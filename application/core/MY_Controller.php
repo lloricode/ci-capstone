@@ -16,7 +16,7 @@ class MY_Controller extends CI_Controller {
             }
         } else {
             if (!$this->session->userdata('validated_client')) {
-                redirect('');
+                redirect(base_url());
             }
         }
     }

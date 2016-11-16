@@ -33,7 +33,7 @@ class Admin_Model extends MY_Model {
         $this->db->select('*');
         if (!is_null($admin)) {
             foreach ($admin as $k => $value) {
-                $this->db->where($k, $admin[$k]);
+                $this->db->where($k, $value);
             }
         }
         $rs = $this->db->get('admin');

@@ -6,8 +6,8 @@ class Login extends CI_Controller {
 
     function __construct() {
         parent::__construct();
-        if ($this->session->userdata('validated')) {
-            redirect('Dashboard');
+        if ($this->session->userdata('validated_admin')) {
+            redirect(ADMIN_DIRFOLDER_NAME);
         }
     }
 
