@@ -6,21 +6,13 @@ class MY_Controller extends CI_Controller {
 
     function __construct() {
         parent::__construct();
-        $this->check_session();
+        $this->validate_session();
     }
 
-    private function check_session() {
-        if ($this->uri->segment(1) == str_replace('/', '', ADMIN_DIRFOLDER_NAME)) {
-            if (!$this->session->userdata('validated_admin')) {
-                redirect(ADMIN_DIRFOLDER_NAME . 'login');
-            }
-        } else {
-            if (!$this->session->userdata('validated_client')) {
-                redirect(base_url());
-            }
-        }
+    private function validate_session() {
+        $this->load->model('Session_Model');
+        $this->Session_Model->check_session();
     }
-
     public function my_json_view($array) {
         $this->load->view('admin/api', array(
             'msg' => json_encode($array),
