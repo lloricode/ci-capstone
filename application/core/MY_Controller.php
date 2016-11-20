@@ -18,7 +18,7 @@ class MY_Controller extends CI_Controller {
         $this->load->model('Session_Model');
         $this->Session_Model->check_session();
     }
-    
+
     public function my_json_view($array) {
         $this->load->view('admin/api', array(
             'msg' => json_encode($array),
@@ -71,6 +71,21 @@ class MY_Controller extends CI_Controller {
                         'label' => 'Add Admin',
                         'desc' => 'Add Admin Description',
                         'icon' => 'pencil',
+                    ),
+                ),
+            ),
+            //sub menu
+            'config' =>
+            array(
+                'label' => 'Configuration',
+                'icon' => 'chevron-down',
+                'sub' =>
+                array(
+                    'log' =>
+                    array(
+                        'label' => 'Error Logs',
+                        'desc' => 'Error Log Description',
+                        'icon' => 'eye',
                     ),
                 ),
             ),
