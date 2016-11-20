@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * 
+ * 
+ * @author Lloric Garcia <emorickfighter@gmail.com>
+ */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class MY_Controller extends CI_Controller {
@@ -13,6 +18,7 @@ class MY_Controller extends CI_Controller {
         $this->load->model('Session_Model');
         $this->Session_Model->check_session();
     }
+    
     public function my_json_view($array) {
         $this->load->view('admin/api', array(
             'msg' => json_encode($array),
@@ -50,29 +56,23 @@ class MY_Controller extends CI_Controller {
             //sub menu
             'menus' =>
             array(
-                'label' => 'Menus',
+                'label' => 'Users',
                 'icon' => 'chevron-down',
                 'sub' =>
                 array(
-                    'sub_one' =>
+                    'users' =>
                     array(
-                        'label' => 'Sub Menu 1',
-                        'desc' => 'Sub Menu1 Description',
-                        'icon' => 'star',
+                        'label' => 'Users',
+                        'desc' => 'Users Description',
+                        'icon' => 'male-user',
                     ),
-                    'sub_two' =>
+                    'addadmin' =>
                     array(
-                        'label' => 'Sub Menu 2',
-                        'desc' => 'Sub Menu2 Description',
-                        'icon' => 'sound-on',
+                        'label' => 'Add Admin',
+                        'desc' => 'Add Admin Description',
+                        'icon' => 'pencil',
                     ),
                 ),
-            ),
-            'users' =>
-            array(
-                'label' => 'Users',
-                'desc' => 'Users Description',
-                'icon' => 'male-user',
             ),
         );
     }

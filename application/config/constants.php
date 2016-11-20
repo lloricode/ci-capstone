@@ -85,4 +85,67 @@ defined('EXIT__AUTO_MIN')      OR define('EXIT__AUTO_MIN', 9); // lowest automat
 defined('EXIT__AUTO_MAX')      OR define('EXIT__AUTO_MAX', 125); // highest automatically-assigned error code
 
 
+
+
+
+/*
+  |
+  |
+  |
+  |
+  |
+  |
+  |  My Constant
+  |
+  |
+  |
+  |
+  |
+  |
+  |
+ */
 define('ADMIN_DIRFOLDER_NAME', 'administrator/');
+/**
+ * value: /^[a-zA-Z][a-zA-Z0-9_]*$/
+ */
+define('USERNAME_REGEX', '/^[a-zA-Z][a-zA-Z0-9_]*$/');
+/**
+ * value: /^[^\\s]*$/
+ */
+define('PASSWORD_SPACENOT_ALLOWED_REGEX', '/^[^\\s]*$/');
+/**
+ * error massage in password regex
+ */
+define('PASSWORD_MSG_REGEX', '%s must at least 8 characters,1 numeric,lowercase case,upper case and special character.');
+/**
+ * 
+  ^: anchored to beginning of string
+  \S*: any set of characters
+  (?=\S{8,}): of at least length 8
+  (?=\S*[a-z]): containing at least one lowercase letter
+  (?=\S*[A-Z]): and at least one uppercase letter
+  (?=\S*[\d]): and at least one number
+  $: anchored to the end of the string
+  (?=\S*[\W]),  non-word characters.
+
+ * value: /^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S*$/
+ */
+define('PASSWORD_REGEX', '/^\S*(?=\S{8,})(?=\S*[a-z])(?=\S*[A-Z])(?=\S*[\d])(?=\S*[\W])\S*$/');
+
+/**
+ * format 1234-1234
+ * value: /^\d{4}[-]\d{4}$/
+ */
+define('SCHOOL_ID_REGEX', '/^\d{4}[-]\d{4}$/');
+/**
+ * 
+ * value: /^[a-zA-Z. ]*$/'
+ */
+define('FULLNAME_REGEX', '/^[a-zA-Z. ]*$/');
+/**
+ * 
+ * value: /^[a-zA-Z. 0-9]*$/
+ */
+define('SUBJECT_CODE_REGEX', '/^[a-zA-Z. 0-9]*$/');
+
+

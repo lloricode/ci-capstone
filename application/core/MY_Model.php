@@ -1,4 +1,9 @@
 <?php
+/**
+ * 
+ * 
+ * @author Lloric Garcia <emorickfighter@gmail.com>
+ */
 
 defined('BASEPATH') or exit('no direct script allowed');
 

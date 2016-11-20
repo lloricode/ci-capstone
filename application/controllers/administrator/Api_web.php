@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * 
+ * 
+ * @author Lloric Garcia <emorickfighter@gmail.com>
+ */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Api_web extends MY_Controller {
