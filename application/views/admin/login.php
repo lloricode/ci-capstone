@@ -9,7 +9,7 @@ $link = 'assets/framework/bootstrap/admin/';
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title><?php echo $title; ?></title>
-        <link href="<?php echo base_url($link); ?>images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <link href="<?php echo base_url(); ?>images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
         <link href="<?php echo base_url($link); ?>css/bootstrap.min.css" rel="stylesheet">
         <link href="<?php echo base_url($link); ?>css/datepicker3.css" rel="stylesheet">
@@ -45,10 +45,9 @@ $link = 'assets/framework/bootstrap/admin/';
                             </div>
                             <div class="form-group">
                                 <?php 
-                                echo form_input(array(
+                                echo form_password(array(
                                     'name' => 'password',
                                     'class' => 'form-control',
-                                    'type' => 'password',
                                     'placeholder' => "Password",
                                     'autofocus' => ''
                                 ));
