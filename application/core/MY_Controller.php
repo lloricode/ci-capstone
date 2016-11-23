@@ -20,8 +20,9 @@ class MY_Controller extends CI_Controller {
     }
 
     public function my_json_view($array) {
+        $this->load->library('myjson');
         $this->load->view('admin/api', array(
-            'msg' => json_encode($array),
+            'msg' => $this->myjson->beautifier(json_encode($array)),
         ));
     }
 
