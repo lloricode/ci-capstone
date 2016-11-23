@@ -33,3 +33,4 @@ $link = 'assets/framework/bootstrap/admin/';
 </script>	
 </body>
 </html>
+<!-- <?php echo CI_VERSION; ?> -->
