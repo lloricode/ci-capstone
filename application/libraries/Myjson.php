@@ -23,6 +23,7 @@ class Myjson {
      * @return string json output readable by human
      */
     public function beautifier($json) {
+        return $json;
 
         //convert ordinary string to array
         //so we cant iterate the string through foreach{} using array
