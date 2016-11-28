@@ -1,21 +1,16 @@
 <?php defined('BASEPATH') OR exit('No direct script allowed'); ?>
-<div class="row">
-    <div class="col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-heading"><?php echo $caption; ?></div>
-            <div class="panel-body">
-                <table data-toggle="table" data-url="<?php echo base_url(ADMIN_DIRFOLDER_NAME.'api_web/' . $controller); ?>"  data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
-                    <thead>
-                        <tr>
-                            <?php foreach ($columns as $key => $col): ?>
-                                <th data-field="<?php echo $key; ?>" data-sortable="true" >
-                                    <?php echo $col; ?>
-                                </th>
-                            <?php endforeach; ?>
-                        </tr>
-                    </thead>
-                </table>
+<div class="container-fluid">
+    <hr>
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+                    <h5><?php echo $caption; ?></h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <?php echo $data; ?>
+                </div>
             </div>
         </div>
     </div>
-</div><!--/.row-->	
+</div>

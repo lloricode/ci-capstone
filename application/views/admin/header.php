@@ -11,13 +11,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * MY CONSTANT
  * 
  */
-        const TITLETAB = 'CI Capstone';
-        const TITLE1 = 'CI';
-        const TITLE2 = 'Capstone';
-        const SEGMENT_NUMBER = 2; //base_url 0,
-        const MENU_ITEM_DEFAULT = 'home';
-        const BOOTSTRAPS_LIB_DIR = 'assets/framework/bootstrap/admin/';
-        const HOME_REDIRECT = ADMIN_DIRFOLDER_NAME; // sample    admin/
+const TITLETAB = 'CI Capstone';
+const TITLE1 = 'CI';
+const TITLE2 = 'Capstone';
+const SEGMENT_NUMBER = 2; //base_url 0,
+const MENU_ITEM_DEFAULT = 'home';
+const BOOTSTRAPS_LIB_DIR = 'assets/framework/bootstrap/admin/';
+const HOME_REDIRECT = ADMIN_DIRFOLDER_NAME; // sample    admin/
 
 $main_sub = '';
 /**
@@ -46,54 +46,75 @@ if (MENU_ITEM_DEFAULT == $menu_current) {
 
 $label = html_escape(((isset($menu_items[$menu_current]['label'])) ? $menu_items[$menu_current]['label'] : $menu_items[$main_sub]['label']));
 $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $menu_items[$main_sub]['sub'][$this->uri->segment(SEGMENT_NUMBER)]['label']));
-?>
-<!DOCTYPE html>
-<html>
+?><!DOCTYPE html>
+<html lang="en">
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title><?php echo ($sub_label != '') ? $sub_label : $label; ?> | <?php echo TITLETAB; ?></title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link href="<?php echo base_url(); ?>images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <link href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>css/bootstrap.min.css" rel="stylesheet">
-        <link href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>css/datepicker3.css" rel="stylesheet">
-        <link href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>css/styles.css" rel="stylesheet">
-        <link href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>css/bootstrap-table.css" rel="stylesheet">
-        <!--Icons-->
-        <script src="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>js/lumino.glyphs.js"></script>
-        <!--[if lt IE 9]>
-        <script src="js/html5shiv.js"></script>
-        <script src="js/respond.min.js"></script>
-        <![endif]-->
+        <link rel="stylesheet" href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>css/bootstrap.min.css" />
+        <link rel="stylesheet" href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>css/bootstrap-responsive.min.css" />
+        <link rel="stylesheet" href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>css/fullcalendar.css" />
+        <link rel="stylesheet" href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>css/matrix-style.css" />
+        <link rel="stylesheet" href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>css/matrix-media.css" />
+        <link href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>font-awesome/css/font-awesome.css" rel="stylesheet" />
+        <link rel="stylesheet" href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>css/jquery.gritter.css" />
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+
+
+
+        <link rel="stylesheet" href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>css/uniform.css" />
+        <link rel="stylesheet" href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>css/select2.css" />
+
+
     </head>
     <body>
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="<?php echo base_url(HOME_REDIRECT); ?>"><span><?php echo TITLE1; ?></span><?php echo TITLE2; ?></a>
-                    <ul class="user-menu">
-                        <li class="dropdown pull-right">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> <?php echo $this->session->userdata('admin_fullname'); ?> <span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="<?php echo base_url(HOME_REDIRECT . MENU_ITEM_DEFAULT); ?>/logout"><svg class="glyph stroked cancel"><use xlink:href="#stroked-cancel"></use></svg> Logout</a></li>
-                            </ul>
-                        </li>
+
+        <!--Header-part-->
+        <div id="header">
+            <h1><a href="dashboard.html"><?php echo TITLETAB; ?></a></h1>
+        </div>
+        <!--close-Header-part--> 
+
+
+        <!--top-Header-menu-->
+        <div id="user-nav" class="navbar navbar-inverse">
+            <ul class="nav">
+                <li  class="dropdown" id="profile-messages" ><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i>  <span class="text"><?php echo $this->session->userdata('admin_fullname'); ?></span><b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#"><i class="icon-user"></i> My Profile</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#"><i class="icon-check"></i> My Tasks</a></li>
+                        <li class="divider"></li>
+                        <li><a href="<?php echo base_url(HOME_REDIRECT . MENU_ITEM_DEFAULT); ?>/logout"><i class="icon-key"></i> Log Out</a></li>
                     </ul>
-                </div>
-            </div><!-- /.container-fluid -->
-        </nav>
-        <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
-            <form role="search">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
-                </div>
-            </form>
-            <ul class="nav menu">
+                </li>
+                <li class="dropdown" id="menu-messages"><a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-envelope"></i> <span class="text">Messages</span> <span class="label label-important">5</span> <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a class="sAdd" title="" href="#"><i class="icon-plus"></i> new message</a></li>
+                        <li class="divider"></li>
+                        <li><a class="sInbox" title="" href="#"><i class="icon-envelope"></i> inbox</a></li>
+                        <li class="divider"></li>
+                        <li><a class="sOutbox" title="" href="#"><i class="icon-arrow-up"></i> outbox</a></li>
+                        <li class="divider"></li>
+                        <li><a class="sTrash" title="" href="#"><i class="icon-trash"></i> trash</a></li>
+                    </ul>
+                </li>
+                <li class=""><a title="" href="#"><i class="icon icon-cog"></i> <span class="text">Settings</span></a></li>
+                <li class=""><a title="" href="<?php echo base_url(HOME_REDIRECT . MENU_ITEM_DEFAULT); ?>/logout"><i class="icon icon-share-alt"></i> <span class="text">Logout</span></a></li>
+            </ul>
+        </div>
+        <!--close-top-Header-menu-->
+        <!--start-top-serch-->
+        <div id="search">
+            <input type="text" placeholder="Search here..."/>
+            <button type="submit" class="tip-bottom" title="Search"><i class="icon-search icon-white"></i></button>
+        </div>
+        <!--close-top-serch-->
+        <!--sidebar-menu-->
+        <div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
+            <ul>
                 <?php
                 /**
                  * navigations
@@ -101,68 +122,49 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
                 foreach ($menu_items as $key => $item) {
                     if (isset($item['sub'])) {
                         //sub menu
-                        $active1 = ($key == $main_sub ? ' active' : '');
-                        echo '<li class="parent' . $active1 . '">';
-                        echo '<a href="#">';
-                        echo '<span data-toggle="collapse" href="#sub-item-' . $key . '">';
-                        echo '<svg class="glyph stroked ' . str_replace('-', ' ', $item['icon']) . '"><use xlink:href="#stroked-' . $item['icon'] . '"/></svg>';
-                        echo '</span>';
-                        echo $item['label'];
-                        echo '</a>';
-                        //start sub menu 
-                        echo '<ul class="children collapse" id="sub-item-' . $key . '">';
+
+                        echo '<li class="submenu">'
+                        . '<a href="#"><i class="icon icon-' . $item['icon'] . '"></i>'
+                        . '<span>' . $item['label'] . '</span> <span class="label label-important">' . $item['count'] . '</span>'
+                        . '</a>'
+                        . '<ul>';
                         foreach ($item['sub'] as $sub_key => $sub_item) {
-                            echo '<li>'
-                            . '<a href="' . base_url(HOME_REDIRECT . $sub_key) . '">'
-                            . '<svg class="glyph stroked download"><use xlink:href="#stroked-' . $sub_item['icon'] . '"/></svg> '
-                            . $sub_item['label'] . '</a>'
-                            . '</li>';
+                            echo '<li><a href="' . base_url(HOME_REDIRECT . $sub_key) . '">' . $sub_item['label'] . '</a></li>';
                         }
-                        echo '</ul>';
-                        echo '</li>';
+                        echo '</ul>'
+                        . '</li>';
                     } else {
                         $active = ($key == $menu_current ? ' class="active"' : '');
+
                         echo '<li' . $active . '>'
                         . '<a href="' . base_url(HOME_REDIRECT . $key) . '">'
-                        . '<svg class="glyph stroked ' . str_replace('-', ' ', $item['icon']) . '"><use xlink:href="#stroked-' . $item['icon'] . '"/></svg> '
-                        . $item['label'] . '</a>'
+                        . '<i class="icon icon-' . $item['icon'] . '"></i>'
+                        . '<span>' . $item['label'] . '</span>'
+                        . '</a>'
                         . '</li>';
                     }
                 }
                 ?>
             </ul>
-        </div><!--/.sidebar-->
-        <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">	<!--main-->
-            <div class="row">
-                <ol class="breadcrumb">
-                    <li><a href="<?php echo base_url(); ?>"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
-                    <li class="active">
-                        <?php
-                        echo '<a href="' . (($sub_label != '') ? '#' : base_url(HOME_REDIRECT . $menu_current) ) . '">'
-                        . $label . '</a>' . (($sub_label != '') ? '</li><li>'
-                                . '<a href="' . base_url(HOME_REDIRECT . $menu_current) . '">'
-                                . $sub_label
-                                . '</a>' : '' );
-                        ?>
-                    </li>
-                    <li>
-                        <?php
-                        // echo now('Asia/Manila');
-                        $datestring = '%Y %m %d - %D %h:%i %a';
-                        $time = time();
-                        echo mdate($datestring, $time);
-                        ?>
-                    </li>
+        </div>
+        <!--sidebar-menu-->
+
+        <!--main-container-part-->
+        <div id="content">
+            <!--breadcrumbs-->
+            <div id="content-header">
+                <div id="breadcrumb"> 
+                    <a href="<?php echo base_url(ADMIN_DIRFOLDER_NAME); ?>" title="Go to Home" class="tip-bottom">
+                        <i class="icon-home"></i> Home
+                    </a> 
                     <?php
-                    echo (ENVIRONMENT === 'development') ?
-                            '<li>[rendered <strong>{elapsed_time}</strong> ver. <strong>'
-                            . CI_VERSION
-                            . '</strong>]</li>' : ''
-                    ?>
-                </ol>
-            </div><!--/.row-->
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header"><?php echo(($sub_label != '') ? $sub_label : $label ); ?></h1>
+                    echo '<a href="' . (($sub_label != '') ? '#' : base_url(HOME_REDIRECT . $menu_current) ) . '">'
+                    . $label . '</a>' . (($sub_label != '') ? ' '
+                            . '<a href="' . base_url(HOME_REDIRECT . $menu_current) . '">'
+                            . $sub_label
+                            . '</a>' : '' );
+                    ?> 
                 </div>
+                <h1><?php echo(($sub_label != '') ? $sub_label : $label ); ?></h1>
             </div>
+            <!--End-breadcrumbs-->

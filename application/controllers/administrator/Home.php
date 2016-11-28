@@ -11,7 +11,7 @@ class Home extends MY_Controller {
 
     public function index() {
         $this->my_header_view();
-        $this->load->view('admin/home_top');
+      //  $this->load->view('admin/home_top');
         $this->load->view('admin/footer');
     }
 

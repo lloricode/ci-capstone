@@ -60,28 +60,21 @@ class Admin_Model extends MY_Model {
         );
 
         $my_inputs = array(
-            'left' =>
-            array(
-                'size' => '12',
-                'attr' =>
-                array(
-                    'fullname' => array(
-                        'title' => 'Fullname',
-                        'type' => 'text',
-                        'value' => NULL,
-                    ),
-                    'username' => array(
-                        'title' => 'Username',
-                        'type' => 'text',
-                        'value' => NULL,
-                    ),
-                    'password' => array(
-                        'title' => 'Password',
-                        'type' => 'text',
-                        'value' => NULL,
-                    ),
-                )
+            'fullname' => array(
+                'title' => 'Fullname',
+                'type' => 'text',
+                'value' => NULL,
             ),
+            'username' => array(
+                'title' => 'Username',
+                'type' => 'text',
+                'value' => NULL,
+            ),
+            'password' => array(
+                'title' => 'Password',
+                'type' => 'text',
+                'value' => NULL,
+            )
         );
         $this->load->model('Form_Model');
         $this->Form_Model->form_view($my_form, $my_inputs);
@@ -91,7 +84,7 @@ class Admin_Model extends MY_Model {
         $this->load->library('form_validation');
         //initialise validation
         $this->admin_validation();
-        $this->form_validation->set_error_delimiters('<span class="help-block"><i class="fa fa-warning"></i>', '</span>');
+        $this->form_validation->set_error_delimiters('<span class="label label-warning">', '</span>');
         if (!$this->form_validation->run()) {
             //admin form view
             $this->admin_form_view();
@@ -120,12 +113,20 @@ class Admin_Model extends MY_Model {
         $admins = $this->get_admin();
         $inc = 1;
         foreach ($admins as $admin) {
+            //active and inactive status (html)
+            $tmp = 'Set Enable';
+            $status = '<span style="color:red">Disabled</span>';
+            if ($admin['status']) {
+                $status = '<span style="color:green">Enabled</span>';
+                $tmp = 'Set Disable';
+            }
             array_push($data, array(
                 'inc' => $inc++,
                 'fullname' => $admin['fullname'],
                 'username' => $admin['username'],
-                'status' => $admin['status'],
-                'option' => anchor(base_url(ADMIN_DIRFOLDER_NAME . 'users#'), 'sample'),
+                'status' => $status,
+                'option' => anchor(base_url(ADMIN_DIRFOLDER_NAME . 'users#'), 'Update') . ' | '
+                . anchor(base_url(ADMIN_DIRFOLDER_NAME . 'users#'), $tmp),
             ));
         }
         return $data;

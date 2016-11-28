@@ -18,8 +18,9 @@ class Addadmin extends MY_Controller {
 
         $this->load->model('Admin_Model');
         $this->Admin_Model->add();
-
-        $this->load->view('admin/footer');
+        $this->load->view('admin/footer', array(
+            'controller' => 'addadmin'
+        ));
     }
 
 }

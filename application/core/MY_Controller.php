@@ -38,11 +38,10 @@ class MY_Controller extends CI_Controller {
      * @param string $controller where to get data
      * @param array $columns key-tdata key, value = title header of table columns
      */
-    public function my_table_view($caption, $controller, $columns) {
+    public function my_table_view($caption, $data) {
         $this->load->view('admin/table', array(
             'caption' => $caption,
-            'columns' => $columns,
-            'controller' => $controller,
+            'data' => $data,
         ));
     }
 
@@ -52,26 +51,25 @@ class MY_Controller extends CI_Controller {
             array(
                 'label' => 'Home',
                 'desc' => 'Home Description',
-                'icon' => 'dashboard-dial',
+                'icon' => 'beaker',
             ),
             //sub menu
             'menus' =>
             array(
                 'label' => 'Users',
-                'icon' => 'chevron-down',
+                'icon' => 'user',
+                'count' => '2',
                 'sub' =>
                 array(
                     'users' =>
                     array(
                         'label' => 'Users',
                         'desc' => 'Users Description',
-                        'icon' => 'male-user',
                     ),
                     'addadmin' =>
                     array(
                         'label' => 'Add Admin',
                         'desc' => 'Add Admin Description',
-                        'icon' => 'pencil',
                     ),
                 ),
             ),
@@ -79,14 +77,14 @@ class MY_Controller extends CI_Controller {
             'config' =>
             array(
                 'label' => 'Configuration',
-                'icon' => 'chevron-down',
+                'icon' => 'warning-sign',
+                'count' => '1',
                 'sub' =>
                 array(
                     'log' =>
                     array(
                         'label' => 'Error Logs',
                         'desc' => 'Error Log Description',
-                        'icon' => 'eye',
                     ),
                 ),
             ),
