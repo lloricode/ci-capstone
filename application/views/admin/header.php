@@ -122,8 +122,9 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
                 foreach ($menu_items as $key => $item) {
                     if (isset($item['sub'])) {
                         //sub menu
+                        $active1 = ($key == $main_sub ? ' active' : '');
 
-                        echo '<li class="submenu">'
+                        echo '<li class="submenu' . $active1 . '">'
                         . '<a href="#"><i class="icon icon-' . $item['icon'] . '"></i>'
                         . '<span>' . $item['label'] . '</span> <span class="label label-important">' . $item['count'] . '</span>'
                         . '</a>'
