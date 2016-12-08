@@ -3,6 +3,7 @@
 /**
  * 
  * @author Lloric Mauga Garcia <emorickfighter@gmail.com>
+ * // Code review: sure kana dito pre?
  */
 class Session_Model extends MY_Model {
 
