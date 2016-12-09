@@ -77,9 +77,10 @@ class Admin_Model extends MY_Model {
         ));
 
         if ($rs) {
+            $this->load->library('Password');
             $row = $rs->row();
 
-            if (password_verify($pwd, $row->admin_password)) {
+            if ($this->password->check_password($pwd, $row->admin_password)) {
                 if ($row->admin_status) {
                     $this->session->set_userdata(array(
                         'admin_id' => $row->admin_id,

@@ -2,6 +2,21 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/opt/lampp/htdocs/ci-capstone/application/controllers/administrator/Backup.php</file>
+            <file>file:/opt/lampp/htdocs/ci-capstone/application/core/MY_Model.php</file>
+            <file>file:/opt/lampp/htdocs/ci-capstone/application/config/constants.php</file>
+            <file>file:/opt/lampp/htdocs/ci-capstone/application/models/Admin_Model.php</file>
+            <file>file:/opt/lampp/htdocs/ci-capstone/application/views/admin/header.php</file>
+            <file>file:/opt/lampp/htdocs/ci-capstone/application/helpers/MY_date_helper.php</file>
+            <file>file:/opt/lampp/htdocs/ci-capstone/application/libraries/MY_Form_validation.php</file>
+            <file>file:/opt/lampp/htdocs/ci-capstone/application/models/Backup_Model.php</file>
+            <file>file:/opt/lampp/htdocs/ci-capstone/application/core/MY_Controller.php</file>
+            <file>file:/opt/lampp/htdocs/ci-capstone/application/helpers/day_helper.php</file>
+            <file>file:/opt/lampp/htdocs/ci-capstone/application/controllers/administrator/Users.php</file>
+            <file>file:/opt/lampp/htdocs/ci-capstone/application/helpers/check_url_helper.php</file>
+            <file>file:/opt/lampp/htdocs/ci-capstone/application/libraries/Password.php</file>
+            <file>file:/opt/lampp/htdocs/ci-capstone/application/helpers/combobox_helper.php</file>
+        </group>
     </open-files>
 </project-private>

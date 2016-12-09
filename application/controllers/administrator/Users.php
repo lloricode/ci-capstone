@@ -33,7 +33,7 @@ class Users extends MY_Controller {
             array(
                 'field' => 'password',
                 'label' => 'Password',
-                'rules' => 'required',
+                'rules' => 'required|password_level[3]',
                 'type' => 'text',
             ),
         );
@@ -45,7 +45,7 @@ class Users extends MY_Controller {
 
         $this->load->model('Admin_Model');
 
-        $this->load->view('admin/add_button_view', array(
+        $this->load->view('admin/button_view', array(
             'href' => 'users/add-admin',
             'button_label' => 'Add Admin'
         ));
@@ -60,11 +60,10 @@ class Users extends MY_Controller {
     }
 
     public function admin_change_status($admin_id = NULL) {
-        $this->load->helper('check_url');
-        $row = check_id_form_url($admin_id, 'admin_id', 'Admin_Model');
+        $this->load->helper('url');
+        $row = check_id_form_url('admin_id', 'Admin_Model', $admin_id);
 
         //no need to load model, its already loaded         ^^^^
-
         //to prevent change status in current logged user
         if ($row->admin_id != $this->session->userdata('admin_id')) {
             $this->Admin_Model->update(
@@ -94,10 +93,11 @@ class Users extends MY_Controller {
 
     private function add_admin_process() {
         $this->load->model('Admin_Model');
+        $this->load->library('Password');
         $admin = array(
             'admin_fullname' => $this->input->post('fullname', TRUE),
             'admin_username' => $this->input->post('username', TRUE),
-            'admin_password' => password_hash($this->input->post('password'), 1),
+            'admin_password' => $this->password->generate_hash($this->input->post('password')),
         );
         $msg = ($this->Admin_Model->add($admin)) ? 'Admin added!.' : 'Failed to add admin.';
         //load view to promt insert status 

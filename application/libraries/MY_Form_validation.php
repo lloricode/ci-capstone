@@ -29,7 +29,7 @@ class MY_Form_validation extends CI_Form_validation {
      * @param string $value
      * @return boolean
      */
-    public function numeric_0_to_9($value) { 
+    public function numeric_0_to_9($value) {
         $this->CI->form_validation->set_message('numeric_0_to_9', 'Please select score in Key {field}.');
         if ($value >= 0 && $value <= 9) {
             return TRUE;
@@ -52,7 +52,7 @@ class MY_Form_validation extends CI_Form_validation {
      * @param string $value
      * @return boolean
      */
-    public function human_name($value) { 
+    public function human_name($value) {
         $this->CI->form_validation->set_message('human_name', 'Invalid {field} format.');
         if (preg_match(MY_Form_validation::human_name_regex, $value)) {
             return TRUE;
@@ -78,6 +78,33 @@ class MY_Form_validation extends CI_Form_validation {
             return TRUE;
         }
         return FALSE;
+    }
+
+    /**
+     * check password difficulties
+     * 
+     * @param string $value
+     * @param int $level 
+     * @return bool
+     */
+    public function password_level($value, $level) {
+        $score = 0;
+        $this->CI->form_validation->set_message('password_level', 'mahina ang password {field}');
+
+        if (preg_match('!\d!', $value)) {
+            $score++;
+        }
+        if (preg_match('![A-z]!', $value)) {
+            $score++;
+        }
+        if (preg_match('!\W!', $value)) {
+            $score++;
+        }
+        if (strlen($value) >= 8) {
+            $score++;
+        }
+
+        return $score >= $level;
     }
 
 }

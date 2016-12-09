@@ -99,7 +99,7 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
                     <ul class="dropdown-menu">
                         <?php foreach ($menu_settings as $k => $v): ?>  
                             <li class="divider"></li>
-                            <li><a class="sAdd" title="" href="<?php echo base_url('admin/' . $k); ?>"><i class="icon-<?php echo $v['icon']; ?>"></i> <?php echo $v['label']; ?></a></li>
+                            <li><a class="sAdd" title="" href="<?php echo base_url(ADMIN_DIRFOLDER_NAME . $k); ?>"><i class="icon-<?php echo $v['icon']; ?>"></i> <?php echo $v['label']; ?></a></li>
 
                         <?php endforeach; ?>
                     </ul>

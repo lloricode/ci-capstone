@@ -12,6 +12,10 @@ class MY_Controller extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->validate_session();
+
+        //saving urls
+        $this->load->helper('url');
+        save_current_url();
     }
 
     private function validate_session() {
@@ -19,13 +23,9 @@ class MY_Controller extends CI_Controller {
         $this->Session_Model->check_session();
     }
 
-    public function my_json_view($array) {
-        $this->load->library('myjson');
-        $this->load->view('admin/api', array(
-            'msg' => $this->myjson->beautifier(json_encode($array)),
-        ));
-    }
-
+    /**
+     * main administrator header view 
+     */
     public function my_header_view() {
         $this->load->view('admin/header', array(
             'navigations' => $this->my_navigations(),
@@ -79,6 +79,11 @@ class MY_Controller extends CI_Controller {
                     array(
                         'label' => 'Backup Database',
                         'desc' => 'Backup Database Description',
+                    ),
+                    'history' =>
+                    array(
+                        'label' => 'History',
+                        'desc' => 'Error Logsn Description',
                     ),
                     'log' =>
                     array(
