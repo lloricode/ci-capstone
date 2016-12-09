@@ -9,124 +9,86 @@ defined('BASEPATH') or exit('no direct script allowed');
 
 class MY_Model extends CI_Model {
 
+    public $my_debug_viewer;
+
     function __construct() {
         parent::__construct();
+        $this->my_debug_viewer = (bool) (ENVIRONMENT === 'development'); //this is for debugging propose
     }
 
     /**
      * 
-     * @return string value: %Y:%m:%d sample : 2016:12:31
+     * @param string $table
+     * @param array $column column names
+     * @param array $orderby col ord
+     * @return boolean|resultset
      */
-    public function my_datetime_format() {
-        $datestring = '%Y:%m:%d';
-        $time = time();
-        return mdate($datestring, $time);
-    }
-
-    /**
-     * 
-     * @param string $timestamp
-     * @param string time or date
-     * @return string December 30, 20016
-     */
-    public function my_converter_datetime_format($timestamp, $dt) {
-        if ($dt == 'date') {
-            $format = '%Y:%m:%d';
-            list($YY, $mm, $dd) = explode(':', mdate($format, $timestamp));
-            return $this->my_month_array($mm) . ' ' . $dd . ', ' . $YY;
-        } elseif ($dt == 'time') {
-            $format = '%h:%i %a';
-            return mdate($format, $timestamp);
+    public function my_select($table, $column = NULL, $orderby = NULL) {
+        $this->load->database();
+        $this->db->select('*');
+        if (!is_null($column)) {
+            foreach ($column as $k => $value) {
+                $this->db->where($k, $value);
+            }
         }
+        if (!is_null($orderby)) {
+            $this->db->order_by($orderby['col'], $orderby['ord']);
+        }
+        $rs = $this->db->get($table);
+        log_message('debug', $this->db->last_query());
+        if ($this->my_debug_viewer) {
+            echo '<!-- ' . $this->db->last_query() . ' -->';
+        }
+        if ($rs->row()) {
+            return $rs;
+        }
+        return FALSE;
     }
 
     /**
      * 
-     * @return string December 30, 20016
+     * @param string $table
+     * @param array $data_vale
+     * @return bool 
      */
-    public function my_current_datetime_information() {
-        $datetimeformated = $this->my_datetime_format();
-        list($YY, $mm, $dd) = explode(':', $datetimeformated);
-        return $this->my_month_array($mm) . ' ' . $dd . ', ' . $YY;
+    public function my_insert($table, $data_vale) {
+        $this->load->database();
+        $this->db->insert($table, $data_vale);
+        log_message('debug', $this->db->last_query());
+        if ($this->my_debug_viewer) {
+            echo '<!-- ' . $this->db->last_query() . ' -->';
+        }
+        return $this->db->affected_rows();
     }
 
     /**
      * 
-     * @return String Sun,Mon
+     * @param string $table
+     * @param array $set
+     * @param array $where
+     * @return bool
      */
-    public function my_day() {
-        $time = time();
-        return mdate('%D', $time);
+    public function my_update($table, $set, $where = NULL) {
+        $this->load->database();
+        if (!is_null($where)) {
+            $this->db->where($where);
+        }
+        $this->db->update($table, $set);
+        log_message('debug', $this->db->last_query());
+        if ($this->my_debug_viewer) {
+            echo '<!-- ' . $this->db->last_query() . ' -->';
+        }
+        return $this->db->affected_rows();
     }
 
-    /**
-     * 
-     * @param type $month_number
-     * @return string 1=January 2=February, etc..
-     */
-    public function my_month_array($month_number) {
-        $month = array(
-            1 => 'January',
-            2 => 'February',
-            3 => 'March',
-            4 => 'April',
-            5 => 'May',
-            6 => 'June',
-            7 => 'July',
-            8 => 'Augost',
-            9 => 'September',
-            10 => 'October',
-            11 => 'November',
-            12 => 'December',
-        );
-        return $month[$month_number];
-    }
-
-    /**
-     * 
-     * @return array 1-1st Semester,2-2nd Semester,3-Summer Semester
-     */
-    public function my_semester_for_combo() {
-        return array(
-            '1' => '1st Semester',
-            '2' => '2nd Semester',
-            '3' => 'Summer Semester',
-        );
-    }
-
-    /**
-     * 
-     * @return array 
-     */
-    public function my_schoolyear_for_combo() {
-        return array(
-            '2016-2017' => '2016-2017',
-            '2017-2018' => '2017-2018',
-            '2018-2019' => '2018-2019',
-        );
-    }
-
-    /**
-     * 
-     * @return array key = 24hrs, value = 12hrs
-     */
-    public function my_time_for_combo() {
-        return array(
-            '6:00' => '6:00 am',
-            '7:00' => '7:00 am',
-            '8:00' => '8:00 am',
-            '9:00' => '9:00 am',
-            '10:00' => '10:00 am',
-            '11:00' => '11:00 am',
-            '12:00' => '12:00 pm',
-            '13:00' => '1:00 pm',
-            '14:00' => '2:00 pm',
-            '15:00' => '3:00 pm',
-            '16:00' => '4:00 pm',
-            '17:00' => '5:00 pm',
-            '18:00' => '6:00 pm',
-            '19:00' => '7:00 pm'
-        );
+    public function my_table_view($header, $data) {
+        $this->load->library('table');
+        $this->table->set_heading($header);
+        $this->table->set_template(array(
+            'table_open' => '<table class="table table-bordered data-table">',
+        ));
+        return $this->table->generate($data);
     }
 
 }
+

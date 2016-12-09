@@ -1,6 +1,5 @@
 <?php defined('BASEPATH') OR exit('No direct script allowed'); ?>
 <div class="container-fluid">
-    <hr>
     <div class="row-fluid">
         <div class="span12">
             <div class="widget-box">
@@ -8,7 +7,7 @@
                     <h5><?php echo $caption; ?></h5>
                 </div>
                 <div class="widget-content nopadding">
-                    <?php echo $data; ?>
+                    <?php echo $table; ?>
                 </div>
             </div>
         </div>

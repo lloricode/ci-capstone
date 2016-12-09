@@ -46,23 +46,28 @@ if (isset($controller)) {
     <script src="<?php echo $link; ?>js/bootstrap.min.js"></script> 
     <script src="<?php echo $link; ?>js/jquery.flot.min.js"></script> 
     <script src="<?php echo $link; ?>js/jquery.flot.resize.min.js"></script> 
-    <script src="<?php echo $link; ?>js/jquery.peity.min.js"></script> 
+<!--    <script src="<?php //echo $link; ?>js/jquery.peity.min.js"></script> -->
     <script src="<?php echo $link; ?>js/fullcalendar.min.js"></script> 
     <script src="<?php echo $link; ?>js/matrix.js"></script> 
     <script src="<?php echo $link; ?>js/matrix.dashboard.js"></script> 
-    <script src="<?php echo $link; ?>js/jquery.gritter.min.js"></script> 
-    <script src="<?php echo $link; ?>js/matrix.interface.js"></script> 
+<!--    <script src="<?php //echo $link; ?>js/matrix.interface.js"></script> -->
     <script src="<?php echo $link; ?>js/matrix.chat.js"></script> 
     <script src="<?php echo $link; ?>js/jquery.validate.js"></script> 
     <script src="<?php echo $link; ?>js/matrix.form_validation.js"></script> 
     <script src="<?php echo $link; ?>js/jquery.wizard.js"></script> 
     <script src="<?php echo $link; ?>js/jquery.uniform.js"></script> 
     <script src="<?php echo $link; ?>js/select2.min.js"></script> 
-    <script src="<?php echo $link; ?>js/matrix.popover.js"></script> 
+<!--    <script src="<?php //echo $link; ?>js/matrix.popover.js"></script> -->
     <script src="<?php echo $link; ?>js/jquery.dataTables.min.js"></script> 
     <script src="<?php echo $link; ?>js/matrix.tables.js"></script> 
 
 <?php } ?>
+
+<!--<script src="<?php //echo $link; ?>js/jquery.gritter.min.js"></script> 
+<script src="<?php //echo $link; ?>js/jquery.peity.min.js"></script> 
+<script src="<?php //echo $link; ?>js/matrix.interface.js"></script> 
+<script src="<?php //echo $link; ?>js/matrix.popover.js"></script>-->
+
 <script type="text/javascript">
     // This function is called from the pop-up menus to transfer to
     // a different page. Ignore if the value returned is a null string:

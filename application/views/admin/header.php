@@ -25,6 +25,8 @@ $main_sub = '';
  */
 $menu_items = $navigations;
 
+$menu_settings = $setting_vavigations;
+
 
 // Determine the current menu item.
 $menu_current = MENU_ITEM_DEFAULT;
@@ -52,7 +54,7 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
         <title><?php echo ($sub_label != '') ? $sub_label : $label; ?> | <?php echo TITLETAB; ?></title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link href="<?php echo base_url(); ?>images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <link href="<?php echo base_url('assets/img/favicon.ico'); ?>" rel="shortcut icon" type="image/x-icon" />
         <link rel="stylesheet" href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>css/bootstrap.min.css" />
         <link rel="stylesheet" href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>css/bootstrap-responsive.min.css" />
         <link rel="stylesheet" href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>css/fullcalendar.css" />
@@ -63,6 +65,7 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
 
 
+        <link rel="stylesheet" href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>css/jquery.gritter.css" />
 
         <link rel="stylesheet" href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>css/uniform.css" />
         <link rel="stylesheet" href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>css/select2.css" />
@@ -83,26 +86,52 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
             <ul class="nav">
                 <li  class="dropdown" id="profile-messages" ><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i>  <span class="text"><?php echo $this->session->userdata('admin_fullname'); ?></span><b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#"><i class="icon-user"></i> My Profile</a></li>
-                        <li class="divider"></li>
-                        <li><a href="#"><i class="icon-check"></i> My Tasks</a></li>
-                        <li class="divider"></li>
                         <li><a href="<?php echo base_url(HOME_REDIRECT . MENU_ITEM_DEFAULT); ?>/logout"><i class="icon-key"></i> Log Out</a></li>
                     </ul>
                 </li>
-                <li class="dropdown" id="menu-messages"><a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-envelope"></i> <span class="text">Messages</span> <span class="label label-important">5</span> <b class="caret"></b></a>
+                <li class="dropdown" id="menu-messages">
+                    <a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle">
+                        <i class="icon icon-cog"></i> 
+                        <span class="text">Settings</span> 
+<!--                        <span class="label label-important">5</span> -->
+                        <b class="caret"></b>
+                    </a>
                     <ul class="dropdown-menu">
-                        <li><a class="sAdd" title="" href="#"><i class="icon-plus"></i> new message</a></li>
-                        <li class="divider"></li>
-                        <li><a class="sInbox" title="" href="#"><i class="icon-envelope"></i> inbox</a></li>
-                        <li class="divider"></li>
-                        <li><a class="sOutbox" title="" href="#"><i class="icon-arrow-up"></i> outbox</a></li>
-                        <li class="divider"></li>
-                        <li><a class="sTrash" title="" href="#"><i class="icon-trash"></i> trash</a></li>
+                        <?php foreach ($menu_settings as $k => $v): ?>  
+                            <li class="divider"></li>
+                            <li><a class="sAdd" title="" href="<?php echo base_url('admin/' . $k); ?>"><i class="icon-<?php echo $v['icon']; ?>"></i> <?php echo $v['label']; ?></a></li>
+
+                        <?php endforeach; ?>
                     </ul>
                 </li>
-                <li class=""><a title="" href="#"><i class="icon icon-cog"></i> <span class="text">Settings</span></a></li>
-                <li class=""><a title="" href="<?php echo base_url(HOME_REDIRECT . MENU_ITEM_DEFAULT); ?>/logout"><i class="icon icon-share-alt"></i> <span class="text">Logout</span></a></li>
+                <li class="">
+                    <a title="" href="<?php echo base_url(HOME_REDIRECT . MENU_ITEM_DEFAULT); ?>/logout">
+                        <i class="icon icon-share-alt"></i> 
+                        <span class="text">Logout</span>
+                    </a>
+                </li>
+                <li class="">
+                    <a title="">
+                        <i class="icon icon-bolt"></i> 
+                        <span class="text">
+                            {elapsed_time} 
+                        </span>
+                        <i class="icon icon-beaker"></i> 
+                        <span class="text">
+                            <?php echo CI_VERSION; ?>
+                        </span>
+                    </a>
+                </li>
+                <?php if (ENVIRONMENT === 'development'): ?>
+                    <li class="">
+                        <a title="">
+                            <i class="icon icon-magic"></i> 
+                            <span class="text">
+                                Developing Mode 
+                            </span>
+                        </a>
+                    </li>
+                <?php endif; ?>
             </ul>
         </div>
         <!--close-top-Header-menu-->
@@ -126,7 +155,7 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
 
                         echo '<li class="submenu' . $active1 . '">'
                         . '<a href="#"><i class="icon icon-' . $item['icon'] . '"></i>'
-                        . '<span>' . $item['label'] . '</span> <span class="label label-important">' . $item['count'] . '</span>'
+                        . '<span>' . $item['label'] . '</span> <span class="label label-important">' . sizeof($item['sub']) . '</span>'
                         . '</a>'
                         . '<ul>';
                         foreach ($item['sub'] as $sub_key => $sub_item) {
@@ -159,9 +188,9 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
                         <i class="icon-home"></i> Home
                     </a> 
                     <?php
-                    echo '<a href="' . (($sub_label != '') ? '#' : base_url(HOME_REDIRECT . $menu_current) ) . '">'
+                    echo '<a' . (($sub_label != '') ? '' : ' href="' . base_url(HOME_REDIRECT . $menu_current) . '"' ) . (($sub_label != '') ? '' : ' class="current"') . '>'
                     . $label . '</a>' . (($sub_label != '') ? ' '
-                            . '<a href="' . base_url(HOME_REDIRECT . $menu_current) . '">'
+                            . '<a href="' . base_url(HOME_REDIRECT . $menu_current) . '" class="current">'
                             . $sub_label
                             . '</a>' : '' );
                     ?> 

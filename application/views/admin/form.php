@@ -1,11 +1,49 @@
 <?php
-/**
- * 
- * @author Lloric Mayuga Garcia <emorickfighter@gmail.com> 
- */
-defined('BASEPATH') OR exit('No direct script allowed');
-?>
+defined('BASEPATH') or exit('Direct Script is not allowed');
 
+function inputs($attr) {
+
+    switch ($attr['type']) {
+        case 'text':
+            echo form_input(array(
+                'name' => $attr['field'],
+                'value' => set_value($attr['field']),
+                'placeholder' => $attr['label'],
+                'id' => 'inputError'
+            ));
+            break;
+        case 'password':
+            echo form_password(array(
+                'name' => $attr['field'],
+                'placeholder' => $attr['label'],
+                'id' => 'inputError'
+            ));
+            break;
+        case 'combo':
+            echo form_dropdown(
+                    $attr['field'], $attr['combo_value'], set_value($attr['field']), array(
+                'id' => 'inputError',
+                    )
+            );
+            break;
+        case 'textarea':
+            echo form_textarea(
+                    $attr['field'], set_value($attr['field']), $attr['label'], array(
+                'placeholder' => $attr['label'],
+                'id' => 'inputError'
+                    )
+            );
+            break;
+        case 'checkbox':
+            echo form_checkbox($attr['field'], set_value($attr['field']), FALSE);
+            break;
+        default :
+            break;
+    }
+
+    echo '<br />';
+}
+?>
 <div class="container-fluid">
     <hr>
     <div class="row-fluid">
@@ -13,80 +51,48 @@ defined('BASEPATH') OR exit('No direct script allowed');
 
             <div class="widget-box">
                 <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
-                    <h5><?php echo $my_form['caption']; ?></h5>
+                    <h5><?php echo $caption; ?></h5>
                 </div>
                 <div class="widget-content nopadding">
                     <?php
-                    echo form_open($my_form['action'], array(
+//echo validation_errors();
+
+                    echo form_open(base_url(ADMIN_DIRFOLDER_NAME . $myform['action']), array(
                         'class' => 'form-horizontal',
                         'name' => 'basic_validate',
                         'id' => 'basic_validate',
                         'novalidate' => 'novalidate',
                     ));
+
+                    foreach ($myform['attr'] as $attr):
+                        $tmp = (form_error($attr['field']) == '') ? '' : ' error';
+                        echo '<div class="control-group' . $tmp . '">';
+                        echo form_label($attr['label'], $attr['field'], array(
+                            'class' => 'control-label',
+                            'id' => 'inputError'
+                        ));
+                        echo '<div class="controls">';
+                        inputs($attr);
+                        echo form_error($attr['field']);
+                        echo '</div></div> ';
+                    endforeach;
+                    echo ' <div class="form-actions">';
+
+                    echo form_submit($myform['button_name'], $myform['button_label'], array(
+                        'class' => 'btn btn-success'
+                    ));
+
+                    echo form_reset('reset', 'Reset', array(
+                        'class' => 'btn btn-default'
+                    ));
+
+                    echo '</div>';
+                    echo form_close();
                     ?>
 
-                    <?php foreach ($my_forms_inputs as $k => $my_input): ?>  
-                        <div class="control-group">
-                            <?php
-                            echo form_label($my_input['title'], $k, array(
-                                'class' => 'control-label'
-                            ));
-                            ?>
-                            <div class="controls">
-                                <?php
-                                switch ($my_input['type']) {
-                                    case 'text':
-                                        echo form_input(array(
-                                            'name' => $k,
-                                            'value' => ($my_input['value'] == NULL) ? set_value($k) : $my_input['value'],
-                                            'placeholder' => $my_input['title'],
-                                            'id' => 'required'
-                                        ));
-                                        break;
-                                    case 'password':
-                                        echo form_password(array(
-                                            'name' => $k,
-                                            'value' => NULL,
-                                            'placeholder' => $my_input['title'],
-                                            'id' => 'required'
-                                        ));
-                                        break;
-                                    case 'combo':
-                                        echo form_dropdown($k, $my_input['combo_value'], ($my_input['value'] == NULL) ? set_value($k) : $my_input['value'], array(
-                                            'class' => 'form-control'
-                                        ));
-                                        break;
-                                    case 'checkbox':
-                                        checkbox($my_input['checkbox_value']);
-                                        break;
-                                    default:
-                                        $tmp = FALSE;
-                                        log_message('error', 'no value in form view');
-                                        break;
-                                }
-                                echo form_error($k);
-                                ?>
-                            </div>
-                        </div>
-                    <?php endforeach; ?>
-
-                    <div class="form-actions">
-                        <?php
-                        echo form_submit($my_form['button_name'], $my_form['button_title'], array(
-                            'class' => 'btn btn-success'
-                        ));
-                        ?>
-                        <?php
-                        echo form_reset('reset', 'Reset', array(
-                            'class' => 'btn btn-default'
-                        ));
-                        ?>
-                    </div>
-                    <?php echo form_close(); ?>
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>
+

@@ -28,7 +28,8 @@ class MY_Controller extends CI_Controller {
 
     public function my_header_view() {
         $this->load->view('admin/header', array(
-            'navigations' => $this->my_navigations()
+            'navigations' => $this->my_navigations(),
+            'setting_vavigations' => $this->setting_navs()
         ));
     }
 
@@ -58,7 +59,6 @@ class MY_Controller extends CI_Controller {
             array(
                 'label' => 'Users',
                 'icon' => 'user',
-                'count' => '2',
                 'sub' =>
                 array(
                     'users' =>
@@ -66,27 +66,43 @@ class MY_Controller extends CI_Controller {
                         'label' => 'Users',
                         'desc' => 'Users Description',
                     ),
-                    'addadmin' =>
-                    array(
-                        'label' => 'Add Admin',
-                        'desc' => 'Add Admin Description',
-                    ),
                 ),
             ),
             //sub menu
-            'config' =>
+            'menus4' =>
             array(
-                'label' => 'Configuration',
-                'icon' => 'warning-sign',
-                'count' => '1',
+                'label' => 'Settings',
+                'icon' => 'cogs',
                 'sub' =>
                 array(
+                    'backup' =>
+                    array(
+                        'label' => 'Backup Database',
+                        'desc' => 'Backup Database Description',
+                    ),
                     'log' =>
                     array(
                         'label' => 'Error Logs',
-                        'desc' => 'Error Log Description',
+                        'desc' => 'Error Logsn Description',
                     ),
                 ),
+            ),
+        );
+    }
+
+    private function setting_navs() {
+        return array(
+            'backup' =>
+            array(
+                'label' => 'Backup Database',
+                'desc' => 'Backup Database Description',
+                'icon' => 'file',
+            ),
+            'logs' =>
+            array(
+                'label' => 'Error Logs',
+                'desc' => 'Error Logsn Description',
+                'icon' => 'exclamation-sign',
             ),
         );
     }
