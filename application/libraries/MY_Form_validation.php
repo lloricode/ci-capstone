@@ -116,4 +116,12 @@ class MY_Form_validation extends CI_Form_validation {
         return $score >= $level;
     }
 
+    public function valid_username($value) {
+        $this->CI->form_validation->set_message('valid_username', 'Invalid {field}.');
+        if (preg_match('/^[a-zA-Z0-9]+[_.-]{0,1}[a-zA-Z0-9]+$/m', $value)) {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
 }

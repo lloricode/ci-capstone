@@ -20,14 +20,14 @@ class Users extends MY_Controller {
         $this->my_input = array(
             array(
                 'field' => 'fullname',
-                'label' => 'First Name',
+                'label' => 'Fullname',
                 'rules' => 'required|human_name|min_length[4]|max_length[20]',
                 'type' => 'text'
             ),
             array(
                 'field' => 'username',
                 'label' => 'Username',
-                'rules' => 'required|is_unique[admin.admin_username]',
+                'rules' => 'required|is_unique[admin.admin_username]|valid_username|min_length[4]|max_length[15]',
                 'type' => 'text'
             ),
             array(
