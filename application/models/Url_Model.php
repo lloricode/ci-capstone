@@ -31,13 +31,19 @@ class Url_Model extends MY_Model {
             $this->load->model('Admin_Model');
             $inc = 1;
             foreach ($rs->result() as $row) {
+                $admin = 'not logged in';
+                $rs_a = $this->Admin_Model->get(array('admin_id' => $row->admin_id));
+                if ($rs_a) {
+                    $admin = $rs_a->row()->admin_fullname;
+                }
                 array_push($data, array(
                     'inc' => $inc++,
                     'url' => $row->url_value,
                     'agent' => $row->url_agent,
                     'platform' => $row->url_platform,
                     'count' => $row->url_count,
-                    'admin' => $this->Admin_Model->get(array('admin_id' => $row->admin_id))->row()->admin_fullname,
+                    'admin' => $admin,
+                    'client' => 'not implemeted yet.',
                 ));
             }
         }
@@ -47,7 +53,8 @@ class Url_Model extends MY_Model {
             'agent' => 'Agent',
             'platform' => 'Platform',
             'count' => 'Visited Count',
-            'admin' => 'User',
+            'admin' => 'Admin',
+            'client' => 'User',
         );
         return $this->my_table_view($header, $data);
     }

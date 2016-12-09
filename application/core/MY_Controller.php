@@ -12,10 +12,6 @@ class MY_Controller extends CI_Controller {
     function __construct() {
         parent::__construct();
         $this->validate_session();
-
-        //saving urls
-        $this->load->helper('url');
-        save_current_url();
     }
 
     private function validate_session() {

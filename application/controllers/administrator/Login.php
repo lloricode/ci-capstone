@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 
  * 
@@ -10,6 +11,8 @@ class Login extends CI_Controller {
 
     function __construct() {
         parent::__construct();
+
+        save_current_url();
         $this->load->library('session');
         //if already logged in, it will redirect to home view
         //to prevent see this when already logged in

@@ -61,7 +61,7 @@ class Users extends MY_Controller {
 
     public function admin_change_status($admin_id = NULL) {
         $this->load->helper('url');
-        $row = check_id_form_url('admin_id', 'Admin_Model', $admin_id);
+        $row = check_id_from_url('admin_id', 'Admin_Model', $admin_id);
 
         //no need to load model, its already loaded         ^^^^
         //to prevent change status in current logged user

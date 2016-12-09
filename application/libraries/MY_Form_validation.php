@@ -14,7 +14,6 @@ class MY_Form_validation extends CI_Form_validation {
 
     public function __construct($rules = array()) {
         parent::__construct($rules);
-      
     }
 
     /**
@@ -83,23 +82,33 @@ class MY_Form_validation extends CI_Form_validation {
     /**
      * check password difficulties
      * 
+     * 
+     * 
      * @param string $value
      * @param int $level 
      * @return bool
      */
     public function password_level($value, $level) {
         $score = 0;
-        $this->CI->form_validation->set_message('password_level', 'mahina ang password {field}');
+        $this->CI->form_validation->set_message('password_level', 'Weak {field}');
 
+        //plus 1 score if has numeric
         if (preg_match('!\d!', $value)) {
             $score++;
         }
-        if (preg_match('![A-z]!', $value)) {
+        //has capital letter
+        if (preg_match('![A-Z]!', $value)) {
             $score++;
         }
+        //has small letter
+        if (preg_match('![a-z]!', $value)) {
+            $score++;
+        }
+        //has special character
         if (preg_match('!\W!', $value)) {
             $score++;
         }
+        //length greater than or equal 8
         if (strlen($value) >= 8) {
             $score++;
         }

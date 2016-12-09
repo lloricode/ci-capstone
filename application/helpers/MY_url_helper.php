@@ -12,23 +12,23 @@ if (!function_exists('check_id_form_url')) {
     /**
      * if not exist 404 will occurred
      * 
-     * @param string $id id from url | default NULL to prevent error in case user modify url
-     * @param array $coumn column from table on database
-     * @param string $model  model to get table name
+     * @param string $column  model to get table name
+     * @param array $model column from table on database
+     * @param string $id from url | default NULL to prevent error in case user modify url
      * @return row data from table
      */
-    function check_id_form_url($coumn, $model, $id = NULL) {
+    function check_id_from_url($column, $model, $id = NULL) {
         if (is_null($id)) {
             show_404();
         }
         /**
-         * Returns current CI instance object
+         * CI instance object
          */
         $CI = & get_instance();
 
         $CI->load->model($model);
         $rs = $CI->$model->get(array(
-            $coumn => $id
+            $column => $id
         ));
 
 
@@ -46,7 +46,7 @@ if (!function_exists('save_current_url')) {
     /**
      * save to database all url receive 
      */
-    function save_current_url() {
+    function save_current_url($usertype = NULL) {
         /**
          * Returns current CI instance object
          */
@@ -71,21 +71,63 @@ if (!function_exists('save_current_url')) {
         $current_url = current_url();
 
         //check value
-        $rs = $CI->Url_Model->get(array(
-            'url_value' => $current_url,
-            'url_agent' => $agent,
-            'url_platform' => $CI->agent->platform(),
-            'admin_id' => $CI->session->userdata('admin_id'),
-        ));
+        $rs = NULL;
 
-        if (!$rs) {
-            //insert
-            $CI->Url_Model->add(array(
+        if ($usertype === 'admin') {
+            $rs = $CI->Url_Model->get(array(
                 'url_value' => $current_url,
                 'url_agent' => $agent,
                 'url_platform' => $CI->agent->platform(),
                 'admin_id' => $CI->session->userdata('admin_id'),
+                'user_id' => '-1'
             ));
+        } else if ($usertype === 'client') {
+            $rs = $CI->Url_Model->get(array(
+                'url_value' => $current_url,
+                'url_agent' => $agent,
+                'url_platform' => $CI->agent->platform(),
+                'admin_id' => '-1',
+                'user_id' => $CI->session->userdata('client_id'),
+            ));
+        } else if ($usertype === 'client' || $usertype == NULL) {
+            $rs = $CI->Url_Model->get(array(
+                'url_value' => $current_url,
+                'url_agent' => $agent,
+                'url_platform' => $CI->agent->platform(),
+                'admin_id' => '-1',
+                'user_id' => '-1'
+            ));
+        }
+
+
+        if (!$rs) {
+            //insert
+
+            if ($usertype === 'admin') {
+                $CI->Url_Model->add(array(
+                    'url_value' => $current_url,
+                    'url_agent' => $agent,
+                    'url_platform' => $CI->agent->platform(),
+                    'admin_id' => $CI->session->userdata('admin_id'),
+                    'user_id' => '-1'
+                ));
+            } else if ($usertype === 'client') {
+                $CI->Url_Model->add(array(
+                    'url_value' => $current_url,
+                    'url_agent' => $agent,
+                    'url_platform' => $CI->agent->platform(),
+                    'admin_id' => '-1',
+                    'user_id' => $CI->session->userdata('client_id'),
+                ));
+            } else {
+                $CI->Url_Model->add(array(
+                    'url_value' => $current_url,
+                    'url_agent' => $agent,
+                    'url_platform' => $CI->agent->platform(),
+                    'admin_id' => '-1',
+                    'user_id' => '-1',
+                ));
+            }
         } else {
             $row = $rs->row();
             //update
