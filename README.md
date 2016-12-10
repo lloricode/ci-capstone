@@ -16,7 +16,7 @@ The project description will be updated including the client side after we propo
 
 	If your using ``XAMPP`` put it in the ``htdocs`` folder and for ``WAMP`` server put it in the ``www`` folder.
 
-	``cd /opt/lampp/htdocs`` then ``git clone https://github.com/lloricode/ci-capstone.git``
+- For Linux user ``cd /opt/lampp/htdocs`` then ``git clone https://github.com/lloricode/ci-capstone.git``
 
 - Create a database ``ci_capstone`` in your local machine, 
 
