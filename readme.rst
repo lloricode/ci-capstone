@@ -13,7 +13,7 @@ this project will be update inlcuding client side, after we propos a proposal pr
 ### Installation
 
 * First ``clone`` this project on you ``htdocs`` folder, if you are using ``xampp``, ``www`` folder if ``wampp``
-    ``cd /opt/lampp/htdocs`` then ``clone git https://github.com/lloricode/ci-capstone.git``
+    ``cd /opt/lampp/htdocs`` then ``git clone https://github.com/lloricode/ci-capstone.git``
 
 * Then create database ``ci_capstone`` in your local machine
     then import ``ci_capstone.sql`` from project you clone in root folder on you database that you created.
