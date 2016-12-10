@@ -3,7 +3,9 @@
     <hr>
     <div class="row-fluid">
         <div class="span12">
-            <?php echo (isset($msg)) ? $msg : ''; ?>
+            <div class="alert alert-success alert-block"> 
+                <h4 class="alert-heading"><?php echo (isset($msg)) ? $msg : ''; ?></h4>
+            </div>
         </div>
     </div>
 </div>
