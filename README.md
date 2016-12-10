@@ -1,5 +1,5 @@
 # [ci-capstone](http://ci-capstone.lloricmayugagarcia.com/)
-## A Thesis project made by [CodeIgniter](http://codeigniter.com).
+## A Thesis project made by using [CodeIgniter](http://codeigniter.com).
 
 This project will be updated including the client side after our proposed project gets approved by our instructor. 
 
