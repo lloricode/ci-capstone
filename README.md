@@ -10,25 +10,41 @@ This project will be updated including the client side after our proposed projec
 * Client UI Framework : soon
 
 
-### Installation
+## Installation
 
-* First ``clone or download`` this project on your ``htdocs`` folder if you are using ``XAMPP`` as a server or ``www`` folder if ``WAMP`` server.
-    ``cd /opt/lampp/htdocs`` then ``git clone https://github.com/lloricode/ci-capstone.git``
+- For installation ``clone or download`` the project and put the files into your server. 
 
-* Create a database ``ci_capstone`` in your local machine
-    then import the ``ci_capstone.sql`` from the project you clone/downloaded in root folder.
+	If your using ``XAMPP`` put it in the ``htdocs`` folder and for ``WAMP`` server put it in the ``www`` folder.
+
+	``cd /opt/lampp/htdocs`` then ``git clone https://github.com/lloricode/ci-capstone.git``
+
+- Create a database ``ci_capstone`` in your local machine, 
+
+	then import the ``ci_capstone.sql`` 
+
+	from the project you cloned/downloaded into the created database.
 
 
-### Configurations
+## Configurations
 
-* base_url
+- base_url
+
     Open the ``application/config/config.php`` files of the project
-    then check if the base_url is set like this ``$config['base_url'] = 'http://[::1]/ci-capstone/';``
+    then check if the base_url is set like this 
+    
+    ``$config['base_url'] = 'http://[::1]/ci-capstone/';``
 
-* database
+- database
+
     Open the ``application/config/database.php`` files of the project
     then check if the database is configured like this
-    `` 'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
-	'database' => 'ci_capstone',``
+    
+    ```java
+    'hostname' => 'localhost',
+    'username' => 'root',
+    'password' => '',
+    'database' => 'ci_capstone',
+```
+	
+## Screencap
+![home-cicapstone](https://cloud.githubusercontent.com/assets/24410101/21073805/dd95c010-bf23-11e6-9a97-511a0bb52439.jpg)
