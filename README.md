@@ -1,4 +1,4 @@
-# ci-capstone
+# [ci-capstone](http://ci-capstone.lloricmayugagarcia.com/)
 ## A Thesis project made by [CodeIgniter](http://codeigniter.com).
 
 this project will be update inlcuding client side, after we propos a proposal project of our instructor.
@@ -26,7 +26,9 @@ this project will be update inlcuding client side, after we propos a proposal pr
     set ``$config['base_url'] = 'http://[::1]/ci-capstone/';``
 
 * database
-    ``'hostname' => 'localhost',
+    ``root/application/config/database.php`` 
+    set
+    `` 'hostname' => 'localhost',
 	'username' => 'root',
 	'password' => '',
 	'database' => 'ci_capstone',``
