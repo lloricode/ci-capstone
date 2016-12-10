@@ -1,7 +1,7 @@
 # [ci-capstone](http://ci-capstone.lloricmayugagarcia.com/)
 ## A Thesis project made by using [CodeIgniter](http://codeigniter.com).
 
-This project will be updated including the client side after our proposed project gets approved by our instructor. 
+The project description will be updated including the client side after we proposed a project and gets approved by our instuctor.
 
 ## Frameworks used
 
