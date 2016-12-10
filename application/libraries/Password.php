@@ -15,7 +15,8 @@ class Password {
     private $CI;
 
     public function __construct() {
-        $CI = & get_instance();
+        $this->CI = & get_instance();
+        $this->CI->load->library('Bcrypt');
     }
 
     /**
@@ -26,8 +27,8 @@ class Password {
      */
     public function generate_hash($string_pass) {
 
-        
-        return password_hash($string_pass, 1);
+        return $this->CI->bcrypt->hash_password($string_pass);
+        // return password_hash($string_pass, 1);
     }
 
     /**
@@ -38,7 +39,8 @@ class Password {
      */
     public function check_password($password_to_verify, $encrypted_password) {
 
-        return password_verify($password_to_verify, $encrypted_password);
+        return $this->CI->bcrypt->check_password($password_to_verify, $encrypted_password);
+        // return password_verify($password_to_verify, $encrypted_password);
     }
 
 }
