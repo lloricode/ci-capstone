@@ -29,14 +29,14 @@ The project description will be updated including the client side after we propo
 
 - base_url
 
-    Open the ``application/config/config.php`` files of the project
+    Open the ``application/config/config.php`` file of the project
     then check if the base_url is set like this 
     
     ``$config['base_url'] = 'http://[::1]/ci-capstone/';``
 
 - database
 
-    Open the ``application/config/database.php`` files of the project
+    Open the ``application/config/database.php`` file of the project
     then check if the database is configured like this
     
     ```java
@@ -45,6 +45,59 @@ The project description will be updated including the client side after we propo
     'password' => '',
     'database' => 'ci_capstone',
 ```
-	
+
+## Default Login
+
+- username: admin
+- password: password123
+
 ## Screencap
 ![home-cicapstone](https://cloud.githubusercontent.com/assets/24410101/21073805/dd95c010-bf23-11e6-9a97-511a0bb52439.jpg)
+
+
+## Modifacation
+
+- Navigations
+
+ Use multidimentional array to store value, then it will iterate in ``application/view/admin/header.php`` in line ``151`` 
+ 
+ Open the ``application/core/MY_Controller.php`` file of the project,
+ then find this function
+ 
+    ```java
+    
+    public function my_navigations() {
+       ...
+    }
+    ```
+
+  - this is sample one navigation 
+
+    ```    
+     'home' =>
+         array(
+	    'label' => 'Home',
+	     'desc' => 'Home Description',
+	     'icon' => 'beaker',
+         ),
+    ```
+    
+    
+  - this is only sample one with sub navigation 
+
+    ```    
+      //sub menu
+       'menus' =>
+            array(
+                'label' => 'Users',
+                'icon' => 'user',
+                'sub' =>
+                array(
+                    'users' =>
+                    array(
+                        'label' => 'Users',
+                        'desc' => 'Users Description',
+                    ),
+                ),
+            ),
+    ```

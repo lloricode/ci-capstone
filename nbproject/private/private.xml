@@ -3,10 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/opt/lampp/htdocs/ci-capstone/application/models/Admin_Model.php</file>
-            <file>file:/opt/lampp/htdocs/ci-capstone/application/controllers/administrator/History.php</file>
-            <file>file:/opt/lampp/htdocs/ci-capstone/application/libraries/Password.php</file>
-            <file>file:/opt/lampp/htdocs/ci-capstone/application/models/Url_Model.php</file>
+            <file>file:/opt/lampp/htdocs/ci-capstone/application/views/admin/header.php</file>
+            <file>file:/opt/lampp/htdocs/ci-capstone/application/core/MY_Controller.php</file>
+            <file>file:/opt/lampp/htdocs/ci-capstone/README.md</file>
         </group>
     </open-files>
 </project-private>
