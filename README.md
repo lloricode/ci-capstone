@@ -51,8 +51,10 @@ The project description will be updated including the client side after we propo
 - username: admin
 - password: password123
 
-## Screencaptures
+## Screencapture
+-An overview over the Admin Panel
 ![home-cicapstone](https://cloud.githubusercontent.com/assets/24410101/21073805/dd95c010-bf23-11e6-9a97-511a0bb52439.jpg)
+
 
 
 ## Modification
