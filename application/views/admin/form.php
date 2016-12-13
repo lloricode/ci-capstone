@@ -87,7 +87,7 @@ function inputs($attr) {
                     ));
 
                     echo '</div>';
-                    echo form_close();
+                    echo form_close(); 
                     ?>
 
                 </div>

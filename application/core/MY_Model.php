@@ -1,10 +1,10 @@
 <?php
+
 /**
  * 
  * 
  * @author Lloric Garcia <emorickfighter@gmail.com>
  */
-
 defined('BASEPATH') or exit('no direct script allowed');
 
 class MY_Model extends CI_Model {
@@ -58,7 +58,7 @@ class MY_Model extends CI_Model {
         if ($this->my_debug_viewer) {
             echo '<!-- ' . $this->db->last_query() . ' -->';
         }
-        return $this->db->affected_rows();
+        return (bool) $this->db->affected_rows();
     }
 
     /**
@@ -78,7 +78,7 @@ class MY_Model extends CI_Model {
         if ($this->my_debug_viewer) {
             echo '<!-- ' . $this->db->last_query() . ' -->';
         }
-        return $this->db->affected_rows();
+        return (bool) $this->db->affected_rows();
     }
 
     public function my_table_view($header, $data) {
@@ -91,4 +91,3 @@ class MY_Model extends CI_Model {
     }
 
 }
-

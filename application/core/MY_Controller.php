@@ -99,7 +99,7 @@ class MY_Controller extends CI_Controller {
                 'desc' => 'Backup Database Description',
                 'icon' => 'file',
             ),
-            'logs' =>
+            'log' =>
             array(
                 'label' => 'Error Logs',
                 'desc' => 'Error Logsn Description',
