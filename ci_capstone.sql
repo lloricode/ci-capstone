@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 09, 2016 at 07:11 PM
+-- Generation Time: Dec 13, 2016 at 03:48 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 5.6.24
 
@@ -39,7 +39,7 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`admin_id`, `admin_fullname`, `admin_username`, `admin_password`, `admin_status`) VALUES
-(1, 'Im Admin', 'admin', '$2a$08$6YTdpJZd2pNd2Io0iK58J.cGrM03sAc0rIGi2kSoeRPPqerSI8HGe', 1);
+(14, 'Im Admin', 'admin', '$2a$10$yJLlLAtpjETZ.KduoG9fhegyjXDMIKFih2Q12lnGSZRa3nqrfsaV6', 1);
 
 -- --------------------------------------------------------
 
@@ -54,7 +54,8 @@ CREATE TABLE `url` (
   `url_agent` varchar(50) NOT NULL,
   `url_platform` varchar(50) NOT NULL,
   `admin_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL
+  `user_id` int(11) NOT NULL,
+  `url_ip` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -81,7 +82,7 @@ ALTER TABLE `url`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `url`
 --

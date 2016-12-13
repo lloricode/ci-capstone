@@ -55,6 +55,8 @@ if (!function_exists('save_current_url')) {
 
         $agent = NULL;
 
+        $current_ip = $CI->input->ip_address();
+
         $CI->load->library('user_agent');
 
         if ($CI->agent->is_browser()) {
@@ -79,7 +81,8 @@ if (!function_exists('save_current_url')) {
                 'url_agent' => $agent,
                 'url_platform' => $CI->agent->platform(),
                 'admin_id' => $CI->session->userdata('admin_id'),
-                'user_id' => '-1'
+                'user_id' => '-1',
+                'url_ip' => $current_ip,
             ));
         } else if ($usertype === 'client') {
             $rs = $CI->Url_Model->get(array(
@@ -88,6 +91,7 @@ if (!function_exists('save_current_url')) {
                 'url_platform' => $CI->agent->platform(),
                 'admin_id' => '-1',
                 'user_id' => $CI->session->userdata('client_id'),
+                'url_ip' => $current_ip,
             ));
         } else if ($usertype === 'client' || $usertype == NULL) {
             $rs = $CI->Url_Model->get(array(
@@ -95,7 +99,8 @@ if (!function_exists('save_current_url')) {
                 'url_agent' => $agent,
                 'url_platform' => $CI->agent->platform(),
                 'admin_id' => '-1',
-                'user_id' => '-1'
+                'user_id' => '-1',
+                'url_ip' => $current_ip,
             ));
         }
 
@@ -109,7 +114,8 @@ if (!function_exists('save_current_url')) {
                     'url_agent' => $agent,
                     'url_platform' => $CI->agent->platform(),
                     'admin_id' => $CI->session->userdata('admin_id'),
-                    'user_id' => '-1'
+                    'user_id' => '-1',
+                    'url_ip' => $current_ip,
                 ));
             } else if ($usertype === 'client') {
                 $CI->Url_Model->add(array(
@@ -118,6 +124,7 @@ if (!function_exists('save_current_url')) {
                     'url_platform' => $CI->agent->platform(),
                     'admin_id' => '-1',
                     'user_id' => $CI->session->userdata('client_id'),
+                    'url_ip' => $current_ip,
                 ));
             } else {
                 $CI->Url_Model->add(array(
@@ -126,6 +133,7 @@ if (!function_exists('save_current_url')) {
                     'url_platform' => $CI->agent->platform(),
                     'admin_id' => '-1',
                     'user_id' => '-1',
+                    'url_ip' => $current_ip,
                 ));
             }
         } else {
