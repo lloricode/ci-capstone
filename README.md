@@ -51,11 +51,13 @@ The project description will be updated including the client side after we propo
 - username: admin
 - password: password123
 
-## Screencap
+## Screencapture
+-An overview over the Admin Panel
 ![home-cicapstone](https://cloud.githubusercontent.com/assets/24410101/21073805/dd95c010-bf23-11e6-9a97-511a0bb52439.jpg)
 
 
-## Modifacation
+
+## Modification
 
 - Navigations
 
@@ -71,7 +73,7 @@ The project description will be updated including the client side after we propo
     }
     ```
 
-  - this is sample one navigation 
+  - this is a sample navigation bar made using multidimentional array 
 
     ```    
      'home' =>
@@ -83,7 +85,7 @@ The project description will be updated including the client side after we propo
     ```
     
     
-  - this is only sample one with sub navigation 
+  - this is antoher sample with a sub navigation 
 
     ```    
       //sub menu
