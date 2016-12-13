@@ -16,7 +16,10 @@ class Users extends MY_Controller {
     }
 
     private function admin_validation() {
+
+        //need to load this because username will validate if exist in database
         $this->load->database();
+
         $this->my_input = array(
             array(
                 'field' => 'fullname',
@@ -27,14 +30,20 @@ class Users extends MY_Controller {
             array(
                 'field' => 'username',
                 'label' => 'Username',
-                'rules' => 'required|is_unique[admin.admin_username]|valid_username|min_length[4]|max_length[15]',
+                'rules' => 'required|is_unique[admin.admin_username]|username|min_length[4]|max_length[15]',
                 'type' => 'text'
             ),
             array(
                 'field' => 'password',
                 'label' => 'Password',
-                'rules' => 'required|password_level[3]',
-                'type' => 'text',
+                'rules' => 'required|password_level[3]|no_space',
+                'type' => 'password',
+            ),
+            array(
+                'field' => 'repassword',
+                'label' => 'Re-Type Password',
+                'rules' => 'required|matches[password]',
+                'type' => 'password',
             ),
         );
     }
