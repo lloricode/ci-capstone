@@ -3,7 +3,7 @@
 /**
  * 
  * 
- * @author Lloric Garcia <emorickfighter@gmail.com>
+ * @author Lloric Garcia <emorickfighter@gmail.com> IDOL
  */
 defined('BASEPATH') or exit('no direct script allowed');
 
