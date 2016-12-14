@@ -48,7 +48,7 @@ The project description will be updated including the client side after we propo
 
 ## Default Login
 
-- username: admin
+- username: admin@admin.com
 - password: password123
 
 ## Screencapture
@@ -99,6 +99,7 @@ The project description will be updated including the client side after we propo
                     array(
                         'label' => 'Users',
                         'desc' => 'Users Description',
+                        'seen' => TRUE,
                     ),
                 ),
             ),

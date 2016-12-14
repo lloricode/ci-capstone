@@ -19,12 +19,12 @@ $link = base_url('assets/framework/bootstrap/admin/');
     </head>
     <body>
         <div id="loginbox">            
-            <?php echo form_open(base_url(ADMIN_DIRFOLDER_NAME . 'login/validate'), array('class' => 'form-vertical', 'id' => 'loginform')) ?>
+            <?php echo form_open(base_url('auth/login'), array('class' => 'form-vertical', 'id' => 'loginform')) ?>
             <div class="control-group normal_text"> <h3><img src="<?php echo $link; ?>img/logo.png" alt="Logo" /></h3></div>
             <div class="control-group">
                 <div class="controls">
                     <div class="main_input_box">
-                        <?php echo (!is_null($msg)) ? '<div class="form-group">' . $msg . '</div>' : ''; ?>       
+                        <?php echo (!is_null($message)) ? '<div class="form-group">' . $message . '</div>' : ''; ?>       
                     </div>
                 </div>
             </div><div class="control-group">
@@ -32,11 +32,7 @@ $link = base_url('assets/framework/bootstrap/admin/');
                     <div class="main_input_box">
                         <span class="add-on bg_lg"><i class="icon-user"> </i></span>
                         <?php
-                        echo form_input(array(
-                            'name' => 'username',
-                            'value' => set_value('username'),
-                            'placeholder' => "Username",
-                        ));
+                        echo form_input($identity);
                         ?>
                     </div>
                 </div>
@@ -46,10 +42,7 @@ $link = base_url('assets/framework/bootstrap/admin/');
                     <div class="main_input_box">
                         <span class="add-on bg_ly"><i class="icon-lock"></i></span>
                         <?php
-                        echo form_password(array(
-                            'name' => 'password',
-                            'placeholder' => "Password",
-                        ));
+                        echo form_password($password);
                         ?>
                     </div>
                 </div>
@@ -57,9 +50,8 @@ $link = base_url('assets/framework/bootstrap/admin/');
             <div class="form-actions">
                 <span class="pull-left"><a href="#" class="flip-link btn btn-info" id="to-recover">Lost password?</a></span>
                 <span class="pull-right">
-                    <!--                    <a type="submit" href="index.html" class="btn btn-success" /> Login</a>-->
                     <?php
-                    echo form_submit('save', 'Login', array(
+                    echo form_submit('submit', lang('login_submit_btn'), array(
                         'class' => 'btn btn-success'
                     ));
                     ?>

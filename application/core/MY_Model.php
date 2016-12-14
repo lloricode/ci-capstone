@@ -81,13 +81,5 @@ class MY_Model extends CI_Model {
         return (bool) $this->db->affected_rows();
     }
 
-    public function my_table_view($header, $data) {
-        $this->load->library('table');
-        $this->table->set_heading($header);
-        $this->table->set_template(array(
-            'table_open' => '<table class="table table-bordered data-table">',
-        ));
-        return $this->table->generate($data);
-    }
 
 }

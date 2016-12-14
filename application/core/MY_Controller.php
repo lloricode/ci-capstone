@@ -11,7 +11,7 @@ class MY_Controller extends CI_Controller {
 
     function __construct() {
         parent::__construct();
-        $this->validate_session();
+        // $this->validate_session();
     }
 
     private function validate_session() {
@@ -29,22 +29,18 @@ class MY_Controller extends CI_Controller {
         ));
     }
 
-    /**
-     * to load view page
-     * @param string $caption caption of table
-     * @param string $controller where to get data
-     * @param array $columns key-tdata key, value = title header of table columns
-     */
-    public function my_table_view($caption, $data) {
-        $this->load->view('admin/table', array(
-            'caption' => $caption,
-            'data' => $data,
+    public function my_table_view($header, $data) {
+        $this->load->library('table');
+        $this->table->set_heading($header);
+        $this->table->set_template(array(
+            'table_open' => '<table class="table table-bordered data-table">',
         ));
+        return $this->table->generate($data);
     }
 
     public function my_navigations() {
         return array(
-            'home' =>
+            '' =>
             array(
                 'label' => 'Home',
                 'desc' => 'Home Description',
@@ -61,6 +57,31 @@ class MY_Controller extends CI_Controller {
                     array(
                         'label' => 'Users',
                         'desc' => 'Users Description',
+                        'seen' => TRUE,
+                    ),
+                    'create-user' =>
+                    array(
+                        'label' => 'Create Users',
+                        'desc' => 'Create Users Description',
+                        'seen' => TRUE,
+                    ),
+                    'edit-group' =>
+                    array(
+                        'label' => 'Edit Group',
+                        'desc' => 'Edit Group Description',
+                        'seen' => FALSE,
+                    ),
+                    'deactivate' =>
+                    array(
+                        'label' => 'Deactivate User',
+                        'desc' => 'Deactivate User Description',
+                        'seen' => FALSE,
+                    ),
+                    'edit-user' =>
+                    array(
+                        'label' => 'Edit User',
+                        'desc' => 'Edit User Description',
+                        'seen' => FALSE,
                     ),
                 ),
             ),
@@ -75,16 +96,13 @@ class MY_Controller extends CI_Controller {
                     array(
                         'label' => 'Backup Database',
                         'desc' => 'Backup Database Description',
-                    ),
-                    'history' =>
-                    array(
-                        'label' => 'History',
-                        'desc' => 'Error Logsn Description',
+                        'seen' => TRUE,
                     ),
                     'log' =>
                     array(
                         'label' => 'Error Logs',
                         'desc' => 'Error Logsn Description',
+                        'seen' => TRUE,
                     ),
                 ),
             ),

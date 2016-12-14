@@ -6,7 +6,7 @@ Please update views of this controller since im not a UI guy. i suck at UI.
 thanks 
 -jdb
 */
-class Auth extends CI_Controller {
+class Auth extends MY_Controller {
 
 	public function __construct()
 	{
@@ -23,8 +23,15 @@ class Auth extends CI_Controller {
 	// redirect if needed, otherwise display the user list
 	public function index()
 	{
-
-		if (!$this->ion_auth->logged_in())
+                        $this->check_login();
+		
+                        $this->my_header_view();
+                        
+                        $this->load->view('admin/footer');
+	}
+        
+        private function check_login(){
+                if (!$this->ion_auth->logged_in())
 		{
 			// redirect them to the login page
 			redirect('auth/login', 'refresh');
@@ -34,8 +41,15 @@ class Auth extends CI_Controller {
 			// redirect them to the home page because they must be an administrator to view this
 			return show_error('You must be an administrator to view this page.');
 		}
-		else
-		{
+        }
+
+        public function users(){
+            
+                        $this->check_login();
+                        $this->my_header_view();                     
+                        
+                        
+
 			// set the flash data error message if there is one
 			$this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 
@@ -46,11 +60,88 @@ class Auth extends CI_Controller {
 				$this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
 			}
 
-			$this->_render_page('auth/index', $this->data);
-		}
-	}
+                        $header=array(
+                            lang('index_fname_th'),
+                            lang('index_lname_th'),
+                            lang('index_email_th'),
+                            lang('index_groups_th'),
+                            lang('index_status_th'),
+                            lang('index_action_th'),
+                        );
+                        
+                        $table_data=array();
+                        
+                        foreach ($this->data['users'] as $user) {
+                            $groups='';
+                            foreach ($user->groups as $group ) {                                
+                                $groups.= anchor("auth/edit-group/".$group->id, htmlspecialchars($group->name,ENT_QUOTES,'UTF-8')).' | ';
+                            }
+                            array_push($table_data, array(
+                                htmlspecialchars($user->first_name,ENT_QUOTES,'UTF-8'),
+                                htmlspecialchars($user->last_name,ENT_QUOTES,'UTF-8'),
+                                htmlspecialchars($user->email,ENT_QUOTES,'UTF-8'),
+                                $groups,
+                                (($user->active) ? anchor("auth/deactivate/".$user->id, lang('index_active_link')) : anchor("auth/activate/". $user->id, lang('index_inactive_link'))),
+                                anchor("auth/edit-user/".$user->id, 'Edit'),
+                            ));
+                        }
+                        
+                        $this->_render_page('admin/button_view',array(
+                            'href'=>'create-user',
+                            'button_label'=>'Create User',
+                        ));
+                        
+			$this->_render_page('admin/table',array( 'users'=>$this->my_table_view($header, $table_data )));
+                        
+                        
+                        
+                        $this->_render_page('admin/footer', array(
+                            'controller' => 'table'
+                        ));
+            
+        }
 
-	// log the user in
+        public function backup($tmp=NULL){
+                        
+                        
+                        $this->check_login();
+            
+                        if(!is_null($tmp)){
+                            if($tmp=='download'){
+                                $this->load->helper('back_up');
+                                backup_database();
+                            }
+                        }
+                        $this->my_header_view();
+                        
+                        $this->load->view('admin/button_view', array(
+                            'href' => 'backup/download',
+                            'button_label' => 'Download Back up Database'
+                        ));
+
+                        $this->load->view('admin/footer');
+        }
+        
+        public function log(){                
+            
+                        $this->check_login();
+                        
+                        $this->my_header_view();
+                        
+                        
+                        $logPath= ini_get('error_log');
+                                if (@is_file($this->logPath)) {
+                        $this->load->view('admin/log', array(
+                            'msg' => nl2br(@file_get_contents($this->logPath))
+                        ));
+                        } else {
+                            $this->load->view('admin/log', array(
+                                'msg' => 'The log cannot be found in the specified route ' . $logPath
+                            ));
+                        }
+                        $this->load->view('admin/footer');
+        }
+        // log the user in
 	public function login()
 	{
 		$this->data['title'] = $this->lang->line('login_heading');
@@ -90,13 +181,15 @@ class Auth extends CI_Controller {
 				'id'    => 'identity',
 				'type'  => 'text',
 				'value' => $this->form_validation->set_value('identity'),
+                                'placeholder'=>'Username or Email'
 			);
 			$this->data['password'] = array('name' => 'password',
 				'id'   => 'password',
 				'type' => 'password',
+                                'placeholder'=>'Password'
 			);
 
-			$this->_render_page('auth/login', $this->data);
+			$this->_render_page('admin/login', $this->data);
 		}
 	}
 
@@ -116,6 +209,8 @@ class Auth extends CI_Controller {
 	// change password
 	public function change_password()
 	{
+            
+                $this->check_login();
 		$this->form_validation->set_rules('old', $this->lang->line('change_password_validation_old_password_label'), 'required');
 		$this->form_validation->set_rules('new', $this->lang->line('change_password_validation_new_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[new_confirm]');
 		$this->form_validation->set_rules('new_confirm', $this->lang->line('change_password_validation_new_password_confirm_label'), 'required');
@@ -346,6 +441,9 @@ class Auth extends CI_Controller {
 	// activate the user
 	public function activate($id, $code=false)
 	{
+                
+                 $this->check_login();
+                 
 		if ($code !== false)
 		{
 			$activation = $this->ion_auth->activate($id, $code);
@@ -372,11 +470,8 @@ class Auth extends CI_Controller {
 	// deactivate the user
 	public function deactivate($id = NULL)
 	{
-		if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin())
-		{
-			// redirect them to the home page because they must be an administrator to view this
-			return show_error('You must be an administrator to view this page.');
-		}
+		
+                 $this->check_login();
 
 		$id = (int) $id;
 
@@ -389,8 +484,10 @@ class Auth extends CI_Controller {
 			// insert csrf check
 			$this->data['csrf'] = $this->_get_csrf_nonce();
 			$this->data['user'] = $this->ion_auth->user($id)->row();
-
-			$this->_render_page('auth/deactivate_user', $this->data);
+                           
+                        $this->my_header_view();
+			$this->_render_page('admin/deactivate_user', $this->data);
+                        $this->_render_page('admin/footer');
 		}
 		else
 		{
@@ -418,12 +515,12 @@ class Auth extends CI_Controller {
 	// create a new user
 	public function create_user()
     {
+            
+        $this->check_login();
+        
         $this->data['title'] = $this->lang->line('create_user_heading');
 
-        if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin())
-        {
-            redirect('auth', 'refresh');
-        }
+        
 
         $tables = $this->config->item('tables','ion_auth');
         $identity_column = $this->config->item('identity','ion_auth');
@@ -483,7 +580,7 @@ class Auth extends CI_Controller {
                 'id'    => 'last_name',
                 'type'  => 'text',
                 'value' => $this->form_validation->set_value('last_name'),
-            );
+                );
             $this->data['identity'] = array(
                 'name'  => 'identity',
                 'id'    => 'identity',
@@ -520,20 +617,20 @@ class Auth extends CI_Controller {
                 'type'  => 'password',
                 'value' => $this->form_validation->set_value('password_confirm'),
             );
-
-            $this->_render_page('auth/create_user', $this->data);
+            $this->my_header_view();
+            $this->_render_page('admin/create_user', $this->data);
+            $this->_render_page('admin/footer');
         }
     }
 
 	// edit a user
 	public function edit_user($id)
 	{
+                $this->check_login();
+                
 		$this->data['title'] = $this->lang->line('edit_user_heading');
 
-		if (!$this->ion_auth->logged_in() || (!$this->ion_auth->is_admin() && !($this->ion_auth->user()->row()->id == $id)))
-		{
-			redirect('auth', 'refresh');
-		}
+		
 
 		$user = $this->ion_auth->user($id)->row();
 		$groups=$this->ion_auth->groups()->result_array();
@@ -672,19 +769,19 @@ class Auth extends CI_Controller {
 			'id'   => 'password_confirm',
 			'type' => 'password'
 		);
-
-		$this->_render_page('auth/edit_user', $this->data);
+                
+                $this->my_header_view();
+		$this->_render_page('admin/edit_user', $this->data);
+                $this->_render_page('admin/footer');
 	}
 
 	// create a new group
 	public function create_group()
 	{
+                $this->check_login();
 		$this->data['title'] = $this->lang->line('create_group_title');
 
-		if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin())
-		{
-			redirect('auth', 'refresh');
-		}
+		
 
 		// validate form input
 		$this->form_validation->set_rules('group_name', $this->lang->line('create_group_validation_name_label'), 'required|alpha_dash');
@@ -726,6 +823,8 @@ class Auth extends CI_Controller {
 	// edit a group
 	public function edit_group($id)
 	{
+            
+                 $this->check_login();
 		// bail if no group id given
 		if(!$id || empty($id))
 		{
@@ -733,11 +832,6 @@ class Auth extends CI_Controller {
 		}
 
 		$this->data['title'] = $this->lang->line('edit_group_title');
-
-		if (!$this->ion_auth->logged_in() || !$this->ion_auth->is_admin())
-		{
-			redirect('auth', 'refresh');
-		}
 
 		$group = $this->ion_auth->group($id)->row();
 
@@ -776,19 +870,20 @@ class Auth extends CI_Controller {
 			'type'    => 'text',
 			'value'   => $this->form_validation->set_value('group_name', $group->name),
 			$readonly => $readonly,
-		);
+                );
 		$this->data['group_description'] = array(
 			'name'  => 'group_description',
 			'id'    => 'group_description',
 			'type'  => 'text',
 			'value' => $this->form_validation->set_value('group_description', $group->description),
-		);
-
-		$this->_render_page('auth/edit_group', $this->data);
+                    );
+                $this->my_header_view();
+		$this->_render_page('admin/edit_group', $this->data);
+                $this->_render_page('admin/footer');
 	}
 
 
-	public function _get_csrf_nonce()
+	private function _get_csrf_nonce()
 	{
 		$this->load->helper('string');
 		$key   = random_string('alnum', 8);
@@ -799,7 +894,7 @@ class Auth extends CI_Controller {
 		return array($key => $value);
 	}
 
-	public function _valid_csrf_nonce()
+	private function _valid_csrf_nonce()
 	{
 		$csrfkey = $this->input->post($this->session->flashdata('csrfkey'));
 		if ($csrfkey && $csrfkey == $this->session->flashdata('csrfvalue'))
@@ -812,7 +907,7 @@ class Auth extends CI_Controller {
 		}
 	}
 
-	public function _render_page($view, $data=null, $returnhtml=false)//I think this makes more sense
+	private function _render_page($view, $data=null, $returnhtml=false)//I think this makes more sense
 	{
 
 		$this->viewdata = (empty($data)) ? $this->data: $data;
@@ -934,7 +1029,7 @@ class Auth extends CI_Controller {
     }
 
 	//handles user session checking
-	public function authorize_request()
+	private function authorize_request()
 	{
 		if (!$this->ion_auth->logged_in())
 		{

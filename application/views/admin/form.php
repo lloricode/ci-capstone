@@ -8,14 +8,14 @@ function inputs($attr) {
             echo form_input(array(
                 'name' => $attr['field'],
                 'value' => set_value($attr['field']),
-                'placeholder' => $attr['label'],
+              //  'placeholder' => $attr['label'],
                 'id' => 'inputError'
             ));
             break;
         case 'password':
             echo form_password(array(
                 'name' => $attr['field'],
-                'placeholder' => $attr['label'],
+               // 'placeholder' => $attr['label'],
                 'id' => 'inputError'
             ));
             break;
@@ -29,7 +29,7 @@ function inputs($attr) {
         case 'textarea':
             echo form_textarea(
                     $attr['field'], set_value($attr['field']), $attr['label'], array(
-                'placeholder' => $attr['label'],
+              //  'placeholder' => $attr['label'],
                 'id' => 'inputError'
                     )
             );
@@ -57,7 +57,7 @@ function inputs($attr) {
                     <?php
 //echo validation_errors();
 
-                    echo form_open(base_url(ADMIN_DIRFOLDER_NAME . $myform['action']), array(
+                    echo form_open(base_url($myform['action']), array(
                         'class' => 'form-horizontal',
                         'name' => 'basic_validate',
                         'id' => 'basic_validate',
@@ -67,10 +67,11 @@ function inputs($attr) {
                     foreach ($myform['attr'] as $attr):
                         $tmp = (form_error($attr['field']) == '') ? '' : ' error';
                         echo '<div class="control-group' . $tmp . '">';
-                        echo form_label($attr['label'], $attr['field'], array(
-                            'class' => 'control-label',
-                            'id' => 'inputError'
-                        ));
+//                        echo form_label($attr['label'], $attr['field'], array(
+//                            'class' => 'control-label',
+//                            'id' => 'inputError'
+//                        ));
+                        echo $attr['label'];
                         echo '<div class="controls">';
                         inputs($attr);
                         echo form_error($attr['field']);

@@ -15,9 +15,9 @@ const TITLETAB = 'CI Capstone';
 const TITLE1 = 'CI';
 const TITLE2 = 'Capstone';
 const SEGMENT_NUMBER = 2; //base_url 0,
-const MENU_ITEM_DEFAULT = 'home';
+const MENU_ITEM_DEFAULT = 'auth';
 const BOOTSTRAPS_LIB_DIR = 'assets/framework/bootstrap/admin/';
-const HOME_REDIRECT = ADMIN_DIRFOLDER_NAME; // sample    admin/
+const HOME_REDIRECT = 'auth/'; // sample    admin/
 
 $main_sub = '';
 /**
@@ -27,7 +27,7 @@ $menu_items = $navigations;
 
 $menu_settings = $setting_vavigations;
 
-
+$active_link = TRUE;
 // Determine the current menu item.
 $menu_current = MENU_ITEM_DEFAULT;
 // If there is a query for a specific menu item and that menu item exists...
@@ -38,8 +38,16 @@ if (MENU_ITEM_DEFAULT == $menu_current) {
     foreach ($menu_items as $key => $item) {
         if (isset($item['sub'])) {
             if (@array_key_exists($this->uri->segment(SEGMENT_NUMBER), $item['sub'])) {
+
                 $main_sub = $key;
                 $menu_current = $this->uri->segment(SEGMENT_NUMBER);
+
+
+                foreach ($item['sub'] as $k => $v) {
+                    if ($menu_current == $k) {
+                        $active_link = $v['seen'];
+                    }
+                }
                 break;
             }
         }
@@ -84,9 +92,9 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
         <!--top-Header-menu-->
         <div id="user-nav" class="navbar navbar-inverse">
             <ul class="nav">
-                <li  class="dropdown" id="profile-messages" ><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i>  <span class="text"><?php echo $this->session->userdata('admin_fullname'); ?></span><b class="caret"></b></a>
+                <li  class="dropdown" id="profile-messages" ><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i>  <span class="text"><?php echo $this->session->userdata('user_last_name').', '.$this->session->userdata('user_first_name'); ?></span><b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="<?php echo base_url(HOME_REDIRECT . MENU_ITEM_DEFAULT); ?>/logout"><i class="icon-key"></i> Log Out</a></li>
+                        <li><a href="<?php echo base_url(MENU_ITEM_DEFAULT); ?>/logout"><i class="icon-key"></i> Log Out</a></li>
                     </ul>
                 </li>
                 <li class="dropdown" id="menu-messages">
@@ -99,13 +107,13 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
                     <ul class="dropdown-menu">
                         <?php foreach ($menu_settings as $k => $v): ?>  
                             <li class="divider"></li>
-                            <li><a class="sAdd" title="" href="<?php echo base_url(ADMIN_DIRFOLDER_NAME . $k); ?>"><i class="icon-<?php echo $v['icon']; ?>"></i> <?php echo $v['label']; ?></a></li>
+                            <li><a class="sAdd" title="" href="<?php echo base_url(HOME_REDIRECT . $k); ?>"><i class="icon-<?php echo $v['icon']; ?>"></i> <?php echo $v['label']; ?></a></li>
 
                         <?php endforeach; ?>
                     </ul>
                 </li>
                 <li class="">
-                    <a title="" href="<?php echo base_url(HOME_REDIRECT . MENU_ITEM_DEFAULT); ?>/logout">
+                    <a title="" href="<?php echo base_url(MENU_ITEM_DEFAULT); ?>/logout">
                         <i class="icon icon-share-alt"></i> 
                         <span class="text">Logout</span>
                     </a>
@@ -153,13 +161,22 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
                         //sub menu
                         $active1 = ($key == $main_sub ? ' active' : '');
 
+                        //count the seen
+                        $count = 0;
+                        foreach ($item['sub'] as $t) {
+                            if ($t['seen']) {
+                                $count++;
+                            }
+                        }
                         echo '<li class="submenu' . $active1 . '">'
                         . '<a href="#"><i class="icon icon-' . $item['icon'] . '"></i>'
-                        . '<span>' . $item['label'] . '</span> <span class="label label-important">' . sizeof($item['sub']) . '</span>'
+                        . '<span>' . $item['label'] . '</span> <span class="label label-important">' . $count . '</span>'
                         . '</a>'
                         . '<ul>';
                         foreach ($item['sub'] as $sub_key => $sub_item) {
-                            echo '<li><a href="' . base_url(HOME_REDIRECT . $sub_key) . '">' . $sub_item['label'] . '</a></li>';
+                            if ($sub_item['seen']) {
+                                echo '<li><a href="' . base_url(HOME_REDIRECT . $sub_key) . '">' . $sub_item['label'] . '</a></li>';
+                            }
                         }
                         echo '</ul>'
                         . '</li>';
@@ -184,13 +201,56 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
             <!--breadcrumbs-->
             <div id="content-header">
                 <div id="breadcrumb"> 
-                    <a href="<?php echo base_url(ADMIN_DIRFOLDER_NAME); ?>" title="Go to Home" class="tip-bottom">
+                    <a href="<?php echo base_url(); ?>" title="Go to Home" class="tip-bottom">
                         <i class="icon-home"></i> Home
                     </a> 
                     <?php
-                    echo '<a' . (($sub_label != '') ? '' : ' href="' . base_url(HOME_REDIRECT . $menu_current) . '"' ) . (($sub_label != '') ? '' : ' class="current"') . '>'
+                    echo '<a' .
+                    (
+
+
+
+                    //-----------------start
+                    #if
+                    ($sub_label != '') ?
+                            #then
+                            '' :
+                            #else
+
+                            ' href="' . base_url(HOME_REDIRECT . $menu_current) . '"'
+
+
+                    //--------------end
+
+
+                    )
+                    .
+                    (
+                    //--------------start
+                    #if
+                    ($sub_label != '') ?
+                            #then
+                            '' :
+                            #else
+                            ' class="current"'
+
+                    //--------------end
+                    )
+                    . '>'
                     . $label . '</a>' . (($sub_label != '') ? ' '
-                            . '<a href="' . base_url(HOME_REDIRECT . $menu_current) . '" class="current">'
+                            . '<a ' .
+                            //-------start sub
+                            (
+                            ##if
+                            ($active_link) ?
+                                    ##then
+                                    'href="' . base_url(HOME_REDIRECT . $menu_current) . '"'
+
+                            ##else
+                                    : ''
+                            )
+                            //---------end sub
+                            . ' class="current">'
                             . $sub_label
                             . '</a>' : '' );
                     ?> 
