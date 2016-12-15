@@ -14,11 +14,6 @@ class MY_Controller extends CI_Controller {
         // $this->validate_session();
     }
 
-    private function validate_session() {
-        $this->load->model('Session_Model');
-        $this->Session_Model->check_session();
-    }
-
     /**
      * main administrator header view 
      */
