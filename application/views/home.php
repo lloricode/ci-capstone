@@ -72,7 +72,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<h1>Client Home</h1>
 
 	<div id="body">
-            <p>login to <a href="<?php echo base_url('administrator'); ?>">Administrator</a> page.</p>
+            <p>login to <a href="<?php echo base_url('auth/login'); ?>">Administrator</a> page.</p>
 	</div>
 
 	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds. <?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?></p>

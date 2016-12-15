@@ -13,7 +13,8 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                 <div class="widget-content nopadding">
                     <?php
 //echo validation_errors();
-
+                    echo $message;
+                    
                     echo form_open(current_url(), array(
                         'class' => 'form-horizontal',
                         'name' => 'basic_validate',

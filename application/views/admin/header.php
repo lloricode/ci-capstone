@@ -14,10 +14,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 const TITLETAB = 'CI Capstone';
 const TITLE1 = 'CI';
 const TITLE2 = 'Capstone';
-const SEGMENT_NUMBER = 2; //base_url 0,
-const MENU_ITEM_DEFAULT = 'auth';
+const SEGMENT_NUMBER = 1; //base_url 0,
+const MENU_ITEM_DEFAULT = 'dashboard';
 const BOOTSTRAPS_LIB_DIR = 'assets/framework/bootstrap/admin/';
-const HOME_REDIRECT = 'auth/'; // sample    admin/
+const HOME_REDIRECT = ''; // sample    admin/
+
 
 $main_sub = '';
 /**
@@ -62,7 +63,7 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
         <title><?php echo ($sub_label != '') ? $sub_label : $label; ?> | <?php echo TITLETAB; ?></title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link href="<?php echo base_url('assets/img/favicon.ico'); ?>" rel="shortcut icon" type="image/x-icon" />
+        <link href="<?php echo base_url(); ?>assets/img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <link rel="stylesheet" href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>css/bootstrap.min.css" />
         <link rel="stylesheet" href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>css/bootstrap-responsive.min.css" />
         <link rel="stylesheet" href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>css/fullcalendar.css" />
@@ -94,7 +95,7 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
             <ul class="nav">
                 <li  class="dropdown" id="profile-messages" ><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i>  <span class="text"><?php echo $this->session->userdata('user_last_name').', '.$this->session->userdata('user_first_name'); ?></span><b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="<?php echo base_url(MENU_ITEM_DEFAULT); ?>/logout"><i class="icon-key"></i> Log Out</a></li>
+                        <li><a href="<?php echo base_url(HOME_REDIRECT . MENU_ITEM_DEFAULT); ?>/logout"><i class="icon-key"></i> Log Out</a></li>
                     </ul>
                 </li>
                 <li class="dropdown" id="menu-messages">
@@ -107,13 +108,13 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
                     <ul class="dropdown-menu">
                         <?php foreach ($menu_settings as $k => $v): ?>  
                             <li class="divider"></li>
-                            <li><a class="sAdd" title="" href="<?php echo base_url(HOME_REDIRECT . $k); ?>"><i class="icon-<?php echo $v['icon']; ?>"></i> <?php echo $v['label']; ?></a></li>
+                            <li><a class="sAdd" title="" href="<?php echo base_url('admin/' . $k); ?>"><i class="icon-<?php echo $v['icon']; ?>"></i> <?php echo $v['label']; ?></a></li>
 
                         <?php endforeach; ?>
                     </ul>
                 </li>
                 <li class="">
-                    <a title="" href="<?php echo base_url(MENU_ITEM_DEFAULT); ?>/logout">
+                    <a title="" href="<?php echo base_url(HOME_REDIRECT . MENU_ITEM_DEFAULT); ?>/logout">
                         <i class="icon icon-share-alt"></i> 
                         <span class="text">Logout</span>
                     </a>
@@ -161,10 +162,9 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
                         //sub menu
                         $active1 = ($key == $main_sub ? ' active' : '');
 
-                        //count the seen
                         $count = 0;
-                        foreach ($item['sub'] as $t) {
-                            if ($t['seen']) {
+                        foreach ($item['sub'] as $value) {
+                            if ($value['seen']) {
                                 $count++;
                             }
                         }

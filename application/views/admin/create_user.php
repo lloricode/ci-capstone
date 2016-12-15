@@ -13,8 +13,9 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                 <div class="widget-content nopadding">
                     <?php
 //echo validation_errors();
+                    echo $message;
 
-                    echo form_open(base_url("auth/create-user"), array(
+                    echo form_open(base_url("create-user/index"), array(
                         'class' => 'form-horizontal',
                         'name' => 'basic_validate',
                         'id' => 'basic_validate',
@@ -22,7 +23,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     ));
 
 
-                    
+
                     //First Name:
                     $tmp = (form_error('first_name') == '') ? '' : ' error';
                     echo '<div class="control-group' . $tmp . '">';
@@ -36,9 +37,9 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     ));
                     echo form_error('first_name');
                     echo '</div></div> ';
-                    
-                    
-                    
+
+
+
                     //Last Name:
                     $tmp = (form_error('last_name') == '') ? '' : ' error';
                     echo '<div class="control-group' . $tmp . '">';
@@ -52,10 +53,10 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     ));
                     echo form_error('last_name');
                     echo '</div></div> ';
-                    
-                    
 
-                    
+
+
+
                     //Company Name:
                     $tmp = (form_error('company') == '') ? '' : ' error';
                     echo '<div class="control-group' . $tmp . '">';
@@ -69,9 +70,9 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     ));
                     echo form_error('company');
                     echo '</div></div> ';
-                    
-                    
-                    
+
+
+
                     //Email:
                     $tmp = (form_error('email') == '') ? '' : ' error';
                     echo '<div class="control-group' . $tmp . '">';
@@ -85,9 +86,9 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     ));
                     echo form_error('email');
                     echo '</div></div> ';
-                    
-                    
-                    
+
+
+
                     //Phone:
                     $tmp = (form_error('phone') == '') ? '' : ' error';
                     echo '<div class="control-group' . $tmp . '">';
@@ -101,9 +102,9 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     ));
                     echo form_error('phone');
                     echo '</div></div> ';
-                    
-                    
-                    
+
+
+
                     //Password:
                     $tmp = (form_error('password') == '') ? '' : ' error';
                     echo '<div class="control-group' . $tmp . '">';
@@ -117,9 +118,9 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     ));
                     echo form_error('password');
                     echo '</div></div> ';
-                    
-                    
-                    
+
+
+
                     //Confirm Password:
                     $tmp = (form_error('password_confirm') == '') ? '' : ' error';
                     echo '<div class="control-group' . $tmp . '">';
@@ -133,8 +134,8 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     ));
                     echo form_error('password_confirm');
                     echo '</div></div> ';
-                    
-                    
+
+
 
                     echo ' <div class="form-actions">';
 
