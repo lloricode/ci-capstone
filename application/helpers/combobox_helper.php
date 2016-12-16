@@ -4,6 +4,7 @@
  * 
  * 
  * @author Lloric Garcia <emorickfighter@gmail.com>
+ * //pogi ako :D
  */
 defined('BASEPATH') or exit('no direct script allowed');
 
