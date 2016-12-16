@@ -93,7 +93,7 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
         <!--top-Header-menu-->
         <div id="user-nav" class="navbar navbar-inverse">
             <ul class="nav">
-                <li  class="dropdown" id="profile-messages" ><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i>  <span class="text"><?php echo $this->session->userdata('user_last_name').', '.$this->session->userdata('user_first_name'); ?></span><b class="caret"></b></a>
+                <li  class="dropdown" id="profile-messages" ><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i>  <span class="text"><?php echo $this->session->userdata('user_last_name') . ', ' . $this->session->userdata('user_first_name'); ?></span><b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="<?php echo base_url(HOME_REDIRECT . MENU_ITEM_DEFAULT); ?>/logout"><i class="icon-key"></i> Log Out</a></li>
                     </ul>
@@ -108,7 +108,7 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
                     <ul class="dropdown-menu">
                         <?php foreach ($menu_settings as $k => $v): ?>  
                             <li class="divider"></li>
-                            <li><a class="sAdd" title="" href="<?php echo base_url('admin/' . $k); ?>"><i class="icon-<?php echo $v['icon']; ?>"></i> <?php echo $v['label']; ?></a></li>
+                            <li><a class="sAdd" title="" href="<?php echo base_url($k); ?>"><i class="icon-<?php echo $v['icon']; ?>"></i> <?php echo $v['label']; ?></a></li>
 
                         <?php endforeach; ?>
                     </ul>

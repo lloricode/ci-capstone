@@ -51,15 +51,17 @@ class Admin_Controller extends MY_Controller {
         if (!$this->ion_auth->logged_in() OR ! $this->ion_auth->is_admin()) {
             redirect('auth/login', 'refresh');
         }
+        $this->config->load('table');
+        $this->load->helper('navigation');
     }
 
     /**
      * main administrator header view 
      */
     public function my_header_view() {
-        $this->load->view('admin/header', array(
-            'navigations' => $this->my_navigations(),
-            'setting_vavigations' => $this->setting_navs()
+        $this->_render_page('admin/header', array(
+            'navigations' => navigations_main(),
+            'setting_vavigations' => navigations_setting()
         ));
     }
 
@@ -67,97 +69,9 @@ class Admin_Controller extends MY_Controller {
         $this->load->library('table');
         $this->table->set_heading($header);
         $this->table->set_template(array(
-            'table_open' => '<table class="table table-bordered data-table">',
+            'table_open' => $this->config->item('table_open_pagination'),
         ));
         return $this->table->generate($data);
-    }
-
-    public function my_navigations() {
-        return array(
-            'dashboard' =>
-            array(
-                'label' => 'Dashboard',
-                'desc' => 'Dashboard Description',
-                'icon' => 'beaker',
-            ),
-            //sub menu
-            'menus' =>
-            array(
-                'label' => 'Users',
-                'icon' => 'user',
-                'sub' =>
-                array(
-                    'users' =>
-                    array(
-                        'label' => 'Users',
-                        'desc' => 'Users Description',
-                        'seen' => TRUE,
-                    ),
-                    'create-user' =>
-                    array(
-                        'label' => 'Create Users',
-                        'desc' => 'Create Users Description',
-                        'seen' => TRUE,
-                    ),
-                    'edit-group' =>
-                    array(
-                        'label' => 'Edit Group',
-                        'desc' => 'Edit Group Description',
-                        'seen' => FALSE,
-                    ),
-                    'deactivate' =>
-                    array(
-                        'label' => 'Deactivate User',
-                        'desc' => 'Deactivate User Description',
-                        'seen' => FALSE,
-                    ),
-                    'edit-user' =>
-                    array(
-                        'label' => 'Edit User',
-                        'desc' => 'Edit User Description',
-                        'seen' => FALSE,
-                    ),
-                ),
-            ),
-            //sub menu
-            'menus4' =>
-            array(
-                'label' => 'Settings',
-                'icon' => 'cogs',
-                'sub' =>
-                array(
-                    'backup' =>
-                    array(
-                        'label' => 'Backup Database',
-                        'desc' => 'Backup Database Description',
-                        'seen' => TRUE,
-                    ),
-                    'log' =>
-                    array(
-                        'label' => 'Error Logs',
-                        'desc' => 'Error Logsn Description',
-                        'seen' => TRUE,
-                    ),
-                ),
-            ),
-        );
-    }
-
-    private function setting_navs() {
-        return array(
-            'backup' =>
-            array(
-                'label' => 'Backup Database',
-                'desc' => 'Backup Database Description',
-                'icon' => 'file',
-            ),
-            'log' =>
-            array(
-                'label' => 'Error Logs',
-                'desc' => 'Error Logsn Description',
-                'icon' => 'exclamation-sign',
-            ),
-        );
     }
 
 }
