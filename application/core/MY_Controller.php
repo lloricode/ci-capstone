@@ -11,10 +11,10 @@ class MY_Controller extends CI_Controller {
         //$this->load->spark('codeigniter-log/1.0.0');
         // load from CI library
         //if production will enable this 
-        if (ENVIRONMENT === 'production') {
+       // if (ENVIRONMENT === 'production') {
 
             $this->load->library('lib_log');
-        }
+       // }
 
 
         $this->load->database();

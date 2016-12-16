@@ -64,7 +64,8 @@ $link = base_url('assets/framework/bootstrap/admin/');
             <div class="controls">
                 <div class="main_input_box">
                     <span class="add-on bg_lo"><i class="icon-envelope"></i></span>
-                    <?php echo (($type == 'email') ? sprintf(lang('forgot_password_email_label'), $identity_label) : sprintf(lang('forgot_password_identity_label'), $identity_label)); ?>
+                    <?php //echo (($type == 'email') ? sprintf(lang('forgot_password_email_label'), $identity_label) : sprintf(lang('forgot_password_identity_label'), $identity_label)); ?>
+                    <?php echo form_input($identity); ?>
                 </div>
             </div>
 

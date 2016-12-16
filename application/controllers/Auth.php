@@ -20,34 +20,34 @@ class Auth extends MY_Controller {
         }
     }
 
-// log the user in
+    // log the user in
     public function login() {
         $this->check_log();
         $this->data['title'] = $this->lang->line('login_heading');
 
-//validate form input
+        //validate form input
         $this->form_validation->set_rules('identity', str_replace(':', '', $this->lang->line('login_identity_label')), 'required');
         $this->form_validation->set_rules('password', str_replace(':', '', $this->lang->line('login_password_label')), 'required');
 
         if ($this->form_validation->run() == true) {
-// check to see if the user is logging in
-// check for "remember me"
+            // check to see if the user is logging in
+            // check for "remember me"
             $remember = (bool) $this->input->post('remember');
 
             if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember)) {
-//if the login is successful
-//redirect them back to the home page
+                //if the login is successful
+                //redirect them back to the home page
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
                 redirect('dashboard', 'refresh');
             } else {
-// if the login was un-successful
-// redirect them back to the login page
+                // if the login was un-successful
+                // redirect them back to the login page
                 $this->session->set_flashdata('message', $this->ion_auth->errors());
                 redirect('auth/login', 'refresh'); // use redirects instead of loading views for compatibility with MY_Controller libraries
             }
         } else {
-// the user is not logging in so display the login page
-// set the flash data error message if there is one
+            // the user is not logging in so display the login page
+            // set the flash data error message if there is one
             $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 
             $this->data['identity'] = array('name' => 'identity',
@@ -61,6 +61,24 @@ class Auth extends MY_Controller {
                 'type' => 'password',
                 'placeholder' => 'Password'
             );
+
+
+
+            //forgot password
+            $this->data['type'] = $this->config->item('identity', 'ion_auth');
+            // setup the input
+            $this->data['identity'] = array('name' => 'identity',
+                'id' => 'identity',
+            );
+
+            if ($this->config->item('identity', 'ion_auth') != 'email') {
+                $this->data['identity_label'] = $this->lang->line('forgot_password_identity_label');
+            } else {
+                $this->data['identity_label'] = $this->lang->line('forgot_password_email_identity_label');
+            }
+
+            // set any errors and display the form
+            $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
 
             $this->_render_page('admin/login', $this->data);
         }
