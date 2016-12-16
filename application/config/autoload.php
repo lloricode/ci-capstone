@@ -30,6 +30,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 
+/**
+ * Load the log library when the spark is loaded
+ */
+$autoload['config'] = array('log');
+$autoload['libraries'] = array('lib_log');
+
 /*
 | -------------------------------------------------------------------
 |  Auto-load Packages
