@@ -6,6 +6,7 @@ class Users extends Admin_Controller {
 
     function __construct() {
         parent::__construct();
+        $this->lang->load('ci_excel');
     }
 
     public function index() {
@@ -50,7 +51,7 @@ class Users extends Admin_Controller {
 
         $this->_render_page('admin/button_view', array(
             'href' => 'create-user',
-            'button_label' => 'Create User',
+            'button_label' => lang('create_user_heading'),
         ));
 
         $this->_render_page('admin/table', array('users' => $this->my_table_view($header, $table_data)));

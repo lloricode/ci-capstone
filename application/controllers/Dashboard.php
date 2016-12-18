@@ -13,16 +13,4 @@ class Dashboard extends Admin_Controller {
         $this->load->view('admin/footer');
     }
 
-    // log the user out
-    public function logout() {
-        $this->data['title'] = "Logout";
-
-        // log the user out
-        $logout = $this->ion_auth->logout();
-
-        // redirect them to the login page
-        $this->session->set_flashdata('message', $this->ion_auth->messages());
-        redirect('auth/login', 'refresh');
-    }
-
 }

@@ -11,19 +11,31 @@ class MY_Controller extends CI_Controller {
         //$this->load->spark('codeigniter-log/1.0.0');
         // load from CI library
         //if production will enable this 
-       // if (ENVIRONMENT === 'production') {
+        if (ENVIRONMENT === 'production') {
 
             $this->load->library('lib_log');
-       // }
+        }
+        $this->load->library(array('ion_auth', 'form_validation'));
 
+        $this->load->library('session');
+        
+        //load the preffer user language (if logged)
+        if ($this->ion_auth->logged_in() OR $this->ion_auth->is_admin()) {
+            $this->load->model('Language_Model');
+            $data_return = $this->Language_Model->where('user_id', $this->session->userdata('user_id'))->get();
+
+            if ($data_return) {
+                $this->config->set_item('language', $data_return->language_value);
+            }
+        }
 
         $this->load->database();
-        $this->load->library(array('ion_auth', 'form_validation'));
         $this->load->helper(array('url', 'language'));
 
         $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 
         $this->lang->load('auth');
+        $this->lang->load('ci_change_language');
     }
 
     public function _render_page($view, $data = null, $returnhtml = false) {//I think this makes more sense

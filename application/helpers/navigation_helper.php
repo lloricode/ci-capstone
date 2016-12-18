@@ -15,37 +15,37 @@ if (!function_exists('navigations_main')) {
             //sub menu
             'menus' =>
             array(
-                'label' => 'Users',
+                'label' => lang('index_heading'),
                 'icon' => 'user',
                 'sub' =>
                 array(
                     'users' =>
                     array(
-                        'label' => 'Users',
+                        'label' => lang('index_heading'),
                         'desc' => 'Users Description',
                         'seen' => TRUE,
                     ),
                     'create-user' =>
                     array(
-                        'label' => 'Create Users',
+                        'label' => lang('create_user_heading'),
                         'desc' => 'Create Users Description',
                         'seen' => TRUE,
                     ),
                     'edit-group' =>
                     array(
-                        'label' => 'Edit Group',
+                        'label' => lang('edit_group_title'),
                         'desc' => 'Edit Group Description',
                         'seen' => FALSE,
                     ),
                     'deactivate' =>
                     array(
-                        'label' => 'Deactivate User',
+                        'label' => lang('deactivate_heading'),
                         'desc' => 'Deactivate User Description',
                         'seen' => FALSE,
                     ),
                     'edit-user' =>
                     array(
-                        'label' => 'Edit User',
+                        'label' => lang('edit_user_heading'),
                         'desc' => 'Edit User Description',
                         'seen' => FALSE,
                     ),
@@ -58,6 +58,12 @@ if (!function_exists('navigations_main')) {
                 'icon' => 'cogs',
                 'sub' =>
                 array(
+                    'language' =>
+                    array(
+                        'label' => lang('lang_label'),
+                        'desc' => 'Language Description',
+                        'seen' => TRUE,
+                    ),
                     'database' =>
                     array(
                         'label' => 'Database',
@@ -82,6 +88,12 @@ if (!function_exists('navigations_setting')) {
 
     function navigations_setting() {
         return array(
+            'language' =>
+            array(
+                'label' => lang('lang_label'),
+                'desc' => 'Language Description',
+                'icon' => 'file',
+            ),
             'database' =>
             array(
                 'label' => 'Database',

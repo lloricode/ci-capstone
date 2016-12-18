@@ -7,6 +7,7 @@ class Database extends Admin_Controller {
     function __construct() {
         parent::__construct();
         $this->load->dbutil();
+        $this->lang->load('ci_db');
     }
 
     public function index() {
@@ -28,7 +29,7 @@ class Database extends Admin_Controller {
         }
 
         $this->data['href'] = base_url('database/backup-database');
-        $this->data['button_label'] = 'Download Backup Database';
+        $this->data['button_label'] = lang('db_back_up');
         $this->data['platform'] = $this->db->platform();
         $this->data['version'] = $this->db->version();
         $this->data['table'] = $this->table->generate();

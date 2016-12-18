@@ -78,3 +78,14 @@ if (!function_exists('my_course_combo')) {
     }
 
 }
+if (!function_exists('my_lang_combo')) {
+
+    function my_lang_combo() {
+        return array(
+            'english' => 'English',
+            'filipino' => 'Filipino',
+            'cebuano' => 'Cebuano',
+        );
+    }
+
+}

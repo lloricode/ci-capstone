@@ -8,7 +8,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
 
             <div class="widget-box">
                 <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
-                    <h5>Create User</h5>
+                    <h5><?php echo lang('create_user_heading') ?></h5>
                 </div>
                 <div class="widget-content nopadding">
                     <?php

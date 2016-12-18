@@ -48,7 +48,7 @@ class Log extends Admin_Controller {
         $data['logs'] = $this->table->generate();
         $data['controller'] = 'table';
         $this->_render_page('admin/log', $data);
-        $this->load->view('admin/footer', $data);
+        $this->_render_page('admin/footer', $data);
     }
 
 }
