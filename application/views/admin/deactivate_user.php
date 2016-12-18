@@ -8,7 +8,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
 
             <div class="widget-box">
                 <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
-                    <h5>Deactivate User</h5>
+                    <h5><?php echo lang('deactivate_heading'); ?></h5>
                 </div>
                 <div class="widget-content nopadding">
                     <?php
@@ -59,7 +59,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
 
                     echo form_hidden($csrf);
                     echo form_hidden(array('id' => $user->id));
-                    
+
                     echo form_reset('reset', 'Reset', array(
                         'class' => 'btn btn-default'
                     ));

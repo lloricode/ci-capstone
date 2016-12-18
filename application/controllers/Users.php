@@ -54,6 +54,11 @@ class Users extends Admin_Controller {
             'button_label' => lang('create_user_heading'),
         ));
 
+        $this->_render_page('admin/button_view', array(
+            'href' => 'users/export-excel',
+            'button_label' => lang('excel_export'),
+        ));
+
         $this->_render_page('admin/table', array('users' => $this->my_table_view($header, $table_data)));
 
 
@@ -61,6 +66,37 @@ class Users extends Admin_Controller {
         $this->_render_page('admin/footer', array(
             'controller' => 'table'
         ));
+    }
+
+    public function export_excel() {
+        $titles = array(
+            lang('index_fname_th'),
+            lang('index_lname_th'),
+            lang('index_email_th'),
+            lang('index_groups_th'),
+            lang('index_status_th'),
+        );
+        $data_ = array();
+        $user_obj = $this->ion_auth->users()->result();
+        foreach ($user_obj as $k => $user) {
+            $user_obj[$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
+        }
+        foreach ($user_obj as $k => $user) {
+            $groups = '';
+            foreach ($user->groups as $group) {
+                $groups .= $group->name . ' | ';
+            }
+            $data_[] = array(
+                $user->first_name,
+                $user->last_name,
+                $user->email,
+                $groups,
+                ($user->active) ? lang('index_active_link') : lang('index_inactive_link'),
+            );
+        }
+        $this->load->library('excel');
+        // echo print_r($data_);
+        $this->excel->make_from_array($titles, $data_);
     }
 
 // activate the user
