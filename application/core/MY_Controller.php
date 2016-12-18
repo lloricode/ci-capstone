@@ -18,7 +18,7 @@ class MY_Controller extends CI_Controller {
         $this->load->library(array('ion_auth', 'form_validation'));
 
         $this->load->library('session');
-        
+
         //load the preffer user language (if logged)
         if ($this->ion_auth->logged_in() OR $this->ion_auth->is_admin()) {
             $this->load->model('Language_Model');
@@ -34,8 +34,7 @@ class MY_Controller extends CI_Controller {
 
         $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 
-        $this->lang->load('auth');
-        $this->lang->load('ci_change_language');
+        $this->lang->load(array('ci_change_language', 'ci_validation', 'auth'));
     }
 
     public function _render_page($view, $data = null, $returnhtml = false) {//I think this makes more sense

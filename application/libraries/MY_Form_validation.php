@@ -59,7 +59,7 @@ class MY_Form_validation extends CI_Form_validation {
      * @return boolean
      */
     public function numeric_0_to_9($value) {
-        $this->CI->form_validation->set_message('numeric_0_to_9', 'Please select score in Key {field}.');
+        $this->CI->form_validation->set_message('numeric_0_to_9', lang('validation_numeric_0_to_9'));
         if ($value >= 0 && $value <= 9) {
             return TRUE;
         } else if ($value < 0 || $value > 9) {
@@ -82,7 +82,7 @@ class MY_Form_validation extends CI_Form_validation {
      * @return boolean
      */
     public function human_name($value) {
-        $this->CI->form_validation->set_message('human_name', 'Invalid {field} format.');
+        $this->CI->form_validation->set_message('human_name', lang('validation_human_name'));
 
         # a to z(small chars) 
         # A to Z (capital)
@@ -107,7 +107,7 @@ class MY_Form_validation extends CI_Form_validation {
      * @return boolean
      */
     public function school_id($value) {
-        $this->CI->form_validation->set_message('school_id', 'Invalid {field} format. must be XXXX-XXXX');
+        $this->CI->form_validation->set_message('school_id', lang('validation_school_id'));
 
         #  '\d' means digit/numeric
         #  '{4}' means exactly 4 length of character
@@ -131,7 +131,7 @@ class MY_Form_validation extends CI_Form_validation {
      */
     public function password_level($value, $level) {
         $score = 0;
-        $this->CI->form_validation->set_message('password_level', 'Weak {field}');
+        $this->CI->form_validation->set_message('password_level', lang('validation_password_level'));
 
         # plus 1 score if has numeric
         if (preg_match('!\d!', $value)) {
@@ -166,7 +166,7 @@ class MY_Form_validation extends CI_Form_validation {
      * @return boolean
      */
     public function username($value) {
-        $this->CI->form_validation->set_message('username', 'Invalid {field}.');
+        $this->CI->form_validation->set_message('username', lang('validation_username'));
         if (preg_match('/^[a-zA-Z0-9]+[_.-]{0,1}[a-zA-Z0-9]+$/m', $value)) {
             return TRUE;
         }
@@ -180,7 +180,7 @@ class MY_Form_validation extends CI_Form_validation {
      * @return boolean
      */
     public function no_space($value) {
-        $this->CI->form_validation->set_message('no_space', 'No space allowed in {field}.');
+        $this->CI->form_validation->set_message('no_space', lang('validation_no_space'));
 
         # from start to end of a line must no have white space.
         if (strpos($value, " ") === FALSE) {
