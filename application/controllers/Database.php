@@ -22,7 +22,7 @@ class Database extends Admin_Controller {
 
         foreach ($this->db->list_tables() as $db) {
 
-            $this->table->add_row('<h4>' . $db . '</h4>', '', '', '');
+            $data_table[] = array(array('data' => '<h4>' . $db . '</h4>', 'colspan' => '4'));
             foreach ($this->db->field_data($db) as $field) {
                 $this->table->add_row($field->name, $field->type, $field->max_length, $field->primary_key);
             }

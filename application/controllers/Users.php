@@ -15,12 +15,11 @@ class Users extends Admin_Controller {
 
 
         // set the flash data error message if there is one
-        $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-
+        // $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
         //list the users
-        $this->data['users'] = $this->ion_auth->users()->result();
-        foreach ($this->data['users'] as $k => $user) {
-            $this->data['users'][$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
+        $users_obj = $this->ion_auth->users()->result();
+        foreach ($users_obj as $k => $user) {
+            $users_obj[$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
         }
 
         $header = array(
@@ -34,7 +33,7 @@ class Users extends Admin_Controller {
 
         $table_data = array();
 
-        foreach ($this->data['users'] as $user) {
+        foreach ($users_obj as $user) {
             $groups = '';
             foreach ($user->groups as $group) {
                 $groups .= anchor("edit-group/index/" . $group->id, htmlspecialchars($group->name, ENT_QUOTES, 'UTF-8')) . ' | ';
@@ -59,7 +58,9 @@ class Users extends Admin_Controller {
             'button_label' => lang('excel_export'),
         ));
 
-        $this->_render_page('admin/table', array('users' => $this->my_table_view($header, $table_data)));
+        $this->data['caption'] = lang('index_heading');
+        $this->data['table_data'] = $this->my_table_view($header, $table_data);
+        $this->_render_page('admin/table', $this->data);
 
 
 

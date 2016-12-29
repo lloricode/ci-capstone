@@ -2,22 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/opt/lampp/htdocs/ci-capstone/application/controllers/Edit_group.php</file>
-            <file>file:/opt/lampp/htdocs/ci-capstone/application/controllers/Database.php</file>
-            <file>file:/opt/lampp/htdocs/ci-capstone/system/libraries/Table.php</file>
-            <file>file:/opt/lampp/htdocs/ci-capstone/application/controllers/Dashboard.php</file>
-            <file>file:/opt/lampp/htdocs/ci-capstone/application/helpers/backup_database_helper.php</file>
-            <file>file:/opt/lampp/htdocs/ci-capstone/application/libraries/Ion_auth.php</file>
-            <file>file:/opt/lampp/htdocs/ci-capstone/application/helpers/navigation_helper.php</file>
-            <file>file:/opt/lampp/htdocs/ci-capstone/application/core/MY_Controller.php</file>
-            <file>file:/opt/lampp/htdocs/ci-capstone/application/controllers/Users.php</file>
-            <file>file:/opt/lampp/htdocs/ci-capstone/application/views/admin/button_view.php</file>
-            <file>file:/opt/lampp/htdocs/ci-capstone/application/views/admin/database.php</file>
-            <file>file:/opt/lampp/htdocs/ci-capstone/application/controllers/Deactivate.php</file>
-            <file>file:/opt/lampp/htdocs/ci-capstone/application/controllers/Create_user.php</file>
-            <file>file:/opt/lampp/htdocs/ci-capstone/application/models/Ion_auth_model.php</file>
-            <file>file:/opt/lampp/htdocs/ci-capstone/application/controllers/Edit_user.php</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
