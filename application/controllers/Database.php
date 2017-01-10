@@ -11,7 +11,6 @@ class Database extends Admin_Controller {
     }
 
     public function index() {
-        $this->my_header_view();
 
 
         $this->load->library('table');
@@ -22,7 +21,7 @@ class Database extends Admin_Controller {
 
         foreach ($this->db->list_tables() as $db) {
 
-            $data_table[] = array(array('data' => '<h4>' . $db . '</h4>', 'colspan' => '4'));
+            $this->table->add_row(array(array('data' => '<h4>' . $db . '</h4>', 'colspan' => '4')));
             foreach ($this->db->field_data($db) as $field) {
                 $this->table->add_row($field->name, $field->type, $field->max_length, $field->primary_key);
             }
@@ -37,6 +36,7 @@ class Database extends Admin_Controller {
 
 
 
+        $this->my_header_view();
         $this->_render_page('admin/button_view', $this->data);
         $this->_render_page('admin/database', $this->data);
         $this->_render_page('admin/footer', $this->data);
