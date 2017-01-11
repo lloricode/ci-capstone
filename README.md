@@ -5,7 +5,7 @@ The project description will be updated including the client side after we propo
 
 ## Frameworks used
 
-* PHP Framework       : [CodeIgniter 3.1.2](http://codeigniter.com).
+* PHP Framework       : [CodeIgniter 3.1.3](http://codeigniter.com).
 * Admin UI Framework  : [matrix-admin Bootstrap](http://matrixadmin.themedesigner.in/).
 * Client UI Framework : soon
 
