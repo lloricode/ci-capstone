@@ -23,7 +23,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://[::1]/ci-capstone/';
+
+if (ENVIRONMENT === 'development' || ENVIRONMENT === 'testing') {
+    $config['base_url'] = 'http://[::1]/ci-capstone/';
+} else if(ENVIRONMENT === 'production'){
+    $config['base_url'] = 'http://ci-capstone.lloricmayugagarcia.com/';
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -213,7 +218,11 @@ $config['directory_trigger'] = 'd';
 | your log files will fill up very fast.
 |
 */
-$config['log_threshold'] = array(4);
+if (ENVIRONMENT === 'development' || ENVIRONMENT === 'testing') {
+   $config['log_threshold'] = array(4);
+} else if(ENVIRONMENT === 'production'){
+    $config['log_threshold'] = array(1);
+}
 
 /*
 |--------------------------------------------------------------------------

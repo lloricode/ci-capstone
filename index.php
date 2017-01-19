@@ -1,7 +1,53 @@
 <?php
 
+
+
+/*
+ |  -----------------------------
+ |  ___CI_CAPSTONE_PROJECT_ENVIRONTMENT___
+ |  -----------------------------
+ |  
+ |  1 == DEVELOPMENT
+ |  2 == TESTING
+ |  3 == PRODUCTION
+ |
+ | if not specicy, default is development
+ */
+define('___CI_CAPSTONE_PROJECT_ENVIRONTMENT___', 1);
+
+/*
+ |  -----------------------------
+ |  MAINTENANCE MODE
+ |  -----------------------------
+ |
+ |  
+ */
 $maintenance = FALSE; ## set to true to enable
+/*
+ |  -----------------------------
+ |  REMOTE VALID PUBLIC IP ADDRESS
+ |  -----------------------------
+ |
+ |  if maintenace is TRUE, set public ip address who the one access website
+ */
 $remote_addr='';
+
+
+
+
+//========================================================================
+//========================================================================
+//========================================================================
+//========================================================================
+//========================================================================
+//==============DO NOT MODIFY BELOW HERE==================================
+//========================================================================
+//===================LLORIC MAYUGA GARCIA=================================
+//========================================================================
+//========================================================================
+//========================================================================
+
+
 
 if ($maintenance) {
     if (isset($_SERVER['REMOTE_ADDR']) and $_SERVER['REMOTE_ADDR'] == $remote_addr ) {
@@ -70,7 +116,17 @@ if ($maintenance) {
  *
  * NOTE: If you change these, also change the error_reporting() code below
  */
-	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : 'development');
+$ci_capstone_project_envi='development';
+if(defined('___CI_CAPSTONE_PROJECT_ENVIRONTMENT___')){
+    if( ___CI_CAPSTONE_PROJECT_ENVIRONTMENT___ === 1 ){
+        $ci_capstone_project_envi='development';
+    }else if( ___CI_CAPSTONE_PROJECT_ENVIRONTMENT___ === 2 ){
+        $ci_capstone_project_envi='testing';
+    }else if( ___CI_CAPSTONE_PROJECT_ENVIRONTMENT___ === 3 ){
+        $ci_capstone_project_envi='production';
+    }
+}
+	define('ENVIRONMENT', isset($_SERVER['CI_ENV']) ? $_SERVER['CI_ENV'] : $ci_capstone_project_envi);
 
 /*
   |---------------------------------------------------------------
