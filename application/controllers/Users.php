@@ -38,15 +38,15 @@ class Users extends Admin_Controller
                         $groups = '';
                         foreach ($user->groups as $group)
                         {
-                                $groups .= anchor("edit-group/index/" . $group->id, my_htmlspecialchars($group->name)) . ' | ';
+                                $groups .= anchor("edit-group/?group-id=" . $group->id, my_htmlspecialchars($group->name)) . ' | ';
                         }
                         array_push($table_data, array(
                             my_htmlspecialchars($user->first_name),
                             my_htmlspecialchars($user->last_name),
                             my_htmlspecialchars($user->username),
                             $groups,
-                            (($user->active) ? anchor("deactivate/index/" . $user->id, lang('index_active_link')) : anchor("users/activate/" . $user->id, lang('index_inactive_link'))),
-                            anchor("edit-user/index/" . $user->id, 'Edit'),
+                            (($user->active) ? anchor("deactivate/?user-id=" . $user->id, lang('index_active_link')) : anchor("users/activate/" . $user->id, lang('index_inactive_link'))),
+                            anchor("edit-user/?user-id=" . $user->id, 'Edit'),
                         ));
                 }
 
@@ -115,7 +115,7 @@ class Users extends Admin_Controller
          * @param type $id
          * @param type $code
          */
-        public function activate($id, $code = false)
+        public function activate($id = NULL, $code = false)
         {
                 if ($code !== false)
                 {

@@ -10,9 +10,12 @@ class Deactivate extends Admin_Controller
                 parent::__construct();
         }
 
-        public function index($id = NULL)
+        public function index()
         {
-                $id = (int) $id;
+                if (!($id = (int) $this->input->get('user-id')))
+                {
+                        show_error('Invalid request.');
+                }
 
                 $this->load->library('form_validation');
                 $this->form_validation->set_rules('confirm', $this->lang->line('deactivate_validation_confirm_label'), 'required');
@@ -21,6 +24,10 @@ class Deactivate extends Admin_Controller
                 if ($this->form_validation->run() == FALSE)
                 {
                         $this->data['user'] = $this->ion_auth->user($id)->row();
+                        if (!$this->data['user'])
+                        {
+                                show_error('Invalid request.');
+                        }
 
                         $this->_render_admin_page('admin/deactivate_user', $this->data);
                 }
@@ -29,7 +36,7 @@ class Deactivate extends Admin_Controller
                         // do we really want to deactivate?
                         if ($this->input->post('confirm') == 'yes')
                         {
-                               
+
                                 // do we have the right userlevel?
                                 if ($this->ion_auth->logged_in() && $this->ion_auth->is_admin())
                                 {

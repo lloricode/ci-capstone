@@ -20,7 +20,6 @@ class MY_Controller extends CI_Controller
                                 $this->config->set_item('language', $data_return->language_value);
                         }
                 }
-                $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
         }
 
         /**
@@ -91,6 +90,7 @@ class Admin_Controller extends MY_Controller
          */
         public function my_table_view($header, $data)
         {
+                $this->load->config('admin/table');
                 $this->load->library('table');
                 $this->table->set_heading($header);
                 $this->table->set_template(array(

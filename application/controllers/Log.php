@@ -17,6 +17,7 @@ class Log extends Admin_Controller
                 $this->config->load('log');
 
                 $this->load->library('table');
+                $this->load->config('admin/table');
                 $this->table->set_template(array(
                     'table_open' => $this->config->item('table_open_pagination'),
                 ));

@@ -14,12 +14,12 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     <?php
 //echo validation_errors();
 
-                    echo form_open(base_url("deactivate/index/" . $user->id), array(
+                    echo form_open(base_url("deactivate/?user-id=" . $user->id), array(
                         'class'      => 'form-horizontal',
                         'name'       => 'basic_validate',
                         'id'         => 'basic_validate',
                         'novalidate' => 'novalidate',
-                    ),array('id' => $user->id));
+                            ), array('id' => $user->id));
 
 
 

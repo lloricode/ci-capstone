@@ -8,23 +8,27 @@ class Edit_group extends Admin_Controller
         function __construct()
         {
                 parent::__construct();
+                $this->load->library('form_validation');
+                $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
         }
 
         public function index($id = NULL)
         {
-                // bail if no group id given
-                if (!$id || empty($id) || !is_numeric($id))
+
+
+                if (!($id = $this->input->get('group-id')))
                 {
-                        redirect('dashboard', 'refresh');
+                        show_error('Invalid request.');
                 }
 
                 $this->data['title'] = $this->lang->line('edit_group_title');
 
                 $group = $this->ion_auth->group($id)->row();
 
-//                if(){
-//                    
-//                }
+                if (!$group)
+                {
+                        show_error('Invalid request.');
+                }
                 // validate form input
                 $this->form_validation->set_rules('group_name', $this->lang->line('edit_group_validation_name_label'), 'required|alpha_dash');
 
@@ -54,22 +58,23 @@ class Edit_group extends Admin_Controller
 
                 $readonly = $this->config->item('admin_group', 'ion_auth') === $group->name ? 'readonly' : '';
 
-                $this->data['group_name']        = array(
-                    'name'    => 'group_name',
-                    'id'      => 'group_name',
-                    'type'    => 'text',
-                    'value'   => $this->form_validation->set_value('group_name', $group->name),
-                    $readonly => $readonly,
+                $this->data['group_name'] = array(
+                    'name'  => 'group_name',
+                    'id'    => 'group_name',
+                    'type'  => 'text',
+                    'value' => $this->form_validation->set_value('group_name', $group->name),
                 );
+                if ($readonly != '')
+                {
+                        $this->data['group_name'] [$readonly] = $readonly;
+                }
                 $this->data['group_description'] = array(
                     'name'  => 'group_description',
                     'id'    => 'group_description',
                     'type'  => 'text',
                     'value' => $this->form_validation->set_value('group_description', $group->description),
                 );
-                $this->my_header_view();
-                $this->_render_page('admin/edit_group', $this->data);
-                $this->_render_page('admin/footer');
+                $this->_render_admin_page('admin/edit_group', $this->data);
         }
 
 }

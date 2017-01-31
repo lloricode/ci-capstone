@@ -30,12 +30,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 
-/**
- * Load the log library when the spark is loaded
- */
-$autoload['config'] = array('log');
-$autoload['libraries'] = array('lib_log');
-
 /*
 | -------------------------------------------------------------------
 |  Auto-load Packages
@@ -64,7 +58,7 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$libs_ = array('ion_auth', 'form_validation','session','database');
+$libs_ = array('ion_auth','session');
 if (ENVIRONMENT === 'production')
 {
         $libs_[]='lib_log';
@@ -114,7 +108,7 @@ $autoload['helper'] = array('date','url','html','language','navigation');
 | config files.  Otherwise, leave it blank.
 |
 */
-$autoload['config'] = array('admin/table');
+$autoload['config'] = array();
 
 /*
 | -------------------------------------------------------------------

@@ -8,34 +8,47 @@ class Edit_user extends Admin_Controller
         function __construct()
         {
                 parent::__construct();
+                $this->load->library('form_validation');
+                $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
         }
 
-        public function index($id = NULL)
+        public function index()
         {
+
+                if (!($id = $this->input->get('user-id')))
+                {
+                        show_error('Invalid request.');
+                }
+
                 $this->data['title'] = $this->lang->line('edit_user_heading');
 
 
 
-                $user          = $this->ion_auth->user($id)->row();
+                $user = $this->ion_auth->user($id)->row();
+
+                if (!$user)
+                {
+                        show_error('Invalid request.');
+                }
                 $groups        = $this->ion_auth->groups()->result_array();
                 $currentGroups = $this->ion_auth->get_users_groups($id)->result();
 
                 //just 
                 // validate form input
-                $this->form_validation->set_rules('first_name', $this->lang->line('edit_user_validation_fname_label'), 'required|human_name');
-                $this->form_validation->set_rules('last_name', $this->lang->line('edit_user_validation_lname_label'), 'required|human_name');
-                $this->form_validation->set_rules('phone', $this->lang->line('edit_user_validation_phone_label'), 'required');
-                $this->form_validation->set_rules('company', $this->lang->line('edit_user_validation_company_label'), 'required');
+                $this->form_validation->set_rules('first_name', $this->lang->line('edit_user_validation_fname_label'), 'trim|required|human_name');
+                $this->form_validation->set_rules('last_name', $this->lang->line('edit_user_validation_lname_label'), 'trim|required|human_name');
+                $this->form_validation->set_rules('phone', $this->lang->line('edit_user_validation_phone_label'), 'trim|required');
+                $this->form_validation->set_rules('company', $this->lang->line('edit_user_validation_company_label'), 'trim|required');
 
                 if (isset($_POST) && !empty($_POST))
                 {
-                      
+
 
                         // update the password if it was posted
                         if ($this->input->post('password'))
                         {
-                                $this->form_validation->set_rules('password', $this->lang->line('edit_user_validation_password_label'), 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]|no_space|password_level[3]');
-                                $this->form_validation->set_rules('password_confirm', $this->lang->line('edit_user_validation_password_confirm_label'), 'required');
+                                $this->form_validation->set_rules('password', $this->lang->line('edit_user_validation_password_label'), 'trim|required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]|no_space|password_level[3]');
+                                $this->form_validation->set_rules('password_confirm', $this->lang->line('edit_user_validation_password_confirm_label'), 'trim|required');
                         }
 
                         if ($this->form_validation->run() === TRUE)
