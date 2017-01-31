@@ -16,9 +16,9 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     echo $message;
 
                     echo form_open(base_url("create-user/index"), array(
-                        'class' => 'form-horizontal',
-                        'name' => 'basic_validate',
-                        'id' => 'basic_validate',
+                        'class'      => 'form-horizontal',
+                        'name'       => 'basic_validate',
+                        'id'         => 'basic_validate',
                         'novalidate' => 'novalidate',
                     ));
 
@@ -29,7 +29,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     echo '<div class="control-group' . $tmp . '">';
                     echo lang('create_user_fname_label', 'first_name', array(
                         'class' => 'control-label',
-                        'id' => 'inputError'
+                        'id'    => 'inputError'
                     ));
                     echo '<div class="controls">';
                     echo form_input($first_name, array(
@@ -45,7 +45,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     echo '<div class="control-group' . $tmp . '">';
                     echo lang('create_user_lname_label', 'last_name', array(
                         'class' => 'control-label',
-                        'id' => 'inputError'
+                        'id'    => 'inputError'
                     ));
                     echo '<div class="controls">';
                     echo form_input($last_name, array(
@@ -62,7 +62,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     echo '<div class="control-group' . $tmp . '">';
                     echo lang('create_user_company_label', 'company', array(
                         'class' => 'control-label',
-                        'id' => 'inputError'
+                        'id'    => 'inputError'
                     ));
                     echo '<div class="controls">';
                     echo form_input($company, array(
@@ -78,7 +78,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     echo '<div class="control-group' . $tmp . '">';
                     echo lang('create_user_email_label', 'email', array(
                         'class' => 'control-label',
-                        'id' => 'inputError'
+                        'id'    => 'inputError'
                     ));
                     echo '<div class="controls">';
                     echo form_input($email, array(
@@ -94,7 +94,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     echo '<div class="control-group' . $tmp . '">';
                     echo lang('create_user_phone_label', 'phone', array(
                         'class' => 'control-label',
-                        'id' => 'inputError'
+                        'id'    => 'inputError'
                     ));
                     echo '<div class="controls">';
                     echo form_input($phone, array(
@@ -110,7 +110,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     echo '<div class="control-group' . $tmp . '">';
                     echo lang('create_user_password_label', 'password', array(
                         'class' => 'control-label',
-                        'id' => 'inputError'
+                        'id'    => 'inputError'
                     ));
                     echo '<div class="controls">';
                     echo form_password($password, array(
@@ -126,7 +126,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     echo '<div class="control-group' . $tmp . '">';
                     echo lang('create_user_password_confirm_label', 'password_confirm', array(
                         'class' => 'control-label',
-                        'id' => 'inputError'
+                        'id'    => 'inputError'
                     ));
                     echo '<div class="controls">';
                     echo form_password($password_confirm, array(

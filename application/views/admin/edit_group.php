@@ -14,11 +14,11 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     <?php
 //echo validation_errors();
                     echo $message;
-                    
+
                     echo form_open(current_url(), array(
-                        'class' => 'form-horizontal',
-                        'name' => 'basic_validate',
-                        'id' => 'basic_validate',
+                        'class'      => 'form-horizontal',
+                        'name'       => 'basic_validate',
+                        'id'         => 'basic_validate',
                         'novalidate' => 'novalidate',
                     ));
 
@@ -29,7 +29,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     echo '<div class="control-group' . $tmp . '">';
                     echo lang('edit_group_name_label', 'group_name', array(
                         'class' => 'control-label',
-                        'id' => 'inputError'
+                        'id'    => 'inputError'
                     ));
                     echo '<div class="controls">';
                     echo form_input($group_name, array(
@@ -45,7 +45,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     echo '<div class="control-group' . $tmp . '">';
                     echo lang('edit_group_desc_label', 'description', array(
                         'class' => 'control-label',
-                        'id' => 'inputError'
+                        'id'    => 'inputError'
                     ));
                     echo '<div class="controls">';
                     echo form_input($group_description, array(

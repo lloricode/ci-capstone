@@ -16,9 +16,9 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     echo $message;
 
                     echo form_open(uri_string(), array(
-                        'class' => 'form-horizontal',
-                        'name' => 'basic_validate',
-                        'id' => 'basic_validate',
+                        'class'      => 'form-horizontal',
+                        'name'       => 'basic_validate',
+                        'id'         => 'basic_validate',
                         'novalidate' => 'novalidate',
                     ));
 
@@ -29,7 +29,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     echo '<div class="control-group' . $tmp . '">';
                     echo lang('create_user_fname_label', 'first_name', array(
                         'class' => 'control-label',
-                        'id' => 'inputError'
+                        'id'    => 'inputError'
                     ));
                     echo '<div class="controls">';
                     echo form_input($first_name, array(
@@ -45,7 +45,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     echo '<div class="control-group' . $tmp . '">';
                     echo lang('create_user_lname_label', 'last_name', array(
                         'class' => 'control-label',
-                        'id' => 'inputError'
+                        'id'    => 'inputError'
                     ));
                     echo '<div class="controls">';
                     echo form_input($last_name, array(
@@ -62,7 +62,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     echo '<div class="control-group' . $tmp . '">';
                     echo lang('create_user_company_label', 'company', array(
                         'class' => 'control-label',
-                        'id' => 'inputError'
+                        'id'    => 'inputError'
                     ));
                     echo '<div class="controls">';
                     echo form_input($company, array(
@@ -81,7 +81,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     echo '<div class="control-group' . $tmp . '">';
                     echo lang('create_user_phone_label', 'phone', array(
                         'class' => 'control-label',
-                        'id' => 'inputError'
+                        'id'    => 'inputError'
                     ));
                     echo '<div class="controls">';
                     echo form_input($phone, array(
@@ -97,7 +97,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     echo '<div class="control-group' . $tmp . '">';
                     echo lang('edit_user_password_label', 'password', array(
                         'class' => 'control-label',
-                        'id' => 'inputError'
+                        'id'    => 'inputError'
                     ));
                     echo '<div class="controls">';
                     echo form_password($password);
@@ -111,7 +111,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     echo '<div class="control-group' . $tmp . '">';
                     echo lang('edit_user_password_confirm_label', 'password_confirm', array(
                         'class' => 'control-label',
-                        'id' => 'inputError'
+                        'id'    => 'inputError'
                     ));
                     echo '<div class="controls">';
                     echo form_password($password_confirm);
@@ -125,26 +125,28 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
 
                     <?php if ($this->ion_auth->is_admin()): ?>
 
-                        <h3><?php echo lang('edit_user_groups_heading'); ?></h3>
-                        <?php foreach ($groups as $group): ?>
-                            <label class="checkbox">
-                                <?php
-                                $gID = $group['id'];
-                                $checked = null;
-                                $item = null;
-                                foreach ($currentGroups as $grp) {
-                                    if ($gID == $grp->id) {
-                                        $checked = ' checked="checked"';
-                                        break;
-                                    }
-                                }
-                                ?>
-                                <input type="checkbox" name="groups[]" value="<?php echo $group['id']; ?>"<?php echo $checked; ?>>
-                                <?php echo htmlspecialchars($group['name'], ENT_QUOTES, 'UTF-8'); ?>
-                            </label>
-                        <?php endforeach ?>
+                            <h3><?php echo lang('edit_user_groups_heading'); ?></h3>
+                            <?php foreach ($groups as $group): ?>
+                                    <label class="checkbox">
+                                        <?php
+                                        $gID     = $group['id'];
+                                        $checked = null;
+                                        $item    = null;
+                                        foreach ($currentGroups as $grp)
+                                        {
+                                                if ($gID == $grp->id)
+                                                {
+                                                        $checked = ' checked="checked"';
+                                                        break;
+                                                }
+                                        }
+                                        ?>
+                                        <input type="checkbox" name="groups[]" value="<?php echo $group['id']; ?>"<?php echo $checked; ?>>
+                                        <?php echo htmlspecialchars($group['name'], ENT_QUOTES, 'UTF-8'); ?>
+                                    </label>
+                            <?php endforeach ?>
 
-                        <?php
+                            <?php
                     endif;
                     echo '</div></div>';
                     ?>

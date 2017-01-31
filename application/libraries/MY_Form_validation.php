@@ -45,148 +45,168 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
  * 
  * @author Lloric Garcia <emorickfighter@gmail.com>
  */
-class MY_Form_validation extends CI_Form_validation {
+class MY_Form_validation extends CI_Form_validation
+{
 
-    public function __construct($rules = array()) {
-        parent::__construct($rules);
-    }
-
-    /**
-     * accept input only from 0 to 9
-     * if not numeric will return FALSE with invalid message.
-     * 
-     * @param string $value
-     * @return boolean
-     */
-    public function numeric_0_to_9($value) {
-        $this->CI->form_validation->set_message('numeric_0_to_9', lang('validation_numeric_0_to_9'));
-        if ($value >= 0 && $value <= 9) {
-            return TRUE;
-        } else if ($value < 0 || $value > 9) {
-
-            /**
-             * if someone try in inspect element then change the html values
-             */
-            $this->CI->form_validation->set_message('numeric_0_to_9', 'Invalid score in Key {field}.');
-            return FALSE;
-        }
-        return FALSE;
-    }
-
-    /**
-     * Real human name
-     * 
-     * validated using regex expression
-     * 
-     * @param string $value
-     * @return boolean
-     */
-    public function human_name($value) {
-        $this->CI->form_validation->set_message('human_name', lang('validation_human_name'));
-
-        # a to z(small chars) 
-        # A to Z (capital)
-        # period or space
-        # * means zero or more length of character
-        if (preg_match('/^[a-zA-Z. ]*$/', $value)) {
-            return TRUE;
-        }
-        return FALSE;
-    }
-
-    /**
-     * validation for input school ID's
-     * MUST XXXX-XXXX format | X means numerical
-     * 
-     * soon: valid year in ID's
-     * 
-     * 
-     * validated using regex expression
-     * 
-     * @param string $value
-     * @return boolean
-     */
-    public function school_id($value) {
-        $this->CI->form_validation->set_message('school_id', lang('validation_school_id'));
-
-        #  '\d' means digit/numeric
-        #  '{4}' means exactly 4 length of character
-        #  '[-]' means with dash "-" 
-        #   so need exactly 4 digits followed by dash "-" then followed again with exactly 4 digits
-        if (preg_match('/^\d{4}[-]\d{4}$/', $value)) {
-            return TRUE;
-        }
-        return FALSE;
-    }
-
-    /**
-     * check password difficulties
-     * maximum difficulties: 5
-     * 
-     * validated using regex expression
-     * 
-     * @param string $value
-     * @param int $level 
-     * @return bool
-     */
-    public function password_level($value, $level) {
-        $score = 0;
-        $this->CI->form_validation->set_message('password_level', lang('validation_password_level'));
-
-        # plus 1 score if has numeric
-        if (preg_match('!\d!', $value)) {
-            $score++;
-        }
-        # has capital letter
-        if (preg_match('![A-Z]!', $value)) {
-            $score++;
-        }
-        # has small letter
-        if (preg_match('![a-z]!', $value)) {
-            $score++;
-        }
-        # has special character
-        if (preg_match('!\W!', $value)) {
-            $score++;
-        }
-        # length greater than or equal 8
-        if (strlen($value) >= 8) {
-            $score++;
+        public function __construct($rules = array())
+        {
+                parent::__construct($rules);
         }
 
-        return $score >= $level;
-    }
+        /**
+         * accept input only from 0 to 9
+         * if not numeric will return FALSE with invalid message.
+         * 
+         * @param string $value
+         * @return boolean
+         */
+        public function numeric_0_to_9($value)
+        {
+                $this->CI->form_validation->set_message('numeric_0_to_9', lang('validation_numeric_0_to_9'));
+                if ($value >= 0 && $value <= 9)
+                {
+                        return TRUE;
+                }
+                else if ($value < 0 || $value > 9)
+                {
 
-    /**
-     * a validation for username 
-     * 
-     * validated using regex expression
-     * 
-     * @param type $value
-     * @return boolean
-     */
-    public function username($value) {
-        $this->CI->form_validation->set_message('username', lang('validation_username'));
-        if (preg_match('/^[a-zA-Z0-9]+[_.-]{0,1}[a-zA-Z0-9]+$/m', $value)) {
-            return TRUE;
+                        /**
+                         * if someone try in inspect element then change the html values
+                         */
+                        $this->CI->form_validation->set_message('numeric_0_to_9', 'Invalid score in Key {field}.');
+                        return FALSE;
+                }
+                return FALSE;
         }
-        return FALSE;
-    }
 
-    /**
-     * no space allowed
-     * 
-     * @param type $value
-     * @return boolean
-     */
-    public function no_space($value) {
-        $this->CI->form_validation->set_message('no_space', lang('validation_no_space'));
+        /**
+         * Real human name
+         * 
+         * validated using regex expression
+         * 
+         * @param string $value
+         * @return boolean
+         */
+        public function human_name($value)
+        {
+                $this->CI->form_validation->set_message('human_name', lang('validation_human_name'));
 
-        # from start to end of a line must no have white space.
-        if (strpos($value, " ") === FALSE) {
-            return TRUE;
+                # a to z(small chars) 
+                # A to Z (capital)
+                # period or space
+                # * means zero or more length of character
+                if (preg_match('/^[a-zA-Z. ]*$/', $value))
+                {
+                        return TRUE;
+                }
+                return FALSE;
         }
-        return FALSE;
-    }
+
+        /**
+         * validation for input school ID's
+         * MUST XXXX-XXXX format | X means numerical
+         * 
+         * soon: valid year in ID's
+         * 
+         * 
+         * validated using regex expression
+         * 
+         * @param string $value
+         * @return boolean
+         */
+        public function school_id($value)
+        {
+                $this->CI->form_validation->set_message('school_id', lang('validation_school_id'));
+
+                #  '\d' means digit/numeric
+                #  '{4}' means exactly 4 length of character
+                #  '[-]' means with dash "-" 
+                #   so need exactly 4 digits followed by dash "-" then followed again with exactly 4 digits
+                if (preg_match('/^\d{4}[-]\d{4}$/', $value))
+                {
+                        return TRUE;
+                }
+                return FALSE;
+        }
+
+        /**
+         * check password difficulties
+         * maximum difficulties: 5
+         * 
+         * validated using regex expression
+         * 
+         * @param string $value
+         * @param int $level 
+         * @return bool
+         */
+        public function password_level($value, $level)
+        {
+                $score = 0;
+                $this->CI->form_validation->set_message('password_level', lang('validation_password_level'));
+
+                # plus 1 score if has numeric
+                if (preg_match('!\d!', $value))
+                {
+                        $score++;
+                }
+                # has capital letter
+                if (preg_match('![A-Z]!', $value))
+                {
+                        $score++;
+                }
+                # has small letter
+                if (preg_match('![a-z]!', $value))
+                {
+                        $score++;
+                }
+                # has special character
+                if (preg_match('!\W!', $value))
+                {
+                        $score++;
+                }
+                # length greater than or equal 8
+                if (strlen($value) >= 8)
+                {
+                        $score++;
+                }
+
+                return $score >= $level;
+        }
+
+        /**
+         * a validation for username 
+         * 
+         * validated using regex expression
+         * 
+         * @param type $value
+         * @return boolean
+         */
+        public function username($value)
+        {
+                $this->CI->form_validation->set_message('username', lang('validation_username'));
+                if (preg_match('/^[a-zA-Z0-9]+[_.-]{0,1}[a-zA-Z0-9]+$/m', $value))
+                {
+                        return TRUE;
+                }
+                return FALSE;
+        }
+
+        /**
+         * no space allowed
+         * 
+         * @param type $value
+         * @return boolean
+         */
+        public function no_space($value)
+        {
+                $this->CI->form_validation->set_message('no_space', lang('validation_no_space'));
+
+                # from start to end of a line must no have white space.
+                if (strpos($value, " ") === FALSE)
+                {
+                        return TRUE;
+                }
+                return FALSE;
+        }
 
 }

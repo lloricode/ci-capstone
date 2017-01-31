@@ -15,9 +15,9 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
 //echo validation_errors();
 
                     echo form_open(base_url("deactivate/index/" . $user->id), array(
-                        'class' => 'form-horizontal',
-                        'name' => 'basic_validate',
-                        'id' => 'basic_validate',
+                        'class'      => 'form-horizontal',
+                        'name'       => 'basic_validate',
+                        'id'         => 'basic_validate',
                         'novalidate' => 'novalidate',
                     ));
 
@@ -27,7 +27,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     echo '<div class="control-group">';
                     echo lang('deactivate_confirm_y_label', 'confirm', array(
                         'class' => 'control-label',
-                        'id' => 'inputError'
+                        'id'    => 'inputError'
                     ));
                     echo '<div class="controls">';
                     echo form_radio('confirm', 'yes', TRUE);
@@ -39,7 +39,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     echo '<div class="control-group">';
                     echo lang('deactivate_confirm_n_label', 'confirm', array(
                         'class' => 'control-label',
-                        'id' => 'inputError'
+                        'id'    => 'inputError'
                     ));
                     echo '<div class="controls">';
                     echo form_radio('confirm', 'no');

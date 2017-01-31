@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('no direct script allowed');
 $title = 'Log in | CI Capstone';
-$link = base_url('assets/framework/bootstrap/admin/');
+$link  = base_url('assets/framework/bootstrap/admin/');
 ?>
 <!DOCTYPE html>
 <html lang="en">

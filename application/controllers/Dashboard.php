@@ -2,15 +2,18 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Dashboard extends Admin_Controller {
+class Dashboard extends Admin_Controller
+{
 
-    function __construct() {
-        parent::__construct();
-    }
+        function __construct()
+        {
+                parent::__construct();
+        }
 
-    public function index() {
-        $this->my_header_view();
-        $this->load->view('admin/footer');
-    }
+        public function index()
+        {
+                $this->my_header_view();
+                $this->load->view('admin/footer');
+        }
 
 }
