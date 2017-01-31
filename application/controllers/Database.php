@@ -10,7 +10,7 @@ class Database extends Admin_Controller
                 parent::__construct();
                 $this->load->dbutil();
                 $this->lang->load('ci_db');
-                $this->load->config('admin/table');
+                $this->config->load('admin/table');
         }
 
         public function index()

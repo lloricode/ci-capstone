@@ -90,7 +90,7 @@ class Admin_Controller extends MY_Controller
          */
         public function my_table_view($header, $data)
         {
-                $this->load->config('admin/table');
+                $this->config->load('admin/table');
                 $this->load->library('table');
                 $this->table->set_heading($header);
                 $this->table->set_template(array(
