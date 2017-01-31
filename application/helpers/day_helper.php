@@ -1,10 +1,5 @@
 <?php
 
-/**
- * 
- * 
- * @author Lloric Garcia <emorickfighter@gmail.com>
- */
 defined('BASEPATH') or exit('no direct script allowed');
 
 if (!function_exists('my_day'))
@@ -13,6 +8,7 @@ if (!function_exists('my_day'))
         /**
          * 
          * @return String Sun,Mon
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
         function my_day()
         {
@@ -29,6 +25,7 @@ if (!function_exists('days'))
          * 
          * @param type $row
          * @return string
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
         function days($row)
         {

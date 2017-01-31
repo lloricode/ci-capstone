@@ -1,10 +1,5 @@
 <?php
 
-/**
- * 
- * 
- * @author Lloric Garcia <emorickfighter@gmail.com>
- */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 if (!function_exists('check_id_form_url'))
@@ -17,6 +12,7 @@ if (!function_exists('check_id_form_url'))
          * @param array $model column from table on database
          * @param string $id from url | default NULL to prevent error in case user modify url
          * @return row data from table
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
         function check_id_from_url($column, $model, $id = NULL)
         {
@@ -50,6 +46,7 @@ if (!function_exists('save_current_url'))
 
         /**
          * save to database all url receive 
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
         function save_current_url($usertype = NULL)
         {

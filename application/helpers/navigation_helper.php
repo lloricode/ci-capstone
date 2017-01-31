@@ -5,6 +5,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 if (!function_exists('navigations_main'))
 {
 
+        /**
+         * 
+         * @return type
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
         function navigations_main()
         {
                 return array(
@@ -89,6 +94,11 @@ if (!function_exists('navigations_main'))
 if (!function_exists('navigations_setting'))
 {
 
+        /**
+         * 
+         * @return type
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
         function navigations_setting()
         {
                 return array(

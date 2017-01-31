@@ -13,10 +13,6 @@ class Users extends Admin_Controller
 
         public function index()
         {
-                $this->my_header_view();
-
-
-
                 // set the flash data error message if there is one
                 // $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
                 //list the users
@@ -29,7 +25,7 @@ class Users extends Admin_Controller
                 $header = array(
                     lang('index_fname_th'),
                     lang('index_lname_th'),
-                    lang('index_email_th'),
+                    lang('index_username_th'),
                     lang('index_groups_th'),
                     lang('index_status_th'),
                     lang('index_action_th'),
@@ -42,39 +38,43 @@ class Users extends Admin_Controller
                         $groups = '';
                         foreach ($user->groups as $group)
                         {
-                                $groups .= anchor("edit-group/index/" . $group->id, htmlspecialchars($group->name, ENT_QUOTES, 'UTF-8')) . ' | ';
+                                $groups .= anchor("edit-group/index/" . $group->id, my_htmlspecialchars($group->name)) . ' | ';
                         }
                         array_push($table_data, array(
-                            htmlspecialchars($user->first_name, ENT_QUOTES, 'UTF-8'),
-                            htmlspecialchars($user->last_name, ENT_QUOTES, 'UTF-8'),
-                            htmlspecialchars($user->email, ENT_QUOTES, 'UTF-8'),
+                            my_htmlspecialchars($user->first_name),
+                            my_htmlspecialchars($user->last_name),
+                            my_htmlspecialchars($user->username),
                             $groups,
                             (($user->active) ? anchor("deactivate/index/" . $user->id, lang('index_active_link')) : anchor("users/activate/" . $user->id, lang('index_inactive_link'))),
                             anchor("edit-user/index/" . $user->id, 'Edit'),
                         ));
                 }
 
-                $this->_render_page('admin/button_view', array(
+                $this->template['create_user_button'] = $this->_render_page('admin/_templates/button_view', array(
                     'href'         => 'create-user',
                     'button_label' => lang('create_user_heading'),
-                ));
+                        ), TRUE);
 
-                $this->_render_page('admin/button_view', array(
+                $this->template['export_user_button'] = $this->_render_page('admin/_templates/button_view', array(
                     'href'         => 'users/export-excel',
                     'button_label' => lang('excel_export'),
-                ));
+                        ), TRUE);
+
+
 
                 $this->data['caption']    = lang('index_heading');
                 $this->data['table_data'] = $this->my_table_view($header, $table_data);
-                $this->_render_page('admin/table', $this->data);
+
+                $this->template['table_data_users'] = $this->_render_page('admin/_templates/table', $this->data, TRUE);
+                $this->template['controller']       = 'table';
 
 
-
-                $this->_render_page('admin/footer', array(
-                    'controller' => 'table'
-                ));
+                $this->_render_admin_page('admin/users', $this->template);
         }
 
+        /**
+         * Export data
+         */
         public function export_excel()
         {
                 $titles   = array(
@@ -110,7 +110,11 @@ class Users extends Admin_Controller
                 $this->excel->make_from_array($titles, $data_);
         }
 
-// activate the user
+        /**
+         * 
+         * @param type $id
+         * @param type $code
+         */
         public function activate($id, $code = false)
         {
                 if ($code !== false)

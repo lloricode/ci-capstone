@@ -32,21 +32,23 @@ class Database extends Admin_Controller
                         }
                 }
 
-                $this->data['href']         = base_url('database/backup-database');
-                $this->data['button_label'] = lang('db_back_up');
-                $this->data['platform']     = $this->db->platform();
-                $this->data['version']      = $this->db->version();
-                $this->data['table']        = $this->table->generate();
-                $this->data['controller']   = 'table';
+                $this->template['platform']   = $this->db->platform();
+                $this->template['version']    = $this->db->version();
+                $this->template['table']      = $this->table->generate();
+                $this->template['controller'] = 'table';
 
 
+                $this->template['backup_button'] = $this->_render_page('admin/_templates/button_view', array(
+                    'href'         => 'database/backup-database',
+                    'button_label' => lang('db_back_up'),
+                        ), TRUE);
 
-                $this->my_header_view();
-                $this->_render_page('admin/button_view', $this->data);
-                $this->_render_page('admin/database', $this->data);
-                $this->_render_page('admin/footer', $this->data);
+                $this->_render_admin_page('admin/database', $this->template);
         }
 
+        /**
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
         public function backup_database()
         {
                 $this->load->helper('backup_database');

@@ -12,8 +12,8 @@ class Dashboard extends Admin_Controller
 
         public function index()
         {
-                $this->my_header_view();
-                $this->load->view('admin/footer');
+                $data['test'] = 'test dashboard';
+                $this->_render_admin_page('admin/dashboard', $data);
         }
 
 }

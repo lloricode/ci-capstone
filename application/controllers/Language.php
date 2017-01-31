@@ -16,7 +16,6 @@ class Language extends Admin_Controller
 
         public function index()
         {
-                $this->my_header_view();
                 $data['lang_chooser'] = my_lang_combo();
                 $data['message']      = '';
 
@@ -64,9 +63,7 @@ class Language extends Admin_Controller
                                 $data['message'] = 'submitted';
                         }
                 }
-                $this->_render_page('admin/lang_view', $data);
-
-                $this->_render_page('admin/footer', $data);
+                $this->_render_admin_page('admin/lang_view', $data);
         }
 
 }

@@ -42,6 +42,14 @@ class MY_Controller extends CI_Controller
                 $this->lang->load(array('ci_change_language', 'ci_validation', 'auth'));
         }
 
+        /**
+         * 
+         * @param type $view
+         * @param type $data
+         * @param type $returnhtml
+         * @return type
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
         public function _render_page($view, $data = null, $returnhtml = false)
         {//I think this makes more sense
                 $this->viewdata = (empty($data)) ? $this->data : $data;
@@ -49,7 +57,9 @@ class MY_Controller extends CI_Controller
                 $view_html = $this->load->view($view, $this->viewdata, $returnhtml);
 
                 if ($returnhtml)
+                {
                         return $view_html; //This will return html on 3rd argument being true
+                }
         }
 
         public function _get_csrf_nonce()
@@ -93,16 +103,37 @@ class Admin_Controller extends MY_Controller
         }
 
         /**
-         * main administrator header view 
+         * render views at one call
+         * 
+         * @param view $content current view page to be render
+         * @param data $data data to be render also in current view 
+         * @return null if content is missing
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        public function my_header_view()
+        public function _render_admin_page($content, $data = NULL)
         {
-                $this->_render_page('admin/header', array(
-                    'navigations'         => navigations_main(),
-                    'setting_vavigations' => navigations_setting()
-                ));
+                if (!$content)
+                {
+                        return NULL;
+                }
+
+                $data['navigations']         = navigations_main();
+                $data['setting_vavigations'] = navigations_setting();
+
+                $this->template['header']  = $this->_render_page('admin/_templates/header', $data, TRUE);
+                $this->template['content'] = $this->_render_page($content, $data, TRUE);
+                $this->template['footer']  = $this->_render_page('admin/_templates/footer', $data, TRUE);
+
+                $this->_render_page('template', $this->template);
         }
 
+        /**
+         * 
+         * @param type $header
+         * @param type $data
+         * @return type
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
         public function my_table_view($header, $data)
         {
                 $this->load->library('table');

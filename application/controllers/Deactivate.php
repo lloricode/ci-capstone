@@ -24,9 +24,7 @@ class Deactivate extends Admin_Controller
                         $this->data['csrf'] = $this->_get_csrf_nonce();
                         $this->data['user'] = $this->ion_auth->user($id)->row();
 
-                        $this->my_header_view();
-                        $this->_render_page('admin/deactivate_user', $this->data);
-                        $this->_render_page('admin/footer');
+                        $this->_render_admin_page('admin/deactivate_user', $this->data);
                 }
                 else
                 {

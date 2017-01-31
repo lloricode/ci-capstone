@@ -1,11 +1,5 @@
 <?php
 
-/**
- * 
- * 
- * @author Lloric Garcia <emorickfighter@gmail.com>
- * //pogi ako :D
- */
 defined('BASEPATH') or exit('no direct script allowed');
 
 if (!function_exists('my_semester_for_combo'))
@@ -14,6 +8,7 @@ if (!function_exists('my_semester_for_combo'))
         /**
          * 
          * @return array 1-1st Semester,2-2nd Semester,3-Summer Semester
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
         function my_semester_for_combo()
         {
@@ -32,6 +27,7 @@ if (!function_exists('my_schoolyear_for_combo'))
         /**
          * 
          * @return array 
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
         function my_schoolyear_for_combo()
         {
@@ -50,6 +46,7 @@ if (!function_exists('my_time_for_combo'))
         /**
          * 
          * @return array key = 24hrs, value = 12hrs
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
         function my_time_for_combo()
         {
@@ -76,6 +73,11 @@ if (!function_exists('my_time_for_combo'))
 if (!function_exists('my_course_combo'))
 {
 
+        /**
+         * 
+         * @return type
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
         function my_course_combo()
         {
                 return array(
@@ -89,6 +91,11 @@ if (!function_exists('my_course_combo'))
 if (!function_exists('my_lang_combo'))
 {
 
+        /**
+         * 
+         * @return type
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
         function my_lang_combo()
         {
                 return array(

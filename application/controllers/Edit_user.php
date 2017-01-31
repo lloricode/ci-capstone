@@ -153,9 +153,7 @@ class Edit_user extends Admin_Controller
                     'type' => 'password'
                 );
 
-                $this->my_header_view();
-                $this->_render_page('admin/edit_user', $this->data);
-                $this->_render_page('admin/footer');
+                $this->_render_admin_page('admin/edit_user', $this->data);
         }
 
 }

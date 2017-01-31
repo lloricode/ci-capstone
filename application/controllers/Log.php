@@ -24,7 +24,6 @@ class Log extends Admin_Controller
 
         public function index()
         {
-                $this->my_header_view();
 
                 //store colum nnames of logs table
                 $key = array();
@@ -54,8 +53,7 @@ class Log extends Admin_Controller
                 }
                 $data['logs']       = $this->table->generate();
                 $data['controller'] = 'table';
-                $this->_render_page('admin/log', $data);
-                $this->_render_page('admin/footer', $data);
+                $this->_render_admin_page('admin/log', $data);
         }
 
 }

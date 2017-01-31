@@ -59,6 +59,7 @@ class MY_Form_validation extends CI_Form_validation
          * 
          * @param string $value
          * @return boolean
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
         public function numeric_0_to_9($value)
         {
@@ -86,6 +87,7 @@ class MY_Form_validation extends CI_Form_validation
          * 
          * @param string $value
          * @return boolean
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
         public function human_name($value)
         {
@@ -113,6 +115,7 @@ class MY_Form_validation extends CI_Form_validation
          * 
          * @param string $value
          * @return boolean
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
         public function school_id($value)
         {
@@ -138,6 +141,7 @@ class MY_Form_validation extends CI_Form_validation
          * @param string $value
          * @param int $level 
          * @return bool
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
         public function password_level($value, $level)
         {
@@ -180,6 +184,7 @@ class MY_Form_validation extends CI_Form_validation
          * 
          * @param type $value
          * @return boolean
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
         public function username($value)
         {
@@ -196,6 +201,7 @@ class MY_Form_validation extends CI_Form_validation
          * 
          * @param type $value
          * @return boolean
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
         public function no_space($value)
         {

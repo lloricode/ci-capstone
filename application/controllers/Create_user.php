@@ -112,9 +112,7 @@ class Create_user extends Admin_Controller
                             'type'  => 'password',
                             'value' => $this->form_validation->set_value('password_confirm'),
                         );
-                        $this->my_header_view();
-                        $this->_render_page('admin/create_user', $this->data);
-                        $this->_render_page('admin/footer');
+                        $this->_render_admin_page('admin/create_user', $this->data);
                 }
         }
 

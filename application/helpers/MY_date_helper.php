@@ -1,10 +1,5 @@
 <?php
 
-/**
- * 
- * 
- * @author Lloric Garcia <emorickfighter@gmail.com>
- */
 defined('BASEPATH') or exit('no direct script allowed');
 
 if (!function_exists('my_datetime_format'))
@@ -13,6 +8,7 @@ if (!function_exists('my_datetime_format'))
         /**
          * 
          * @return string value: %Y:%m:%d sample : 2016:12:31
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
         function my_datetime_format()
         {
@@ -31,6 +27,7 @@ if (!function_exists('my_converter_datetime_format'))
          * @param string $timestamp
          * @param string time or date
          * @return string December 30, 20016
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
         function my_converter_datetime_format($timestamp, $dt)
         {
@@ -54,7 +51,8 @@ if (!function_exists('my_current_datetime_information'))
 
         /**
          * 
-         * @return string December 30, 20016
+         * @return string December 30, 20016 
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
         function my_current_datetime_information()
         {
