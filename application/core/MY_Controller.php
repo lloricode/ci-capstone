@@ -9,19 +9,6 @@ class MY_Controller extends CI_Controller
         {
                 parent::__construct();
 
-                // load from spark
-                //$this->load->spark('codeigniter-log/1.0.0');
-                // load from CI library
-                //if production will enable this 
-                if (ENVIRONMENT === 'production')
-                {
-
-                        $this->load->library('lib_log');
-                }
-                $this->load->library(array('ion_auth', 'form_validation'));
-
-                $this->load->library('session');
-
                 //load the preffer user language (if logged)
                 if ($this->ion_auth->logged_in() OR $this->ion_auth->is_admin())
                 {
@@ -33,13 +20,7 @@ class MY_Controller extends CI_Controller
                                 $this->config->set_item('language', $data_return->language_value);
                         }
                 }
-
-                $this->load->database();
-                $this->load->helper(array('url', 'language'));
-
                 $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
-
-                $this->lang->load(array('ci_change_language', 'ci_validation', 'auth'));
         }
 
         /**
@@ -62,30 +43,6 @@ class MY_Controller extends CI_Controller
                 }
         }
 
-        public function _get_csrf_nonce()
-        {
-                $this->load->helper('string');
-                $key   = random_string('alnum', 8);
-                $value = random_string('alnum', 20);
-                $this->session->set_flashdata('csrfkey', $key);
-                $this->session->set_flashdata('csrfvalue', $value);
-
-                return array($key => $value);
-        }
-
-        public function _valid_csrf_nonce()
-        {
-                $csrfkey = $this->input->post($this->session->flashdata('csrfkey'));
-                if ($csrfkey && $csrfkey == $this->session->flashdata('csrfvalue'))
-                {
-                        return TRUE;
-                }
-                else
-                {
-                        return FALSE;
-                }
-        }
-
 }
 
 class Admin_Controller extends MY_Controller
@@ -98,8 +55,6 @@ class Admin_Controller extends MY_Controller
                 {
                         redirect('auth/login', 'refresh');
                 }
-                $this->config->load('table');
-                $this->load->helper('navigation');
         }
 
         /**

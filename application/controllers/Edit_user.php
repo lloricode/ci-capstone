@@ -29,11 +29,7 @@ class Edit_user extends Admin_Controller
 
                 if (isset($_POST) && !empty($_POST))
                 {
-                        // do we have a valid request?
-                        if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id'))
-                        {
-                                show_error($this->lang->line('error_csrf'));
-                        }
+                      
 
                         // update the password if it was posted
                         if ($this->input->post('password'))
@@ -107,8 +103,6 @@ class Edit_user extends Admin_Controller
                         }
                 }
 
-                // display the edit user form
-                $this->data['csrf'] = $this->_get_csrf_nonce();
 
                 // set the flash data error message if there is one
                 $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));

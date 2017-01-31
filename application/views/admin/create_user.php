@@ -88,6 +88,21 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     echo '</div></div> ';
 
 
+                    //Username/identity:
+                    $tmp = (form_error('identity') == '') ? '' : ' error';
+                    echo '<div class="control-group' . $tmp . '">';
+                    echo lang('create_user_username_label', 'identity', array(
+                        'class' => 'control-label',
+                        'id'    => 'inputError'
+                    ));
+                    echo '<div class="controls">';
+                    echo form_input($identity, array(
+                        'id' => 'inputError'
+                    ));
+                    echo form_error('identity');
+                    echo '</div></div> ';
+
+
 
                     //Phone:
                     $tmp = (form_error('phone') == '') ? '' : ' error';

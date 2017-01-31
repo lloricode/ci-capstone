@@ -64,7 +64,12 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$autoload['libraries'] = array();
+$libs_ = array('ion_auth', 'form_validation','session','database');
+if (ENVIRONMENT === 'production')
+{
+        $libs_[]='lib_log';
+}
+$autoload['libraries'] = $libs_;
 
 /*
 | -------------------------------------------------------------------
@@ -95,7 +100,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('date','url','html');
+$autoload['helper'] = array('date','url','html','language','navigation');
 
 /*
 | -------------------------------------------------------------------
@@ -109,7 +114,7 @@ $autoload['helper'] = array('date','url','html');
 | config files.  Otherwise, leave it blank.
 |
 */
-$autoload['config'] = array();
+$autoload['config'] = array('admin/table');
 
 /*
 | -------------------------------------------------------------------
@@ -123,7 +128,7 @@ $autoload['config'] = array();
 | "codeigniter_lang.php" would be referenced as array('codeigniter');
 |
 */
-$autoload['language'] = array();
+$autoload['language'] = array('ci_change_language', 'ci_validation', 'auth');
 
 /*
 | -------------------------------------------------------------------

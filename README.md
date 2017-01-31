@@ -48,8 +48,8 @@ The project description will be updated including the client side after we propo
 
 ## Default Login
 
-- username: admin@admin.com
-- password: password123
+- username: administrator
+- password: mypasswordisadmin1
 
 ## Screencapture
 -An overview over the Admin Panel

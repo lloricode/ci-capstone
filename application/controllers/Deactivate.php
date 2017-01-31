@@ -20,8 +20,6 @@ class Deactivate extends Admin_Controller
 
                 if ($this->form_validation->run() == FALSE)
                 {
-                        // insert csrf check
-                        $this->data['csrf'] = $this->_get_csrf_nonce();
                         $this->data['user'] = $this->ion_auth->user($id)->row();
 
                         $this->_render_admin_page('admin/deactivate_user', $this->data);
@@ -31,12 +29,7 @@ class Deactivate extends Admin_Controller
                         // do we really want to deactivate?
                         if ($this->input->post('confirm') == 'yes')
                         {
-                                // do we have a valid request?
-                                if ($this->_valid_csrf_nonce() === FALSE || $id != $this->input->post('id'))
-                                {
-                                        show_error($this->lang->line('error_csrf'));
-                                }
-
+                               
                                 // do we have the right userlevel?
                                 if ($this->ion_auth->logged_in() && $this->ion_auth->is_admin())
                                 {
