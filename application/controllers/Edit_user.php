@@ -15,7 +15,7 @@ class Edit_user extends Admin_Controller
         public function index()
         {
 
-                if (!($id = $this->input->get('user-id')))
+                if (!($user_id = $this->input->get('user-id')))
                 {
                         show_error('Invalid request.');
                 }
@@ -24,14 +24,14 @@ class Edit_user extends Admin_Controller
 
 
 
-                $user = $this->ion_auth->user($id)->row();
+                $user = $this->ion_auth->user($user_id)->row();
 
                 if (!$user)
                 {
                         show_error('Invalid request.');
                 }
                 $groups        = $this->ion_auth->groups()->result_array();
-                $currentGroups = $this->ion_auth->get_users_groups($id)->result();
+                $currentGroups = $this->ion_auth->get_users_groups($user_id)->result();
 
                 //just 
                 // validate form input
@@ -77,11 +77,11 @@ class Edit_user extends Admin_Controller
                                         if (isset($groupData) && !empty($groupData))
                                         {
 
-                                                $this->ion_auth->remove_from_group('', $id);
+                                                $this->ion_auth->remove_from_group('', $user_id);
 
                                                 foreach ($groupData as $grp)
                                                 {
-                                                        $this->ion_auth->add_to_group($grp, $id);
+                                                        $this->ion_auth->add_to_group($grp, $user_id);
                                                 }
                                         }
                                 }

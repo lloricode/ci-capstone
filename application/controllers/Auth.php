@@ -8,6 +8,8 @@ class Auth extends MY_Controller
         public function __construct()
         {
                 parent::__construct();
+                $this->load->library('form_validation');
+                $this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
         }
 
         public function index()
@@ -30,6 +32,7 @@ class Auth extends MY_Controller
         // log the user in
         public function login()
         {
+
                 $this->check_log();
                 $this->data['title'] = $this->lang->line('login_heading');
 
