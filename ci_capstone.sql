@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 18, 2016 at 03:39 PM
+-- Generation Time: Jan 31, 2017 at 10:12 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 5.6.24
 
@@ -79,6 +79,13 @@ CREATE TABLE `language` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `added_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `language`
+--
+
+INSERT INTO `language` (`language_id`, `user_id`, `language_value`, `updated_at`, `added_at`) VALUES
+(1, 1, 'english', '2017-01-31 09:02:22', '2016-12-18 14:51:07');
 
 -- --------------------------------------------------------
 
@@ -160,9 +167,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`) VALUES
-(1, '127.0.0.1', 'administrator', '$2y$08$sEYjrDksO1aUJiBxsZgXPO9w.zJggWfAM..hgGLwum8Jl1BOsSdt6', '', 'admin@admin.com', 'd3bf03427835d496277d4c78330a125a795a33f8', NULL, NULL, NULL, 1268889823, 1482071929, 1, 'Im Admin', 'ci capstone', 'ADMIN', '0'),
-(2, '::1', 'sdfs@asdas.dfgd', '$2y$08$vEpDmEJWteiZkuOcd/BsieR.kE7TeC7jWmjEYx/YpM03G96mnj8w.', NULL, 'sdfs@asdas.dfgd', NULL, NULL, NULL, NULL, 1482070427, NULL, 1, 'fgsd', 'sdfgsd', 'sdfsdf', 'sfsdf'),
-(3, '::1', 'sdfs@asdas.dfagd', '$2y$08$FGJLAJgZnJfEMFZdISq6JeZbsMGxy.i3.Nq2ovPrQVkOMQXAcF5YO', NULL, 'sdfs@asdas.dfagd', NULL, NULL, NULL, NULL, 1482070464, NULL, 1, 'fgsd', 'sdfgsd', 'sdfsdf', 'sfsdf');
+(1, '127.0.0.1', 'administrator', '$2y$08$m8P3WHDASe.hDP4Jn6J9iut/YsshOKD3xuzuVpjiTKeFf146Mfgoi', '', 'admin@admin.com', 'd3bf03427835d496277d4c78330a125a795a33f8', NULL, NULL, NULL, 1268889823, 1485853919, 1, 'Im Admin', 'ci capstone', 'ADMIN', '0');
 
 -- --------------------------------------------------------
 
@@ -181,10 +186,8 @@ CREATE TABLE `users_groups` (
 --
 
 INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
-(21, 1, 1),
-(22, 1, 2),
-(23, 2, 2),
-(24, 3, 2);
+(39, 1, 1),
+(40, 1, 2);
 
 --
 -- Indexes for dumped tables
@@ -259,7 +262,7 @@ ALTER TABLE `groups`
 -- AUTO_INCREMENT for table `language`
 --
 ALTER TABLE `language`
-  MODIFY `language_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `language_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `login_attempts`
 --
@@ -279,12 +282,12 @@ ALTER TABLE `public_preferences`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `users_groups`
 --
 ALTER TABLE `users_groups`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 --
 -- Constraints for dumped tables
 --

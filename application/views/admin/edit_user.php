@@ -20,7 +20,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                         'name'       => 'basic_validate',
                         'id'         => 'basic_validate',
                         'novalidate' => 'novalidate',
-                    ));
+                            ), array('id', $user->id));
 
 
 
@@ -152,8 +152,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     ?>
 
 
-                    <?php echo form_hidden('id', $user->id); ?>
-                    <?php echo form_hidden($csrf); ?>
+
 
                     <?php
                     echo ' <div class="form-actions">';

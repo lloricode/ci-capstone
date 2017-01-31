@@ -19,7 +19,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                         'name'       => 'basic_validate',
                         'id'         => 'basic_validate',
                         'novalidate' => 'novalidate',
-                    ));
+                    ),array('id' => $user->id));
 
 
 
@@ -57,8 +57,6 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                         'class' => 'btn btn-success'
                     ));
 
-                    echo form_hidden($csrf);
-                    echo form_hidden(array('id' => $user->id));
 
                     echo form_reset('reset', 'Reset', array(
                         'class' => 'btn btn-default'
