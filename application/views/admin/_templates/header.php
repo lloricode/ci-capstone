@@ -113,11 +113,11 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
-<?php foreach ($menu_settings as $k => $v): ?>  
+                        <?php foreach ($menu_settings as $k => $v): ?>  
                                 <li class="divider"></li>
-                                <li><a class="sAdd" title="" href="<?php echo base_url($k); ?>"><i class="icon-<?php echo $v['icon']; ?>"></i> <?php echo $v['label']; ?></a></li>
+                                <li><a class="sAdd" title="" href="<?php echo base_url(HOME_REDIRECT . $k); ?>"><i class="icon-<?php echo $v['icon']; ?>"></i> <?php echo $v['label']; ?></a></li>
 
-<?php endforeach; ?>
+                        <?php endforeach; ?>
                     </ul>
                 </li>
                 <li class="">
@@ -138,11 +138,11 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
                         </span>
                         <i class="icon icon-beaker"></i> 
                         <span class="text">
-<?php echo CI_VERSION; ?>
+                            <?php echo CI_VERSION; ?>
                         </span>
                     </a>
                 </li>
-<?php if (ENVIRONMENT === 'development'): ?>
+                <?php if (ENVIRONMENT === 'development'): ?>
                         <li class="">
                             <a title="">
                                 <i class="icon icon-magic"></i> 
@@ -151,7 +151,7 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
                                 </span>
                             </a>
                         </li>
-<?php endif; ?>
+                <?php endif; ?>
             </ul>
         </div>
         <!--close-top-Header-menu-->
