@@ -14,9 +14,14 @@ class Deactivate extends Admin_Controller
         {
                 if (!($id = (int) $this->input->get('user-id')))
                 {
+
                         show_error('Invalid request.');
                 }
 
+                if ($id == $this->ion_auth->user()->row()->id)
+                {
+                        show_error('You cannot deactivate your self.');
+                }
                 $this->load->library('form_validation');
                 $this->form_validation->set_rules('confirm', $this->lang->line('deactivate_validation_confirm_label'), 'required');
                 $this->form_validation->set_rules('id', $this->lang->line('deactivate_validation_user_id_label'), 'required|alpha_numeric');

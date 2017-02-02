@@ -9,6 +9,7 @@ if (!function_exists('get_3rd_segment_as_int'))
          * 
          * @return int - value from 3rd segment in url if not exist vale 1,
          *  then if not integer show error will occured
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
         function get_3rd_segment_as_int()
         {

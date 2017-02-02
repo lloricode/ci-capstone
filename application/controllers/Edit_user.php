@@ -37,8 +37,8 @@ class Edit_user extends Admin_Controller
                 // validate form input
                 $this->form_validation->set_rules('first_name', $this->lang->line('edit_user_validation_fname_label'), 'trim|required|human_name');
                 $this->form_validation->set_rules('last_name', $this->lang->line('edit_user_validation_lname_label'), 'trim|required|human_name');
-                $this->form_validation->set_rules('phone', $this->lang->line('edit_user_validation_phone_label'), 'trim|required');
-                $this->form_validation->set_rules('company', $this->lang->line('edit_user_validation_company_label'), 'trim|required');
+                $this->form_validation->set_rules('phone', $this->lang->line('edit_user_validation_phone_label'), 'trim');
+                $this->form_validation->set_rules('company', $this->lang->line('edit_user_validation_company_label'), 'trim');
 
                 if (isset($_POST) && !empty($_POST))
                 {
@@ -93,7 +93,7 @@ class Edit_user extends Admin_Controller
                                         $this->session->set_flashdata('message', $this->ion_auth->messages());
                                         if ($this->ion_auth->is_admin())
                                         {
-                                                redirect(current_url(), 'refresh');
+                                                redirect(base_url('edit-user/?user-id=' . $user_id), 'refresh');
                                         }
                                         else
                                         {
