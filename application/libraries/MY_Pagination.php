@@ -16,8 +16,8 @@ class MY_Pagination extends CI_Pagination
          * pagination configuration :
          * application/config/pagination.php
          * 
-         * @param type $url
-         * @param type $total_row
+         * @param string $url
+         * @param string $total_row
          * @return type
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */

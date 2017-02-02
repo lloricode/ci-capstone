@@ -2,6 +2,34 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+if (!function_exists('get_3rd_segment_as_int'))
+{
+
+        /**
+         * 
+         * @return int - value from 3rd segment in url if not exist vale 1,
+         *  then if not integer show error will occured
+         */
+        function get_3rd_segment_as_int()
+        {
+                $CI = & get_instance();
+
+                if ($int_value = $CI->uri->segment(3))
+                {
+                        if (is_numeric($int_value))
+                        {
+                                return $int_value;
+                        }
+                        show_error('Invalid request.');
+                }
+
+                /**
+                 * else return 1 as default
+                 */
+                return 1;
+        }
+
+}
 if (!function_exists('check_id_form_url'))
 {
 

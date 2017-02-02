@@ -27,9 +27,11 @@ class Users extends Admin_Controller
                 $this->total_rows = $this->User_model->total_rows();
 
                 /**
-                 * default page
+                 * get the page from url
+                 * 
+                 * if has not, default $page will is 1
                  */
-                $this->page_ = 1;
+                $this->page_ = get_3rd_segment_as_int();
         }
 
         /**
@@ -38,15 +40,6 @@ class Users extends Admin_Controller
         public function index()
         {
 
-                /**
-                 * get the page from url
-                 * 
-                 * if has not, default $page will is
-                 */
-                if ($this->uri->segment(3))
-                {
-                        $this->page_ = ($this->uri->segment(3));
-                }
                 // set the flash data error message if there is one
                 // $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
                 //list the users
