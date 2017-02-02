@@ -14,10 +14,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 const TITLETAB = 'CI Capstone';
 const TITLE1 = 'CI';
 const TITLE2 = 'Capstone';
-const SEGMENT_NUMBER = 1; //base_url 0,
-const MENU_ITEM_DEFAULT = 'dashboard';
+const SEGMENT_NUMBER = 2; //base_url 0,
+const MENU_ITEM_DEFAULT = 'home';
 const BOOTSTRAPS_LIB_DIR = 'assets/framework/bootstrap/admin/';
-const HOME_REDIRECT = ''; // sample    admin/
+const HOME_REDIRECT = 'admin/'; // sample    admin/
 
 
 $main_sub   = '';
@@ -102,7 +102,7 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
             <ul class="nav">
                 <li  class="dropdown" id="profile-messages" ><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i>  <span class="text"><?php echo $this->session->userdata('user_last_name') . ', ' . $this->session->userdata('user_first_name'); ?></span><b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="<?php echo base_url('auth/logout'); ?>"><i class="icon-key"></i> Log Out</a></li>
+                        <li><a href="<?php echo base_url('admin/auth/logout'); ?>"><i class="icon-key"></i> Log Out</a></li>
                     </ul>
                 </li>
                 <li class="dropdown" id="menu-messages">
@@ -121,7 +121,7 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
                     </ul>
                 </li>
                 <li class="">
-                    <a title="" href="<?php echo base_url('auth/logout'); ?>">
+                    <a title="" href="<?php echo base_url('admin/auth/logout'); ?>">
                         <i class="icon icon-share-alt"></i> 
                         <span class="text">Logout</span>
                     </a>

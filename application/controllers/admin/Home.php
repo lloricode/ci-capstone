@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Dashboard extends Admin_Controller
+class Home extends Admin_Controller
 {
 
         function __construct()
@@ -12,8 +12,8 @@ class Dashboard extends Admin_Controller
 
         public function index()
         {
-                $data['test'] = 'test dashboard';
-                $this->_render_admin_page('admin/dashboard', $data);
+                $data['test'] = 'test Home';
+                $this->_render_admin_page('admin/home', $data);
         }
 
 }

@@ -13,10 +13,10 @@ if (!function_exists('navigations_main'))
         function navigations_main()
         {
                 return array(
-                    'dashboard' =>
+                    'home' =>
                     array(
-                        'label' => 'Dashboard',
-                        'desc'  => 'Dashboard Description',
+                        'label' => 'Home',
+                        'desc'  => 'Home Description',
                         'icon'  => 'beaker',
                     ),
                     //sub menu

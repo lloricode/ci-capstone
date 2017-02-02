@@ -40,7 +40,7 @@ class Database extends Admin_Controller
 
 
                 $this->template['backup_button'] = $this->_render_page('admin/_templates/button_view', array(
-                    'href'         => 'database/backup-database',
+                    'href'         => 'admin/database/backup-database',
                     'button_label' => lang('db_back_up'),
                         ), TRUE);
 

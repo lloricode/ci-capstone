@@ -50,7 +50,7 @@ class Deactivate extends Admin_Controller
                         }
 
                         // redirect them back to the auth page
-                        redirect('users', 'refresh');
+                        redirect('admin/users', 'refresh');
                 }
         }
 

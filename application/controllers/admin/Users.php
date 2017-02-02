@@ -31,7 +31,7 @@ class Users extends Admin_Controller
                  * 
                  * if has not, default $page will is 1
                  */
-                $this->page_ = get_3rd_segment_as_int();
+                $this->page_ = get_page_in_url();
         }
 
         /**
@@ -70,15 +70,15 @@ class Users extends Admin_Controller
                         $groups = '';
                         foreach ($user->groups as $group)
                         {
-                                $groups .= anchor("edit-group/?group-id=" . $group->id, my_htmlspecialchars($group->name)) . ' | ';
+                                $groups .= anchor("admin/edit-group/?group-id=" . $group->id, my_htmlspecialchars($group->name)) . ' | ';
                         }
                         array_push($table_data, array(
                             my_htmlspecialchars($user->first_name),
                             my_htmlspecialchars($user->last_name),
                             my_htmlspecialchars($user->username),
-                            $groups,
-                            (($user->active) ? anchor("deactivate/?user-id=" . $user->id, lang('index_active_link')) : anchor("users/activate/" . $user->id, lang('index_inactive_link'))),
-                            anchor("edit-user/?user-id=" . $user->id, 'Edit'),
+                            trim($groups, ' | '),
+                            (($user->active) ? anchor("admin/deactivate/?user-id=" . $user->id, lang('index_active_link')) : anchor("admin/users/activate/" . $user->id, lang('index_inactive_link'))),
+                            anchor("admin/edit-user/?user-id=" . $user->id, 'Edit'),
                         ));
                 }
 
@@ -106,7 +106,7 @@ class Users extends Admin_Controller
                 /**
                  * pagination
                  */
-                $this->data['pagination'] = $this->pagination->generate_link('users/index', $this->total_rows / $this->limit);
+                $this->data['pagination'] = $this->pagination->generate_link('admin/users/index', $this->total_rows / $this->limit);
 
                 /**
                  * caption of table
@@ -124,11 +124,11 @@ class Users extends Admin_Controller
                 $this->template['table_data_users']   = $this->_render_page('admin/_templates/table', $this->data, TRUE);
                 $this->template['controller']         = 'table';
                 $this->template['create_user_button'] = $this->_render_page('admin/_templates/button_view', array(
-                    'href'         => 'create-user',
+                    'href'         => 'admin/create-user',
                     'button_label' => lang('create_user_heading'),
                         ), TRUE);
                 $this->template['export_user_button'] = $this->_render_page('admin/_templates/button_view', array(
-                    'href'         => 'users/export-excel',
+                    'href'         => 'admin/users/export-excel',
                     'button_label' => lang('excel_export'),
                         ), TRUE);
 
@@ -198,13 +198,13 @@ class Users extends Admin_Controller
                 {
                         // redirect them to the auth page
                         $this->session->set_flashdata('message', $this->ion_auth->messages());
-                        redirect(base_url('users'), 'refresh');
+                        redirect(base_url('admin/users'), 'refresh');
                 }
                 else
                 {
                         // redirect them to the forgot password page
                         $this->session->set_flashdata('message', $this->ion_auth->errors());
-                        redirect(base_url('users'), 'refresh');
+                        redirect(base_url('admin/users'), 'refresh');
                 }
         }
 

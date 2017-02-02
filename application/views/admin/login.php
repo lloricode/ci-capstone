@@ -19,7 +19,7 @@ $link  = base_url('assets/framework/bootstrap/admin/');
     </head>
     <body>
         <div id="loginbox">            
-            <?php echo form_open(base_url('auth/login'), array('class' => 'form-vertical', 'id' => 'loginform')) ?>
+            <?php echo form_open(base_url('admin/auth/login'), array('class' => 'form-vertical', 'id' => 'loginform')) ?>
             <div class="control-group normal_text"> <h3><img src="<?php echo $link; ?>img/logo.png" alt="Logo" /></h3></div>
             <div class="control-group">
                 <div class="controls">

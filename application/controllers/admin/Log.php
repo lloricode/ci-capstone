@@ -41,7 +41,7 @@ class Log extends Admin_Controller
                  * 
                  * if has not, default $page will is 1
                  */
-                $this->page_ = get_3rd_segment_as_int();
+                $this->page_ = get_page_in_url(); 
         }
 
         /**
@@ -85,7 +85,7 @@ class Log extends Admin_Controller
                 /**
                  * pagination
                  */
-                $this->data['pagination'] = $this->pagination->generate_link('log/index', $this->total_rows / $this->limit);
+                $this->data['pagination'] = $this->pagination->generate_link('admin/log/index', $this->total_rows / $this->limit);
 
                 /**
                  * caption of table

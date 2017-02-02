@@ -40,7 +40,7 @@ class Language extends Admin_Controller
                 {
                         //no need to load, its already in my_controller
                         //   $this->load->model('Language_Model');
-                        $data_return = $this->Language_Model->where('user_id', $this->session->userdata('user_id'))->get();
+                        $data_return = $this->Language_model->where('user_id', $this->session->userdata('user_id'))->get();
                         $lang        = $this->input->post('lang');
                         if ($data_return)
                         {
@@ -53,7 +53,7 @@ class Language extends Admin_Controller
                                     'language_id' => $data_return->language_id,
                                     'user_id'     => $this->session->userdata('user_id'),
                                 );
-                                $this->Language_Model->update($data_update, $where);
+                                $this->Language_model->update($data_update, $where);
                                 $data['message'] = 'updated';
                         }
                         else

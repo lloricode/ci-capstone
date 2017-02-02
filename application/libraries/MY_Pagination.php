@@ -25,7 +25,7 @@ class MY_Pagination extends CI_Pagination
         {
                 $this->CI->pagination->initialize(array(
                     'base_url'   => base_url($url),
-                    'total_rows' => $total_row
+                    'total_rows' => $total_row,
                 ));
 
                 /**

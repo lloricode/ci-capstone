@@ -21,7 +21,7 @@ class Auth extends MY_Controller
         {
                 if ($this->ion_auth->is_admin())
                 {
-                        redirect('dashboard', 'refresh');
+                        redirect('admin/dashboard', 'refresh');
                 }
                 else if ($this->ion_auth->logged_in())
                 {
@@ -58,14 +58,14 @@ class Auth extends MY_Controller
                                 ));
 
                                 //redirect them back to the home page
-                                redirect('dashboard', 'refresh');
+                                redirect('admin/home', 'refresh');
                         }
                         else
                         {
                                 // if the login was un-successful
                                 // redirect them back to the login page
                                 $this->session->set_flashdata('message', $this->ion_auth->errors());
-                                redirect('auth/login', 'refresh'); // use redirects instead of loading views for compatibility with MY_Controller libraries
+                                redirect('admin/auth/login', 'refresh'); // use redirects instead of loading views for compatibility with MY_Controller libraries
                         }
                 }
                 else
@@ -120,7 +120,7 @@ class Auth extends MY_Controller
                 $logout = $this->ion_auth->logout();
                 // redirect them to the login page
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
-                redirect('auth/login', 'refresh');
+                redirect('admin/auth/login', 'refresh');
         }
 
 }

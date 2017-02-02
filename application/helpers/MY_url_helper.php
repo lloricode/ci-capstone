@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-if (!function_exists('get_3rd_segment_as_int'))
+if (!function_exists('get_page_in_url'))
 {
 
         /**
@@ -11,11 +11,11 @@ if (!function_exists('get_3rd_segment_as_int'))
          *  then if not integer show error will occured
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        function get_3rd_segment_as_int()
+        function get_page_in_url()
         {
                 $CI = & get_instance();
 
-                if ($int_value = $CI->uri->segment(3))
+                if ($int_value = $CI->uri->segment(4))
                 {
                         if (is_numeric($int_value))
                         {
