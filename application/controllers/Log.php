@@ -12,7 +12,7 @@ class Log extends Admin_Controller
         {
                 parent::__construct();
 
-                $this->load->model('Log_Model');
+                $this->load->model('Log_model');
 
                 $this->config->load('log');
 
@@ -36,7 +36,7 @@ class Log extends Admin_Controller
                 $this->table->set_heading($key);
 
                 //get data from database table logs
-                $logs = $this->Log_Model->get_all();
+                $logs = $this->Log_model->get_all();
 
                 //if has vale
                 if ($logs)

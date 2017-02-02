@@ -12,5 +12,13 @@
                 </div>
             </div>
         </div>
+        <?php
+        if (isset($pagination))
+        {
+                echo '<div class="pagination alternate">';
+                echo $pagination;
+                echo '</div>';
+        }
+        ?>
     </div>
 </div>

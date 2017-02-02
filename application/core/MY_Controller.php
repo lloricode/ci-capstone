@@ -12,8 +12,8 @@ class MY_Controller extends CI_Controller
                 //load the preffer user language (if logged)
                 if ($this->ion_auth->logged_in() OR $this->ion_auth->is_admin())
                 {
-                        $this->load->model('Language_Model');
-                        $data_return = $this->Language_Model->where('user_id', $this->session->userdata('user_id'))->get();
+                        $this->load->model('Language_model');
+                        $data_return = $this->Language_model->where('user_id', $this->session->userdata('user_id'))->get();
 
                         if ($data_return)
                         {
@@ -88,13 +88,13 @@ class Admin_Controller extends MY_Controller
          * @return type
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        public function my_table_view($header, $data)
+        public function my_table_view($header, $data, $table_config)
         {
                 $this->config->load('admin/table');
                 $this->load->library('table');
                 $this->table->set_heading($header);
                 $this->table->set_template(array(
-                    'table_open' => $this->config->item('table_open_pagination'),
+                    'table_open' => $this->config->item($table_config),
                 ));
                 return $this->table->generate($data);
         }
