@@ -44,9 +44,9 @@ class Auth extends MY_Controller
                 {
                         // check to see if the user is logging in
                         // check for "remember me"
-                        $remember = (bool) $this->input->post('remember');
+                        $remember = (bool) $this->input->post('remember', TRUE);
 
-                        if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember))
+                        if ($this->ion_auth->login($this->input->post('identity', TRUE), $this->input->post('password', TRUE), $remember))
                         {
                                 //if the login is successful
                                 //      $this->session->set_flashdata('message', $this->ion_auth->messages());

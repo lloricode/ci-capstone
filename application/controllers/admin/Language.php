@@ -41,7 +41,7 @@ class Language extends Admin_Controller
                         //no need to load, its already in my_controller
                         //   $this->load->model('Language_Model');
                         $data_return = $this->Language_model->where('user_id', $this->session->userdata('user_id'))->get();
-                        $lang        = $this->input->post('lang');
+                        $lang        = $this->input->post('lang', TRUE);
                         if ($data_return)
                         {
 

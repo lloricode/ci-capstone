@@ -7,7 +7,7 @@ if (!function_exists('get_page_in_url'))
 
         /**
          * 
-         * @return int - value from 3rd segment in url if not exist vale 1,
+         * @return int - value from 4rth segment in url if not exist vale 1,
          *  then if not integer show error will occured
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */

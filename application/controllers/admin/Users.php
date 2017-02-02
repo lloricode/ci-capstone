@@ -168,7 +168,7 @@ class Users extends Admin_Controller
                             $user->first_name,
                             $user->last_name,
                             $user->email,
-                            $groups,
+                            trim($groups, ' | '),
                             ($user->active) ? lang('index_active_link') : lang('index_inactive_link'),
                         );
                 }

@@ -16,7 +16,7 @@ if (!function_exists('backup_database'))
                 $CI->load->dbutil();
                 $prefs  = array(
                     'format'   => 'zip',
-                    'filename' => 'evaluation.sql',
+                    'filename' => 'ci_capstone.sql',
                 );
                 $backup = $CI->dbutil->backup($prefs);
 

@@ -39,7 +39,7 @@ class Deactivate extends Admin_Controller
                 else
                 {
                         // do we really want to deactivate?
-                        if ($this->input->post('confirm') == 'yes')
+                        if ($this->input->post('confirm', TRUE) == 'yes')
                         {
 
                                 // do we have the right userlevel?

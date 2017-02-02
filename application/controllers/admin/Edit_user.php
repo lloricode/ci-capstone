@@ -40,12 +40,12 @@ class Edit_user extends Admin_Controller
                 $this->form_validation->set_rules('phone', $this->lang->line('edit_user_validation_phone_label'), 'trim');
                 $this->form_validation->set_rules('company', $this->lang->line('edit_user_validation_company_label'), 'trim');
 
-                if (isset($_POST) && !empty($_POST))
+                if ($this->form_validation->run())
                 {
 
 
                         // update the password if it was posted
-                        if ($this->input->post('password'))
+                        if ($this->input->post('password', TRUE))
                         {
                                 $this->form_validation->set_rules('password', $this->lang->line('edit_user_validation_password_label'), 'trim|required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[password_confirm]|no_space|password_level[3]');
                                 $this->form_validation->set_rules('password_confirm', $this->lang->line('edit_user_validation_password_confirm_label'), 'trim|required');
@@ -54,16 +54,16 @@ class Edit_user extends Admin_Controller
                         if ($this->form_validation->run() === TRUE)
                         {
                                 $data = array(
-                                    'first_name' => $this->input->post('first_name'),
-                                    'last_name'  => $this->input->post('last_name'),
-                                    'company'    => $this->input->post('company'),
-                                    'phone'      => $this->input->post('phone'),
+                                    'first_name' => $this->input->post('first_name', TRUE),
+                                    'last_name'  => $this->input->post('last_name', TRUE),
+                                    'company'    => $this->input->post('company', TRUE),
+                                    'phone'      => $this->input->post('phone', TRUE),
                                 );
 
                                 // update the password if it was posted
-                                if ($this->input->post('password'))
+                                if ($this->input->post('password', TRUE))
                                 {
-                                        $data['password'] = $this->input->post('password');
+                                        $data['password'] = $this->input->post('password', TRUE);
                                 }
 
 
@@ -72,7 +72,7 @@ class Edit_user extends Admin_Controller
                                 if ($this->ion_auth->is_admin())
                                 {
                                         //Update the groups user belongs to
-                                        $groupData = $this->input->post('groups');
+                                        $groupData = $this->input->post('groups', TRUE);
 
                                         if (isset($groupData) && !empty($groupData))
                                         {

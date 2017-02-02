@@ -13,14 +13,14 @@ if (!function_exists('navigations_main'))
         function navigations_main()
         {
                 return array(
-                    'home' =>
+                    'home'         =>
                     array(
                         'label' => 'Home',
                         'desc'  => 'Home Description',
                         'icon'  => 'beaker',
                     ),
                     //sub menu
-                    'menus'     =>
+                    'user_menus'   =>
                     array(
                         'label' => lang('index_heading'),
                         'icon'  => 'user',
@@ -59,7 +59,28 @@ if (!function_exists('navigations_main'))
                         ),
                     ),
                     //sub menu
-                    'menus4'    =>
+                    'group_menu'   =>
+                    array(
+                        'label' => lang('index_groups_th'),
+                        'icon'  => 'group',
+                        'sub'   =>
+                        array(
+                            'groups'       =>
+                            array(
+                                'label' => lang('index_groups_th'),
+                                'desc'  => lang('index_groups_th') . ' Description',
+                                'seen'  => TRUE,
+                            ),
+                            'create-group' =>
+                            array(
+                                'label' => lang('create_group_heading'),
+                                'desc'  => lang('create_group_heading') . ' Description',
+                                'seen'  => TRUE,
+                            ),
+                        ),
+                    ),
+                    //sub menu
+                    'setting_menu' =>
                     array(
                         'label' => 'Settings',
                         'icon'  => 'cogs',

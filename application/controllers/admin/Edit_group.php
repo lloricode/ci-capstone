@@ -30,13 +30,17 @@ class Edit_group extends Admin_Controller
                         show_error('Invalid request.');
                 }
                 // validate form input
-                $this->form_validation->set_rules('group_name', $this->lang->line('edit_group_validation_name_label'), 'required|alpha_dash');
+                $this->form_validation->set_rules(
+                        'group_name', $this->lang->line('edit_group_validation_name_label'), 'required|alpha_dash'
+                );
 
-                if (isset($_POST) && !empty($_POST))
+                if ($this->form_validation->run())
                 {
                         if ($this->form_validation->run() === TRUE)
                         {
-                                $group_update = $this->ion_auth->update_group($id, $_POST['group_name'], $_POST['group_description']);
+                                $group_update = $this->ion_auth->update_group(
+                                        $id, $this->input->post('group_name', TRUE), $this->input->post('group_description', TRUE)
+                                );
 
                                 if ($group_update)
                                 {
