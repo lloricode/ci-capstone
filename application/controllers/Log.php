@@ -8,6 +8,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Log extends Admin_Controller
 {
 
+
+        private $page_;
+        private $limit;
+        private $total_rows;
+
         function __construct()
         {
                 parent::__construct();
@@ -16,15 +21,42 @@ class Log extends Admin_Controller
 
                 $this->config->load('log');
 
-                $this->load->library('table');
+                $this->load->library(array('table', 'pagination'));
                 $this->config->load('admin/table');
                 $this->table->set_template(array(
-                    'table_open' => $this->config->item('table_open_pagination'),
+                    'table_open' => $this->config->item('table_open_bordered'),
                 ));
+
+                /**
+                 * pagination limit
+                 */
+                $this->limit      = 10;
+                /**
+                 * get total rows in users table (no where| all data)
+                 */
+                $this->total_rows = $this->Log_model->total_rows();
+
+                /**
+                 * default page
+                 */
+                $this->page_ = 1;
         }
 
+        /**
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
         public function index()
         {
+
+                /**
+                 * get the page from url
+                 * 
+                 * if has not, default $page will is
+                 */
+                if ($this->uri->segment(3))
+                {
+                        $this->page_ = ($this->uri->segment(3));
+                }
 
                 //store colum nnames of logs table
                 $key = array();
@@ -32,11 +64,12 @@ class Log extends Admin_Controller
                 {
                         $key[] = $field->name;
                 }
+
                 //set ass header table
                 $this->table->set_heading($key);
 
                 //get data from database table logs
-                $logs = $this->Log_model->get_all();
+                $logs = $this->Log_model->limit($this->limit, $this->limit * $this->page_ - $this->limit)->get_all();
 
                 //if has vale
                 if ($logs)
@@ -52,9 +85,23 @@ class Log extends Admin_Controller
                                 $this->table->add_row($tmp);
                         }
                 }
-                $data['logs']       = $this->table->generate();
-                $data['controller'] = 'table';
-                $this->_render_admin_page('admin/log', $data);
+                $this->data['logs']       = $this->table->generate();
+                $this->data['controller'] = 'table';
+
+
+
+                /**
+                 * pagination
+                 */
+                $this->data['pagination'] = $this->pagination->generate_link('log/index', $this->total_rows / $this->limit);
+
+                /**
+                 * caption of table
+                 */
+                $this->data['caption'] = lang('index_heading');
+
+
+                $this->_render_admin_page('admin/log', $this->data);
         }
 
 }

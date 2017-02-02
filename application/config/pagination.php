@@ -12,16 +12,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * application/libraries/MY_Pagination.php 
  * 
  * 
- * $config['base_url']=base_url('controller);
- * $config['total_rows'] =$$this->total_rows / $this->limit; 
+ * $config['base_url']     = base_url($controller);
+ * $config['total_rows']   = $this->total_rows / $this->limit; 
  * 
- * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
- * 
+ * @author Lloric Mayuga Garcia <emorickfighter@gmail.com> 
  * @reference http://stackoverflow.com/questions/36951678/how-to-load-external-config-file-for-pagination-in-codeigniter
  */
 $config['per_page']         = 1;
 $config['use_page_numbers'] = TRUE;
-$config['num_links']        = 3; // lesft&right - link number$config[ 
+$config['num_links']        = 3; // lesft&right - link number
 $config['full_tag_open']    = '<ul>';
 $config['full_tag_close']   = '</ul>';
 $config['cur_tag_open']     = '<li class="active"><a>';

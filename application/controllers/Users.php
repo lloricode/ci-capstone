@@ -152,9 +152,7 @@ class Users extends Admin_Controller
         public function export_excel()
         {
                 $titles   = array(
-                    lang('index_fname_th
-
-                '),
+                    lang('index_fname_th'),
                     lang('index_lname_th'),
                     lang('index_email_th'),
                     lang('index_groups_th'),
@@ -213,9 +211,7 @@ class Users extends Admin_Controller
                 {
                         // redirect them to the forgot password page
                         $this->session->set_flashdata('message', $this->ion_auth->errors());
-                        redirect(base_url('users'), 'refresh    
-
-                   ');
+                        redirect(base_url('users'), 'refresh');
                 }
         }
 
