@@ -15,6 +15,7 @@ class Users extends Admin_Controller
                 parent::__construct();
                 $this->lang->load('ci_excel');
                 $this->load->model('User_model');
+                $this->load->library('pagination');
 
                 /**
                  * pagination limit
@@ -112,7 +113,7 @@ class Users extends Admin_Controller
                 /**
                  * pagination
                  */
-                $this->data['pagination'] = $this->pagination();
+                $this->data['pagination'] = $this->pagination->generate_link('users/index', $this->total_rows / $this->limit);
 
                 /**
                  * caption of table
@@ -145,62 +146,15 @@ class Users extends Admin_Controller
         }
 
         /**
-         * complete pagination
-         * 
-         * @return string pagination '<ul><li><a></a></li></ul>'
-         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
-         */
-        private function pagination()
-        {
-                $config = array(
-                    'base_url'         => base_url('users/index'),
-                    'total_rows'       => $this->total_rows / $this->limit,
-                    'per_page'         => 1,
-                    'use_page_numbers' => TRUE,
-                    'num_links'        => 3, // lesft&right - link number
-                    'full_tag_open'    => '<ul>',
-                    'full_tag_close'   => '</ul>',
-                    'cur_tag_open'     => '<li class="active"><a href="#">',
-                    'cur_tag_close'    => '</a></li>',
-                    'next_link'        => 'Next',
-                    'prev_link'        => 'Previous',
-                    'uri_segment'      => 3,
-                    'first_tag_open'   => '<li>',
-                    'first_tag_close'  => '</li>',
-                    'last_tag_open'    => '<li>',
-                    'last_tag_close'   => '</li>',
-                    'next_tag_open'    => '<li>',
-                    'next_tag_close'   => '</li>',
-                    'prev_tag_open'    => '<li>',
-                    'prev_tag_close'   => '</li>',
-                    'first_tag_open'   => '<li>',
-                    'first_tag_close'  => '</li>',
-                    'num_tag_open'     => '<li>',
-                    'num_tag_close'    => '</li>'
-                );
-                $this->load->library('pagination');
-                $this->pagination->initialize($config);
-
-                /**
-                 * attributes in pagination
-                 */
-                $pagination_attributes = array(
-                );
-
-                /**
-                 * generate list into <ul></ul> then return | it depend on configuration of pagination
-                 */
-                return $this->pagination->create_links();
-        }
-
-        /**
          * Export data
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
         public function export_excel()
         {
                 $titles   = array(
-                    lang('index_fname_th'),
+                    lang('index_fname_th
+
+                '),
                     lang('index_lname_th'),
                     lang('index_email_th'),
                     lang('index_groups_th'),
@@ -259,7 +213,9 @@ class Users extends Admin_Controller
                 {
                         // redirect them to the forgot password page
                         $this->session->set_flashdata('message', $this->ion_auth->errors());
-                        redirect(base_url('users'), 'refresh');
+                        redirect(base_url('users'), 'refresh    
+
+                   ');
                 }
         }
 

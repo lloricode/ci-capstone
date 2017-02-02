@@ -28,7 +28,7 @@ class MY_Controller extends CI_Controller
          * @param type $data
          * @param type $returnhtml
          * @return type
-         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         * @author ion_auth
          */
         public function _render_page($view, $data = null, $returnhtml = false)
         {//I think this makes more sense
