@@ -40,8 +40,6 @@ class Users extends Admin_Controller
         public function index()
         {
 
-                // set the flash data error message if there is one
-                // $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
                 //list the users
                 $users_obj = $this->User_model->limit($this->limit, $this->limit * $this->page_ - $this->limit)->get_all();
 
@@ -121,6 +119,8 @@ class Users extends Admin_Controller
                 /**
                  * templates for users controller
                  */
+                // set the flash data error message if there is one
+                $this->template['message']            = $this->session->flashdata('message');
                 $this->template['table_data_users']   = $this->_render_page('admin/_templates/table', $this->data, TRUE);
                 $this->template['controller']         = 'table';
                 $this->template['create_user_button'] = $this->_render_page('admin/_templates/button_view', array(
