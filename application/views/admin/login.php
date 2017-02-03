@@ -59,13 +59,13 @@ $link  = base_url('assets/framework/bootstrap/admin/');
             </div>
             <?php echo form_close(); ?>
             <?php echo form_open(base_url('admin/auth/forgot_password'), array('class' => 'form-vertical', 'id' => 'recoverform')) ?>
-            <p class="normal_text">Enter your e-mail address below and we will send you instructions how to recover a password.</p>
+            <p class="normal_text">Enter your Username below and we will send you instructions how to recover a password.</p>
 
             <div class="controls">
                 <div class="main_input_box">
                     <span class="add-on bg_lo"><i class="icon-envelope"></i></span>
                     <?php //echo (($type == 'email') ? sprintf(lang('forgot_password_email_label'), $identity_label) : sprintf(lang('forgot_password_identity_label'), $identity_label)); ?>
-                    <?php echo form_input($email); ?>
+                    <?php echo form_input($identity); ?>
                 </div>
             </div>
 

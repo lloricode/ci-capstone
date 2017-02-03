@@ -50,6 +50,15 @@ class Auth extends MY_Controller
 
         private function set_data()
         {
+                $label = '';
+                if ($this->config->item('identity', 'ion_auth') != 'email')
+                {
+                        $label = $this->lang->line('forgot_password_identity_label');
+                }
+                else
+                {
+                        $label = $this->lang->line('forgot_password_email_identity_label');
+                }
                 // the user is not logging in so display the login page
                 // set the flash data error message if there is one
                 $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
@@ -58,22 +67,16 @@ class Auth extends MY_Controller
                     'id'          => 'identity',
                     'type'        => 'text',
                     'value'       => $this->form_validation->set_value('identity'),
-                    'placeholder' => 'Username'
+                    'placeholder' => $label
                 );
                 $this->data['password'] = array('name'        => 'password',
                     'id'          => 'password',
                     'type'        => 'password',
                     'placeholder' => 'Password'
                 );
-                $this->data['email']    = array('name'        => 'email',
-                    'id'          => 'email',
-                    'type'        => 'email',
-                    'placeholder' => 'Email'
-                );
 
 
 
-                //forgot password
                 //  $this->data['type'] = $this->config->item('identity', 'ion_auth');
         }
 
@@ -125,13 +128,18 @@ class Auth extends MY_Controller
 
         public function forgot_password()
         {
+                // setting validation rules by checking whether identity is username or email
+                if ($this->config->item('identity', 'ion_auth') != 'email')
+                {
+                        $this->form_validation->set_rules('identity', $this->lang->line('forgot_password_identity_label'), 'required');
+                }
+                else
+                {
+                        $this->form_validation->set_rules('identity', $this->lang->line('forgot_password_validation_email_label'), 'required|valid_email');
+                }
 
-                $this->form_validation->set_rules(
-                        'email', $this->lang->line('forgot_password_validation_email_label'), 'required|valid_email');
 
-
-
-                if (!$this->form_validation->run())
+                if ($this->form_validation->run() == false)
                 {
 
                         $this->set_data();
@@ -139,17 +147,27 @@ class Auth extends MY_Controller
                 }
                 else
                 {
-                        $user_obj = $this->ion_auth->where('email', $this->input->post('email'))->users()->row();
+                        $identity_column = $this->config->item('identity', 'ion_auth');
+                        $identity        = $this->ion_auth->where($identity_column, $this->input->post('identity'))->users()->row();
 
-                        if (!$user_obj)
+                        if (empty($identity))
                         {
-                                $this->ion_auth->set_error('forgot_password_email_not_found');
+
+                                if ($this->config->item('identity', 'ion_auth') != 'email')
+                                {
+                                        $this->ion_auth->set_error('forgot_password_identity_not_found');
+                                }
+                                else
+                                {
+                                        $this->ion_auth->set_error('forgot_password_email_not_found');
+                                }
+
                                 $this->session->set_flashdata('message', $this->ion_auth->errors());
                                 redirect("admin/auth/login", 'refresh');
                         }
 
                         // run the forgotten password method to email an activation code to the user
-                        $forgotten = $this->ion_auth->forgotten_password($user_obj->{'email'});
+                        $forgotten = $this->ion_auth->forgotten_password($identity->{$this->config->item('identity', 'ion_auth')});
 
                         if ($forgotten)
                         {

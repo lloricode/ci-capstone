@@ -18,16 +18,6 @@ class Deactivate extends Admin_Controller
                         show_error('Invalid request.');
                 }
 
-                if ($id == $this->ion_auth->user()->row()->id)
-                {
-                        //  show_error('You cannot deactivate your self.');
-                        $this->session->set_flashdata(
-                                'message', $this->config->item('error_start_delimiter', 'ion_auth') .
-                                'You cannot deactivate your self.' .
-                                $this->config->item('error_end_delimiter', 'ion_auth')
-                        );
-                        redirect('admin/users', 'refresh');
-                }
                 $this->load->library('form_validation');
                 $this->form_validation->set_rules('confirm', $this->lang->line('deactivate_validation_confirm_label'), 'required');
                 $this->form_validation->set_rules('id', $this->lang->line('deactivate_validation_user_id_label'), 'required|alpha_numeric');
