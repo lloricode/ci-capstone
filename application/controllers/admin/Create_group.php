@@ -16,8 +16,6 @@ class Create_group extends Admin_Controller
 
         public function index()
         {
-                $this->data['title'] = $this->lang->line('create_group_title');
-
                 // validate form input
                 $this->form_validation->set_rules(array(
                     array(
@@ -31,39 +29,35 @@ class Create_group extends Admin_Controller
                         'rules' => 'trim|required',
                     )
                 ));
-                $run__  = $this->form_validation->run();
-                $g_name = NULL;
-                $g_desc = NULL;
-                if ($run__)
-                {
-                        $g_name = $this->input->post('name', TRUE);
-                        $g_desc = $this->input->post('desc', TRUE);
-                }
-                if ($run__ && $this->ion_auth->create_group($g_name, $g_desc))
-                {
-                        // redirect them back to the admin page
-                        $this->session->set_flashdata('message', $this->ion_auth->messages());
-                        redirect(current_url(), 'refresh');
-                }
-                else
-                {
-                        // set the flash data error message if there is one
-                        $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
-                        $this->data['name'] = array(
-                            'name'  => 'name',
-                            'id'    => 'name',
-                            'type'  => 'text',
-                            'value' => $this->form_validation->set_value('name'),
-                        );
-                        $this->data['desc'] = array(
-                            'name'  => 'desc',
-                            'id'    => 'desc',
-                            'type'  => 'text',
-                            'value' => $this->form_validation->set_value('desc'),
-                        );
-                        $this->_render_admin_page('admin/create_group', $this->data);
+                if ($this->form_validation->run())
+                {
+                        if ($this->ion_auth->create_group(
+                                        $this->input->post('name', TRUE), $this->input->post('desc', TRUE)
+                                ))
+                        {
+                                // redirect them back to the admin page
+                                $this->session->set_flashdata('message', $this->ion_auth->messages());
+                                redirect(current_url(), 'refresh');
+                        }
                 }
+
+                // set the flash data error message if there is one
+                $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+                $this->data['name'] = array(
+                    'name'  => 'name',
+                    'id'    => 'name',
+                    'type'  => 'text',
+                    'value' => $this->form_validation->set_value('name'),
+                );
+                $this->data['desc'] = array(
+                    'name'  => 'desc',
+                    'id'    => 'desc',
+                    'type'  => 'text',
+                    'value' => $this->form_validation->set_value('desc'),
+                );
+                $this->_render_admin_page('admin/create_group', $this->data);
         }
 
 }

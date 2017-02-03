@@ -147,7 +147,7 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
                             <a title="">
                                 <i class="icon icon-magic"></i> 
                                 <span class="text">
-                                    Developing Mode 
+                                    <?php echo my_htmlspecialchars(ucfirst(ENVIRONMENT)); ?>
                                 </span>
                             </a>
                         </li>
@@ -220,7 +220,7 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
             <!--breadcrumbs-->
             <div id="content-header">
                 <div id="breadcrumb"> 
-                    <a href="<?php echo base_url(); ?>" title="Go to Home" class="tip-bottom">
+                    <a href="<?php echo base_url(HOME_REDIRECT); ?>" title="Go to Home" class="tip-bottom">
                         <i class="icon-home"></i> Home
                     </a> 
                     <?php
@@ -274,6 +274,6 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
                             . '</a>' : '' );
                     ?> 
                 </div>
-                <h1><?php echo(($sub_label != '') ? $sub_label : $label ); ?></h1>
+                <?php echo(($sub_label != '') ? '<h1>' . $sub_label . '</h1>' : (MENU_ITEM_DEFAULT == $label) ? '<h1>' . $label . '</h1>' : '' ); ?>
             </div>
             <!--End-breadcrumbs-->

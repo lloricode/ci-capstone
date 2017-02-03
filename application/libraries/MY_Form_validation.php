@@ -51,6 +51,7 @@ class MY_Form_validation extends CI_Form_validation
         public function __construct($rules = array())
         {
                 parent::__construct($rules);
+                log_message('info', 'Extended Form Validation Class Initialized');
         }
 
         /**
@@ -81,6 +82,19 @@ class MY_Form_validation extends CI_Form_validation
         }
 
         /**
+         * if value is less than or equal zero will return FALSE
+         * 
+         * @param string $value
+         * @return bool
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        public function combo_box_check_id($value)
+        {
+                $this->CI->form_validation->set_message('combo_box_check_id', 'The {field} field is invalid or required.');
+                return (bool) ($value > 0);
+        }
+
+        /**
          * Real human name
          * 
          * validated using regex expression
@@ -97,11 +111,8 @@ class MY_Form_validation extends CI_Form_validation
                 # A to Z (capital)
                 # period or space
                 # * means zero or more length of character
-                if (preg_match('/^[a-zA-Z. ]*$/', $value))
-                {
-                        return TRUE;
-                }
-                return FALSE;
+
+                return (bool) preg_match('/^[a-zA-Z. ]*$/', $value);
         }
 
         /**
@@ -125,11 +136,8 @@ class MY_Form_validation extends CI_Form_validation
                 #  '{4}' means exactly 4 length of character
                 #  '[-]' means with dash "-" 
                 #   so need exactly 4 digits followed by dash "-" then followed again with exactly 4 digits
-                if (preg_match('/^\d{4}[-]\d{4}$/', $value))
-                {
-                        return TRUE;
-                }
-                return FALSE;
+
+                return (bool) preg_match('/^\d{4}[-]\d{4}$/', $value);
         }
 
         /**
@@ -174,7 +182,7 @@ class MY_Form_validation extends CI_Form_validation
                         $score++;
                 }
 
-                return $score >= $level;
+                return (bool) ($score >= $level);
         }
 
         /**
@@ -189,11 +197,8 @@ class MY_Form_validation extends CI_Form_validation
         public function username($value)
         {
                 $this->CI->form_validation->set_message('username', lang('validation_username'));
-                if (preg_match('/^[a-zA-Z0-9]+[_.-]{0,1}[a-zA-Z0-9]+$/m', $value))
-                {
-                        return TRUE;
-                }
-                return FALSE;
+
+                return (bool) preg_match('/^[a-zA-Z0-9]+[_.-]{0,1}[a-zA-Z0-9]+$/m', $value);
         }
 
         /**
@@ -208,11 +213,25 @@ class MY_Form_validation extends CI_Form_validation
                 $this->CI->form_validation->set_message('no_space', lang('validation_no_space'));
 
                 # from start to end of a line must no have white space.
-                if (strpos($value, " ") === FALSE)
-                {
-                        return TRUE;
-                }
-                return FALSE;
+
+                return (bool) (!strpos($value, " "));
+        }
+
+        /**
+         * required image
+         * 
+         * @return boolean
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        public function image_required($value)
+        {
+//        if (isset($_FILES[$value]) && !empty($_FILES[$value]['name'])) {
+//            return true;
+//        } else {
+                // throw an error because nothing was uploaded
+                $this->form_validation->set_message('image_required', "You must upload an image!");
+                return false;
+                //}
         }
 
 }

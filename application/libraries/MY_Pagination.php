@@ -5,6 +5,12 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
 class MY_Pagination extends CI_Pagination
 {
 
+        public function __construct($params = array())
+        {
+                parent::__construct($params);
+                log_message('info', 'Extended Pagination Class Initialized');
+        }
+
         /**
          * complete pagination
          * 

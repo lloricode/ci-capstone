@@ -17,7 +17,7 @@ if (!function_exists('navigations_main'))
                     array(
                         'label' => 'Home',
                         'desc'  => 'Home Description',
-                        'icon'  => 'beaker',
+                        'icon'  => 'home',
                     ),
                     //sub menu
                     'user_menus'   =>
@@ -58,6 +58,28 @@ if (!function_exists('navigations_main'))
                             ),
                         ),
                     ),
+                    //---------STUDENT------------
+                    'student_menu' =>
+                    array(
+                        'label' => 'Students',
+                        'icon'  => 'user',
+                        'sub'   =>
+                        array(
+                            'students'       =>
+                            array(
+                                'label' => 'Student',
+                                'desc'  => 'Student Description',
+                                'seen'  => TRUE,
+                            ),
+                            'create-student' =>
+                            array(
+                                'label' => 'Create Student',
+                                'desc'  => 'Create Student Description',
+                                'seen'  => TRUE,
+                            ),
+                        ),
+                    ),
+                    //---------END STUDENT--------
                     //sub menu
                     'group_menu'   =>
                     array(

@@ -12,8 +12,7 @@ class Home extends Admin_Controller
 
         public function index()
         {
-                $data['test'] = 'test Home';
-                $this->_render_admin_page('admin/home', $data);
+                $this->_render_admin_page('admin/home');
         }
 
 }
