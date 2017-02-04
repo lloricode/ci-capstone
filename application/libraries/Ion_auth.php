@@ -140,12 +140,12 @@ class Ion_auth
 		{
 			// Get user information
       $identifier = $this->ion_auth_model->identity_column; // use model identity column, so it can be overridden in a controller
-      $user = $this->where($identifier, $identity)->where('active', 1)->users()->row();  // changed to get_user_by_identity from email
+      $user = $this->where('email', $identity)->where('active', 1)->users()->row();  // changed to get_user_by_identity from email
 
 			if ($user)
 			{
 				$data = array(
-					'identity'		=> $user->{$this->config->item('identity', 'ion_auth')},
+					'identity'		=> $user->email,
 					'forgotten_password_code' => $user->forgotten_password_code
 				);
 
@@ -170,20 +170,20 @@ class Ion_auth
 					}
 					else
 					{
-						$this->set_error('forgot_password_unsuccessful');
+						$this->set_error('11');
 						return FALSE;
 					}
 				}
 			}
 			else
 			{
-				$this->set_error('forgot_password_unsuccessful');
+				$this->set_error('22');
 				return FALSE;
 			}
 		}
 		else
 		{
-			$this->set_error('forgot_password_unsuccessful');
+			$this->set_error('33');
 			return FALSE;
 		}
 	}

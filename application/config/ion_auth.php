@@ -82,7 +82,7 @@ $config['salt_prefix']    = version_compare(PHP_VERSION, '5.3.7', '<') ? '$2a$' 
  | The controller should check this function and act
  | appropriately. If this variable set to 0, there is no maximum.
  */
-$config['site_title']                 = "DCIT Enrollment System";       // Site Title, example.com
+$config['site_title']                 = "CI Capstone";       // Site Title, example.com
 $config['admin_email']                = "admin@example.com"; // Admin Email, admin@example.com
 $config['default_group']              = 'admin';           // Default group, use name
 $config['admin_group']                = 'admin';             // Default administrators group, use name
@@ -118,7 +118,7 @@ $config['identity_cookie_name'] = 'identity';
  | 	  'file' = Use the default CI config or use from a config file
  | 	  array  = Manually set your email config settings
  */
-$config['use_ci_email'] = FALSE; // Send Email using the builtin CI email class, if false it will return the code and the identity
+$config['use_ci_email'] = TRUE; // Send Email using the builtin CI email class, if false it will return the code and the identity
 $config['email_config'] = array(
 	'mailtype' => 'html',
 );

@@ -167,7 +167,7 @@ class Auth extends MY_Controller
                         }
 
                         // run the forgotten password method to email an activation code to the user
-                        $forgotten = $this->ion_auth->forgotten_password($identity->{$this->config->item('identity', 'ion_auth')});
+                        $forgotten = $this->ion_auth->forgotten_password($identity->email);
 
                         if ($forgotten)
                         {
@@ -221,13 +221,9 @@ class Auth extends MY_Controller
                                     'placeholder' => 'Retype-Password',
                                     'pattern'     => '^.{' . $this->data['min_password_length'] . '}.*$',
                                 );
-                                $this->data['user_id']              = array(
-                                    'name'  => 'user_id',
-                                    'id'    => 'user_id',
-                                    'type'  => 'hidden',
-                                    'value' => $user->id,
+                                $this->data['user']                 = array(
+                                            'user_id' => $user->id
                                 );
-                                $this->data['csrf']                 = $this->_get_csrf_nonce();
                                 $this->data['code']                 = $code;
 
                                 // render
