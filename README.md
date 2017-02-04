@@ -14,6 +14,8 @@ The project description will be updated including the client side after we propo
 * Login Authentication  : [CodeIgniter-Ion-Auth](https://github.com/benedmunds/CodeIgniter-Ion-Auth).
 * Error Log             : [CodeIgniter-Log-Library](https://github.com/appleboy/CodeIgniter-Log-Library).
 * Excel Export          : [Codeigniter-Excel-Export](https://github.com/jiji262/Codeigniter-Excel-Export).
+* Core My_Model         : [CodeIgniter-MY_Model](https://github.com/avenirer/CodeIgniter-MY_Model).
+* Translator            : [codeigniter3-translations](https://github.com/bcit-ci/codeigniter3-translations).
 
 ## Installation
 
@@ -28,28 +30,6 @@ The project description will be updated including the client side after we propo
 	then import the ``ci_capstone.sql`` 
 
 	from the project you cloned/downloaded into the created database.
-
-
-## Configurations
-
-- base_url
-
-    Open the ``application/config/config.php`` file of the project
-    then check if the base_url is set like this 
-    
-    ``$config['base_url'] = 'http://[::1]/ci-capstone/';``
-
-- database
-
-    Open the ``application/config/database.php`` file of the project
-    then check if the database is configured like this
-    
-    ```java
-    'hostname' => 'localhost',
-    'username' => 'root',
-    'password' => '',
-    'database' => 'ci_capstone',
-```
 
 ## Default Login
 
