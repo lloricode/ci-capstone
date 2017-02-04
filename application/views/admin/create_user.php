@@ -91,7 +91,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     //Username/identity:
                     $tmp = (form_error('identity') == '') ? '' : ' error';
                     echo '<div class="control-group' . $tmp . '">';
-                    echo lang('create_user_username_label', 'identity', array(
+                    echo lang('create_user_validation_identity_label', 'identity', array(
                         'class' => 'control-label',
                         'id'    => 'inputError'
                     ));

@@ -58,7 +58,7 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$libs_ = array('ion_auth','session');
+$libs_ = array('ion_auth','session','migration');
 if (ENVIRONMENT === 'production')
 {
         $libs_[]='lib_log';

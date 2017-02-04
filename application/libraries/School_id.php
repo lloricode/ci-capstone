@@ -151,15 +151,15 @@ class School_id
                 {
                         $string = '000' . $total;
                 }
-                elseif ($total > 10 && $total < 100)
+                elseif ($total >= 10 && $total < 100)
                 {
                         $string = '00' . $total;
                 }
-                elseif ($total > 100 && $total < 1000)
+                elseif ($total >= 100 && $total < 1000)
                 {
                         $string = '0' . $total;
                 }
-                elseif ($total > 1000 && $total < 10000)
+                elseif ($total >= 1000 && $total < 10000)
                 {
                         $string = $total;
                 }

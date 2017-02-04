@@ -41,7 +41,7 @@ class Create_user extends Admin_Controller
                     array(
                         'label' => lang('create_user_validation_email_label'),
                         'field' => 'email',
-                        'rules' => 'trim|valid_email|min_length[3]|max_length[30]',
+                        'rules' => 'trim|required|valid_email|min_length[3]|max_length[30]',
                     ),
                     array(
                         'label' => lang('create_user_validation_phone_label'),
