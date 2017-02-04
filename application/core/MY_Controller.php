@@ -9,12 +9,12 @@ class MY_Controller extends CI_Controller
         {
                 parent::__construct();
                 
-                $this->load->dbutil();
-                $DB_NAME = 'ci_capstone';
-                if (!$this->dbutil->database_exists($DB_NAME))
-                {
-                        $this->dbforge->create_database($DB_NAME);
-                }
+//                $this->load->dbutil();
+//                $DB_NAME = 'ci_capstone';
+//                if (!$this->dbutil->database_exists($DB_NAME))
+//                {
+//                        $this->dbforge->create_database($DB_NAME);
+//                }
 
                 $this->migration->current();
                 //load the preffer user language (if logged)
