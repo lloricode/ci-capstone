@@ -170,20 +170,20 @@ class Ion_auth
 					}
 					else
 					{
-						$this->set_error('11');
+						$this->set_error('forgot_password_unsuccessful');
 						return FALSE;
 					}
 				}
 			}
 			else
 			{
-				$this->set_error('22');
+				$this->set_error('forgot_password_unsuccessful');
 				return FALSE;
 			}
 		}
 		else
 		{
-			$this->set_error('33');
+			$this->set_error('forgot_password_unsuccessful');
 			return FALSE;
 		}
 	}
