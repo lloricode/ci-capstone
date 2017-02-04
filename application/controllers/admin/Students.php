@@ -38,33 +38,25 @@ class Students extends Admin_Controller {
                 //list students
                 $student_obj = $this->Student_model->limit($this->limit, $this->limit * $this->page_ - $this->limit)->get_all();
 
-                /**
-                 * checking if it has a result
-                 * 
-                 */
-                if (!$student_obj) {
-                        show_error('Invalid request');
-                }
 
-
-
-                /**
-                 * where data array from db stored
-                 */
                 $table_data = array();
 
-                foreach ($student_obj as $student) {
+                if ($student_obj) {
+                        show_error('Invalid request');
 
-                        array_push($table_data, array(
-                            my_htmlspecialchars($student->student_firstname),
-                            my_htmlspecialchars($student->student_middlename),
-                            my_htmlspecialchars($student->student_lastname),
-                            my_htmlspecialchars($student->student_school_id),
-                            my_htmlspecialchars($student->student_gender),
-                            my_htmlspecialchars($student->student_permanent_address),
-                            my_htmlspecialchars($student->course_id),
-                            my_htmlspecialchars($student->student_year_level),
-                        ));
+                        foreach ($student_obj as $student) {
+
+                                array_push($table_data, array(
+                                    my_htmlspecialchars($student->student_firstname),
+                                    my_htmlspecialchars($student->student_middlename),
+                                    my_htmlspecialchars($student->student_lastname),
+                                    my_htmlspecialchars($student->student_school_id),
+                                    my_htmlspecialchars($student->student_gender),
+                                    my_htmlspecialchars($student->student_permanent_address),
+                                    my_htmlspecialchars($student->course_id),
+                                    my_htmlspecialchars($student->student_year_level),
+                                ));
+                        }
                 }
 
 

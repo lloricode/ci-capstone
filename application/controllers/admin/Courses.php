@@ -38,27 +38,19 @@ class Courses extends Admin_Controller {
                 //list the Courses
                 $course_obj = $this->Course_model->limit($this->limit, $this->limit * $this->page_ - $this->limit)->get_all();
 
-                /**
-                 * check if has a result
-                 * 
-                 */
-                if (!$course_obj) {
-                        show_error('Invalid request');
-                }
 
-
-
-                /**
-                 * where data array from db stored
-                 */
                 $table_data = array();
 
-                foreach ($course_obj as $course) {
+                if ($course_obj) {
+                        show_error('Invalid request');
 
-                        array_push($table_data, array(
-                            my_htmlspecialchars($course->course_name),
-                            my_htmlspecialchars($course->course_description),
-                        ));
+                        foreach ($course_obj as $course) {
+
+                                array_push($table_data, array(
+                                    my_htmlspecialchars($course->course_name),
+                                    my_htmlspecialchars($course->course_description),
+                                ));
+                        }
                 }
 
 
