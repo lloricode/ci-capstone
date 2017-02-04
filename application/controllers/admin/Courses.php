@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Students extends Admin_Controller {
+class Courses extends Admin_Controller {
 
         private $page_;
         private $limit;
@@ -10,8 +10,8 @@ class Students extends Admin_Controller {
 
         function __construct() {
                 parent::__construct();
-                $this->lang->load('ci_students');
-                $this->load->model('Student_model');
+                $this->lang->load('ci_courses');
+                $this->load->model('Course_model');
                 $this->load->library('pagination');
 
                 /**
@@ -19,9 +19,9 @@ class Students extends Admin_Controller {
                  */
                 $this->limit      = 10;
                 /**
-                 * get total rows in the student table
+                 * get total rows in users table
                  */
-                $this->total_rows = $this->Student_model->total_rows();
+                $this->total_rows = $this->Course_model->total_rows();
 
                 /**
                  * get the page from url
@@ -35,14 +35,14 @@ class Students extends Admin_Controller {
          */
         public function index() {
 
-                //list students
-                $student_obj = $this->Student_model->limit($this->limit, $this->limit * $this->page_ - $this->limit)->get_all();
+                //list the Courses
+                $course_obj = $this->Course_model->limit($this->limit, $this->limit * $this->page_ - $this->limit)->get_all();
 
                 /**
-                 * checking if it has a result
+                 * check if has a result
                  * 
                  */
-                if (!$student_obj) {
+                if (!$course_obj) {
                         show_error('Invalid request');
                 }
 
@@ -53,33 +53,22 @@ class Students extends Admin_Controller {
                  */
                 $table_data = array();
 
-                foreach ($student_obj as $student) {
+                foreach ($course_obj as $course) {
 
                         array_push($table_data, array(
-                            my_htmlspecialchars($student->student_firstname),
-                            my_htmlspecialchars($student->student_middlename),
-                            my_htmlspecialchars($student->student_lastname),
-                            my_htmlspecialchars($student->student_school_id),
-                            my_htmlspecialchars($student->student_gender),
-                            my_htmlspecialchars($student->student_permanent_address),
-                            my_htmlspecialchars($student->course_id),
-                            my_htmlspecialchars($student->student_year_level),
+                            my_htmlspecialchars($course->course_name),
+                            my_htmlspecialchars($course->course_description),
                         ));
                 }
+
 
 
                 /*
                  * Table headers
                  */
                 $header = array(
-                    lang('index_student_school_id_th'),
-                    lang('index_student_firstname_th'),
-                    lang('index_student_middlename_th'),
-                    lang('index_student_lastname_th'),
-                    lang('index_student_Gender_th'),
-                    lang('index_student_permanent_address_th'),
-                    lang('index_student_course_id_th'),
-                    lang('index_student_year_level_th')
+                    lang('index_course_name_th'),
+                    lang('index_course_desc_th')
                 );
 
                 /**
@@ -90,12 +79,12 @@ class Students extends Admin_Controller {
                 /**
                  * pagination
                  */
-                $this->data['pagination'] = $this->pagination->generate_link('admin/students/index', $this->total_rows / $this->limit);
+                $this->data['pagination'] = $this->pagination->generate_link('admin/courses/index', $this->total_rows / $this->limit);
 
                 /**
                  * caption of table
                  */
-                $this->data['caption'] = lang('index_student_heading');
+                $this->data['caption'] = lang('index_course_heading');
 
 
                 /**
@@ -112,7 +101,7 @@ class Students extends Admin_Controller {
                 /**
                  * rendering users view
                  */
-                $this->_render_admin_page('admin/students', $this->template);
+                $this->_render_admin_page('admin/courses', $this->template);
         }
 
 }

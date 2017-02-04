@@ -2,16 +2,14 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-if (!function_exists('navigations_main'))
-{
+if (!function_exists('navigations_main')) {
 
         /**
          * 
          * @return type
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        function navigations_main()
-        {
+        function navigations_main() {
                 return array(
                     'home'         =>
                     array(
@@ -58,6 +56,7 @@ if (!function_exists('navigations_main'))
                             ),
                         ),
                     ),
+                    //sub menu
                     //---------STUDENT------------
                     'student_menu' =>
                     array(
@@ -80,6 +79,29 @@ if (!function_exists('navigations_main'))
                         ),
                     ),
                     //---------END STUDENT--------
+                    //sub menu
+                    //--------START COURSE--------
+                    'course_menu'  =>
+                    array(
+                        'label' => 'Courses',
+                        'icon'  => 'list',
+                        'sub'   =>
+                        array(
+                            'courses'       =>
+                            array(
+                                'label' => 'Course',
+                                'desc'  => 'Course Description',
+                                'seen'  => TRUE,
+                            ),
+                            'create-course' =>
+                            array(
+                                'label' => 'Create Course',
+                                'desc'  => 'Create Course Description',
+                                'seen'  => TRUE,
+                            ),
+                        ),
+                    ),
+                    //--------END COURSE----------
                     //sub menu
                     'group_menu'   =>
                     array(
@@ -134,16 +156,14 @@ if (!function_exists('navigations_main'))
 }
 
 
-if (!function_exists('navigations_setting'))
-{
+if (!function_exists('navigations_setting')) {
 
         /**
          * 
          * @return type
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        function navigations_setting()
-        {
+        function navigations_setting() {
                 return array(
                     'language' =>
                     array(

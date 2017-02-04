@@ -2,16 +2,13 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Groups extends Admin_Controller
-{
-
+class Groups extends Admin_Controller {
 
         private $page_;
         private $limit;
         private $total_rows;
 
-        function __construct()
-        {
+        function __construct() {
                 parent::__construct();
                 $this->lang->load('ci_excel');
                 $this->load->model('Group_model');
@@ -37,8 +34,7 @@ class Groups extends Admin_Controller
         /**
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        public function index()
-        {
+        public function index() {
 
                 // set the flash data error message if there is one
                 // $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
@@ -50,8 +46,7 @@ class Groups extends Admin_Controller
                  * 
                  * sometime pagination can replace a page that has no value by crazy users :)
                  */
-                if (!$group_obj)
-                {
+                if (!$group_obj) {
                         show_error('Invalid request');
                 }
 
@@ -62,8 +57,7 @@ class Groups extends Admin_Controller
                  */
                 $table_data = array();
 
-                foreach ($group_obj as $group)
-                {
+                foreach ($group_obj as $group) {
 
                         array_push($table_data, array(
                             my_htmlspecialchars($group->name),

@@ -2,11 +2,9 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Create_student extends Admin_Controller
-{
+class Create_student extends Admin_Controller {
 
-        function __construct()
-        {
+        function __construct() {
                 parent::__construct();
                 $this->lang->load('ci_students');
                 $this->load->library('form_validation');
@@ -15,8 +13,7 @@ class Create_student extends Admin_Controller
                 );
         }
 
-        public function index()
-        {
+        public function index() {
                 $this->form_validation->set_rules(array(
                     array(
                         'label' => lang('create_student_firstname_label'),
@@ -31,7 +28,7 @@ class Create_student extends Admin_Controller
                     array(
                         'label' => lang('create_student_lastname_label'),
                         'field' => 'student_lastname',
-                        'rules' => 'trim|required|human_name|min_length[3]|max_length[30]',
+                        'rules' => 'trim|required|human_name|min_length[2]|max_length[30]',
                     ),
                     array(
                         'label' => lang('create_student_school_id_label'),
@@ -60,8 +57,7 @@ class Create_student extends Admin_Controller
                     )
                 ));
 
-                if ($this->form_validation->run())
-                {
+                if ($this->form_validation->run()) {
                         $student = array(
                             'student_firstname'         => $this->input->post('student_firstname', TRUE),
                             'student_middlename'        => $this->input->post('student_middlename', TRUE),
@@ -73,8 +69,7 @@ class Create_student extends Admin_Controller
                             'student_year_level'        => $this->input->post('student_year_level', TRUE),
                         );
                         $this->load->model('Student_model');
-                        if ($this->Student_model->insert($student))
-                        {
+                        if ($this->Student_model->insert($student)) {
                                 $this->session->set_flashdata('message', $this->config->item('message_start_delimiter', 'ion_auth') . lang('create_student_succesfully_added_message') . $this->config->item('message_end_delimiter', 'ion_auth'));
                                 redirect(current_url(), 'refresh');
                         }
