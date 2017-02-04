@@ -20,7 +20,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                         'name'       => 'basic_validate',
                         'id'         => 'basic_validate',
                         'novalidate' => 'novalidate',
-                    ));
+                    ),$student_school_id);
 
 
 
@@ -74,17 +74,17 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
 
 
                     //student_school_id:
-                    $tmp = (form_error('student_school_id') == '') ? '' : ' error';
+                    $tmp = (form_error('student_school_id_temp') == '') ? '' : ' error';
                     echo '<div class="control-group' . $tmp . '">';
-                    echo lang('create_student_school_id_label', 'student_school_id', array(
+                    echo lang('create_student_school_id_label', 'student_school_id_temp', array(
                         'class' => 'control-label',
                         'id'    => 'inputError'
                     ));
                     echo '<div class="controls">';
-                    echo form_input($student_school_id, array(
+                    echo form_input($student_school_id_temp, array(
                         'id' => 'inputError'
                     ));
-                    echo form_error('student_school_id');
+                    echo form_error('student_school_id_temp');
                     echo '</div></div> ';
 
 

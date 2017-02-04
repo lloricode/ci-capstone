@@ -85,8 +85,9 @@ class Create_student extends Admin_Controller
                  */
                 $this->load->model('Course_model');
                 $this->load->helper('combobox');
-                $this->load->library('school_id');
                 $this->config->load('common/config', TRUE);
+                $this->load->library('school_id');
+                $this->school_id->initialize(6, 5);
 
 
                 $this->data['message']            = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
@@ -107,11 +108,15 @@ class Create_student extends Admin_Controller
                     'value' => $this->form_validation->set_value('student_lastname'),
                 );
 
-                $this->data['student_school_id'] = array(
-                    'name'     => 'student_school_id',
-                    'id'       => 'student_school_id',
+                $this->data['student_school_id_temp'] = array(
+                    'name'     => 'student_school_id_temp',
+                    'id'       => 'student_school_id_temp',
                     'disabled' => '',
                     'value'    => $this->school_id->generate(),
+                );
+
+                $this->data['student_school_id'] = array(
+                    'student_school_id' => $this->school_id->generate()
                 );
 
                 $this->data['student_gender'] = array(

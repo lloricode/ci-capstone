@@ -2,16 +2,19 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Students extends Admin_Controller {
+class Students extends Admin_Controller
+{
+
 
         private $page_;
         private $limit;
         private $total_rows;
 
-        function __construct() {
+        function __construct()
+        {
                 parent::__construct();
                 $this->lang->load('ci_students');
-                $this->load->model('Student_model');
+                $this->load->model(array('Student_model', 'Course_model'));
                 $this->load->library('pagination');
 
                 /**
@@ -33,7 +36,8 @@ class Students extends Admin_Controller {
         /**
          * @author Jinkee Po <pojinkee1@gmail.com>
          */
-        public function index() {
+        public function index()
+        {
 
                 //list students
                 $student_obj = $this->Student_model->limit($this->limit, $this->limit * $this->page_ - $this->limit)->get_all();
@@ -41,19 +45,20 @@ class Students extends Admin_Controller {
 
                 $table_data = array();
 
-                if ($student_obj) {
-                        show_error('Invalid request');
+                if ($student_obj)
+                {
 
-                        foreach ($student_obj as $student) {
+                        foreach ($student_obj as $student)
+                        {
 
                                 array_push($table_data, array(
+                                    my_htmlspecialchars($student->student_school_id),
                                     my_htmlspecialchars($student->student_firstname),
                                     my_htmlspecialchars($student->student_middlename),
                                     my_htmlspecialchars($student->student_lastname),
-                                    my_htmlspecialchars($student->student_school_id),
                                     my_htmlspecialchars($student->student_gender),
                                     my_htmlspecialchars($student->student_permanent_address),
-                                    my_htmlspecialchars($student->course_id),
+                                    my_htmlspecialchars($this->Course_model->get($student->course_id)->course_name),
                                     my_htmlspecialchars($student->student_year_level),
                                 ));
                         }
