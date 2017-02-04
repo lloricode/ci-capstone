@@ -43,44 +43,44 @@ class Users extends Admin_Controller
                 //list the users
                 $users_obj = $this->User_model->limit($this->limit, $this->limit * $this->page_ - $this->limit)->get_all();
 
-                /**
-                 * check if has a result
-                 * 
-                 * sometime pagination can replace a page that has no value by crazy users :)
-                 */
-                if (!$users_obj)
-                {
-                        show_error('Invalid request');
-                }
-
-                foreach ($users_obj as $k => $user)
-                {
-                        $users_obj[$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
-                }
 
                 /**
                  * where data array from db stored
                  */
                 $table_data = array();
-
-                foreach ($users_obj as $user)
+                /**
+                 * check if has a result
+                 * 
+                 * sometime pagination can replace a page that has no value by crazy users :)
+                 */
+                if ($users_obj)
                 {
-                        $groups = '';
-                        foreach ($user->groups as $group)
-                        {
-                                $groups .= anchor("admin/edit-group/?group-id=" . $group->id, my_htmlspecialchars($group->name)) . ' | ';
-                        }
-                        array_push($table_data, array(
-                            my_htmlspecialchars($user->first_name),
-                            my_htmlspecialchars($user->last_name),
-                            my_htmlspecialchars($user->username),
-                            my_htmlspecialchars($user->email),
-                            trim($groups, ' | '),
-                            (($user->active) ? anchor("admin/deactivate/?user-id=" . $user->id, lang('index_active_link')) : anchor("admin/users/activate/" . $user->id, lang('index_inactive_link'))),
-                            anchor("admin/edit-user/?user-id=" . $user->id, 'Edit'),
-                        ));
-                }
 
+                        foreach ($users_obj as $k => $user)
+                        {
+                                $users_obj[$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
+                        }
+
+
+
+                        foreach ($users_obj as $user)
+                        {
+                                $groups = '';
+                                foreach ($user->groups as $group)
+                                {
+                                        $groups .= anchor("admin/edit-group/?group-id=" . $group->id, my_htmlspecialchars($group->name)) . ' | ';
+                                }
+                                array_push($table_data, array(
+                                    my_htmlspecialchars($user->first_name),
+                                    my_htmlspecialchars($user->last_name),
+                                    my_htmlspecialchars($user->username),
+                                    my_htmlspecialchars($user->email),
+                                    trim($groups, ' | '),
+                                    (($user->active) ? anchor("admin/deactivate/?user-id=" . $user->id, lang('index_active_link')) : anchor("admin/users/activate/" . $user->id, lang('index_inactive_link'))),
+                                    anchor("admin/edit-user/?user-id=" . $user->id, 'Edit'),
+                                ));
+                        }
+                }
 
                 /*
                  * preparing html table

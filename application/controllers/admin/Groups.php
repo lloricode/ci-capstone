@@ -46,31 +46,25 @@ class Groups extends Admin_Controller
                 $group_obj = $this->Group_model->limit($this->limit, $this->limit * $this->page_ - $this->limit)->get_all();
 
                 /**
+                 * where data array from db stored
+                 */
+                $table_data = array();
+                /**
                  * check if has a result
                  * 
                  * sometime pagination can replace a page that has no value by crazy users :)
                  */
-                if (!$group_obj)
+                if ($group_obj)
                 {
-                        show_error('Invalid request');
+                        foreach ($group_obj as $group)
+                        {
+
+                                array_push($table_data, array(
+                                    my_htmlspecialchars($group->name),
+                                    my_htmlspecialchars($group->description),
+                                ));
+                        }
                 }
-
-
-
-                /**
-                 * where data array from db stored
-                 */
-                $table_data = array();
-
-                foreach ($group_obj as $group)
-                {
-
-                        array_push($table_data, array(
-                            my_htmlspecialchars($group->name),
-                            my_htmlspecialchars($group->description),
-                        ));
-                }
-
 
                 /*
                  * preparing html table
