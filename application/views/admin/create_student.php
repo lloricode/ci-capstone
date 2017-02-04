@@ -128,9 +128,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                         'id'    => 'inputError'
                     ));
                     echo '<div class="controls">';
-                    echo form_input($course_id, array(
-                        'id' => 'inputError'
-                    ));
+                    echo form_dropdown($course_id, $course_id_value);
                     echo form_error('course_id');
                     echo '</div></div> ';
 
@@ -144,9 +142,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                         'id'    => 'inputError'
                     ));
                     echo '<div class="controls">';
-                    echo form_input($student_year_level, array(
-                        'id' => 'inputError'
-                    ));
+                    echo form_dropdown($student_year_level, $student_year_level_value);
                     echo form_error('student_year_level');
                     echo '</div></div> ';
 

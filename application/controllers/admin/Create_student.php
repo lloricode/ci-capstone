@@ -2,9 +2,11 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Create_student extends Admin_Controller {
+class Create_student extends Admin_Controller
+{
 
-        function __construct() {
+        function __construct()
+        {
                 parent::__construct();
                 $this->lang->load('ci_students');
                 $this->load->library('form_validation');
@@ -13,7 +15,8 @@ class Create_student extends Admin_Controller {
                 );
         }
 
-        public function index() {
+        public function index()
+        {
                 $this->form_validation->set_rules(array(
                     array(
                         'label' => lang('create_student_firstname_label'),
@@ -57,7 +60,8 @@ class Create_student extends Admin_Controller {
                     )
                 ));
 
-                if ($this->form_validation->run()) {
+                if ($this->form_validation->run())
+                {
                         $student = array(
                             'student_firstname'         => $this->input->post('student_firstname', TRUE),
                             'student_middlename'        => $this->input->post('student_middlename', TRUE),
@@ -69,67 +73,73 @@ class Create_student extends Admin_Controller {
                             'student_year_level'        => $this->input->post('student_year_level', TRUE),
                         );
                         $this->load->model('Student_model');
-                        if ($this->Student_model->insert($student)) {
+                        if ($this->Student_model->insert($student))
+                        {
                                 $this->session->set_flashdata('message', $this->config->item('message_start_delimiter', 'ion_auth') . lang('create_student_succesfully_added_message') . $this->config->item('message_end_delimiter', 'ion_auth'));
                                 redirect(current_url(), 'refresh');
                         }
                 }
 
+                /**
+                 * if reach here, load the model, etc...
+                 */
+                $this->load->model('Course_model');
+                $this->load->helper('combobox');
+                $this->load->library('school_id');
+                $this->config->load('common/config', TRUE);
+
+
                 $this->data['message']            = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
                 $this->data['student_firstname']  = array(
                     'name'  => 'student_firstname',
                     'id'    => 'student_firstname',
-                    'type'  => 'text',
                     'value' => $this->form_validation->set_value('student_firstname'),
                 );
                 $this->data['student_middlename'] = array(
                     'name'  => 'student_middlename',
                     'id'    => 'student_middlename',
-                    'type'  => 'text',
                     'value' => $this->form_validation->set_value('student_middlename'),
                 );
 
                 $this->data['student_lastname'] = array(
                     'name'  => 'student_lastname',
                     'id'    => 'student_lastname',
-                    'type'  => 'text',
                     'value' => $this->form_validation->set_value('student_lastname'),
                 );
 
                 $this->data['student_school_id'] = array(
-                    'name'  => 'student_school_id',
-                    'id'    => 'student_school_id',
-                    'type'  => 'text',
-                    'value' => $this->form_validation->set_value('student_school_id'),
+                    'name'     => 'student_school_id',
+                    'id'       => 'student_school_id',
+                    'disabled' => '',
+                    'value'    => $this->school_id->generate(),
                 );
 
                 $this->data['student_gender'] = array(
                     'name'  => 'student_gender',
                     'id'    => 'student_gender',
-                    'type'  => 'text',
                     'value' => $this->form_validation->set_value('student_gender'),
                 );
 
                 $this->data['student_permanent_address'] = array(
                     'name'  => 'student_permanent_address',
                     'id'    => 'student_permanent_address',
-                    'type'  => 'text',
                     'value' => $this->form_validation->set_value('student_permanent_address'),
                 );
 
-                $this->data['course_id'] = array(
+                $this->data['course_id']       = array(
                     'name'  => 'course_id',
-                    'id'    => 'course_id',
-                    'type'  => 'text',
                     'value' => $this->form_validation->set_value('course_id'),
                 );
+                $this->data['course_id_value'] = $this->Course_model->as_dropdown('course_name')->get_all();
 
-                $this->data['student_year_level'] = array(
+                $this->data['student_year_level']       = array(
                     'name'  => 'student_year_level',
-                    'id'    => 'student_year_level',
-                    'type'  => 'text',
                     'value' => $this->form_validation->set_value('student_year_level'),
                 );
+                $this->data['student_year_level_value'] = _numbers_for_drop_down(0, $this->config->item('max_year_level', 'common/config'));
+
+
+
                 $this->_render_admin_page('admin/create_student', $this->data);
         }
 
