@@ -28,9 +28,7 @@ The project description will be updated including the client side after we propo
 
 - Create a database ``ci_capstone`` in your local machine, 
 
-	then import the ``ci_capstone.sql`` 
-
-	from the project you cloned/downloaded into the created database.
+	then tables automatically migrate in database, with generated sample data
 
 ## Default Login
 
