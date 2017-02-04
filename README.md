@@ -12,6 +12,8 @@ The project description will be updated including the client side after we propo
 ## Library used
 
 * Login Authentication  : [CodeIgniter-Ion-Auth](https://github.com/benedmunds/CodeIgniter-Ion-Auth).
+* Error Log             : [CodeIgniter-Log-Library](https://github.com/appleboy/CodeIgniter-Log-Library).
+* Excel Export          : [Codeigniter-Excel-Export](https://github.com/jiji262/Codeigniter-Excel-Export).
 
 ## Installation
 
