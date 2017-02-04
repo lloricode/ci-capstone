@@ -65,7 +65,6 @@ class Groups extends Admin_Controller
                                 ));
                         }
                 }
-
                 /*
                  * preparing html table
                  */
