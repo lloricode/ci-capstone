@@ -169,7 +169,7 @@ class School_id
                         /**
                          * recursive plus increment attempp
                          */
-                        $this->generate($attemp++);
+                        $this->generate_number($attemp++);
                 }
         }
 
