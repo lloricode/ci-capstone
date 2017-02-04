@@ -77,10 +77,6 @@ class Log extends Admin_Controller
                                 $this->table->add_row($tmp);
                         }
                 }
-                else
-                {
-                        show_error('Invalid request');
-                }
                 $this->data['logs']       = $this->table->generate();
                 $this->data['controller'] = 'table';
 
