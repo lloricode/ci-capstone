@@ -42,7 +42,6 @@ class Courses extends Admin_Controller {
                 $table_data = array();
 
                 if ($course_obj) {
-                        show_error('Invalid request');
 
                         foreach ($course_obj as $course) {
 

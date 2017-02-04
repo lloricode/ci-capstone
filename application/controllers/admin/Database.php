@@ -29,7 +29,7 @@ class Database extends Admin_Controller
                         $this->table->add_row(array(array('data' => '<h4>' . $db . '</h4>', 'colspan' => '4')));
                         foreach ($this->db->field_data($db) as $field)
                         {
-                                $this->table->add_row($field->name, $field->type, $field->max_length, $field->primary_key);
+                                $this->table->add_row($field->name, $field->type, $field->max_length, ($field->primary_key) ? 'YES' : 'NO');
                         }
                 }
 
