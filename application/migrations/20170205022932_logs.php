@@ -6,11 +6,27 @@ class Migration_Logs extends CI_Migration
 {
 
 
-        const CI_DB_TABLE = 'logs';
+        /**
+         * table name
+         * @var string 
+         */
+        private $table;
 
         public function __construct($config = array())
         {
                 parent::__construct($config);
+                /**
+                 * get CI reference
+                 */
+                $CI          = & get_instance();
+                /**
+                 * load log config
+                 */
+                $CI->config->load('log', TRUE);
+                /**
+                 * load log item
+                 */
+                $this->table = $CI->config->item('log_table_name', 'log');
         }
 
         public function up()
@@ -60,12 +76,12 @@ class Migration_Logs extends CI_Migration
                 $this->dbforge->add_key('user_agent');
 
                 $this->dbforge->add_field($fields);
-                $this->dbforge->create_table(self::CI_DB_TABLE,TRUE);
+                $this->dbforge->create_table($this->table, TRUE);
         }
 
         public function down()
         {
-                $this->dbforge->drop_table(self::CI_DB_TABLE);
+                $this->dbforge->drop_table($this->table);
         }
 
 }
