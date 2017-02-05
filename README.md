@@ -1,39 +1,36 @@
 # [ci-capstone](http://ci-capstone.lloricmayugagarcia.com/)
 ## A Thesis project made by using [CodeIgniter](http://codeigniter.com).
 
-The project description will be updated including the client side after we proposed a project and gets approved by our instuctor.
+
 
 ## Frameworks used
+Platform|Framework
+--------------------- | ----------------------------
+ PHP Framework        | [CodeIgniter 3.1.3](http://codeigniter.com).
+ Admin UI Framework   | [matrix-admin Bootstrap](http://matrixadmin.themedesigner.in/).
 
-* PHP Framework        : [CodeIgniter 3.1.3](http://codeigniter.com).
-* Admin UI Framework   : [matrix-admin Bootstrap](http://matrixadmin.themedesigner.in/).
-* Client UI Framework  : soon
 
 ## Library used
 
-* Login Authentication  : [CodeIgniter-Ion-Auth](https://github.com/benedmunds/CodeIgniter-Ion-Auth).
-* Migration Authentication  : [codeigniter-ion-auth-migration](https://github.com/iamfiscus/codeigniter-ion-auth-migration).
-* Error Log             : [CodeIgniter-Log-Library](https://github.com/appleboy/CodeIgniter-Log-Library).
-* Excel Export          : [Codeigniter-Excel-Export](https://github.com/jiji262/Codeigniter-Excel-Export).
-* Core My_Model         : [CodeIgniter-MY_Model](https://github.com/avenirer/CodeIgniter-MY_Model).
-* Translator            : [codeigniter3-translations](https://github.com/bcit-ci/codeigniter3-translations).
+
+ Name | Repository
+-------------------------- | ----------------------
+ Login Authentication      | [CodeIgniter-Ion-Auth](https://github.com/benedmunds/CodeIgniter-Ion-Auth).
+ Migration Authentication  | [codeigniter-ion-auth-migration](https://github.com/iamfiscus/codeigniter-ion-auth-migration).
+ Error Log                 | [CodeIgniter-Log-Library](https://github.com/appleboy/CodeIgniter-Log-Library).
+ Excel Export              | [Codeigniter-Excel-Export](https://github.com/jiji262/Codeigniter-Excel-Export).
+ Core My_Model             | [CodeIgniter-MY_Model](https://github.com/avenirer/CodeIgniter-MY_Model).
+ Translator                | [codeigniter3-translations](https://github.com/bcit-ci/codeigniter3-translations).
 
 ## Installation
 
-- For installation ``clone or download`` the project and put the files into your server. 
-
-	If your using ``XAMPP`` put it in the ``htdocs`` folder and for ``WAMP`` server put it in the ``www`` folder.
-
-- For Linux user ``cd /opt/lampp/htdocs`` then ``git clone https://github.com/lloricode/ci-capstone.git``
-
-- Create a database ``ci_capstone`` in your local machine, 
-
-	then tables automatically migrate in database, with generated sample data
+- Create first a databse named ``ci_capstone`` then just run/execute the website, ``tables`` in ``database`` will automatically migrate.
 
 ## Default Login
 
-- username: administrator
-- password: mypasswordisadmin1
+Username | Password
+-------- | -----------
+administrator|mypasswordisadmin1
 
 ## Screencapture
 -An overview over the Admin Panel
