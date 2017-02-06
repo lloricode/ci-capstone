@@ -3,7 +3,7 @@
 defined('BASEPATH') or exit('Direct Script is not allowed');
 //english
 //Create Student Form
-$lang['create_student_heading']                   = 'Create Student';
+$lang['create_student_heading']                   = 'Add Student';
 $lang['create_student_firstname_label']           = 'Firstname:';
 $lang['create_student_middlename_label']          = 'Middlename:';
 $lang['create_student_lastname_label']            = 'Lastname:';
