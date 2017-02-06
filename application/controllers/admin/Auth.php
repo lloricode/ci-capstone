@@ -5,6 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Auth extends MY_Controller
 {
 
+
         private $data;
 
         public function __construct()
@@ -94,7 +95,7 @@ class Auth extends MY_Controller
         /**
          * Function that logs the user in
          * 
-         * @author Lloric Garcia
+         * @author ion_auth
          * @version 2017-2-1
          */
         public function login()
@@ -145,7 +146,7 @@ class Auth extends MY_Controller
         /**
          * Function to reset password incase the password is forgotten.
          * 
-         * @author Lloric Garcia
+         * @author ion_auth
          * @version 2017-2-1
          */
         public function forgot_password()
@@ -189,7 +190,7 @@ class Auth extends MY_Controller
                         }
 
                         // run the forgotten password method to email an activation code to the user
-                        $forgotten = $this->ion_auth->forgotten_password($identity->email);
+                        $forgotten = $this->ion_auth->forgotten_password($identity->{$this->config->item('identity', 'ion_auth')});
 
                         if ($forgotten)
                         {
@@ -208,7 +209,7 @@ class Auth extends MY_Controller
         /**
          * Function to reset password incase the password is forgotten.
          * 
-         * @author Lloric Garcia
+         * @author ion_auth
          * @version 2017-2-1
          */
         public function reset_password($code = NULL)
@@ -299,7 +300,7 @@ class Auth extends MY_Controller
         /**
          * Function that logs the user out.
          * 
-         * @author Lloric Garcia
+         * @author ion_auth
          * @version 2017-2-1
          */
         public function logout()
