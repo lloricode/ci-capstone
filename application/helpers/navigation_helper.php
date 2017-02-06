@@ -72,8 +72,8 @@ if (!function_exists('navigations_main')) {
                             ),
                             'create-student' =>
                             array(
-                                'label' => 'Create Student',
-                                'desc'  => 'Create Student Description',
+                                'label' => 'Add Student',
+                                'desc'  => 'Add Student Description',
                                 'seen'  => TRUE,
                             ),
                         ),

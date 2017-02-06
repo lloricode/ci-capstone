@@ -152,6 +152,8 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
 
 
 
+
+
                     echo ' <div class="form-actions">';
 
                     echo form_submit('submit', lang('create_user_submit_btn'), array(
