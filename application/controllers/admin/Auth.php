@@ -16,7 +16,7 @@ class Auth extends MY_Controller
                         $this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth')
                 );
         }
-
+        
         public function index()
         {
                 if ($this->ion_auth->logged_in() and ! $this->ion_auth->is_admin())
@@ -36,6 +36,13 @@ class Auth extends MY_Controller
                 }
         }
 
+        
+        /**
+        * Function to that checks log in credentials
+        * 
+        * @author Lloric Garcia
+        * @version 2017-2-1
+        */
         private function check_log()
         {
                 if ($this->ion_auth->is_admin())
@@ -47,7 +54,14 @@ class Auth extends MY_Controller
                         redirect('/', 'refresh');
                 }
         }
-
+        
+        
+        /**
+        * Function to display the error/specifi error upon log in
+        * 
+        * @author Lloric Garcia
+        * @version 2017-2-1
+        */
         private function set_data()
         {
                 $label = '';
@@ -80,7 +94,13 @@ class Auth extends MY_Controller
                 //  $this->data['type'] = $this->config->item('identity', 'ion_auth');
         }
 
-        // log the user in
+        
+        /**
+        * Function that logs the user in
+        * 
+        * @author Lloric Garcia
+        * @version 2017-2-1
+        */
         public function login()
         {
                 $this->check_log();
@@ -125,7 +145,14 @@ class Auth extends MY_Controller
                         $this->_render_page('admin/login', $this->data);
                 }
         }
-
+        
+        
+        /**
+        * Function to reset password incase the password is forgotten.
+        * 
+        * @author Lloric Garcia
+        * @version 2017-2-1
+        */
         public function forgot_password()
         {
                 // setting validation rules by checking whether identity is username or email
@@ -183,7 +210,12 @@ class Auth extends MY_Controller
                 }
         }
 
-// reset password - final step for forgotten password
+         /**
+        * Function to reset password incase the password is forgotten.
+        * 
+        * @author Lloric Garcia
+        * @version 2017-2-1
+        */
         public function reset_password($code = NULL)
         {
                 if (!$code)
@@ -269,7 +301,13 @@ class Auth extends MY_Controller
                 }
         }
 
-        // log the user out
+        
+         /**
+        * Function that logs the user out.
+        * 
+        * @author Lloric Garcia
+        * @version 2017-2-1
+        */
         public function logout()
         {
                 $this->data['title'] = "Logout";

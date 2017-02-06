@@ -26,7 +26,7 @@ $lang['account_creation_invalid_default_group'] = 'Invalid default group name se
 // Password
 $lang['password_change_successful']          = 'Password Successfully Changed';
 $lang['password_change_unsuccessful']        = 'Unable to Change Password';
-$lang['forgot_password_successful']          = 'Password Reset Email Sent';
+$lang['forgot_password_successful']          = 'Email for Resetting Password sent';
 $lang['forgot_password_unsuccessful']        = 'Unable to Reset Password';
 
 // Activation

@@ -31,7 +31,9 @@ class Courses extends Admin_Controller {
         }
 
         /**
+         * Function to display the index
          * @author Jinkee Po <pojinkee1@gmail.com>
+         * @version 2017-2-4
          */
         public function index() {
 

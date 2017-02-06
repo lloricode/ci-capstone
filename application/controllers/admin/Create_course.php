@@ -13,6 +13,12 @@ class Create_course extends Admin_Controller {
                 );
         }
 
+        /**
+        * Function to display index
+        * 
+        * @author Lloric Garcia
+        * @version 2017-2-1
+        */
         public function index() {
                 $this->form_validation->set_rules(array(
                     array(
