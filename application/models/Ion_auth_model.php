@@ -522,6 +522,7 @@ class Ion_auth_model extends CI_Model
                         $this->set_error('deactivate_current_user_unsuccessful');
                         return FALSE;
                 }
+
 		$activation_code       = sha1(md5(microtime()));
 		$this->activation_code = $activation_code;
 
@@ -760,9 +761,9 @@ class Ion_auth_model extends CI_Model
 	 * @updated Ryan
 	 * @updated 52aa456eef8b60ad6754b31fbdcc77bb
 	 **/
-	public function forgotten_password($user_email)
+	public function forgotten_password($identity)
 	{
-		if (empty($user_email))
+		if (empty($identity))
 		{
 			$this->trigger_events(array('post_forgotten_password', 'post_forgotten_password_unsuccessful'));
 			return FALSE;
@@ -778,7 +779,7 @@ class Ion_auth_model extends CI_Model
 			$activation_code_part = sha1($activation_code_part . mt_rand() . microtime());
 		}
 
-		$key = $this->hash_code($activation_code_part.$user_email);
+		$key = $this->hash_code($activation_code_part.$identity);
 
 		// If enable query strings is set, then we need to replace any unsafe characters so that the code can still work
 		if ($key != '' && $this->config->item('permitted_uri_chars') != '' && $this->config->item('enable_query_strings') == FALSE)
@@ -800,7 +801,7 @@ class Ion_auth_model extends CI_Model
 		    'forgotten_password_time' => time()
 		);
 
-		$this->db->update($this->tables['users'], $update, array('email' => $user_email));
+		$this->db->update($this->tables['users'], $update, array($this->identity_column => $identity));
 
 		$return = $this->db->affected_rows() == 1;
 
