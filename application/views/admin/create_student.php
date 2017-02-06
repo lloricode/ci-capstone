@@ -20,7 +20,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                         'name'       => 'basic_validate',
                         'id'         => 'basic_validate',
                         'novalidate' => 'novalidate',
-                    ),$student_school_id);
+                            ), $student_school_id);
 
 
 

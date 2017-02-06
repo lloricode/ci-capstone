@@ -44,6 +44,7 @@
       <p>
             <?php echo lang('create_user_password_label', 'password');?> <br />
             <?php echo form_input($password);?>
+            
       </p>
 
       <p>
