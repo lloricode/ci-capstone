@@ -61,7 +61,7 @@ if (!function_exists('navigations_main')) {
                     'student_menu' =>
                     array(
                         'label' => 'Students',
-                        'icon'  => 'user',
+                        'icon'  => 'user-md',
                         'sub'   =>
                         array(
                             'students'       =>
