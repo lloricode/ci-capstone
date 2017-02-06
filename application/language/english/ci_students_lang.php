@@ -11,6 +11,7 @@ $lang['create_student_school_id_label']           = 'School ID:';
 $lang['create_student_gender_label']              = 'Gender:';
 $lang['create_student_permanent_address_label']   = 'Permanent Address:';
 $lang['create_course_id_label']                   = 'Course ID:';
+$lang['create_course_label']                   = 'Course:';
 $lang['create_student_year_level_label']          = 'Year Level:';
 $lang['create_student_submit_button_label']       = 'Create Student:';
 $lang['create_student_succesfully_added_message'] = 'Student Succesfully Added!!';
@@ -24,6 +25,7 @@ $lang['index_student_lastname_th']          = 'Lastname';
 $lang['index_student_Gender_th']            = 'Gender';
 $lang['index_student_permanent_address_th'] = 'Permanent Address';
 $lang['index_student_course_id_th']         = 'Course ID';
+$lang['index_student_course_th']         = 'Course';
 $lang['index_student_year_level_th']        = 'Year Level';
 
 

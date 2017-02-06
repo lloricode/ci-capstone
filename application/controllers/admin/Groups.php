@@ -8,7 +8,6 @@ class Groups extends Admin_Controller
 
         private $page_;
         private $limit;
-        private $total_rows;
 
         function __construct()
         {
@@ -20,11 +19,7 @@ class Groups extends Admin_Controller
                 /**
                  * pagination limit
                  */
-                $this->limit      = 10;
-                /**
-                 * get total rows in users table (no where| all data)
-                 */
-                $this->total_rows = $this->Group_model->total_rows();
+                $this->limit = 10;
 
                 /**
                  * get the page from url
@@ -84,7 +79,7 @@ class Groups extends Admin_Controller
                 /**
                  * pagination
                  */
-                $this->data['pagination'] = $this->pagination->generate_link('admin/groups/index', $this->total_rows / $this->limit);
+                $this->data['pagination'] = $this->pagination->generate_link('admin/groups/index', $this->Group_model->count_rows() / $this->limit);
 
                 /**
                  * caption of table

@@ -18,9 +18,4 @@ class User_model extends MY_Model
                 parent::__construct();
         }
 
-        public function total_rows()
-        {
-                return $this->db->count_all($this->table);
-        }
-
 }

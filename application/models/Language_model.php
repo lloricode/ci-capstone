@@ -18,15 +18,4 @@ class Language_model extends MY_Model
                 parent::__construct();
         }
 
-        public function set_user_language($lang)
-        {
-                $insert_data = array(
-                    array(
-                        'user_id'        => $this->session->userdata('user_id'),
-                        'language_value' => $lang,
-                    ),
-                );
-                $this->db->insert_batch($this->table, $insert_data);
-        }
-
 }

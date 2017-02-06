@@ -38,9 +38,8 @@ class Language extends Admin_Controller
 
                 if ($this->form_validation->run())
                 {
-                        //no need to load, its already in my_controller
-                        //   $this->load->model('Language_Model');
-                        $data_return = $this->Language_model->where('user_id', $this->session->userdata('user_id'))->get();
+                        $this->load->model('Language_model');
+                        $data_return = $this->Language_model->where('user_id', $this->ion_auth->user()->row()->id)->get();
                         $lang        = $this->input->post('lang', TRUE);
                         if ($data_return)
                         {
@@ -53,14 +52,18 @@ class Language extends Admin_Controller
                                     'language_id' => $data_return->language_id,
                                     'user_id'     => $this->session->userdata('user_id'),
                                 );
-                                $this->Language_model->update($data_update, $where);
-                                $data['message'] = 'updated';
+                             //   $this->Language_model->update($data_update, $where);
+                                $data['message'] = 'disbled, only english available for now';
                         }
                         else
                         {
+                                $insert_data     = array(
+                                    'user_id'        => $this->session->userdata('user_id'),
+                                    'language_value' => $lang,
+                                );
                                 //insert
-                                $this->Language_Model->set_user_language($lang);
-                                $data['message'] = 'submitted';
+                             //   $this->Language_model->insert($insert_data);
+                                $data['message'] = 'disbled, only english available for now';
                         }
                 }
                 $this->_render_admin_page('admin/lang_view', $data);

@@ -123,7 +123,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     //course_id:
                     $tmp = (form_error('course_id') == '') ? '' : ' error';
                     echo '<div class="control-group' . $tmp . '">';
-                    echo lang('create_course_id_label', 'course_id', array(
+                    echo lang('create_course_label', 'course_id', array(
                         'class' => 'control-label',
                         'id'    => 'inputError'
                     ));

@@ -8,7 +8,6 @@ class Students extends Admin_Controller
 
         private $page_;
         private $limit;
-        private $total_rows;
 
         function __construct()
         {
@@ -20,11 +19,7 @@ class Students extends Admin_Controller
                 /**
                  * pagination limit
                  */
-                $this->limit      = 10;
-                /**
-                 * get total rows in the student table
-                 */
-                $this->total_rows = $this->Student_model->total_rows();
+                $this->limit = 10;
 
                 /**
                  * get the page from url
@@ -75,7 +70,7 @@ class Students extends Admin_Controller
                     lang('index_student_lastname_th'),
                     lang('index_student_Gender_th'),
                     lang('index_student_permanent_address_th'),
-                    lang('index_student_course_id_th'),
+                    lang('index_student_course_th'),
                     lang('index_student_year_level_th')
                 );
 
@@ -87,7 +82,7 @@ class Students extends Admin_Controller
                 /**
                  * pagination
                  */
-                $this->data['pagination'] = $this->pagination->generate_link('admin/students/index', $this->total_rows / $this->limit);
+                $this->data['pagination'] = $this->pagination->generate_link('admin/students/index', $this->Student_model->count_rows() / $this->limit);
 
                 /**
                  * caption of table

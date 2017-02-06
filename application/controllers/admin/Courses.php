@@ -2,13 +2,15 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Courses extends Admin_Controller {
+class Courses extends Admin_Controller
+{
+
 
         private $page_;
         private $limit;
-        private $total_rows;
 
-        function __construct() {
+        function __construct()
+        {
                 parent::__construct();
                 $this->lang->load('ci_courses');
                 $this->load->model('Course_model');
@@ -17,11 +19,7 @@ class Courses extends Admin_Controller {
                 /**
                  * pagination limit
                  */
-                $this->limit      = 10;
-                /**
-                 * get total rows in users table
-                 */
-                $this->total_rows = $this->Course_model->total_rows();
+                $this->limit = 10;
 
                 /**
                  * get the page from url
@@ -35,7 +33,8 @@ class Courses extends Admin_Controller {
          * @author Jinkee Po <pojinkee1@gmail.com>
          * @version 2017-2-4
          */
-        public function index() {
+        public function index()
+        {
 
                 //list the Courses
                 $course_obj = $this->Course_model->limit($this->limit, $this->limit * $this->page_ - $this->limit)->get_all();
@@ -43,9 +42,11 @@ class Courses extends Admin_Controller {
 
                 $table_data = array();
 
-                if ($course_obj) {
+                if ($course_obj)
+                {
 
-                        foreach ($course_obj as $course) {
+                        foreach ($course_obj as $course)
+                        {
 
                                 array_push($table_data, array(
                                     my_htmlspecialchars($course->course_name),
@@ -72,7 +73,7 @@ class Courses extends Admin_Controller {
                 /**
                  * pagination
                  */
-                $this->data['pagination'] = $this->pagination->generate_link('admin/courses/index', $this->total_rows / $this->limit);
+                $this->data['pagination'] = $this->pagination->generate_link('admin/courses/index', $this->Course_model->count_rows() / $this->limit);
 
                 /**
                  * caption of table
