@@ -18,6 +18,7 @@ class Migration_Course extends CI_Migration
 
         public function up()
         {
+                $this->down();
                 $fields = array(
                     self::CI_DB_TABLE . '_id'          => array(
                         'type'           => 'TINYINT',
@@ -52,7 +53,7 @@ class Migration_Course extends CI_Migration
                 $this->dbforge->add_key(self::CI_DB_TABLE . '_id', TRUE);
 
                 $this->dbforge->add_field($fields);
-                $this->dbforge->create_table(self::CI_DB_TABLE, TRUE);
+                $this->dbforge->create_table(self::CI_DB_TABLE);
 
                 $this->add_sample_data();
         }

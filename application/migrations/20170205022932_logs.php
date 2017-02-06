@@ -31,6 +31,7 @@ class Migration_Logs extends CI_Migration
 
         public function up()
         {
+                $this->down();
                 $fields = array(
                     'id'         => array(
                         'type'           => 'TINYINT',
@@ -76,7 +77,7 @@ class Migration_Logs extends CI_Migration
                 $this->dbforge->add_key('user_agent');
 
                 $this->dbforge->add_field($fields);
-                $this->dbforge->create_table($this->table, TRUE);
+                $this->dbforge->create_table($this->table);
         }
 
         public function down()

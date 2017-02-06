@@ -19,6 +19,7 @@ class Migration_Students extends CI_Migration
 
         public function up()
         {
+                $this->down();
                 $fields = array(
                     self::CI_DB_TABLE_COL . '_id'                => array(
                         'type'           => 'TINYINT',
@@ -59,6 +60,10 @@ class Migration_Students extends CI_Migration
                         'type'       => 'TINYINT',
                         'constraint' => '1',
                     ),
+                    self::CI_DB_TABLE_COL . '_active'            => array(
+                        'type'       => 'TINYINT',
+                        'constraint' => '1',
+                    ),
                     'course_id'                                  => array(
                         'type'       => 'INT',
                         'constraint' => '11',
@@ -81,7 +86,7 @@ class Migration_Students extends CI_Migration
                 $this->dbforge->add_field($fields);
 
                 $this->dbforge->add_key(self::CI_DB_TABLE_COL . '_id', TRUE);
-                $this->dbforge->create_table(self::CI_DB_TABLE, TRUE);
+                $this->dbforge->create_table(self::CI_DB_TABLE);
 
                 $this->add_sample_data();
         }
@@ -111,6 +116,7 @@ class Migration_Students extends CI_Migration
                             self::CI_DB_TABLE_COL . '_permanent_address' => 'addreee' . random_string('alnum', 3),
                             self::CI_DB_TABLE_COL . '_year_level'        => random_string('nozero', 1),
                             self::CI_DB_TABLE_COL . '_enrolled'          => (bool) (random_string('nozero', 1) % random_string('nozero', 1) == 0),
+                            self::CI_DB_TABLE_COL . '_active'            => (bool) (random_string('nozero', 1) % random_string('nozero', 1) == 0),
                             'course_id'                                  => random_string('nozero', 1),
                             'created_at'                                 => my_datetime_format(),
                             'deleted_at'                                 => '',
