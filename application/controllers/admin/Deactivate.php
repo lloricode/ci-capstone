@@ -30,6 +30,7 @@ class Deactivate extends Admin_Controller
                                 show_error('Invalid request.');
                         }
                         $this->session->set_flashdata('message', (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->ion_auth->messages())));
+                        $this->data['bootstrap'] = $this->bootstrap();
                         $this->_render_admin_page('admin/deactivate_user', $this->data);
                 }
                 else
@@ -49,6 +50,56 @@ class Deactivate extends Admin_Controller
                         // redirect them back to the auth page
                         redirect('admin/users', 'refresh');
                 }
+        }
+
+        /**
+         * 
+         * @return array
+         *  @author Lloric Garcia <emorickfighter@gmail.com>
+         */
+        private function bootstrap()
+        {
+                /**
+                 * for header
+                 * 
+                 */
+                $header       = array(
+                    'css' => array(
+                        'css/bootstrap.min.css',
+                        'css/bootstrap-responsive.min.css',
+                        'css/uniform.css',
+                        'css/select2.css',
+                        'css/matrix-style.css',
+                        'css/matrix-media.css',
+                        'font-awesome/css/font-awesome.css',
+                        'http://fonts.googleapis.com/css?family=Open+Sans:400,700,800',
+                    ),
+                    'js'  => array(
+                    ),
+                );
+                /**
+                 * for footer
+                 * 
+                 */
+                $footer       = array(
+                    'css' => array(
+                    ),
+                    'js'  => array(
+                        'js/jquery.min.js',
+                        'js/jquery.ui.custom.js',
+                        'js/bootstrap.min.js',
+                        'js/jquery.uniform.js',
+                        'js/select2.min.js',
+                        'js/jquery.dataTables.min.js',
+                        'js/matrix.js',
+                        'js/matrix.tables.js',
+                    ),
+                );
+                /**
+                 * footer extra
+                 */
+                $footer_extra = '';
+                return generate_link_script_tag($header, $footer, $footer_extra);
         }
 
 }

@@ -58,13 +58,13 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
 
                     echo ' <div class="form-actions">';
 
+                    echo form_reset('reset', 'Reset', array(
+                        'class' => 'btn btn-default'
+                    ));
                     echo form_submit('submit', lang('create_group_submit_btn'), array(
                         'class' => 'btn btn-success'
                     ));
 
-                    echo form_reset('reset', 'Reset', array(
-                        'class' => 'btn btn-default'
-                    ));
 
                     echo '</div>';
                     echo form_close();

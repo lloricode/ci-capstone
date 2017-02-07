@@ -1,13 +1,13 @@
 <?php
 defined('BASEPATH') or exit('no direct script allowed');
-$title = 'Log in | CI Capstone';
-$link  = base_url('assets/framework/bootstrap/admin/');
+$link = base_url($this->config->item('bootstarp_dir'));
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
     <head>
-        <title><?php echo $title; ?></title><meta charset="UTF-8" />
+        <title>Log in | <?php echo $this->config->item('project_title'); ?></title>
+        <meta charset="<?php echo $this->config->item('charset'); ?>" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link href="<?php echo base_url('assets/img/favicon.ico'); ?>" rel="shortcut icon" type="image/x-icon" />
         <link rel="stylesheet" href="<?php echo $link; ?>css/bootstrap.min.css" />

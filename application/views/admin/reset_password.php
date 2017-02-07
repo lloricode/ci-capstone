@@ -1,13 +1,13 @@
 <?php
 defined('BASEPATH') or exit('no direct script allowed');
-$title = 'CI Capston';
-$link  = base_url('assets/framework/bootstrap/admin/');
+$link = base_url($this->config->item('bootstarp_dir'));
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
     <head>
-        <title><?php echo $title; ?></title><meta charset="UTF-8" />
+        <title><?php echo $this->config->item('project_title'); ?></title>
+        <meta charset="<?php echo $this->config->item('charset'); ?>" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link href="<?php echo base_url('assets/img/favicon.ico'); ?>" rel="shortcut icon" type="image/x-icon" />
         <link rel="stylesheet" href="<?php echo $link; ?>css/bootstrap.min.css" />
@@ -19,7 +19,7 @@ $link  = base_url('assets/framework/bootstrap/admin/');
     </head>
     <body>
         <div id="loginbox">            
-            <?php echo form_open(base_url('admin/auth/reset_password/' . $code), array('class' => 'form-vertical', 'id' => 'loginform'),$user) ?>
+            <?php echo form_open(base_url('admin/auth/reset_password/' . $code), array('class' => 'form-vertical', 'id' => 'loginform'), $user) ?>
             <div class="control-group normal_text"> <h3><img src="<?php echo $link; ?>img/logo.png" alt="Logo" /></h3></div>
             <div class="control-group">
                 <div class="controls">

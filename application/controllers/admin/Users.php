@@ -65,13 +65,15 @@ class Users extends Admin_Controller
                                 {
                                         $groups .= anchor("admin/edit-group/?group-id=" . $group->id, my_htmlspecialchars($group->name)) . ' | ';
                                 }
+                                $active_      = (($user->active) ? anchor("admin/deactivate/?user-id=" . $user->id, 'set deactive') : anchor("admin/users/activate/" . $user->id, 'set active'));
+                                $active_label = (($user->active) ? '<span class="done">' . lang('index_active_link') : '<span class="pending">' . lang('index_inactive_link')) . '</span>';
                                 array_push($table_data, array(
                                     my_htmlspecialchars($user->first_name),
                                     my_htmlspecialchars($user->last_name),
                                     my_htmlspecialchars($user->username),
                                     my_htmlspecialchars($user->email),
                                     trim($groups, ' | '),
-                                    (($user->active) ? anchor("admin/deactivate/?user-id=" . $user->id, lang('index_active_link')) : anchor("admin/users/activate/" . $user->id, lang('index_inactive_link'))),
+                                    array('data' => $active_label . nbs() . $active_, 'class' => 'taskStatus'),
                                     anchor("admin/edit-user/?user-id=" . $user->id, 'Edit'),
                                 ));
                         }

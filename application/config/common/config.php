@@ -7,7 +7,7 @@
 
 
 $config['max_year_level']     = 4;
-$config['bootstarp_dir']      = 'assets/framework/bootstrap/admin/';
+$config['bootstarp_dir']      = 'assets/framework/bootstrap/admin/matrix-admin-package/';
 $config['project_title']      = 'CI Capstone';
 $config['project_title_link'] = 'https://github.com/lloricode/ci-capstone';
 $config['project_title_1']    = 'CI';

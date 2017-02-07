@@ -5,12 +5,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Create_student extends Admin_Controller
 {
 
+
+        private $data;
+
         function __construct()
         {
                 parent::__construct();
                 $this->lang->load('ci_students');
                 $this->load->library('form_validation');
-                $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
+                $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span><br />');
         }
 
         public function index()
@@ -87,7 +90,19 @@ class Create_student extends Admin_Controller
                 $this->school_id->initialize(6, 5);
 
 
-                $this->data['message']            = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
+                $this->first_page();
+                $this->second_page();
+
+                $this->template['first_page']  = $this->_render_page('admin/_templates/create_student/first_page', $this->data, TRUE);
+                $this->template['second_page'] = $this->_render_page('admin/_templates/create_student/second_page', $this->data, TRUE);
+                $this->template['bootstrap']   = $this->bootstrap();
+                $this->_render_admin_page('admin/create_student', $this->template);
+        }
+
+        private function first_page()
+        {
                 $this->data['student_firstname']  = array(
                     'name'  => 'student_firstname',
                     'id'    => 'student_firstname',
@@ -105,13 +120,6 @@ class Create_student extends Admin_Controller
                     'value' => $this->form_validation->set_value('student_lastname'),
                 );
 
-                $this->data['student_school_id_temp'] = array(
-                    'name'     => 'student_school_id_temp',
-                    'id'       => 'student_school_id_temp',
-                    'disabled' => '',
-                    'value'    => $this->school_id->generate(),
-                );
-
                 $this->data['student_school_id'] = array(
                     'student_school_id' => $this->school_id->generate()
                 );
@@ -127,22 +135,19 @@ class Create_student extends Admin_Controller
                     'id'    => 'student_permanent_address',
                     'value' => $this->form_validation->set_value('student_permanent_address'),
                 );
+        }
 
-                $this->data['course_id']       = array(
-                    'name'  => 'course_id',
-                    'value' => $this->form_validation->set_value('course_id'),
+        private function second_page()
+        {
+                $this->data['student_school_id_temp'] = array(
+                    'name'     => 'student_school_id_temp',
+                    'id'       => 'student_school_id_temp',
+                    'disabled' => '',
+                    'value'    => $this->school_id->generate(),
                 );
-                $this->data['course_id_value'] = $this->Course_model->as_dropdown('course_name')->get_all();
+                $this->data['course_id_value']        = $this->Course_model->as_dropdown('course_name')->get_all();
 
-                $this->data['student_year_level']       = array(
-                    'name'  => 'student_year_level',
-                    'value' => $this->form_validation->set_value('student_year_level'),
-                );
                 $this->data['student_year_level_value'] = _numbers_for_drop_down(0, $this->config->item('max_year_level'));
-
-                $this->data['bootstrap'] = $this->bootstrap();
-
-                $this->_render_admin_page('admin/create_student', $this->data);
         }
 
         /**
@@ -153,21 +158,27 @@ class Create_student extends Admin_Controller
         private function bootstrap()
         {
                 /**
-                 * for header
+                 * for header      
                  */
                 $header       = array(
                     'css' => array(
+                        /**
+                         * wizard
+                         */
                         'css/bootstrap.min.css',
                         'css/bootstrap-responsive.min.css',
-                        'css/fullcalendar.css',
                         'css/matrix-style.css',
                         'css/matrix-media.css',
                         'font-awesome/css/font-awesome.css',
-                        'css/jquery.gritter.css',
-                        'css/jquery.gritter.css',
-                        'css/uniform.css',
-                        'css/select2.css',
-                        'http://fonts.googleapis.com/css?family=Open+Sans:400,700,800'
+                        'http://fonts.googleapis.com/css?family=Open+Sans:400,700,800',
+                    /**
+                     * addition for form
+                     */
+//                        'css/colorpicker.css',
+//                        'css/datepicker.css',
+//                        'css/uniform.css',
+//                        'css/select2.css',
+//                        'css/bootstrap-wysihtml5.css',
                     ),
                     'js'  => array(
                     ),
@@ -179,49 +190,44 @@ class Create_student extends Admin_Controller
                     'css' => array(
                     ),
                     'js'  => array(
+                        /**
+                         * wizard
+                         * 
+                         */
                         'js/jquery.min.js',
                         'js/jquery.ui.custom.js',
                         'js/bootstrap.min.js',
-                        'js/bootstrap-colorpicker.js',
-                        'js/bootstrap-datepicker.js',
-                        'js/jquery.toggle.buttons.js',
-                        'js/masked.js',
-                        'js/jquery.uniform.js',
-                        'js/select2.min.js',
+                        'js/jquery.validate.js',
+                        'js/jquery.wizard.js',
                         'js/matrix.js',
-                        'js/matrix.form_common.js',
-                        'js/wysihtml5-0.3.0.js',
-                        'js/jquery.peity.min.js',
-                        'js/bootstrap-wysihtml5.js',
+                        /*
+                         * for frontend validation
+                         */
+                        base_url('assets/framework/bootstrap/admin/matrixwizard.js'),
+                    /**
+                     * addition for form
+                     */
+//                        'js/bootstrap-colorpicker.js',
+//                        'js/bootstrap-datepicker.js',
+//                        'js/jquery.toggle.buttons.js',
+//                        'js/masked.js',
+//                        'js/jquery.uniform.js',
+//                        'js/select2.min.js',
+//                        'js/matrix.form_common.js',
+//                        'js/wysihtml5-0.3.0.js',
+//                        'js/jquery.peity.min.js',
+//                        'js/bootstrap-wysihtml5.js',
                     ),
                 );
                 /**
                  * footer extra
                  */
-                $footer_extra = '<script type="text/javascript">
-        // This function is called from the pop-up menus to transfer to
-        // a different page. Ignore if the value returned is a null string:
-        function goPage(newURL) {
-
-            // if url is empty, skip the menu dividers and reset the menu selection to default
-            if (newURL != "") {
-
-                // if url is "-", it is this page -- reset the menu:
-                if (newURL == "-") {
-                    resetMenu();
-                }
-                // else, send page to designated URL            
-                else {
-                    document.location.href = newURL;
-                }
-            }
-        }
-
-        // resets the menu selection upon entry to this page:
-        function resetMenu() {
-            document.gomenu.selector.selectedIndex = 2;
-        }
-</script>';
+                /**
+                 * addition for form
+                 */
+                $footer_extra = "<script>
+                        $('.textarea_editor').wysihtml5();
+                </script>";
                 return generate_link_script_tag($header, $footer, $footer_extra);
         }
 
