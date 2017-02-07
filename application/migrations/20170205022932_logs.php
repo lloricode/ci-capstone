@@ -77,7 +77,7 @@ class Migration_Logs extends CI_Migration
                 $this->dbforge->add_key('user_agent');
 
                 $this->dbforge->add_field($fields);
-                $this->dbforge->create_table($this->table);
+                $this->dbforge->create_table($this->table, TRUE);
         }
 
         public function down()

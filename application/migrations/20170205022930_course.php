@@ -9,7 +9,7 @@ class Migration_Course extends CI_Migration
 {
 
 
-        const CI_DB_TABLE = 'course';
+        const CI_DB_TABLE = 'courses';
 
         public function __construct($config = array())
         {
@@ -20,29 +20,29 @@ class Migration_Course extends CI_Migration
         {
                 $this->down();
                 $fields = array(
-                    self::CI_DB_TABLE . '_id'          => array(
+                    'course_id'          => array(
                         'type'           => 'TINYINT',
                         'constraint'     => '11',
                         'unsigned'       => TRUE,
                         'auto_increment' => TRUE
                     ),
-                    self::CI_DB_TABLE . '_name'        => array(
+                    'course_name'        => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '50',
                     ),
-                    self::CI_DB_TABLE . '_description' => array(
+                    'course_description' => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '50',
                     ),
-                    'created_at'                       => array(
+                    'created_at'         => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
                     ),
-                    'deleted_at'                       => array(
+                    'deleted_at'         => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
                     ),
-                    'updated_at'                       => array(
+                    'updated_at'         => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
                     ),
@@ -50,7 +50,7 @@ class Migration_Course extends CI_Migration
 
 
 
-                $this->dbforge->add_key(self::CI_DB_TABLE . '_id', TRUE);
+                $this->dbforge->add_key('course_id', TRUE);
 
                 $this->dbforge->add_field($fields);
                 $this->dbforge->create_table(self::CI_DB_TABLE);
@@ -73,11 +73,11 @@ class Migration_Course extends CI_Migration
                 for ($i = 1; $i < 80; $i++)
                 {
                         $data = array(
-                            self::CI_DB_TABLE . '_name'        => 'Name' . random_string('alpha', 3),
-                            self::CI_DB_TABLE . '_description' => 'Desc' . random_string('alpha', 3),
-                            'created_at'                       => my_datetime_format(),
-                            'deleted_at'                       => '',
-                            'updated_at'                       => ''
+                            'course_name'        => 'Name' . random_string('alpha', 3),
+                            'course_description' => 'Desc' . random_string('alpha', 3),
+                            'created_at'         => my_datetime_format(),
+                            'deleted_at'         => '',
+                            'updated_at'         => ''
                         );
 
                         $this->db->insert(self::CI_DB_TABLE, $data);

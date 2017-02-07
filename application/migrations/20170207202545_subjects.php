@@ -29,10 +29,12 @@ class Migration_Subjects extends CI_Migration
                     'subject_code'        => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '10',
+                        'unique'     => TRUE
                     ),
                     'subject_description' => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '50',
+                        'unique'     => TRUE
                     ),
                     'subject_unit'        => array(
                         'type'       => 'INT',
