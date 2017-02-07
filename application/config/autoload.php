@@ -108,7 +108,7 @@ $autoload['helper'] = array('date','url','html','language','navigation');
 | config files.  Otherwise, leave it blank.
 |
 */
-$autoload['config'] = array();
+$autoload['config'] = array('common/config');
 
 /*
 | -------------------------------------------------------------------

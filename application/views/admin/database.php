@@ -1,7 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script allowed'); ?>
 <?php echo $backup_button; ?>
 <div class="container-fluid">
-    <hr>
     <h2>Platform</h2>
     <?php echo $platform; ?>
 

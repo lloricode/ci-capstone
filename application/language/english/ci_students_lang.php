@@ -13,7 +13,7 @@ $lang['create_student_permanent_address_label']   = 'Permanent Address:';
 $lang['create_course_id_label']                   = 'Course ID:';
 $lang['create_course_label']                   = 'Course:';
 $lang['create_student_year_level_label']          = 'Year Level:';
-$lang['create_student_submit_button_label']       = 'Create Student:';
+$lang['create_student_submit_button_label']       = 'Add Student';
 $lang['create_student_succesfully_added_message'] = 'Student Succesfully Added!!';
 
 //Table Header

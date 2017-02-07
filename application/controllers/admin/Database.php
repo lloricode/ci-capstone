@@ -43,7 +43,7 @@ class Database extends Admin_Controller
                     'href'         => 'admin/database/backup-database',
                     'button_label' => lang('db_back_up'),
                         ), TRUE);
-
+                $this->template['bootstrap']     = $this->bootstrap();
                 $this->_render_admin_page('admin/database', $this->template);
         }
 
@@ -54,6 +54,56 @@ class Database extends Admin_Controller
         {
                 $this->load->helper('backup_database');
                 backup_database('ci_capstone');
+        }
+
+        /**
+         * 
+         * @return array
+         *  @author Lloric Garcia <emorickfighter@gmail.com>
+         */
+        private function bootstrap()
+        {
+                /**
+                 * for header
+                 * 
+                 */
+                $header       = array(
+                    'css' => array(
+                        'css/bootstrap.min.css',
+                        'css/bootstrap-responsive.min.css',
+                        'css/uniform.css',
+                        'css/select2.css',
+                        'css/matrix-style.css',
+                        'css/matrix-media.css',
+                        'font-awesome/css/font-awesome.css',
+                        'http://fonts.googleapis.com/css?family=Open+Sans:400,700,800',
+                    ),
+                    'js'  => array(
+                    ),
+                );
+                /**
+                 * for footer
+                 * 
+                 */
+                $footer       = array(
+                    'css' => array(
+                    ),
+                    'js'  => array(
+                        'js/jquery.min.js',
+                        'js/jquery.ui.custom.js',
+                        'js/bootstrap.min.js',
+                        'js/jquery.uniform.js',
+                        'js/select2.min.js',
+                        'js/jquery.dataTables.min.js',
+                        'js/matrix.js',
+                        'js/matrix.tables.js',
+                    ),
+                );
+                /**
+                 * footer extra
+                 */
+                $footer_extra = '';
+                return generate_link_script_tag($header, $footer, $footer_extra);
         }
 
 }

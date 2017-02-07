@@ -2,7 +2,6 @@
 defined('BASEPATH') or exit('Direct Script is not allowed');
 ?>
 <div class="container-fluid">
-    <hr>
     <div class="row-fluid">
         <div class="span12">
 

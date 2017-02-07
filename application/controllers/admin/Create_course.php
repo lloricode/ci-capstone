@@ -2,24 +2,25 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Create_course extends Admin_Controller {
+class Create_course extends Admin_Controller
+{
 
-        function __construct() {
+        function __construct()
+        {
                 parent::__construct();
                 $this->lang->load('ci_courses');
                 $this->load->library('form_validation');
-                $this->form_validation->set_error_delimiters(
-                        $this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth')
-                );
+                $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
         }
 
         /**
-        * Function to display index
-        * 
-        * @author Lloric Garcia
-        * @version 2017-2-1
-        */
-        public function index() {
+         * Function to display index
+         * 
+         * @author Lloric Garcia
+         * @version 2017-2-1
+         */
+        public function index()
+        {
                 $this->form_validation->set_rules(array(
                     array(
                         'label' => lang('create_course_name_label'),
@@ -33,13 +34,15 @@ class Create_course extends Admin_Controller {
                     )
                 ));
 
-                if ($this->form_validation->run()) {
+                if ($this->form_validation->run())
+                {
                         $course = array(
                             'course_name'        => $this->input->post('course_name', TRUE),
                             'course_description' => $this->input->post('course_description', TRUE),
                         );
                         $this->load->model('Course_model');
-                        if ($this->Course_model->insert($course)) {
+                        if ($this->Course_model->insert($course))
+                        {
                                 $this->session->set_flashdata('message', $this->config->item('message_start_delimiter', 'ion_auth') . lang('create_course_succesfully_added_message') . $this->config->item('message_end_delimiter', 'ion_auth'));
                                 redirect(current_url(), 'refresh');
                         }
@@ -58,7 +61,88 @@ class Create_course extends Admin_Controller {
                     'type'  => 'text',
                     'value' => $this->form_validation->set_value('course_description'),
                 );
+                $this->data['bootstrap']          = $this->bootstrap();
                 $this->_render_admin_page('admin/create_course', $this->data);
+        }
+
+        /**
+         * 
+         * @return array
+         *  @author Lloric Garcia <emorickfighter@gmail.com>
+         */
+        private function bootstrap()
+        {
+                /**
+                 * for header
+                 */
+                $header       = array(
+                    'css' => array(
+                        'css/bootstrap.min.css',
+                        'css/bootstrap-responsive.min.css',
+                        'css/fullcalendar.css',
+                        'css/matrix-style.css',
+                        'css/matrix-media.css',
+                        'font-awesome/css/font-awesome.css',
+                        'css/jquery.gritter.css',
+                        'css/jquery.gritter.css',
+                        'css/uniform.css',
+                        'css/select2.css',
+                        'http://fonts.googleapis.com/css?family=Open+Sans:400,700,800'
+                    ),
+                    'js'  => array(
+                    ),
+                );
+                /**
+                 * for footer
+                 */
+                $footer       = array(
+                    'css' => array(
+                    ),
+                    'js'  => array(
+                        'js/jquery.min.js',
+                        'js/jquery.ui.custom.js',
+                        'js/bootstrap.min.js',
+                        'js/bootstrap-colorpicker.js',
+                        'js/bootstrap-datepicker.js',
+                        'js/jquery.toggle.buttons.js',
+                        'js/masked.js',
+                        'js/jquery.uniform.js',
+                        'js/select2.min.js',
+                        'js/matrix.js',
+                        'js/matrix.form_common.js',
+                        'js/wysihtml5-0.3.0.js',
+                        'js/jquery.peity.min.js',
+                        'js/bootstrap-wysihtml5.js',
+                    ),
+                );
+                /**
+                 * footer extra
+                 */
+                $footer_extra = '<script type="text/javascript">
+        // This function is called from the pop-up menus to transfer to
+        // a different page. Ignore if the value returned is a null string:
+        function goPage(newURL) {
+
+            // if url is empty, skip the menu dividers and reset the menu selection to default
+            if (newURL != "") {
+
+                // if url is "-", it is this page -- reset the menu:
+                if (newURL == "-") {
+                    resetMenu();
+                }
+                // else, send page to designated URL            
+                else {
+                    document.location.href = newURL;
+                }
+            }
+        }
+
+        // resets the menu selection upon entry to this page:
+        function resetMenu() {
+            document.gomenu.selector.selectedIndex = 2;
+        }
+</script>';
+                return generate_link_script_tag($header, $footer, $footer_extra);
         }
 
 }

@@ -11,12 +11,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * MY CONSTANT
  * 
  */
-const TITLETAB = 'CI Capstone';
-const TITLE1 = 'CI';
-const TITLE2 = 'Capstone';
 const SEGMENT_NUMBER = 2; //base_url 0,
 const MENU_ITEM_DEFAULT = 'home';
-const BOOTSTRAPS_LIB_DIR = 'assets/framework/bootstrap/admin/';
 const HOME_REDIRECT = 'admin/'; // sample    admin/
 
 
@@ -67,32 +63,24 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
 ?><!DOCTYPE html>
 <html lang="en">
     <head>
-        <title><?php echo ($sub_label != '') ? $sub_label : $label; ?> | <?php echo TITLETAB; ?></title>
-        <meta charset="UTF-8" />
+        <title><?php echo ($sub_label != '') ? $sub_label : $label; ?> | <?php echo $this->config->item('project_title'); ?></title>
+        <meta charset="<?php echo $this->config->item('charset'); ?>" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link href="<?php echo base_url(); ?>assets/img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-        <link rel="stylesheet" href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>css/bootstrap.min.css" />
-        <link rel="stylesheet" href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>css/bootstrap-responsive.min.css" />
-        <link rel="stylesheet" href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>css/fullcalendar.css" />
-        <link rel="stylesheet" href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>css/matrix-style.css" />
-        <link rel="stylesheet" href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>css/matrix-media.css" />
-        <link href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>font-awesome/css/font-awesome.css" rel="stylesheet" />
-        <link rel="stylesheet" href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>css/jquery.gritter.css" />
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
 
-
-        <link rel="stylesheet" href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>css/jquery.gritter.css" />
-
-        <link rel="stylesheet" href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>css/uniform.css" />
-        <link rel="stylesheet" href="<?php echo base_url(BOOTSTRAPS_LIB_DIR); ?>css/select2.css" />
-
+        <?php echo link_tag('assets/img/favicon.ico', 'shortcut icon', 'image/ico'); ?>
+        <?php
+        /**
+         * echo generated link/script tags
+         */
+        echo $bootstrap['header'];
+        ?>
 
     </head>
     <body>
 
         <!--Header-part-->
         <div id="header">
-            <h1><a href="dashboard.html"><?php echo TITLETAB; ?></a></h1>
+            <h1><a href="<?php echo base_url(HOME_REDIRECT); ?>"><?php echo $this->config->item('project_title'); ?></a></h1>
         </div>
         <!--close-Header-part--> 
 

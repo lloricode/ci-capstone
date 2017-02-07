@@ -52,7 +52,7 @@ class Language extends Admin_Controller
                                     'language_id' => $data_return->language_id,
                                     'user_id'     => $this->session->userdata('user_id'),
                                 );
-                             //   $this->Language_model->update($data_update, $where);
+                                //   $this->Language_model->update($data_update, $where);
                                 $data['message'] = 'disbled, only english available for now';
                         }
                         else
@@ -62,11 +62,92 @@ class Language extends Admin_Controller
                                     'language_value' => $lang,
                                 );
                                 //insert
-                             //   $this->Language_model->insert($insert_data);
+                                //   $this->Language_model->insert($insert_data);
                                 $data['message'] = 'disbled, only english available for now';
                         }
                 }
+                $data['bootstrap'] = $this->bootstrap();
                 $this->_render_admin_page('admin/lang_view', $data);
+        }
+
+        /**
+         * 
+         * @return array
+         *  @author Lloric Garcia <emorickfighter@gmail.com>
+         */
+        private function bootstrap()
+        {
+                /**
+                 * for header
+                 */
+                $header       = array(
+                    'css' => array(
+                        'css/bootstrap.min.css',
+                        'css/bootstrap-responsive.min.css',
+                        'css/fullcalendar.css',
+                        'css/matrix-style.css',
+                        'css/matrix-media.css',
+                        'font-awesome/css/font-awesome.css',
+                        'css/jquery.gritter.css',
+                        'css/jquery.gritter.css',
+                        'css/uniform.css',
+                        'css/select2.css',
+                        'http://fonts.googleapis.com/css?family=Open+Sans:400,700,800'
+                    ),
+                    'js'  => array(
+                    ),
+                );
+                /**
+                 * for footer
+                 */
+                $footer       = array(
+                    'css' => array(
+                    ),
+                    'js'  => array(
+                        'js/jquery.min.js',
+                        'js/jquery.ui.custom.js',
+                        'js/bootstrap.min.js',
+                        'js/bootstrap-colorpicker.js',
+                        'js/bootstrap-datepicker.js',
+                        'js/jquery.toggle.buttons.js',
+                        'js/masked.js',
+                        'js/jquery.uniform.js',
+                        'js/select2.min.js',
+                        'js/matrix.js',
+                        'js/matrix.form_common.js',
+                        'js/wysihtml5-0.3.0.js',
+                        'js/jquery.peity.min.js',
+                        'js/bootstrap-wysihtml5.js',
+                    ),
+                );
+                /**
+                 * footer extra
+                 */
+                $footer_extra = '<script type="text/javascript">
+        // This function is called from the pop-up menus to transfer to
+        // a different page. Ignore if the value returned is a null string:
+        function goPage(newURL) {
+
+            // if url is empty, skip the menu dividers and reset the menu selection to default
+            if (newURL != "") {
+
+                // if url is "-", it is this page -- reset the menu:
+                if (newURL == "-") {
+                    resetMenu();
+                }
+                // else, send page to designated URL            
+                else {
+                    document.location.href = newURL;
+                }
+            }
+        }
+
+        // resets the menu selection upon entry to this page:
+        function resetMenu() {
+            document.gomenu.selector.selectedIndex = 2;
+        }
+</script>';
+                return generate_link_script_tag($header, $footer, $footer_extra);
         }
 
 }

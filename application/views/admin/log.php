@@ -1,6 +1,5 @@
 <?php defined('BASEPATH') OR exit('No direct script allowed'); ?>
 <div class="container-fluid">
-    <hr>
     <div class="row-fluid">
         <div class="span12">
             <div class="widget-box">
