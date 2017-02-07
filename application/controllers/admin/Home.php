@@ -8,12 +8,26 @@ class Home extends Admin_Controller
         function __construct()
         {
                 parent::__construct();
+                $this->load->model(array('User_model', 'Student_model'));
         }
 
+        /**
+         * Function to show index page with count for dashboard
+         * 
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
         public function index()
         {
-                $this->data['bootstrap'] = $this->bootstrap();
-                $this->_render_admin_page('admin/home', $this->data);
+
+                $this->data['active_users']    = $this->User_model->where(array(
+                            'active' => TRUE
+                        ))->count_rows();
+                $this->data['active_students'] = $this->Student_model->where(array(
+                            'student_active' => TRUE
+                        ))->count_rows();
+                $this->template['active_user_count']          = $this->_render_page('admin/_templates/home/user_count', $this->data, TRUE);
+                $this->template['bootstrap'] = $this->bootstrap();
+                $this->_render_admin_page('admin/home', $this->template);
         }
 
         /**
