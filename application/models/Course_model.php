@@ -7,7 +7,7 @@ class Course_model extends MY_Model
 
         public function __construct()
         {
-                $this->table       = 'course';
+                $this->table       = 'courses';
                 $this->primary_key = 'course_id';
 
 
