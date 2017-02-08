@@ -61,6 +61,11 @@ class School_id
         private $db_table_school_id;
 
         /**
+         * table primary id
+         */
+        private $model;
+
+        /**
          * 
          */
         public function __construct()
@@ -70,6 +75,8 @@ class School_id
                 $this->db_table           = 'students';
                 $this->db_table_id        = 'student_id';
                 $this->db_table_school_id = 'student_school_id';
+                $this->model              = 'Student_model';
+                $this->CI->load->model($this->model);
                 log_message('info', 'class ' . get_class() . ' initiallize.');
         }
 
@@ -135,13 +142,13 @@ class School_id
 
         private function generate_number($attemp = 0)
         {
-                $this->CI->db->select($this->db_table_id)
-                        ->like(
-                                $this->db_table_school_id, $this->year, 'after'
-                        )
-                        ->get($this->db_table);
-                $total  = (int) $this->CI->db->affected_rows();
-                $total++;
+                /**
+                 * get total exist then plus one
+                 */
+                $total = $this->CI->{$this->model}->
+                                where($this->db_table_school_id, 'LIKE', $this->year)->
+                                count_rows() + 1;
+
                 /**
                  * add attemp to generate new number
                  */
@@ -176,16 +183,14 @@ class School_id
         /**
          * check if generated id is exist in database
          * @return boolean
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
         private function check_if_school_id_exist()
         {
-                $this->CI->db->select($this->db_table_id)
-                        ->where(array(
+                $obj = $this->CI->{$this->model}->where(array(
                             $this->db_table_school_id => $this->complete_school_id()
-                        ))
-                        ->limit(1)
-                        ->get($this->db_table);
-                return (bool) $this->CI->db->affected_rows();
+                        ))->get();
+                return (bool) $obj;
         }
 
         private function complete_school_id()
