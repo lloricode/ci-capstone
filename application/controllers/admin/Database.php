@@ -33,10 +33,9 @@ class Database extends Admin_Controller
                         }
                 }
 
-                $this->template['platform']   = $this->db->platform();
-                $this->template['version']    = $this->db->version();
-                $this->template['table']      = $this->table->generate();
-                $this->template['controller'] = 'table';
+                $this->template['platform'] = $this->db->platform();
+                $this->template['version']  = $this->db->version();
+                $this->template['table']    = $this->table->generate();
 
 
                 $this->template['backup_button'] = $this->_render_page('admin/_templates/button_view', array(

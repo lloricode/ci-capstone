@@ -15,17 +15,10 @@ class Students extends Admin_Controller
                 $this->lang->load('ci_students');
                 $this->load->model(array('Student_model', 'Course_model'));
                 $this->load->library('pagination');
-
                 /**
                  * pagination limit
                  */
                 $this->limit = 10;
-
-                /**
-                 * get the page from url
-                 * 
-                 */
-                $this->page_ = get_page_in_url();
         }
 
         /**
@@ -33,6 +26,12 @@ class Students extends Admin_Controller
          */
         public function index()
         {
+
+                /**
+                 * get the page from url
+                 * 
+                 */
+                $this->page_ = get_page_in_url();
 
                 //list students
                 $student_obj = $this->Student_model->limit($this->limit, $this->limit * $this->page_ - $this->limit)->get_all();
@@ -45,6 +44,8 @@ class Students extends Admin_Controller
 
                         foreach ($student_obj as $student)
                         {
+                                $view_ = anchor(base_url('admin/students/view?student-id=' . $student->student_id), 'View');
+                                $edit_ = anchor(base_url('admin/students/edit?student-id=' . $student->student_id), 'Edit');
 
                                 array_push($table_data, array(
                                     my_htmlspecialchars($student->student_school_id),
@@ -55,6 +56,7 @@ class Students extends Admin_Controller
                                     my_htmlspecialchars($student->student_permanent_address),
                                     my_htmlspecialchars($this->Course_model->get($student->course_id)->course_name),
                                     my_htmlspecialchars($student->student_year_level),
+                                    $view_ . ' | ' . $edit_
                                 ));
                         }
                 }
@@ -71,7 +73,8 @@ class Students extends Admin_Controller
                     lang('index_student_Gender_th'),
                     lang('index_student_permanent_address_th'),
                     lang('index_student_course_th'),
-                    lang('index_student_year_level_th')
+                    lang('index_student_year_level_th'),
+                    'Options'
                 );
 
                 /**
@@ -108,9 +111,118 @@ class Students extends Admin_Controller
         }
 
         /**
+         *  @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        public function view()
+        {
+                $page = 1;
+                if ($this->input->get('per_page'))
+                {
+                        $page = $this->input->get('per_page');
+                }
+                $this->load->model('Students_subjects_model');
+                /*
+                 * check url with id
+                 */
+                $this->data['student'] = check_id_from_url('student_id', 'Student_model', $this->input->get('student-id'));
+
+                /**
+                 * get the subjects of current student
+                 * 
+                 */
+                $subjects_obj = $this->Students_subjects_model->
+                                limit($this->limit, $this->limit * $page - $this->limit)->
+                                with_subjects()->as_object()->get_all(array('student_id' => $this->data['student']->student_id));
+
+                $total_all = $this->Students_subjects_model->count_rows(array('student_id' => $this->data['student']->student_id));
+
+                $this->config->load('admin/table');
+                $this->load->library('table');
+                $this->table->set_template(array(
+                    'table_open' => $this->config->item('table_open_invoice'),
+                ));
+
+
+                $this->table->set_heading(array('Code', 'Desciption', 'Unit'));
+
+                if ($subjects_obj)
+                {
+                        foreach ($subjects_obj as $v)
+                        {
+                                $subject = $v->subjects;
+
+                                $this->table->add_row($subject->subject_code, $subject->subject_description, $subject->subject_unit);
+                        }
+                }
+
+                $this->data['table_subjects'] = $this->table->generate();
+
+                $this->data['table_subjects_pagination'] = $this->pagination->generate_link('/admin/students/view?student-id=' . $this->data['student']->student_id, $total_all / $this->limit, TRUE);
+
+                $this->template['view']      = $this->_render_page('admin/_templates/students/view', $this->data, TRUE);
+                $this->template['bootstrap'] = $this->bootstrap_for_view();
+                $this->_render_admin_page('admin/students', $this->template);
+        }
+
+        /**
+         *  @author Lloric Mayuga Garcia <emorickfighter@gmail.com> 
+         */
+        public function edit()
+        {
+                /*
+                 * check url with id
+                 */
+                $student_obj = check_id_from_url('student_id', 'Student_model', $this->input->get('student-id'));
+        }
+
+        /**
          * 
          * @return array
-         *  @author Lloric Garcia <emorickfighter@gmail.com>
+         *  @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        private function bootstrap_for_view()
+        {
+                /**
+                 * for header
+                 *
+                 */
+                $header       = array(
+                    'css' => array(
+                        'css/bootstrap.min.css',
+                        'css/bootstrap-responsive.min.css',
+                        'css/matrix-style.css',
+                        'css/matrix-media.css',
+                        'font-awesome/css/font-awesome.css',
+                        'http://fonts.googleapis.com/css?family=Open+Sans:400,700,800',
+                    ),
+                    'js'  => array(
+                    ),
+                );
+                /**
+                 * for footer
+                 * 
+                 */
+                $footer       = array(
+                    'css' => array(
+                    ),
+                    'js'  => array(
+                        'js/jquery.min.js',
+                        'js/jquery.ui.custom.js',
+                        'js/bootstrap.min.js',
+                        'js/matrix.js'
+                    ),
+                );
+                /**
+                 * footer extra
+                 */
+                $footer_extra = '';
+                return generate_link_script_tag($header, $footer, $footer_extra);
+        }
+
+        /**
+         * 
+         * @return array
+         *  @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
         private function bootstrap()
         {

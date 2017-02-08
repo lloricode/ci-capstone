@@ -27,11 +27,12 @@ class MY_Pagination extends CI_Pagination
          * @return type
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        public function generate_link($url, $total_row)
+        public function generate_link($url, $total_row, $tmp = FALSE)
         {
                 $this->CI->pagination->initialize(array(
-                    'base_url'   => base_url($url),
-                    'total_rows' => $total_row,
+                    'base_url'         => base_url($url),
+                    'total_rows'       => $total_row,
+                    'page_query_string' => $tmp
                 ));
 
                 /**

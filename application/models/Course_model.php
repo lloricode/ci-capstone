@@ -11,6 +11,8 @@ class Course_model extends MY_Model
                 $this->primary_key = 'course_id';
 
 
+                $this->timestamps = TRUE;
+                $this->return_as  = 'object';
                 parent::__construct();
         }
 

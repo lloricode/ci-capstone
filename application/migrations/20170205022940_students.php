@@ -21,62 +21,121 @@ class Migration_Students extends CI_Migration
         {
                 $this->down();
                 $fields = array(
-                    self::CI_DB_TABLE_COL . '_id'                => array(
+                    self::CI_DB_TABLE_COL . '_id'                      => array(
                         'type'           => 'TINYINT',
                         'constraint'     => '11',
                         'unsigned'       => TRUE,
                         'auto_increment' => TRUE
                     ),
-                    self::CI_DB_TABLE_COL . '_firstname'         => array(
+                    /**
+                     * personal info
+                     */
+                    self::CI_DB_TABLE_COL . '_firstname'               => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '50',
                     ),
-                    self::CI_DB_TABLE_COL . '_middlename'        => array(
+                    self::CI_DB_TABLE_COL . '_middlename'              => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '50',
                     ),
-                    self::CI_DB_TABLE_COL . '_lastname'          => array(
+                    self::CI_DB_TABLE_COL . '_lastname'                => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '50',
                     ),
-                    self::CI_DB_TABLE_COL . '_school_id'         => array(
+                    self::CI_DB_TABLE_COL . '_gender'                  => array(
+                        'type'       => 'VARCHAR',
+                        'constraint' => '6',
+                    ),
+                    self::CI_DB_TABLE_COL . '_birthdate'               => array(
+                        'type'       => 'VARCHAR',
+                        'constraint' => '50',
+                    ),
+                    self::CI_DB_TABLE_COL . '_birthplace'              => array(
+                        'type'       => 'VARCHAR',
+                        'constraint' => '50',
+                    ),
+                    self::CI_DB_TABLE_COL . '_civil_status'            => array(//single,marriage
+                        'type'       => 'VARCHAR',
+                        'constraint' => '50',
+                    ),
+                    self::CI_DB_TABLE_COL . '_nationality'             => array(
+                        'type'       => 'VARCHAR',
+                        'constraint' => '50',
+                    ),
+                    /**
+                     * contact info
+                     */
+                    #address
+                    #######################
+                    self::CI_DB_TABLE_COL . '_permanent_address'       => array(
+                        'type'       => 'VARCHAR',
+                        'constraint' => '250',
+                    ),
+                    self::CI_DB_TABLE_COL . '_address_town'            => array(
+                        'type'       => 'VARCHAR',
+                        'constraint' => '250',
+                    ),
+                    self::CI_DB_TABLE_COL . '_address_region'          => array(
+                        'type'       => 'VARCHAR',
+                        'constraint' => '250',
+                    ),
+                    self::CI_DB_TABLE_COL . '_guardian_address'        => array(
+                        'type'       => 'VARCHAR',
+                        'constraint' => '50',
+                    ),
+                    #######################
+                    self::CI_DB_TABLE_COL . '_personal_contact_number' => array(
+                        'type'       => 'VARCHAR',
+                        'constraint' => '50',
+                    ),
+                    self::CI_DB_TABLE_COL . '_guardian_contact_number' => array(
+                        'type'       => 'VARCHAR',
+                        'constraint' => '50',
+                    ),
+                    self::CI_DB_TABLE_COL . '_personal_email'          => array(
+                        'type'       => 'VARCHAR',
+                        'constraint' => '50',
+                    ),
+                    self::CI_DB_TABLE_COL . '_guardian_email'          => array(
+                        'type'       => 'VARCHAR',
+                        'constraint' => '50',
+                    ),
+                    /**
+                     * school info
+                     */
+                    self::CI_DB_TABLE_COL . '_school_id'               => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '9',
                         'unique'     => TRUE
                     ),
-                    self::CI_DB_TABLE_COL . '_gender'            => array(
-                        'type'       => 'VARCHAR',
-                        'constraint' => '6',
-                    ),
-                    self::CI_DB_TABLE_COL . '_permanent_address' => array(
-                        'type'       => 'VARCHAR',
-                        'constraint' => '250',
-                    ),
-                    self::CI_DB_TABLE_COL . '_year_level'        => array(
+                    self::CI_DB_TABLE_COL . '_year_level'              => array(
                         'type'       => 'INT',
                         'constraint' => '11',
                     ),
-                    self::CI_DB_TABLE_COL . '_enrolled'          => array(
+                    self::CI_DB_TABLE_COL . '_enrolled'                => array(
                         'type'       => 'TINYINT',
                         'constraint' => '1',
                     ),
-                    self::CI_DB_TABLE_COL . '_active'            => array(
+                    /**
+                     * other
+                     */
+                    self::CI_DB_TABLE_COL . '_active'                  => array(
                         'type'       => 'TINYINT',
                         'constraint' => '1',
                     ),
-                    'course_id'                                  => array(
+                    'course_id'                                        => array(
                         'type'       => 'INT',
                         'constraint' => '11',
                     ),
-                    'created_at'                                 => array(
+                    'created_at'                                       => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
                     ),
-                    'deleted_at'                                 => array(
+                    'deleted_at'                                       => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
                     ),
-                    'updated_at'                                 => array(
+                    'updated_at'                                       => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
                     ),

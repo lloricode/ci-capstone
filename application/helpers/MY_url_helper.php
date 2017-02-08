@@ -35,36 +35,48 @@ if (!function_exists('check_id_form_url'))
 {
 
         /**
-         * if not exist 404 will occurred
+         * if not exist error will occurred.
          * 
          * @param string $column  model to get table name
          * @param array $model column from table on database
          * @param string $id from url | default NULL to prevent error in case user modify url
-         * @return row data from table
+         * @return object data from table
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
         function check_id_from_url($column, $model, $id = NULL)
         {
+                /**
+                 * check if id is set
+                 */
                 if (is_null($id))
                 {
-                        show_404();
+                        show_error('id no found.');
                 }
                 /**
                  * CI instance object
                  */
                 $CI = & get_instance();
 
+                /**
+                 * load model dynaically
+                 */
                 $CI->load->model($model);
-                $rs = $CI->$model->get(array(
+
+                /**
+                 * get the data
+                 */
+                $obj = $CI->$model->get(array(
                     $column => $id
                 ));
 
-
-                if (!$rs)
+                /**
+                 * no data so no object found
+                 */
+                if (!$obj)
                 {
-                        show_404();
+                        show_error('object not found.');
                 }
-                return $rs->row();
+                return $obj;
         }
 
 }
