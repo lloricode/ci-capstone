@@ -1,14 +1,10 @@
 {
-	"description": "The CodeIgniter framework",
-	"name": "codeigniter/framework",
+	"description": "CI Capstone",
+	"name": "ci capstone",
 	"type": "project",
-	"homepage": "https://codeigniter.com",
+	"homepage": "http://ci-capstone.lloricmayugagarcia.com/",
 	"license": "MIT",
 	"support": {
-		"forum": "http://forum.codeigniter.com/",
-		"wiki": "https://github.com/bcit-ci/CodeIgniter/wiki",
-		"irc": "irc://irc.freenode.net/codeigniter",
-		"source": "https://github.com/bcit-ci/CodeIgniter"
 	},
 	"require": {
 		"php": ">=5.2.4"
