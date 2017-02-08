@@ -129,7 +129,7 @@ class Migration_Students extends CI_Migration
 
         public function down()
         {
-                $this->dbforge->drop_table(self::CI_DB_TABLE);
+                $this->dbforge->drop_table(self::CI_DB_TABLE, TRUE);
         }
 
 }
