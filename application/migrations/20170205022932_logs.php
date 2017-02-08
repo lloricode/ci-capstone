@@ -82,7 +82,7 @@ class Migration_Logs extends CI_Migration
 
         public function down()
         {
-                $this->dbforge->drop_table(self::CI_DB_TABLE, TRUE);
+                $this->dbforge->drop_table($this->table, TRUE);
         }
 
 }
