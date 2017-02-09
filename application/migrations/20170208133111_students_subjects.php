@@ -20,48 +20,61 @@ class Migration_Students_subjects extends CI_Migration
         {
                 $this->down();
                 $fields = array(
-                    'id'         => array(
+                    'student_subject_id' => array(
                         'type'           => 'TINYINT',
                         'constraint'     => '11',
                         'unsigned'       => TRUE,
                         'auto_increment' => TRUE
                     ),
-                    'student_id' => array(
+                    'enrollment_id'      => array(
                         'type'       => 'INT',
                         'constraint' => '11',
+                        'null'       => FALSE
                     ),
-                    'grade' => array(
+                    'subject_offer_id'   => array(
                         'type'       => 'INT',
                         'constraint' => '11',
+                        'null'       => FALSE
                     ),
-                    'subject_id' => array(
-                        'type'       => 'INT',
-                        'constraint' => '11',
-                    ),
-                    'user_id'    => array(
-                        'type'       => 'INT',
-                        'constraint' => '11',
-                    ),
-                    'created_at' => array(
+                    //------------------------------------
+                    'created_at'         => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
+                        'null'       => FALSE
                     ),
-                    'deleted_at' => array(
+                    'created_user_id'    => array(
+                        'type'       => 'INT',
+                        'constraint' => '11',
+                        'null'       => FALSE
+                    ),
+                    'deleted_at'         => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
+                        'null'       => TRUE
                     ),
-                    'updated_at' => array(
+                    'delete_user_id'     => array(
+                        'type'       => 'INT',
+                        'constraint' => '11',
+                        'null'       => TRUE
+                    ),
+                    'updated_at'         => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
+                        'null'       => TRUE
+                    ),
+                    'update_user_id'     => array(
+                        'type'       => 'INT',
+                        'constraint' => '11',
+                        'null'       => TRUE
                     ),
                 );
 
 
 
-                $this->dbforge->add_key('id', TRUE);
+                $this->dbforge->add_key('student_subject_id', TRUE);
 
                 $this->dbforge->add_field($fields);
-                $this->dbforge->create_table(self::CI_DB_TABLE);
+                $this->dbforge->create_table(self::CI_DB_TABLE, TRUE);
         }
 
         public function down()

@@ -81,13 +81,7 @@ class School_id
                 log_message('info', 'class ' . get_class() . ' initiallize.');
         }
 
-        /**
-         * set this to automatically set year
-         * 
-         * 1=January, 2=Febbruary, etc...
-         * 
-         * @param int $school_month_start
-         * @param int $school_month_end
+        /*
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
         public function initialize()

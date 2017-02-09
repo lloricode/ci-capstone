@@ -48,9 +48,8 @@ class Migration_Language extends CI_Migration
                 );
 
                 $this->dbforge->add_key(self::CI_DB_TABLE . '_id', TRUE);
-
                 $this->dbforge->add_field($fields);
-                $this->dbforge->create_table(self::CI_DB_TABLE);
+                $this->dbforge->create_table(self::CI_DB_TABLE, TRUE);
         }
 
         public function down()

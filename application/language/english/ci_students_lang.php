@@ -18,6 +18,8 @@ $lang['create_course_id_label']                 = 'Course ID:';
 $lang['create_course_label']                    = 'Course:';
 $lang['create_student_year_level_label']        = 'Year Level:';
 $lang['create_student_submit_button_label']     = 'Add Student';
+$lang['create_student_school_year_label']       = 'School Year:';
+$lang['create_student_semester_label']       = 'Semester:';
 
 
 $lang['create_student_guardian_fullname_label'] = 'Guardian Fullname:';
@@ -56,6 +58,10 @@ $lang['index_student_personal_contact_th']  = 'Personal Contact Number';
 $lang['index_student_guardian_contact_th']  = 'Guardian Contact Number';
 $lang['index_student_personal_email_th']    = 'Personal Email';
 $lang['index_student_guardian_email_th']    = 'Guardian Email';
+
+
+$lang['index_student_school_year_th']            = 'School Year';
+$lang['index_student_semesterl_th']        = 'Semester';
 
 
 

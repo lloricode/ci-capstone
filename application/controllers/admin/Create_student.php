@@ -60,10 +60,6 @@ class Create_student extends Admin_Controller
                         'rules' => 'trim|required|is_natural_no_zero',
                     ),
                     array(
-                        'label' => lang('index_student_year_level_th'),
-                        'field' => 'student_year_level',
-                        'rules' => 'trim|required|is_natural_no_zero',
-                    ), array(
                         'label' => lang('index_student_birthplace_th'),
                         'field' => 'student_birthplace',
                         'rules' => 'trim|required|min_length[8]|max_length[100]',
@@ -119,6 +115,21 @@ class Create_student extends Admin_Controller
                         'field' => 'student_guardian_email',
                         'rules' => 'trim|required|max_length[50]|valid_email',
                     ),
+                    //--------
+                    array(
+                        'label' => lang('index_student_year_level_th'),
+                        'field' => 'enrollment_year_level',
+                        'rules' => 'trim|required|is_natural_no_zero',
+                    ),
+                    array(
+                        'label' => lang('index_student_school_year_th'),
+                        'field' => 'enrollment_school_year',
+                        'rules' => 'trim|required',
+                    ), array(
+                        'label' => lang('index_student_semesterl_th'),
+                        'field' => 'enrollment_semester',
+                        'rules' => 'trim|required',
+                    ),
                 ));
 
                 if ($this->form_validation->run())
@@ -130,8 +141,6 @@ class Create_student extends Admin_Controller
                             'student_school_id'               => $this->input->post('student_school_id', TRUE),
                             'student_gender'                  => $this->input->post('student_gender', TRUE),
                             'student_permanent_address'       => $this->input->post('student_permanent_address', TRUE),
-                            'course_id'                       => $this->input->post('course_id', TRUE),
-                            'student_year_level'              => $this->input->post('student_year_level', TRUE),
                             'student_birthdate'               => $this->input->post('student_birthdate', TRUE),
                             'student_birthplace'              => $this->input->post('student_birthplace', TRUE),
                             'student_civil_status'            => $this->input->post('student_civil_status', TRUE),
@@ -145,12 +154,29 @@ class Create_student extends Admin_Controller
                             'student_guardian_contact_number' => $this->input->post('student_guardian_contact_number', TRUE),
                             'student_personal_email'          => $this->input->post('student_personal_email', TRUE),
                             'student_guardian_email'          => $this->input->post('student_guardian_email', TRUE),
+                            'created_user_id'                 => $this->ion_auth->user()->row()->id,
+                                //=-----
                         );
-                        $this->load->model('Student_model');
-                        if ($this->Student_model->insert($student__))
+
+                        $this->load->model(array('Student_model', 'Enrollment_model'));
+                        $returned_student_id = $this->Student_model->insert($student__);
+                        if ($returned_student_id)
                         {
-                                $this->session->set_flashdata('message', $this->config->item('message_start_delimiter', 'ion_auth') . lang('create_student_succesfully_added_message') . $this->config->item('message_end_delimiter', 'ion_auth'));
-                                redirect(current_url(), 'refresh');
+                                $enrollmet__ = array(
+                                    'student_id'             => $returned_student_id,
+                                    'course_id'              => $this->input->post('course_id', TRUE),
+                                    'enrollment_school_year' => $this->input->post('student_year_level', TRUE),
+                                    'enrollment_semester'    => $this->input->post('enrollment_semester', TRUE),
+                                    'enrollment_year_level'  => $this->input->post('enrollment_year_level', TRUE),
+                                    'created_user_id'        => $this->ion_auth->user()->row()->id,
+                                );
+
+                                if ($this->Enrollment_model->insert($enrollmet__))
+                                {
+
+                                        $this->session->set_flashdata('message', $this->config->item('message_start_delimiter', 'ion_auth') . lang('create_student_succesfully_added_message') . $this->config->item('message_end_delimiter', 'ion_auth'));
+                                        redirect(current_url(), 'refresh');
+                                }
                         }
                 }
 
@@ -236,7 +262,9 @@ class Create_student extends Admin_Controller
                 );
                 $this->data['course_id_value']           = $this->Course_model->as_dropdown('course_code')->get_all();
 
-                $this->data['student_year_level_value'] = _numbers_for_drop_down(0, $this->config->item('max_year_level'));
+                $this->data['enrollment_year_level_value']  = _numbers_for_drop_down(0, $this->config->item('max_year_level'));
+                $this->data['enrollment_semester_value']    = my_semester_for_combo();
+                $this->data['enrollment_school_year_value'] = my_schoolyear_for_combo();
 
                 //++++++++++++++++++++++++++++++++++++++=
                 $this->data['student_guardian_fullname'] = array(

@@ -5,11 +5,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 /**
  * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
  */
-class Migration_Course extends CI_Migration
+class Migration_Enrollments extends CI_Migration
 {
 
 
-        const CI_DB_TABLE = 'courses';
+        const CI_DB_TABLE = 'enrollments';
 
         public function __construct($config = array())
         {
@@ -20,51 +20,70 @@ class Migration_Course extends CI_Migration
         {
                 $this->down();
                 $fields = array(
-                    'course_id'          => array(
+                    'enrollment_id'          => array(
                         'type'           => 'TINYINT',
                         'constraint'     => '11',
                         'unsigned'       => TRUE,
                         'auto_increment' => TRUE
                     ),
-                    'course_code'        => array(
-                        'type'       => 'VARCHAR',
-                        'constraint' => '50',
-                        'unique'     => TRUE,
+                    'student_id'             => array(
+                        'type'       => 'TINYINT',
+                        'constraint' => '11',
                         'null'       => FALSE
                     ),
-                    'course_description' => array(
-                        'type'       => 'VARCHAR',
-                        'constraint' => '50',
-                        'unique'     => TRUE,
+                    'course_id'              => array(
+                        'type'       => 'TINYINT',
+                        'constraint' => '11',
                         'null'       => FALSE
+                    ),
+                    'enrollment_school_year' => array(
+                        'type'       => 'VARCHAR',
+                        'constraint' => '10',
+                        'null'       => FALSE
+                    ),
+                    'enrollment_semester'    => array(
+                        'type'       => 'VARCHAR',
+                        'constraint' => '5',
+                        'null'       => FALSE
+                    ),
+                    'enrollment_year_level'  => array(
+                        'type'       => 'TINYINT',
+                        'constraint' => '11',
+                        'null'       => FALSE
+                    ),
+                    'enrollment_status'      => array(
+                        'type'       => 'TINYINT',
+                        'constraint' => '1',
+                        'null'       => FALSE,
+                        'default'    => FALSE
                     ),
                     //------------------------------------
-                    'created_at'         => array(
+                    'created_at'             => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
                         'null'       => FALSE
                     ),
-                    'created_user_id'    => array(
+                    'created_user_id'        => array(
                         'type'       => 'INT',
                         'constraint' => '11',
                         'null'       => FALSE
                     ),
-                    'deleted_at'         => array(
+                    'deleted_at'             => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
                         'null'       => TRUE
                     ),
-                    'delete_user_id'     => array(
+                    'delete_user_id'         => array(
                         'type'       => 'INT',
                         'constraint' => '11',
                         'null'       => TRUE
                     ),
-                    'updated_at'         => array(
+                    'updated_at'             => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
                         'null'       => TRUE
                     ),
-                    'update_user_id'     => array(
+                    'update_user_id'         => array(
                         'type'       => 'INT',
                         'constraint' => '11',
                         'null'       => TRUE
@@ -73,7 +92,7 @@ class Migration_Course extends CI_Migration
 
 
 
-                $this->dbforge->add_key('course_id', TRUE);
+                $this->dbforge->add_key('enrollment_id', TRUE);
 
                 $this->dbforge->add_field($fields);
                 $this->dbforge->create_table(self::CI_DB_TABLE, TRUE);

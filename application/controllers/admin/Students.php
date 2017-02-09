@@ -13,7 +13,7 @@ class Students extends Admin_Controller
         {
                 parent::__construct();
                 $this->lang->load('ci_students');
-                $this->load->model(array('Student_model', 'Course_model'));
+                $this->load->model(array('Student_model'));
                 $this->load->library('pagination');
                 /**
                  * pagination limit
@@ -52,11 +52,7 @@ class Students extends Admin_Controller
                                     my_htmlspecialchars($student->student_firstname),
                                     my_htmlspecialchars($student->student_middlename),
                                     my_htmlspecialchars($student->student_lastname),
-                                    my_htmlspecialchars($student->student_gender),
-                                    my_htmlspecialchars($student->student_permanent_address),
-                                    my_htmlspecialchars($this->Course_model->get($student->course_id)->course_code),
-                                    my_htmlspecialchars($student->student_year_level),
-                                    $view_ . ' | ' . $edit_
+                                   $view_ . ' | ' . $edit_
                                 ));
                         }
                 }
@@ -70,10 +66,6 @@ class Students extends Admin_Controller
                     lang('index_student_firstname_th'),
                     lang('index_student_middlename_th'),
                     lang('index_student_lastname_th'),
-                    lang('index_student_Gender_th'),
-                    lang('index_student_permanent_address_th'),
-                    lang('index_student_course_th'),
-                    lang('index_student_year_level_th'),
                     'Options'
                 );
 

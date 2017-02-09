@@ -29,46 +29,60 @@ class Migration_Subjects extends CI_Migration
                     'subject_code'        => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '10',
-                        'unique'     => TRUE
+                        'unique'     => TRUE,
+                        'null'       => FALSE
                     ),
                     'subject_description' => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '50',
-                        'unique'     => TRUE
+                        'unique'     => TRUE,
+                        'null'       => FALSE
                     ),
                     'subject_unit'        => array(
                         'type'       => 'INT',
                         'constraint' => '11',
-                    ),
-                    'course_id'           => array(
-                        'type'       => 'INT',
-                        'constraint' => '11',
+                        'null'       => FALSE
                     ),
                     /**
                      * who add subject
                      */
-                    'user_id'             => array(
-                        'type'       => 'INT',
-                        'constraint' => '11',
-                    ),
+                    //------------------------------------
                     'created_at'          => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
+                        'null'       => FALSE
+                    ),
+                    'created_user_id'     => array(
+                        'type'       => 'INT',
+                        'constraint' => '11',
+                        'null'       => FALSE
                     ),
                     'deleted_at'          => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
+                        'null'       => TRUE
+                    ),
+                    'delete_user_id'      => array(
+                        'type'       => 'INT',
+                        'constraint' => '11',
+                        'null'       => TRUE
                     ),
                     'updated_at'          => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
+                        'null'       => TRUE
+                    ),
+                    'update_user_id'      => array(
+                        'type'       => 'INT',
+                        'constraint' => '11',
+                        'null'       => TRUE
                     ),
                 );
 
                 $this->dbforge->add_key('subject_id', TRUE);
 
                 $this->dbforge->add_field($fields);
-                $this->dbforge->create_table(self::CI_DB_TABLE);
+                $this->dbforge->create_table(self::CI_DB_TABLE, TRUE);
         }
 
         public function down()

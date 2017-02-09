@@ -91,7 +91,50 @@ echo form_open(base_url("admin/create-student/index"), array(
                         echo input_dropdown_bootstrap('course_id', 'create_course_label', $course_id_value);
 
                         //student_year_level:
-                        echo input_dropdown_bootstrap('student_year_level', 'student_year_level', $student_year_level_value);
+                        echo input_dropdown_bootstrap('enrollment_year_level', 'create_student_year_level_label', $enrollment_year_level_value);
+
+                        //course_id:                      
+                        echo input_dropdown_bootstrap('enrollment_school_year', 'create_student_school_year_label', $enrollment_school_year_value);
+
+                        //student_year_level:
+                        echo input_dropdown_bootstrap('enrollment_semester', 'create_student_semester_label', $enrollment_semester_value);
+                        ?>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="span6">
+            <div class="widget-box">
+                <div class="widget-title"> <span class="icon"> <i class="icon-edit"></i> </span>
+                    <h5>Contacts</h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <div class="form-horizontal">
+                        <?php
+                        //guardian_fullname:
+                        echo input_bootstrap($student_guardian_fullname, 'create_student_guardian_fullname_label');
+
+                        //address_town:
+                        echo input_bootstrap($student_address_town, 'create_student_town_label');
+
+                        //address_region:
+                        echo input_bootstrap($student_address_region, 'create_student_region_label');
+
+                        //guardian_address:
+                        echo input_bootstrap($student_guardian_address, 'create_student_guardian_address_label', 'textarea');
+
+                        //personal_contact_number:
+                        echo input_bootstrap($student_personal_contact_number, 'create_student_personal_contact_label');
+
+                        //guardian_contact_number:
+                        echo input_bootstrap($student_guardian_contact_number, 'create_student_guardian_contact_label');
+
+                        //personal_email:
+                        echo input_bootstrap($student_personal_email, 'create_student_personal_email_label');
+
+                        //guardian_email:
+                        echo input_bootstrap($student_guardian_email, 'create_student_guardian_email_label');
                         ?>
                     </div>
                 </div>
@@ -143,104 +186,6 @@ echo form_open(base_url("admin/create-student/index"), array(
                                     <input type="checkbox" name="radios" />
                                     Third One</label>
                             </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="span6">
-            <div class="widget-box">
-                <div class="widget-title"> <span class="icon"> <i class="icon-edit"></i> </span>
-                    <h5>Contacts</h5>
-                </div>
-                <div class="widget-content nopadding">
-                    <div class="form-horizontal">
-                        <?php
-                        //guardian_fullname:
-                        echo input_bootstrap($student_guardian_fullname, 'create_student_guardian_fullname_label');
-
-                        //address_town:
-                        echo input_bootstrap($student_address_town, 'create_student_town_label');
-
-                        //address_region:
-                        echo input_bootstrap($student_address_region, 'create_student_region_label');
-
-                        //guardian_address:
-                        echo input_bootstrap($student_guardian_address, 'create_student_guardian_address_label', 'textarea');
-
-                        //personal_contact_number:
-                        echo input_bootstrap($student_personal_contact_number, 'create_student_personal_contact_label');
-
-                        //guardian_contact_number:
-                        echo input_bootstrap($student_guardian_contact_number, 'create_student_guardian_contact_label');
-
-                        //personal_email:
-                        echo input_bootstrap($student_personal_email, 'create_student_personal_email_label');
-
-                        //guardian_email:
-                        echo input_bootstrap($student_guardian_email, 'create_student_guardian_email_label');
-                        ?>
-                    </div>
-                </div>
-            </div>
-            <div class="widget-box">
-                <div class="widget-title"> <span class="icon"> <i class="icon-edit"></i> </span>
-                    <h5>Others</h5>
-                </div>
-                <div class="widget-content nopadding">
-                    <div class="form-horizontal">
-                        <div class="control-group">
-                            <label class="control-label">Tooltip Input</label>
-                            <div class="controls">
-                                <input type="text" placeholder="Hover for tooltip…" data-title="A tooltip for the input" class="span11 tip" data-original-title="">
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">Type ahead Input</label>
-                            <div class="controls">
-                                <input type="text" placeholder="Type here for auto complete…" style="margin: 0 auto;" data-provide="typeahead" data-items="4" data-source="[&quot;Alabama&quot;,&quot;Alaska&quot;,&quot;Arizona&quot;,&quot;Arkansas&quot;,&quot;California&quot;,&quot;Colorado&quot;,&quot;Ahmedabad&quot;,&quot;India&quot;,&quot;Florida&quot;,&quot;Georgia&quot;,&quot;Hawaii&quot;,&quot;Idaho&quot;,&quot;Illinois&quot;,&quot;Indiana&quot;,&quot;Iowa&quot;,&quot;Kansas&quot;,&quot;Kentucky&quot;,&quot;Louisiana&quot;,&quot;Maine&quot;,&quot;Maryland&quot;,&quot;Massachusetts&quot;,&quot;Michigan&quot;,&quot;Minnesota&quot;,&quot;Mississippi&quot;,&quot;Missouri&quot;,&quot;Montana&quot;,&quot;Nebraska&quot;,&quot;Nevada&quot;,&quot;New Hampshire&quot;,&quot;New Jersey&quot;,&quot;New Mexico&quot;,&quot;New York&quot;,&quot;North Dakota&quot;,&quot;North Carolina&quot;,&quot;Ohio&quot;,&quot;Oklahoma&quot;,&quot;Oregon&quot;,&quot;Pennsylvania&quot;,&quot;Rhode Island&quot;,&quot;South Carolina&quot;,&quot;South Dakota&quot;,&quot;Tennessee&quot;,&quot;Texas&quot;,&quot;Utah&quot;,&quot;Vermont&quot;,&quot;Virginia&quot;,&quot;Washington&quot;,&quot;West Virginia&quot;,&quot;Wisconsin&quot;,&quot;Wyoming&quot;]" class="span11">
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">Prepended Input</label>
-                            <div class="controls">
-                                <div class="input-prepend"> <span class="add-on">#</span>
-                                    <input type="text" placeholder="prepend" class="span11">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">Appended Input</label>
-                            <div class="controls">
-                                <div class="input-append">
-                                    <input type="text" placeholder="5.000" class="span11">
-                                    <span class="add-on">$</span> </div>
-                            </div>
-                        </div>
-                        <div class="control-group warning">
-                            <label class="control-label" for="inputWarning">Input with warning</label>
-                            <div class="controls">
-                                <input type="text" id="inputWarning" class="span11">
-                                <span class="help-inline">Something may have gone wrong</span> </div>
-                        </div>
-                        <div class="control-group error">
-                            <label class="control-label" for="inputError">Input with error</label>
-                            <div class="controls">
-                                <input type="text" id="inputError" class="span11">
-                                <span class="help-inline">Please correct the error</span> </div>
-                        </div>
-                        <div class="control-group info">
-                            <label class="control-label" for="inputInfo">Input with info</label>
-                            <div class="controls">
-                                <input type="text" id="inputInfo" class="span11">
-                                <span class="help-inline">Username is already taken</span> </div>
-                        </div>
-                        <div class="control-group success">
-                            <label class="control-label" for="inputSuccess">Input with success</label>
-                            <div class="controls">
-                                <input type="text" id="inputSuccess" class="span11">
-                                <span class="help-inline">Woohoo!</span> </div>
                         </div>
                     </div>
                 </div>
