@@ -29,6 +29,10 @@
                                     <tr>
                                         <td ><?php echo $student->student_personal_email; ?></td>
                                     </tr> 
+                                    <tr>
+                                        <td ><?php echo $student->student_birthdate; ?></td>
+                                        <td ><?php echo $this->age->result() . 'yrs. old'; ?></td>
+                                    </tr> 
                                 </tbody>
                             </table>
                         </div>
@@ -83,11 +87,11 @@
                             echo '</div>';
                             ?>
 
-<!--                            <div class="pull-right">
-                                <h4><span>Amount Due:</span> $7,650.00</h4>
-                                <br>
-                                <a class="btn btn-primary btn-large pull-right" href="">Pay Invoice</a>
-                            </div>-->
+                            <!--                            <div class="pull-right">
+                                                            <h4><span>Amount Due:</span> $7,650.00</h4>
+                                                            <br>
+                                                            <a class="btn btn-primary btn-large pull-right" href="">Pay Invoice</a>
+                                                        </div>-->
                         </div>
                     </div>
                 </div>

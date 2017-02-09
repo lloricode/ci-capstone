@@ -115,6 +115,7 @@ class Students extends Admin_Controller
          */
         public function view()
         {
+
                 /*
                  * check url with id
                  */
@@ -139,7 +140,8 @@ class Students extends Admin_Controller
                 $total_all = $this->Students_subjects_model->count_rows(array('student_id' => $this->data['student']->student_id));
 
                 $this->config->load('admin/table');
-                $this->load->library('table');
+                $this->load->library(array('table', 'age'));
+                $this->age->initialize($this->data['student']->student_birthdate);
                 $this->table->set_template(array(
                     'table_open' => $this->config->item('table_open_invoice'),
                 ));

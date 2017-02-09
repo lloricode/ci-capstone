@@ -19,15 +19,16 @@ class Home extends Admin_Controller
         public function index()
         {
 
-                $this->data['active_users']    = $this->User_model->where(array(
+
+                $this->data['active_users']           = $this->User_model->where(array(
                             'active' => TRUE
                         ))->count_rows();
-                $this->data['active_students'] = $this->Student_model->where(array(
+                $this->data['active_students']        = $this->Student_model->where(array(
                             'student_active' => TRUE
                         ))->count_rows();
-                $this->template['active_user_count']          = $this->_render_page('admin/_templates/home/user_count', $this->data, TRUE);
-                $this->template['dashboard_ctrl_var']          = $this->_render_page('admin/_templates/home/dashboard_ctrl', $this->data, TRUE);
-                $this->template['bootstrap'] = $this->bootstrap();
+                $this->template['active_user_count']  = $this->_render_page('admin/_templates/home/user_count', $this->data, TRUE);
+                $this->template['dashboard_ctrl_var'] = $this->_render_page('admin/_templates/home/dashboard_ctrl', $this->data, TRUE);
+                $this->template['bootstrap']          = $this->bootstrap();
                 $this->_render_admin_page('admin/home', $this->template);
         }
 

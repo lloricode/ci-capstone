@@ -181,13 +181,14 @@ class Migration_Students extends CI_Migration
                             self::CI_DB_TABLE_COL . 'school_id'               => $this->school_id->generate(),
                             self::CI_DB_TABLE_COL . 'gender'                  => ($i % 2 == 0) ? 'Male' : 'Female',
                             self::CI_DB_TABLE_COL . 'permanent_address'       => ' permanent addreee' . random_string('alnum', 3),
+                            self::CI_DB_TABLE_COL . 'birthdate'               => '0' . random_string('nozero', 1) . '-2' . random_string('nozero', 1) . '-19' . random_string('nozero', 2),
                             self::CI_DB_TABLE_COL . 'year_level'              => random_string('nozero', 1),
                             self::CI_DB_TABLE_COL . 'enrolled'                => (bool) (random_string('nozero', 1) % random_string('nozero', 1) == 0),
                             self::CI_DB_TABLE_COL . 'active'                  => (bool) (random_string('nozero', 1) % random_string('nozero', 1) == 0),
                             'course_id'                                       => random_string('nozero', 1),
                             self::CI_DB_TABLE_COL . 'address_town'            => 'Town' . random_string('alpha', 3),
                             self::CI_DB_TABLE_COL . 'address_region'          => 'Region' . random_string('alpha', 3),
-                            self::CI_DB_TABLE_COL . 'personal_contact_number' => '+639' . random_string('numeric', 9),
+                            self::CI_DB_TABLE_COL . 'personal_contact_number' => '+639' . random_string('numeric', 2) . '-' . random_string('numeric', 4) . '-' . random_string('numeric', 3),
                             self::CI_DB_TABLE_COL . 'personal_email'          => random_string('alnum', 15) . '@' . random_string('alpha', 3) . '.' . random_string('alpha', 3),
                         );
 
