@@ -11,14 +11,14 @@ if (!function_exists('navigations_main')) {
          */
         function navigations_main() {
                 return array(
-                    'home'         =>
+                    'home'          =>
                     array(
                         'label' => 'Home',
                         'desc'  => 'Home Description',
                         'icon'  => 'home',
                     ),
                     //sub menu
-                    'user_menus'   =>
+                    'user_menus'    =>
                     array(
                         'label' => lang('index_heading'),
                         'icon'  => 'user',
@@ -58,7 +58,7 @@ if (!function_exists('navigations_main')) {
                     ),
                     //sub menu
                     //---------STUDENT------------
-                    'student_menu' =>
+                    'student_menu'  =>
                     array(
                         'label' => 'Students',
                         'icon'  => 'user-md',
@@ -80,8 +80,31 @@ if (!function_exists('navigations_main')) {
                     ),
                     //---------END STUDENT--------
                     //sub menu
+                    //---------START SUBJECTS-----
+                    'subjects_menu' =>
+                    array(
+                        'label' => 'Subjects',
+                        'icon'  => 'book',
+                        'sub'   =>
+                        array(
+                            'subjects'       =>
+                            array(
+                                'label' => 'Subject',
+                                'desc'  => 'Subject Description',
+                                'seen'  => TRUE,
+                            ),
+                            'create-subject' =>
+                            array(
+                                'label' => 'Add Subject',
+                                'desc'  => 'Add Subject Description',
+                                'seen'  => TRUE,
+                            ),
+                        ),
+                    ),
+                    //---------END SUBJECTS-------
+                    //sub menu
                     //--------START COURSE--------
-                    'course_menu'  =>
+                    'course_menu'   =>
                     array(
                         'label' => 'Courses',
                         'icon'  => 'list',
@@ -103,7 +126,30 @@ if (!function_exists('navigations_main')) {
                     ),
                     //--------END COURSE----------
                     //sub menu
-                    'group_menu'   =>
+                    //--------START SCHEDULE------
+                    'schedule_menu' =>
+                    array(
+                        'label' => 'Schedules',
+                        'icon'  => 'calendar',
+                        'sub'   =>
+                        array(
+                            'schedules'       =>
+                            array(
+                                'label' => 'Schedule',
+                                'desc'  => 'Schedule Description',
+                                'seen'  => TRUE,
+                            ),
+                            'create-schedule' =>
+                            array(
+                                'label' => 'Create Schedule',
+                                'desc'  => 'Create Schedules Description',
+                                'seen'  => TRUE,
+                            ),
+                        ),
+                    ),
+                    //--------END SCHEDULE--------
+                    //sub menu
+                    'group_menu'    =>
                     array(
                         'label' => lang('index_groups_th'),
                         'icon'  => 'group',
@@ -124,7 +170,7 @@ if (!function_exists('navigations_main')) {
                         ),
                     ),
                     //sub menu
-                    'setting_menu' =>
+                    'setting_menu'  =>
                     array(
                         'label' => 'Settings',
                         'icon'  => 'cogs',
