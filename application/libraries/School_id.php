@@ -72,41 +72,13 @@ class School_id
         {
                 $this->CI                 = &get_instance();
                 $this->CI->load->helper('date');
+                $this->CI->config->load('common/config');
                 $this->db_table           = 'students';
                 $this->db_table_id        = 'student_id';
                 $this->db_table_school_id = 'student_school_id';
                 $this->model              = 'Student_model';
                 $this->CI->load->model($this->model);
                 log_message('info', 'class ' . get_class() . ' initiallize.');
-        }
-
-        /**
-         * just check if parameter is ready
-         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
-         */
-        private function check_init($school_month_start, $school_month_end)
-        {
-                /**
-                 * check if parameter is ready
-                 */
-                if (is_null($school_month_start) || is_null($school_month_end))
-                {
-                        show_error('Parameter(s) missing in ' . get_class() . ' class.');
-                }
-                /**
-                 * check if int
-                 */
-                if (!is_integer($school_month_start) || !is_integer($school_month_end))
-                {
-                        show_error('Parameter(s) must INTEGER in ' . get_class() . ' class.');
-                }
-                /**
-                 * valid in month
-                 */
-                if (($school_month_start > 12 || $school_month_start < 1) || ($school_month_end > 12 || $school_month_end < 1))
-                {
-                        show_error('Parameter(s) must gtreater than 0 or less than 13 in ' . get_class() . ' class.');
-                }
         }
 
         /**
@@ -118,11 +90,10 @@ class School_id
          * @param int $school_month_end
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        public function initialize($school_month_start = NULL, $school_month_end = NULL)
+        public function initialize()
         {
-                $this->check_init($school_month_start, $school_month_end);
-                $this->month_start = (int) $school_month_start;
-                $this->month_end   = (int) $school_month_end;
+                $this->month_start = (int) $this->CI->config->item('school_year_start');
+                $this->month_end   = (int) $this->CI->config->item('school_year_end');
                 $this->year        = (int) date('Y');
                 $this->month       = (int) date('m');
                 $this->generate_school_year();

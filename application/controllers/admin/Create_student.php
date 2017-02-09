@@ -160,7 +160,7 @@ class Create_student extends Admin_Controller
                 $this->load->model('Course_model');
                 $this->load->helper('combobox');
                 $this->load->library('school_id');
-                $this->school_id->initialize(6, 5);
+                $this->school_id->initialize();
 
 
                 // $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));

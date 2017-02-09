@@ -172,7 +172,7 @@ class Migration_Students extends CI_Migration
                  */
                 for ($i = 1; $i < 80; $i++)
                 {
-                        $this->school_id->initialize(6, 5);
+                        $this->school_id->initialize();
 
                         $data = array(
                             self::CI_DB_TABLE_COL . 'firstname'               => 'Firsname' . random_string('alpha', 3),
