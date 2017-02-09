@@ -26,9 +26,10 @@ class Migration_Course extends CI_Migration
                         'unsigned'       => TRUE,
                         'auto_increment' => TRUE
                     ),
-                    'course_name'        => array(
+                    'course_code'        => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '50',
+                        'unique'     => TRUE
                     ),
                     'course_description' => array(
                         'type'       => 'VARCHAR',
@@ -65,7 +66,7 @@ class Migration_Course extends CI_Migration
         private function add_sample_data()
         {
                 $this->load->helper(array('string', 'date'));
-
+                $this->load->model('Course_model');
 
                 /**
                  * 80 sample record
@@ -73,14 +74,11 @@ class Migration_Course extends CI_Migration
                 for ($i = 1; $i < 80; $i++)
                 {
                         $data = array(
-                            'course_name'        => 'Name' . random_string('alpha', 3),
-                            'course_description' => 'Desc' . random_string('alpha', 3),
-                            'created_at'         => my_datetime_format(),
-                            'deleted_at'         => '',
-                            'updated_at'         => ''
+                            'course_code'        => 'c' . random_string('alpha', 3),
+                            'course_description' => 'Desc' . random_string('alpha', 5)
                         );
 
-                        $this->db->insert(self::CI_DB_TABLE, $data);
+                        $this->Course_model->insert($data);
                 }
         }
 

@@ -49,7 +49,7 @@ class Courses extends Admin_Controller
                         {
 
                                 array_push($table_data, array(
-                                    my_htmlspecialchars($course->course_name),
+                                    my_htmlspecialchars($course->course_code),
                                     my_htmlspecialchars($course->course_description),
                                 ));
                         }
@@ -61,7 +61,7 @@ class Courses extends Admin_Controller
                  * Table headers
                  */
                 $header = array(
-                    lang('index_course_name_th'),
+                    lang('index_course_code_th'),
                     lang('index_course_desc_th')
                 );
 

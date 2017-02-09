@@ -15,8 +15,9 @@ class Log_model extends MY_Model
                 //  $this->has_one['details'] = array('local_key' => 'id', 'foreign_key' => 'user_id', 'foreign_model' => 'User_details_model');
                 // $this->has_many['posts'] = 'Post_model';
 
-                $this->timestamps = TRUE;
-                $this->return_as  = 'object';
+                $this->timestamps        = TRUE;
+                $this->return_as         = 'object';
+                $this->timestamps_format = 'H:i:s m-d-Y';
                 parent::__construct();
         }
 

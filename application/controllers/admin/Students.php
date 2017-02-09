@@ -54,7 +54,7 @@ class Students extends Admin_Controller
                                     my_htmlspecialchars($student->student_lastname),
                                     my_htmlspecialchars($student->student_gender),
                                     my_htmlspecialchars($student->student_permanent_address),
-                                    my_htmlspecialchars($this->Course_model->get($student->course_id)->course_name),
+                                    my_htmlspecialchars($this->Course_model->get($student->course_id)->course_code),
                                     my_htmlspecialchars($student->student_year_level),
                                     $view_ . ' | ' . $edit_
                                 ));
@@ -115,16 +115,18 @@ class Students extends Admin_Controller
          */
         public function view()
         {
-                $page = 1;
-                if ($this->input->get('per_page'))
-                {
-                        $page = $this->input->get('per_page');
-                }
-                $this->load->model('Students_subjects_model');
                 /*
                  * check url with id
                  */
                 $this->data['student'] = check_id_from_url('student_id', 'Student_model', $this->input->get('student-id'));
+
+                $this->load->model(array('Students_subjects_model', 'Course_model'));
+                $this->data['course'] = $this->Course_model->get($this->data['student']->course_id);
+                $page                 = 1;
+                if ($this->input->get('per_page'))
+                {
+                        $page = $this->input->get('per_page');
+                }
 
                 /**
                  * get the subjects of current student
@@ -143,7 +145,7 @@ class Students extends Admin_Controller
                 ));
 
 
-                $this->table->set_heading(array('Code', 'Desciption', 'Unit'));
+                $this->table->set_heading(array('Code', 'Desciption', 'Unit', 'Grade'));
 
                 if ($subjects_obj)
                 {
@@ -151,8 +153,12 @@ class Students extends Admin_Controller
                         {
                                 $subject = $v->subjects;
 
-                                $this->table->add_row($subject->subject_code, $subject->subject_description, $subject->subject_unit);
+                                $this->table->add_row($subject->subject_code, $subject->subject_description, $subject->subject_unit, $subject->grade);
                         }
+                }
+                else
+                {
+                        $this->table->add_row(array('data' => 'no data', 'colspan' => '4'));
                 }
 
                 $this->data['table_subjects'] = $this->table->generate();

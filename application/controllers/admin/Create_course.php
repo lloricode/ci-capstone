@@ -23,8 +23,8 @@ class Create_course extends Admin_Controller
         {
                 $this->form_validation->set_rules(array(
                     array(
-                        'label' => lang('create_course_name_label'),
-                        'field' => 'course_name',
+                        'label' => lang('create_course_code_label'),
+                        'field' => 'course_code',
                         'rules' => 'trim|required|human_name|min_length[3]|max_length[50]',
                     ),
                     array(
@@ -37,7 +37,7 @@ class Create_course extends Admin_Controller
                 if ($this->form_validation->run())
                 {
                         $course = array(
-                            'course_name'        => $this->input->post('course_name', TRUE),
+                            'course_code'        => $this->input->post('course_code', TRUE),
                             'course_description' => $this->input->post('course_description', TRUE),
                         );
                         $this->load->model('Course_model');
@@ -49,11 +49,11 @@ class Create_course extends Admin_Controller
                 }
 
                 $this->data['message']            = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-                $this->data['course_name']        = array(
-                    'name'  => 'course_name',
-                    'id'    => 'course_name',
+                $this->data['course_code']        = array(
+                    'name'  => 'course_code',
+                    'id'    => 'course_code',
                     'type'  => 'text',
-                    'value' => $this->form_validation->set_value('course_name'),
+                    'value' => $this->form_validation->set_value('course_code'),
                 );
                 $this->data['course_description'] = array(
                     'name'  => 'course_description',

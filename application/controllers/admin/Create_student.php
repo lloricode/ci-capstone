@@ -20,64 +20,137 @@ class Create_student extends Admin_Controller
         {
                 $this->form_validation->set_rules(array(
                     array(
-                        'label' => lang('create_student_firstname_label'),
+                        'label' => lang('index_student_firstname_th'),
                         'field' => 'student_firstname',
                         'rules' => 'trim|required|human_name|min_length[3]|max_length[30]',
                     ),
                     array(
-                        'label' => lang('create_student_middlename_label'),
+                        'label' => lang('index_student_middlename_th'),
                         'field' => 'student_middlename',
                         'rules' => 'trim|required|human_name|min_length[3]|max_length[30]',
                     ),
                     array(
-                        'label' => lang('create_student_lastname_label'),
+                        'label' => lang('index_student_lastname_th'),
                         'field' => 'student_lastname',
                         'rules' => 'trim|required|human_name|min_length[2]|max_length[30]',
                     ),
                     array(
-                        'label' => lang('create_student_school_id_label'),
+                        'label' => lang('index_student_school_id_th'),
                         'field' => 'student_school_id',
                         'rules' => 'trim|required|exact_length[9]|is_unique[students.student_school_id]|school_id',
                     ),
                     array(
-                        'label' => lang('create_student_gender_label'),
+                        'label' => lang('index_student_gender_th'),
                         'field' => 'student_gender',
                         'rules' => 'trim|required|min_length[4]|max_length[6]',
                     ),
                     array(
-                        'label' => lang('create_student_permanent_address_label'),
+                        'label' => lang('index_student_birthdate_th'),
+                        'field' => 'student_birtdate',
+                        'rules' => 'trim|required',
+                    ),
+                    array(
+                        'label' => lang('index_student_permanent_address_th'),
                         'field' => 'student_permanent_address',
                         'rules' => 'trim|required|min_length[8]|max_length[100]',
                     ),
                     array(
-                        'label' => lang('create_course_id_label'),
+                        'label' => lang('index_course_id_th'),
                         'field' => 'course_id',
                         'rules' => 'trim|required|is_natural_no_zero',
                     ),
                     array(
-                        'label' => lang('create_student_year_level_label'),
+                        'label' => lang('index_student_year_level_th'),
                         'field' => 'student_year_level',
                         'rules' => 'trim|required|is_natural_no_zero',
-                    )
+                    ), array(
+                        'label' => lang('index_student_birthplace_th'),
+                        'field' => 'student_birthplace',
+                        'rules' => 'trim|required|min_length[8]|max_length[100]',
+                    ),
+                    array(
+                        'label' => lang('index_student_civil_status_th'),
+                        'field' => 'student_civil_status',
+                        'rules' => 'trim|required|min_length[3]|max_length[15]',
+                    ),
+                    array(
+                        'label' => lang('index_student_nationality_th'),
+                        'field' => 'student_nationality',
+                        'rules' => 'trim|required|min_length[4]|max_length[20]',
+                    ),
+                    //--
+                    array(
+                        'label' => lang('index_student_guardian_fullname_th'),
+                        'field' => 'student_guardian_fullname',
+                        'rules' => 'trim|required|min_length[8]|max_length[100]',
+                    ),
+                    array(
+                        'label' => lang('index_student_town_th'),
+                        'field' => 'student_address_town',
+                        'rules' => 'trim|required|min_length[3]|max_length[30]',
+                    ),
+                    array(
+                        'label' => lang('index_student_region_th'),
+                        'field' => 'student_address_region',
+                        'rules' => 'trim|required|min_length[8]|max_length[100]',
+                    ),
+                    array(
+                        'label' => lang('index_student_guardian_address_th'),
+                        'field' => 'student_guardian_address',
+                        'rules' => 'trim|required|min_length[8]|max_length[100]',
+                    ),
+                    array(
+                        'label' => lang('index_student_personal_contact_th'),
+                        'field' => 'student_personal_contact_number',
+                        'rules' => 'trim|required|min_length[8]|max_length[100]',
+                    ),
+                    array(
+                        'label' => lang('index_student_guardian_contact_th'),
+                        'field' => 'student_guardian_contact_number',
+                        'rules' => 'trim|required|min_length[8]|max_length[100]',
+                    ),
+                    array(
+                        'label' => lang('index_student_personal_email_th'),
+                        'field' => 'student_personal_email',
+                        'rules' => 'trim|required|max_length[50]|valid_email',
+                    ),
+                    array(
+                        'label' => lang('index_student_guardian_email_th'),
+                        'field' => 'student_guardian_email',
+                        'rules' => 'trim|required|max_length[50]|valid_email',
+                    ),
                 ));
 
                 if ($this->form_validation->run())
                 {
-                        $student = array(
-                            'student_firstname'         => $this->input->post('student_firstname', TRUE),
-                            'student_middlename'        => $this->input->post('student_middlename', TRUE),
-                            'student_lastname'          => $this->input->post('student_lastname', TRUE),
-                            'student_school_id'         => $this->input->post('student_school_id', TRUE),
-                            'student_gender'            => $this->input->post('student_gender', TRUE),
-                            'student_permanent_address' => $this->input->post('student_permanent_address', TRUE),
-                            'course_id'                 => $this->input->post('course_id', TRUE),
-                            'student_year_level'        => $this->input->post('student_year_level', TRUE),
+                        $student__ = array(
+                            'student_firstname'               => $this->input->post('student_firstname', TRUE),
+                            'student_middlename'              => $this->input->post('student_middlename', TRUE),
+                            'student_lastname'                => $this->input->post('student_lastname', TRUE),
+                            'student_school_id'               => $this->input->post('student_school_id', TRUE),
+                            'student_gender'                  => $this->input->post('student_gender', TRUE),
+                            'student_permanent_address'       => $this->input->post('student_permanent_address', TRUE),
+                            'course_id'                       => $this->input->post('course_id', TRUE),
+                            'student_year_level'              => $this->input->post('student_year_level', TRUE),
+                            'student_birtdate'                => $this->input->post('student_birtdate', TRUE),
+                            'student_birthplace'              => $this->input->post('student_birthplace', TRUE),
+                            'student_civil_status'            => $this->input->post('student_civil_status', TRUE),
+                            'student_nationality'             => $this->input->post('student_nationality', TRUE),
+                            //==
+                            'student_guardian_fullname'       => $this->input->post('student_guardian_fullname', TRUE),
+                            'student_address_town'            => $this->input->post('student_address_town', TRUE),
+                            'student_address_region'          => $this->input->post('student_address_region', TRUE),
+                            'student_guardian_address'        => $this->input->post('student_guardian_address', TRUE),
+                            'student_personal_contact_number' => $this->input->post('student_personal_contact_number', TRUE),
+                            'student_guardian_contact_number' => $this->input->post('student_guardian_contact_number', TRUE),
+                            'student_personal_email'          => $this->input->post('student_personal_email', TRUE),
+                            'student_guardian_email'          => $this->input->post('student_guardian_email', TRUE),
                         );
                         $this->load->model('Student_model');
-                        if ($this->Student_model->insert($student))
+                        if ($this->Student_model->insert($student__))
                         {
                                 $this->session->set_flashdata('message', $this->config->item('message_start_delimiter', 'ion_auth') . lang('create_student_succesfully_added_message') . $this->config->item('message_end_delimiter', 'ion_auth'));
-                                redirect(current_url(), 'refresh');
+                                // redirect(current_url(), 'refresh');
                         }
                 }
 
@@ -90,19 +163,10 @@ class Create_student extends Admin_Controller
                 $this->school_id->initialize(6, 5);
 
 
-                $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                // $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
-                $this->first_page();
-                $this->second_page();
+                $this->data['message'] = ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message'));
 
-                $this->template['first_page']  = $this->_render_page('admin/_templates/create_student/first_page', $this->data, TRUE);
-                $this->template['second_page'] = $this->_render_page('admin/_templates/create_student/second_page', $this->data, TRUE);
-                $this->template['bootstrap']   = $this->bootstrap();
-                $this->_render_admin_page('admin/create_student', $this->template);
-        }
-
-        private function first_page()
-        {
                 $this->data['student_firstname']  = array(
                     'name'  => 'student_firstname',
                     'id'    => 'student_firstname',
@@ -124,30 +188,119 @@ class Create_student extends Admin_Controller
                     'student_school_id' => $this->school_id->generate()
                 );
 
-                $this->data['student_gender'] = array(
+                $this->data['student_gender']   = array(
                     'name'  => 'student_gender',
                     'id'    => 'student_gender',
                     'value' => $this->form_validation->set_value('student_gender'),
                 );
+                $this->data['student_birtdate'] = array(
+                    'name'             => 'student_birtdate',
+                    'data-date-format' => 'mm-dd-yyyy',
+                    'class'            => 'datepicker',
+                    //  'data-date'        => "01-02-2013",
+                    'value'            => $this->form_validation->set_value('student_birtdate'),
+                );
+
+
+
+                $this->data['student_birthplace'] = array(
+                    'name'  => 'student_birthplace',
+                    'id'    => 'student_birthplace',
+                    'value' => $this->form_validation->set_value('student_birthplace'),
+                );
+
+                $this->data['student_civil_status'] = array(
+                    'name'  => 'student_civil_status',
+                    'id'    => 'student_civil_status',
+                    'value' => $this->form_validation->set_value('student_civil_status'),
+                );
+
+                $this->data['student_nationality'] = array(
+                    'name'  => 'student_nationality',
+                    'id'    => 'student_nationality',
+                    'value' => $this->form_validation->set_value('student_nationality'),
+                );
+
+
 
                 $this->data['student_permanent_address'] = array(
                     'name'  => 'student_permanent_address',
                     'id'    => 'student_permanent_address',
                     'value' => $this->form_validation->set_value('student_permanent_address'),
                 );
-        }
-
-        private function second_page()
-        {
-                $this->data['student_school_id_temp'] = array(
+                $this->data['student_school_id_temp']    = array(
                     'name'     => 'student_school_id_temp',
                     'id'       => 'student_school_id_temp',
                     'disabled' => '',
                     'value'    => $this->school_id->generate(),
                 );
-                $this->data['course_id_value']        = $this->Course_model->as_dropdown('course_name')->get_all();
+                $this->data['course_id_value']           = $this->Course_model->as_dropdown('course_code')->get_all();
 
                 $this->data['student_year_level_value'] = _numbers_for_drop_down(0, $this->config->item('max_year_level'));
+
+                //++++++++++++++++++++++++++++++++++++++=
+                $this->data['student_guardian_fullname'] = array(
+                    'name'  => 'student_guardian_fullname',
+                    'id'    => 'student_guardian_fullname',
+                    'value' => $this->form_validation->set_value('student_guardian_fullname'),
+                );
+
+
+                $this->data['student_address_town'] = array(
+                    'name'  => 'student_address_town',
+                    'id'    => 'student_address_town',
+                    'value' => $this->form_validation->set_value('student_address_town'),
+                );
+
+
+
+                $this->data['student_address_region'] = array(
+                    'name'  => 'student_address_region',
+                    'id'    => 'student_address_region',
+                    'value' => $this->form_validation->set_value('student_address_region'),
+                );
+
+
+
+                $this->data['student_guardian_address'] = array(
+                    'name'  => 'student_guardian_address',
+                    'id'    => 'student_guardian_address',
+                    'value' => $this->form_validation->set_value('student_guardian_address'),
+                );
+
+
+
+                $this->data['student_personal_contact_number'] = array(
+                    'name'  => 'student_personal_contact_number',
+                    'id'    => 'student_personal_contact_number',
+                    'value' => $this->form_validation->set_value('student_personal_contact_number'),
+                );
+
+
+
+                $this->data['student_guardian_contact_number'] = array(
+                    'name'  => 'student_guardian_contact_number',
+                    'id'    => 'student_guardian_contact_number',
+                    'value' => $this->form_validation->set_value('student_guardian_contact_number'),
+                );
+
+
+
+                $this->data['student_personal_email'] = array(
+                    'name'  => 'student_personal_email',
+                    'id'    => 'student_personal_email',
+                    'value' => $this->form_validation->set_value('student_personal_email'),
+                );
+
+
+                $this->data['student_guardian_email'] = array(
+                    'name'  => 'student_guardian_email',
+                    'id'    => 'student_guardian_email',
+                    'value' => $this->form_validation->set_value('student_guardian_email'),
+                );
+
+                $this->data['bootstrap'] = $this->bootstrap();
+                $this->_render_admin_page('admin/create_student', $this->data);
         }
 
         /**
@@ -158,19 +311,30 @@ class Create_student extends Admin_Controller
         private function bootstrap()
         {
                 /**
-                 * for header      
+                 * for header
                  */
-                $header       = array(
+                $header = array(
                     'css' => array(
-                        /**
-                         * wizard
-                         */
                         'css/bootstrap.min.css',
                         'css/bootstrap-responsive.min.css',
+                        'css/colorpicker.css',
+                        'css/datepicker.css',
+                        'css/uniform.css',
+                        'css/select2.css',
                         'css/matrix-style.css',
                         'css/matrix-media.css',
-                        'font-awesome/css/font-awesome.css',
+                        'css/bootstrap-wysihtml5.css',
+                        'font-awesome/css/font-awesome.css" rel="stylesheet',
                         'http://fonts.googleapis.com/css?family=Open+Sans:400,700,800',
+                    /**
+                     * wizard
+                     */
+//                        'css/bootstrap.min.css',
+//                        'css/bootstrap-responsive.min.css',
+//                        'css/matrix-style.css',
+//                        'css/matrix-media.css',
+//                        'font-awesome/css/font-awesome.css',
+//                        'http://fonts.googleapis.com/css?family=Open+Sans:400,700,800',
                     /**
                      * addition for form
                      */
@@ -186,20 +350,34 @@ class Create_student extends Admin_Controller
                 /**
                  * for footer
                  */
-                $footer       = array(
+                $footer = array(
                     'css' => array(
                     ),
                     'js'  => array(
+                        'js/jquery.min.js',
+                        'js/jquery.ui.custom.js',
+                        'js/bootstrap.min.js',
+                        'js/bootstrap-colorpicker.js',
+                        'js/bootstrap-datepicker.js',
+                        'js/jquery.toggle.buttons.js',
+                        'js/masked.js',
+                        'js/jquery.uniform.js',
+                        'js/select2.min.js',
+                        'js/matrix.js',
+                        'js/matrix.form_common.js',
+                        'js/wysihtml5-0.3.0.js',
+                        'js/jquery.peity.min.js',
+                        'js/bootstrap-wysihtml5.js',
                         /**
                          * wizard
                          * 
                          */
-                        'js/jquery.min.js',
-                        'js/jquery.ui.custom.js',
-                        'js/bootstrap.min.js',
-                        'js/jquery.validate.js',
-                        'js/jquery.wizard.js',
-                        'js/matrix.js',
+//                        'js/jquery.min.js',
+//                        'js/jquery.ui.custom.js',
+//                        'js/bootstrap.min.js',
+//                        'js/jquery.validate.js',
+//                        'js/jquery.wizard.js',
+//                        'js/matrix.js',
                         /*
                          * for frontend validation
                          */
@@ -225,9 +403,13 @@ class Create_student extends Admin_Controller
                 /**
                  * addition for form
                  */
+//                $footer_extra = "<script>
+//                        $('.textarea_editor').wysihtml5();
+//                </script>";
+
                 $footer_extra = "<script>
-                        $('.textarea_editor').wysihtml5();
-                </script>";
+	$('.textarea_editor').wysihtml5();
+</script>";
                 return generate_link_script_tag($header, $footer, $footer_extra);
         }
 

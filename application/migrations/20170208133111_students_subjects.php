@@ -30,6 +30,10 @@ class Migration_Students_subjects extends CI_Migration
                         'type'       => 'INT',
                         'constraint' => '11',
                     ),
+                    'grade' => array(
+                        'type'       => 'INT',
+                        'constraint' => '11',
+                    ),
                     'subject_id' => array(
                         'type'       => 'INT',
                         'constraint' => '11',

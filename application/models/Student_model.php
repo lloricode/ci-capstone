@@ -31,8 +31,9 @@ class Student_model extends MY_Model
 //                    'get_relate'        => FALSE /* another optional setting, which is explained below */
 //                );
 
-                $this->timestamps = TRUE;
-                $this->return_as  = 'object';
+                $this->timestamps        = TRUE;
+                $this->return_as         = 'object';
+                $this->timestamps_format = 'H:i:s m-d-Y';
                 parent::__construct();
         }
 

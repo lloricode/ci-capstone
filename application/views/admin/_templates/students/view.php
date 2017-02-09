@@ -1,8 +1,9 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span12">
             <div class="widget-box">
-                <div class="widget-title"> <span class="icon"> <i class="icon-briefcase"></i> </span>
+                <div class="widget-title"> <span class="icon"> <i class="icon-user"></i> </span>
                     <h5><?php echo $this->config->item('project_title'); ?></h5>
                 </div>
                 <div class="widget-content">
@@ -14,17 +15,20 @@
                                         <td><h4><?php echo $student->student_lastname . ', ' . $student->student_firstname . ' ' . $student->student_middlename; ?></h4></td>
                                     </tr>
                                     <tr>
+                                        <td ><?php echo $student->student_permanent_address; ?></td>
+                                    </tr>
+                                    <tr>
                                         <td><?php echo $student->student_address_town; ?></td>
                                     </tr>
                                     <tr>
                                         <td><?php echo $student->student_address_region; ?></td>
                                     </tr>
                                     <tr>
-                                        <td>Mobile Phone: <?php echo $student->student_personal_contact_number; ?></td>
+                                        <td><?php echo $student->student_personal_contact_number; ?></td>
                                     </tr>
                                     <tr>
                                         <td ><?php echo $student->student_personal_email; ?></td>
-                                    </tr>
+                                    </tr> 
                                 </tbody>
                             </table>
                         </div>
@@ -37,18 +41,16 @@
                                         <td class="width70"><strong><?php echo $student->student_school_id; ?></strong></td>
                                     </tr>
                                     <tr>
-                                        <td>Issue Date:</td>
-                                        <td><strong>March 23, 2013</strong></td>
+                                        <td>Course</td>
+                                        <td><strong><?php echo $course->course_code . ' - ' . $course->course_description; ?></strong></td>
                                     </tr>
                                     <tr>
-                                        <td>Due Date:</td>
-                                        <td><strong>April 01, 2013</strong></td>
+                                        <td>Year Level</td>
+                                        <td><strong> <?php echo $student->student_year_level; ?></strong></td>
                                     </tr>
                                     <tr>
-                                        <td class="width30">Client Address:</td>
-                                        <td class="width70">
-                                            <?php echo $student->student_permanent_address; ?>
-                                        </td>
+                                        <td>Status</td>
+                                        <td><strong> <?php echo ($student->student_enrolled) ? 'Enrolled' : 'Not Enrolled'; ?></strong></td>
                                     </tr>
                                 </tbody>
 
@@ -57,15 +59,6 @@
                     </div>
                     <div class="row-fluid">
                         <div class="span12">
-                            <?php
-                            /*
-                             * subjects table
-                             */
-                            echo $table_subjects;
-                            echo '<div class="pagination alternate">';
-                            echo $table_subjects_pagination;
-                            echo '</div>';
-                            ?>
                             <table class="table table-bordered table-invoice-full">
                                 <tbody>
                                     <tr>
@@ -80,10 +73,21 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <div class="pull-right">
+                            <?php
+                            /*
+                             * subjects table
+                             */
+                            echo $table_subjects;
+                            echo '<div class="pagination alternate">';
+                            echo $table_subjects_pagination;
+                            echo '</div>';
+                            ?>
+
+<!--                            <div class="pull-right">
                                 <h4><span>Amount Due:</span> $7,650.00</h4>
                                 <br>
-                                <a class="btn btn-primary btn-large pull-right" href="">Pay Invoice</a> </div>
+                                <a class="btn btn-primary btn-large pull-right" href="">Pay Invoice</a>
+                            </div>-->
                         </div>
                     </div>
                 </div>

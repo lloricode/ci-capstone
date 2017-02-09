@@ -16,8 +16,9 @@ class User_model extends MY_Model
                     'local_key'     => 'id'
                 );
 
-                $this->timestamps = TRUE;
-                $this->return_as  = 'object';
+                $this->timestamps        = TRUE;
+                $this->return_as         = 'object';
+                $this->timestamps_format = 'H:i:s m-d-Y';
                 parent::__construct();
         }
 

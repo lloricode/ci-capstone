@@ -10,7 +10,7 @@ class Migration_Students extends CI_Migration
 
 
         const CI_DB_TABLE     = 'students';
-        const CI_DB_TABLE_COL = 'student';
+        const CI_DB_TABLE_COL = 'student_';
 
         public function __construct($config = array())
         {
@@ -21,7 +21,7 @@ class Migration_Students extends CI_Migration
         {
                 $this->down();
                 $fields = array(
-                    self::CI_DB_TABLE_COL . '_id'                      => array(
+                    self::CI_DB_TABLE_COL . 'id'                      => array(
                         'type'           => 'TINYINT',
                         'constraint'     => '11',
                         'unsigned'       => TRUE,
@@ -30,35 +30,35 @@ class Migration_Students extends CI_Migration
                     /**
                      * personal info
                      */
-                    self::CI_DB_TABLE_COL . '_firstname'               => array(
+                    self::CI_DB_TABLE_COL . 'firstname'               => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '50',
                     ),
-                    self::CI_DB_TABLE_COL . '_middlename'              => array(
+                    self::CI_DB_TABLE_COL . 'middlename'              => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '50',
                     ),
-                    self::CI_DB_TABLE_COL . '_lastname'                => array(
+                    self::CI_DB_TABLE_COL . 'lastname'                => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '50',
                     ),
-                    self::CI_DB_TABLE_COL . '_gender'                  => array(
+                    self::CI_DB_TABLE_COL . 'gender'                  => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '6',
                     ),
-                    self::CI_DB_TABLE_COL . '_birthdate'               => array(
+                    self::CI_DB_TABLE_COL . 'birthdate'               => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '50',
                     ),
-                    self::CI_DB_TABLE_COL . '_birthplace'              => array(
+                    self::CI_DB_TABLE_COL . 'birthplace'              => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '50',
                     ),
-                    self::CI_DB_TABLE_COL . '_civil_status'            => array(//single,marriage
+                    self::CI_DB_TABLE_COL . 'civil_status'            => array(//single,marriage
                         'type'       => 'VARCHAR',
                         'constraint' => '50',
                     ),
-                    self::CI_DB_TABLE_COL . '_nationality'             => array(
+                    self::CI_DB_TABLE_COL . 'nationality'             => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '50',
                     ),
@@ -67,75 +67,82 @@ class Migration_Students extends CI_Migration
                      */
                     #address
                     #######################
-                    self::CI_DB_TABLE_COL . '_permanent_address'       => array(
-                        'type'       => 'VARCHAR',
-                        'constraint' => '250',
-                    ),
-                    self::CI_DB_TABLE_COL . '_address_town'            => array(
-                        'type'       => 'VARCHAR',
-                        'constraint' => '250',
-                    ),
-                    self::CI_DB_TABLE_COL . '_address_region'          => array(
-                        'type'       => 'VARCHAR',
-                        'constraint' => '250',
-                    ),
-                    self::CI_DB_TABLE_COL . '_guardian_address'        => array(
+                    self::CI_DB_TABLE_COL . 'guardian_fullname'       => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '50',
                     ),
+                    self::CI_DB_TABLE_COL . 'permanent_address'       => array(
+                        'type'       => 'VARCHAR',
+                        'constraint' => '250',
+                    ),
+                    self::CI_DB_TABLE_COL . 'address_town'            => array(
+                        'type'       => 'VARCHAR',
+                        'constraint' => '250',
+                    ),
+                    self::CI_DB_TABLE_COL . 'address_region'          => array(
+                        'type'       => 'VARCHAR',
+                        'constraint' => '250',
+                    ),
+                    self::CI_DB_TABLE_COL . 'guardian_address'        => array(
+                        'type'       => 'VARCHAR',
+                        'constraint' => '50',
+                    ),
+                    #number/emails
                     #######################
-                    self::CI_DB_TABLE_COL . '_personal_contact_number' => array(
+                    self::CI_DB_TABLE_COL . 'personal_contact_number' => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '50',
                     ),
-                    self::CI_DB_TABLE_COL . '_guardian_contact_number' => array(
+                    self::CI_DB_TABLE_COL . 'guardian_contact_number' => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '50',
                     ),
-                    self::CI_DB_TABLE_COL . '_personal_email'          => array(
+                    self::CI_DB_TABLE_COL . 'personal_email'          => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '50',
                     ),
-                    self::CI_DB_TABLE_COL . '_guardian_email'          => array(
+                    self::CI_DB_TABLE_COL . 'guardian_email'          => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '50',
                     ),
                     /**
                      * school info
                      */
-                    self::CI_DB_TABLE_COL . '_school_id'               => array(
+                    self::CI_DB_TABLE_COL . 'school_id'               => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '9',
                         'unique'     => TRUE
                     ),
-                    self::CI_DB_TABLE_COL . '_year_level'              => array(
+                    self::CI_DB_TABLE_COL . 'year_level'              => array(
                         'type'       => 'INT',
                         'constraint' => '11',
                     ),
-                    self::CI_DB_TABLE_COL . '_enrolled'                => array(
+                    self::CI_DB_TABLE_COL . 'enrolled'                => array(
                         'type'       => 'TINYINT',
                         'constraint' => '1',
+                        'default'    => FALSE
                     ),
                     /**
                      * other
                      */
-                    self::CI_DB_TABLE_COL . '_active'                  => array(
+                    self::CI_DB_TABLE_COL . 'active'                  => array(
                         'type'       => 'TINYINT',
                         'constraint' => '1',
+                        'default'    => FALSE
                     ),
-                    'course_id'                                        => array(
+                    'course_id'                                       => array(
                         'type'       => 'INT',
                         'constraint' => '11',
                     ),
-                    'created_at'                                       => array(
+                    'created_at'                                      => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
                     ),
-                    'deleted_at'                                       => array(
+                    'deleted_at'                                      => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
                     ),
-                    'updated_at'                                       => array(
+                    'updated_at'                                      => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
                     ),
@@ -144,7 +151,7 @@ class Migration_Students extends CI_Migration
 
                 $this->dbforge->add_field($fields);
 
-                $this->dbforge->add_key(self::CI_DB_TABLE_COL . '_id', TRUE);
+                $this->dbforge->add_key(self::CI_DB_TABLE_COL . 'id', TRUE);
                 $this->dbforge->create_table(self::CI_DB_TABLE);
 
                 $this->add_sample_data();
@@ -158,6 +165,7 @@ class Migration_Students extends CI_Migration
         {
                 $this->load->helper(array('string', 'date'));
                 $this->load->library('school_id');
+                $this->load->model('Student_model');
 
                 /**
                  * 80 sample record
@@ -167,22 +175,23 @@ class Migration_Students extends CI_Migration
                         $this->school_id->initialize(6, 5);
 
                         $data = array(
-                            self::CI_DB_TABLE_COL . '_firstname'         => 'Firsname' . random_string('alpha', 3),
-                            self::CI_DB_TABLE_COL . '_middlename'        => 'Middlename' . random_string('alpha', 3),
-                            self::CI_DB_TABLE_COL . '_lastname'          => 'Lastname' . random_string('alpha', 3),
-                            self::CI_DB_TABLE_COL . '_school_id'         => $this->school_id->generate(),
-                            self::CI_DB_TABLE_COL . '_gender'            => ($i % 2 == 0) ? 'Male' : 'Female',
-                            self::CI_DB_TABLE_COL . '_permanent_address' => 'addreee' . random_string('alnum', 3),
-                            self::CI_DB_TABLE_COL . '_year_level'        => random_string('nozero', 1),
-                            self::CI_DB_TABLE_COL . '_enrolled'          => (bool) (random_string('nozero', 1) % random_string('nozero', 1) == 0),
-                            self::CI_DB_TABLE_COL . '_active'            => (bool) (random_string('nozero', 1) % random_string('nozero', 1) == 0),
-                            'course_id'                                  => random_string('nozero', 1),
-                            'created_at'                                 => my_datetime_format(),
-                            'deleted_at'                                 => '',
-                            'updated_at'                                 => ''
+                            self::CI_DB_TABLE_COL . 'firstname'               => 'Firsname' . random_string('alpha', 3),
+                            self::CI_DB_TABLE_COL . 'middlename'              => 'Middlename' . random_string('alpha', 3),
+                            self::CI_DB_TABLE_COL . 'lastname'                => 'Lastname' . random_string('alpha', 3),
+                            self::CI_DB_TABLE_COL . 'school_id'               => $this->school_id->generate(),
+                            self::CI_DB_TABLE_COL . 'gender'                  => ($i % 2 == 0) ? 'Male' : 'Female',
+                            self::CI_DB_TABLE_COL . 'permanent_address'       => ' permanent addreee' . random_string('alnum', 3),
+                            self::CI_DB_TABLE_COL . 'year_level'              => random_string('nozero', 1),
+                            self::CI_DB_TABLE_COL . 'enrolled'                => (bool) (random_string('nozero', 1) % random_string('nozero', 1) == 0),
+                            self::CI_DB_TABLE_COL . 'active'                  => (bool) (random_string('nozero', 1) % random_string('nozero', 1) == 0),
+                            'course_id'                                       => random_string('nozero', 1),
+                            self::CI_DB_TABLE_COL . 'address_town'            => 'Town' . random_string('alpha', 3),
+                            self::CI_DB_TABLE_COL . 'address_region'          => 'Region' . random_string('alpha', 3),
+                            self::CI_DB_TABLE_COL . 'personal_contact_number' => '+639' . random_string('numeric', 9),
+                            self::CI_DB_TABLE_COL . 'personal_email'          => random_string('alnum', 15) . '@' . random_string('alpha', 3) . '.' . random_string('alpha', 3),
                         );
 
-                        $this->db->insert(self::CI_DB_TABLE, $data);
+                        $this->Student_model->insert($data);
                 }
         }
 
