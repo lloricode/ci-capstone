@@ -46,7 +46,7 @@ class Create_student extends Admin_Controller
                     ),
                     array(
                         'label' => lang('index_student_birthdate_th'),
-                        'field' => 'student_birtdate',
+                        'field' => 'student_birthdate',
                         'rules' => 'trim|required',
                     ),
                     array(
@@ -132,7 +132,7 @@ class Create_student extends Admin_Controller
                             'student_permanent_address'       => $this->input->post('student_permanent_address', TRUE),
                             'course_id'                       => $this->input->post('course_id', TRUE),
                             'student_year_level'              => $this->input->post('student_year_level', TRUE),
-                            'student_birtdate'                => $this->input->post('student_birtdate', TRUE),
+                            'student_birthdate'               => $this->input->post('student_birthdate', TRUE),
                             'student_birthplace'              => $this->input->post('student_birthplace', TRUE),
                             'student_civil_status'            => $this->input->post('student_civil_status', TRUE),
                             'student_nationality'             => $this->input->post('student_nationality', TRUE),
@@ -150,7 +150,7 @@ class Create_student extends Admin_Controller
                         if ($this->Student_model->insert($student__))
                         {
                                 $this->session->set_flashdata('message', $this->config->item('message_start_delimiter', 'ion_auth') . lang('create_student_succesfully_added_message') . $this->config->item('message_end_delimiter', 'ion_auth'));
-                                // redirect(current_url(), 'refresh');
+                                redirect(current_url(), 'refresh');
                         }
                 }
 
@@ -188,17 +188,17 @@ class Create_student extends Admin_Controller
                     'student_school_id' => $this->school_id->generate()
                 );
 
-                $this->data['student_gender']   = array(
+                $this->data['student_gender']    = array(
                     'name'  => 'student_gender',
                     'id'    => 'student_gender',
                     'value' => $this->form_validation->set_value('student_gender'),
                 );
-                $this->data['student_birtdate'] = array(
-                    'name'             => 'student_birtdate',
+                $this->data['student_birthdate'] = array(
+                    'name'             => 'student_birthdate',
                     'data-date-format' => 'mm-dd-yyyy',
                     'class'            => 'datepicker',
                     //  'data-date'        => "01-02-2013",
-                    'value'            => $this->form_validation->set_value('student_birtdate'),
+                    'value'            => $this->form_validation->set_value('student_birthdate'),
                 );
 
 

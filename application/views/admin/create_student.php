@@ -58,8 +58,8 @@ echo form_open(base_url("admin/create-student/index"), array(
 
                         echo '</div></div>';
 
-                        //student_birtdate:                        
-                        echo input_bootstrap($student_birtdate, 'create_student_birthdate_label');
+                        //student_birthdate:                        
+                        echo input_bootstrap($student_birthdate, 'create_student_birthdate_label');
 
                         //student_birthplace:
                         echo input_bootstrap($student_birthplace, 'create_student_birthplace_label');
