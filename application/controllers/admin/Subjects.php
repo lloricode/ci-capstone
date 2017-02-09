@@ -10,7 +10,7 @@ class Subjects extends Admin_Controller {
         function __construct() {
                 parent::__construct();
                 $this->lang->load('ci_subjects');
-                $this->load->model(array('Subject_model', 'Course_model'));
+                $this->load->model('Subject_model');
                 $this->load->library('pagination');
 
                 /**
@@ -41,8 +41,7 @@ class Subjects extends Admin_Controller {
                                     my_htmlspecialchars($subject->subject_code),
                                     my_htmlspecialchars($subject->subject_description),
                                     my_htmlspecialchars($subject->subject_unit),
-                                    my_htmlspecialchars($this->Course_model->get($subject->course_id)->course_code)
-                                ));
+                                 ));
                         }
                 }
 
@@ -55,7 +54,6 @@ class Subjects extends Admin_Controller {
                     lang('index_subject_code_th'),
                     lang('index_subject_description_th'),
                     lang('index_subject_unit_th'),
-                    lang('index_subject_course_name_th'),
                 );
 
                 /**
@@ -66,7 +64,7 @@ class Subjects extends Admin_Controller {
                 /**
                  * pagination
                  */
-                $this->data['pagination'] = $this->pagination->generate_link('admin/subjects/index', $this->Course_model->count_rows() / $this->limit);
+                $this->data['pagination'] = $this->pagination->generate_link('admin/subjects/index', $this->Subject_model->count_rows() / $this->limit);
 
                 /**
                  * caption of table

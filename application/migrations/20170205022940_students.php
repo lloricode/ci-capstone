@@ -120,7 +120,8 @@ class Migration_Students extends CI_Migration
                     self::CI_DB_TABLE_COL . 'guardian_email'          => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '50',
-                        'null'       => FALSE
+                        'null'       => FALSE,
+                        'unique'     => TRUE,
                     ),
                     /**
                      * school info

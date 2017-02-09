@@ -8,7 +8,7 @@ class Home extends Admin_Controller
         function __construct()
         {
                 parent::__construct();
-                $this->load->model(array('User_model', 'Student_model'));
+                $this->load->model(array('User_model', 'Enrollment_model'));
         }
 
         /**
@@ -20,11 +20,11 @@ class Home extends Admin_Controller
         {
 
 
-                $this->data['active_users']           = $this->User_model->where(array(
+                $this->data['active_users_count']           = $this->User_model->where(array(
                             'active' => TRUE
                         ))->count_rows();
-                $this->data['active_students']        = $this->Student_model->where(array(
-                            'student_active' => TRUE
+                $this->data['student_enrolled_count'] = $this->Enrollment_model->where(array(
+                            'enrollment_status' => TRUE
                         ))->count_rows();
                 $this->template['active_user_count']  = $this->_render_page('admin/_templates/home/user_count', $this->data, TRUE);
                 $this->template['dashboard_ctrl_var'] = $this->_render_page('admin/_templates/home/dashboard_ctrl', $this->data, TRUE);

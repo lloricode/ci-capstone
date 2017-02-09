@@ -108,12 +108,12 @@ class Create_student extends Admin_Controller
                     array(
                         'label' => lang('index_student_personal_email_th'),
                         'field' => 'student_personal_email',
-                        'rules' => 'trim|required|max_length[50]|valid_email',
+                        'rules' => 'trim|required|max_length[50]|valid_email|is_unique[students.student_personal_email]',
                     ),
                     array(
                         'label' => lang('index_student_guardian_email_th'),
                         'field' => 'student_guardian_email',
-                        'rules' => 'trim|required|max_length[50]|valid_email',
+                        'rules' => 'trim|required|max_length[50]|valid_email|is_unique[students.student_guardian_email]',
                     ),
                     //--------
                     array(
@@ -165,7 +165,7 @@ class Create_student extends Admin_Controller
                                 $enrollmet__ = array(
                                     'student_id'             => $returned_student_id,
                                     'course_id'              => $this->input->post('course_id', TRUE),
-                                    'enrollment_school_year' => $this->input->post('student_year_level', TRUE),
+                                    'enrollment_school_year' => $this->input->post('enrollment_school_year', TRUE),
                                     'enrollment_semester'    => $this->input->post('enrollment_semester', TRUE),
                                     'enrollment_year_level'  => $this->input->post('enrollment_year_level', TRUE),
                                     'created_user_id'        => $this->ion_auth->user()->row()->id,

@@ -28,11 +28,6 @@ class Create_subject extends Admin_Controller {
                         'label' => lang('create_subject_unit_label'),
                         'field' => 'subject_unit',
                         'rules' => 'trim|required|is_natural_no_zero',
-                    ),
-                    array(
-                        'label' => lang('create_course_id_label'),
-                        'field' => 'course_id',
-                        'rules' => 'trim|required|is_natural_no_zero',
                     )
                 ));
 
@@ -42,7 +37,7 @@ class Create_subject extends Admin_Controller {
                             'subject_description' => $this->input->post('subject_description', TRUE),
                             'subject_unit'        => $this->input->post('subject_unit', TRUE),
                             'course_id'           => $this->input->post('course_id', TRUE),
-                            'user_id'             => $this->ion_auth->user()->row()->id
+                            'created_user_id'             => $this->ion_auth->user()->row()->id
                         );
                         $this->load->model('Subject_model');
                         if ($this->Subject_model->insert($subject)) {
@@ -74,9 +69,7 @@ class Create_subject extends Admin_Controller {
                     'type'  => 'text',
                     'value' => $this->form_validation->set_value('subject_unit'),
                 );
-                $this->data['course_id_value']     = $this->Course_model->as_dropdown('course_code')->get_all();
-
-
+            
                 $this->data['bootstrap'] = $this->bootstrap();
                 $this->_render_admin_page('admin/create_subject', $this->data);
         }

@@ -66,18 +66,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     echo form_error('subject_unit');
                     echo '</div></div> ';
 
-                    //course_id:
-                    $tmp = (form_error('course_id') == '') ? '' : ' error';
-                    echo '<div class="control-group' . $tmp . '">';
-                    echo lang('create_subject_course_name_label', 'course_id', array(
-                        'class' => 'control-label',
-                        'id'    => 'inputError'
-                    ));
-                    echo '<div class="controls">';
-                    echo form_dropdown('course_id', $course_id_value, set_value('course_id'));
-                    echo form_error('course_id');
-                    echo '</div></div> ';
-
+        
 
                     echo ' <div class="form-actions">';
 

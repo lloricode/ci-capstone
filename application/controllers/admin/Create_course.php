@@ -39,6 +39,7 @@ class Create_course extends Admin_Controller
                         $course = array(
                             'course_code'        => $this->input->post('course_code', TRUE),
                             'course_description' => $this->input->post('course_description', TRUE),
+                            'created_user_id'    => $this->ion_auth->user()->row()->id
                         );
                         $this->load->model('Course_model');
                         if ($this->Course_model->insert($course))
