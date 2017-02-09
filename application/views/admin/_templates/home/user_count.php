@@ -13,7 +13,7 @@
             <li class="bg_lg"> <a href="calendar.html"> <i class="icon-calendar"></i> Calendar</a> </li>
             <li class="bg_lr"> <a href="error404.html"> <i class="icon-info-sign"></i> Error</a> </li>-->
             <li class="bg_lb"> <a href= "<?php echo base_url('admin/users'); ?>"> <i class="icon-group"></i> <span class="label label-important"><?php echo $active_users ?></span>Active Users </a> </li>
-            <li class="bg_lg"> <a href="<?php echo base_url('admin/students'); ?>"> <i class="icon-user"></i> <span class="label label-important"><?php echo $active_students ?></span> Active Students </a> </li>
+            <li class="bg_lg"> <a href="<?php echo base_url('admin/students'); ?>"> <i class="icon-user"></i> <span class="label label-important"><?php echo $active_students ?></span> Enrolled Students </a> </li>
 
         </ul>
     </div>
