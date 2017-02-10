@@ -108,77 +108,20 @@ class Students extends Admin_Controller
         public function view()
         {
 
+                $this->load->library('student');
                 /*
-                 * check url with id
+                 * check url with id,tehn get studewnt row
                  */
-                #1
-                #student row
-                ############################################
-                $this->data['student'] = check_id_from_url('student_id', 'Student_model', $this->input->get('student-id'));
-
-
+                $this->data['student'] = $this->student->get($this->input->get('student-id'));
                 /**
                  * setting up page for pagination
                  */
-                $page = 1;
+                $page                  = 1;
                 if ($this->input->get('per_page'))
                 {
                         $page = $this->input->get('per_page');
                 }
 
-                /**
-                 * loading models if valid id in url 
-                 * 
-                 * note Student_model no need to load, its already loaded in checking url, see above code
-                 */
-                $this->load->model(array('Students_subjects_model', 'Course_model', 'Enrollment_model'));
-
-
-
-                /**
-                 * get enrollment row in student
-                 */
-                #2
-                #enrollment row
-                ############################################
-                $this->data['enrollment'] = $this->Enrollment_model->with_course()->get(array(
-                    'student_id' => $this->data['student']->student_id
-                ));
-
-
-                /**
-                 * getting course of student
-                 */
-                #3
-                #course row
-                ############################################
-                $this->data['course'] = $this->Course_model->get($this->data['enrollment']->course_id);
-
-
-                /**
-                 * get the student_subjects of current student
-                 * 
-                 */
-                #4
-                #student_subjects rows
-                ############################################
-                /**
-                 * where clause
-                 */
-                /**
-                 * setting up where clause,
-                 */
-                $subjects_where__                  = array('enrollment_id' => $this->data['enrollment']->enrollment_id);
-                /**
-                 * get rows
-                 */
-                $student_subjects_obj              = $this->Students_subjects_model->
-                                limit($this->limit, $this->limit * $page - $this->limit)->
-                                with_subjects()->as_object()->get_all($subjects_where__);
-                /**
-                 * get total rows for pagination
-                 */
-                $student_subjects_total_pagination = $this->Students_subjects_model->count_rows($subjects_where__);
 
                 /**
                  * config for table, getting bootstrap header table
@@ -192,27 +135,22 @@ class Students extends Admin_Controller
                 $this->table->set_template(array(
                     'table_open' => $this->config->item('table_open_invoice'),
                 ));
-                $this->table->set_heading(array('Code', 'Desciption', 'Unit', 'Grade'));
+                $this->table->set_heading(array('Code', 'Desciption', 'Unit'));
 
                 /**
                  * preparing convert birthdate to age
                  */
                 $this->age->initialize($this->data['student']->student_birthdate);
 
-
+                $student_subjects_obj = $this->student->subject_enrolled();
                 if ($student_subjects_obj)
                 {
                         /**
                          * distribute data to html table rows
                          */
-                        foreach ($student_subjects_obj as $v)
+                        foreach ($student_subjects_obj as $subject)
                         {
-                                /**
-                                 * get subjects in student
-                                 */
-                                $subject = $v->subjects;
-
-                                $this->table->add_row($subject->subject_code, $subject->subject_description, $subject->subject_unit, $subject->grade);
+                                $this->table->add_row($subject->subject_code, $subject->subject_description, $subject->subject_unit);
                         }
                 }
                 else
@@ -231,7 +169,7 @@ class Students extends Admin_Controller
                 /**
                  * generating html pagination
                  */
-                $this->data['table_subjects_pagination'] = $this->pagination->generate_link('/admin/students/view?student-id=' . $this->data['student']->student_id, $student_subjects_total_pagination / $this->limit, TRUE);
+                $this->data['table_subjects_pagination'] = $this->pagination->generate_link('/admin/students/view?student-id=' . $this->data['student']->student_id, $this->student->subject_total() / $this->limit, TRUE);
 
 
                 /**

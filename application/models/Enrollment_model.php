@@ -18,9 +18,16 @@ class Enrollment_model extends MY_Model
                     'local_key'     => 'course_id'
                 );
 
-                $this->timestamps        = TRUE;
-                $this->return_as         = 'object';
-                $this->timestamps_format = 'timestamp';
+
+                $this->has_many['students_subjects'] = array(
+                    'foreign_model' => 'Students_subjects_model',
+                    'foreign_table' => 'students_subjects',
+                    'foreign_key'   => 'id',
+                    'local_key'     => 'id'
+                );
+                $this->timestamps                    = TRUE;
+                $this->return_as                     = 'object';
+                $this->timestamps_format             = 'timestamp';
                 parent::__construct();
         }
 

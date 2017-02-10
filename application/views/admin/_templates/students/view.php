@@ -46,15 +46,15 @@
                                     </tr>
                                     <tr>
                                         <td>Course</td>
-                                        <td><strong><?php echo $course->course_code . ' - ' . $course->course_description; ?></strong></td>
+                                        <td><strong><?php echo $this->student->course_code() . ' - ' . $this->student->course_description(); ?></strong></td>
                                     </tr>
                                     <tr>
                                         <td>Year Level</td>
-                                        <td><strong> <?php echo $enrollment->enrollment_year_level; ?></strong></td>
+                                        <td><strong> <?php echo $this->student->level(); ?></strong></td>
                                     </tr>
                                     <tr>
                                         <td>Status</td>
-                                        <td><strong> <?php echo ($enrollment->enrollment_status) ? 'Enrolled' : 'Not Enrolled'; ?></strong></td>
+                                        <td><strong> <?php echo $this->student->is_enrolled(TRUE); ?></strong></td>
                                     </tr>
                                 </tbody>
 

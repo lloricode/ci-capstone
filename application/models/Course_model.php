@@ -16,9 +16,15 @@ class Course_model extends MY_Model
                     'foreign_key'   => 'enrollment_id',
                     'local_key'     => 'enrollment_id'
                 );
+                $this->has_one['education']   = array(
+                    'foreign_model' => 'Education_model',
+                    'foreign_table' => 'educations',
+                    'foreign_key'   => 'education_id',
+                    'local_key'     => 'education_id'
+                );
                 $this->timestamps             = TRUE;
                 $this->return_as              = 'object';
-                $this->timestamps_format = 'timestamp';
+                $this->timestamps_format      = 'timestamp';
                 parent::__construct();
         }
 
