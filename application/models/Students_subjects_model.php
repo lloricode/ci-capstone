@@ -20,7 +20,7 @@ class Students_subjects_model extends MY_Model
 
                 $this->timestamps        = TRUE;
                 $this->return_as         = 'object';
-                $this->timestamps_format = 'H:i:s m-d-Y';
+                $this->timestamps_format = 'timestamp';
                 parent::__construct();
         }
 
