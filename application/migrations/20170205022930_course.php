@@ -37,6 +37,11 @@ class Migration_Course extends CI_Migration
                         'constraint' => '50',
                         'unique'     => TRUE,
                         'null'       => FALSE
+                    ), 
+                    'education_id'    => array(
+                        'type'       => 'INT',
+                        'constraint' => '11',
+                        'null'       => FALSE
                     ),
                     //------------------------------------
                     'created_at'         => array(
