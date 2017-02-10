@@ -36,6 +36,6 @@ administrator|mypasswordisadmin1
 -An overview over the Admin Panel
 ![home-cicapstone](https://cloud.githubusercontent.com/assets/24410101/21073805/dd95c010-bf23-11e6-9a97-511a0bb52439.jpg)
 
-
- 
+ -Database Relation
+![screenshot at 2017-02-10 11-01-24](https://cloud.githubusercontent.com/assets/8251344/22812863/2f71f5e6-ef82-11e6-9f11-916d854dc67f.png)
 
