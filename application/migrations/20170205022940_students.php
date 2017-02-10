@@ -32,7 +32,7 @@ class Migration_Students extends CI_Migration
                      */
                     self::CI_DB_TABLE_COL . 'firstname'               => array(
                         'type'       => 'VARCHAR',
-                        'constraint' => '50',
+                        'constraint' => '100',
                         'null'       => FALSE
                     ),
                     self::CI_DB_TABLE_COL . 'image'               => array(

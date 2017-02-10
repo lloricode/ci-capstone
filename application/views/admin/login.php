@@ -9,7 +9,7 @@ $link = base_url($this->config->item('bootstarp_dir'));
         <title>Log in | <?php echo $this->config->item('project_title'); ?></title>
         <meta charset="<?php echo $this->config->item('charset'); ?>" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link href="<?php echo base_url('assets/img/favicon.ico'); ?>" rel="shortcut icon" type="image/x-icon" />
+        <link href="<?php echo base_url('assets/images/favicon.ico'); ?>" rel="shortcut icon" type="image/x-icon" />
         <link rel="stylesheet" href="<?php echo $link; ?>css/bootstrap.min.css" />
         <link rel="stylesheet" href="<?php echo $link; ?>css/bootstrap-responsive.min.css" />
         <link rel="stylesheet" href="<?php echo $link; ?>css/matrix-login.css" />

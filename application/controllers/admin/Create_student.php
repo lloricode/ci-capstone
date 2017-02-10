@@ -13,11 +13,14 @@ class Create_student extends Admin_Controller
                 parent::__construct();
                 $this->lang->load('ci_students');
                 $this->load->library('form_validation');
-                $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span><br />');
+                $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span>');
         }
 
         public function index()
         {
+                /**
+                 * setting up rules validations
+                 */
                 $this->form_validation->set_rules(array(
                     array(
                         'label' => lang('index_student_firstname_th'),
@@ -132,9 +135,85 @@ class Create_student extends Admin_Controller
                     ),
                 ));
 
-                if ($this->form_validation->run())
+
+                /**
+                 * preparing config for image upload
+                 */
+                $config = array(
+                    'encrypt_name'  => TRUE,
+                    'upload_path'   => 'assets/images/students',
+                    'allowed_types' => 'jpg|png|jpeg',
+                    'max_size'      => "1000KB",
+                    'max_height'    => "768",
+                    'max_width'     => "1024"
+                );
+
+                /**
+                 * load upload library including configuration for upload
+                 */
+                $this->load->library('upload', $config);
+
+                /**
+                 * for image upload
+                 */
+                $uploaded            = FALSE;
+                $image_error_message = '';
+                $run__               = $this->form_validation->run();
+
+                if (empty($_FILES['student_image']['name']) && $run__)
                 {
+
+                        /*
+                         * dear me:
+                         * i cant fix later improvement 
+                         * trully your: me.
+                         */
+                        //  $this->form_validation->set_rules('student_image', lang('index_student_image_th'), 'required');
+
+                        /**
+                         * image required
+                         * with error delimiter in ion_auth config
+                         */
+                        $image_error_message = $this->config->item('error_start_delimiter', 'ion_auth') .
+                                lang('student_image_required') .
+                                $this->config->item('error_end_delimiter', 'ion_auth');
+                }
+                /**
+                 * check if has error in upload $_FILES[] and pass rule validation
+                 */
+                if ($run__ && isset($_FILES['student_image']['error']) && $_FILES['student_image']['error'] != 4)
+                {
+                        /**
+                         * now uploading, FALSE in failed
+                         */
+                        $uploaded = ($this->upload->do_upload('student_image'));
+
+                        /**
+                         * if returned FALSE it means failed/error
+                         */
+                        if (!$uploaded)
+                        {
+                                /**
+                                 * get error upload message
+                                 * with error delimiter in ion_auth config
+                                 */
+                                $image_error_message = $this->config->item('error_start_delimiter', 'ion_auth') .
+                                        $this->upload->display_errors() .
+                                        $this->config->item('error_end_delimiter', 'ion_auth');
+                        }
+                }
+
+                /**
+                 * checking for validation and upload
+                 * if all rules pass, 
+                 */
+                if ($run__ && $uploaded)
+                {
+                        /**
+                         * preparing data into array
+                         */
                         $student__ = array(
+                            'student_image'                   => $this->upload->data()['file_name'],
                             'student_firstname'               => $this->input->post('student_firstname', TRUE),
                             'student_middlename'              => $this->input->post('student_middlename', TRUE),
                             'student_lastname'                => $this->input->post('student_lastname', TRUE),
@@ -154,28 +233,64 @@ class Create_student extends Admin_Controller
                             'student_guardian_contact_number' => $this->input->post('student_guardian_contact_number', TRUE),
                             'student_personal_email'          => $this->input->post('student_personal_email', TRUE),
                             'student_guardian_email'          => $this->input->post('student_guardian_email', TRUE),
+                            /**
+                             * who add the data
+                             */
                             'created_user_id'                 => $this->ion_auth->user()->row()->id,
-                                //=-----
                         );
 
                         $this->load->model(array('Student_model', 'Enrollment_model'));
+
+                        /**
+                         * inserting to student to database, then will return a primary if on success
+                         */
                         $returned_student_id = $this->Student_model->insert($student__);
+
+                        /**
+                         * check if id is ready
+                         * else nothing to do
+                         */
                         if ($returned_student_id)
                         {
+                                /**
+                                 * preparing data into array
+                                 */
                                 $enrollmet__ = array(
                                     'student_id'             => $returned_student_id,
                                     'course_id'              => $this->input->post('course_id', TRUE),
                                     'enrollment_school_year' => $this->input->post('enrollment_school_year', TRUE),
                                     'enrollment_semester'    => $this->input->post('enrollment_semester', TRUE),
                                     'enrollment_year_level'  => $this->input->post('enrollment_year_level', TRUE),
+                                    /**
+                                     * who add the data
+                                     */
                                     'created_user_id'        => $this->ion_auth->user()->row()->id,
                                 );
 
+                                /**
+                                 * on success will redirect in current page, to clear input
+                                 * 
+                                 * else on failed
+                                 * exist student id will delete from student table to rollback data
+                                 */
                                 if ($this->Enrollment_model->insert($enrollmet__))
                                 {
-
+                                        /**
+                                         * setting flash data, (once pop out, it will delete) using session
+                                         */
                                         $this->session->set_flashdata('message', $this->config->item('message_start_delimiter', 'ion_auth') . lang('create_student_succesfully_added_message') . $this->config->item('message_end_delimiter', 'ion_auth'));
+
+                                        /**
+                                         * redirecting in current_url
+                                         */
                                         redirect(current_url(), 'refresh');
+                                }
+                                else
+                                {
+                                        /**
+                                         * deleting student
+                                         */
+                                        $this->Student_model->delete($returned_student_id);
                                 }
                         }
                 }
@@ -189,9 +304,11 @@ class Create_student extends Admin_Controller
                 $this->school_id->initialize();
 
 
-                // $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                $this->data['message'] = $image_error_message . ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message'));
 
-                $this->data['message'] = ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message'));
+                $this->data['student_image'] = array(
+                    'name' => 'student_image',
+                );
 
                 $this->data['student_firstname']  = array(
                     'name'  => 'student_firstname',

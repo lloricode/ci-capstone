@@ -52,7 +52,7 @@ class Students extends Admin_Controller
                                     my_htmlspecialchars($student->student_firstname),
                                     my_htmlspecialchars($student->student_middlename),
                                     my_htmlspecialchars($student->student_lastname),
-                                   $view_ . ' | ' . $edit_
+                                    $view_ . ' | ' . $edit_
                                 ));
                         }
                 }
@@ -111,40 +111,105 @@ class Students extends Admin_Controller
                 /*
                  * check url with id
                  */
+                #1
+                #student row
+                ############################################
                 $this->data['student'] = check_id_from_url('student_id', 'Student_model', $this->input->get('student-id'));
 
-                $this->load->model(array('Students_subjects_model', 'Course_model'));
-                $this->data['course'] = $this->Course_model->get($this->data['student']->course_id);
-                $page                 = 1;
+
+                /**
+                 * setting up page for pagination
+                 */
+                $page = 1;
                 if ($this->input->get('per_page'))
                 {
                         $page = $this->input->get('per_page');
                 }
 
                 /**
-                 * get the subjects of current student
+                 * loading models if valid id in url 
                  * 
+                 * note Student_model no need to load, its already loaded in checking url, see above code
                  */
-                $subjects_obj = $this->Students_subjects_model->
-                                limit($this->limit, $this->limit * $page - $this->limit)->
-                                with_subjects()->as_object()->get_all(array('student_id' => $this->data['student']->student_id));
+                $this->load->model(array('Students_subjects_model', 'Course_model', 'Enrollment_model'));
 
-                $total_all = $this->Students_subjects_model->count_rows(array('student_id' => $this->data['student']->student_id));
 
-                $this->config->load('admin/table');
-                $this->load->library(array('table', 'age'));
-                $this->age->initialize($this->data['student']->student_birthdate);
-                $this->table->set_template(array(
-                    'table_open' => $this->config->item('table_open_invoice'),
+
+                /**
+                 * get enrollment row in student
+                 */
+                #2
+                #enrollment row
+                ############################################
+                $this->data['enrollment'] = $this->Enrollment_model->with_course()->get(array(
+                    'student_id' => $this->data['student']->student_id
                 ));
 
 
+                /**
+                 * getting course of student
+                 */
+                #3
+                #course row
+                ############################################
+                $this->data['course'] = $this->Course_model->get($this->data['enrollment']->course_id);
+
+
+                /**
+                 * get the student_subjects of current student
+                 * 
+                 */
+                #4
+                #student_subjects rows
+                ############################################
+                /**
+                 * where clause
+                 */
+                /**
+                 * setting up where clause,
+                 */
+                $subjects_where__                  = array('enrollment_id' => $this->data['enrollment']->enrollment_id);
+                /**
+                 * get rows
+                 */
+                $student_subjects_obj              = $this->Students_subjects_model->
+                                limit($this->limit, $this->limit * $page - $this->limit)->
+                                with_subjects()->as_object()->get_all($subjects_where__);
+                /**
+                 * get total rows for pagination
+                 */
+                $student_subjects_total_pagination = $this->Students_subjects_model->count_rows($subjects_where__);
+
+                /**
+                 * config for table, getting bootstrap header table
+                 */
+                $this->config->load('admin/table');
+                /**
+                 * loading table and age library
+                 * then setting up html table configuration
+                 */
+                $this->load->library(array('table', 'age'));
+                $this->table->set_template(array(
+                    'table_open' => $this->config->item('table_open_invoice'),
+                ));
                 $this->table->set_heading(array('Code', 'Desciption', 'Unit', 'Grade'));
 
-                if ($subjects_obj)
+                /**
+                 * preparing convert birthdate to age
+                 */
+                $this->age->initialize($this->data['student']->student_birthdate);
+
+
+                if ($student_subjects_obj)
                 {
-                        foreach ($subjects_obj as $v)
+                        /**
+                         * distribute data to html table rows
+                         */
+                        foreach ($student_subjects_obj as $v)
                         {
+                                /**
+                                 * get subjects in student
+                                 */
                                 $subject = $v->subjects;
 
                                 $this->table->add_row($subject->subject_code, $subject->subject_description, $subject->subject_unit, $subject->grade);
@@ -152,13 +217,27 @@ class Students extends Admin_Controller
                 }
                 else
                 {
+                        /**
+                         * no data so, i colspan the row in 4 with data "no data"
+                         */
                         $this->table->add_row(array('data' => 'no data', 'colspan' => '4'));
                 }
 
+                /**
+                 * generating html table result
+                 */
                 $this->data['table_subjects'] = $this->table->generate();
 
-                $this->data['table_subjects_pagination'] = $this->pagination->generate_link('/admin/students/view?student-id=' . $this->data['student']->student_id, $total_all / $this->limit, TRUE);
+                /**
+                 * generating html pagination
+                 */
+                $this->data['table_subjects_pagination'] = $this->pagination->generate_link('/admin/students/view?student-id=' . $this->data['student']->student_id, $student_subjects_total_pagination / $this->limit, TRUE);
 
+
+                /**
+                 * here we go!
+                 * rendering page for view
+                 */
                 $this->template['view']      = $this->_render_page('admin/_templates/students/view', $this->data, TRUE);
                 $this->template['bootstrap'] = $this->bootstrap_for_view();
                 $this->_render_admin_page('admin/students', $this->template);

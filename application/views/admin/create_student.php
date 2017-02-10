@@ -1,5 +1,5 @@
 <?php
-echo form_open(base_url("admin/create-student/index"), array(
+echo form_open_multipart(base_url("admin/create-student/index"), array(
     'class' => 'form-horizontal'
         ), $student_school_id);
 ?>
@@ -14,6 +14,9 @@ echo form_open(base_url("admin/create-student/index"), array(
                 <div class="widget-content nopadding">
                     <div class="form-horizontal">
                         <?php
+                        //student_image:
+                        echo input_bootstrap($student_image, 'create_student_image_label', 'file');
+
                         //student_firstname:
                         echo input_bootstrap($student_firstname, 'create_student_firstname_label');
 

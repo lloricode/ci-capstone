@@ -50,11 +50,11 @@
                                     </tr>
                                     <tr>
                                         <td>Year Level</td>
-                                        <td><strong> <?php echo $student->student_year_level; ?></strong></td>
+                                        <td><strong> <?php echo $enrollment->enrollment_year_level; ?></strong></td>
                                     </tr>
                                     <tr>
                                         <td>Status</td>
-                                        <td><strong> <?php echo ($student->student_enrolled) ? 'Enrolled' : 'Not Enrolled'; ?></strong></td>
+                                        <td><strong> <?php echo ($enrollment->enrollment_status) ? 'Enrolled' : 'Not Enrolled'; ?></strong></td>
                                     </tr>
                                 </tbody>
 

@@ -29,6 +29,9 @@ if (!function_exists('input_bootstrap'))
                         case 'textarea':
                                 echo form_textarea($field);
                                 break;
+                        case 'file':
+                                echo form_upload($field);
+                                break;
                         default:
                                 break;
                 }

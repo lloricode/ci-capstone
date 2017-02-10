@@ -67,7 +67,7 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
         <meta charset="<?php echo $this->config->item('charset'); ?>" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <?php echo link_tag('assets/img/favicon.ico', 'shortcut icon', 'image/ico'); ?>
+        <?php echo link_tag('assets/images/favicon.ico', 'shortcut icon', 'image/ico'); ?>
         <?php
         /**
          * echo generated link/script tags

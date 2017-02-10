@@ -9,14 +9,14 @@ class Enrollment_model extends MY_Model
         {
                 $this->table       = 'enrollments';
                 $this->primary_key = 'enrollment_id';
-//                $this->has_many['students_subjects'] = array(
-//                    'foreign_model' => 'Students_subjects_model',
-//                    'foreign_table' => 'students_subjects',
-//                    'foreign_key'   => 'subject_id',
-//                    'local_key'     => 'subject_id'
-//                );
-                //  $this->has_many_pivot['students'] = 'Student_model';
 
+
+                $this->has_one['course'] = array(
+                    'foreign_model' => 'Course_model',
+                    'foreign_table' => 'courses',
+                    'foreign_key'   => 'course_id',
+                    'local_key'     => 'course_id'
+                );
 
                 $this->timestamps        = TRUE;
                 $this->return_as         = 'object';
