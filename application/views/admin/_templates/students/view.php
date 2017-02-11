@@ -38,6 +38,9 @@
                         <div class="span6">
                             <table class="table table-bordered table-invoice">
                                 <tbody>
+                                    <tr>
+                                        <td><img src="<?php echo base_url($this->config->item('student_image_dir') . $this->student->image); ?>" width="200" alt="no image" /></td>
+                                    </tr>
 
                                     <tr>
                                         <td class="width30">School ID:</td>
@@ -62,7 +65,7 @@
                     </div>
                     <div class="row-fluid">
                         <div class="span12">
-                            <table class="table table-bordered table-invoice-full">
+<!--                            <table class="table table-bordered table-invoice-full">
                                 <tbody>
                                     <tr>
                                         <td class="msg-invoice" width="85%"><h4>Payment method: </h4>
@@ -75,7 +78,7 @@
                                                 $50</strong></td>
                                     </tr>
                                 </tbody>
-                            </table>
+                            </table>-->
                             <?php
                             /*
                              * subjects table

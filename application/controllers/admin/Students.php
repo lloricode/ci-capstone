@@ -148,7 +148,7 @@ class Students extends Admin_Controller
                         foreach ($student_subjects_obj as $subject)
                         {
                                 $this->table->add_row(
-                                        $subject->subject_code, $subject->subject_description, $subject->start, $subject->end, $subject->days, $subject->room_number . ' - ' . $subject->subject_description, $subject->faculty
+                                        $subject->subject_code, $subject->subject_description, $subject->start, $subject->end, $subject->days, $subject->room_number . ' - ' . $subject->room_description, $subject->faculty
                                 );
                         }
                 }

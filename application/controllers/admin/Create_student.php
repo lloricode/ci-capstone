@@ -141,7 +141,7 @@ class Create_student extends Admin_Controller
                  */
                 $config = array(
                     'encrypt_name'  => TRUE,
-                    'upload_path'   => 'assets/images/students',
+                    'upload_path'   => $this->config->item('student_image_dir'),
                     'allowed_types' => 'jpg|png|jpeg',
                     'max_size'      => "1000KB",
                     'max_height'    => "768",
@@ -266,7 +266,11 @@ class Create_student extends Admin_Controller
                                      */
                                     'created_user_id'        => $this->ion_auth->user()->row()->id,
                                 );
-
+                                
+                                /**
+                                 * get education by course id
+                                 */
+                                
                                 /**
                                  * on success will redirect in current page, to clear input
                                  * 

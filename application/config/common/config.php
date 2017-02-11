@@ -8,6 +8,7 @@
 
 $config['max_year_level']      = 4;
 $config['bootstarp_dir']       = 'assets/framework/bootstrap/admin/matrix-admin-package/';
+$config['student_image_dir']   = 'assets/images/students/';
 $config['project_title']       = 'CI Capstone';
 $config['project_title_link']  = 'https://github.com/lloricode/ci-capstone';
 $config['project_title_1']     = 'CI';
@@ -18,7 +19,7 @@ $config['current_year_footer'] = '2017';
 
 
 /**
- * this is for age generator
+ * this is for school id generator
  */;
 $config['school_year_start'] = 6; //JUNE
 $config['school_year_end']   = 5; //MAY
