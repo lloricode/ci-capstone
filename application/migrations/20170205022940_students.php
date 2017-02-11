@@ -51,7 +51,7 @@ class Migration_Students extends CI_Migration
                         'null'       => FALSE
                     ),
                     self::CI_DB_TABLE_COL . 'gender'                  => array(
-                        'type' => 'ENUM("male","female")',
+                        'type' => 'ENUM("Male","Female")',
                         'null' => FALSE
                     ),
                     self::CI_DB_TABLE_COL . 'birthdate'               => array(

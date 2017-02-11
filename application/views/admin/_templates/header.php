@@ -11,11 +11,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * MY CONSTANT
  * 
  */
-const SEGMENT_NUMBER = 2; //base_url 0,
 const MENU_ITEM_DEFAULT = 'home';
 const HOME_REDIRECT = 'admin/'; // sample    admin/
 
 
+$segment__  = str_replace('_', '-', $this->uri->segment(2)); //base_url 0,
 $main_sub   = '';
 /**
  * navigation
@@ -28,9 +28,9 @@ $active_link  = TRUE;
 // Determine the current menu item.
 $menu_current = MENU_ITEM_DEFAULT;
 // If there is a query for a specific menu item and that menu item exists...
-if (@array_key_exists($this->uri->segment(SEGMENT_NUMBER), $menu_items))
+if (@array_key_exists($segment__, $menu_items))
 {
-        $menu_current = $this->uri->segment(SEGMENT_NUMBER);
+        $menu_current = $segment__;
 }
 if (MENU_ITEM_DEFAULT == $menu_current)
 {
@@ -38,11 +38,11 @@ if (MENU_ITEM_DEFAULT == $menu_current)
         {
                 if (isset($item['sub']))
                 {
-                        if (@array_key_exists($this->uri->segment(SEGMENT_NUMBER), $item['sub']))
+                        if (@array_key_exists($segment__, $item['sub']))
                         {
 
                                 $main_sub     = $key;
-                                $menu_current = $this->uri->segment(SEGMENT_NUMBER);
+                                $menu_current = $segment__;
 
 
                                 foreach ($item['sub'] as $k => $v)
@@ -59,7 +59,7 @@ if (MENU_ITEM_DEFAULT == $menu_current)
 }
 
 $label     = html_escape(((isset($menu_items[$menu_current]['label'])) ? $menu_items[$menu_current]['label'] : $menu_items[$main_sub]['label']));
-$sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $menu_items[$main_sub]['sub'][$this->uri->segment(SEGMENT_NUMBER)]['label']));
+$sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $menu_items[$main_sub]['sub'][$segment__]['label']));
 ?><!DOCTYPE html>
 <html lang="en">
     <head>
@@ -212,54 +212,57 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
                         <i class="icon-home"></i> Home
                     </a> 
                     <?php
-                    echo '<a' .
-                    (
-
-
-
-                    //-----------------start
-                    #if
-                    ($sub_label != '') ?
-                            #then
-                            '' :
-                            #else
-
-                            ' href="' . base_url(HOME_REDIRECT . $menu_current) . '"'
-
-
-                    //--------------end
-
-
-                    )
-                    .
-                    (
-                    //--------------start
-                    #if
-                    ($sub_label != '') ?
-                            #then
-                            '' :
-                            #else
-                            ' class="current"'
-
-                    //--------------end
-                    )
-                    . '>'
-                    . $label . '</a>' . (($sub_label != '') ? ' '
-                            . '<a ' .
-                            //-------start sub
+                    if (MENU_ITEM_DEFAULT != $menu_current)
+                    {
+                            echo '<a' .
                             (
-                            ##if
-                            ($active_link) ?
-                                    ##then
-                                    'href="' . base_url(HOME_REDIRECT . $menu_current) . '"'
 
-                            ##else
-                                    : ''
+
+
+                            //-----------------start
+                            #if
+                            ($sub_label != '') ?
+                                    #then
+                                    '' :
+                                    #else
+
+                                    ' href="' . base_url(HOME_REDIRECT . $menu_current) . '"'
+
+
+                            //--------------end
+
+
                             )
-                            //---------end sub
-                            . ' class="current">'
-                            . $sub_label
-                            . '</a>' : '' );
+                            .
+                            (
+                            //--------------start
+                            #if
+                            ($sub_label != '') ?
+                                    #then
+                                    '' :
+                                    #else
+                                    ' class="current"'
+
+                            //--------------end
+                            )
+                            . '>'
+                            . $label . '</a>' . (($sub_label != '') ? ' '
+                                    . '<a ' .
+                                    //-------start sub
+                                    (
+                                    ##if
+                                    ($active_link) ?
+                                            ##then
+                                            'href="' . base_url(HOME_REDIRECT . $menu_current) . '"'
+
+                                    ##else
+                                            : ''
+                                    )
+                                    //---------end sub
+                                    . ' class="current">'
+                                    . $sub_label
+                                    . '</a>' : '' );
+                    }
                     ?> 
                 </div>
                 <?php echo(($sub_label != '') ? '<h1>' . $sub_label . '</h1>' : (MENU_ITEM_DEFAULT == $label) ? '<h1>' . $label . '</h1>' : '' ); ?>

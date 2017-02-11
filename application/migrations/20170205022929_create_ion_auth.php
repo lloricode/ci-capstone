@@ -61,7 +61,7 @@ class Migration_Create_ion_auth extends	CI_Migration {
 			
 			// default data
 			$this->db->insert($this->groups, array('id'=>null,'name'=>'admin','description'=>'Administrator'));
-			$this->db->insert($this->groups, array('id'=>null,'name'=>'members','description'=>'General User'));
+			$this->db->insert($this->groups, array('id'=>null,'name'=>'faculty','description'=>'General User'));
 		}
 
 		// users
