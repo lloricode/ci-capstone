@@ -21,9 +21,10 @@ class Migration_Subject_offers extends CI_Migration
                 $this->down();
                 $fields = array(
                     'subject_offer_id'        => array(
-                        'type'           => 'TINYINT',
-                        'constraint'     => '11',
+                        'type'           => 'MEDIUMINT',
+                        'constraint'     => 8,
                         'unsigned'       => TRUE,
+                        'null'           => FALSE,
                         'auto_increment' => TRUE
                     ),
                     'subject_offer_start'     => array(

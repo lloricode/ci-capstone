@@ -21,9 +21,10 @@ class Migration_Course extends CI_Migration
                 $this->down();
                 $fields = array(
                     'course_id'          => array(
-                        'type'           => 'TINYINT',
-                        'constraint'     => '11',
+                        'type'           => 'MEDIUMINT',
+                        'constraint'     => 8,
                         'unsigned'       => TRUE,
+                        'null'           => FALSE,
                         'auto_increment' => TRUE
                     ),
                     'course_code'        => array(
@@ -37,8 +38,8 @@ class Migration_Course extends CI_Migration
                         'constraint' => '50',
                         'unique'     => TRUE,
                         'null'       => FALSE
-                    ), 
-                    'education_id'    => array(
+                    ),
+                    'education_id'       => array(
                         'type'       => 'INT',
                         'constraint' => '11',
                         'null'       => FALSE

@@ -2,23 +2,25 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-if (!function_exists('navigations_main')) {
+if (!function_exists('navigations_main'))
+{
 
         /**
          * 
          * @return type
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        function navigations_main() {
+        function navigations_main()
+        {
                 return array(
-                    'home'          =>
+                    'home'           =>
                     array(
                         'label' => 'Home',
                         'desc'  => 'Home Description',
                         'icon'  => 'home',
                     ),
                     //sub menu
-                    'user_menus'    =>
+                    'user_menus'     =>
                     array(
                         'label' => lang('index_heading'),
                         'icon'  => 'user',
@@ -58,7 +60,7 @@ if (!function_exists('navigations_main')) {
                     ),
                     //sub menu
                     //---------STUDENT------------
-                    'student_menu'  =>
+                    'student_menu'   =>
                     array(
                         'label' => 'Students',
                         'icon'  => 'user-md',
@@ -81,7 +83,7 @@ if (!function_exists('navigations_main')) {
                     //---------END STUDENT--------
                     //sub menu
                     //---------START SUBJECTS-----
-                    'subjects_menu' =>
+                    'subjects_menu'  =>
                     array(
                         'label' => 'Subjects',
                         'icon'  => 'book',
@@ -104,7 +106,7 @@ if (!function_exists('navigations_main')) {
                     //---------END SUBJECTS-------
                     //sub menu
                     //--------START COURSE--------
-                    'course_menu'   =>
+                    'course_menu'    =>
                     array(
                         'label' => 'Courses',
                         'icon'  => 'list',
@@ -127,7 +129,7 @@ if (!function_exists('navigations_main')) {
                     //--------END COURSE----------
                     //
                     //--------START EDUCATION--------
-                    'education_menu'   =>
+                    'education_menu' =>
                     array(
                         'label' => 'Educations',
                         'icon'  => 'pencil',
@@ -148,9 +150,32 @@ if (!function_exists('navigations_main')) {
                         ),
                     ),
                     //--------END EDUCATION----------
+                    //
+                    //--------START ROOM--------
+                    'room_menu'      =>
+                    array(
+                        'label' => 'Rooms',
+                        'icon'  => 'lock',
+                        'sub'   =>
+                        array(
+                            'rooms'       =>
+                            array(
+                                'label' => 'Room',
+                                'desc'  => 'Room Description',
+                                'seen'  => TRUE,
+                            ),
+                            'create-room' =>
+                            array(
+                                'label' => 'Create Room',
+                                'desc'  => 'Create Room Description',
+                                'seen'  => TRUE,
+                            ),
+                        ),
+                    ),
+                    //--------END ROOM----------
                     //sub menu
                     //--------START SCHEDULE------
-                    'schedule_menu' =>
+                    'schedule_menu'  =>
                     array(
                         'label' => 'Schedules',
                         'icon'  => 'calendar',
@@ -172,7 +197,7 @@ if (!function_exists('navigations_main')) {
                     ),
                     //--------END SCHEDULE--------
                     //sub menu
-                    'group_menu'    =>
+                    'group_menu'     =>
                     array(
                         'label' => lang('index_groups_th'),
                         'icon'  => 'group',
@@ -193,7 +218,7 @@ if (!function_exists('navigations_main')) {
                         ),
                     ),
                     //sub menu
-                    'setting_menu'  =>
+                    'setting_menu'   =>
                     array(
                         'label' => 'Settings',
                         'icon'  => 'cogs',
@@ -225,14 +250,16 @@ if (!function_exists('navigations_main')) {
 }
 
 
-if (!function_exists('navigations_setting')) {
+if (!function_exists('navigations_setting'))
+{
 
         /**
          * 
          * @return type
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        function navigations_setting() {
+        function navigations_setting()
+        {
                 return array(
                     'language' =>
                     array(
