@@ -186,15 +186,20 @@ class Student extends CI_capstone
         }
 
         /**
-         * days of subject offer
+         * ALL days SCHEDULE of subject offer
          * 
-         * @param object_row $sub_off_obj
-         * @return string
+         * @param object_row $sub_off_obj 
+         * @return string sample: MWF ,TTH ,Sat ,Sun ,MTTHF ,etc..
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          * @access private
          */
         private function days($sub_off_obj)
         {
+                /**
+                 * key => days 
+                 * 
+                 * days is refer from subject_offer table 
+                 */
                 $days   = array(
                     'Sun' => 'sunday',
                     'M'   => 'monday',
@@ -204,11 +209,28 @@ class Student extends CI_capstone
                     'F'   => 'friday',
                     'Sat' => 'saturday'
                 );
+                /**
+                 * storing data to be return later
+                 */
                 $days__ = '';
+                /**
+                 * loop in days
+                 */
                 foreach ($days as $key => $day)
                 {
+                        /**
+                         * in current row, check all days if TRUE, then append DAY KEY, else FALSE nothing to append 
+                         *
+                         * loop in columns in subject_offer table from database
+                         * 
+                         * example:
+                         * $ubject_off_obj->subject_offer_monday, etc...
+                         */
                         if ($sub_off_obj->{'subject_offer_' . $day})
                         {
+                                /**
+                                 * append key
+                                 */
                                 $days__ .= $key;
                         }
                 }

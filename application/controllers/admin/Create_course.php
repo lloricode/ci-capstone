@@ -31,7 +31,12 @@ class Create_course extends Admin_Controller
                         'label' => lang('create_course_description_label'),
                         'field' => 'course_description',
                         'rules' => 'trim|required|human_name|min_length[3]|max_length[50]',
-                    )
+                    ),
+                    array(
+                        'label' => lang('index_course_education_th'),
+                        'field' => 'education_id',
+                        'rules' => 'trim|required|is_natural_no_zero',
+                    ),
                 ));
 
                 if ($this->form_validation->run())
@@ -39,6 +44,7 @@ class Create_course extends Admin_Controller
                         $course = array(
                             'course_code'        => $this->input->post('course_code', TRUE),
                             'course_description' => $this->input->post('course_description', TRUE),
+                            'education_id'        => $this->input->post('education_id', TRUE),
                             'created_user_id'    => $this->ion_auth->user()->row()->id
                         );
                         $this->load->model('Course_model');
@@ -48,7 +54,7 @@ class Create_course extends Admin_Controller
                                 redirect(current_url(), 'refresh');
                         }
                 }
-
+                $this->load->model('Education_model');
                 $this->data['message']            = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
                 $this->data['course_code']        = array(
                     'name'  => 'course_code',
@@ -62,6 +68,7 @@ class Create_course extends Admin_Controller
                     'type'  => 'text',
                     'value' => $this->form_validation->set_value('course_description'),
                 );
+                $this->data['education_id_value'] = $this->Education_model->as_dropdown('education_code')->get_all();
                 $this->data['bootstrap']          = $this->bootstrap();
                 $this->_render_admin_page('admin/create_course', $this->data);
         }

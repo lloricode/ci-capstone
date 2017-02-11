@@ -24,34 +24,14 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
 
 
                     //course_code:
-                    $tmp = (form_error('course_code') == '') ? '' : ' error';
-                    echo '<div class="control-group' . $tmp . '">';
-                    echo lang('create_course_code_label', 'course_code', array(
-                        'class' => 'control-label',
-                        'id'    => 'inputError'
-                    ));
-                    echo '<div class="controls">';
-                    echo form_input($course_code, array(
-                        'id' => 'inputError'
-                    ));
-                    echo form_error('course_code');
-                    echo '</div></div> ';
-
-
+                    echo input_bootstrap($course_code, 'create_course_code_label');
 
                     //course_description:
-                    $tmp = (form_error('course_description') == '') ? '' : ' error';
-                    echo '<div class="control-group' . $tmp . '">';
-                    echo lang('create_course_description_label', 'course_description', array(
-                        'class' => 'control-label',
-                        'id'    => 'inputError'
-                    ));
-                    echo '<div class="controls">';
-                    echo form_input($course_description, array(
-                        'id' => 'inputError'
-                    ));
-                    echo form_error('course_description');
-                    echo '</div></div> ';
+                    echo input_bootstrap($course_description, 'create_course_description_label');
+
+                    //education_id                     
+                    echo input_dropdown_bootstrap('education_id', 'create_course_education_label', $education_id_value);
+
 
                     echo ' <div class="form-actions">';
 
