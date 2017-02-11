@@ -17,7 +17,6 @@ if (!function_exists('input_bootstrap'))
                 echo '<div class="control-group' . $tmp . '">' . "\n";
                 echo lang($lang, $field['name'], array(
                     'class' => 'control-label',
-                    'id'    => 'inputError'
                 )) . "\n";
                 echo '<div class="controls">' . "\n";
 
@@ -88,7 +87,6 @@ if (!function_exists('input_dropdown_bootstrap'))
                 echo '<div class="control-group' . $tmp . '">' . "\n";
                 echo lang($lang, $field, array(
                     'class' => 'control-label',
-                    'id'    => 'inputError'
                 )) . "\n";
                 echo '<div class="controls">' . "\n";
 
