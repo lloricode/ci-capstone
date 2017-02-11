@@ -21,9 +21,10 @@ class Migration_Rooms extends CI_Migration
                 $this->down();
                 $fields = array(
                     'room_id'          => array(
-                        'type'           => 'TINYINT',
-                        'constraint'     => '11',
+                        'type'           => 'MEDIUMINT',
+                        'constraint'     => 8,
                         'unsigned'       => TRUE,
+                        'null'           => FALSE,
                         'auto_increment' => TRUE
                     ),
                     'room_number'      => array(

@@ -21,9 +21,10 @@ class Migration_Students_subjects extends CI_Migration
                 $this->down();
                 $fields = array(
                     'student_subject_id' => array(
-                        'type'           => 'TINYINT',
-                        'constraint'     => '11',
+                        'type'           => 'MEDIUMINT',
+                        'constraint'     => 8,
                         'unsigned'       => TRUE,
+                        'null'           => FALSE,
                         'auto_increment' => TRUE
                     ),
                     'enrollment_id'      => array(

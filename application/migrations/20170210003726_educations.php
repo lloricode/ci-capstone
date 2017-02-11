@@ -21,9 +21,10 @@ class Migration_Educations extends CI_Migration
                 $this->down();
                 $fields = array(
                     'education_id'          => array(
-                        'type'           => 'TINYINT',
-                        'constraint'     => '11',
+                        'type'           => 'MEDIUMINT',
+                        'constraint'     => 8,
                         'unsigned'       => TRUE,
+                        'null'           => FALSE,
                         'auto_increment' => TRUE
                     ),
                     'education_code'        => array(

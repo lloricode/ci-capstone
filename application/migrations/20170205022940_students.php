@@ -22,9 +22,10 @@ class Migration_Students extends CI_Migration
                 $this->down();
                 $fields = array(
                     self::CI_DB_TABLE_COL . 'id'                      => array(
-                        'type'           => 'TINYINT',
-                        'constraint'     => '11',
+                        'type'           => 'MEDIUMINT',
+                        'constraint'     => 8,
                         'unsigned'       => TRUE,
+                        'null'           => FALSE,
                         'auto_increment' => TRUE
                     ),
                     /**
@@ -35,7 +36,7 @@ class Migration_Students extends CI_Migration
                         'constraint' => '100',
                         'null'       => FALSE
                     ),
-                    self::CI_DB_TABLE_COL . 'image'               => array(
+                    self::CI_DB_TABLE_COL . 'image'                   => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '50',
                         'null'       => FALSE
