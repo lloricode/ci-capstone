@@ -25,14 +25,37 @@ class Student extends CI_capstone
 
 
         /**
-         * all object var
-         * @var objects
+         * public
          */
-        protected $student;
-        protected $enrollment;
-        protected $course;
-        protected $education;
-        protected $student_subjects;
+        #personael info
+        public $school_id;
+        public $fullname;
+        public $firstname;
+        public $middle;
+        public $lastname;
+        public $image;
+        public $gender;
+        public $birthdate;
+        public $birthplace;
+        public $civil_status;
+        public $nationality;
+        public $address;
+        public $town;
+        public $region;
+        public $contact;
+        public $email;
+        #guardian
+        public $guardian_fullname;
+        public $guardian_adrress;
+        public $guardian_contact;
+        public $guardian_email;
+
+        #school_info
+        public $education_code;
+        public $education_description;
+        public $course_code;
+        public $course_description;
+        public $level;
 
         public function __construct()
         {
@@ -42,6 +65,8 @@ class Student extends CI_capstone
         /**
          * 
          * @param int $studen_id
+         * @return object student row
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
         public function get($studen_id = NULL)
         {
@@ -65,31 +90,53 @@ class Student extends CI_capstone
                 $this->_load_education();
                 $this->_load_student_subjects();
 
-                return $this->student;
+                $this->school_id             = $this->student->student_school_id;
+                $this->fullname              = $this->student->student_lastname . ', ' . $this->student->student_firstname . ' ' . $this->student->student_middlename;
+                $this->firstname             = $this->student->student_firstname;
+                $this->middle                = $this->student->student_middlename;
+                $this->lastname              = $this->student->student_lastname;
+                $this->image                 = $this->student->student_image;
+                $this->gender                = $this->student->student_gender;
+                $this->birthdate             = $this->student->student_birthdate;
+                $this->birthplace            = $this->student->student_birthplace;
+                $this->civil_status          = $this->student->student_civil_status;
+                $this->nationality           = $this->student->student_nationality;
+                $this->address               = $this->student->student_permanent_address;
+                $this->town                  = $this->student->student_address_town;
+                $this->region                = $this->student->student_address_region;
+                $this->contact               = $this->student->student_personal_contact_number;
+                $this->email                 = $this->student->student_personal_email;
+                $this->guardian_fullname     = $this->student->student_guardian_fullname;
+                $this->guardian_adrress      = $this->student->student_guardian_address;
+                $this->guardian_contact      = $this->student->student_guardian_contact_number;
+                $this->guardian_email        = $this->student->student_guardian_email;
+                #######
+                $this->education_code        = $this->education->education_code;
+                $this->education_description = $this->education->education_description;
+                $this->course_code           = $this->course->course_code;
+                $this->course_description    = $this->course->course_description;
+                $this->level                 = (int) $this->enrollment->enrollment_year_level;
         }
 
         /**
          * 
-         * 
-         * 
-         * all available public functions
-         * 
-         * paramete TRUE if all subjects
-         * 
-         * 
-         * 'id'
-         * 'subject_code'  
-         * 'subject_description' 
-         * 'subject_unit'        
-         * 'days'              
-         * 'start'            
-         * 'end'               
-         * 'room_number'        
-         * 'room_description'    
-         * 'faculty'   
-         * 
+         * subject_offer_id
+         * days  
+         * start  
+         * end
+         * subject_id       
+         * subject_code        
+         * subject_description            
+         * subject_unit               
+         * room_id    
+         * room_number    
+         * room_description   
+         * faculty_id
+         * faculty
+         * @return object
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        public function subject_enrolled()
+        public function subject_offers()
         {
                 $subject_offers = array();
                 if ($this->student_subjects)
@@ -100,15 +147,22 @@ class Student extends CI_capstone
                                     'subject_offer_id' => $stud_sub->subject_offer_id
                                 ));
                                 $subject_offers[] = (object) array(
-                                            'id'                  => $sub_of->subject_offer_id,
-                                            'subject_code'        => $sub_of->subject->subject_code,
-                                            'subject_description' => $sub_of->subject->subject_description,
-                                            'subject_unit'        => $sub_of->subject->subject_unit,
+                                            //local
+                                            'subject_offer_id'    => $sub_of->subject_offer_id,
                                             'days'                => $this->days($sub_of),
                                             'start'               => $sub_of->subject_offer_start,
                                             'end'                 => $sub_of->subject_offer_end,
+                                            //subject
+                                            'subject_id'          => $sub_of->subject->subject_id,
+                                            'subject_code'        => $sub_of->subject->subject_code,
+                                            'subject_description' => $sub_of->subject->subject_description,
+                                            'subject_unit'        => $sub_of->subject->subject_unit,
+                                            //room
+                                            'room_id'             => $sub_of->room->room_id,
                                             'room_number'         => $sub_of->room->room_number,
                                             'room_description'    => $sub_of->room->room_description,
+                                            //user
+                                            'faculty_id'          => $sub_of->faculty->id,
                                             'faculty'             => $sub_of->faculty->last_name . ', ' . $sub_of->faculty->first_name,
                                 );
                         }
@@ -118,6 +172,12 @@ class Student extends CI_capstone
                 return NULL;
         }
 
+        /**
+         * total subject enrolled
+         * 
+         * @return type
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
         public function subject_total()
         {
                 return (int) $this->CI->Students_subjects_model->count_rows(array(
@@ -125,15 +185,43 @@ class Student extends CI_capstone
                 ));
         }
 
+        /**
+         * days of subject offer
+         * 
+         * @param object_row $sub_off_obj
+         * @return string
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         * @access private
+         */
         private function days($sub_off_obj)
         {
-                return 'day not implemented yet';
+                $days   = array(
+                    'Sun' => 'sunday',
+                    'M'   => 'monday',
+                    'T'   => 'tuesday',
+                    'W'   => 'wednesday',
+                    'TH'  => 'thursday',
+                    'F'   => 'friday',
+                    'Sat' => 'saturday'
+                );
+                $days__ = '';
+                foreach ($days as $key => $day)
+                {
+                        if ($sub_off_obj->{'subject_offer_' . $day})
+                        {
+                                $days__ .= $key;
+                        }
+                }
+                return $days__;
         }
 
         /**
-         * is student enrolled
+         * 
+         * @param bool $msg where if you want return as string with message
+         * @return bool|string
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        public function is_enrolled($msg = TRUE)
+        public function is_enrolled($msg = FALSE)
         {
                 if ($msg)
                 {
@@ -142,29 +230,18 @@ class Student extends CI_capstone
                 return (bool) $this->enrollment->enrollment_status;
         }
 
-        public function course_code()
+        /**
+         * age of current student
+         * 
+         * @param bool $msg where if you want return as string with message
+         * @return int|string
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        public function age($msg = FALSE)
         {
-                return $this->course->course_code;
-        }
-
-        public function course_description()
-        {
-                return $this->course->course_description;
-        }
-
-        public function education_code()
-        {
-                return $this->education->education_code;
-        }
-
-        public function education_description()
-        {
-                return $this->education->education_description;
-        }
-
-        public function level()
-        {
-                return $this->enrollment->enrollment_year_level;
+                $this->CI->load->library('age');
+                $this->CI->age->initialize($this->student->student_birthdate);
+                return $this->CI->age->result() . (($msg) ? 'years old' : '');
         }
 
 }
@@ -182,6 +259,16 @@ class CI_capstone
          * @var reference CodeIgniter
          */
         protected $CI;
+
+        /**
+         * all object var
+         * @var objects
+         */
+        protected $student;
+        protected $enrollment;
+        protected $course;
+        protected $education;
+        protected $student_subjects;
 
         public function __construct()
         {

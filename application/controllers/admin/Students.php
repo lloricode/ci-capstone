@@ -112,11 +112,11 @@ class Students extends Admin_Controller
                 /*
                  * check url with id,tehn get studewnt row
                  */
-                $this->data['student'] = $this->student->get($this->input->get('student-id'));
+                $this->student->get($this->input->get('student-id'));
                 /**
                  * setting up page for pagination
                  */
-                $page                  = 1;
+                $page = 1;
                 if ($this->input->get('per_page'))
                 {
                         $page = $this->input->get('per_page');
@@ -128,21 +128,18 @@ class Students extends Admin_Controller
                  */
                 $this->config->load('admin/table');
                 /**
-                 * loading table and age library
+                 * loading table library
                  * then setting up html table configuration
                  */
-                $this->load->library(array('table', 'age'));
+                $this->load->library('table');
                 $this->table->set_template(array(
                     'table_open' => $this->config->item('table_open_invoice'),
                 ));
-                $this->table->set_heading(array('Code', 'Desciption', 'Unit'));
+                $this->table->set_heading(array('Code', 'Desciption', 'Start', 'End', 'Days', 'Room', 'Faculty'));
 
-                /**
-                 * preparing convert birthdate to age
-                 */
-                $this->age->initialize($this->data['student']->student_birthdate);
 
-                $student_subjects_obj = $this->student->subject_enrolled();
+
+                $student_subjects_obj = $this->student->subject_offers();
                 if ($student_subjects_obj)
                 {
                         /**
@@ -150,7 +147,9 @@ class Students extends Admin_Controller
                          */
                         foreach ($student_subjects_obj as $subject)
                         {
-                                $this->table->add_row($subject->subject_code, $subject->subject_description, $subject->subject_unit);
+                                $this->table->add_row(
+                                        $subject->subject_code, $subject->subject_description, $subject->start, $subject->end, $subject->days, $subject->room_number . ' - ' . $subject->subject_description, $subject->faculty
+                                );
                         }
                 }
                 else
@@ -169,7 +168,7 @@ class Students extends Admin_Controller
                 /**
                  * generating html pagination
                  */
-                $this->data['table_subjects_pagination'] = $this->pagination->generate_link('/admin/students/view?student-id=' . $this->data['student']->student_id, $this->student->subject_total() / $this->limit, TRUE);
+                $this->data['table_subjects_pagination'] = $this->pagination->generate_link('/admin/students/view?student-id=' . $this->student->school_id, $this->student->subject_total() / $this->limit, TRUE);
 
 
                 /**
