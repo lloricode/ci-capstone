@@ -114,7 +114,6 @@ class Migration_Sample_data extends CI_Migration
                                          * then minus loop
                                          */
                                         $i--;
-                                        continue;
                                 }
                         }
                         /**
