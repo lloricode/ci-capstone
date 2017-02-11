@@ -125,6 +125,29 @@ if (!function_exists('navigations_main')) {
                         ),
                     ),
                     //--------END COURSE----------
+                    //
+                    //--------START EDUCATION--------
+                    'education_menu'   =>
+                    array(
+                        'label' => 'Educations',
+                        'icon'  => 'pencil',
+                        'sub'   =>
+                        array(
+                            'educations'       =>
+                            array(
+                                'label' => 'Education',
+                                'desc'  => 'Education Description',
+                                'seen'  => TRUE,
+                            ),
+                            'create-education' =>
+                            array(
+                                'label' => 'Create Education',
+                                'desc'  => 'Create Education Description',
+                                'seen'  => TRUE,
+                            ),
+                        ),
+                    ),
+                    //--------END EDUCATION----------
                     //sub menu
                     //--------START SCHEDULE------
                     'schedule_menu' =>
