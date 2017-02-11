@@ -9,7 +9,7 @@ class Education_model extends MY_Model
         {
                 $this->table                         = 'educations';
                 $this->primary_key                   = 'education_id';
-                $this->has_many['courses'] = array(
+                $this->has_many['course'] = array(
                     'foreign_model' => 'Course_model',
                     'foreign_table' => 'courses',
                     'foreign_key'   => 'course_id',
