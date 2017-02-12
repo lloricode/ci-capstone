@@ -32,7 +32,7 @@ class Auth extends MY_Controller
                 }
                 else
                 {
-                        redirect(base_url('admin/auth/login'), 'refresh');
+                        redirect(base_url('auth/login'), 'refresh');
                 }
         }
 
@@ -46,7 +46,7 @@ class Auth extends MY_Controller
         {
                 if ($this->ion_auth->is_admin())
                 {
-                        redirect('admin/home', 'refresh');
+                        redirect('home', 'refresh');
                 }
                 else if ($this->ion_auth->logged_in())
                 {
@@ -126,14 +126,14 @@ class Auth extends MY_Controller
 
                                 //redirect them back to the home page
                                 $this->session->set_flashdata('message', $this->ion_auth->messages());
-                                redirect('admin/home', 'refresh');
+                                redirect('home', 'refresh');
                         }
                         else
                         {
                                 // if the login was un-successful
                                 // redirect them back to the login page
                                 $this->session->set_flashdata('message', $this->ion_auth->errors());
-                                redirect('admin/auth/login', 'refresh'); // use redirects instead of loading views for compatibility with MY_Controller libraries
+                                redirect('auth/login', 'refresh'); // use redirects instead of loading views for compatibility with MY_Controller libraries
                         }
                 }
                 else
@@ -186,7 +186,7 @@ class Auth extends MY_Controller
                                 }
 
                                 $this->session->set_flashdata('message', $this->ion_auth->errors());
-                                redirect("admin/auth/login", 'refresh');
+                                redirect("auth/login", 'refresh');
                         }
 
                         // run the forgotten password method to email an activation code to the user
@@ -196,12 +196,12 @@ class Auth extends MY_Controller
                         {
                                 // if there were no errors
                                 $this->session->set_flashdata('message', $this->ion_auth->messages());
-                                redirect("admin/auth/login", 'refresh'); //we should display a confirmation page here instead of the login page
+                                redirect("auth/login", 'refresh'); //we should display a confirmation page here instead of the login page
                         }
                         else
                         {
                                 $this->session->set_flashdata('message', $this->ion_auth->errors());
-                                redirect("admin/auth/login", 'refresh');
+                                redirect("auth/login", 'refresh');
                         }
                 }
         }
@@ -255,7 +255,7 @@ class Auth extends MY_Controller
                                 $this->data['code']                 = $code;
 
                                 // render
-                                $this->_render_page('admin/reset_password', $this->data);
+                                $this->_render_page('reset_password', $this->data);
                         }
                         else
                         {
@@ -279,7 +279,7 @@ class Auth extends MY_Controller
                                         {
                                                 // if the password was successfully changed
                                                 $this->session->set_flashdata('message', $this->ion_auth->messages());
-                                                redirect("admin/auth/login", 'refresh');
+                                                redirect("auth/login", 'refresh');
                                         }
                                         else
                                         {
@@ -311,7 +311,7 @@ class Auth extends MY_Controller
                 $logout = $this->ion_auth->logout();
                 // redirect them to the login page
                 $this->session->set_flashdata('message', $this->ion_auth->messages());
-                redirect('admin/auth/login', 'refresh');
+                redirect('auth/login', 'refresh');
         }
 
 }

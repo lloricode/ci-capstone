@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Students extends Admin_Controller
+class Students extends CI_Capstone_Controller
 {
 
 
@@ -44,8 +44,8 @@ class Students extends Admin_Controller
 
                         foreach ($student_obj as $student)
                         {
-                                $view_ = anchor(base_url('admin/students/view?student-id=' . $student->student_id), 'View');
-                                $edit_ = anchor(base_url('admin/students/edit?student-id=' . $student->student_id), 'Edit');
+                                $view_ = anchor(base_url('students/view?student-id=' . $student->student_id), 'View');
+                                $edit_ = anchor(base_url('students/edit?student-id=' . $student->student_id), 'Edit');
 
                                 array_push($table_data, array(
                                     my_htmlspecialchars($student->student_school_id),
@@ -77,7 +77,7 @@ class Students extends Admin_Controller
                 /**
                  * pagination
                  */
-                $this->data['pagination'] = $this->pagination->generate_link('admin/students/index', $this->Student_model->count_rows() / $this->limit);
+                $this->data['pagination'] = $this->pagination->generate_link('students/index', $this->Student_model->count_rows() / $this->limit);
 
                 /**
                  * caption of table
@@ -168,7 +168,7 @@ class Students extends Admin_Controller
                 /**
                  * generating html pagination
                  */
-                $this->data['table_subjects_pagination'] = $this->pagination->generate_link('/admin/students/view?student-id=' . $this->student->school_id, $this->student->subject_total() / $this->limit, TRUE);
+                $this->data['table_subjects_pagination'] = $this->pagination->generate_link('/admin/students/view?student-id=' . $this->student->id, $this->student->subject_total() / $this->limit, TRUE);
 
 
                 /**

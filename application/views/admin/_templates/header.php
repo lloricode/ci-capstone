@@ -2,7 +2,7 @@
 /**
  * 
  * 
- * @author Lloric Garcia <emorickfighter@gmail.com>
+ * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -12,10 +12,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * 
  */
 const MENU_ITEM_DEFAULT = 'home';
-const HOME_REDIRECT = 'admin/'; // sample    admin/
+const HOME_REDIRECT = ''; // sample    admin/
 
-
-$segment__  = str_replace('_', '-', $this->uri->segment(2)); //base_url 0,
+/**
+ * replace '_' to '-' in controller, to prevent error in navigation
+ */
+$segment__  = str_replace('_', '-', $this->uri->segment(1)); //base_url 0,
 $main_sub   = '';
 /**
  * navigation
@@ -88,9 +90,16 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
         <!--top-Header-menu-->
         <div id="user-nav" class="navbar navbar-inverse">
             <ul class="nav">
-                <li  class="dropdown" id="profile-messages" ><a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle"><i class="icon icon-user"></i>  <span class="text"><?php echo $this->session->userdata('user_last_name') . ', ' . $this->session->userdata('user_first_name'); ?></span><b class="caret"></b></a>
+                <li  class="dropdown" id="profile-messages" >
+                    <a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle">
+                        <i class="icon icon-user"></i>  
+                        <span class="text"><?php echo $this->session->userdata('user_last_name') . ', ' . $this->session->userdata('user_first_name'); ?></span>
+                        <b class="caret"></b>
+                    </a>
                     <ul class="dropdown-menu">
-                        <li><a href="<?php echo base_url('admin/auth/logout'); ?>"><i class="icon-key"></i> Log Out</a></li>
+                        <li><a href="<?php echo base_url('auth/logout'); ?>">
+                                <i class="icon-key"></i> Log Out</a>
+                        </li>
                     </ul>
                 </li>
                 <li class="dropdown" id="menu-messages">
@@ -109,7 +118,7 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
                     </ul>
                 </li>
                 <li class="">
-                    <a title="" href="<?php echo base_url('admin/auth/logout'); ?>">
+                    <a title="" href="<?php echo base_url('auth/logout'); ?>">
                         <i class="icon icon-share-alt"></i> 
                         <span class="text">Logout</span>
                     </a>
@@ -130,7 +139,7 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
                         </span>
                     </a>
                 </li>
-                <?php if (ENVIRONMENT === 'development'): ?>
+                <?php if (ENVIRONMENT === 'development' || ENVIRONMENT === 'testing'): ?>
                         <li class="">
                             <a title="">
                                 <i class="icon icon-magic"></i> 
@@ -151,55 +160,7 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
         <!--close-top-serch-->
         <!--sidebar-menu-->
         <div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
-            <ul>
-                <?php
-                /**
-                 * navigations
-                 */
-                foreach ($menu_items as $key => $item)
-                {
-                        if (isset($item['sub']))
-                        {
-                                //sub menu
-                                $active1 = ($key == $main_sub ? ' active' : '');
-
-                                $count = 0;
-                                foreach ($item['sub'] as $value)
-                                {
-                                        if ($value['seen'])
-                                        {
-                                                $count++;
-                                        }
-                                }
-                                echo '<li class="submenu' . $active1 . '">'
-                                . '<a href="#"><i class="icon icon-' . $item['icon'] . '"></i>'
-                                . '<span>' . $item['label'] . '</span> <span class="label label-important">' . $count . '</span>'
-                                . '</a>'
-                                . '<ul>';
-                                foreach ($item['sub'] as $sub_key => $sub_item)
-                                {
-                                        if ($sub_item['seen'])
-                                        {
-                                                echo '<li><a href="' . base_url(HOME_REDIRECT . $sub_key) . '">' . $sub_item['label'] . '</a></li>';
-                                        }
-                                }
-                                echo '</ul>'
-                                . '</li>';
-                        }
-                        else
-                        {
-                                $active = ($key == $menu_current ? ' class="active"' : '');
-
-                                echo '<li' . $active . '>'
-                                . '<a href="' . base_url(HOME_REDIRECT . $key) . '">'
-                                . '<i class="icon icon-' . $item['icon'] . '"></i>'
-                                . '<span>' . $item['label'] . '</span>'
-                                . '</a>'
-                                . '</li>';
-                        }
-                }
-                ?>
-            </ul>
+            <?php echo sidebar_menu_ci_capstone($menu_current, $main_sub); ?>
         </div>
         <!--sidebar-menu-->
 

@@ -14,7 +14,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
 //echo validation_errors();
                     echo $message;
 
-                    echo form_open(base_url('admin/create-education'), array(
+                    echo form_open(base_url('create-education'), array(
                         'class'      => 'form-horizontal',
                         'name'       => 'basic_validate',
                         'id'         => 'basic_validate',

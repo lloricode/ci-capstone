@@ -15,7 +15,7 @@ if (!function_exists('get_page_in_url'))
         {
                 $CI = & get_instance();
 
-                if ($int_value = $CI->uri->segment(4))
+                if ($int_value = $CI->uri->segment(3))
                 {
                         if (is_numeric($int_value))
                         {
@@ -50,7 +50,7 @@ if (!function_exists('check_id_form_url'))
                  */
                 if (is_null($id))
                 {
-                        show_error('id no found.');
+                        show_error('id not found.');
                 }
                 /**
                  * CI instance object

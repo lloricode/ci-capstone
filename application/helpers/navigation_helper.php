@@ -6,8 +6,9 @@ if (!function_exists('navigations_main'))
 {
 
         /**
+         * navigation in project
          * 
-         * @return type
+         * @return array-multi
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
         function navigations_main()
@@ -224,22 +225,28 @@ if (!function_exists('navigations_main'))
                         'icon'  => 'cogs',
                         'sub'   =>
                         array(
-                            'language' =>
+                            'language'    =>
                             array(
                                 'label' => lang('lang_label'),
                                 'desc'  => 'Language Description',
                                 'seen'  => TRUE,
                             ),
-                            'database' =>
+                            'database'    =>
                             array(
                                 'label' => 'Database',
                                 'desc'  => 'Database Description',
                                 'seen'  => TRUE,
                             ),
-                            'log'      =>
+                            'log'         =>
                             array(
                                 'label' => 'Error Logs',
                                 'desc'  => 'Error Logsn Description',
+                                'seen'  => TRUE,
+                            ),
+                            'permissions' =>
+                            array(
+                                'label' => 'Permissions',
+                                'desc'  => 'permission Description',
                                 'seen'  => TRUE,
                             ),
                         ),
@@ -280,6 +287,159 @@ if (!function_exists('navigations_setting'))
                         'icon'  => 'exclamation-sign',
                     ),
                 );
+        }
+
+}
+if (!function_exists('controllers__'))
+{
+
+        /**
+         * all controllers from navigations_main() [helper], NOT FROM DATABSE
+         * 
+         * @param string $delimeter if delimeter set,
+         *  it will return STRING with delimeter you set, else ARRAY of all controllers
+         * 
+         * @return string
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        function controllers__($delimeter = '')
+        {
+                $return_arr = array();
+                $return_str = '';
+                foreach (navigations_main() as $k => $v)
+                {
+                        if (isset($v['sub']))
+                        {
+                                foreach ($v['sub'] as $kk => $vv)
+                                {
+
+                                        $return_arr[] = $kk;
+                                        $return_str   .= $kk . $delimeter;
+                                }
+                        }
+                        else
+                        {
+                                $return_arr[]   = $k;
+                                $return_str .= $k . $delimeter;
+                        }
+                }
+                if ($delimeter == '')
+                {
+                        return $return_arr;
+                }
+                elseif ($delimeter != '')
+                {
+                        return $return_str;
+                }
+        }
+
+}
+
+if (!function_exists('sidebar_menu_ci_capstone'))
+{
+
+        /**
+         * 
+         * @param type $menu_current
+         * @param type $main_sub
+         * @return string generated navigation
+         */
+        function sidebar_menu_ci_capstone($menu_current, $main_sub)
+        {
+                /**
+                 * navigations
+                 */
+                $return = '<ul>' . "\n";
+                foreach (navigations_main() as $key => $item)
+                {
+
+                        if (isset($item['sub']))
+                        {
+                                /**
+                                 * check permission
+                                 * default
+                                 */
+                                $permmission = FALSE;
+
+                                /**
+                                 * check permission
+                                 * if only one is there, so set the TRUE, else, nothing to show. means FALSE
+                                 */
+                                foreach ($item['sub'] as $k => $sub)
+                                {
+                                        $permmission = in_array($k, permission_controllers());
+                                        if ($permmission)
+                                        {
+                                                //now we can stop here, because it has atleast one permission
+                                                break;
+                                        }
+                                }
+
+                                /**
+                                 * check permission
+                                 */
+                                if ($permmission)
+                                {
+                                        //sub menu
+                                        $active1 = ($key == $main_sub ? ' active' : '');
+
+                                        $count = 0;
+                                        foreach ($item['sub'] as $k_ => $value)
+                                        {
+                                                if ($value['seen'])
+                                                {
+                                                        /**
+                                                         * check permission
+                                                         */
+                                                        if (in_array($k_, permission_controllers()))
+                                                        {
+                                                                $count++;
+                                                        }
+                                                }
+                                        }
+
+                                        $return .= '<li class="submenu' . $active1 . '">' . "\n"
+                                                . '<a href="#"><i class="icon icon-' . $item['icon'] . '"></i>' . "\n"
+                                                . '<span>' . $item['label'] . '</span> <span class="label label-important">' . $count . '</span>' . "\n"
+                                                . '</a>' . "\n"
+                                                . '<ul>' . "\n";
+                                        foreach ($item['sub'] as $sub_key => $sub_item)
+                                        {
+                                                /**
+                                                 * check permission
+                                                 */
+                                                if (in_array($sub_key, permission_controllers()))
+                                                {
+                                                        if ($sub_item['seen'])
+                                                        {
+                                                                $return .= '<li><a href="' . base_url(HOME_REDIRECT . $sub_key) . '">' . $sub_item['label'] . '</a></li>' . "\n";
+                                                        }
+                                                }
+                                        }
+                                        $return .= '</ul>' . "\n"
+                                                . '</li>' . "\n";
+                                }
+                        }
+                        else
+                        {
+                                /**
+                                 * check permission
+                                 */
+                                if (in_array($key, permission_controllers()))
+                                {
+
+                                        $active = ($key == $menu_current ? ' class="active"' : '');
+
+                                        $return .= '<li' . $active . '>'
+                                                . '<a href="' . base_url(HOME_REDIRECT . $key) . '">' . "\n"
+                                                . '<i class="icon icon-' . $item['icon'] . '"></i>' . "\n"
+                                                . '<span>' . $item['label'] . '</span>' . "\n"
+                                                . '</a>' . "\n"
+                                                . '</li>' . "\n";
+                                }
+                        }
+                }
+                return $return .= '</ul>' . "\n";
         }
 
 }

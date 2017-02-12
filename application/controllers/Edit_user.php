@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Edit_user extends Admin_Controller
+class Edit_user extends CI_Capstone_Controller
 {
 
         function __construct()
@@ -93,7 +93,7 @@ class Edit_user extends Admin_Controller
                                         $this->session->set_flashdata('message', $this->ion_auth->messages());
                                         if ($this->ion_auth->is_admin())
                                         {
-                                                redirect(base_url('admin/edit-user/?user-id=' . $user_id), 'refresh');
+                                                redirect(base_url('edit-user/?user-id=' . $user_id), 'refresh');
                                         }
                                         else
                                         {

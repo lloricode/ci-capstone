@@ -5,7 +5,7 @@
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Log extends Admin_Controller
+class Log extends CI_Capstone_Controller
 {
 
 
@@ -80,7 +80,7 @@ class Log extends Admin_Controller
                 /**
                  * pagination
                  */
-                $this->data['pagination'] = $this->pagination->generate_link('admin/log/index', $this->Log_model->count_rows() / $this->limit);
+                $this->data['pagination'] = $this->pagination->generate_link('log/index', $this->Log_model->count_rows() / $this->limit);
 
                 /**
                  * caption of table

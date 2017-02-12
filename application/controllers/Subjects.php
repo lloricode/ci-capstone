@@ -2,12 +2,15 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Subjects extends Admin_Controller {
+class Subjects extends CI_Capstone_Controller
+{
+
 
         private $page_;
         private $limit;
 
-        function __construct() {
+        function __construct()
+        {
                 parent::__construct();
                 $this->lang->load('ci_subjects');
                 $this->load->model('Subject_model');
@@ -25,23 +28,26 @@ class Subjects extends Admin_Controller {
                 $this->page_ = get_page_in_url();
         }
 
-        public function index() {
+        public function index()
+        {
 
-                
+
                 $subject_obj = $this->Subject_model->limit($this->limit, $this->limit * $this->page_ - $this->limit)->get_all();
 
 
                 $table_data = array();
 
-                if ($subject_obj) {
+                if ($subject_obj)
+                {
 
-                        foreach ($subject_obj as $subject) {
+                        foreach ($subject_obj as $subject)
+                        {
 
                                 array_push($table_data, array(
                                     my_htmlspecialchars($subject->subject_code),
                                     my_htmlspecialchars($subject->subject_description),
                                     my_htmlspecialchars($subject->subject_unit),
-                                 ));
+                                ));
                         }
                 }
 
@@ -64,7 +70,7 @@ class Subjects extends Admin_Controller {
                 /**
                  * pagination
                  */
-                $this->data['pagination'] = $this->pagination->generate_link('admin/subjects/index', $this->Subject_model->count_rows() / $this->limit);
+                $this->data['pagination'] = $this->pagination->generate_link('subjects/index', $this->Subject_model->count_rows() / $this->limit);
 
                 /**
                  * caption of table
@@ -91,7 +97,8 @@ class Subjects extends Admin_Controller {
          * @return array
          *  @author Lloric Garcia <emorickfighter@gmail.com>
          */
-        private function bootstrap() {
+        private function bootstrap()
+        {
                 /**
                  * for header
                  * 

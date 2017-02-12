@@ -94,7 +94,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('date','url','html','language','navigation');
+$autoload['helper'] = array('date','url','html','language','navigation','permission');
 
 /*
 | -------------------------------------------------------------------
@@ -137,4 +137,4 @@ $autoload['language'] = array('ci_change_language', 'ci_validation', 'auth');
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array();
+$autoload['model'] = array('Permission_model','Controller_model');

@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Create_group extends Admin_Controller
+class Create_group extends CI_Capstone_Controller
 {
 
         function __construct()

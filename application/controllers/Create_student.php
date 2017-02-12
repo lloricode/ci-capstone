@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Create_student extends Admin_Controller
+class Create_student extends CI_Capstone_Controller
 {
 
 

@@ -17,11 +17,13 @@ class Migration_Sample_data extends CI_Migration
         private $room_ids;
         private $subject_offer_ids;
         private $randnum;
+        private $permission_ids;
+        private $controller_ids;
 
         public function __construct($config = array())
         {
                 parent::__construct($config);
-                $this->load->helper(array('array', 'string'));
+                $this->load->helper(array('array', 'string', 'navigation'));
                 $this->load->model(array(
                     'Student_model',
                     'Enrollment_model',
@@ -31,7 +33,9 @@ class Migration_Sample_data extends CI_Migration
                     'Subject_offer_model',
                     'Subject_model',
                     'Room_model',
-                    'User_model'
+                    'User_model',
+                    'Permission_model',
+                    'Controller_model'
                 ));
                 $this->load->library('school_id');
         }
@@ -57,6 +61,43 @@ class Migration_Sample_data extends CI_Migration
                 }
 
                 $this->student_subjects();
+                $this->controllers();
+                $this->permission();
+        }
+
+        private function controllers()
+        {
+                $data_con_arr = array();
+
+                foreach (controllers__() as $v)
+                {
+                        $data_con_arr[] = array(
+                            'controller_name'        => $v,
+                            'controller_description' => ucwords(str_replace('-', ' ', $v)) . ' Description',
+                            'created_user_id'        => random_element($this->user_ids)
+                        );
+                }
+                $data_con_arr[]       = array(
+                    'controller_name'        => '',
+                    'controller_description' => 'Default Controller Description',
+                    'created_user_id'        => random_element($this->user_ids)
+                );
+                $this->controller_ids = $this->Controller_model->insert($data_con_arr);
+        }
+
+        private function permission()
+        {
+                $per_arr = array();
+                foreach ($this->controller_ids as $v)
+                {
+                        $per_arr[] = array(
+                            'controller_id'   => $v,
+                            'group_id'        => 1,
+                            'created_user_id' => random_element($this->user_ids),
+                        );
+                }
+
+                $this->permission_ids = $this->Permission_model->insert($per_arr);
         }
 
         private function users()

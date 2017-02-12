@@ -28,6 +28,7 @@ class Student extends CI_capstone
          * public
          */
         #personael info
+        public $id;
         public $school_id;
         public $fullname;
         public $firstname;
@@ -90,6 +91,7 @@ class Student extends CI_capstone
                 $this->_load_education();
                 $this->_load_student_subjects();
 
+                $this->id                    = $this->student->student_id;
                 $this->school_id             = $this->student->student_school_id;
                 $this->fullname              = $this->student->student_lastname . ', ' . $this->student->student_firstname . ' ' . $this->student->student_middlename;
                 $this->firstname             = $this->student->student_firstname;

@@ -8,7 +8,7 @@ class MY_Controller extends CI_Controller
         function __construct()
         {
                 parent::__construct();
-                
+
 //                $this->load->dbutil();
 //                $DB_NAME = 'ci_capstone';
 //                if (!$this->dbutil->database_exists($DB_NAME))
@@ -52,15 +52,22 @@ class MY_Controller extends CI_Controller
 
 }
 
-class Admin_Controller extends MY_Controller
+class CI_Capstone_Controller extends MY_Controller
 {
 
         function __construct()
         {
                 parent::__construct();
-                if (!$this->ion_auth->logged_in() OR ! $this->ion_auth->is_admin())
+                if (!$this->ion_auth->logged_in())
                 {
-                        redirect('admin/auth/login', 'refresh');
+                        redirect(base_url('auth/login'), 'refresh');
+                }
+                /**
+                 * check permission
+                 */
+                if (!in_array($this->uri->segment(1), permission_controllers()))
+                {
+                        show_404();
                 }
         }
 
@@ -105,16 +112,6 @@ class Admin_Controller extends MY_Controller
                     'table_open' => $this->config->item($table_config),
                 ));
                 return $this->table->generate($data);
-        }
-
-}
-
-class Public_Controller extends MY_Controller
-{
-
-        function __construct()
-        {
-                parent::__construct();
         }
 
 }

@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Database extends Admin_Controller
+class Database extends CI_Capstone_Controller
 {
 
         function __construct()
@@ -39,7 +39,7 @@ class Database extends Admin_Controller
 
 
                 $this->template['backup_button'] = $this->_render_page('admin/_templates/button_view', array(
-                    'href'         => 'admin/database/backup-database',
+                    'href'         => 'database/backup-database',
                     'button_label' => lang('db_back_up'),
                         ), TRUE);
                 $this->template['bootstrap']     = $this->bootstrap();

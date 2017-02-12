@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Users extends Admin_Controller
+class Users extends CI_Capstone_Controller
 {
 
 
@@ -63,9 +63,9 @@ class Users extends Admin_Controller
                                 $groups = '';
                                 foreach ($user->groups as $group)
                                 {
-                                        $groups .= anchor("admin/edit-group/?group-id=" . $group->id, my_htmlspecialchars($group->name)) . ' | ';
+                                        $groups .= anchor("edit-group/?group-id=" . $group->id, my_htmlspecialchars($group->name)) . ' | ';
                                 }
-                                $active_      = (($user->active) ? anchor("admin/deactivate/?user-id=" . $user->id, 'set deactive') : anchor("admin/users/activate/" . $user->id, 'set active'));
+                                $active_      = (($user->active) ? anchor("deactivate/?user-id=" . $user->id, 'set deactive') : anchor("users/activate/" . $user->id, 'set active'));
                                 $active_label = (($user->active) ? '<span class="done">' . lang('index_active_link') : '<span class="pending">' . lang('index_inactive_link')) . '</span>';
                                 array_push($table_data, array(
                                     my_htmlspecialchars($user->first_name),
@@ -74,11 +74,12 @@ class Users extends Admin_Controller
                                     my_htmlspecialchars($user->email),
                                     trim($groups, ' | '),
                                     array('data' => $active_label . nbs() . $active_, 'class' => 'taskStatus'),
-                                    anchor("admin/edit-user/?user-id=" . $user->id, 'Edit'),
+                                    anchor("edit-user/?user-id=" . $user->id, 'Edit'),
                                 ));
+                                
+                                
                         }
                 }
-
                 /*
                  * preparing html table
                  */
@@ -103,7 +104,7 @@ class Users extends Admin_Controller
                 /**
                  * pagination
                  */
-                $this->data['pagination'] = $this->pagination->generate_link('admin/users/index', $this->User_model->count_rows() / $this->limit);
+                $this->data['pagination'] = $this->pagination->generate_link('users/index', $this->User_model->count_rows() / $this->limit);
 
                 /**
                  * caption of table
@@ -123,11 +124,11 @@ class Users extends Admin_Controller
                 $this->template['table_data_users']   = $this->_render_page('admin/_templates/table', $this->data, TRUE);
                 $this->template['controller']         = 'table';
                 $this->template['create_user_button'] = $this->_render_page('admin/_templates/button_view', array(
-                    'href'         => 'admin/create-user',
+                    'href'         => 'create-user',
                     'button_label' => lang('create_user_heading'),
                         ), TRUE);
                 $this->template['export_user_button'] = $this->_render_page('admin/_templates/button_view', array(
-                    'href'         => 'admin/users/export-excel',
+                    'href'         => 'users/export-excel',
                     'button_label' => lang('excel_export'),
                         ), TRUE);
                 $this->template['bootstrap']          = $this->bootstrap();
@@ -197,13 +198,13 @@ class Users extends Admin_Controller
                 {
                         // redirect them to the auth page
                         $this->session->set_flashdata('message', $this->ion_auth->messages());
-                        redirect(base_url('admin/users'), 'refresh');
+                        redirect(base_url('users'), 'refresh');
                 }
                 else
                 {
                         // redirect them to the forgot password page
                         $this->session->set_flashdata('message', $this->ion_auth->errors());
-                        redirect(base_url('admin/users'), 'refresh');
+                        redirect(base_url('users'), 'refresh');
                 }
         }
 

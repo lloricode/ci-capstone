@@ -2,8 +2,9 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Rooms extends Admin_Controller
+class Courses extends CI_Capstone_Controller
 {
+
 
         private $page_;
         private $limit;
@@ -11,48 +12,56 @@ class Rooms extends Admin_Controller
         function __construct()
         {
                 parent::__construct();
-                $this->lang->load('ci_rooms');
-                $this->load->model('Room_model');
+                $this->lang->load('ci_courses');
+                $this->load->model('Course_model');
                 $this->load->library('pagination');
+
                 /**
                  * pagination limit
                  */
                 $this->limit = 10;
+
+                /**
+                 * get the page from url
+                 * 
+                 */
+                $this->page_ = get_page_in_url();
         }
 
         /**
-         * @author Jinkee Po 
-         *         pojinkee1@gmail.com
+         * Function to display the index
+         * @author Jinkee Po <pojinkee1@gmail.com>
+         * @version 2017-2-4
          */
         public function index()
         {
 
-
-                $this->page_ = get_page_in_url();
-
-
-                $room_obj = $this->Room_model->limit($this->limit, $this->limit * $this->page_ - $this->limit)->get_all();
+                //list the Courses
+                $course_obj = $this->Course_model->limit($this->limit, $this->limit * $this->page_ - $this->limit)->get_all();
 
 
                 $table_data = array();
-
-                if ($room_obj)
+                if ($course_obj)
                 {
 
-                        foreach ($room_obj as $room)
+                        foreach ($course_obj as $course)
                         {
+
                                 array_push($table_data, array(
-                                    my_htmlspecialchars($room->room_number),
-                                    my_htmlspecialchars($room->room_description),
+                                    my_htmlspecialchars($course->course_code),
+                                    my_htmlspecialchars($course->course_description),
                                 ));
                         }
                 }
+
+
+
                 /*
                  * Table headers
                  */
                 $header = array(
-                    lang('index_room_number_th'),
-                    lang('index_room_description_th')
+                    lang('index_course_code_th'),
+                    lang('index_course_desc_th')
                 );
 
                 /**
@@ -63,14 +72,18 @@ class Rooms extends Admin_Controller
                 /**
                  * pagination
                  */
-                $this->data['pagination'] = $this->pagination->generate_link('admin/rooms/index', $this->Room_model->count_rows() / $this->limit);
+                $this->data['pagination'] = $this->pagination->generate_link('courses/index', $this->Course_model->count_rows() / $this->limit);
 
                 /**
                  * caption of table
                  */
-                $this->data['caption'] = lang('index_room_heading');
+                $this->data['caption'] = lang('index_course_heading');
 
 
+                /**
+                 * table of users ready,
+                 * 
+                 */
                 /**
                  * templates for group controller
                  */
@@ -81,57 +94,13 @@ class Rooms extends Admin_Controller
                 /**
                  * rendering users view
                  */
-                $this->_render_admin_page('admin/rooms', $this->template);
+                $this->_render_admin_page('admin/courses', $this->template);
         }
 
         /**
          * 
          * @return array
-         *  @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
-         */
-        private function bootstrap_for_view()
-        {
-                /**
-                 * for header
-                 *
-                 */
-                $header       = array(
-                    'css' => array(
-                        'css/bootstrap.min.css',
-                        'css/bootstrap-responsive.min.css',
-                        'css/matrix-style.css',
-                        'css/matrix-media.css',
-                        'font-awesome/css/font-awesome.css',
-                        'http://fonts.googleapis.com/css?family=Open+Sans:400,700,800',
-                    ),
-                    'js'  => array(
-                    ),
-                );
-                /**
-                 * for footer
-                 * 
-                 */
-                $footer       = array(
-                    'css' => array(
-                    ),
-                    'js'  => array(
-                        'js/jquery.min.js',
-                        'js/jquery.ui.custom.js',
-                        'js/bootstrap.min.js',
-                        'js/matrix.js'
-                    ),
-                );
-                /**
-                 * footer extra
-                 */
-                $footer_extra = '';
-                return generate_link_script_tag($header, $footer, $footer_extra);
-        }
-
-        /**
-         * 
-         * @return array
-         *  @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         *  @author Lloric Garcia <emorickfighter@gmail.com>
          */
         private function bootstrap()
         {

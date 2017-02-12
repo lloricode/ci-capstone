@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Groups extends Admin_Controller
+class Groups extends CI_Capstone_Controller
 {
 
 

@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Edit_group extends Admin_Controller
+class Edit_group extends CI_Capstone_Controller
 {
 
         function __construct()
@@ -50,7 +50,7 @@ class Edit_group extends Admin_Controller
                                 {
                                         $this->session->set_flashdata('message', $this->ion_auth->errors());
                                 }
-                                redirect(base_url('admin/users'), 'refresh');
+                                redirect(base_url('users'), 'refresh');
                         }
                 }
 

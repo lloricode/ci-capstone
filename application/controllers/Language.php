@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Language extends Admin_Controller
+class Language extends CI_Capstone_Controller
 {
 
         function __construct()

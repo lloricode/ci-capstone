@@ -2,16 +2,19 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Create_education extends Admin_Controller {
+class Create_education extends CI_Capstone_Controller
+{
 
-        function __construct() {
+        function __construct()
+        {
                 parent::__construct();
                 $this->lang->load('ci_educations');
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
         }
 
-        public function index() {
+        public function index()
+        {
 
                 $this->form_validation->set_rules(array(
                     array(
@@ -26,14 +29,16 @@ class Create_education extends Admin_Controller {
                     )
                 ));
 
-                if ($this->form_validation->run()) {
+                if ($this->form_validation->run())
+                {
                         $education = array(
                             'education_code'        => $this->input->post('education_code', TRUE),
                             'education_description' => $this->input->post('education_description', TRUE),
-                            'created_user_id'             => $this->ion_auth->user()->row()->id
+                            'created_user_id'       => $this->ion_auth->user()->row()->id
                         );
                         $this->load->model('Education_model');
-                        if ($this->Education_model->insert($education)) {
+                        if ($this->Education_model->insert($education))
+                        {
                                 $this->session->set_flashdata('message', $this->config->item('message_start_delimiter', 'ion_auth') . lang('create_education_succesfully_added_message') . $this->config->item('message_end_delimiter', 'ion_auth'));
                                 redirect(current_url(), 'refresh');
                         }
@@ -54,12 +59,13 @@ class Create_education extends Admin_Controller {
                     'type'  => 'text',
                     'value' => $this->form_validation->set_value('education_description'),
                 );
-            
+
                 $this->data['bootstrap'] = $this->bootstrap();
                 $this->_render_admin_page('admin/create_education', $this->data);
         }
 
-        private function bootstrap() {
+        private function bootstrap()
+        {
                 /**
                  * for header
                  */

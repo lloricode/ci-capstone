@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Create_room extends Admin_Controller
+class Create_room extends CI_Capstone_Controller
 {
 
         private $data;

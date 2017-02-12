@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Deactivate extends Admin_Controller
+class Deactivate extends CI_Capstone_Controller
 {
 
         function __construct()
@@ -48,7 +48,7 @@ class Deactivate extends Admin_Controller
                         }
                         $this->session->set_flashdata('message', (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->ion_auth->messages())));
                         // redirect them back to the auth page
-                        redirect('admin/users', 'refresh');
+                        redirect('users', 'refresh');
                 }
         }
 

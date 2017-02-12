@@ -10,8 +10,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div class="row-fluid">
     <div id="footer" class="span12"> 
         <?php echo $this->config->item('current_year_footer'); ?> &copy;
-        <a href="<?php echo $this->config->item('project_title_link'); ?>"><?php echo $this->config->item('project_title'); ?></a>.
-        <a href="<?php echo $this->config->item('project_web_link'); ?>"><?php echo $this->config->item('project_web'); ?></a> 
+        <?php echo anchor($this->config->item('project_title_link'), $this->config->item('project_title')) ?>.
+        <?php echo anchor($this->config->item('project_web_link'), $this->config->item('project_web')) ?>
     </div>
 </div>
 
