@@ -14,6 +14,8 @@ class Create_student extends CI_Capstone_Controller
                 $this->lang->load('ci_students');
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span>');
+                $this->breadcrumbs->unshift(2, 'Students', 'students');
+                $this->breadcrumbs->unshift(3, 'Enroll Student', 'create-student');
         }
 
         public function index()
@@ -25,17 +27,17 @@ class Create_student extends CI_Capstone_Controller
                     array(
                         'label' => lang('index_student_firstname_th'),
                         'field' => 'student_firstname',
-                        'rules' => 'trim|required|human_name|min_length[3]|max_length[30]',
+                        'rules' => 'trim|required|human_name|min_length[1]|max_length[30]',
                     ),
                     array(
                         'label' => lang('index_student_middlename_th'),
                         'field' => 'student_middlename',
-                        'rules' => 'trim|required|human_name|min_length[3]|max_length[30]',
+                        'rules' => 'trim|required|human_name|min_length[1]|max_length[30]',
                     ),
                     array(
                         'label' => lang('index_student_lastname_th'),
                         'field' => 'student_lastname',
-                        'rules' => 'trim|required|human_name|min_length[2]|max_length[30]',
+                        'rules' => 'trim|required|human_name|min_length[1]|max_length[30]',
                     ),
                     array(
                         'label' => lang('index_student_school_id_th'),

@@ -10,6 +10,8 @@ class Create_user extends CI_Capstone_Controller
                 parent::__construct();
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
+                $this->breadcrumbs->unshift(2, 'Users', 'users');
+                $this->breadcrumbs->unshift(3, 'Create User', 'create-user');
         }
 
         public function index()
@@ -24,12 +26,12 @@ class Create_user extends CI_Capstone_Controller
                     array(
                         'label' => lang('create_user_validation_fname_label'),
                         'field' => 'first_name',
-                        'rules' => 'trim|required|human_name|min_length[3]|max_length[30]',
+                        'rules' => 'trim|required|human_name|min_length[1]|max_length[30]',
                     ),
                     array(
                         'label' => lang('create_user_validation_lname_label'),
                         'field' => 'last_name',
-                        'rules' => 'trim|required|human_name|min_length[3]|max_length[30]',
+                        'rules' => 'trim|required|human_name|min_length[1]|max_length[30]',
                     ),
                     array(
                         'label' => lang('create_user_validation_identity_label'),

@@ -218,7 +218,6 @@ class Edit_student extends CI_Capstone_Controller
                             'student_firstname'               => $this->input->post('student_firstname', TRUE),
                             'student_middlename'              => $this->input->post('student_middlename', TRUE),
                             'student_lastname'                => $this->input->post('student_lastname', TRUE),
-                            'student_school_id'               => $this->input->post('student_school_id', TRUE),
                             'student_gender'                  => $this->input->post('student_gender', TRUE),
                             'student_permanent_address'       => $this->input->post('student_permanent_address', TRUE),
                             'student_birthdate'               => $this->input->post('student_birthdate', TRUE),

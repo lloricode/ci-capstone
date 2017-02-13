@@ -10,6 +10,7 @@ class Edit_group extends CI_Capstone_Controller
                 parent::__construct();
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
+                $this->breadcrumbs->unshift(2, 'Groups', 'groups');
         }
 
         public function index($id = NULL)
@@ -21,6 +22,7 @@ class Edit_group extends CI_Capstone_Controller
                         show_error('Invalid request.');
                 }
 
+                $this->breadcrumbs->unshift(3, 'Edit Groups', 'edit-group?group-id=' . $id);
                 $this->data['title'] = $this->lang->line('edit_group_title');
 
                 $group = $this->ion_auth->group($id)->row();

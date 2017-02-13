@@ -9,6 +9,8 @@ class Create_subject extends CI_Capstone_Controller {
                 $this->lang->load('ci_subjects');
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
+                $this->breadcrumbs->unshift(2, 'Subjects', 'subjects');
+                $this->breadcrumbs->unshift(3, 'Create Subjects', 'create-subject');
         }
 
         public function index() {

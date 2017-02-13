@@ -10,6 +10,7 @@ class Edit_user extends CI_Capstone_Controller
                 parent::__construct();
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
+                $this->breadcrumbs->unshift(2, 'Users', 'users');
         }
 
         public function index()
@@ -21,6 +22,7 @@ class Edit_user extends CI_Capstone_Controller
                 }
 
                 $this->data['title'] = $this->lang->line('edit_user_heading');
+                $this->breadcrumbs->unshift(3, 'Edit User', 'edit-user?user-id=' . $user_id);
 
 
 

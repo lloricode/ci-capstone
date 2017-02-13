@@ -11,6 +11,8 @@ class Create_education extends CI_Capstone_Controller
                 $this->lang->load('ci_educations');
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
+                $this->breadcrumbs->unshift(2, 'Educations', 'educations');
+                $this->breadcrumbs->unshift(3, 'Create Education', 'create-education');
         }
 
         public function index()

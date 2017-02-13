@@ -18,6 +18,7 @@ class Rooms extends CI_Capstone_Controller
                  * pagination limit
                  */
                 $this->limit = 10;
+                $this->breadcrumbs->unshift(2, 'Rooms', 'rooms');
         }
 
         /**

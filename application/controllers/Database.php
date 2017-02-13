@@ -11,6 +11,8 @@ class Database extends CI_Capstone_Controller
                 $this->load->dbutil();
                 $this->lang->load('ci_db');
                 $this->config->load('admin/table');
+                $this->breadcrumbs->unshift(2, 'Settings', '#');
+                $this->breadcrumbs->unshift(3, 'Database', 'database');
         }
 
         public function index()

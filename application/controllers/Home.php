@@ -18,7 +18,7 @@ class Home extends CI_Capstone_Controller
          */
         public function index()
         {
-
+         
 
                 $this->data['active_users_count']           = $this->User_model->where(array(
                             'active' => TRUE

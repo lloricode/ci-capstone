@@ -97,6 +97,9 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
+                        <li><a href="<?php echo base_url('edit-user/?user-id=' . $this->ion_auth->user()->row()->id); ?>">
+                                <i class="icon-user"></i> Profile</a>
+                        </li>
                         <li><a href="<?php echo base_url('auth/logout'); ?>">
                                 <i class="icon-key"></i> Log Out</a>
                         </li>
@@ -112,8 +115,12 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
                     <ul class="dropdown-menu">
                         <?php foreach ($menu_settings as $k => $v): ?>  
                                 <li class="divider"></li>
-                                <li><a class="sAdd" title="" href="<?php echo base_url(HOME_REDIRECT . $k); ?>"><i class="icon-<?php echo $v['icon']; ?>"></i> <?php echo $v['label']; ?></a></li>
-
+                                <li>
+                                    <a class="sAdd" title="" href="<?php echo base_url(HOME_REDIRECT . $k); ?>">
+                                        <i class="icon-<?php echo $v['icon']; ?>"></i>
+                                        <?php echo $v['label']; ?>
+                                    </a>
+                                </li>
                         <?php endforeach; ?>
                     </ul>
                 </li>
@@ -166,66 +173,12 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
 
         <!--main-container-part-->
         <div id="content">
-            <!--breadcrumbs-->
+
             <div id="content-header">
-                <div id="breadcrumb"> 
-                    <a href="<?php echo base_url(HOME_REDIRECT); ?>" title="Go to Home" class="tip-bottom">
-                        <i class="icon-home"></i> Home
-                    </a> 
-                    <?php
-                    if (MENU_ITEM_DEFAULT != $menu_current)
-                    {
-                            echo '<a' .
-                            (
+                <?php echo $this->breadcrumbs->show();  ?>
 
-
-
-                            //-----------------start
-                            #if
-                            ($sub_label != '') ?
-                                    #then
-                                    '' :
-                                    #else
-
-                                    ' href="' . base_url(HOME_REDIRECT . $menu_current) . '"'
-
-
-                            //--------------end
-
-
-                            )
-                            .
-                            (
-                            //--------------start
-                            #if
-                            ($sub_label != '') ?
-                                    #then
-                                    '' :
-                                    #else
-                                    ' class="current"'
-
-                            //--------------end
-                            )
-                            . '>'
-                            . $label . '</a>' . (($sub_label != '') ? ' '
-                                    . '<a ' .
-                                    //-------start sub
-                                    (
-                                    ##if
-                                    ($active_link) ?
-                                            ##then
-                                            'href="' . base_url(HOME_REDIRECT . $menu_current) . '"'
-
-                                    ##else
-                                            : ''
-                                    )
-                                    //---------end sub
-                                    . ' class="current">'
-                                    . $sub_label
-                                    . '</a>' : '' );
-                    }
-                    ?> 
-                </div>
                 <?php echo(($sub_label != '') ? '<h1>' . $sub_label . '</h1>' : (MENU_ITEM_DEFAULT == $label) ? '<h1>' . $label . '</h1>' : '' ); ?>
             </div>
-            <!--End-breadcrumbs-->
+
+
+

@@ -12,6 +12,8 @@ class Language extends CI_Capstone_Controller
                 //loader all needed
                 $this->load->helper('combobox');
                 $this->load->library('form_validation');
+                $this->breadcrumbs->unshift(2, 'Settings', '#');
+                $this->breadcrumbs->unshift(3, 'Language', 'language');
         }
 
         public function index()

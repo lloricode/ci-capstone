@@ -11,6 +11,8 @@ class Create_course extends CI_Capstone_Controller
                 $this->lang->load('ci_courses');
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
+                $this->breadcrumbs->unshift(2, 'Courses', 'courses');
+                $this->breadcrumbs->unshift(3, 'Create Courses', 'create-course');
         }
 
         /**
@@ -44,7 +46,7 @@ class Create_course extends CI_Capstone_Controller
                         $course = array(
                             'course_code'        => $this->input->post('course_code', TRUE),
                             'course_description' => $this->input->post('course_description', TRUE),
-                            'education_id'        => $this->input->post('education_id', TRUE),
+                            'education_id'       => $this->input->post('education_id', TRUE),
                             'created_user_id'    => $this->ion_auth->user()->row()->id
                         );
                         $this->load->model('Course_model');
