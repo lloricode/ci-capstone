@@ -12,7 +12,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                 <div class="widget-content nopadding">
                     <?php
 //echo validation_errors();
-                    echo $message;
+                    echo '<div class="alert-success">' . $message . '</div>';
 
                     echo form_open(base_url("create-user/index"), array(
                         'class'      => 'form-horizontal',
@@ -154,11 +154,11 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
 
 
                     echo ' <div class="form-actions">';
-                    
+
                     echo form_reset('reset', 'Reset', array(
                         'class' => 'btn btn-default'
                     ));
-                    
+
                     echo form_submit('submit', lang('create_user_submit_btn'), array(
                         'class' => 'btn btn-success'
                     ));
