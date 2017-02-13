@@ -19,10 +19,31 @@ class Migration_Sample_data extends CI_Migration
         private $randnum;
         private $permission_ids;
         private $controller_ids;
+        //---
+        private $user_count;
+        private $student_count;
+        private $educaton_count;
+        private $subject_offer_count;
+        private $room_count;
+        private $subject_count;
 
         public function __construct($config = array())
         {
                 parent::__construct($config);
+
+                /**
+                 * set counts
+                 */
+                $this->user_count          = 80;
+                $this->student_count       = 80;
+                $this->educaton_count      = 11;
+                $this->subject_offer_count = 80;
+                $this->room_count          = 80;
+                $this->subject_count       = 80;
+
+                /**
+                 * loading needed files
+                 */
                 $this->load->helper(array('array', 'string', 'navigation'));
                 $this->load->model(array(
                     'Student_model',
@@ -53,7 +74,7 @@ class Migration_Sample_data extends CI_Migration
                 $this->subjects();
                 $this->rooms();
                 $this->subject_offer();
-                for ($i = 1; $i <= 90; $i++)
+                for ($i = 1; $i <= $this->student_count; $i++)
                 {
 
                         $this->school_id->initialize();
@@ -102,7 +123,7 @@ class Migration_Sample_data extends CI_Migration
 
         private function users()
         {
-                for ($i = 1; $i <= 80; $i++)
+                for ($i = 1; $i <= $this->user_count; $i++)
                 {
                         $identity = 'username' . $i;
                         $password = 'password';
@@ -181,7 +202,7 @@ class Migration_Sample_data extends CI_Migration
                 $subj_offr_arr = array();
 
 
-                for ($i = 1; $i <= 80; $i++)
+                for ($i = 1; $i <= $this->subject_offer_count; $i++)
                 {
                         $subj_offr_arr[] = array(
                             'subject_offer_start'     => 'starttest' . $i,
@@ -212,7 +233,7 @@ class Migration_Sample_data extends CI_Migration
 
                 $dplicate1 = 1;
                 $dplicate2 = 'A';
-                for ($i = 1; $i <= 80; $i++)
+                for ($i = 1; $i <= $this->room_count; $i++)
                 {
                         $room_arr[] = array(
                             'room_number'      => 'Room' . $dplicate1++,
@@ -230,7 +251,7 @@ class Migration_Sample_data extends CI_Migration
 
                 $dplicate1 = 1;
                 $dplicate2 = 'A';
-                for ($i = 1; $i <= 80; $i++)
+                for ($i = 1; $i <= $this->subject_count; $i++)
                 {
                         $subject_arr[] = array(
                             'subject_code'        => 'Subjcode' . $dplicate1++,
@@ -250,7 +271,7 @@ class Migration_Sample_data extends CI_Migration
 
                 $dplicate1 = 1;
                 $dplicate2 = 'A';
-                for ($i = 1; $i <= 7; $i++)
+                for ($i = 1; $i <= $this->educaton_count; $i++)
                 {
                         $education_arr[] = array(
                             'education_code'        => 'Educode' . $dplicate1++,
