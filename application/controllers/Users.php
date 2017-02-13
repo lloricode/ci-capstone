@@ -5,7 +5,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Users extends CI_Capstone_Controller
 {
 
-
         private $page_;
         private $limit;
 
@@ -76,8 +75,6 @@ class Users extends CI_Capstone_Controller
                                     array('data' => $active_label . nbs() . $active_, 'class' => 'taskStatus'),
                                     anchor("edit-user/?user-id=" . $user->id, 'Edit'),
                                 ));
-                                
-                                
                         }
                 }
                 /*
@@ -126,10 +123,12 @@ class Users extends CI_Capstone_Controller
                 $this->template['create_user_button'] = $this->_render_page('admin/_templates/button_view', array(
                     'href'         => 'create-user',
                     'button_label' => lang('create_user_heading'),
+                    'extra'        => array('class' => 'btn btn-success icon-edit'),
                         ), TRUE);
                 $this->template['export_user_button'] = $this->_render_page('admin/_templates/button_view', array(
                     'href'         => 'users/export-excel',
                     'button_label' => lang('excel_export'),
+                    'extra'        => array('class' => 'btn btn-info icon-download-alt')
                         ), TRUE);
                 $this->template['bootstrap']          = $this->bootstrap();
                 /**

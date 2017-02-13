@@ -41,6 +41,7 @@ class Database extends CI_Capstone_Controller
                 $this->template['backup_button'] = $this->_render_page('admin/_templates/button_view', array(
                     'href'         => 'database/backup-database',
                     'button_label' => lang('db_back_up'),
+                    'extra'        => array('class' => 'btn btn-info icon-tasks'),
                         ), TRUE);
                 $this->template['bootstrap']     = $this->bootstrap();
                 $this->_render_admin_page('admin/database', $this->template);
