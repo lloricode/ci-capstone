@@ -5,6 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Users extends CI_Capstone_Controller
 {
 
+
         private $page_;
         private $limit;
 
@@ -82,7 +83,6 @@ class Users extends CI_Capstone_Controller
                                         $tmp[] = anchor("edit-user/?user-id=" . $user->id, 'Edit');
                                 }
                                 array_push($table_data, $tmp);
-
                         }
                 }
                 //  echo print_r($table_data);
@@ -141,7 +141,7 @@ class Users extends CI_Capstone_Controller
                         $this->template['create_user_button'] = $this->_render_page('admin/_templates/button_view', array(
                             'href'         => 'create-user',
                             'button_label' => lang('create_user_heading'),
-                                'extra'        => array('class' => 'btn btn-success icon-edit'),
+                            'extra'        => array('class' => 'btn btn-success icon-edit'),
                                 ), TRUE);
                 }
                 if ($this->ion_auth->is_admin())
