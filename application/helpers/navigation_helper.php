@@ -79,6 +79,12 @@ if (!function_exists('navigations_main'))
                                 'desc'  => 'Add Student Description',
                                 'seen'  => TRUE,
                             ),
+                            'edit-student' =>
+                            array(
+                                'label' => 'Edit Student',
+                                'desc'  => 'Edit Student Description',
+                                'seen'  => FALSE,
+                            ),
                         ),
                     ),
                     //---------END STUDENT--------

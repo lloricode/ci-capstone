@@ -45,13 +45,13 @@ class Students extends CI_Capstone_Controller
                         foreach ($student_obj as $student)
                         {
                                 $view_ = anchor(base_url('students/view?student-id=' . $student->student_id), 'View');
-                                $edit_ = anchor(base_url('students/edit?student-id=' . $student->student_id), 'Edit');
+                                $edit_ = anchor(base_url('edit-student?student-id=' . $student->student_id), 'Edit');
 
                                 array_push($table_data, array(
                                     my_htmlspecialchars($student->student_school_id),
+                                    my_htmlspecialchars($student->student_lastname),
                                     my_htmlspecialchars($student->student_firstname),
                                     my_htmlspecialchars($student->student_middlename),
-                                    my_htmlspecialchars($student->student_lastname),
                                     $view_ . ' | ' . $edit_
                                 ));
                         }
@@ -63,9 +63,9 @@ class Students extends CI_Capstone_Controller
                  */
                 $header = array(
                     lang('index_student_school_id_th'),
+                    lang('index_student_lastname_th'),
                     lang('index_student_firstname_th'),
                     lang('index_student_middlename_th'),
-                    lang('index_student_lastname_th'),
                     'Options'
                 );
 

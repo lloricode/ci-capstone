@@ -93,7 +93,7 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
                 <li  class="dropdown" id="profile-messages" >
                     <a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle">
                         <i class="icon icon-user"></i>  
-                        <span class="text"><?php echo $this->session->userdata('user_last_name') . ', ' . $this->session->userdata('user_first_name'); ?></span>
+                        <span class="text"><?php echo $user_info; ?></span>
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">

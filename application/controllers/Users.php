@@ -64,35 +64,49 @@ class Users extends CI_Capstone_Controller
                                 {
                                         $groups .= anchor("edit-group/?group-id=" . $group->id, my_htmlspecialchars($group->name)) . ' | ';
                                 }
-                                $active_      = (($user->active) ? anchor("deactivate/?user-id=" . $user->id, 'set deactive') : anchor("users/activate/" . $user->id, 'set active'));
-                                $active_label = (($user->active) ? '<span class="done">' . lang('index_active_link') : '<span class="pending">' . lang('index_inactive_link')) . '</span>';
-                                array_push($table_data, array(
-                                    my_htmlspecialchars($user->first_name),
-                                    my_htmlspecialchars($user->last_name),
-                                    my_htmlspecialchars($user->username),
-                                    my_htmlspecialchars($user->email),
-                                    trim($groups, ' | '),
-                                    array('data' => $active_label . nbs() . $active_, 'class' => 'taskStatus'),
-                                    anchor("edit-user/?user-id=" . $user->id, 'Edit'),
-                                ));
+                                $tmp   = array();
+                                $tmp[] = my_htmlspecialchars($user->last_name);
+                                $tmp[] = my_htmlspecialchars($user->first_name);
+                                $tmp[] = my_htmlspecialchars($user->username);
+                                $tmp[] = my_htmlspecialchars($user->email);
+                                $tmp[] = trim($groups, ' | ');
+
+                                if (in_array('deactivate', permission_controllers()))
+                                {
+                                        $active_      = (($user->active) ? anchor("deactivate/?user-id=" . $user->id, 'set deactive') : anchor("users/activate/" . $user->id, 'set active'));
+                                        $active_label = (($user->active) ? '<span class="done">' . lang('index_active_link') : '<span class="pending">' . lang('index_inactive_link')) . '</span>';
+                                        $tmp[]        = array('data' => $active_label . nbs() . $active_, 'class' => 'taskStatus');
+                                }
+                                if (in_array('edit-user', permission_controllers()))
+                                {
+                                        $tmp[] = anchor("edit-user/?user-id=" . $user->id, 'Edit');
+                                }
+                                array_push($table_data, $tmp);
+
                         }
                 }
+                //  echo print_r($table_data);
                 /*
                  * preparing html table
                  */
                 /*
                  * header
                  */
-                $header = array(
-                    lang('index_fname_th'),
-                    lang('index_lname_th'),
-                    lang('index_username_th'),
-                    lang('index_email_th'),
-                    lang('index_groups_th'),
-                    lang('index_status_th'),
-                    lang('index_action_th'),
-                );
+                $header   = array();
+                $header[] = lang('index_lname_th');
+                $header[] = lang('index_fname_th');
+                $header[] = lang('index_username_th');
+                $header[] = lang('index_email_th');
+                $header[] = lang('index_groups_th');
 
+                if (in_array('deactivate', permission_controllers()))
+                {
+                        $header[] = lang('index_status_th');
+                }
+                if (in_array('edit-user', permission_controllers()))
+                {
+                        $header[] = lang('index_action_th');
+                }
                 /**
                  * table values
                  */
@@ -117,20 +131,29 @@ class Users extends CI_Capstone_Controller
                  * templates for users controller
                  */
                 // set the flash data error message if there is one
-                $this->template['message']            = $this->session->flashdata('message');
-                $this->template['table_data_users']   = $this->_render_page('admin/_templates/table', $this->data, TRUE);
-                $this->template['controller']         = 'table';
-                $this->template['create_user_button'] = $this->_render_page('admin/_templates/button_view', array(
-                    'href'         => 'create-user',
-                    'button_label' => lang('create_user_heading'),
-                    'extra'        => array('class' => 'btn btn-success icon-edit'),
-                        ), TRUE);
-                $this->template['export_user_button'] = $this->_render_page('admin/_templates/button_view', array(
-                    'href'         => 'users/export-excel',
-                    'button_label' => lang('excel_export'),
-                    'extra'        => array('class' => 'btn btn-info icon-download-alt')
-                        ), TRUE);
-                $this->template['bootstrap']          = $this->bootstrap();
+
+                $this->template['message']          = $this->session->flashdata('message');
+                $this->template['table_data_users'] = $this->_render_page('admin/_templates/table', $this->data, TRUE);
+                $this->template['controller']       = 'table';
+                if (in_array('create-user', permission_controllers()))
+                {
+
+                        $this->template['create_user_button'] = $this->_render_page('admin/_templates/button_view', array(
+                            'href'         => 'create-user',
+                            'button_label' => lang('create_user_heading'),
+                                'extra'        => array('class' => 'btn btn-success icon-edit'),
+                                ), TRUE);
+                }
+                if ($this->ion_auth->is_admin())
+                {
+                        $this->template['export_user_button'] = $this->_render_page('admin/_templates/button_view', array(
+                            'href'         => 'users/export-excel',
+                            'button_label' => lang('excel_export'),
+                            'extra'        => array('class' => 'btn btn-info icon-download-alt')
+                                ), TRUE);
+                }
+                $this->template['bootstrap'] = $this->bootstrap();
+
                 /**
                  * rendering users view
                  */

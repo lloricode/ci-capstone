@@ -89,6 +89,18 @@ class Edit_user extends CI_Capstone_Controller
                                 // check to see if we are updating the user
                                 if ($this->ion_auth->update($user->id, $data))
                                 {
+                                        /**
+                                         * refresh session data
+                                         * if edit from current user
+                                         */
+                                        $user_obj = $this->ion_auth->user()->row();
+                                        if ($user_obj->id == $user->id)
+                                        {
+                                                $this->session->set_userdata(array(
+                                                    'user_first_name' => $user_obj->first_name,
+                                                    'user_last_name'  => $user_obj->last_name
+                                                ));
+                                        }
                                         // redirect them back to the admin page if admin, or to the base url if non admin
                                         $this->session->set_flashdata('message', $this->ion_auth->messages());
                                         if ($this->ion_auth->is_admin())
