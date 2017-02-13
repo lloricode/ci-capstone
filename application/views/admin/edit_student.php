@@ -1,5 +1,5 @@
 <?php
-echo form_open_multipart(base_url("create-student/index"), array(
+echo form_open_multipart(base_url("edit-student?student-id=" . $this->student->id), array(
     'class' => 'form-horizontal'
         ), $student_school_id);
 ?>
@@ -14,6 +14,15 @@ echo form_open_multipart(base_url("create-student/index"), array(
                 <div class="widget-content nopadding">
                     <div class="form-horizontal">
                         <?php
+                        image_view(array(
+                            'src'    => $this->config->item('student_image_dir') . $this->student->image,
+                            'alt'    => $this->student->school_id . ' - ' . $this->student->fullname,
+                            //  'class'  => 'post_images',
+                            'width'  => '200',
+                           // 'height' => '200',
+                            'title'  => $this->student->school_id . ' - ' . $this->student->fullname,
+                                //'rel'    => 'lightbox'
+                        ));
                         //student_image:
                         echo input_bootstrap($student_image, 'create_student_image_label', 'file');
 
@@ -36,7 +45,7 @@ echo form_open_multipart(base_url("create-student/index"), array(
                             'id'    => 'inputError'
                         ));
                         echo '<div class="controls">';
-                        $set_vale_gender = set_value('student_gender');
+                        $set_vale_gender = $student_gender['value'];
                         $male            = FALSE;
                         $female          = FALSE;
                         if ($set_vale_gender == 'Male')
@@ -91,16 +100,16 @@ echo form_open_multipart(base_url("create-student/index"), array(
                         echo input_bootstrap($student_school_id_temp, 'create_student_school_id_label');
 
                         //course_id:                      
-                        echo input_dropdown_bootstrap('course_id', 'create_course_label', $course_id_value);
+                        echo input_dropdown_bootstrap('course_id', 'create_course_label', $course_id_value, $this->student->course_id);
 
                         //student_year_level:
-                        echo input_dropdown_bootstrap('enrollment_year_level', 'create_student_year_level_label', $enrollment_year_level_value);
+                        echo input_dropdown_bootstrap('enrollment_year_level', 'create_student_year_level_label', $enrollment_year_level_value, $this->student->level);
 
                         //course_id:                      
-                        echo input_dropdown_bootstrap('enrollment_school_year', 'create_student_school_year_label', $enrollment_school_year_value);
+                        echo input_dropdown_bootstrap('enrollment_school_year', 'create_student_school_year_label', $enrollment_school_year_value, $this->student->school_year);
 
                         //student_year_level:
-                        echo input_dropdown_bootstrap('enrollment_semester', 'create_student_semester_label', $enrollment_semester_value);
+                        echo input_dropdown_bootstrap('enrollment_semester', 'create_student_semester_label', $enrollment_semester_value, $this->student->semester);
                         ?>
                     </div>
                 </div>

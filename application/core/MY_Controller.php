@@ -85,7 +85,10 @@ class CI_Capstone_Controller extends MY_Controller
                 {
                         return NULL;
                 }
-
+                $data['user_info']           = $this->session->userdata('user_last_name') .
+                        ', ' .
+                        $this->session->userdata('user_first_name') .
+                        ' [' . $this->current_gruop_string() . ']';
                 $data['navigations']         = navigations_main();
                 $data['setting_vavigations'] = navigations_setting();
 
@@ -94,6 +97,16 @@ class CI_Capstone_Controller extends MY_Controller
                 $this->template['footer']  = $this->_render_page('admin/_templates/footer', $data, TRUE);
 
                 $this->_render_page('template', $this->template);
+        }
+
+        private function current_gruop_string()
+        {
+                $return = '';
+                foreach ($this->ion_auth->get_users_groups()->result() as $g)
+                {
+                        $return .= $g->name . '|';
+                }
+                return trim($return, '|');
         }
 
         /**

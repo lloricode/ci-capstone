@@ -32,7 +32,7 @@ class Student extends CI_capstone
         public $school_id;
         public $fullname;
         public $firstname;
-        public $middle;
+        public $middlename;
         public $lastname;
         public $image;
         public $gender;
@@ -52,11 +52,15 @@ class Student extends CI_capstone
         public $guardian_email;
 
         #school_info
+        public $education_id;
         public $education_code;
         public $education_description;
+        public $course_id;
         public $course_code;
         public $course_description;
         public $level;
+        public $school_year;
+        public $semester;
 
         public function __construct()
         {
@@ -95,7 +99,7 @@ class Student extends CI_capstone
                 $this->school_id             = $this->student->student_school_id;
                 $this->fullname              = $this->student->student_lastname . ', ' . $this->student->student_firstname . ' ' . $this->student->student_middlename;
                 $this->firstname             = $this->student->student_firstname;
-                $this->middle                = $this->student->student_middlename;
+                $this->middlename            = $this->student->student_middlename;
                 $this->lastname              = $this->student->student_lastname;
                 $this->image                 = $this->student->student_image;
                 $this->gender                = $this->student->student_gender;
@@ -113,11 +117,15 @@ class Student extends CI_capstone
                 $this->guardian_contact      = $this->student->student_guardian_contact_number;
                 $this->guardian_email        = $this->student->student_guardian_email;
                 #######
+                $this->education_id          = $this->education->education_id;
                 $this->education_code        = $this->education->education_code;
                 $this->education_description = $this->education->education_description;
+                $this->course_id             = $this->course->course_id;
                 $this->course_code           = $this->course->course_code;
                 $this->course_description    = $this->course->course_description;
                 $this->level                 = (int) $this->enrollment->enrollment_year_level;
+                $this->school_year           = $this->enrollment->enrollment_school_year;
+                $this->semester              = $this->enrollment->enrollment_semester;
         }
 
         /**

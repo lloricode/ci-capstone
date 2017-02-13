@@ -18,7 +18,7 @@ class Permissions extends CI_Capstone_Controller
                  */
                 if (!$this->ion_auth->is_admin())
                 {
-                        show_404();
+                        show_error('Permission denied of current user group.');
                 }
 
                 //  $this->lang->load('ci_courses');
