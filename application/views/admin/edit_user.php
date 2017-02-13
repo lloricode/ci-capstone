@@ -12,7 +12,8 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                 <div class="widget-content nopadding">
                     <?php
 //echo validation_errors();
-                    echo $message;
+                    echo '<div class="alert-success">'.$message.'</div>';                   
+                    
 
                     echo form_open(base_url('edit-user/?user-id=' . $user->id), array(
                         'class'      => 'form-horizontal',

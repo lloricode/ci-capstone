@@ -22,6 +22,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 echo $bootstrap['footer'];
 echo $bootstrap['footer_extra'];
+echo script_tag(base_url('assets/custom_js/flashdata_fade.js'));
 ?>
+
+
 </body>
 </html>
