@@ -35,7 +35,10 @@ class Users extends CI_Capstone_Controller
         {
 
                 //list the users
-                $users_obj = $this->User_model->limit($this->limit, $this->limit * $this->page_ - $this->limit)->get_all();
+                $users_obj = $this->User_model->
+                        limit($this->limit, $this->limit * $this->page_ - $this->limit)->
+                        order_by('created_on','DESC') ->
+                        get_all();
 
 
                 /**
