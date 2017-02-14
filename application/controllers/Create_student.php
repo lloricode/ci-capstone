@@ -5,6 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Create_student extends CI_Capstone_Controller
 {
 
+
         private $data;
 
         function __construct()
@@ -109,16 +110,6 @@ class Create_student extends CI_Capstone_Controller
                         'field' => 'student_guardian_contact_number',
                         'rules' => 'trim|min_length[8]|max_length[100]',
                     ),
-                    array(
-                        'label' => lang('index_student_personal_email_th'),
-                        'field' => 'student_personal_email',
-                        'rules' => 'trim|max_length[50]|valid_email|is_unique[students.student_personal_email]',
-                    ),
-                    array(
-                        'label' => lang('index_student_guardian_email_th'),
-                        'field' => 'student_guardian_email',
-                        'rules' => 'trim|max_length[50]|valid_email|is_unique[students.student_guardian_email]',
-                    ),
                     //--------
                     array(
                         'label' => lang('index_student_year_level_th'),
@@ -134,6 +125,21 @@ class Create_student extends CI_Capstone_Controller
                         'field' => 'enrollment_semester',
                         'rules' => 'trim|required',
                     ),
+                    //-----email
+                    array(
+                        'label' => lang('index_student_personal_email_th'),
+                        'field' => 'student_personal_email',
+                        'rules' => 'trim|max_length[50]|valid_email' .
+                        (('' != $this->input->post('student_personal_email', TRUE)) ?
+                                '|is_unique[students.student_personal_email]' : ''),
+                    ),
+                    array(
+                        'label' => lang('index_student_guardian_email_th'),
+                        'field' => 'student_guardian_email',
+                        'rules' => 'trim|max_length[50]|valid_email' .
+                        (('' != $this->input->post('student_guardian_email', TRUE)) ?
+                                '|is_unique[students.student_guardian_email]' : ''),
+                    )
                 ));
 
 
@@ -240,6 +246,16 @@ class Create_student extends CI_Capstone_Controller
                             'created_user_id'                 => $this->ion_auth->user()->row()->id,
                         );
 
+                        /**
+                         * remove elemen if no data
+                         */
+                        foreach ($student__ as $k => $v)
+                        {
+                                if ($v == '')
+                                {
+                                        unset($student__[$k]);
+                                }
+                        }
                         $this->load->model(array('Student_model', 'Enrollment_model'));
 
                         /**

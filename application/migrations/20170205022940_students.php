@@ -93,40 +93,40 @@ class Migration_Students extends CI_Migration
                     self::CI_DB_TABLE_COL . 'address_town'            => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '250',
-                        'null'       => FALSE
+                        'null'       => TRUE
                     ),
                     self::CI_DB_TABLE_COL . 'address_region'          => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '250',
-                        'null'       => FALSE
+                        'null'       => TRUE
                     ),
                     self::CI_DB_TABLE_COL . 'guardian_address'        => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '50',
-                        'null'       => FALSE
+                        'null'       => TRUE
                     ),
                     #number/emails
                     #######################
                     self::CI_DB_TABLE_COL . 'personal_contact_number' => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '50',
-                        'null'       => FALSE
+                        'null'       => TRUE
                     ),
                     self::CI_DB_TABLE_COL . 'guardian_contact_number' => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '50',
-                        'null'       => FALSE
+                        'null'       => TRUE
                     ),
                     self::CI_DB_TABLE_COL . 'personal_email'          => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '50',
-                        'null'       => FALSE,
+                        'null'       => TRUE,
                         'unique'     => TRUE,
                     ),
                     self::CI_DB_TABLE_COL . 'guardian_email'          => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '50',
-                        'null'       => FALSE,
+                        'null'       => TRUE,
                         'unique'     => TRUE,
                     ),
                     /**
