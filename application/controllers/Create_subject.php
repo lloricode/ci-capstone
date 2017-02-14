@@ -2,9 +2,11 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Create_subject extends CI_Capstone_Controller {
+class Create_subject extends CI_Capstone_Controller
+{
 
-        function __construct() {
+        function __construct()
+        {
                 parent::__construct();
                 $this->lang->load('ci_subjects');
                 $this->load->library('form_validation');
@@ -13,8 +15,12 @@ class Create_subject extends CI_Capstone_Controller {
                 $this->breadcrumbs->unshift(3, 'Create Subjects', 'create-subject');
         }
 
-        public function index() {
-
+        public function index()
+        {
+                /**
+                 * @Contributor: Jinkee Po <pojinkee1@gmail.com>
+                 *         
+                 */
                 $this->form_validation->set_rules(array(
                     array(
                         'label' => lang('create_subject_code_label'),
@@ -33,16 +39,18 @@ class Create_subject extends CI_Capstone_Controller {
                     )
                 ));
 
-                if ($this->form_validation->run()) {
+                if ($this->form_validation->run())
+                {
                         $subject = array(
                             'subject_code'        => $this->input->post('subject_code', TRUE),
                             'subject_description' => $this->input->post('subject_description', TRUE),
                             'subject_unit'        => $this->input->post('subject_unit', TRUE),
                             'course_id'           => $this->input->post('course_id', TRUE),
-                            'created_user_id'             => $this->ion_auth->user()->row()->id
+                            'created_user_id'     => $this->ion_auth->user()->row()->id
                         );
                         $this->load->model('Subject_model');
-                        if ($this->Subject_model->insert($subject)) {
+                        if ($this->Subject_model->insert($subject))
+                        {
                                 $this->session->set_flashdata('message', $this->config->item('message_start_delimiter', 'ion_auth') . lang('create_subject_succesfully_added_message') . $this->config->item('message_end_delimiter', 'ion_auth'));
                                 redirect(base_url('subjects'), 'refresh');
                                 
@@ -73,12 +81,13 @@ class Create_subject extends CI_Capstone_Controller {
                     'type'  => 'text',
                     'value' => $this->form_validation->set_value('subject_unit'),
                 );
-            
+
                 $this->data['bootstrap'] = $this->bootstrap();
                 $this->_render_admin_page('admin/create_subject', $this->data);
         }
 
-        private function bootstrap() {
+        private function bootstrap()
+        {
                 /**
                  * for header
                  */

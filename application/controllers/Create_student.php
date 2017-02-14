@@ -360,7 +360,6 @@ class Create_student extends CI_Capstone_Controller
                     'name'             => 'student_birthdate',
                     'data-date-format' => 'mm-dd-yyyy',
                     'class'            => 'datepicker',
-                    //  'data-date'        => "01-02-2013",
                     'value'            => $this->form_validation->set_value('student_birthdate'),
                 );
 

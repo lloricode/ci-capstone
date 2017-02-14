@@ -34,12 +34,12 @@ class Migration_Sample_data extends CI_Migration
                 /**
                  * set counts
                  */
-                $this->user_count          = 80;
-                $this->student_count       = 80;
+                $this->user_count          = 10;
+                $this->student_count       = 10;
                 $this->educaton_count      = 11;
-                $this->subject_offer_count = 80;
-                $this->room_count          = 80;
-                $this->subject_count       = 80;
+                $this->subject_offer_count = 10;
+                $this->room_count          = 10;
+                $this->subject_count       = 10;
 
                 /**
                  * loading needed files

@@ -5,7 +5,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Students extends CI_Capstone_Controller
 {
 
-
         private $page_;
         private $limit;
 
@@ -22,9 +21,6 @@ class Students extends CI_Capstone_Controller
                 $this->breadcrumbs->unshift(2, 'Students', 'students');
         }
 
-        /**
-         * @author Jinkee Po <pojinkee1@gmail.com>
-         */
         public function index()
         {
 
