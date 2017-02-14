@@ -22,12 +22,12 @@ class Create_education extends CI_Capstone_Controller
                     array(
                         'label' => lang('create_education_code_label'),
                         'field' => 'education_code',
-                        'rules' => 'trim|required|is_unique[educations.education_code]|min_length[3]|max_length[20]',
+                        'rules' => 'trim|required|is_unique[educations.education_code]|min_length[2]|max_length[20]',
                     ),
                     array(
                         'label' => lang('create_education_description_label'),
                         'field' => 'education_description',
-                        'rules' => 'trim|required|human_name|min_length[3]|max_length[50]',
+                        'rules' => 'trim|required|human_name|min_length[2]|max_length[50]',
                     )
                 ));
 

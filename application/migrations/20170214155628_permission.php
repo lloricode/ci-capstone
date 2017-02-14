@@ -20,7 +20,7 @@ class Migration_Permission extends CI_Migration
         {
                 $this->down();
                 $fields = array(
-                    'permission_id'  => array(
+                    'permission_id'   => array(
                         'type'           => 'MEDIUMINT',
                         'constraint'     => 8,
                         'unsigned'       => TRUE,
@@ -53,7 +53,7 @@ class Migration_Permission extends CI_Migration
                         'constraint' => '100',
                         'null'       => TRUE
                     ),
-                    'delete_user_id'  => array(
+                    'deleted_user_id' => array(
                         'type'       => 'INT',
                         'constraint' => '11',
                         'null'       => TRUE
@@ -63,7 +63,7 @@ class Migration_Permission extends CI_Migration
                         'constraint' => '100',
                         'null'       => TRUE
                     ),
-                    'update_user_id'  => array(
+                    'updated_user_id' => array(
                         'type'       => 'INT',
                         'constraint' => '11',
                         'null'       => TRUE

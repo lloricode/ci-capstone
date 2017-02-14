@@ -35,7 +35,11 @@ class Students extends CI_Capstone_Controller
                 $this->page_ = get_page_in_url();
 
                 //list students
-                $student_obj = $this->Student_model->limit($this->limit, $this->limit * $this->page_ - $this->limit)->get_all();
+                $student_obj = $this->Student_model->
+                        limit($this->limit, $this->limit * $this->page_ - $this->limit)->
+                        order_by('created_at','DESC')->
+                        order_by('updated_at','DESC')->
+                        get_all();
 
 
                 $table_data = array();
@@ -159,7 +163,7 @@ class Students extends CI_Capstone_Controller
                         /**
                          * no data so, i colspan the row in 4 with data "no data"
                          */
-                        $this->table->add_row(array('data' => 'no data', 'colspan' => '4'));
+                        $this->table->add_row(array('data' => 'no data', 'colspan' => '7'));
                 }
 
                 /**

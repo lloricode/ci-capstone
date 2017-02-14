@@ -88,37 +88,37 @@ class Create_student extends CI_Capstone_Controller
                     array(
                         'label' => lang('index_student_town_th'),
                         'field' => 'student_address_town',
-                        'rules' => 'trim|required|min_length[3]|max_length[30]',
+                        'rules' => 'trim|min_length[3]|max_length[30]',
                     ),
                     array(
                         'label' => lang('index_student_region_th'),
                         'field' => 'student_address_region',
-                        'rules' => 'trim|required|min_length[8]|max_length[100]',
+                        'rules' => 'trim|min_length[8]|max_length[100]',
                     ),
                     array(
                         'label' => lang('index_student_guardian_address_th'),
                         'field' => 'student_guardian_address',
-                        'rules' => 'trim|required|min_length[8]|max_length[100]',
+                        'rules' => 'trim|min_length[8]|max_length[100]',
                     ),
                     array(
                         'label' => lang('index_student_personal_contact_th'),
                         'field' => 'student_personal_contact_number',
-                        'rules' => 'trim|required|min_length[8]|max_length[100]',
+                        'rules' => 'trim|min_length[8]|max_length[100]',
                     ),
                     array(
                         'label' => lang('index_student_guardian_contact_th'),
                         'field' => 'student_guardian_contact_number',
-                        'rules' => 'trim|required|min_length[8]|max_length[100]',
+                        'rules' => 'trim|min_length[8]|max_length[100]',
                     ),
                     array(
                         'label' => lang('index_student_personal_email_th'),
                         'field' => 'student_personal_email',
-                        'rules' => 'trim|required|max_length[50]|valid_email|is_unique[students.student_personal_email]',
+                        'rules' => 'trim|max_length[50]|valid_email|is_unique[students.student_personal_email]',
                     ),
                     array(
                         'label' => lang('index_student_guardian_email_th'),
                         'field' => 'student_guardian_email',
-                        'rules' => 'trim|required|max_length[50]|valid_email|is_unique[students.student_guardian_email]',
+                        'rules' => 'trim|max_length[50]|valid_email|is_unique[students.student_guardian_email]',
                     ),
                     //--------
                     array(

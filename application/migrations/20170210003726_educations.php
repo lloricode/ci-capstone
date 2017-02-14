@@ -55,7 +55,7 @@ class Migration_Educations extends CI_Migration
                         'constraint' => '100',
                         'null'       => TRUE
                     ),
-                    'delete_user_id'        => array(
+                    'deleted_user_id'       => array(
                         'type'       => 'INT',
                         'constraint' => '11',
                         'null'       => TRUE
@@ -65,7 +65,7 @@ class Migration_Educations extends CI_Migration
                         'constraint' => '100',
                         'null'       => TRUE
                     ),
-                    'update_user_id'        => array(
+                    'updated_user_id'       => array(
                         'type'       => 'INT',
                         'constraint' => '11',
                         'null'       => TRUE

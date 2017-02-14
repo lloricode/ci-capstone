@@ -27,12 +27,12 @@ class Create_course extends CI_Capstone_Controller
                     array(
                         'label' => lang('create_course_code_label'),
                         'field' => 'course_code',
-                        'rules' => 'trim|required|human_name|min_length[3]|max_length[50]',
+                        'rules' => 'trim|required|human_name|min_length[2]|max_length[50]',
                     ),
                     array(
                         'label' => lang('create_course_description_label'),
                         'field' => 'course_description',
-                        'rules' => 'trim|required|human_name|min_length[3]|max_length[50]',
+                        'rules' => 'trim|required|human_name|min_length[2]|max_length[50]',
                     ),
                     array(
                         'label' => lang('index_course_education_th'),

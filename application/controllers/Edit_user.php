@@ -22,7 +22,6 @@ class Edit_user extends CI_Capstone_Controller
                 }
 
                 $this->data['title'] = $this->lang->line('edit_user_heading');
-                $this->breadcrumbs->unshift(3, 'Edit User', 'edit-user?user-id=' . $user_id);
 
 
 
@@ -32,6 +31,9 @@ class Edit_user extends CI_Capstone_Controller
                 {
                         show_error('Invalid request.');
                 }
+
+                $this->breadcrumbs->unshift(3, 'Edit User [ ' . $user->last_name . ', ' . $user->first_name . ' ]', 'edit-user?user-id=' . $user_id);
+
                 $groups        = $this->ion_auth->groups()->result_array();
                 $currentGroups = $this->ion_auth->get_users_groups($user_id)->result();
 
