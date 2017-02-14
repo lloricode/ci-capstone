@@ -13,6 +13,10 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     <?php
 //echo validation_errors();
                     echo $message;
+                    /**
+                     * @Contributor: Jinkee Po <pojinkee1@gmail.com>
+                     *         
+                     */
 
                     echo form_open(base_url('create-education'), array(
                         'class'      => 'form-horizontal',

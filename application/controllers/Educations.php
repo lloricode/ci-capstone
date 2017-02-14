@@ -2,17 +2,22 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Educations extends CI_Capstone_Controller {
+class Educations extends CI_Capstone_Controller
+{
 
         private $page_;
         private $limit;
 
-        function __construct() {
+        function __construct()
+        {
                 parent::__construct();
                 $this->lang->load('ci_educations');
                 $this->load->model('Education_model');
                 $this->load->library('pagination');
-
+                /**
+                 * @Contributor: Jinkee Po <pojinkee1@gmail.com>
+                 *         
+                 */
                 /**
                  * pagination limit
                  */
@@ -25,7 +30,8 @@ class Educations extends CI_Capstone_Controller {
                 $this->page_ = get_page_in_url();
         }
 
-        public function index() {
+        public function index()
+        {
 
 
                 $education_obj = $this->Education_model->limit($this->limit, $this->limit * $this->page_ - $this->limit)->get_all();
@@ -33,9 +39,11 @@ class Educations extends CI_Capstone_Controller {
 
                 $table_data = array();
 
-                if ($education_obj) {
+                if ($education_obj)
+                {
 
-                        foreach ($education_obj as $education) {
+                        foreach ($education_obj as $education)
+                        {
 
                                 array_push($table_data, array(
                                     my_htmlspecialchars($education->education_code),
@@ -89,7 +97,8 @@ class Educations extends CI_Capstone_Controller {
          * @return array
          *  @author Lloric Garcia <emorickfighter@gmail.com>
          */
-        private function bootstrap() {
+        private function bootstrap()
+        {
                 /**
                  * for header
                  * 

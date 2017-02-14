@@ -2,70 +2,93 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-/**
- * @Contributor: Jinkee Po <pojinkee1@gmail.com>
- *         
- */
-class Create_education extends CI_Capstone_Controller
+class Create_subject_offer extends CI_Capstone_Controller
 {
 
         function __construct()
         {
                 parent::__construct();
-                $this->lang->load('ci_educations');
+                $this->lang->load('ci_subject_offers');
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
         }
 
+        /**
+         * @Contributor: Jinkee Po <pojinkee1@gmail.com>
+         *         
+         */
         public function index()
         {
 
                 $this->form_validation->set_rules(array(
                     array(
-                        'label' => lang('create_education_code_label'),
-                        'field' => 'education_code',
-                        'rules' => 'trim|required|is_unique[educations.education_code]|min_length[3]|max_length[20]',
+                        'label' => lang('create_subject_offer_start_label'),
+                        'field' => 'subject_offer_start',
+                        'rules' => 'trim|required',
                     ),
                     array(
-                        'label' => lang('create_education_description_label'),
-                        'field' => 'education_description',
-                        'rules' => 'trim|required|human_name|min_length[3]|max_length[50]',
-                    )
+                        'label' => lang('create_subject_offer_end_label'),
+                        'field' => 'subject_offer_end',
+                        'rules' => 'trim|required',
+                    ),
+                    array(
+                        'label' => lang('create_user_id_label'),
+                        'field' => 'user_id',
+                        'rules' => 'trim|required|is_natural_no_zero',
+                    ),
+                    array(
+                        'label' => lang('create_subject_id_label'),
+                        'field' => 'subject_id',
+                        'rules' => 'trim|required|is_natural_no_zero',
+                    ),
+                    array(
+                        'label' => lang('create_room_id_label'),
+                        'field' => 'room_id',
+                        'rules' => 'trim|required|is_natural_no_zero',
+                    ),
                 ));
 
                 if ($this->form_validation->run())
                 {
-                        $education = array(
-                            'education_code'        => $this->input->post('education_code', TRUE),
-                            'education_description' => $this->input->post('education_description', TRUE),
-                            'created_user_id'       => $this->ion_auth->user()->row()->id
+                        $subject_offer = array(
+                            'subject_offer_start' => $this->input->post('subject_offer_start', TRUE),
+                            'subject_offer_end'   => $this->input->post('subject_offer_end', TRUE),
+                            'user_id'             => $this->input->post('user_id', TRUE),
+                            'subject_id'          => $this->input->post('subject_id', TRUE),
+                            'room_id'             => $this->input->post('room_id', TRUE),
+                            'created_user_id'     => $this->ion_auth->user()->row()->id
                         );
-                        $this->load->model('Education_model');
-                        if ($this->Education_model->insert($education))
+                        $this->load->model('Subject_offer_model');
+                        if ($this->Subject_offer_model->insert($subject_offer))
                         {
-                                $this->session->set_flashdata('message', $this->config->item('message_start_delimiter', 'ion_auth') . lang('create_education_succesfully_added_message') . $this->config->item('message_end_delimiter', 'ion_auth'));
+                                $this->session->set_flashdata('message', $this->config->item('message_start_delimiter', 'ion_auth') . lang('create_subject_offer_succesfully_added_message') . $this->config->item('message_end_delimiter', 'ion_auth'));
                                 redirect(current_url(), 'refresh');
                         }
                 }
 
+                $this->load->model(array('User_model', 'Subject_model', 'Room_model'));
+                $this->load->helper('combobox');
                 $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
+                $this->data['subject_offer_start'] = array(
+                    'name'        => 'subject_offer_start',
+                    'time_format' => 'mm-dd-yyyy',
+                    'class'       => 'datepicker',
+                    'value'       => $this->form_validation->set_value('subject_offer_start'),
+                );
+                $this->data['subject_offer_end']   = array(
+                    'name'             => 'subject_offer_end',
+                    'data-date-format' => 'mm-dd-yyyy',
+                    'class'            => 'datepicker',
+                    'value'            => $this->form_validation->set_value('subject_offer_end'),
+                );
+                $this->data['user_id_value']       = $this->User_model->as_dropdown('username')->get_all();
+                $this->data['subject_id_value']    = $this->Subject_model->as_dropdown('subject_code')->get_all();
+                $this->data['room_id_value']       = $this->Room_model->as_dropdown('room_number')->get_all();
 
-                $this->data['education_code']        = array(
-                    'name'  => 'education_code',
-                    'id'    => 'education_code',
-                    'type'  => 'text',
-                    'value' => $this->form_validation->set_value('education_code'),
-                );
-                $this->data['education_description'] = array(
-                    'name'  => 'education_description',
-                    'id'    => 'education_description',
-                    'type'  => 'text',
-                    'value' => $this->form_validation->set_value('education_description'),
-                );
 
                 $this->data['bootstrap'] = $this->bootstrap();
-                $this->_render_admin_page('admin/create_education', $this->data);
+                $this->_render_admin_page('admin/create_subject_offer', $this->data);
         }
 
         private function bootstrap()

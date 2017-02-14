@@ -12,6 +12,10 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                 <div class="widget-content nopadding">
                     <?php
 //echo validation_errors();
+                    /**
+                     * @Contributor: Jinkee Po <pojinkee1@gmail.com>
+                     *         
+                     */
                     echo $message;
 
                     echo form_open(base_url('create-subject'), array(
@@ -66,7 +70,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     echo form_error('subject_unit');
                     echo '</div></div> ';
 
-        
+
 
                     echo ' <div class="form-actions">';
 
