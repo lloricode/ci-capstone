@@ -8,7 +8,6 @@
                 <div class="widget-content nopadding">
                     <div class="form-horizontal">
                         <?php
-                        echo $message;
                         echo form_open(base_url('create-room'), array(
                             'class' => 'form-horizontal'));
                         //room_number:

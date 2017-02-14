@@ -77,6 +77,8 @@ class Rooms extends CI_Capstone_Controller
                  */
                 $this->template['table_data_groups'] = $this->_render_page('admin/_templates/table', $this->data, TRUE);
                 $this->template['controller']        = 'table';
+                $this->template['message']           = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+
 
                 $this->template['bootstrap'] = $this->bootstrap();
                 /**

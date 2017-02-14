@@ -2,12 +2,14 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Educations extends CI_Capstone_Controller {
+class Educations extends CI_Capstone_Controller
+{
 
         private $page_;
         private $limit;
 
-        function __construct() {
+        function __construct()
+        {
                 parent::__construct();
                 $this->lang->load('ci_educations');
                 $this->load->model('Education_model');
@@ -26,7 +28,8 @@ class Educations extends CI_Capstone_Controller {
                 $this->breadcrumbs->unshift(2, 'Educations', 'educations');
         }
 
-        public function index() {
+        public function index()
+        {
 
 
                 $education_obj = $this->Education_model->limit($this->limit, $this->limit * $this->page_ - $this->limit)->get_all();
@@ -34,9 +37,11 @@ class Educations extends CI_Capstone_Controller {
 
                 $table_data = array();
 
-                if ($education_obj) {
+                if ($education_obj)
+                {
 
-                        foreach ($education_obj as $education) {
+                        foreach ($education_obj as $education)
+                        {
 
                                 array_push($table_data, array(
                                     my_htmlspecialchars($education->education_code),
@@ -77,6 +82,7 @@ class Educations extends CI_Capstone_Controller {
                  */
                 $this->template['table_data_groups'] = $this->_render_page('admin/_templates/table', $this->data, TRUE);
                 $this->template['controller']        = 'table';
+                $this->template['message']           = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
                 $this->template['bootstrap'] = $this->bootstrap();
                 /**
@@ -90,7 +96,8 @@ class Educations extends CI_Capstone_Controller {
          * @return array
          *  @author Lloric Garcia <emorickfighter@gmail.com>
          */
-        private function bootstrap() {
+        private function bootstrap()
+        {
                 /**
                  * for header
                  * 

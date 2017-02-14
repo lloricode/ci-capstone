@@ -5,7 +5,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Create_student extends CI_Capstone_Controller
 {
 
-
         private $data;
 
         function __construct()
@@ -268,11 +267,10 @@ class Create_student extends CI_Capstone_Controller
                                      */
                                     'created_user_id'        => $this->ion_auth->user()->row()->id,
                                 );
-                                
+
                                 /**
                                  * get education by course id
                                  */
-                                
                                 /**
                                  * on success will redirect in current page, to clear input
                                  * 

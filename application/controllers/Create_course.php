@@ -53,7 +53,7 @@ class Create_course extends CI_Capstone_Controller
                         if ($this->Course_model->insert($course))
                         {
                                 $this->session->set_flashdata('message', $this->config->item('message_start_delimiter', 'ion_auth') . lang('create_course_succesfully_added_message') . $this->config->item('message_end_delimiter', 'ion_auth'));
-                                redirect(current_url(), 'refresh');
+                                redirect(base_url('courses'), 'refresh');
                         }
                 }
                 $this->load->model('Education_model');
