@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('Direct Script is not allowed');
 /**
- * Author: Jink Po
+ * Author: Jinkee Po
  *         pojinkee1@gmail.com
  *         @shikai06
  */

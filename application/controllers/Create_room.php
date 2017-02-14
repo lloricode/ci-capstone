@@ -20,7 +20,8 @@ class Create_room extends CI_Capstone_Controller
         public function index()
         {
                 /**
-                 * validation rules
+                 * @Contributor: Jinkee Po <pojinkee1@gmail.com>
+                 *         
                  */
                 $this->form_validation->set_rules(array(
                     array(

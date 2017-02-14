@@ -14,7 +14,10 @@ class Educations extends CI_Capstone_Controller
                 $this->lang->load('ci_educations');
                 $this->load->model('Education_model');
                 $this->load->library('pagination');
-
+                /**
+                 * @Contributor: Jinkee Po <pojinkee1@gmail.com>
+                 *         
+                 */
                 /**
                  * pagination limit
                  */

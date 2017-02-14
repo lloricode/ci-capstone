@@ -158,6 +158,7 @@ if (!function_exists('navigations_main'))
                     ),
                     //--------END EDUCATION----------
                     //
+                    //
                     //--------START ROOM--------
                     'room_menu'      =>
                     array(
@@ -182,22 +183,22 @@ if (!function_exists('navigations_main'))
                     //--------END ROOM----------
                     //sub menu
                     //--------START SCHEDULE------
-                    'schedule_menu'  =>
+                    'subject_offer_menu'  =>
                     array(
-                        'label' => 'Schedules',
+                        'label' => 'Subject Offers',
                         'icon'  => 'calendar',
                         'sub'   =>
                         array(
-                            'schedules'       =>
+                            'subject-offers'       =>
                             array(
-                                'label' => 'Schedule',
-                                'desc'  => 'Schedule Description',
+                                'label' => 'Subject Offer',
+                                'desc'  => 'Subject Offer Description',
                                 'seen'  => TRUE,
                             ),
-                            'create-schedule' =>
+                            'create-subject-offer' =>
                             array(
-                                'label' => 'Create Schedule',
-                                'desc'  => 'Create Schedules Description',
+                                'label' => 'Create Subject Offer',
+                                'desc'  => 'Create Subject Offer Description',
                                 'seen'  => TRUE,
                             ),
                         ),
