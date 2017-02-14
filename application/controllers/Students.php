@@ -5,6 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Students extends CI_Capstone_Controller
 {
 
+
         private $page_;
         private $limit;
 
@@ -33,8 +34,8 @@ class Students extends CI_Capstone_Controller
                 //list students
                 $student_obj = $this->Student_model->
                         limit($this->limit, $this->limit * $this->page_ - $this->limit)->
-                        order_by('created_at','DESC')->
-                        order_by('updated_at','DESC')->
+                        order_by('created_at', 'DESC')->
+                        order_by('updated_at', 'DESC')->
                         get_all();
 
 
@@ -141,7 +142,7 @@ class Students extends CI_Capstone_Controller
 
 
 
-                $student_subjects_obj = $this->student->subject_offers();
+                $student_subjects_obj = $this->student->subject_offers($this->limit, $this->limit * $page - $this->limit);
                 if ($student_subjects_obj)
                 {
                         /**
@@ -170,7 +171,7 @@ class Students extends CI_Capstone_Controller
                 /**
                  * generating html pagination
                  */
-                $this->data['table_subjects_pagination'] = $this->pagination->generate_link('/admin/students/view?student-id=' . $this->student->id, $this->student->subject_total() / $this->limit, TRUE);
+                $this->data['table_subjects_pagination'] = $this->pagination->generate_link('students/view?student-id=' . $this->student->id, $this->student->subject_total() / $this->limit, TRUE);
 
 
                 /**

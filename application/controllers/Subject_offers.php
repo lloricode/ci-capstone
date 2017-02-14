@@ -31,7 +31,9 @@ class Subject_offers extends CI_Capstone_Controller
                  */
                 $this->page_       = get_page_in_url();
                 //list students
-                $subject_offer_obj = $this->Subject_offer_model->limit($this->limit, $this->limit * $this->page_ - $this->limit)->get_all();
+                $subject_offer_obj = $this->Subject_offer_model->
+                        limit($this->limit, $this->limit * $this->page_ - $this->limit)->
+                        get_all();
 
                 $table_data = array();
 

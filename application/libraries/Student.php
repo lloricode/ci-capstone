@@ -94,7 +94,6 @@ class Student extends CI_capstone
                  */
                 $this->load_enrollment();
                 $this->_load_education();
-                $this->_load_student_subjects();
 
                 $this->id                    = $this->student->student_id;
                 $this->school_id             = $this->student->student_school_id;
@@ -145,17 +144,25 @@ class Student extends CI_capstone
          * room_description   
          * faculty_id
          * faculty
+         * 
+         * @param int $limit
+         * @param int $offset
          * @return object
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        public function subject_offers()
+        public function subject_offers($limit, $offset)
         {
+                $s_o_           = $this->suject_offers_($limit, $offset);
                 $subject_offers = array();
-                if ($this->student_subjects)
+                if ($s_o_)
                 {
-                        foreach ($this->student_subjects as $stud_sub)
+                        foreach ($s_o_ as $stud_sub)
                         {
-                                $sub_of           = $this->CI->Subject_offer_model->with_faculty()->with_room()->with_subject()->get(array(
+                                $sub_of           = $this->CI->Subject_offer_model->
+                                        with_faculty()->
+                                        with_room()->
+                                        with_subject()->
+                                        get(array(
                                     'subject_offer_id' => $stud_sub->subject_offer_id
                                 ));
                                 $subject_offers[] = (object) array(
@@ -302,7 +309,6 @@ class CI_capstone
         protected $enrollment;
         protected $course;
         protected $education;
-        protected $student_subjects;
 
         public function __construct()
         {
@@ -344,11 +350,14 @@ class CI_capstone
                 ));
         }
 
-        protected function _load_student_subjects()
+        protected function suject_offers_($limit, $offset)
         {
-                $this->student_subjects = $this->CI->Students_subjects_model->where(array(
-                            'enrollment_id' => $this->enrollment->enrollment_id
-                        ))->as_object()->get_all();
+                return $this->CI->Students_subjects_model->
+                                where(array(
+                                    'enrollment_id' => $this->enrollment->enrollment_id
+                                ))->
+                                as_object()->
+                                limit($limit, $offset)->get_all();
         }
 
 }

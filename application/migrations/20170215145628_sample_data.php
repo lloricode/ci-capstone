@@ -26,6 +26,7 @@ class Migration_Sample_data extends CI_Migration
         private $subject_offer_count;
         private $room_count;
         private $subject_count;
+        private $courses_count;
 
         public function __construct($config = array())
         {
@@ -34,12 +35,13 @@ class Migration_Sample_data extends CI_Migration
                 /**
                  * set counts
                  */
-                $this->user_count          = 10;
-                $this->student_count       = 10;
-                $this->educaton_count      = 11;
-                $this->subject_offer_count = 10;
-                $this->room_count          = 10;
-                $this->subject_count       = 10;
+                $this->user_count          = 100;
+                $this->student_count       = 100;
+                $this->educaton_count      = 100;
+                $this->subject_offer_count = 100;
+                $this->room_count          = 100;
+                $this->subject_count       = 100;
+                $this->courses_count       = 100;
 
                 /**
                  * loading needed files
@@ -148,10 +150,7 @@ class Migration_Sample_data extends CI_Migration
         {
                 $students_subjects_model_arr = array();
 
-                /**
-                 * lets make random enroll subject in all student with dynamically subject count
-                 */
-                $how_many_subject = array(2, 4, 6, 8, 23, 34, 56);
+
 
                 /**
                  * add subject all enroll ids
@@ -159,10 +158,14 @@ class Migration_Sample_data extends CI_Migration
                 foreach ($this->enrollment_ids as $e_id)
                 {
                         /**
+                         * lets make random enroll subject in all student with dynamically subject count
+                         */
+                        $how_many_subject = random_string('numeric', 2);
+                        /**
                          * select subject offer first with how many
                          */
                         $subjects_ofr_ids = array();
-                        for ($i = 1; $i <= random_element($how_many_subject); $i++)
+                        for ($i = 1; $i <= $how_many_subject; $i++)
                         {
                                 $s_offr = random_element($this->subject_offer_ids);
                                 if (!in_array($s_offr, $subjects_ofr_ids))
@@ -287,7 +290,7 @@ class Migration_Sample_data extends CI_Migration
                 $course_arr = array();
                 $dplicate1  = 1;
                 $dplicate2  = 'A';
-                for ($i = 1; $i <= 15; $i++)
+                for ($i = 1; $i <= $this->courses_count; $i++)
                 {
                         $course_arr[] = array(
                             'course_code'        => 'Coursecode' . $dplicate1++,
@@ -392,7 +395,7 @@ class Migration_Sample_data extends CI_Migration
                             'student_id'             => $returned_student_id,
                             'course_id'              => random_element($this->course_ids),
                             'enrollment_school_year' => random_element(array('2015-2017', '2016-2017', '2017-2018')),
-                            'enrollment_semester'    => random_element(array('First', 'Second', 'Summer')),
+                            'enrollment_semester'    => random_element(array('first', 'second', 'summer')),
                             'enrollment_year_level'  => random_element(array(1, 2, 3, 4)),
                             'enrollment_status'      => random_element(array(TRUE, FALSE)),
                             /**

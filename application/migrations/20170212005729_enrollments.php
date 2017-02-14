@@ -30,7 +30,8 @@ class Migration_Enrollments extends CI_Migration
                     'student_id'             => array(
                         'type'       => 'TINYINT',
                         'constraint' => '11',
-                        'null'       => FALSE
+                        'null'       => FALSE,
+                        'unique'     => TRUE,
                     ),
                     'course_id'              => array(
                         'type'       => 'TINYINT',
@@ -43,9 +44,8 @@ class Migration_Enrollments extends CI_Migration
                         'null'       => FALSE
                     ),
                     'enrollment_semester'    => array(
-                        'type'       => 'VARCHAR',
-                        'constraint' => '5',
-                        'null'       => FALSE
+                        'type' => 'ENUM("first","second","summer")',
+                        'null' => FALSE
                     ),
                     'enrollment_year_level'  => array(
                         'type'       => 'TINYINT',
