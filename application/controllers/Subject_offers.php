@@ -5,6 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Subject_offers extends CI_Capstone_Controller
 {
 
+
         private $page_;
         private $limit;
 
@@ -12,12 +13,14 @@ class Subject_offers extends CI_Capstone_Controller
         {
                 parent::__construct();
                 $this->lang->load('ci_subject_offers');
-                $this->load->model(array('Subject_offer_model'));
+                $this->load->model(array('Subject_offer_model', 'User_model', 'Subject_model', 'Room_model'));
                 $this->load->library('pagination');
                 /**
                  * pagination limit
                  */
                 $this->limit = 10;
+                $this->breadcrumbs->unshift(2, 'Subject Offers', 'subject-offers');
+                $this->load->helper('day');
         }
 
         /**
@@ -45,9 +48,10 @@ class Subject_offers extends CI_Capstone_Controller
                                 array_push($table_data, array(
                                     my_htmlspecialchars($subject_offer->subject_offer_start),
                                     my_htmlspecialchars($subject_offer->subject_offer_end),
-                                    my_htmlspecialchars($subject_offer->user_id),
-                                    my_htmlspecialchars($subject_offer->subject_id),
-                                    my_htmlspecialchars($subject_offer->room_id),
+                                    my_htmlspecialchars(subject_offers_days($subject_offer)),
+                                    my_htmlspecialchars($this->User_model->get($subject_offer->user_id)->first_name),
+                                    my_htmlspecialchars($this->Subject_model->get($subject_offer->subject_id)->subject_code),
+                                    my_htmlspecialchars($this->Room_model->get($subject_offer->room_id)->room_number),
                                 ));
                         }
                 }
@@ -57,6 +61,7 @@ class Subject_offers extends CI_Capstone_Controller
                 $header                   = array(
                     lang('index_subject_offer_start_th'),
                     lang('index_subject_offer_end_th'),
+                    lang('index_subject_offer_days_th'),
                     lang('index_user_id_th'),
                     lang('index_subject_id_th'),
                     lang('index_room_id_th'),
@@ -69,7 +74,7 @@ class Subject_offers extends CI_Capstone_Controller
                 /**
                  * pagination
                  */
-                $this->data['pagination'] = $this->pagination->generate_link('subject_offers/index', $this->Subject_offer_model->count_rows() / $this->limit);
+                $this->data['pagination'] = $this->pagination->generate_link('subject-offers/index', $this->Subject_offer_model->count_rows() / $this->limit);
 
                 /**
                  * caption of table

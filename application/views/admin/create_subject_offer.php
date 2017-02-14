@@ -32,92 +32,10 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     ?>
                     <div class="control-group">
                         <div class="controls">
-                            <table>
-                                <tr>
-                                    <td>
-                                        <label>
-                                            Monday
-                                        </label>
-                                    </td>
-                                    <td>
-                                        <label>
-                                            <input type="checkbox" name="monday" value="1"/>
-                                        </label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <label>
-                                            Tuesday
-                                        </label>
-                                    </td>
-                                    <td>
-                                        <label>
-                                            <input type="checkbox" name="tuesday" value="1"/>
-                                        </label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <label>
-                                            Wednesday
-                                        </label>
-                                    </td>
-                                    <td>
-                                        <label>
-                                            <input type="checkbox" name="wednesday" value="1"/>
-                                        </label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <label>
-                                            Thursday
-                                        </label>
-                                    </td>
-                                    <td>
-                                        <label>
-                                            <input type="checkbox" name="thursday" value="1"/>
-                                        </label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <label>
-                                            Friday
-                                        </label>
-                                    </td>
-                                    <td>
-                                        <label>
-                                            <input type="checkbox" name="friday" value="1"/>
-                                        </label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <label>
-                                            Saturday
-                                        </label>
-                                    </td>
-                                    <td>
-                                        <label>
-                                            <input type="checkbox" name="saturday" value="1"/>
-                                        </label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <label>
-                                            Sunday
-                                        </label>
-                                    </td>
-                                    <td>
-                                        <label>
-                                            <input type="checkbox" name="sunday" value="1"/>
-                                        </label>
-                                    </td>
-                                </tr>
-                            </table>
+                            <?php foreach ($days as $d): ?>
+                                    <?php $this->table->add_row(form_label(ucfirst($d), 'subject_offer_' . $d), form_label(form_checkbox('subject_offer_' . $d, $d, set_checkbox('subject_offer_' . $d, set_value('subject_offer_' . $d))), 'subject_offer_' . $d)); ?>
+                            <?php endforeach; ?>
+                            <?php echo $this->table->generate(); ?>
                         </div>
                     </div>
 

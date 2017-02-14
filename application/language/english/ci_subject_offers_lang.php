@@ -20,6 +20,7 @@ $lang['create_subject_offer_succesfully_added_message'] = 'Subject Offer Succesf
 $lang['index_subject_offer_heading']  = 'Subject Offers';
 $lang['index_subject_offer_start_th'] = 'Subject Offers Start';
 $lang['index_subject_offer_end_th']   = 'Subject Offers End';
+$lang['index_subject_offer_days_th']  = 'Days';
 $lang['index_user_id_th']             = 'Instructor';
 $lang['index_subject_id_th']          = 'Subject';
 $lang['index_room_id_th']             = 'Room';

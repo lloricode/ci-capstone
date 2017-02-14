@@ -41,43 +41,43 @@ class Migration_Subject_offers extends CI_Migration
                     'subject_offer_monday'    => array(
                         'type'       => 'TINYINT',
                         'constraint' => '1',
-                        'default'    => FALSE,
+                        'default'    => '0',
                         'null'       => FALSE
                     ),
                     'subject_offer_tuesday'   => array(
                         'type'       => 'TINYINT',
                         'constraint' => '1',
-                        'default'    => FALSE,
+                        'default'    => '0',
                         'null'       => FALSE
                     ),
                     'subject_offer_wednesday' => array(
                         'type'       => 'TINYINT',
                         'constraint' => '1',
-                        'default'    => FALSE,
+                        'default'    => '0',
                         'null'       => FALSE
                     ),
                     'subject_offer_thursday'  => array(
                         'type'       => 'TINYINT',
                         'constraint' => '1',
-                        'default'    => FALSE,
+                        'default'    => '0',
                         'null'       => FALSE
                     ),
                     'subject_offer_friday'    => array(
                         'type'       => 'TINYINT',
                         'constraint' => '1',
-                        'default'    => FALSE,
+                        'default'    => '0',
                         'null'       => FALSE
                     ),
                     'subject_offer_saturday'  => array(
                         'type'       => 'TINYINT',
                         'constraint' => '1',
-                        'default'    => FALSE,
+                        'default'    => '0',
                         'null'       => FALSE
                     ),
                     'subject_offer_sunday'    => array(
                         'type'       => 'TINYINT',
                         'constraint' => '1',
-                        'default'    => FALSE,
+                        'default'    => '0',
                         'null'       => FALSE
                     ),
                     /**

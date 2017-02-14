@@ -154,7 +154,7 @@ echo form_open_multipart(base_url("create-student/index"), array(
                             <label class="control-label">Old</label>
                             <div class="controls">
                                 <label>
-                                    <input type="checkbox" name="radios" />
+                                    <?php echo form_checkbox('newsletter', 'accept', TRUE); ?>
                                     First One</label>
                                 <label>
                                     <input type="checkbox" name="radios" />

@@ -11,6 +11,12 @@ class Create_subject_offer extends CI_Capstone_Controller
                 $this->lang->load('ci_subject_offers');
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
+                $this->breadcrumbs->unshift(2, 'Subject Offers', 'subject-offers');
+                $this->breadcrumbs->unshift(3, 'Create Subject Offers', 'create-subject-offer');
+                /**
+                 * for check box, in days
+                 */
+                $this->load->library('table');
         }
 
         /**
@@ -47,17 +53,38 @@ class Create_subject_offer extends CI_Capstone_Controller
                         'rules' => 'trim|required|is_natural_no_zero',
                     ),
                 ));
-
+                $days = array(
+                    'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'
+                );
                 if ($this->form_validation->run())
                 {
                         $subject_offer = array(
+                            /**
+                             * time
+                             */
                             'subject_offer_start' => $this->input->post('subject_offer_start', TRUE),
                             'subject_offer_end'   => $this->input->post('subject_offer_end', TRUE),
+                            /**
+                             * foreign
+                             */
                             'user_id'             => $this->input->post('user_id', TRUE),
                             'subject_id'          => $this->input->post('subject_id', TRUE),
                             'room_id'             => $this->input->post('room_id', TRUE),
+                            /**
+                             * 
+                             */
                             'created_user_id'     => $this->ion_auth->user()->row()->id
                         );
+                        $days          = array(
+                            'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'
+                        );
+                        /**
+                         * get input from check box, days
+                         */
+                        foreach ($days as $d)
+                        {
+                                $subject_offer['subject_offer_' . $d] = ($this->input->post('subject_offer_' . $d, TRUE) == $d) ? TRUE : FALSE;
+                        }
                         $this->load->model('Subject_offer_model');
                         if ($this->Subject_offer_model->insert($subject_offer))
                         {
@@ -87,6 +114,11 @@ class Create_subject_offer extends CI_Capstone_Controller
                 $this->data['room_id_value']     = $this->Room_model->as_dropdown('room_number')->get_all();
 
 
+                /**
+                 * for check box
+                 */
+                $this->data['days']      = $days;
+                
                 $this->data['bootstrap'] = $this->bootstrap();
                 $this->_render_admin_page('admin/create_subject_offer', $this->data);
         }
