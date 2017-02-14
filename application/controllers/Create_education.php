@@ -42,7 +42,7 @@ class Create_education extends CI_Capstone_Controller
                         if ($this->Education_model->insert($education))
                         {
                                 $this->session->set_flashdata('message', $this->config->item('message_start_delimiter', 'ion_auth') . lang('create_education_succesfully_added_message') . $this->config->item('message_end_delimiter', 'ion_auth'));
-                                redirect(current_url(), 'refresh');
+                                redirect(base_url('educations'), 'refresh');
                         }
                 }
 
