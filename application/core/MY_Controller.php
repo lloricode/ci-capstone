@@ -69,6 +69,8 @@ class CI_Capstone_Controller extends MY_Controller
                 {
                         show_404();
                 }
+
+                $this->breadcrumbs->unshift(1, 'Home', 'home');
         }
 
         /**

@@ -126,7 +126,7 @@ class Auth extends MY_Controller
 
                                 //redirect them back to the home page
                                 $this->session->set_flashdata('message', $this->ion_auth->messages());
-                                redirect('home', 'refresh');
+                                redirect('', 'refresh');
                         }
                         else
                         {

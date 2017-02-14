@@ -27,6 +27,7 @@ class Users extends CI_Capstone_Controller
                  * if has not, default $page will is 1
                  */
                 $this->page_ = get_page_in_url();
+                $this->breadcrumbs->unshift(2, 'Users', 'users');
         }
 
         /**
@@ -38,7 +39,7 @@ class Users extends CI_Capstone_Controller
                 //list the users
                 $users_obj = $this->User_model->
                         limit($this->limit, $this->limit * $this->page_ - $this->limit)->
-                        order_by('created_on','DESC') ->
+                        order_by('created_on', 'DESC')->
                         get_all();
 
 
@@ -160,6 +161,9 @@ class Users extends CI_Capstone_Controller
                 /**
                  * rendering users view
                  */
+                ;
+
+
                 $this->_render_admin_page('admin/users', $this->template);
         }
 

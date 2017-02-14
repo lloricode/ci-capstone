@@ -20,31 +20,51 @@ class Migration_Language extends CI_Migration
         {
                 $this->down();
                 $fields = array(
-                    'language_id'    => array(
+                    'language_id'     => array(
                         'type'           => 'MEDIUMINT',
                         'constraint'     => 8,
                         'unsigned'       => TRUE,
                         'null'           => FALSE,
                         'auto_increment' => TRUE
                     ),
-                    'user_id'        => array(
+                    'user_id'         => array(
                         'type'       => 'INT',
                         'constraint' => '11',
                     ),
-                    'language_value' => array(
+                    'language_value'  => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '10',
-                    ), 'created_at'     => array(
-                        'type'       => 'VARCHAR',
-                        'constraint' => '100',
                     ),
-                    'deleted_at'     => array(
+                    //------------------------------------
+                    'created_at'      => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
+                        'null'       => FALSE
                     ),
-                    'updated_at'     => array(
+                    'created_user_id' => array(
+                        'type'       => 'INT',
+                        'constraint' => '11',
+                        'null'       => FALSE
+                    ),
+                    'deleted_at'      => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
+                        'null'       => TRUE
+                    ),
+                    'deleted_user_id' => array(
+                        'type'       => 'INT',
+                        'constraint' => '11',
+                        'null'       => TRUE
+                    ),
+                    'updated_at'      => array(
+                        'type'       => 'VARCHAR',
+                        'constraint' => '100',
+                        'null'       => TRUE
+                    ),
+                    'updated_user_id' => array(
+                        'type'       => 'INT',
+                        'constraint' => '11',
+                        'null'       => TRUE
                     ),
                 );
 

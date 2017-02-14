@@ -13,6 +13,8 @@ class Create_room extends CI_Capstone_Controller
                 $this->lang->load('ci_rooms');
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span>');
+                $this->breadcrumbs->unshift(2, 'Rooms', 'rooms');
+                $this->breadcrumbs->unshift(3, 'Create Room', 'create-room');
         }
 
         public function index()
@@ -48,7 +50,7 @@ class Create_room extends CI_Capstone_Controller
                         if ($this->Room_model->insert($room))
                         {
                                 $this->session->set_flashdata('message', $this->config->item('message_start_delimiter', 'ion_auth') . lang('create_room_succesfully_added_message') . $this->config->item('message_end_delimiter', 'ion_auth'));
-                                redirect(current_url(), 'refresh');
+                                redirect(base_url('rooms'), 'refresh');
                         }
                 }
 

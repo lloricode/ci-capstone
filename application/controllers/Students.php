@@ -18,6 +18,7 @@ class Students extends CI_Capstone_Controller
                  * pagination limit
                  */
                 $this->limit = 10;
+                $this->breadcrumbs->unshift(2, 'Students', 'students');
         }
 
         public function index()
@@ -30,7 +31,11 @@ class Students extends CI_Capstone_Controller
                 $this->page_ = get_page_in_url();
 
                 //list students
-                $student_obj = $this->Student_model->limit($this->limit, $this->limit * $this->page_ - $this->limit)->get_all();
+                $student_obj = $this->Student_model->
+                        limit($this->limit, $this->limit * $this->page_ - $this->limit)->
+                        order_by('created_at','DESC')->
+                        order_by('updated_at','DESC')->
+                        get_all();
 
 
                 $table_data = array();
@@ -109,6 +114,7 @@ class Students extends CI_Capstone_Controller
                  * check url with id,tehn get studewnt row
                  */
                 $this->student->get($this->input->get('student-id'));
+                $this->breadcrumbs->unshift(3, 'View Student', 'students/view?student-id=' . $this->student->id);
                 /**
                  * setting up page for pagination
                  */
@@ -153,7 +159,7 @@ class Students extends CI_Capstone_Controller
                         /**
                          * no data so, i colspan the row in 4 with data "no data"
                          */
-                        $this->table->add_row(array('data' => 'no data', 'colspan' => '4'));
+                        $this->table->add_row(array('data' => 'no data', 'colspan' => '7'));
                 }
 
                 /**

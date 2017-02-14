@@ -8,7 +8,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
  */
 //Subject Form
 $lang['create_education_heading']                   = 'Add Subject';
-$lang['create_education_code_label']                = 'Subject Code:';
+$lang['create_education_code_label']                = 'Education Code:';
 $lang['create_education_description_label']         = 'Description:';
 $lang['create_education_submit_button_label']       = 'Add Education';
 $lang['create_education_succesfully_added_message'] = 'Education Succesfully Added!!';

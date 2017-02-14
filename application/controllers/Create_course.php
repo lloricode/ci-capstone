@@ -11,6 +11,8 @@ class Create_course extends CI_Capstone_Controller
                 $this->lang->load('ci_courses');
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
+                $this->breadcrumbs->unshift(2, 'Courses', 'courses');
+                $this->breadcrumbs->unshift(3, 'Create Courses', 'create-course');
         }
 
         /**
@@ -25,12 +27,12 @@ class Create_course extends CI_Capstone_Controller
                     array(
                         'label' => lang('create_course_code_label'),
                         'field' => 'course_code',
-                        'rules' => 'trim|required|human_name|min_length[3]|max_length[50]',
+                        'rules' => 'trim|required|human_name|min_length[2]|max_length[50]',
                     ),
                     array(
                         'label' => lang('create_course_description_label'),
                         'field' => 'course_description',
-                        'rules' => 'trim|required|human_name|min_length[3]|max_length[50]',
+                        'rules' => 'trim|required|human_name|min_length[2]|max_length[50]',
                     ),
                     array(
                         'label' => lang('index_course_education_th'),
@@ -44,14 +46,14 @@ class Create_course extends CI_Capstone_Controller
                         $course = array(
                             'course_code'        => $this->input->post('course_code', TRUE),
                             'course_description' => $this->input->post('course_description', TRUE),
-                            'education_id'        => $this->input->post('education_id', TRUE),
+                            'education_id'       => $this->input->post('education_id', TRUE),
                             'created_user_id'    => $this->ion_auth->user()->row()->id
                         );
                         $this->load->model('Course_model');
                         if ($this->Course_model->insert($course))
                         {
                                 $this->session->set_flashdata('message', $this->config->item('message_start_delimiter', 'ion_auth') . lang('create_course_succesfully_added_message') . $this->config->item('message_end_delimiter', 'ion_auth'));
-                                redirect(current_url(), 'refresh');
+                                redirect(base_url('courses'), 'refresh');
                         }
                 }
                 $this->load->model('Education_model');

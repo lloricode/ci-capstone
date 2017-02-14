@@ -37,6 +37,8 @@ class Log extends CI_Capstone_Controller
                  * if has not, default $page will is 1
                  */
                 $this->page_ = get_page_in_url();
+                $this->breadcrumbs->unshift(2, 'Settings', '#');
+                $this->breadcrumbs->unshift(3, 'Error Logs', 'log');
         }
 
         /**

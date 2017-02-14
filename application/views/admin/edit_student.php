@@ -14,13 +14,14 @@ echo form_open_multipart(base_url("edit-student?student-id=" . $this->student->i
                 <div class="widget-content nopadding">
                     <div class="form-horizontal">
                         <?php
+                        // echo validation_errors();
                         image_view(array(
-                            'src'    => $this->config->item('student_image_dir') . $this->student->image,
-                            'alt'    => $this->student->school_id . ' - ' . $this->student->fullname,
+                            'src'   => $this->config->item('student_image_dir') . $this->student->image,
+                            'alt'   => $this->student->school_id . ' - ' . $this->student->fullname,
                             //  'class'  => 'post_images',
-                            'width'  => '200',
-                           // 'height' => '200',
-                            'title'  => $this->student->school_id . ' - ' . $this->student->fullname,
+                            'width' => '200',
+                            // 'height' => '200',
+                            'title' => $this->student->school_id . ' - ' . $this->student->fullname,
                                 //'rel'    => 'lightbox'
                         ));
                         //student_image:

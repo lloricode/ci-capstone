@@ -61,6 +61,7 @@ class Student extends CI_capstone
         public $level;
         public $school_year;
         public $semester;
+        public $enrollment_id;
 
         public function __construct()
         {
@@ -126,6 +127,7 @@ class Student extends CI_capstone
                 $this->level                 = (int) $this->enrollment->enrollment_year_level;
                 $this->school_year           = $this->enrollment->enrollment_school_year;
                 $this->semester              = $this->enrollment->enrollment_semester;
+                $this->enrollment_id         = $this->enrollment->enrollment_id;
         }
 
         /**

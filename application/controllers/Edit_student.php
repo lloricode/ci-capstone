@@ -11,6 +11,7 @@ class Edit_student extends CI_Capstone_Controller
                 $this->lang->load('ci_students');
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span>');
+                $this->breadcrumbs->unshift(2, 'Students', 'students');
         }
 
         public function index($id = NULL)
@@ -18,7 +19,7 @@ class Edit_student extends CI_Capstone_Controller
 
                 $this->load->library('student');
                 $this->student->get($id = $this->input->get('student-id'));
-
+                $this->breadcrumbs->unshift(3, 'Edit Student [ ' . $this->student->school_id . ' ]', 'edit-student?student-id=' . $this->student->id);
                 /**
                  * setting up rules validations
                  */
@@ -26,22 +27,17 @@ class Edit_student extends CI_Capstone_Controller
                     array(
                         'label' => lang('index_student_firstname_th'),
                         'field' => 'student_firstname',
-                        'rules' => 'trim|required|human_name|min_length[3]|max_length[30]',
+                        'rules' => 'trim|required|human_name|min_length[1]|max_length[30]',
                     ),
                     array(
                         'label' => lang('index_student_middlename_th'),
                         'field' => 'student_middlename',
-                        'rules' => 'trim|required|human_name|min_length[3]|max_length[30]',
+                        'rules' => 'trim|required|human_name|min_length[1]|max_length[30]',
                     ),
                     array(
                         'label' => lang('index_student_lastname_th'),
                         'field' => 'student_lastname',
-                        'rules' => 'trim|required|human_name|min_length[2]|max_length[30]',
-                    ),
-                    array(
-                        'label' => lang('index_student_school_id_th'),
-                        'field' => 'student_school_id',
-                        'rules' => 'trim|required|exact_length[9]|is_unique[students.student_school_id]|school_id',
+                        'rules' => 'trim|required|human_name|min_length[1]|max_length[30]',
                     ),
                     array(
                         'label' => lang('index_student_gender_th'),
@@ -87,37 +83,27 @@ class Edit_student extends CI_Capstone_Controller
                     array(
                         'label' => lang('index_student_town_th'),
                         'field' => 'student_address_town',
-                        'rules' => 'trim|required|min_length[3]|max_length[30]',
+                        'rules' => 'trim|min_length[3]|max_length[30]',
                     ),
                     array(
                         'label' => lang('index_student_region_th'),
                         'field' => 'student_address_region',
-                        'rules' => 'trim|required|min_length[8]|max_length[100]',
+                        'rules' => 'trim|min_length[8]|max_length[100]',
                     ),
                     array(
                         'label' => lang('index_student_guardian_address_th'),
                         'field' => 'student_guardian_address',
-                        'rules' => 'trim|required|min_length[8]|max_length[100]',
+                        'rules' => 'trim|min_length[8]|max_length[100]',
                     ),
                     array(
                         'label' => lang('index_student_personal_contact_th'),
                         'field' => 'student_personal_contact_number',
-                        'rules' => 'trim|required|min_length[8]|max_length[100]',
+                        'rules' => 'trim|min_length[8]|max_length[100]',
                     ),
                     array(
                         'label' => lang('index_student_guardian_contact_th'),
                         'field' => 'student_guardian_contact_number',
-                        'rules' => 'trim|required|min_length[8]|max_length[100]',
-                    ),
-                    array(
-                        'label' => lang('index_student_personal_email_th'),
-                        'field' => 'student_personal_email',
-                        'rules' => 'trim|required|max_length[50]|valid_email|is_unique[students.student_personal_email]',
-                    ),
-                    array(
-                        'label' => lang('index_student_guardian_email_th'),
-                        'field' => 'student_guardian_email',
-                        'rules' => 'trim|required|max_length[50]|valid_email|is_unique[students.student_guardian_email]',
+                        'rules' => 'trim|min_length[8]|max_length[100]',
                     ),
                     //--------
                     array(
@@ -134,6 +120,21 @@ class Edit_student extends CI_Capstone_Controller
                         'field' => 'enrollment_semester',
                         'rules' => 'trim|required',
                     ),
+                    //-----email
+                    array(
+                        'label' => lang('index_student_personal_email_th'),
+                        'field' => 'student_personal_email',
+                        'rules' => 'trim|max_length[50]|valid_email' .
+                        (($this->student->email != $this->input->post('student_personal_email', TRUE)) ?
+                                '|is_unique[students.student_personal_email]' : ''),
+                    ),
+                    array(
+                        'label' => lang('index_student_guardian_email_th'),
+                        'field' => 'student_guardian_email',
+                        'rules' => 'trim|max_length[50]|valid_email' .
+                        (($this->student->guardian_email != $this->input->post('student_guardian_email', TRUE)) ?
+                                '|is_unique[students.student_guardian_email]' : ''),
+                    )
                 ));
 
 
@@ -157,50 +158,36 @@ class Edit_student extends CI_Capstone_Controller
                 /**
                  * for image upload
                  */
-                $uploaded            = FALSE;
+                $uploaded            = TRUE;
+                $update_imge         = FALSE;
                 $image_error_message = '';
                 $run__               = $this->form_validation->run();
 
-                if (empty($_FILES['student_image']['name']) && $run__)
-                {
-
-                        /*
-                         * dear me:
-                         * i cant fix later improvement 
-                         * trully your: me.
-                         */
-                        //  $this->form_validation->set_rules('student_image', lang('index_student_image_th'), 'required');
-
-                        /**
-                         * image required
-                         * with error delimiter in ion_auth config
-                         */
-                        $image_error_message = $this->config->item('error_start_delimiter', 'ion_auth') .
-                                lang('student_image_required') .
-                                $this->config->item('error_end_delimiter', 'ion_auth');
-                }
-                /**
-                 * check if has error in upload $_FILES[] and pass rule validation
-                 */
-                if ($run__ && isset($_FILES['student_image']['error']) && $_FILES['student_image']['error'] != 4)
+                if (!empty($_FILES['student_image']['name']))
                 {
                         /**
-                         * now uploading, FALSE in failed
+                         * check if has error in upload $_FILES[] and pass rule validation
                          */
-                        $uploaded = ($this->upload->do_upload('student_image'));
-
-                        /**
-                         * if returned FALSE it means failed/error
-                         */
-                        if (!$uploaded)
+                        if ($run__ && isset($_FILES['student_image']['error']) && $_FILES['student_image']['error'] != 4)
                         {
                                 /**
-                                 * get error upload message
-                                 * with error delimiter in ion_auth config
+                                 * now uploading, FALSE in failed
                                  */
-                                $image_error_message = $this->config->item('error_start_delimiter', 'ion_auth') .
-                                        $this->upload->display_errors() .
-                                        $this->config->item('error_end_delimiter', 'ion_auth');
+                                $update_imge = $uploaded    = ($this->upload->do_upload('student_image'));
+
+                                /**
+                                 * if returned FALSE it means failed/error
+                                 */
+                                if (!$uploaded)
+                                {
+                                        /**
+                                         * get error upload message
+                                         * with error delimiter in ion_auth config
+                                         */
+                                        $image_error_message = $this->config->item('error_start_delimiter', 'ion_auth') .
+                                                $this->upload->display_errors() .
+                                                $this->config->item('error_end_delimiter', 'ion_auth');
+                                }
                         }
                 }
 
@@ -208,17 +195,16 @@ class Edit_student extends CI_Capstone_Controller
                  * checking for validation and upload
                  * if all rules pass, 
                  */
-                if ($run__ && $uploaded && FALSE)
+                if ($run__ && $uploaded)
                 {
+
                         /**
                          * preparing data into array
                          */
                         $student__ = array(
-                            'student_image'                   => $this->upload->data()['file_name'],
                             'student_firstname'               => $this->input->post('student_firstname', TRUE),
                             'student_middlename'              => $this->input->post('student_middlename', TRUE),
                             'student_lastname'                => $this->input->post('student_lastname', TRUE),
-                            'student_school_id'               => $this->input->post('student_school_id', TRUE),
                             'student_gender'                  => $this->input->post('student_gender', TRUE),
                             'student_permanent_address'       => $this->input->post('student_permanent_address', TRUE),
                             'student_birthdate'               => $this->input->post('student_birthdate', TRUE),
@@ -235,37 +221,38 @@ class Edit_student extends CI_Capstone_Controller
                             'student_personal_email'          => $this->input->post('student_personal_email', TRUE),
                             'student_guardian_email'          => $this->input->post('student_guardian_email', TRUE),
                             /**
-                             * who add the data
+                             * who update the data
                              */
-                            'created_user_id'                 => $this->ion_auth->user()->row()->id,
+                            'updated_user_id'                 => $this->ion_auth->user()->row()->id,
                         );
+                        if ($update_imge)
+                        {
+                                $student__['student_image'] = $this->upload->data()['file_name'];
+                        }
 
                         $this->load->model(array('Student_model', 'Enrollment_model'));
 
-                        /**
-                         * inserting to student to database, then will return a primary if on success
-                         */
-                        $returned_student_id = $this->Student_model->insert($student__);
 
                         /**
                          * check if id is ready
                          * else nothing to do
                          */
-                        if ($returned_student_id)
+                        if ($this->Student_model->update($student__, $this->student->id))
                         {
+
                                 /**
                                  * preparing data into array
                                  */
                                 $enrollmet__ = array(
-                                    'student_id'             => $returned_student_id,
+                                    'student_id'             => $this->student->id,
                                     'course_id'              => $this->input->post('course_id', TRUE),
                                     'enrollment_school_year' => $this->input->post('enrollment_school_year', TRUE),
                                     'enrollment_semester'    => $this->input->post('enrollment_semester', TRUE),
                                     'enrollment_year_level'  => $this->input->post('enrollment_year_level', TRUE),
                                     /**
-                                     * who add the data
+                                     * who update the data
                                      */
-                                    'created_user_id'        => $this->ion_auth->user()->row()->id,
+                                    'updated_user_id'        => $this->ion_auth->user()->row()->id,
                                 );
 
                                 /**
@@ -277,24 +264,25 @@ class Edit_student extends CI_Capstone_Controller
                                  * else on failed
                                  * exist student id will delete from student table to rollback data
                                  */
-                                if ($this->Enrollment_model->insert($enrollmet__))
+                                if ($this->Enrollment_model->update($enrollmet__, $this->student->enrollment_id))
                                 {
                                         /**
                                          * setting flash data, (once pop out, it will delete) using session
                                          */
-                                        $this->session->set_flashdata('message', $this->config->item('message_start_delimiter', 'ion_auth') . lang('create_student_succesfully_added_message') . $this->config->item('message_end_delimiter', 'ion_auth'));
+                                        $this->session->set_flashdata('message', $this->config->item('message_start_delimiter', 'ion_auth') . lang('update_student_succesfully_added_message') . $this->config->item('message_end_delimiter', 'ion_auth'));
 
                                         /**
                                          * redirecting in current_url
                                          */
-                                        redirect(current_url(), 'refresh');
+                                        redirect(base_url('students'), 'refresh');
                                 }
                                 else
                                 {
+
                                         /**
                                          * deleting student
                                          */
-                                        $this->Student_model->delete($returned_student_id);
+                                        //$this->Student_model->delete($returned_student_id);
                                 }
                         }
                 }

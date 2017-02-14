@@ -115,8 +115,11 @@ echo form_open_multipart(base_url("create-student/index"), array(
                 <div class="widget-content nopadding">
                     <div class="form-horizontal">
                         <?php
-                        //guardian_fullname:
-                        echo input_bootstrap($student_guardian_fullname, 'create_student_guardian_fullname_label');
+                        //personal_email:
+                        echo input_bootstrap($student_personal_email, 'create_student_personal_email_label');
+
+                        //personal_contact_number:
+                        echo input_bootstrap($student_personal_contact_number, 'create_student_personal_contact_label');
 
                         //address_town:
                         echo input_bootstrap($student_address_town, 'create_student_town_label');
@@ -124,20 +127,19 @@ echo form_open_multipart(base_url("create-student/index"), array(
                         //address_region:
                         echo input_bootstrap($student_address_region, 'create_student_region_label');
 
-                        //guardian_address:
-                        echo input_bootstrap($student_guardian_address, 'create_student_guardian_address_label', 'textarea');
 
-                        //personal_contact_number:
-                        echo input_bootstrap($student_personal_contact_number, 'create_student_personal_contact_label');
 
                         //guardian_contact_number:
                         echo input_bootstrap($student_guardian_contact_number, 'create_student_guardian_contact_label');
 
-                        //personal_email:
-                        echo input_bootstrap($student_personal_email, 'create_student_personal_email_label');
+
+                        //guardian_fullname:
+                        echo input_bootstrap($student_guardian_fullname, 'create_student_guardian_fullname_label');
 
                         //guardian_email:
                         echo input_bootstrap($student_guardian_email, 'create_student_guardian_email_label');
+                        //guardian_address:
+                        echo input_bootstrap($student_guardian_address, 'create_student_guardian_address_label', 'textarea');
                         ?>
                     </div>
                 </div>

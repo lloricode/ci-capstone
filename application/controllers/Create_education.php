@@ -15,6 +15,8 @@ class Create_education extends CI_Capstone_Controller
                 $this->lang->load('ci_educations');
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
+                $this->breadcrumbs->unshift(2, 'Educations', 'educations');
+                $this->breadcrumbs->unshift(3, 'Create Education', 'create-education');
         }
 
         public function index()
@@ -24,12 +26,12 @@ class Create_education extends CI_Capstone_Controller
                     array(
                         'label' => lang('create_education_code_label'),
                         'field' => 'education_code',
-                        'rules' => 'trim|required|is_unique[educations.education_code]|min_length[3]|max_length[20]',
+                        'rules' => 'trim|required|is_unique[educations.education_code]|min_length[2]|max_length[20]',
                     ),
                     array(
                         'label' => lang('create_education_description_label'),
                         'field' => 'education_description',
-                        'rules' => 'trim|required|human_name|min_length[3]|max_length[50]',
+                        'rules' => 'trim|required|human_name|min_length[2]|max_length[50]',
                     )
                 ));
 
@@ -44,7 +46,7 @@ class Create_education extends CI_Capstone_Controller
                         if ($this->Education_model->insert($education))
                         {
                                 $this->session->set_flashdata('message', $this->config->item('message_start_delimiter', 'ion_auth') . lang('create_education_succesfully_added_message') . $this->config->item('message_end_delimiter', 'ion_auth'));
-                                redirect(current_url(), 'refresh');
+                                redirect(base_url('educations'), 'refresh');
                         }
                 }
 
