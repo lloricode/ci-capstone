@@ -259,10 +259,15 @@ class MY_Form_validation extends CI_Form_validation
         {
                 if (is_null($must_lessthan_this) || empty($must_lessthan_this))
                 {
-                        $this->CI->form_validation->set_message('time_lessthan', "second value requured.");
+                        $this->CI->form_validation->set_message('time_lessthan', "second value required.");
                         return FALSE;
                 }
                 $this->CI->load->helper('time');
+                $this->CI->form_validation->set_message('time_lessthan', "must less than a second value.");
+                if ($value == $must_lessthan_this)
+                {
+                        return FALSE;
+                }
                 foreach (time_list($value) as $k => $v)
                 {
                         if ($must_lessthan_this == $k)
@@ -270,7 +275,6 @@ class MY_Form_validation extends CI_Form_validation
                                 return TRUE;
                         }
                 }
-                $this->CI->form_validation->set_message('time_lessthan', "must less than a second value.");
                 return FALSE;
         }
 
