@@ -21,6 +21,8 @@ class Subject_offers extends CI_Capstone_Controller
                 $this->limit = 10;
                 $this->breadcrumbs->unshift(2, 'Subject Offers', 'subject-offers');
                 $this->load->helper(array('day', 'time'));
+
+                // echo print_r(time_list(FALSE,'10:30'));
         }
 
         /**
@@ -45,11 +47,12 @@ class Subject_offers extends CI_Capstone_Controller
 
                         foreach ($subject_offer_obj as $subject_offer)
                         {
+                                $user = $this->User_model->get($subject_offer->user_id);
                                 array_push($table_data, array(
                                     my_htmlspecialchars(convert_24_to_12hrs($subject_offer->subject_offer_start)),
                                     my_htmlspecialchars(convert_24_to_12hrs($subject_offer->subject_offer_end)),
                                     my_htmlspecialchars(subject_offers_days($subject_offer)),
-                                    my_htmlspecialchars($this->User_model->get($subject_offer->user_id)->first_name),
+                                    my_htmlspecialchars($user->last_name . ', ' . $user->first_name),
                                     my_htmlspecialchars($this->Subject_model->get($subject_offer->subject_id)->subject_code),
                                     my_htmlspecialchars($this->Room_model->get($subject_offer->room_id)->room_number),
                                 ));

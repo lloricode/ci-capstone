@@ -20,10 +20,13 @@ if (!function_exists('time_list'))
          * @return array
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        function time_list($start = '06:00', $end = '18:30', $hours_incrementation = 1, $minute_incrementation = 30)
+        function time_list($tmp = TRUE, $start = '06:00', $end = '18:30', $hours_incrementation = 1, $minute_incrementation = 30)
         {
-                $arr [''] = 'Time';
-
+                $arr = array();
+                if ($tmp)
+                {
+                        $arr [''] = 'Time';
+                }
                 /**
                  * explode value, assuming value parameter is valid,so make sure, parameter has valid value,
                  * its ok, only developer will set this, not user
@@ -112,6 +115,25 @@ if (!function_exists('convert_24_to_12hrs'))
                 }
 
                 return str_pad($hh, 2, '0', STR_PAD_LEFT) . ':' . str_pad($mm, 2, '0', STR_PAD_LEFT) . ' ' . $ap;
+        }
+
+}
+if (!function_exists('convert_12_to_24hrs'))
+{
+
+        function convert_12_to_24hrs($hr12 = NULL)
+        {
+//                if (!strpos($hr24, ':') || !strpos($hr24, ' ') || !strpos($hr24, 'M'))
+//                {
+//                        return 'invalid time format.';
+//                }
+                list($time, $ap) = explode(' ', $hr12);
+                list($hh, $mm) = explode(':', $time);
+                if ($ap == 'PM' )
+                {
+                        $hh += 12;
+                }
+                return $hh . ':' . $mm;
         }
 
 }

@@ -46,7 +46,7 @@ class Migration_Sample_data extends CI_Migration
                 /**
                  * loading needed files
                  */
-                $this->load->helper(array('array', 'string', 'navigation'));
+                $this->load->helper(array('array', 'string', 'navigation', 'time'));
                 $this->load->model(array(
                     'Student_model',
                     'Enrollment_model',
@@ -200,16 +200,27 @@ class Migration_Sample_data extends CI_Migration
                 }
         }
 
+        private function gen_time_end($start)
+        {
+                $end = convert_12_to_24hrs(random_element(time_list(FALSE, convert_12_to_24hrs($start))));
+                if ($end == $start)
+                {
+                        $end = $this->gen_time_end($start);
+                }
+                return $end;
+        }
+
         private function subject_offer()
         {
                 $subj_offr_arr = array();
 
-
                 for ($i = 1; $i <= $this->subject_offer_count; $i++)
                 {
+                        $start           = random_element(time_list(FALSE));
+                        $end             = $this->gen_time_end($start);
                         $subj_offr_arr[] = array(
-                            'subject_offer_start'     => 'starttest' . $i,
-                            'subject_offer_end'       => 'endtest' . $i,
+                            'subject_offer_start'     => convert_12_to_24hrs($start),
+                            'subject_offer_end'       => $end,
                             //days
                             'subject_offer_monday'    => random_element(array(TRUE, FALSE)),
                             'subject_offer_tuesday'   => random_element(array(TRUE, FALSE)),

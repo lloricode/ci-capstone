@@ -23,10 +23,34 @@ class Create_subject_offer extends CI_Capstone_Controller
         public function subject_offer_check_check_conflict()
         {
                 $this->load->library('subject_offer');
+                $this->load->helper('day');
+                $this->load->model(array('User_model', 'Subject_model', 'Room_model'));
                 $conflic = $this->subject_offer->subject_offer_check_check_conflict();
-                if (!$conflic)
+                $data    = $this->subject_offer->conflict();
+                if ($data)
                 {
-                        $this->data['data_conflict'] = $this->subject_offer->conflict();
+                        $header     = array(
+                            lang('index_subject_offer_start_th'),
+                            lang('index_subject_offer_end_th'),
+                            lang('index_subject_offer_days_th'),
+                            lang('index_user_id_th'),
+                            lang('index_subject_id_th'),
+                            lang('index_room_id_th'),
+                        );
+                        $table_data = array();
+                        foreach ($data as $subject_offer)
+                        {
+                                $user = $this->User_model->get($subject_offer->user_id);
+                                array_push($table_data, array(
+                                    my_htmlspecialchars(convert_24_to_12hrs($subject_offer->subject_offer_start)),
+                                    my_htmlspecialchars(convert_24_to_12hrs($subject_offer->subject_offer_end)),
+                                    my_htmlspecialchars(subject_offers_days($subject_offer)),
+                                    my_htmlspecialchars($user->last_name . ', ' . $user->first_name),
+                                    my_htmlspecialchars($this->Subject_model->get($subject_offer->subject_id)->subject_code),
+                                    my_htmlspecialchars($this->Room_model->get($subject_offer->room_id)->room_number),
+                                ));
+                        }
+                        $this->data['data_conflict'] = $this->my_table_view($header, $table_data, 'table_open_bordered');
                 }
                 return $conflic;
         }
@@ -142,7 +166,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                  */
                 foreach ($faculties_obj as $f)
                 {
-                        $faculty_drop_down[$f->id] = $f->last_name . '' . $f->first_name;
+                        $faculty_drop_down[$f->id] = $f->last_name . ', ' . $f->first_name;
                 }
                 $this->data['user_id_value']    = $faculty_drop_down;
                 $this->data['subject_id_value'] = $this->Subject_model->as_dropdown('subject_code')->get_all();

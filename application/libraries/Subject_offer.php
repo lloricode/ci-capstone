@@ -26,12 +26,25 @@ class Subject_offer
         private $input_data;
 
         /**
+         *
+         * database table
+         */
+        private $table;
+
+        /**
          * fields
          */
         private $days;
 
+        /**
+         * 
+         */
+        private $affected_rows;
+        private $rs;
+
         public function __construct()
         {
+                $this->table                 = 'subject_offers';
                 $this->days                  = array(
                     'monday',
                     'tuesday',
@@ -64,28 +77,56 @@ class Subject_offer
 
         public function subject_offer_check_check_conflict()
         {
-                $this->CI->form_validation->set_message('subject_offer_check_check_conflict', $this->error_strat_delimeter .
-                        'this is test conflict message.' .
-                        //   'Conflict Schedule, see table above.' .
-                        $this->error_end_delimeter);
-                $where_ = array();
+                $or_where_foriegn = array();
+                $or_where_days    = array();
 
                 foreach ($this->input_data as $k => $v)
                 {
-                        $where_[$k] = $v;
+                        $or_where_days[$k] = $v;
                 }
-                $where_['subject_offer_start'] = $this->start;
-                $where_['subject_offer_end']   = $this->end;
-                $where_['user_id']             = $this->user_id;
-                $where_['room_id']             = $this->room_id;
-                $where_['subject_id']          = $this->subject_id;
-                $this->CI->Subject_offer_model->where($where_)->get_all();
+                // $where_['subject_offer_start'] = $this->start;
+                //  $where_['subject_offer_end']   = $this->end;
+                $or_where_foriegn['user_id']    = $this->user_id;
+                $or_where_foriegn['room_id']    = $this->room_id;
+                $or_where_foriegn['subject_id'] = $this->subject_id;
+                $this->rs                       = $this->CI->db->select('*')->
+                        //----------
+                        group_start()->
+                        where('subject_offer_start >= ', $this->start)->
+                        where('subject_offer_end <= ', $this->end)->
+                        group_end()->
+                        //----------
+                        or_group_start()->
+                        where($or_where_foriegn)->
+                        group_end()->
+                        //------------
+                        or_group_start()->
+                        where($or_where_days)->
+                        group_end()->
+                        get($this->table); //->count_all_results();
+//                $this->CI->Subject_offer_model->where($where_)->get_all();
+                $this->affected_rows            = $this->CI->db->affected_rows();
+                $this->CI->form_validation->set_message('subject_offer_check_check_conflict', $this->error_strat_delimeter .
+                        'Confict ' . $this->affected_rows . ' schedules.[<pre>' . $this->CI->db->last_query() .'</pre>'.
+                        //   'Conflict Schedule, see table above.' .
+                        $this->error_end_delimeter);
+                // return (bool) $this->affected_rows == 0;
                 return FALSE;
         }
 
         public function conflict()
         {
-                return 'test data confict [not implemented yet]<br />' . $this->CI->db->last_query();
+                $sub_off = array();
+                if ($this->affected_rows > 0)
+                {
+                        foreach ($this->rs->result() as $row)
+                        {
+                                $sub_off[] = $this->CI->Subject_offer_model->get($row->subject_offer_id);
+                        }
+                        return $sub_off;
+                }
+                return FALSE;
+                // return 'test data confict [not implemented yet]<br />' . $this->CI->db->last_query();
         }
 
 }

@@ -111,6 +111,7 @@ class Students extends CI_Capstone_Controller
         {
 
                 $this->load->library('student');
+                $this->load->helper('time');
                 /*
                  * check url with id,tehn get studewnt row
                  */
@@ -151,7 +152,7 @@ class Students extends CI_Capstone_Controller
                         foreach ($student_subjects_obj as $subject)
                         {
                                 $this->table->add_row(
-                                        $subject->subject_code, $subject->subject_description, $subject->start, $subject->end, $subject->days, $subject->room_number . ' - ' . $subject->room_description, $subject->faculty
+                                        $subject->subject_code, $subject->subject_description, convert_24_to_12hrs($subject->start), convert_24_to_12hrs($subject->end), $subject->days, $subject->room_number . ' - ' . $subject->room_description, $subject->faculty
                                 );
                         }
                 }

@@ -28,12 +28,12 @@ class Migration_Subject_offers extends CI_Migration
                         'auto_increment' => TRUE
                     ),
                     'subject_offer_start'     => array(
-                        'type'       => 'VARCHAR',
-                        'constraint' => '50',
+                        'type' => 'TIME',
+                        'null' => FALSE
                     ),
                     'subject_offer_end'       => array(
-                        'type'       => 'VARCHAR',
-                        'constraint' => '50',
+                        'type' => 'TIME',
+                        'null' => FALSE
                     ),
                     /**
                      * true if with this day
