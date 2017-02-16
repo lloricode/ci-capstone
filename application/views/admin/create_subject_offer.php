@@ -24,11 +24,13 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     ));
 
                     //subject_offer_start:
-                    echo input_bootstrap($subject_offer_start, 'create_subject_offer_start_label');
+                    //  echo input_bootstrap($subject_offer_start, 'create_subject_offer_start_label');
+                    echo input_dropdown_bootstrap('subject_offer_start', 'create_subject_offer_start_label', time_list());
 
 
                     //subject_offer_end:
-                    echo input_bootstrap($subject_offer_end, 'create_subject_offer_end_label');
+                    // echo input_bootstrap($subject_offer_end, 'create_subject_offer_end_label');
+                    echo input_dropdown_bootstrap('subject_offer_end', 'create_subject_offer_end_label', time_list());
                     ?>
                     <div class="control-group">
                         <div class="controls">

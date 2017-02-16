@@ -229,9 +229,49 @@ class MY_Form_validation extends CI_Form_validation
 //            return true;
 //        } else {
                 // throw an error because nothing was uploaded
-                $this->form_validation->set_message('image_required', "You must upload an image!");
+                $this->CI->form_validation->set_message('image_required', "You must upload an image!");
                 return false;
                 //}
+        }
+
+        /**
+         * check if value  is valid 24hr format, using time helper
+         * 
+         * @param string $value
+         * @return boolean
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        public function time_24hr($value)
+        {
+                $this->CI->load->helper('time');
+                foreach (time_list() as $k => $v)
+                {
+                        if ($value == $k)
+                        {
+                                return TRUE;
+                        }
+                }
+                $this->CI->form_validation->set_message('time_24hr', "invalid time");
+                return FALSE;
+        }
+
+        public function time_lessthan($value, $must_lessthan_this)
+        {
+                if (is_null($must_lessthan_this) || empty($must_lessthan_this))
+                {
+                        $this->CI->form_validation->set_message('time_lessthan', "second value requured.");
+                        return FALSE;
+                }
+                $this->CI->load->helper('time');
+                foreach (time_list($value) as $k => $v)
+                {
+                        if ($must_lessthan_this == $k)
+                        {
+                                return TRUE;
+                        }
+                }
+                $this->CI->form_validation->set_message('time_lessthan', "must less than a second value.");
+                return FALSE;
         }
 
 }

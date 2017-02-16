@@ -17,6 +17,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                  * for check box, in days
                  */
                 $this->load->library('table');
+                $this->load->helper('time');
         }
 
         /**
@@ -27,15 +28,16 @@ class Create_subject_offer extends CI_Capstone_Controller
         {
 
                 $this->form_validation->set_rules(array(
+                    //http://stackoverflow.com/questions/7440977/how-to-validate-time-input-in-codeigniter
                     array(
                         'label' => lang('create_subject_offer_start_label'),
                         'field' => 'subject_offer_start',
-                        'rules' => 'trim|required',
+                        'rules' => 'required|trim|min_length[3]|max_length[5]|time_24hr|time_24hr|time_lessthan[' . $this->input->post('subject_offer_end', TRUE) . ']',
                     ),
                     array(
                         'label' => lang('create_subject_offer_end_label'),
                         'field' => 'subject_offer_end',
-                        'rules' => 'trim|required',
+                        'rules' => 'required|trim|min_length[3]|max_length[5]',
                     ),
                     array(
                         'label' => lang('create_user_id_label'),
@@ -109,16 +111,33 @@ class Create_subject_offer extends CI_Capstone_Controller
                     'type'  => 'time',
                     'value' => $this->form_validation->set_value('subject_offer_end'),
                 );
-                $this->data['user_id_value']     = $this->User_model->as_dropdown('username')->get_all();
-                $this->data['subject_id_value']  = $this->Subject_model->as_dropdown('subject_code')->get_all();
-                $this->data['room_id_value']     = $this->Room_model->as_dropdown('room_number')->get_all();
+
+                /**
+                 * get all user that has faculty group
+                 */
+                $faculties_obj = $this->ion_auth->users('faculty')->result();
+
+                /**
+                 * create dropdown for <select></select>'s <option>
+                 */
+                $faculty_drop_down = array();
+                /**
+                 * convert to array with specific value id|fullname
+                 */
+                foreach ($faculties_obj as $f)
+                {
+                        $faculty_drop_down[$f->id] = $f->last_name . '' . $f->first_name;
+                }
+                $this->data['user_id_value']    = $faculty_drop_down;
+                $this->data['subject_id_value'] = $this->Subject_model->as_dropdown('subject_code')->get_all();
+                $this->data['room_id_value']    = $this->Room_model->as_dropdown('room_number')->get_all();
 
 
                 /**
                  * for check box
                  */
-                $this->data['days']      = $days;
-                
+                $this->data['days'] = $days;
+
                 $this->data['bootstrap'] = $this->bootstrap();
                 $this->_render_admin_page('admin/create_subject_offer', $this->data);
         }
