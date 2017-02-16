@@ -152,7 +152,7 @@ class Permissions extends CI_Capstone_Controller
                         'rules' => 'trim',
                     ),
                 ));
-                $this->load->library('ci_permission');
+                $this->load->library('permission');
                 $this->data['message'] = '';
                 if ($this->form_validation->run())
                 {
@@ -160,14 +160,14 @@ class Permissions extends CI_Capstone_Controller
 
                         $groupData = $this->input->post('groups', TRUE);
                         $done      = FALSE;
-                        $done      = $this->ci_permission->controller_remove_all_group($controller_obj->controller_id);
+                        $done      = $this->permission->controller_remove_all_group($controller_obj->controller_id);
                         if (isset($groupData) && !empty($groupData))
                         {
 
 
                                 foreach ($groupData as $g_id)
                                 {
-                                        $done = $this->ci_permission->add_permision($controller_obj->controller_id, $g_id);
+                                        $done = $this->permission->add_permision($controller_obj->controller_id, $g_id);
 
                                         if (!$done)
                                         {

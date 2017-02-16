@@ -7,7 +7,7 @@ if (!function_exists('time_list'))
 
         /**
          * 
-         * create and array or time, depend on parameters given, 
+         * create and array for time, depend on parameters given, 
          * 
          * return will be key is 24rhs,value is 12 hrs
          * 

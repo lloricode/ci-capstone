@@ -255,6 +255,13 @@ class MY_Form_validation extends CI_Form_validation
                 return FALSE;
         }
 
+        /**
+         * 
+         * @param type $value
+         * @param type $must_lessthan_this
+         * @return boolean
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
         public function time_lessthan($value, $must_lessthan_this)
         {
                 if (is_null($must_lessthan_this) || empty($must_lessthan_this))

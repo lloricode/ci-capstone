@@ -30,7 +30,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                                         <?php
                                         $checked = null;
                                         $item    = null;
-                                        foreach ($this->ci_permission->controller_groups($controller_obj->controller_id) as $g_id)
+                                        foreach ($this->permission->controller_groups($controller_obj->controller_id) as $g_id)
                                         {
                                                 if ($group->id == $g_id)
                                                 {

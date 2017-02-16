@@ -20,6 +20,17 @@ class Create_subject_offer extends CI_Capstone_Controller
                 $this->load->helper('time');
         }
 
+        public function subject_offer_check_check_conflict()
+        {
+                $this->load->library('subject_offer');
+                $conflic = $this->subject_offer->subject_offer_check_check_conflict();
+                if (!$conflic)
+                {
+                        $this->data['data_conflict'] = $this->subject_offer->conflict();
+                }
+                return $conflic;
+        }
+
         /**
          * @Contributor: Jinkee Po <pojinkee1@gmail.com>
          *         
@@ -53,6 +64,11 @@ class Create_subject_offer extends CI_Capstone_Controller
                         'label' => lang('create_room_id_label'),
                         'field' => 'room_id',
                         'rules' => 'trim|required|is_natural_no_zero',
+                    ),
+                    array(
+                        'label' => 'Subject Offer',
+                        'field' => 'subject_offer_check_check_conflict',
+                        'rules' => 'callback_subject_offer_check_check_conflict',
                     ),
                 ));
                 $days = array(
@@ -138,7 +154,8 @@ class Create_subject_offer extends CI_Capstone_Controller
                  */
                 $this->data['days'] = $days;
 
-                $this->data['bootstrap'] = $this->bootstrap();
+                $this->data['bootstrap']     = $this->bootstrap();
+                $this->data['conflict_data'] = $this->_render_page('admin/_templates/create_subject_offer/conflict_data', $this->data, TRUE);
                 $this->_render_admin_page('admin/create_subject_offer', $this->data);
         }
 

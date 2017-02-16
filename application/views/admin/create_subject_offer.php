@@ -1,5 +1,9 @@
 <?php
 defined('BASEPATH') or exit('Direct Script is not allowed');
+if (isset($conflict_data))
+{
+        echo $conflict_data;
+}
 ?>
 <div class="container-fluid">
     <div class="row-fluid">

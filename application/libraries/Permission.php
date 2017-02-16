@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('Direct Script is not allowed');
 
-class CI_permission
+class Permission
 {
 
 
