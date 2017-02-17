@@ -38,6 +38,11 @@ if (isset($conflict_data))
                     ?>
                     <div class="control-group">
                         <div class="controls">
+                            <?php
+                            $this->table->set_template(array(
+                                'table_open' => '<table>',
+                            ));
+                            ?>
                             <?php foreach ($days as $d): ?>
                                     <?php $this->table->add_row(form_label(ucfirst($d), 'subject_offer_' . $d), form_label(form_checkbox('subject_offer_' . $d, $d, set_checkbox('subject_offer_' . $d, set_value('subject_offer_' . $d))), 'subject_offer_' . $d)); ?>
                             <?php endforeach; ?>

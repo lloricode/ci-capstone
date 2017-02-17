@@ -258,31 +258,19 @@ class MY_Form_validation extends CI_Form_validation
         /**
          * 
          * @param type $value
-         * @param type $must_lessthan_this
+         * @param type $end_time
          * @return boolean
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        public function time_lessthan($value, $must_lessthan_this)
+        public function time_lessthan($value, $end_time)
         {
-                if (is_null($must_lessthan_this) || empty($must_lessthan_this))
+                if (is_null($end_time) || empty($end_time))
                 {
                         $this->CI->form_validation->set_message('time_lessthan', "second value required.");
                         return FALSE;
                 }
-                $this->CI->load->helper('time');
                 $this->CI->form_validation->set_message('time_lessthan', "must less than a second value.");
-                if ($value == $must_lessthan_this)
-                {
-                        return FALSE;
-                }
-                foreach (time_list($value) as $k => $v)
-                {
-                        if ($must_lessthan_this == $k)
-                        {
-                                return TRUE;
-                        }
-                }
-                return FALSE;
+                return (bool) (convert_24hrs_to_seconds($value) < convert_24hrs_to_seconds($end_time));
         }
 
 }

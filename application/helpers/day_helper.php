@@ -55,7 +55,27 @@ if (!function_exists('days'))
         }
 
 }
+if (!function_exists('days_for_db'))
+{
 
+        /**
+         * note: don't use LANG, this is use for table
+         * @return type
+         */
+        function days_for_db()
+        {
+                return array(
+                    'Sun' => 'sunday',
+                    'M'   => 'monday',
+                    'T'   => 'tuesday',
+                    'W'   => 'wednesday',
+                    'TH'  => 'thursday',
+                    'F'   => 'friday',
+                    'Sat' => 'saturday'
+                );
+        }
+
+}
 if (!function_exists('subject_offers_days'))
 {
 
@@ -68,20 +88,7 @@ if (!function_exists('subject_offers_days'))
          */
         function subject_offers_days($sub_off_obj)
         {
-                /**
-                 * key => days 
-                 * 
-                 * days is refer from subject_offer table 
-                 */
-                $days   = array(
-                    'Sun' => 'sunday',
-                    'M'   => 'monday',
-                    'T'   => 'tuesday',
-                    'W'   => 'wednesday',
-                    'TH'  => 'thursday',
-                    'F'   => 'friday',
-                    'Sat' => 'saturday'
-                );
+
                 /**
                  * storing data to be return later
                  */
@@ -89,7 +96,7 @@ if (!function_exists('subject_offers_days'))
                 /**
                  * loop in days
                  */
-                foreach ($days as $key => $day)
+                foreach (days_for_db() as $key => $day)
                 {
                         /**
                          * in current row, check all days if TRUE, then append DAY KEY, else FALSE nothing to append 

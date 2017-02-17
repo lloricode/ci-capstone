@@ -200,15 +200,6 @@ class Migration_Sample_data extends CI_Migration
                 }
         }
 
-        private function gen_time_end($start)
-        {
-                $end = convert_12_to_24hrs(random_element(time_list(FALSE, convert_12_to_24hrs($start))));
-                if ($end == $start)
-                {
-                        $end = $this->gen_time_end($start);
-                }
-                return $end;
-        }
 
         private function subject_offer()
         {
@@ -216,8 +207,14 @@ class Migration_Sample_data extends CI_Migration
 
                 for ($i = 1; $i <= $this->subject_offer_count; $i++)
                 {
-                        $start           = random_element(time_list(FALSE));
-                        $end             = $this->gen_time_end($start);
+                        $start  = random_element(time_list(FALSE));
+                        $t_list = time_list(FALSE, convert_12_to_24hrs($start));
+                        /**
+                         * remove 1st element (start)
+                         */
+                        unset($t_list[0]);
+                        $end    = convert_12_to_24hrs(random_element($t_list));
+
                         $subj_offr_arr[] = array(
                             'subject_offer_start'     => convert_12_to_24hrs($start),
                             'subject_offer_end'       => $end,

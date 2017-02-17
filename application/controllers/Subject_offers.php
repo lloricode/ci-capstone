@@ -22,7 +22,7 @@ class Subject_offers extends CI_Capstone_Controller
                 $this->breadcrumbs->unshift(2, 'Subject Offers', 'subject-offers');
                 $this->load->helper(array('day', 'time'));
 
-                // echo print_r(time_list(FALSE,'10:30'));
+// echo print_r(time_list(FALSE,'10:30'));
         }
 
         /**
@@ -35,13 +35,19 @@ class Subject_offers extends CI_Capstone_Controller
                  * 
                  */
                 $this->page_       = get_page_in_url();
-                //list students
-                $subject_offer_obj = $this->Subject_offer_model->
-                        limit($this->limit, $this->limit * $this->page_ - $this->limit)->
-                        get_all();
+//list students
+                $subject_offer_obj = $this->Subject_offer_model;
+                $subject_offer_obj = $subject_offer_obj->limit($this->limit, $this->limit * $this->page_ - $this->limit);
+
+
+                foreach (days_for_db() as $d)
+                {
+                        $subject_offer_obj = $subject_offer_obj->order_by('subject_offer_' . $d, 'ASC');
+                }
+                $subject_offer_obj = $subject_offer_obj->order_by('subject_offer_start', 'ASC');
+                $subject_offer_obj = $subject_offer_obj->get_all();
 
                 $table_data = array();
-
                 if ($subject_offer_obj)
                 {
 
@@ -49,6 +55,7 @@ class Subject_offers extends CI_Capstone_Controller
                         {
                                 $user = $this->User_model->get($subject_offer->user_id);
                                 array_push($table_data, array(
+                                    $subject_offer->subject_offer_id,
                                     my_htmlspecialchars(convert_24_to_12hrs($subject_offer->subject_offer_start)),
                                     my_htmlspecialchars(convert_24_to_12hrs($subject_offer->subject_offer_end)),
                                     my_htmlspecialchars(subject_offers_days($subject_offer)),
@@ -62,6 +69,7 @@ class Subject_offers extends CI_Capstone_Controller
                  * Table headers
                  */
                 $header                   = array(
+                    'id',
                     lang('index_subject_offer_start_th'),
                     lang('index_subject_offer_end_th'),
                     lang('index_subject_offer_days_th'),
@@ -114,16 +122,14 @@ class Subject_offers extends CI_Capstone_Controller
                         'font-awesome/css/font-awesome.css',
                         'http://fonts.googleapis.com/css?family=Open+Sans:400,700,800',
                     ),
-                    'js'  => array(
-                    ),
+                    'js'  => array(),
                 );
                 /**
                  * for footer
                  * 
                  */
                 $footer       = array(
-                    'css' => array(
-                    ),
+                    'css' => array(),
                     'js'  => array(
                         'js/jquery.min.js',
                         'js/jquery.ui.custom.js',
@@ -160,16 +166,14 @@ class Subject_offers extends CI_Capstone_Controller
                         'font-awesome/css/font-awesome.css',
                         'http://fonts.googleapis.com/css?family=Open+Sans:400,700,800',
                     ),
-                    'js'  => array(
-                    ),
+                    'js'  => array(),
                 );
                 /**
                  * for footer
                  * 
                  */
                 $footer       = array(
-                    'css' => array(
-                    ),
+                    'css' => array(),
                     'js'  => array(
                         'js/jquery.min.js',
                         'js/jquery.ui.custom.js',

@@ -129,11 +129,24 @@ if (!function_exists('convert_12_to_24hrs'))
 //                }
                 list($time, $ap) = explode(' ', $hr12);
                 list($hh, $mm) = explode(':', $time);
-                if ($ap == 'PM' )
+                if ($ap == 'PM')
                 {
                         $hh += 12;
                 }
                 return $hh . ':' . $mm;
+        }
+
+}
+if (!function_usable('convert_24hrs_to_seconds'))
+{
+
+        function convert_24hrs_to_seconds($hr24)
+        {
+                list($hh, $mm) = explode(':', $hr24);
+                $sec = 0;
+                $sec += ($hh * 60 * 60);
+                $sec += ($mm * 60);
+                return (int) $sec;
         }
 
 }

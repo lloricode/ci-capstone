@@ -29,7 +29,9 @@ class Create_subject_offer extends CI_Capstone_Controller
                 $data    = $this->subject_offer->conflict();
                 if ($data)
                 {
+                        $inc        = 1;
                         $header     = array(
+                            '#', 'id',
                             lang('index_subject_offer_start_th'),
                             lang('index_subject_offer_end_th'),
                             lang('index_subject_offer_days_th'),
@@ -42,6 +44,8 @@ class Create_subject_offer extends CI_Capstone_Controller
                         {
                                 $user = $this->User_model->get($subject_offer->user_id);
                                 array_push($table_data, array(
+                                    $inc++,
+                                    $subject_offer->subject_offer_id,
                                     my_htmlspecialchars(convert_24_to_12hrs($subject_offer->subject_offer_start)),
                                     my_htmlspecialchars(convert_24_to_12hrs($subject_offer->subject_offer_end)),
                                     my_htmlspecialchars(subject_offers_days($subject_offer)),
@@ -63,7 +67,6 @@ class Create_subject_offer extends CI_Capstone_Controller
         {
 
                 $this->form_validation->set_rules(array(
-                    //http://stackoverflow.com/questions/7440977/how-to-validate-time-input-in-codeigniter
                     array(
                         'label' => lang('create_subject_offer_start_label'),
                         'field' => 'subject_offer_start',

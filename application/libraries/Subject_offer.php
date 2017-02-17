@@ -75,43 +75,175 @@ class Subject_offer
                 }
         }
 
+        /**
+         * 
+         * @return boolean
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
         public function subject_offer_check_check_conflict()
         {
-                $or_where_foriegn = array();
-                $or_where_days    = array();
+                $foriegn_ids = array();
+                $days        = array();
 
+
+                $atleast_one_day = FALSE;
+                /**
+                 * populate days with value from input
+                 */
                 foreach ($this->input_data as $k => $v)
                 {
-                        $or_where_days[$k] = $v;
+                        if ($v)
+                        {
+                                $atleast_one_day = TRUE;
+                                $days[$k]        = $v;
+                        }
                 }
-                // $where_['subject_offer_start'] = $this->start;
-                //  $where_['subject_offer_end']   = $this->end;
-                $or_where_foriegn['user_id']    = $this->user_id;
-                $or_where_foriegn['room_id']    = $this->room_id;
-                $or_where_foriegn['subject_id'] = $this->subject_id;
-                $this->rs                       = $this->CI->db->select('*')->
-                        //----------
-                        group_start()->
-                        where('subject_offer_start >= ', $this->start)->
+                if (!$atleast_one_day)
+                {
+                        $this->CI->form_validation->set_message(
+                                'subject_offer_check_check_conflict', $this->error_strat_delimeter .
+                                'Days required.' .
+                                $this->error_end_delimeter);
+                        // return (bool) $this->affected_rows == 0;
+                        return FALSE;
+                }
+                $foriegn_ids['user_id']    = $this->user_id;
+                $foriegn_ids['room_id']    = $this->room_id;
+                $foriegn_ids['subject_id'] = $this->subject_id;
+                /**
+                 * 
+                 * generate a query
+                 * then get result set, for the view of conflict subject offer
+                 */
+                $this->rs                  = $this->CI->db->select('*')->
+                        //**********
+                        group_start()->//big start
+                        //::::::::::::::::::::::::::::::
+                        //----------------------------------------------------------------------------------1
+                        /**
+                         * 
+                         * input
+                         * AM                               PM
+                         *           |---------------|
+                         * |----------------|
+                         * 
+                         * db
+                         * 
+                         * 
+                         */
+                        #1
+                        or_group_start()->
+                        where('subject_offer_start <= ', $this->start)->
+                        where('subject_offer_start <= ', $this->end)->
+                        where('subject_offer_end > ', $this->start)->
                         where('subject_offer_end <= ', $this->end)->
                         group_end()->
-                        //----------
+                        //----------------------------------------------------------------------------------2
+
+                        /**
+                         * 
+                         * input
+                         * 
+                         *     |---------------|
+                         *            |------------------|
+                         * 
+                         * db
+                         * 
+                         * 
+                         */
+                        #2
                         or_group_start()->
-                        where($or_where_foriegn)->
+                        where('subject_offer_start >= ', $this->start)->
+                        where('subject_offer_start < ', $this->end)->
+                        where('subject_offer_end >= ', $this->start)->
+                        where('subject_offer_end >= ', $this->end)->
+                        group_end()->
+                        //----------------------------------------------------------------------------------3
+                        /**
+                         * 
+                         * input
+                         * 
+                         *         |---------------|
+                         * |--------------------------------|
+                         * 
+                         * db
+                         * 
+                         * 
+                         */
+                        #3
+                        or_group_start()->
+                        where('subject_offer_start <= ', $this->start)->
+                        where('subject_offer_start < ', $this->end)->
+                        where('subject_offer_end > ', $this->start)->
+                        where('subject_offer_end >= ', $this->end)->
+                        group_end()->
+                        //----------------------------------------------------------------------------------4
+                        /**
+                         * 
+                         * input
+                         * 
+                         *  |--------------------------------|
+                         *           |----------------|
+                         * 
+                         * db
+                         * 
+                         * 
+                         */
+                        #4
+                        or_group_start()->
+                        where('subject_offer_start >= ', $this->start)->
+                        where('subject_offer_start < ', $this->end)->
+                        where('subject_offer_end > ', $this->start)->
+                        where('subject_offer_end <= ', $this->end)->
+                        group_end()->
+                        //::::::::::::::::::::::::::::::
+                        //----------------------------------------------------------------------------------end
+
+
+
+                        group_end()->//big end
+                        //**********
+
+                        /**
+                         * 
+                         * 
+                         * user | room | subject
+                         * foreign key
+                         */
+                        group_start()->
+                        or_where($foriegn_ids)->
                         group_end()->
                         //------------
-                        or_group_start()->
-                        where($or_where_days)->
+
+                        /**
+                         * 
+                         * 
+                         * days
+                         */
+                        group_start()->
+                        or_where($days)->
                         group_end()->
-                        get($this->table); //->count_all_results();
-//                $this->CI->Subject_offer_model->where($where_)->get_all();
-                $this->affected_rows            = $this->CI->db->affected_rows();
-                $this->CI->form_validation->set_message('subject_offer_check_check_conflict', $this->error_strat_delimeter .
-                        'Confict ' . $this->affected_rows . ' schedules.[<pre>' . $this->CI->db->last_query() .'</pre>'.
-                        //   'Conflict Schedule, see table above.' .
+                        //-----------
+                        get($this->table);
+
+                /**
+                 * get affected row count
+                 */
+                $this->affected_rows = $this->CI->db->affected_rows();
+
+                /**
+                 * set error/invalid message
+                 */
+                $this->CI->form_validation->set_message(
+                        'subject_offer_check_check_conflict', $this->error_strat_delimeter .
+                        'Conflict ' . $this->affected_rows .
+                        ' schedules.' .
+                        //  . '<pre>' .
+                        // $this->CI->db->last_query() .
+                        // '</pre>' .
                         $this->error_end_delimeter);
-                // return (bool) $this->affected_rows == 0;
-                return FALSE;
+                return (bool) ($this->affected_rows == 0);
+                //return FALSE;
         }
 
         public function conflict()
