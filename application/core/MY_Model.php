@@ -858,6 +858,32 @@ class MY_Model extends CI_Model
         return FALSE;
     }
 
+    public function _get_joined($requested)
+    {
+        $this->_database->join($this->_relationships[$requested['request']]['foreign_table'], $this->table.'.'.$this->_relationships[$requested['request']]['local_key'].' = '.$this->_relationships[$requested['request']]['foreign_table'].'.'.$this->_relationships[$requested['request']]['foreign_key']);
+        $the_select = '';
+        if(!empty($requested['parameters']))
+        {
+            if(array_key_exists('fields',$requested['parameters']))
+            {
+                $fields = explode(',', $requested['parameters']['fields']);
+                $sub_select = array();
+                foreach ($fields as $field)
+                {
+                    $sub_select[] = ((strpos($field,'.')===FALSE) ? '`' . $this->_relationships[$requested['request']]['foreign_table'] . '`.`' . trim($field) . '`' : trim($field)).' AS '.$requested['request'].'_'.trim($field);
+                }
+                $the_select = implode(',', $sub_select);
+
+            }
+            else
+            {
+                $the_select = $this->_relationships[$requested['request']]['foreign_table'] . '.*';
+            }
+        }
+        $this->_database->select($the_select);
+        unset($this->_requested[$requested['request']]);
+    }
+
 
     /**
      * public function get()
@@ -884,9 +910,17 @@ class MY_Model extends CI_Model
             }
             if(!empty($this->_requested))
             {
+
                 foreach($this->_requested as $requested)
                 {
-                    $this->_database->select($this->_relationships[$requested['request']]['local_key']);
+                    if(isset($requested['parameters']['join']))
+                    {
+                        $this->_get_joined($requested);
+                    }
+                    else
+                    {
+                        $this->_database->select($this->_relationships[$requested['request']]['local_key']);
+                    }
                 }
             }
             if(isset($where))
@@ -953,7 +987,14 @@ class MY_Model extends CI_Model
             {
                 foreach($this->_requested as $requested)
                 {
-                    $this->_database->select($this->_relationships[$requested['request']]['local_key']);
+                    if(isset($requested['parameters']['join']))
+                    {
+                        $this->_get_joined($requested);
+                    }
+                    else
+                    {
+                        $this->_database->select($this->_relationships[$requested['request']]['local_key']);
+                    }
                 }
             }
             $query = $this->_database->get($this->table);
@@ -1074,7 +1115,7 @@ class MY_Model extends CI_Model
         {
             $pivot_table = NULL;
             $relation = $this->_relationships[$request['request']];
-            $this->load->model($relation['foreign_model']);
+            $this->load->model($relation['foreign_model'],$relation['foreign_model_name']);
             $foreign_key = $relation['foreign_key'];
             $local_key = $relation['local_key'];
             $foreign_table = $relation['foreign_table'];
@@ -1124,7 +1165,7 @@ class MY_Model extends CI_Model
             }
             if(!isset($pivot_table))
             {
-                $sub_results = $this->{$relation['foreign_model']};
+                $sub_results = $this->{$relation['foreign_model_name']};
                 $select = array();
                 $select[] = '`'.$foreign_table.'`.`'.$foreign_key.'`';
                 if(!empty($request['parameters']))
@@ -1346,15 +1387,16 @@ class MY_Model extends CI_Model
                 {
                     foreach($this->{$option} as $key => $relation)
                     {
+                        $single_query=false;
                         if(!is_array($relation))
                         {
                             $foreign_model = $relation;
                             $model = $this->_parse_model_dir($foreign_model);
                             $foreign_model = $model['foreign_model'];
-                            $model_dir = $model['model_dir'];
+                            //$model_dir = $model['model_dir'];
                             $foreign_model_name = $model['foreign_model_name'];
 
-                            $this->load->model($model_dir . $foreign_model_name);
+                            $this->load->model($foreign_model, $foreign_model_name);
                             $foreign_table = $this->{$foreign_model_name}->table;
                             $foreign_key = $this->{$foreign_model_name}->primary_key;
                             $local_key = $this->primary_key;
@@ -1368,20 +1410,20 @@ class MY_Model extends CI_Model
                             if($this->is_assoc($relation))
                             {
                                 $foreign_model = $relation['foreign_model'];
+                                $model = $this->_parse_model_dir($foreign_model);
+                                $foreign_model = $model['model_dir'].$model['foreign_model'];
+                                $foreign_model_name = $model['foreign_model_name'];
+
                                 if(array_key_exists('foreign_table',$relation))
                                 {
                                     $foreign_table = $relation['foreign_table'];
                                 }
                                 else
                                 {
-                                    $model = $this->_parse_model_dir($foreign_model);
-                                    $foreign_model = $model['foreign_model'];
-                                    $model_dir = $model['model_dir'];
-                                    $foreign_model_name = $model['foreign_model_name'];
-
-                                    $this->load->model($model_dir . $foreign_model_name);
+                                    $this->load->model($foreign_model, $foreign_model_name);
                                     $foreign_table = $this->{$foreign_model_name}->table;
                                 }
+
                                 $foreign_key = $relation['foreign_key'];
                                 $local_key = $relation['local_key'];
                                 if($option=='has_many_pivot')
@@ -1391,17 +1433,20 @@ class MY_Model extends CI_Model
                                     $pivot_foreign_key = (array_key_exists('pivot_foreign_key',$relation)) ? $relation['pivot_foreign_key'] : $foreign_table.'_'.$foreign_key;
                                     $get_relate = (array_key_exists('get_relate',$relation) && ($relation['get_relate']===TRUE)) ? TRUE : FALSE;
                                 }
+                                if($option=='has_one' && isset($relation['join']) && $relation['join']===true)
+                                {
+                                    $single_query=true;
+                                }
                             }
                             else
                             {
                                 $foreign_model = $relation[0];
                                 $model = $this->_parse_model_dir($foreign_model);
-                                $foreign_model = $model['foreign_model'];
-                                $model_dir = $model['model_dir'];
+                                $foreign_model = $model['model_dir'].$model['foreign_model'];
                                 $foreign_model_name = $model['foreign_model_name'];
 
-                                $this->load->model($model_dir . $foreign_model_name);
-                                $foreign_table = $this->{$foreign_model_name}->table;
+                                $this->load->model($foreign_model);
+                                $foreign_table = $this->{$foreign_model}->table;
                                 $foreign_key = $relation[1];
                                 $local_key = $relation[2];
                                 if($option=='has_many_pivot')
@@ -1421,7 +1466,7 @@ class MY_Model extends CI_Model
                             $pivot_table = $tables[0].'_'.$tables[1];
                         }
 
-                        $this->_relationships[$key] = array('relation' => $option, 'relation_key' => $key, 'foreign_model' => strtolower($foreign_model), 'foreign_table' => $foreign_table, 'foreign_key' => $foreign_key, 'local_key' => $local_key);
+                        $this->_relationships[$key] = array('relation' => $option, 'relation_key' => $key, 'foreign_model' => strtolower($foreign_model), 'foreign_model_name'=>strtolower($foreign_model_name), 'foreign_table' => $foreign_table, 'foreign_key' => $foreign_key, 'local_key' => $local_key);
                         if($option == 'has_many_pivot')
                         {
                             $this->_relationships[$key]['pivot_table'] = $pivot_table;
@@ -1429,10 +1474,15 @@ class MY_Model extends CI_Model
                             $this->_relationships[$key]['pivot_foreign_key'] = $pivot_foreign_key;
                             $this->_relationships[$key]['get_relate'] = $get_relate;
                         }
+                        if($single_query===true)
+                        {
+                            $this->_relationships[$key]['joined'] = true;
+                        }
                     }
                 }
             }
         }
+
     }
 
     /** END RELATIONSHIPS */
@@ -1503,7 +1553,7 @@ class MY_Model extends CI_Model
 
     /**
      * public function with_trashed()
-     * Sets $_trashed to TRUE
+     * Sets $_trashed to with
      */
     public function with_trashed()
     {
@@ -1512,8 +1562,18 @@ class MY_Model extends CI_Model
     }
 
     /**
+     * public function without_trashed()
+     * Sets $_trashed to without
+     */
+    public function without_trashed()
+    {
+        $this->_trashed = 'without';
+        return $this;
+    }
+
+    /**
      * public function with_trashed()
-     * Sets $_trashed to TRUE
+     * Sets $_trashed to only
      */
     public function only_trashed()
     {
@@ -1526,15 +1586,15 @@ class MY_Model extends CI_Model
         switch($this->_trashed)
         {
             case 'only' :
-                $this->_database->where($this->_deleted_at_field.' IS NOT NULL', NULL, FALSE);
+                $this->_database->where($this->table.'.'.$this->_deleted_at_field.' IS NOT NULL', NULL, FALSE);
                 break;
             case 'without' :
-                $this->_database->where($this->_deleted_at_field.' IS NULL', NULL, FALSE);
+                $this->_database->where($this->table.'.'.$this->_deleted_at_field.' IS NULL', NULL, FALSE);
                 break;
             case 'with' :
                 break;
         }
-        $this->_trashed = '';
+        //$this->_trashed = ''; issue #208...
         return $this;
     }
 
@@ -1966,7 +2026,7 @@ class MY_Model extends CI_Model
     private function _parse_model_dir($foreign_model)
     {
         $data['foreign_model']      = $foreign_model;
-        $data['model_dir']          = NULL;
+        $data['model_dir']          = '';
 
         $full_model = explode('/', $data['foreign_model']);
         if ($full_model) {
@@ -1975,7 +2035,9 @@ class MY_Model extends CI_Model
             $data['model_dir'] = str_replace($data['foreign_model'], null, implode('/', $full_model));
         }
 
-        $data['foreign_model_name'] = strtolower($data['foreign_model']);
+        $foreign_model_name = str_replace('/','_',$data['model_dir'].$data['foreign_model']);
+
+        $data['foreign_model_name'] = strtolower($foreign_model_name);
 
         return $data;
     }
