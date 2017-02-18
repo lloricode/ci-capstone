@@ -443,7 +443,7 @@ class Ion_auth
 	{
 		$this->ion_auth_model->trigger_events('logged_in');
 
-       return $this->ion_auth_model->recheck_session();
+        return $this->ion_auth_model->recheck_session();
 	}
 
 	/**
