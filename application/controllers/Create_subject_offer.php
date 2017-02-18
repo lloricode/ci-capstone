@@ -22,9 +22,10 @@ class Create_subject_offer extends CI_Capstone_Controller
 
         public function subject_offer_check_check_conflict()
         {
-                $this->load->library('subject_offer');
                 $this->load->helper('day');
                 $this->load->model(array('User_model', 'Subject_model', 'Room_model'));
+                $this->load->library('subject_offer');
+                $this->subject_offer->init('post');
                 $conflic = $this->subject_offer->subject_offer_check_check_conflict();
                 $data    = $this->subject_offer->conflict();
                 if ($data)

@@ -23,7 +23,7 @@ class Subject_offer
          *
          * @var array inputs
          */
-        private $input_data;
+        private $input_data_days;
 
         /**
          *
@@ -41,37 +41,78 @@ class Subject_offer
          */
         private $affected_rows;
         private $rs;
+        private $enable_migrate;
 
         public function __construct()
         {
+                $this->enable_migrate        = FALSE;
                 $this->table                 = 'subject_offers';
-                $this->days                  = array(
-                    'monday',
-                    'tuesday',
-                    'wednesday',
-                    'thursday',
-                    'friday',
-                    'saturday',
-                    'sunday',
-                );
                 $this->CI                    = &get_instance();
                 $this->CI->load->model(array(
                     'Subject_offer_model'
                 ));
+                $this->CI->load->helper(array(
+                    'day'
+                ));
                 $this->error_strat_delimeter = $this->CI->config->item('error_start_delimiter', 'ion_auth');
                 $this->error_end_delimeter   = $this->CI->config->item('error_end_delimiter', 'ion_auth');
+                $this->days                  = days_for_db();
+        }
+
+        public function init($method = NULL)
+        {
+                if (is_null($method))
+                {
+                        show_error('init method required in ' . get_class() . ' class.');
+                }
+                switch ($method)
+                {
+                        case 'post':
+                                $this->post();
+                                break;
+                        case 'migrate':
+                                $this->enable_migrate = TRUE;
+                                break;
+                        default :
+                                show_error('parameter invalid in ' . get_class() . ' class.');
+                }
+        }
+
+        private function post()
+        {
                 /**
                  * set foreign ids
                  */
-                $this->user_id               = $this->CI->input->post('user_id', TRUE);
-                $this->room_id               = $this->CI->input->post('room_id', TRUE);
-                $this->subject_id            = $this->CI->input->post('subject_id', TRUE);
-                $this->start                 = $this->CI->input->post('subject_offer_start', TRUE);
-                $this->end                   = $this->CI->input->post('subject_offer_end', TRUE);
+                $this->user_id    = $this->CI->input->post('user_id', TRUE);
+                $this->room_id    = $this->CI->input->post('room_id', TRUE);
+                $this->subject_id = $this->CI->input->post('subject_id', TRUE);
+                $this->start      = $this->CI->input->post('subject_offer_start', TRUE);
+                $this->end        = $this->CI->input->post('subject_offer_end', TRUE);
 
                 foreach ($this->days as $v)
                 {
-                        $this->input_data['subject_offer_' . $v] = (is_null($this->CI->input->post('subject_offer_' . $v, TRUE)) ? FALSE : TRUE);
+                        $this->input_data_days['subject_offer_' . $v] = (is_null($this->CI->input->post('subject_offer_' . $v, TRUE)) ? FALSE : TRUE);
+                }
+        }
+
+        public function migrate_test($sub_offr)
+        {
+                if (!$this->enable_migrate)
+                {
+                        show_error('must enable migrate test in ' . get_class() . ' class.');
+                }
+                /**
+                 * set foreign ids
+                 */
+                $this->user_id    = $sub_offr['user_id'];
+                $this->room_id    = $sub_offr['room_id'];
+                $this->subject_id = $sub_offr['subject_id'];
+                $this->start      = $sub_offr['subject_offer_start'];
+                $this->end        = $sub_offr['subject_offer_end'];
+
+                foreach ($this->days as $v)
+                {
+                        $this->input_data_days['subject_offer_' . $v] = $sub_offr['subject_offer_' . $v];
                 }
         }
 
@@ -90,7 +131,7 @@ class Subject_offer
                 /**
                  * populate days with value from input
                  */
-                foreach ($this->input_data as $k => $v)
+                foreach ($this->input_data_days as $k => $v)
                 {
                         if ($v)
                         {
@@ -100,11 +141,14 @@ class Subject_offer
                 }
                 if (!$atleast_one_day)
                 {
-                        $this->CI->form_validation->set_message(
-                                'subject_offer_check_check_conflict', $this->error_strat_delimeter .
-                                'Days required.' .
-                                $this->error_end_delimeter);
-                        // return (bool) $this->affected_rows == 0;
+                        if (!$this->enable_migrate)
+                        {
+
+                                $this->CI->form_validation->set_message(
+                                        'subject_offer_check_check_conflict', $this->error_strat_delimeter .
+                                        'Days required.' .
+                                        $this->error_end_delimeter);
+                        }
                         return FALSE;
                 }
                 $foriegn_ids['user_id']    = $this->user_id;
@@ -234,14 +278,18 @@ class Subject_offer
                 /**
                  * set error/invalid message
                  */
-                $this->CI->form_validation->set_message(
-                        'subject_offer_check_check_conflict', $this->error_strat_delimeter .
-                        'Conflict ' . $this->affected_rows .
-                        ' schedules.' .
-                        //  . '<pre>' .
-                        // $this->CI->db->last_query() .
-                        // '</pre>' .
-                        $this->error_end_delimeter);
+                if (!$this->enable_migrate)
+                {
+                        $this->CI->form_validation->set_message(
+                                'subject_offer_check_check_conflict', $this->error_strat_delimeter .
+                                'Conflict ' . $this->affected_rows .
+                                ' schedules.' .
+                                //  . '<pre>' .
+                                // $this->CI->db->last_query() .
+                                // '</pre>' .
+                                $this->error_end_delimeter);
+                }
+
                 return (bool) ($this->affected_rows == 0);
                 //return FALSE;
         }

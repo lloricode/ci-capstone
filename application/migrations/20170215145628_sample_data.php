@@ -27,26 +27,35 @@ class Migration_Sample_data extends CI_Migration
         private $room_count;
         private $subject_count;
         private $courses_count;
+        private $enable;
 
         public function __construct($config = array())
         {
                 parent::__construct($config);
-
+                /**
+                 * set this TRU if you want to enable
+                 */
+                $this->enable     = FALSE;
                 /**
                  * set counts
                  */
-                $this->user_count          = 100;
-                $this->student_count       = 100;
-                $this->educaton_count      = 100;
-                $this->subject_offer_count = 100;
-                $this->room_count          = 100;
-                $this->subject_count       = 100;
-                $this->courses_count       = 100;
+                $this->user_count = 2;
+
+                /**
+                 * this will be use if you set enable for migration sample data  |>>>> $this->enable = FALSE;
+                 */
+                $this->student_count       = 1000;
+                $this->educaton_count      = 1000;
+                $this->subject_offer_count = 1000;
+                $this->room_count          = 1000;
+                $this->subject_count       = 1000;
+                $this->courses_count       = 1000;
 
                 /**
                  * loading needed files
                  */
-                $this->load->helper(array('array', 'string', 'navigation', 'time'));
+                $this->load->library(array('school_id', 'subject_offer'));
+                $this->load->helper(array('array', 'string', 'navigation', 'time', 'day'));
                 $this->load->model(array(
                     'Student_model',
                     'Enrollment_model',
@@ -60,7 +69,6 @@ class Migration_Sample_data extends CI_Migration
                     'Permission_model',
                     'Controller_model'
                 ));
-                $this->load->library('school_id');
         }
 
         public function up()
@@ -69,21 +77,25 @@ class Migration_Sample_data extends CI_Migration
                     1, 2, 3, 4, 5
                 );
 
-                $this->users();
-                $this->enrollment_ids = array();
-                $this->education();
-                $this->course();
-                $this->subjects();
-                $this->rooms();
-                $this->subject_offer();
-                for ($i = 1; $i <= $this->student_count; $i++)
+                if ($this->enable)
                 {
+                        $this->users();
+                        $this->enrollment_ids = array();
+                        $this->education();
+                        $this->course();
+                        $this->subjects();
+                        $this->rooms();
+                        $this->subject_offer();
+                        for ($i = 1; $i <= $this->student_count; $i++)
+                        {
 
-                        $this->school_id->initialize();
-                        $this->enrollment_ids[] = $this->student($this->school_id->generate(), $i);
+                                $this->school_id->initialize();
+                                $this->enrollment_ids[] = $this->student($this->school_id->generate(), $i);
+                        }
+
+                        $this->student_subjects();
                 }
-
-                $this->student_subjects();
+                $this->users();
                 $this->controllers();
                 $this->permission();
         }
@@ -200,7 +212,6 @@ class Migration_Sample_data extends CI_Migration
                 }
         }
 
-
         private function subject_offer()
         {
                 $subj_offr_arr = array();
@@ -215,7 +226,7 @@ class Migration_Sample_data extends CI_Migration
                         unset($t_list[0]);
                         $end    = convert_12_to_24hrs(random_element($t_list));
 
-                        $subj_offr_arr[] = array(
+                        $sub_ofrr = array(
                             'subject_offer_start'     => convert_12_to_24hrs($start),
                             'subject_offer_end'       => $end,
                             //days
@@ -233,9 +244,48 @@ class Migration_Sample_data extends CI_Migration
                             //--
                             'created_user_id'         => random_element($this->user_ids)
                         );
+
+                        /**
+                         * check atleast one day
+                         */
+                        if ($this->atleast_one_day($sub_ofrr))
+                        {
+                                $i--;
+                                continue;
+                        }
+
+                        /**
+                         * check conflict
+                         */
+                        if (!$this->check_conflict($sub_ofrr))
+                        {
+                                $i--;
+                                continue;
+                        }
+
+                        $subj_offr_arr[] = $sub_ofrr;
                 }
 
                 $this->subject_offer_ids = $this->Subject_offer_model->insert($subj_offr_arr);
+        }
+
+        private function check_conflict($sub_offr)
+        {
+                $this->subject_offer->init('migrate');
+                $this->subject_offer->migrate_test($sub_offr);
+                return $this->subject_offer->subject_offer_check_check_conflict();
+        }
+
+        private function atleast_one_day($sub_offr)
+        {
+                foreach (days_for_db() as $d)
+                {
+                        if ($sub_offr['subject_offer_' . $d])
+                        {
+                                return TRUE;
+                        }
+                }
+                return FALSE;
         }
 
         private function rooms()
