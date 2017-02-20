@@ -57,6 +57,8 @@ class MY_Controller extends CI_Controller
          * 
          * ,this is set hook in constructor in auth controller
          * 
+         * 
+         * i put here htis method to controller, to prevent acces via url, because private is cannot in ion auth hook
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          * 
          */
@@ -76,12 +78,9 @@ class CI_Capstone_Controller extends MY_Controller
         function __construct()
         {
                 parent::__construct();
-                if ($this->migration->latest())
+                if (!$this->ion_auth->logged_in())
                 {
-                        if (!$this->ion_auth->logged_in())
-                        {
-                                redirect(base_url('auth/login'), 'refresh');
-                        }
+                        redirect(base_url('auth/login'), 'refresh');
                 }
                 /**
                  * check permission
