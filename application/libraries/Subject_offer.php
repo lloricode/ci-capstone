@@ -26,12 +26,6 @@ class Subject_offer
         private $input_data_days;
 
         /**
-         *
-         * database table
-         */
-        private $table;
-
-        /**
          * fields
          */
         private $days;
@@ -46,7 +40,6 @@ class Subject_offer
         public function __construct()
         {
                 $this->enable_migrate        = FALSE;
-                $this->table                 = 'subject_offers';
                 $this->CI                    = &get_instance();
                 $this->CI->load->model(array(
                     'Subject_offer_model'
@@ -283,10 +276,10 @@ class Subject_offer
                         $this->CI->form_validation->set_message(
                                 'subject_offer_check_check_conflict', $this->error_strat_delimeter .
                                 'Conflict ' . $this->affected_rows .
-                                ' schedules.' .
-                                '<pre>' .
-                                $this->CI->db->last_query() .
-                                '</pre>' .
+//                                ' schedules.' .
+//                                '<pre>' .
+//                                $this->CI->db->last_query() .
+//                                '</pre>' .
                                 $this->error_end_delimeter);
                 }
 
