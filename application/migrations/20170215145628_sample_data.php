@@ -35,15 +35,14 @@ class Migration_Sample_data extends CI_Migration
                 /**
                  * set this TRU if you want to enable
                  */
-                $this->enable     = FALSE;
+                $this->enable              = FALSE;
                 /**
                  * set counts
                  */
-                $this->user_count = 2;
-
                 /**
                  * this will be use if you set enable for migration sample data  |>>>> $this->enable = FALSE;
                  */
+                $this->user_count          = 2;
                 $this->student_count       = 1000;
                 $this->educaton_count      = 1000;
                 $this->subject_offer_count = 1000;
@@ -73,12 +72,12 @@ class Migration_Sample_data extends CI_Migration
 
         public function up()
         {
-                $this->randnum = array(
-                    1, 2, 3, 4, 5
-                );
 
                 if ($this->enable)
                 {
+                        $this->randnum        = array(
+                            1, 2, 3, 4, 5
+                        );
                         $this->users();
                         $this->enrollment_ids = array();
                         $this->education();
@@ -94,8 +93,8 @@ class Migration_Sample_data extends CI_Migration
                         }
 
                         $this->student_subjects();
+                        $this->users();
                 }
-                $this->users();
                 $this->controllers();
                 $this->permission();
         }
@@ -109,13 +108,11 @@ class Migration_Sample_data extends CI_Migration
                         $data_con_arr[] = array(
                             'controller_name'        => $v,
                             'controller_description' => ucwords(str_replace('-', ' ', $v)) . ' Description',
-                            'created_user_id'        => random_element($this->user_ids)
                         );
                 }
                 $data_con_arr[]       = array(
                     'controller_name'        => '',
                     'controller_description' => 'Default Controller Description',
-                    'created_user_id'        => random_element($this->user_ids)
                 );
                 $this->controller_ids = $this->Controller_model->insert($data_con_arr);
         }
@@ -126,9 +123,8 @@ class Migration_Sample_data extends CI_Migration
                 foreach ($this->controller_ids as $v)
                 {
                         $per_arr[] = array(
-                            'controller_id'   => $v,
-                            'group_id'        => 1,
-                            'created_user_id' => random_element($this->user_ids),
+                            'controller_id' => $v,
+                            'group_id'      => 1,
                         );
                 }
 

@@ -116,7 +116,7 @@ class Students extends CI_Capstone_Controller
                  * check url with id,tehn get studewnt row
                  */
                 $this->student->get($this->input->get('student-id'));
-                $this->breadcrumbs->unshift(3, 'View Student', 'students/view?student-id=' . $this->student->id);
+                $this->breadcrumbs->unshift(3, 'View Student [ ' . $this->student->school_id . ' ]', 'students/view?student-id=' . $this->student->id);
                 /**
                  * setting up page for pagination
                  */

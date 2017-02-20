@@ -50,6 +50,24 @@ class MY_Controller extends CI_Controller
                 }
         }
 
+        /**
+         * this will call using 
+         * $this->trigger_events(array(_____ , 'post_login_successful')); line 1012 :Ion_auth_model.php
+         * in success login
+         * 
+         * ,this is set hook in constructor in auth controller
+         * 
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         * 
+         */
+        public function insert_last_login()
+        {
+                $this->load->model('Users_last_login_model');
+                return (bool) $this->Users_last_login_model->insert(array(
+                            'user_id' => $this->ion_auth->user()->row()->id
+                ));
+        }
+
 }
 
 class CI_Capstone_Controller extends MY_Controller
@@ -58,9 +76,12 @@ class CI_Capstone_Controller extends MY_Controller
         function __construct()
         {
                 parent::__construct();
-                if (!$this->ion_auth->logged_in())
+                if ($this->migration->latest())
                 {
-                        redirect(base_url('auth/login'), 'refresh');
+                        if (!$this->ion_auth->logged_in())
+                        {
+                                redirect(base_url('auth/login'), 'refresh');
+                        }
                 }
                 /**
                  * check permission
@@ -101,6 +122,12 @@ class CI_Capstone_Controller extends MY_Controller
                 $this->_render_page('template', $this->template);
         }
 
+        /**
+         * this will display all user_group of current user in top, beside of user detail in name,last name, 
+         * 
+         * @return string | all user_group of current logged user
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
         private function current_gruop_string()
         {
                 $return = '';
@@ -127,6 +154,30 @@ class CI_Capstone_Controller extends MY_Controller
                     'table_open' => $this->config->item($table_config),
                 ));
                 return $this->table->generate($data);
+        }
+
+        /**
+         * this will call using 
+         * $this->trigger_events(array(_____ , 'post_update_user_successful')); line 1664 :Ion_auth_model.php
+         * in success login
+         * 
+         * ,this is set hook in constructor in edit_user controller
+         * 
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         * 
+         */
+        public function add_update_at_data_user_column($table, $user_id)
+        {
+                /**
+                 * not using core My_Model, because, we needed is updated_at to be update
+                 */
+                /**
+                 * for very spcific, we use table set in ion auth config,
+                 * see on set hook in edit_user controller
+                 */
+                return (bool) $this->db->update($table, array(
+                            'updated_at' => time()
+                                ), array('id' => $user_id));
         }
 
 }

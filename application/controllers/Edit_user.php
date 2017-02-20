@@ -13,6 +13,16 @@ class Edit_user extends CI_Capstone_Controller
                 $this->breadcrumbs->unshift(2, 'Users', 'users');
         }
 
+        private function set_hook($user_id)
+        {
+                /**
+                 * set hook for add data in update_at, after success updating data
+                 */
+                $this->ion_auth->set_hook(
+                        'post_update_user_successful', 'update_at', $this/* $this because the class already extended */, 'add_update_at_data_user_column', array($this->ion_auth_model->tables['users'], $user_id)
+                );
+        }
+
         public function index()
         {
 
@@ -27,15 +37,16 @@ class Edit_user extends CI_Capstone_Controller
 
                 $user = $this->ion_auth->user($user_id)->row();
 
+                $this->set_hook($user->id);
                 if (!$user)
                 {
                         show_error('Invalid request.');
                 }
 
-                $this->breadcrumbs->unshift(3, 'Edit User [ ' . $user->last_name . ', ' . $user->first_name . ' ]', 'edit-user?user-id=' . $user_id);
+                $this->breadcrumbs->unshift(3, 'Edit User [ ' . $user->last_name . ', ' . $user->first_name . ' ]', 'edit-user?user-id=' . $user->id);
 
                 $groups        = $this->ion_auth->groups()->result_array();
-                $currentGroups = $this->ion_auth->get_users_groups($user_id)->result();
+                $currentGroups = $this->ion_auth->get_users_groups($user->id)->result();
 
                 //just 
                 // validate form input

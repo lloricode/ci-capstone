@@ -15,6 +15,13 @@ class Auth extends MY_Controller
                 $this->form_validation->set_error_delimiters(
                         $this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth')
                 );
+
+                /**
+                 * set hook for insert user last login data after success login,
+                 */
+                $this->ion_auth->set_hook(
+                        'post_login_successful', 'insert_last_login', $this/* $this because the class already extended */, 'insert_last_login', array()
+                );
         }
 
         public function index()

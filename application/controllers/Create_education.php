@@ -31,7 +31,7 @@ class Create_education extends CI_Capstone_Controller
                     array(
                         'label' => lang('create_education_description_label'),
                         'field' => 'education_description',
-                        'rules' => 'trim|required|human_name|min_length[2]|max_length[50]',
+                        'rules' => 'trim|required|human_name|min_length[2]|max_length[50]|is_unique[educations.education_description]',
                     )
                 ));
 
@@ -46,7 +46,7 @@ class Create_education extends CI_Capstone_Controller
                         if ($this->Education_model->insert($education))
                         {
                                 $this->session->set_flashdata('message', $this->config->item('message_start_delimiter', 'ion_auth') . lang('create_education_succesfully_added_message') . $this->config->item('message_end_delimiter', 'ion_auth'));
-                                redirect(base_url('educations'), 'refresh');
+                             //   redirect(base_url('educations'), 'refresh');
                         }
                 }
 

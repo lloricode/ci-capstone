@@ -303,7 +303,7 @@ class Create_student extends CI_Capstone_Controller
                                         /**
                                          * redirecting in current_url
                                          */
-                                        redirect(current_url(), 'refresh');
+                                        redirect(base_url('students/view?student-id=' . $returned_student_id), 'refresh');
                                 }
                                 else
                                 {
