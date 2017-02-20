@@ -40,7 +40,7 @@ class Subject_offer
          * 
          */
         private $affected_rows;
-        private $rs;
+        private $subject_offer_conflict_result_object;
         private $enable_migrate;
 
         public function __construct()
@@ -151,15 +151,15 @@ class Subject_offer
                         }
                         return FALSE;
                 }
-                $foriegn_ids['user_id']    = $this->user_id;
-                $foriegn_ids['room_id']    = $this->room_id;
-                $foriegn_ids['subject_id'] = $this->subject_id;
+                $foriegn_ids['user_id']                     = $this->user_id;
+                $foriegn_ids['room_id']                     = $this->room_id;
+                $foriegn_ids['subject_id']                  = $this->subject_id;
                 /**
                  * 
                  * generate a query
                  * then get result set, for the view of conflict subject offer
                  */
-                $this->rs                  = $this->CI->db->select('*')->
+                $this->subject_offer_conflict_result_object = $this->CI->Subject_offer_model->
                         //**********
                         group_start()->//big start
                         //::::::::::::::::::::::::::::::
@@ -268,7 +268,7 @@ class Subject_offer
                         or_where($days)->
                         group_end()->
                         //-----------
-                        get($this->table);
+                        get_all();
 
                 /**
                  * get affected row count
@@ -284,9 +284,9 @@ class Subject_offer
                                 'subject_offer_check_check_conflict', $this->error_strat_delimeter .
                                 'Conflict ' . $this->affected_rows .
                                 ' schedules.' .
-                                //  . '<pre>' .
-                                // $this->CI->db->last_query() .
-                                // '</pre>' .
+                                '<pre>' .
+                                $this->CI->db->last_query() .
+                                '</pre>' .
                                 $this->error_end_delimeter);
                 }
 
@@ -299,7 +299,7 @@ class Subject_offer
                 $sub_off = array();
                 if ($this->affected_rows > 0)
                 {
-                        foreach ($this->rs->result() as $row)
+                        foreach ($this->subject_offer_conflict_result_object as $row)
                         {
                                 $sub_off[] = $this->CI->Subject_offer_model->get($row->subject_offer_id);
                         }

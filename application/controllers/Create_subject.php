@@ -45,7 +45,6 @@ class Create_subject extends CI_Capstone_Controller
                             'subject_code'        => $this->input->post('subject_code', TRUE),
                             'subject_description' => $this->input->post('subject_description', TRUE),
                             'subject_unit'        => $this->input->post('subject_unit', TRUE),
-                            'course_id'           => $this->input->post('course_id', TRUE),
                             'created_user_id'     => $this->ion_auth->user()->row()->id
                         );
                         $this->load->model('Subject_model');
