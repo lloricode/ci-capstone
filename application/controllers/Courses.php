@@ -5,14 +5,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Courses extends CI_Capstone_Controller
 {
 
+
         private $page_;
         private $limit;
 
         function __construct()
         {
                 parent::__construct();
-                $this->lang->load('ci_courses');
-                $this->load->model('Course_model');
+                $this->lang->load(array('ci_courses', 'ci_educations'));
+                $this->load->model(array('Course_model', 'Education_model'));
                 $this->load->library('pagination');
 
                 /**
@@ -50,6 +51,8 @@ class Courses extends CI_Capstone_Controller
                                 array_push($table_data, array(
                                     my_htmlspecialchars($course->course_code),
                                     my_htmlspecialchars($course->course_description),
+                                    my_htmlspecialchars($course->course_code_id),
+                                    my_htmlspecialchars($this->Education_model->get($course->education_id)->education_code),
                                 ));
                         }
                 }
@@ -61,7 +64,9 @@ class Courses extends CI_Capstone_Controller
                  */
                 $header = array(
                     lang('index_course_code_th'),
-                    lang('index_course_desc_th')
+                    lang('index_course_desc_th'),
+                    lang('index_course_code_id_th'),
+                    lang('index_education_code_th')
                 );
 
                 /**

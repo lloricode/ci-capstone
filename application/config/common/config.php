@@ -20,6 +20,22 @@ $config['current_year_footer'] = '2017';
 
 /**
  * this is for school id generator
- */;
+ */
 $config['school_year_start'] = 6; //JUNE
 $config['school_year_end']   = 5; //MAY
+
+/**
+ * automatically first semester is start of class
+ */
+$config['first_semester_start']  = $config['school_year_start'];
+$config['second_semester_start'] = 10; //oct
+$config['summer_semester_start'] = 4;
+
+/**
+ * id generator version
+ * 
+ * version 1 | YYYY-1234 - sample 2017-0312
+ * version 2 | course-1234 - sample: 06-3456
+ */
+$config['version_id_generator']      = 2;
+$config['start_id_number_generator'] = 0;

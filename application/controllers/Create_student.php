@@ -16,6 +16,24 @@ class Create_student extends CI_Capstone_Controller
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span>');
                 $this->breadcrumbs->unshift(2, 'Students', 'students');
                 $this->breadcrumbs->unshift(3, 'Enroll Student', 'create-student');
+
+                $this->load->library('school_id');
+                $this->_get_school_id_code();
+        }
+
+        private function _get_school_id_code($course_id = NULL)
+        {
+                if (!is_null($course_id))
+                {
+                        $this->load->model('Course_model');
+                        $tmp = $this->Course_model->get($course_id)->course_code_id;
+
+                        $this->school_id->initialize($tmp);
+                }
+                else
+                {
+                        $this->school_id->initialize();
+                }
         }
 
         public function index()
@@ -39,11 +57,11 @@ class Create_student extends CI_Capstone_Controller
                         'field' => 'student_lastname',
                         'rules' => 'trim|required|human_name|min_length[1]|max_length[30]',
                     ),
-                    array(
-                        'label' => lang('index_student_school_id_th'),
-                        'field' => 'student_school_id',
-                        'rules' => 'trim|required|exact_length[9]|is_unique[students.student_school_id]|school_id',
-                    ),
+//                    array(
+//                        'label' => lang('index_student_school_id_th'),
+//                        'field' => 'student_school_id',
+//                        'rules' => 'trim|required|exact_length[9]|is_unique[students.student_school_id]|school_id',
+//                    ),
                     array(
                         'label' => lang('index_student_gender_th'),
                         'field' => 'student_gender',
@@ -216,6 +234,8 @@ class Create_student extends CI_Capstone_Controller
                  */
                 if ($run__ && $uploaded)
                 {
+
+                        $this->_get_school_id_code($this->input->post('course_id', TRUE));
                         /**
                          * preparing data into array
                          */
@@ -224,7 +244,7 @@ class Create_student extends CI_Capstone_Controller
                             'student_firstname'               => $this->input->post('student_firstname', TRUE),
                             'student_middlename'              => $this->input->post('student_middlename', TRUE),
                             'student_lastname'                => $this->input->post('student_lastname', TRUE),
-                            'student_school_id'               => $this->input->post('student_school_id', TRUE),
+                            'student_school_id'               => $this->school_id->generate(),
                             'student_gender'                  => $this->input->post('student_gender', TRUE),
                             'student_permanent_address'       => $this->input->post('student_permanent_address', TRUE),
                             'student_birthdate'               => $this->input->post('student_birthdate', TRUE),
@@ -320,8 +340,6 @@ class Create_student extends CI_Capstone_Controller
                  */
                 $this->load->model('Course_model');
                 $this->load->helper('combobox');
-                $this->load->library('school_id');
-                $this->school_id->initialize();
 
 
                 $this->data['message'] = $image_error_message . ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message'));
@@ -346,10 +364,10 @@ class Create_student extends CI_Capstone_Controller
                     'id'    => 'student_lastname',
                     'value' => $this->form_validation->set_value('student_lastname'),
                 );
-
-                $this->data['student_school_id'] = array(
-                    'student_school_id' => $this->school_id->generate()
-                );
+//
+//                $this->data['student_school_id'] = array(
+//                    'student_school_id' => $this->school_id->generate()
+//                );
 
                 $this->data['student_gender']    = array(
                     'name'  => 'student_gender',
@@ -394,7 +412,7 @@ class Create_student extends CI_Capstone_Controller
                     'name'     => 'student_school_id_temp',
                     'id'       => 'student_school_id_temp',
                     'disabled' => '',
-                    'value'    => $this->school_id->generate(),
+                    'value'    => $this->school_id->temporary_id(),
                 );
                 $this->data['course_id_value']           = $this->Course_model->as_dropdown('course_code')->get_all();
 

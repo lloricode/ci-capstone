@@ -1,7 +1,7 @@
 <?php
 echo form_open_multipart(base_url("create-student/index"), array(
     'class' => 'form-horizontal'
-        ), $student_school_id);
+        ));echo validation_errors();
 ?>
 <?php echo (isset($message)) ? $message : ''; ?>
 <div class="container-fluid">

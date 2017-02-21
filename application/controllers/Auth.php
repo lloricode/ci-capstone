@@ -54,11 +54,7 @@ class Auth extends MY_Controller
          */
         private function check_log()
         {
-                if ($this->ion_auth->is_admin())
-                {
-                        redirect('home', 'refresh');
-                }
-                else if ($this->ion_auth->logged_in())
+                if ($this->ion_auth->logged_in())
                 {
                         redirect('/', 'refresh');
                 }

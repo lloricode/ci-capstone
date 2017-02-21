@@ -25,18 +25,23 @@ class Create_course extends CI_Capstone_Controller
         {
                 $this->form_validation->set_rules(array(
                     array(
-                        'label' => lang('create_course_code_label'),
-                        'field' => 'course_code',
+                        'label' => lang('index_course_code_th'),
+                        'field' => 'code',
                         'rules' => 'trim|required|human_name|min_length[2]|max_length[50]',
                     ),
                     array(
-                        'label' => lang('create_course_description_label'),
-                        'field' => 'course_description',
+                        'label' => lang('index_course_desc_th'),
+                        'field' => 'desc',
                         'rules' => 'trim|required|human_name|min_length[2]|max_length[50]',
+                    ),
+                    array(
+                        'label' => lang('index_course_code_id_th'),
+                        'field' => 'id',
+                        'rules' => 'trim|required|min_length[2]|max_length[5]',
                     ),
                     array(
                         'label' => lang('index_course_education_th'),
-                        'field' => 'education_id',
+                        'field' => 'educ',
                         'rules' => 'trim|required|is_natural_no_zero',
                     ),
                 ));
@@ -44,9 +49,10 @@ class Create_course extends CI_Capstone_Controller
                 if ($this->form_validation->run())
                 {
                         $course = array(
-                            'course_code'        => $this->input->post('course_code', TRUE),
-                            'course_description' => $this->input->post('course_description', TRUE),
-                            'education_id'       => $this->input->post('education_id', TRUE),
+                            'course_code'        => $this->input->post('code', TRUE),
+                            'course_description' => $this->input->post('desc', TRUE),
+                            'education_id'       => $this->input->post('educ', TRUE),
+                            'course_code_id'     => $this->input->post('id', TRUE),
                             'created_user_id'    => $this->ion_auth->user()->row()->id
                         );
                         $this->load->model('Course_model');
@@ -59,16 +65,22 @@ class Create_course extends CI_Capstone_Controller
                 $this->load->model('Education_model');
                 $this->data['message']            = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
                 $this->data['course_code']        = array(
-                    'name'  => 'course_code',
-                    'id'    => 'course_code',
+                    'name'  => 'code',
+                    'id'    => 'code',
                     'type'  => 'text',
-                    'value' => $this->form_validation->set_value('course_code'),
+                    'value' => $this->form_validation->set_value('code'),
                 );
                 $this->data['course_description'] = array(
-                    'name'  => 'course_description',
-                    'id'    => 'course_description',
+                    'name'  => 'desc',
+                    'id'    => 'desc',
                     'type'  => 'text',
-                    'value' => $this->form_validation->set_value('course_description'),
+                    'value' => $this->form_validation->set_value('desc'),
+                );
+                $this->data['course_code_id']     = array(
+                    'name'  => 'id',
+                    'id'    => 'id',
+                    'type'  => 'text',
+                    'value' => $this->form_validation->set_value('id'),
                 );
                 $this->data['education_id_value'] = $this->Education_model->as_dropdown('education_code')->get_all();
                 $this->data['bootstrap']          = $this->bootstrap();

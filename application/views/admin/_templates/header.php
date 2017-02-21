@@ -97,7 +97,7 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="<?php echo base_url('edit-user/?user-id=' . $this->ion_auth->user()->row()->id); ?>">
+                        <li><a href="<?php echo base_url('edit-user/?user-id=' . $this->session->userdata('user_id')); ?>">
                                 <i class="icon-user"></i> Profile</a>
                         </li>
                         <li><a href="<?php echo base_url('auth/logout'); ?>">
@@ -175,7 +175,7 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
         <div id="content">
 
             <div id="content-header">
-                <?php echo $this->breadcrumbs->show();  ?>
+                <?php echo $this->breadcrumbs->show(); ?>
 
                 <?php echo(($sub_label != '') ? '<h1>' . $sub_label . '</h1>' : (MENU_ITEM_DEFAULT == $label) ? '<h1>' . $label . '</h1>' : '' ); ?>
             </div>
