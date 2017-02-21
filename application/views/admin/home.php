@@ -2,6 +2,11 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+if (isset($message))
+{
+        echo $message;
+}
+
 if (isset($active_user_count))
 {
         echo $active_user_count;

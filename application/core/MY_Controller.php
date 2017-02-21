@@ -28,6 +28,13 @@ class MY_Controller extends CI_Controller
                                 $this->config->set_item('language', $data_return->language_value);
                         }
                 }
+
+                /**
+                 * we set here , must before check login or before calling a trigger for a name of event
+                 */
+                $this->ion_auth->set_hook(
+                        'logged_in', 'check_log_multiple_user', $this/* $this because the class already extended */, 'check_if_multiple_logged_in_one_user', array()
+                );
         }
 
         /**
@@ -70,6 +77,22 @@ class MY_Controller extends CI_Controller
                 ));
         }
 
+        /**
+         * ,this is set hook in constructor in auth controller
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        public function set_session_data_session()
+        {
+                //set the user name/last name in session
+                $user_obj = $this->ion_auth->user()->row();
+                $this->session->set_userdata(array(
+                    'user_first_name'          => $user_obj->first_name,
+                    'user_last_name'           => $user_obj->last_name,
+                    'user_fullname'            => $user_obj->last_name . ', ' . $user_obj->first_name,
+                    'user_current_logged_time' => $user_obj->last_login
+                ));
+        }
+
 }
 
 class CI_Capstone_Controller extends MY_Controller
@@ -107,9 +130,7 @@ class CI_Capstone_Controller extends MY_Controller
                 {
                         return NULL;
                 }
-                $data['user_info']           = $this->session->userdata('user_last_name') .
-                        ', ' .
-                        $this->session->userdata('user_first_name') .
+                $data['user_info']           = $this->session->userdata('user_fullname') .
                         ' [' . $this->current_gruop_string() . ']';
                 $data['navigations']         = navigations_main();
                 $data['setting_vavigations'] = navigations_setting();
@@ -177,6 +198,45 @@ class CI_Capstone_Controller extends MY_Controller
                 return (bool) $this->db->update($table, array(
                             'updated_at' => time()
                                 ), array('id' => $user_id));
+        }
+
+        /**
+         * 
+         * checking if one account log in another machine
+         * ,this is set hook in constructor in MY_Controller
+         * 
+         * then will call thin when trigger the name 'logged_in
+         * 
+         * 
+         * this idea is came from https://github.com/benedmunds/CodeIgniter-Ion-Auth/issues/947
+         * 
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        public function check_if_multiple_logged_in_one_user()
+        {
+                /**
+                 * there is a back button, and i don't know why even logged out, 
+                 * still reach this, so error occurred where get last_login,
+                 *  because session not exit
+                 */
+                if ($this->session->userdata('identity'))#hmmm
+                {
+                        $last_logged_in_session = $this->session->userdata('user_current_logged_time');
+                        $last_logged_in_db      = $this->ion_auth->user()->row()->last_login;
+
+                        if ($last_logged_in_session != $last_logged_in_db)
+                        {
+                                $message = 'Another Logged In User in this Account.';
+
+                                /**
+                                 * replace 'space' to 'undescore
+                                 * because, it will appear in url
+                                 */
+                                $message = str_replace(' ', '_', $message);
+
+                                redirect(base_url('auth/logout/' . $message), 'refresh');
+                        }
+                }
         }
 
 }

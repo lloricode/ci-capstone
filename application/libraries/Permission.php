@@ -6,6 +6,11 @@ class Permission
 {
 
 
+        /**
+         * CI Reference
+         *
+         * @var reference
+         */
         private $CI;
 
         public function __construct()
@@ -15,9 +20,11 @@ class Permission
         }
 
         /**
+         * get all user_groups id(s) that allowed permission in controller id as parameter
          * 
          * @param int $controller_id
-         * @return array group ids
+         * @return array | array of group id
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
         public function controller_groups($controller_id)
         {
@@ -35,6 +42,13 @@ class Permission
                 return $group_ids;
         }
 
+        /**
+         * remove all user_groups id(s) in controller id as parameter
+         * 
+         * @param int $controller_id
+         * @return bool depend on success
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
         public function controller_remove_all_group($controller_id)
         {
                 return (bool) $this->CI->Permission_model->delete(array(
@@ -42,6 +56,14 @@ class Permission
                 ));
         }
 
+        /**
+         * insert permission
+         * 
+         * @param int $controller_id
+         * @param int $group_id
+         * @return bool depend on success
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
         public function add_permision($controller_id, $group_id)
         {
                 $per_arr                  = array(

@@ -22,6 +22,9 @@ class Auth extends MY_Controller
                 $this->ion_auth->set_hook(
                         'post_login_successful', 'insert_last_login', $this/* $this because the class already extended */, 'insert_last_login', array()
                 );
+                $this->ion_auth->set_hook(
+                        'post_login_successful', 'add_another_session', $this/* $this because the class already extended */, 'set_session_data_session', array()
+                );
         }
 
         public function index()
@@ -67,7 +70,7 @@ class Auth extends MY_Controller
          * @author Lloric Garcia
          * @version 2017-2-1
          */
-        private function set_data()
+        private function set_data($message)
         {
                 $label = '';
                 if ($this->config->item('identity', 'ion_auth') != 'email')
@@ -80,8 +83,8 @@ class Auth extends MY_Controller
                 }
                 // the user is not logging in so display the login page
                 // set the flash data error message if there is one
-                $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-
+                $this->data['message']  = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+                $this->data['message']  = (!is_null($message)) ? $message : $this->data['message'];
                 $this->data['identity'] = array('name'        => 'identity',
                     'id'          => 'identity',
                     'type'        => 'text',
@@ -105,9 +108,12 @@ class Auth extends MY_Controller
          * @author ion_auth
          * @version 2017-2-1
          */
-        public function login()
+        public function login($message = NULL)
         {
-                $this->check_log();
+                if (is_null($message))
+                {
+                        $this->check_log();
+                }
                 $this->data['title'] = $this->lang->line('login_heading');
 
                 //validate form input
@@ -124,13 +130,6 @@ class Auth extends MY_Controller
                         {
                                 //if the login is successful
                                 //      $this->session->set_flashdata('message', $this->ion_auth->messages());
-                                //set the user name/last name in session
-                                $user_obj = $this->ion_auth->user()->row();
-                                $this->session->set_userdata(array(
-                                    'user_first_name' => $user_obj->first_name,
-                                    'user_last_name'  => $user_obj->last_name
-                                ));
-
                                 //redirect them back to the home page
                                 $this->session->set_flashdata('message', $this->ion_auth->messages());
                                 redirect('', 'refresh');
@@ -145,7 +144,7 @@ class Auth extends MY_Controller
                 }
                 else
                 {
-                        $this->set_data();
+                        $this->set_data($message);
                         $this->_render_page('admin/login', $this->data);
                 }
         }
@@ -306,19 +305,37 @@ class Auth extends MY_Controller
 
         /**
          * Function that logs the user out.
-         * 
-         * @author ion_auth
+         *
+         * @param string $message | default is null, we use this for unexpected logout message when multiple user
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          * @version 2017-2-1
          */
-        public function logout()
+        public function logout($message = NULL)
         {
-                $this->data['title'] = "Logout";
-
                 // log the user out
-                $logout = $this->ion_auth->logout();
+                $this->ion_auth->logout();
                 // redirect them to the login page
-                $this->session->set_flashdata('message', $this->ion_auth->messages());
-                redirect('auth/login', 'refresh');
+                //   $this->session->set_flashdata('message', $this->ion_auth->messages());
+                // redirect('auth/login', 'refresh');
+
+                /*
+                 * i set this because all session destroyed also even done logout,
+                 */
+                $m = '';
+                if (is_null($message))
+                {
+                        $m = $this->ion_auth->messages();
+                }
+                else
+                {
+                        $message = str_replace('_', ' ', $message);
+                        /**
+                         * set erro delimeter
+                         * using ion_auth
+                         */
+                        $m       = $this->config->item('error_start_delimiter', 'ion_auth') . $message . $this->config->item('error_end_delimiter', 'ion_auth');
+                }
+                $this->login($m);
         }
 
 }

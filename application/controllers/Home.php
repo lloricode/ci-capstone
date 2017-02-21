@@ -18,9 +18,9 @@ class Home extends CI_Capstone_Controller
          */
         public function index()
         {
-         
 
-                $this->data['active_users_count']           = $this->User_model->where(array(
+
+                $this->data['active_users_count']     = $this->User_model->where(array(
                             'active' => TRUE
                         ))->count_rows();
                 $this->data['student_enrolled_count'] = $this->Enrollment_model->where(array(
@@ -28,6 +28,7 @@ class Home extends CI_Capstone_Controller
                         ))->count_rows();
                 $this->template['active_user_count']  = $this->_render_page('admin/_templates/home/user_count', $this->data, TRUE);
                 $this->template['dashboard_ctrl_var'] = $this->_render_page('admin/_templates/home/dashboard_ctrl', $this->data, TRUE);
+                $this->template['message']            = $this->session->flashdata('message');
                 $this->template['bootstrap']          = $this->bootstrap();
                 $this->_render_admin_page('admin/home', $this->template);
         }
