@@ -53,6 +53,8 @@ class Last_logins extends CI_Capstone_Controller
                                 array_push($table_data, array(
                                     my_htmlspecialchars($user->last_name . ', ' . $user->first_name),
                                     my_htmlspecialchars($last_login->ip_address),
+                                    my_htmlspecialchars($last_login->agent),
+                                    my_htmlspecialchars($last_login->platform),
                                     my_htmlspecialchars(unix_to_human($last_login->created_at)),
                                 ));
                         }
@@ -66,6 +68,8 @@ class Last_logins extends CI_Capstone_Controller
                 $header = array(
                     lang('users_header'),
                     lang('ip_address_header'),
+                    lang('agent_header'),
+                    lang('platform_header'),
                     lang('time_header')
                 );
 

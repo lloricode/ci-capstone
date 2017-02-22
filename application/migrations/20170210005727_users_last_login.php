@@ -37,6 +37,16 @@ class Migration_Users_last_login extends CI_Migration
                         'constraint' => '16',
                         'null'       => FALSE
                     ),
+                    'agent'               => array(
+                        'type'       => 'VARCHAR',
+                        'constraint' => '100',
+                        'null'       => FALSE
+                    ),
+                    'platform'            => array(
+                        'type'       => 'VARCHAR',
+                        'constraint' => '100',
+                        'null'       => FALSE
+                    ),
                     //------------------------------------
                     'created_at'          => array(
                         'type'       => 'VARCHAR',

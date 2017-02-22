@@ -71,10 +71,30 @@ class MY_Controller extends CI_Controller
          */
         public function insert_last_login()
         {
+                $this->load->library('user_agent');
+                if ($this->agent->is_browser())
+                {
+                        $agent = $this->agent->browser() . ' ' . $this->agent->version();
+                }
+                elseif ($this->agent->is_robot())
+                {
+                        $agent = $this->agent->robot();
+                }
+                elseif ($this->agent->is_mobile())
+                {
+                        $agent = $this->agent->mobile();
+                }
+                else
+                {
+                        $agent = 'Unidentified User Agent';
+                }
+
                 $this->load->model('Users_last_login_model');
                 return (bool) $this->Users_last_login_model->insert(array(
                             'user_id'    => $this->ion_auth->user()->row()->id,
-                            'ip_address' => $this->input->ip_address()
+                            'ip_address' => $this->input->ip_address(),
+                            'agent'      => $agent,
+                            'platform'   => $this->agent->platform()
                 ));
         }
 
