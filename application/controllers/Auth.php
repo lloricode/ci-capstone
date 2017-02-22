@@ -29,35 +29,7 @@ class Auth extends MY_Controller
 
         public function index()
         {
-                if ($this->ion_auth->logged_in() and ! $this->ion_auth->is_admin())
-                {
-                        // redirect them to the login page
-                        redirect(base_url(), 'refresh');
-                }
-                elseif ($this->ion_auth->is_admin())
-                { // remove this elseif if you want to enable this for non-admins
-                        // redirect them to the home page because they must be an administrator to view this
-                        // return show_error('You must be an administrator to view this page.');
-                        redirect(base_url('dashboard'), 'refresh');
-                }
-                else
-                {
-                        redirect(base_url('auth/login'), 'refresh');
-                }
-        }
-
-        /**
-         * Function to that checks log in credentials
-         * 
-         * @author Lloric Garcia
-         * @version 2017-2-1
-         */
-        private function check_log()
-        {
-                if ($this->ion_auth->logged_in())
-                {
-                        redirect('/', 'refresh');
-                }
+                redirect(base_url(), 'refresh');
         }
 
         /**
@@ -66,7 +38,7 @@ class Auth extends MY_Controller
          * @author Lloric Garcia
          * @version 2017-2-1
          */
-        private function set_data($message)
+        private function set_data($message = NULL)
         {
                 $label = '';
                 if ($this->config->item('identity', 'ion_auth') != 'email')
@@ -108,7 +80,10 @@ class Auth extends MY_Controller
         {
                 if (is_null($message))
                 {
-                        $this->check_log();
+                        if ($this->ion_auth->logged_in())
+                        {
+                                redirect('/', 'refresh');
+                        }
                 }
                 $this->data['title'] = $this->lang->line('login_heading');
 

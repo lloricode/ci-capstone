@@ -73,7 +73,8 @@ class MY_Controller extends CI_Controller
         {
                 $this->load->model('Users_last_login_model');
                 return (bool) $this->Users_last_login_model->insert(array(
-                            'user_id' => $this->ion_auth->user()->row()->id
+                            'user_id'    => $this->ion_auth->user()->row()->id,
+                            'ip_address' => $this->input->ip_address()
                 ));
         }
 
