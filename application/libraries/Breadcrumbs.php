@@ -88,11 +88,13 @@ class Breadcrumbs
                                 }
                                 elseif (end($keys) == $key)
                                 {
-                                        $output .= $this->breadcrumb_el_last_open . anchor($value['href'], $value['page'], $this->breadcrumb_el_last_open_extra) . $this->breadcrumb_el_last_close . $this->breadcrumb_el_close . "\n";
+                                        $this->breadcrumb_el_last_open_extra['title'] = 'Refresh To ' . $value['page'];
+                                        $output                                       .= $this->breadcrumb_el_last_open . anchor($value['href'], $value['page'], $this->breadcrumb_el_last_open_extra) . $this->breadcrumb_el_last_close . $this->breadcrumb_el_close . "\n";
                                 }
                                 else
                                 {
-                                        $output .= $this->breadcrumb_el_open . anchor($value['href'], $value['page'], $this->breadcrumb_el_open_extra) . $this->breadcrumb_el_close . "\n";
+                                        $this->breadcrumb_el_open_extra['title'] = 'Go To ' . $value['page'];
+                                        $output                                  .= $this->breadcrumb_el_open . anchor($value['href'], $value['page'], $this->breadcrumb_el_open_extra) . $this->breadcrumb_el_close . "\n";
                                 }
                         }
 
