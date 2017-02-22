@@ -12,7 +12,7 @@ class Courses extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
-                $this->lang->load(array('ci_courses', 'ci_educations'));
+                $this->lang->load(array('ci_capstone/ci_courses', 'ci_capstone/ci_educations'));
                 $this->load->model(array('Course_model', 'Education_model'));
                 $this->load->library('pagination');
 

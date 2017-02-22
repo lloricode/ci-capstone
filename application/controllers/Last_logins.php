@@ -1,8 +1,11 @@
 <?php
 
+/**
+ * @author Lloric Mayuga Gracia <emorickfighter@gmail.com>
+ */
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Groups extends CI_Capstone_Controller
+class Last_logins extends CI_Capstone_Controller
 {
 
 
@@ -12,10 +15,9 @@ class Groups extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
-                $this->lang->load('ci_capstone/ci_excel');
-                $this->load->model('Group_model');
+                $this->lang->load('ci_capstone/ci_last_logins');
+                $this->load->model(array('Users_last_login_model', 'User_model'));
                 $this->load->library('pagination');
-
                 /**
                  * pagination limit
                  */
@@ -24,10 +26,10 @@ class Groups extends CI_Capstone_Controller
                 /**
                  * get the page from url
                  * 
-                 * if has not, default $page will is 1
                  */
                 $this->page_ = get_page_in_url();
-                $this->breadcrumbs->unshift(2, 'Groups', 'groups');
+                $this->breadcrumbs->unshift(2, 'Settings', '#');
+                $this->breadcrumbs->unshift(3, 'Last Logins', 'last-logins');
         }
 
         /**
@@ -36,40 +38,35 @@ class Groups extends CI_Capstone_Controller
         public function index()
         {
 
-                // set the flash data error message if there is one
-                // $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-                //list the users
-                $group_obj = $this->Group_model->limit($this->limit, $this->limit * $this->page_ - $this->limit)->get_all();
 
-                /**
-                 * where data array from db stored
-                 */
+                $last_login_obj = $this->Users_last_login_model->limit($this->limit, $this->limit * $this->page_ - $this->limit)->get_all();
+
+
                 $table_data = array();
-                /**
-                 * check if has a result
-                 * 
-                 * sometime pagination can replace a page that has no value by crazy users :)
-                 */
-                if ($group_obj)
-                {
-                        foreach ($group_obj as $group)
-                        {
 
+                if ($last_login_obj)
+                {
+
+                        foreach ($last_login_obj as $last_login)
+                        {
+                                $user = $this->User_model->get($last_login->user_id);
                                 array_push($table_data, array(
-                                    my_htmlspecialchars($group->name),
-                                    my_htmlspecialchars($group->description),
+                                    my_htmlspecialchars($user->last_name . ', ' . $user->first_name),
+                                    my_htmlspecialchars($last_login->ip_address),
+                                    my_htmlspecialchars(unix_to_human($last_login->created_at)),
                                 ));
                         }
                 }
+
+
+
                 /*
-                 * preparing html table
-                 */
-                /*
-                 * header
+                 * Table headers
                  */
                 $header = array(
-                    lang('index_groups_th'),
-                    lang('index_group_desc_th')
+                    lang('users_header'),
+                    lang('ip_address_header'),
+                    lang('time_header')
                 );
 
                 /**
@@ -80,29 +77,27 @@ class Groups extends CI_Capstone_Controller
                 /**
                  * pagination
                  */
-                $this->data['pagination'] = $this->pagination->generate_link('admin/groups/index', $this->Group_model->count_rows() / $this->limit);
+                $this->data['pagination'] = $this->pagination->generate_link('educations/index', $this->Users_last_login_model->count_rows() / $this->limit);
 
                 /**
                  * caption of table
                  */
-                $this->data['caption'] = lang('index_heading');
+                $this->data['caption'] = lang('user_last_login_capstion_table');
 
 
-                /**
-                 * table of users ready,
-                 * so whole html table with datas passing as var table_data_users
-                 */
+
                 /**
                  * templates for group controller
                  */
                 $this->template['table_data_groups'] = $this->_render_page('admin/_templates/table', $this->data, TRUE);
                 $this->template['controller']        = 'table';
+                $this->template['message']           = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
                 $this->template['bootstrap'] = $this->bootstrap();
                 /**
                  * rendering users view
                  */
-                $this->_render_admin_page('admin/groups', $this->template);
+                $this->_render_admin_page('admin/educations', $this->template);
         }
 
         /**
@@ -127,8 +122,7 @@ class Groups extends CI_Capstone_Controller
                         'font-awesome/css/font-awesome.css',
                         'http://fonts.googleapis.com/css?family=Open+Sans:400,700,800',
                     ),
-                    'js'  => array(
-                    ),
+                    'js'  => array(),
                 );
                 /**
                  * for footer

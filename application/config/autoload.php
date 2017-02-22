@@ -122,7 +122,7 @@ $autoload['config'] = array('common/config');
 | "codeigniter_lang.php" would be referenced as array('codeigniter');
 |
 */
-$autoload['language'] = array('ci_change_language', 'ci_validation', 'auth');
+$autoload['language'] = array('ci_capstone/ci_change_language', 'ci_capstone/ci_validation', 'auth');
 
 /*
 | -------------------------------------------------------------------

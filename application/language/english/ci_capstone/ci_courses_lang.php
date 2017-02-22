@@ -1,7 +1,9 @@
 <?php
-
+/**
+ * ENGLISH
+ */
 defined('BASEPATH') or exit('Direct Script is not allowed');
-//english
+
 //Create Course
 $lang['create_course_heading']                   = 'Add Course';
 $lang['create_course_code_label']                = 'Course Name:';

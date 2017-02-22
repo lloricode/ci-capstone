@@ -1,7 +1,9 @@
 <?php
-
+/**
+ * ENGLISH
+ */
 defined('BASEPATH') or exit('Direct Script is not allowed');
-//english
+
 //Create Student Form
 $lang['create_student_heading']                 = 'Add Student';
 $lang['create_student_firstname_label']         = 'Firstname:';

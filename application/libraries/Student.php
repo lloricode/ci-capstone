@@ -231,7 +231,7 @@ class Student extends CI_capstone
         {
                 $this->CI->load->library('age');
                 $this->CI->age->initialize($this->student->student_birthdate);
-                return $this->CI->age->result() . (($msg) ? 'years old' : '');
+                return $this->CI->age->result() . (($msg) ? ' years old' : '');
         }
 
 }

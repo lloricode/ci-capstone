@@ -8,7 +8,7 @@ class Edit_student extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
-                $this->lang->load('ci_students');
+                $this->lang->load('ci_capstone/ci_students');
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span>');
                 $this->breadcrumbs->unshift(2, 'Students', 'students');
@@ -274,7 +274,7 @@ class Edit_student extends CI_Capstone_Controller
                                         /**
                                          * redirecting in current_url
                                          */
-                                        redirect(base_url('students'), 'refresh');
+                                        redirect(base_url('students/view?student-id=' . $this->student->id), 'refresh');
                                 }
                                 else
                                 {

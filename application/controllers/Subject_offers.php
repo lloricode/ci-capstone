@@ -12,7 +12,7 @@ class Subject_offers extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
-                $this->lang->load('ci_subject_offers');
+                $this->lang->load('ci_capstone/ci_subject_offers');
                 $this->load->model(array('Subject_offer_model', 'User_model', 'Subject_model', 'Room_model'));
                 $this->load->library('pagination');
                 /**

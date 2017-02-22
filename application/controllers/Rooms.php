@@ -11,7 +11,7 @@ class Rooms extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
-                $this->lang->load('ci_rooms');
+                $this->lang->load('ci_capstone/ci_rooms');
                 $this->load->model('Room_model');
                 $this->load->library('pagination');
                 /**

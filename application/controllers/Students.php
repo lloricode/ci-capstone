@@ -12,7 +12,7 @@ class Students extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
-                $this->lang->load('ci_students');
+                $this->lang->load('ci_capstone/ci_students');
                 $this->load->model(array('Student_model'));
                 $this->load->library('pagination');
                 /**

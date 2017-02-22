@@ -8,7 +8,7 @@ class Create_course extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
-                $this->lang->load('ci_courses');
+                $this->lang->load('ci_capstone/ci_courses');
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
                 $this->breadcrumbs->unshift(2, 'Courses', 'courses');
@@ -37,7 +37,7 @@ class Create_course extends CI_Capstone_Controller
                     array(
                         'label' => lang('index_course_code_id_th'),
                         'field' => 'id',
-                        'rules' => 'trim|required|min_length[2]|max_length[5]',
+                        'rules' => 'trim|required|min_length[2]|max_length[5]|is_natural_no_zero',
                     ),
                     array(
                         'label' => lang('index_course_education_th'),

@@ -9,7 +9,7 @@ class Database extends CI_Capstone_Controller
         {
                 parent::__construct();
                 $this->load->dbutil();
-                $this->lang->load('ci_db');
+                $this->lang->load('ci_capstone/ci_db');
                 $this->config->load('admin/table');
                 $this->breadcrumbs->unshift(2, 'Settings', '#');
                 $this->breadcrumbs->unshift(3, 'Database', 'database');

@@ -11,7 +11,7 @@ class Create_student extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
-                $this->lang->load('ci_students');
+                $this->lang->load('ci_capstone/ci_students');
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span>');
                 $this->breadcrumbs->unshift(2, 'Students', 'students');

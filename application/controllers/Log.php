@@ -75,7 +75,6 @@ class Log extends CI_Capstone_Controller
                         }
                 }
                 $this->data['logs']       = $this->table->generate();
-                $this->data['controller'] = 'table';
 
 
 

@@ -14,14 +14,14 @@ if (!function_exists('navigations_main'))
         function navigations_main()
         {
                 return array(
-                    'home'           =>
+                    'home'               =>
                     array(
                         'label' => 'Home',
                         'desc'  => 'Home Description',
                         'icon'  => 'home',
                     ),
                     //sub menu
-                    'user_menus'     =>
+                    'user_menus'         =>
                     array(
                         'label' => lang('index_heading'),
                         'icon'  => 'user',
@@ -61,7 +61,7 @@ if (!function_exists('navigations_main'))
                     ),
                     //sub menu
                     //---------STUDENT------------
-                    'student_menu'   =>
+                    'student_menu'       =>
                     array(
                         'label' => 'Students',
                         'icon'  => 'user-md',
@@ -79,7 +79,7 @@ if (!function_exists('navigations_main'))
                                 'desc'  => 'Add Student Description',
                                 'seen'  => TRUE,
                             ),
-                            'edit-student' =>
+                            'edit-student'   =>
                             array(
                                 'label' => 'Edit Student',
                                 'desc'  => 'Edit Student Description',
@@ -90,7 +90,7 @@ if (!function_exists('navigations_main'))
                     //---------END STUDENT--------
                     //sub menu
                     //---------START SUBJECTS-----
-                    'subjects_menu'  =>
+                    'subjects_menu'      =>
                     array(
                         'label' => 'Subjects',
                         'icon'  => 'book',
@@ -113,7 +113,7 @@ if (!function_exists('navigations_main'))
                     //---------END SUBJECTS-------
                     //sub menu
                     //--------START COURSE--------
-                    'course_menu'    =>
+                    'course_menu'        =>
                     array(
                         'label' => 'Courses',
                         'icon'  => 'list',
@@ -136,7 +136,7 @@ if (!function_exists('navigations_main'))
                     //--------END COURSE----------
                     //
                     //--------START EDUCATION--------
-                    'education_menu' =>
+                    'education_menu'     =>
                     array(
                         'label' => 'Educations',
                         'icon'  => 'pencil',
@@ -160,7 +160,7 @@ if (!function_exists('navigations_main'))
                     //
                     //
                     //--------START ROOM--------
-                    'room_menu'      =>
+                    'room_menu'          =>
                     array(
                         'label' => 'Rooms',
                         'icon'  => 'lock',
@@ -183,7 +183,7 @@ if (!function_exists('navigations_main'))
                     //--------END ROOM----------
                     //sub menu
                     //--------START SCHEDULE------
-                    'subject_offer_menu'  =>
+                    'subject_offer_menu' =>
                     array(
                         'label' => 'Subject Offers',
                         'icon'  => 'calendar',
@@ -205,7 +205,7 @@ if (!function_exists('navigations_main'))
                     ),
                     //--------END SCHEDULE--------
                     //sub menu
-                    'group_menu'     =>
+                    'group_menu'         =>
                     array(
                         'label' => lang('index_groups_th'),
                         'icon'  => 'group',
@@ -226,7 +226,7 @@ if (!function_exists('navigations_main'))
                         ),
                     ),
                     //sub menu
-                    'setting_menu'   =>
+                    'setting_menu'       =>
                     array(
                         'label' => 'Settings',
                         'icon'  => 'cogs',
@@ -254,6 +254,12 @@ if (!function_exists('navigations_main'))
                             array(
                                 'label' => 'Permissions',
                                 'desc'  => 'permission Description',
+                                'seen'  => TRUE,
+                            ),
+                            'last-logins' =>
+                            array(
+                                'label' => 'Last Logins',
+                                'desc'  => 'Last Logins Description',
                                 'seen'  => TRUE,
                             ),
                         ),
@@ -326,8 +332,8 @@ if (!function_exists('controllers__'))
                         }
                         else
                         {
-                                $return_arr[]   = $k;
-                                $return_str .= $k . $delimeter;
+                                $return_arr[] = $k;
+                                $return_str   .= $k . $delimeter;
                         }
                 }
                 if ($delimeter == '')

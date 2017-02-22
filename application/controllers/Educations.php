@@ -11,7 +11,7 @@ class Educations extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
-                $this->lang->load('ci_educations');
+                $this->lang->load('ci_capstone/ci_educations');
                 $this->load->model('Education_model');
                 $this->load->library('pagination');
                 /**

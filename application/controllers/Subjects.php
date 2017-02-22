@@ -11,7 +11,7 @@ class Subjects extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
-                $this->lang->load('ci_subjects');
+                $this->lang->load('ci_capstone/ci_subjects');
                 $this->load->model('Subject_model');
                 $this->load->library('pagination');
 
