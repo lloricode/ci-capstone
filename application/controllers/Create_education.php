@@ -23,7 +23,9 @@ class Create_education extends CI_Capstone_Controller
         {
                 if ($this->input->post('submit'))
                 {
-                        $id = $this->Education_model->from_form()->insert();
+                        $id = $this->Education_model->from_form(NULL, array(
+                                    'created_user_id' => $this->session->userdata('user_id')
+                                ))->insert();
                         if ($id)
                         {
                                 redirect(base_url('educations'), 'refresh');

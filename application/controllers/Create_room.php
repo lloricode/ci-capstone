@@ -5,6 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Create_room extends CI_Capstone_Controller
 {
 
+
         private $data;
 
         function __construct()
@@ -25,7 +26,9 @@ class Create_room extends CI_Capstone_Controller
                  */
                 if ($this->input->post('submit'))
                 {
-                        $id = $this->Room_model->from_form()->insert();
+                        $id = $this->Room_model->from_form(NULL, array(
+                                    'created_user_id' => $this->session->userdata('user_id')
+                                ))->insert();
                         if ($id)
                         {
                                 redirect(base_url('rooms'), 'refresh');
