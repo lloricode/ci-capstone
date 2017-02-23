@@ -34,7 +34,15 @@ class Student_model extends MY_Model
         {
                 $this->lang->load('ci_capstone/ci_educations');
 
-                $insert      = array(
+                $this->rules = array(
+                    'insert' => $this->_insert(),
+                    'update' => $this->_update()
+                );
+        }
+
+        private function _insert()
+        {
+                return array(
                     'student_firstname'               => array(
                         'label' => lang('index_student_firstname_th'),
                         'field' => 'firstname',
@@ -133,12 +141,11 @@ class Student_model extends MY_Model
                         )
                     ),
                 );
-                $update      = array(
-                );
-                
-                $this->rules = array(
-                    'insert' => $insert,
-                    'update' => $update
+        }
+
+        private function _update()
+        {
+                return array(
                 );
         }
 

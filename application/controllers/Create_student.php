@@ -39,7 +39,7 @@ class Create_student extends CI_Capstone_Controller
         {
 
                 $__post_button    = (bool) $this->input->post('submit');
-                $_post_image_name = 'student_image';
+                $_post_image_name = 'image';
 
                 /**
                  * preparing image
@@ -51,7 +51,7 @@ class Create_student extends CI_Capstone_Controller
 
 
                 /**
-                 * check if the button in POST in triggered
+                 * check if the button in POST is triggered
                  */
                 if ($__post_button)
                 {
@@ -107,7 +107,7 @@ class Create_student extends CI_Capstone_Controller
                  */
                 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::start
                 $s_id = $this->Student_model->from_form(NULL, array(
-                            $_post_image_name   => $img_name,
+                            'student_image'     => $img_name,
                             'student_school_id' => (string) $this->school_id->generate(),
                             'created_user_id'   => $this->session->userdata('user_id')
                         ))->insert();
@@ -155,7 +155,7 @@ class Create_student extends CI_Capstone_Controller
 
                 $this->data['message'] = $image_error_message;
 
-                $this->data[$_post_image_name] = array(
+                $this->data['student_image'] = array(
                     'name' => $_post_image_name,
                 );
 
