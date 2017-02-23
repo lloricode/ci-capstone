@@ -10,6 +10,7 @@ class Create_room extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
+                $this->load->model('Room_model');
                 $this->lang->load('ci_capstone/ci_rooms');
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span>');
@@ -23,33 +24,11 @@ class Create_room extends CI_Capstone_Controller
                  * @Contributor: Jinkee Po <pojinkee1@gmail.com>
                  *         
                  */
-                $this->form_validation->set_rules(array(
-                    array(
-                        'label' => lang('create_room_number_label'),
-                        'field' => 'room_number',
-                        'rules' => 'trim|required|numeric|min_length[1]|max_length[30]',
-                    ),
-                    array(
-                        'label' => lang('create_room_description_label'),
-                        'field' => 'room_description',
-                        'rules' => 'trim|required|human_name|min_length[3]|max_length[30]',
-                    )
-                ));
-
-
-
-                if ($this->form_validation->run())
+                if ($this->input->post('submit'))
                 {
-
-                        $room = array(
-                            'room_number'      => $this->input->post('room_number', TRUE),
-                            'room_description' => $this->input->post('room_description', TRUE),
-                            'created_user_id'  => $this->ion_auth->user()->row()->id,
-                        );
-                        $this->load->model('Room_model');
-                        if ($this->Room_model->insert($room))
+                        $id = $this->Room_model->from_form()->insert();
+                        if ($id)
                         {
-                                $this->session->set_flashdata('message', $this->config->item('message_start_delimiter', 'ion_auth') . lang('create_room_succesfully_added_message') . $this->config->item('message_end_delimiter', 'ion_auth'));
                                 redirect(base_url('rooms'), 'refresh');
                         }
                 }
@@ -57,14 +36,14 @@ class Create_room extends CI_Capstone_Controller
                 $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
                 $this->data['room_number']      = array(
-                    'name'  => 'room_number',
-                    'id'    => 'room_number',
-                    'value' => $this->form_validation->set_value('room_number'),
+                    'name'  => 'number',
+                    'id'    => 'number',
+                    'value' => $this->form_validation->set_value('number'),
                 );
                 $this->data['room_description'] = array(
-                    'name'  => 'room_description',
-                    'id'    => 'room_description',
-                    'value' => $this->form_validation->set_value('room_description'),
+                    'name'  => 'description',
+                    'id'    => 'description',
+                    'value' => $this->form_validation->set_value('description'),
                 );
                 $this->data['bootstrap']        = $this->bootstrap();
                 $this->_render_admin_page('admin/create_room', $this->data);
