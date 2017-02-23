@@ -1,4 +1,5 @@
 <?php
+defined('BASEPATH') or exit('no direct script allowed');
 echo form_open_multipart(base_url("edit-student?student-id=" . $this->student->id), array(
     'class' => 'form-horizontal'
         ), $student_school_id);

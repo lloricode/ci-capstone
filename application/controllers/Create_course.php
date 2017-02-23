@@ -8,7 +8,7 @@ class Create_course extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
-                $this->lang->load('ci_capstone/ci_courses');
+                $this->load->model(array('Course_model', 'Education_model'));
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
                 $this->breadcrumbs->unshift(2, 'Courses', 'courses');
@@ -23,46 +23,17 @@ class Create_course extends CI_Capstone_Controller
          */
         public function index()
         {
-                $this->form_validation->set_rules(array(
-                    array(
-                        'label' => lang('index_course_code_th'),
-                        'field' => 'code',
-                        'rules' => 'trim|required|human_name|min_length[2]|max_length[50]',
-                    ),
-                    array(
-                        'label' => lang('index_course_desc_th'),
-                        'field' => 'desc',
-                        'rules' => 'trim|required|human_name|min_length[2]|max_length[50]',
-                    ),
-                    array(
-                        'label' => lang('index_course_code_id_th'),
-                        'field' => 'id',
-                        'rules' => 'trim|required|min_length[2]|max_length[5]|is_natural_no_zero',
-                    ),
-                    array(
-                        'label' => lang('index_course_education_th'),
-                        'field' => 'educ',
-                        'rules' => 'trim|required|is_natural_no_zero',
-                    ),
-                ));
-
-                if ($this->form_validation->run())
+                if ($this->input->post('submit'))
                 {
-                        $course = array(
-                            'course_code'        => $this->input->post('code', TRUE),
-                            'course_description' => $this->input->post('desc', TRUE),
-                            'education_id'       => $this->input->post('educ', TRUE),
-                            'course_code_id'     => $this->input->post('id', TRUE),
-                            'created_user_id'    => $this->ion_auth->user()->row()->id
-                        );
-                        $this->load->model('Course_model');
-                        if ($this->Course_model->insert($course))
+                        $id = $this->Course_model->from_form()->insert();
+                        if ($id)
                         {
                                 $this->session->set_flashdata('message', $this->config->item('message_start_delimiter', 'ion_auth') . lang('create_course_succesfully_added_message') . $this->config->item('message_end_delimiter', 'ion_auth'));
                                 redirect(base_url('courses'), 'refresh');
                         }
                 }
-                $this->load->model('Education_model');
+
+
                 $this->data['message']            = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
                 $this->data['course_code']        = array(
                     'name'  => 'code',

@@ -1,7 +1,7 @@
 <?php
 echo form_open_multipart(base_url("create-student/index"), array(
     'class' => 'form-horizontal'
-        ));echo validation_errors();
+)); //echo validation_errors();
 ?>
 <?php echo (isset($message)) ? $message : ''; ?>
 <div class="container-fluid">
@@ -29,14 +29,14 @@ echo form_open_multipart(base_url("create-student/index"), array(
 
 
                         //student_gender:
-                        $tmp             = (form_error('student_gender') == '') ? '' : ' error';
+                        $gender_field    = $student_gender['name'];
+                        $tmp             = (form_error($gender_field) == '') ? '' : ' error';
                         echo '<div class="control-group' . $tmp . '">';
-                        echo lang('create_student_gender_label', 'student_gender', array(
+                        echo lang('create_student_gender_label', $gender_field, array(
                             'class' => 'control-label',
-                            'id'    => 'inputError'
                         ));
                         echo '<div class="controls">';
-                        $set_vale_gender = set_value('student_gender');
+                        $set_vale_gender = $student_gender['value'];
                         $male            = FALSE;
                         $female          = FALSE;
                         if ($set_vale_gender == 'Male')
@@ -49,15 +49,15 @@ echo form_open_multipart(base_url("create-student/index"), array(
                         }
                         ?>
                         <label>
-                            <?php echo form_radio('student_gender', 'Female', $female); ?>
+                            <?php echo form_radio($gender_field, 'Female', $female); ?>
                             Female
                         </label>   
                         <label>
-                            <?php echo form_radio('student_gender', 'Male', $male); ?>
+                            <?php echo form_radio($gender_field, 'Male', $male); ?>
                             Male
                         </label> 
                         <?php
-                        echo form_error('student_gender');
+                        echo form_error($gender_field);
 
                         echo '</div></div>';
 
@@ -91,16 +91,16 @@ echo form_open_multipart(base_url("create-student/index"), array(
                         echo input_bootstrap($student_school_id_temp, 'create_student_school_id_label');
 
                         //course_id:                      
-                        echo input_dropdown_bootstrap('course_id', 'create_course_label', $course_id_value);
+                        echo input_dropdown_bootstrap($course_id['name'], 'create_course_label', $course_id['value']);
 
                         //student_year_level:
-                        echo input_dropdown_bootstrap('enrollment_year_level', 'create_student_year_level_label', $enrollment_year_level_value);
+                        echo input_dropdown_bootstrap($enrollment_year_level['name'], 'create_student_year_level_label', $enrollment_year_level['value']);
 
                         //course_id:                      
-                        echo input_dropdown_bootstrap('enrollment_school_year', 'create_student_school_year_label', $enrollment_school_year_value);
+                        echo input_dropdown_bootstrap($enrollment_school_year['name'], 'create_student_school_year_label', $enrollment_school_year['value']);
 
                         //student_year_level:
-                        echo input_dropdown_bootstrap('enrollment_semester', 'create_student_semester_label', $enrollment_semester_value);
+                        echo input_dropdown_bootstrap($enrollment_semester['name'], 'create_student_semester_label', $enrollment_semester['value']);
                         ?>
                     </div>
                 </div>
@@ -206,7 +206,7 @@ echo form_open_multipart(base_url("create-student/index"), array(
                     'class' => 'btn btn-default'
                 ));
 
-                echo form_submit('btn2', lang('create_student_submit_button_label'), array(
+                echo form_submit('submit', lang('create_student_submit_button_label'), array(
                     'class' => 'btn btn-primary'
                 ));
                 echo '<div id="status"></div>';

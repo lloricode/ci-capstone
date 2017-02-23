@@ -13,6 +13,9 @@ if (!function_exists('input_bootstrap'))
          */
         function input_bootstrap($field, $lang, $input = 'input')
         {
+                $CI  = &get_instance();
+                $CI->load->helper('html');
+                echo "\n" . comment_tag($field['name']);
                 $tmp = (form_error($field['name']) == '') ? '' : ' error';
                 echo '<div class="control-group' . $tmp . '">' . "\n";
                 echo lang($lang, $field['name'], array(
@@ -37,6 +40,7 @@ if (!function_exists('input_bootstrap'))
                 echo form_error($field['name']);
                 echo '</div>' . "\n";
                 echo '</div>' . "\n";
+                echo comment_tag('end-' . $field['name']) . "\n";
         }
 
 }
@@ -51,6 +55,9 @@ if (!function_exists('image_view'))
          */
         function image_view($image_properties)//, $lang, $input = 'input')
         {
+                $CI = &get_instance();
+                $CI->load->helper('html');
+                echo "\n" . comment_tag('image');
                 //  $tmp = (form_error($field['name']) == '') ? '' : ' error';
                 echo '<div class="control-group' . /* $tmp . */ '">' . "\n";
 //                echo lang($lang, $field['name'], array(
@@ -64,6 +71,7 @@ if (!function_exists('image_view'))
 
                 echo '</div>' . "\n";
                 echo '</div>' . "\n";
+                echo comment_tag('end-imgae' ) . "\n";
         }
 
 }
@@ -110,6 +118,9 @@ if (!function_exists('input_dropdown_bootstrap'))
          */
         function input_dropdown_bootstrap($field, $lang, $value_combo, $default = NULL)
         {
+                $CI  = &get_instance();
+                $CI->load->helper('html');
+                echo "\n" . comment_tag($field);
                 $tmp = (form_error($field) == '') ? '' : ' error';
                 echo '<div class = "control-group' . $tmp . '">' . "\n";
                 echo lang($lang, $field, array(
@@ -122,6 +133,7 @@ if (!function_exists('input_dropdown_bootstrap'))
                 echo form_error($field);
                 echo '</div>' . "\n";
                 echo '</div>' . "\n";
+                echo comment_tag('end-' . $field) . "\n";
         }
 
 }

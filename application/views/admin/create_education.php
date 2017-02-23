@@ -11,14 +11,13 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                 </div>
                 <div class="widget-content nopadding">
                     <?php
-//echo validation_errors();
+echo validation_errors();
 
                     echo $message;
                     /**
                      * @Contributor: Jinkee Po <pojinkee1@gmail.com>
                      *         
                      */
-
                     echo form_open(base_url('create-education'), array(
                         'class'      => 'form-horizontal',
                         'name'       => 'basic_validate',
@@ -27,36 +26,15 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     ));
 
 
-                    //education_code:
-                    $tmp = (form_error('education_code') == '') ? '' : ' error';
-                    echo '<div class="control-group' . $tmp . '">';
-                    echo lang('create_education_code_label', 'education_code', array(
-                        'class' => 'control-label',
-                        'id'    => 'inputError'
-                    ));
-                    echo '<div class="controls">';
-                    echo form_input($education_code, array(
-                        'id' => 'inputError'
-                    ));
-                    echo form_error('education_code');
-                    echo '</div></div> ';
 
+                    //education_code:
+                    echo input_bootstrap($education_code, 'create_education_code_label');
 
 
                     //education_description:
-                    $tmp = (form_error('education_description') == '') ? '' : ' error';
-                    echo '<div class="control-group' . $tmp . '">';
-                    echo lang('create_education_description_label', 'education_description', array(
-                        'class' => 'control-label',
-                        'id'    => 'inputError'
-                    ));
-                    echo '<div class="controls">';
-                    echo form_input($education_description, array(
-                        'id' => 'inputError'
-                    ));
-                    echo form_error('education_description');
-                    echo '</div></div> ';
-
+                    echo input_bootstrap($education_description, 'create_education_description_label');
+                    
+                    
                     echo ' <div class="form-actions">';
 
                     //reset button

@@ -11,7 +11,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                 </div>
                 <div class="widget-content nopadding">
                     <?php
-//echo validation_errors();
+echo validation_errors();
 
                     /**
                      * @Contributor: Jinkee Po <pojinkee1@gmail.com>

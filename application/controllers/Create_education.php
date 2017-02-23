@@ -12,7 +12,7 @@ class Create_education extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
-                $this->lang->load('ci_capstone/ci_educations');
+                $this->load->model('Education_model');
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
                 $this->breadcrumbs->unshift(2, 'Educations', 'educations');
@@ -21,49 +21,28 @@ class Create_education extends CI_Capstone_Controller
 
         public function index()
         {
-
-                $this->form_validation->set_rules(array(
-                    array(
-                        'label' => lang('create_education_code_label'),
-                        'field' => 'education_code',
-                        'rules' => 'trim|required|is_unique[educations.education_code]|min_length[2]|max_length[20]',
-                    ),
-                    array(
-                        'label' => lang('create_education_description_label'),
-                        'field' => 'education_description',
-                        'rules' => 'trim|required|human_name|min_length[2]|max_length[50]|is_unique[educations.education_description]',
-                    )
-                ));
-
-                if ($this->form_validation->run())
+                if ($this->input->post('submit'))
                 {
-                        $education = array(
-                            'education_code'        => $this->input->post('education_code', TRUE),
-                            'education_description' => $this->input->post('education_description', TRUE),
-                            'created_user_id'       => $this->ion_auth->user()->row()->id
-                        );
-                        $this->load->model('Education_model');
-                        if ($this->Education_model->insert($education))
+                        $id = $this->Education_model->from_form()->insert();
+                        if ($id)
                         {
-                                $this->session->set_flashdata('message', $this->config->item('message_start_delimiter', 'ion_auth') . lang('create_education_succesfully_added_message') . $this->config->item('message_end_delimiter', 'ion_auth'));
-                             //   redirect(base_url('educations'), 'refresh');
+                                redirect(base_url('educations'), 'refresh');
                         }
                 }
-
                 $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
 
                 $this->data['education_code']        = array(
-                    'name'  => 'education_code',
-                    'id'    => 'education_code',
+                    'name'  => 'code',
+                    'id'    => 'code',
                     'type'  => 'text',
-                    'value' => $this->form_validation->set_value('education_code'),
+                    'value' => $this->form_validation->set_value('code'),
                 );
                 $this->data['education_description'] = array(
-                    'name'  => 'education_description',
-                    'id'    => 'education_description',
+                    'name'  => 'description',
+                    'id'    => 'description',
                     'type'  => 'text',
-                    'value' => $this->form_validation->set_value('education_description'),
+                    'value' => $this->form_validation->set_value('description'),
                 );
 
                 $this->data['bootstrap'] = $this->bootstrap();
