@@ -8,7 +8,7 @@ class Create_subject extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
-                $this->lang->load('ci_capstone/ci_subjects');
+                $this->load->model('Subject_model');
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
                 $this->breadcrumbs->unshift(2, 'Subjects', 'subjects');
@@ -21,64 +21,37 @@ class Create_subject extends CI_Capstone_Controller
                  * @Contributor: Jinkee Po <pojinkee1@gmail.com>
                  *         
                  */
-                $this->form_validation->set_rules(array(
-                    array(
-                        'label' => lang('create_subject_code_label'),
-                        'field' => 'subject_code',
-                        'rules' => 'trim|required|is_unique[subjects.subject_code]|min_length[3]|max_length[20]',
-                    ),
-                    array(
-                        'label' => lang('create_subject_description_label'),
-                        'field' => 'subject_description',
-                        'rules' => 'trim|required|human_name|min_length[3]|max_length[50]',
-                    ),
-                    array(
-                        'label' => lang('create_subject_unit_label'),
-                        'field' => 'subject_unit',
-                        'rules' => 'trim|required|is_natural_no_zero',
-                    )
-                ));
-
-                if ($this->form_validation->run())
+                if ($this->input->post('submit'))
                 {
-                        $subject = array(
-                            'subject_code'        => $this->input->post('subject_code', TRUE),
-                            'subject_description' => $this->input->post('subject_description', TRUE),
-                            'subject_unit'        => $this->input->post('subject_unit', TRUE),
-                            'created_user_id'     => $this->ion_auth->user()->row()->id
-                        );
-                        $this->load->model('Subject_model');
-                        if ($this->Subject_model->insert($subject))
+                        $id = $this->Subject_model->from_form(NULL, array(
+                                    'created_user_id' => $this->session->userdata('user_id')
+                                ))->insert();
+                        if ($id)
                         {
-                                $this->session->set_flashdata('message', $this->config->item('message_start_delimiter', 'ion_auth') . lang('create_subject_succesfully_added_message') . $this->config->item('message_end_delimiter', 'ion_auth'));
                                 redirect(base_url('subjects'), 'refresh');
-                                
-                               
                         }
                 }
-                $this->load->model('Course_model');
-                $this->load->helper('combobox');
 
                 $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
 
                 $this->data['subject_code']        = array(
-                    'name'  => 'subject_code',
-                    'id'    => 'subject_code',
+                    'name'  => 'code',
+                    'id'    => 'code',
                     'type'  => 'text',
-                    'value' => $this->form_validation->set_value('subject_code'),
+                    'value' => $this->form_validation->set_value('code'),
                 );
                 $this->data['subject_description'] = array(
-                    'name'  => 'subject_description',
-                    'id'    => 'subject_description',
+                    'name'  => 'desc',
+                    'id'    => 'desc',
                     'type'  => 'text',
-                    'value' => $this->form_validation->set_value('subject_description'),
+                    'value' => $this->form_validation->set_value('desc'),
                 );
                 $this->data['subject_unit']        = array(
-                    'name'  => 'subject_unit',
-                    'id'    => 'subject_unit',
+                    'name'  => 'unit',
+                    'id'    => 'unit',
                     'type'  => 'text',
-                    'value' => $this->form_validation->set_value('subject_unit'),
+                    'value' => $this->form_validation->set_value('unit'),
                 );
 
                 $this->data['bootstrap'] = $this->bootstrap();
