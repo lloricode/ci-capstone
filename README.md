@@ -43,10 +43,12 @@ administrator|mypasswordisadmin1
 ### production ENVIRONMENT 
 - compress html, for fast renderring page in live server 
 - csrf_protection is enabled (set to TRUE), for prevent malicious/unnecessary behavior in submitting forms
+- errors log save to database,then not directly seen in browsers,
 
 ### developing ENVIRONMENT
 - compress html disabled, for easy monitoring html output (easy debugging)
 - csrf_protection is disabled (set to FALSE), for easy submitting forms, for testing in big forms
+- errors log disabled, directly promt in browser,
 - database set to localhost 
 
 ### ..
