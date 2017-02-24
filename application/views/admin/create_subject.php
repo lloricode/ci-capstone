@@ -12,7 +12,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                 <div class="widget-content nopadding">
                     <?php
 //echo validation_errors();
-                  
+
                     /**
                      * @Contributor: Jinkee Po <pojinkee1@gmail.com>
                      *         
@@ -28,48 +28,14 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
 
 
                     //subject_code:
-                    $tmp = (form_error('subject_code') == '') ? '' : ' error';
-                    echo '<div class="control-group' . $tmp . '">';
-                    echo lang('create_subject_code_label', 'subject_code', array(
-                        'class' => 'control-label',
-                        'id'    => 'inputError'
-                    ));
-                    echo '<div class="controls">';
-                    echo form_input($subject_code, array(
-                        'id' => 'inputError'
-                    ));
-                    echo form_error('subject_code');
-                    echo '</div></div> ';
-
+                    echo input_bootstrap($subject_code, 'create_subject_code_label');
 
 
                     //subject_description:
-                    $tmp = (form_error('subject_description') == '') ? '' : ' error';
-                    echo '<div class="control-group' . $tmp . '">';
-                    echo lang('create_subject_description_label', 'subject_description', array(
-                        'class' => 'control-label',
-                        'id'    => 'inputError'
-                    ));
-                    echo '<div class="controls">';
-                    echo form_input($subject_description, array(
-                        'id' => 'inputError'
-                    ));
-                    echo form_error('subject_description');
-                    echo '</div></div> ';
+                    echo input_bootstrap($subject_description, 'create_subject_description_label');
 
                     //subject_unit:
-                    $tmp = (form_error('subject_unit') == '') ? '' : ' error';
-                    echo '<div class="control-group' . $tmp . '">';
-                    echo lang('create_subject_unit_label', 'subject_unit', array(
-                        'class' => 'control-label',
-                        'id'    => 'inputError'
-                    ));
-                    echo '<div class="controls">';
-                    echo form_input($subject_unit, array(
-                        'id' => 'inputError'
-                    ));
-                    echo form_error('subject_unit');
-                    echo '</div></div> ';
+                    echo input_bootstrap($subject_unit, 'create_subject_unit_label');
 
 
 
