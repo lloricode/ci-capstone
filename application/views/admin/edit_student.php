@@ -18,7 +18,7 @@ echo form_open_multipart(base_url("edit-student?student-id=" . $this->student->i
                         // echo validation_errors();
                         image_view(array(
                             'src'   => $this->config->item('student_image_dir') . $this->student->image,
-                            'alt'   => $this->student->school_id . ' - ' . $this->student->fullname,
+                            'alt'   => 'no image for [ ' . $this->student->school_id . ' ]',
                             //  'class'  => 'post_images',
                             'width' => '200',
                             // 'height' => '200',

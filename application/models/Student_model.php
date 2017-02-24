@@ -14,9 +14,10 @@ class Student_model extends MY_Model
                 $this->_relations();
                 $this->_form();
 
-                $this->timestamps        = TRUE;
-                $this->return_as         = 'object';
-                $this->timestamps_format = 'timestamp';
+                $this->timestamps                = TRUE;
+                $this->return_as                 = 'object';
+                $this->timestamps_format         = 'timestamp';
+                $this->remove_empty_before_write = TRUE;
                 parent::__construct();
         }
 
