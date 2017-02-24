@@ -13,19 +13,19 @@ class MY_Upload extends CI_Upload
         /**
          * 
          * @param string $_post_image_name
-         * @param bool $__post_button
+         * @param bool $required - default TRUE
          * @return array | uploaded- bool | error_message -string
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        public function _preparing_image($_post_image_name, $__post_button)
+        public function _preparing_image($_post_image_name, $required = TRUE)
         {
                 /**
                  * for image upload
                  */
-                $uploaded            = FALSE;
+                $uploaded            = !$required;
                 $image_error_message = '';
 
-                if (empty($_FILES[$_post_image_name]['name']) && $__post_button)
+                if (empty($_FILES[$_post_image_name]['name']) && $required)
                 {
 
                         /*
@@ -46,12 +46,12 @@ class MY_Upload extends CI_Upload
                 /**
                  * check if has error in upload $_FILES[] and pass rule validation
                  */
-                if ($__post_button && isset($_FILES[$_post_image_name]['error']) && $_FILES[$_post_image_name]['error'] != 4)
+                if (isset($_FILES[$_post_image_name]['error']) && $_FILES[$_post_image_name]['error'] != 4)
                 {
                         /**
                          * now uploading, FALSE in failed
                          */
-                        $uploaded = ($this->do_upload($_post_image_name));
+                        $uploaded = $this->do_upload($_post_image_name);
 
                         /**
                          * if returned FALSE it means failed/error

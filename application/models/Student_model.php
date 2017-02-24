@@ -40,12 +40,12 @@ class Student_model extends MY_Model
                 $this->lang->load('ci_capstone/ci_educations');
 
                 $this->rules = array(
-                    'insert' => $this->_insert(),
-                    'update' => $this->_update()
+                    'insert' => array_merge($this->_common(), $this->_insert()),
+                    'update' => array_merge($this->_common(), $this->_update())
                 );
         }
 
-        private function _insert()
+        private function _common()
         {
                 return array(
                     'student_firstname'               => array(
@@ -124,8 +124,14 @@ class Student_model extends MY_Model
                         'field' => 'guardian_contact_number',
                         'rules' => 'trim|min_length[8]|max_length[100]',
                     ),
+                );
+        }
+
+        private function _insert()
+        {
+                return array(
                     //-----email
-                    'student_personal_email'          => array(
+                    'student_personal_email' => array(
                         'label'  => lang('index_student_personal_email_th'),
                         'field'  => 'personal_email',
                         'rules'  => 'trim|max_length[50]|valid_email' .
@@ -135,7 +141,7 @@ class Student_model extends MY_Model
                             'is_unique' => 'The {field} already exist.'
                         )
                     ),
-                    'student_guardian_email'          => array(
+                    'student_guardian_email' => array(
                         'label'  => lang('index_student_guardian_email_th'),
                         'field'  => 'guardian_email',
                         'rules'  => 'trim|max_length[50]|valid_email' .
@@ -151,6 +157,45 @@ class Student_model extends MY_Model
         private function _update()
         {
                 return array(
+                    'student_personal_email' => array(
+                        'label' => lang('index_student_personal_email_th'),
+                        'field' => 'personal_email',
+                        'rules' => 'trim|max_length[50]|valid_email|callback_email_personal'
+                    ),
+                    'student_guardian_email' => array(
+                        'label' => lang('index_student_guardian_email_th'),
+                        'field' => 'guardian_email',
+                        'rules' => 'trim|max_length[50]|valid_email|callback_email_guardian'
+                    ),
+                        /**
+                         * needs improvement  -- Lloric 2/25/17 1:55am (mardags home)
+                         */
+//                    'student_personal_email' => array(
+//                        'label' => lang('index_student_personal_email_th'),
+//                        'field' => 'personal_email',
+//                        'rules' => 'trim|max_length[50]|valid_email' .
+//                        (($this->student->email != $this->input->post('personal_email', TRUE)) ?
+//                        '|is_unique[students.student_personal_email]' : ''),
+//                    ),
+//                    'student_guardian_email' => array(
+//                        'label' => lang('index_student_guardian_email_th'),
+//                        'field' => 'guardian_email',
+//                        'rules' => 'trim|max_length[50]|valid_email' .
+//                        (($this->student->guardian_email != $this->input->post('guardian_email', TRUE)) ?
+//                        '|is_unique[students.student_guardian_email]' : ''),
+//                    ),
+                );
+        }
+
+        public function image_config()
+        {
+                return array(
+                    'encrypt_name'  => TRUE,
+                    'upload_path'   => $this->config->item('student_image_dir'),
+                    'allowed_types' => 'jpg|png|jpeg',
+                    'max_size'      => "1000KB",
+                    'max_height'    => "768",
+                    'max_width'     => "1024"
                 );
         }
 

@@ -9,22 +9,6 @@ class Create_student extends CI_Capstone_Controller
         {
                 parent::__construct();
 
-                /**
-                 * preparing configuration for image upload
-                 */
-                $config = array(
-                    'encrypt_name'  => TRUE,
-                    'upload_path'   => $this->config->item('student_image_dir'),
-                    'allowed_types' => 'jpg|png|jpeg',
-                    'max_size'      => "1000KB",
-                    'max_height'    => "768",
-                    'max_width'     => "1024"
-                );
-
-                /**
-                 * load upload library including configuration for upload
-                 */
-                $this->load->library('upload', $config);
                 $this->load->library(array('form_validation', 'school_id'));
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span>');
                 $this->lang->load('ci_capstone/ci_students');
@@ -33,6 +17,14 @@ class Create_student extends CI_Capstone_Controller
 
                 $this->breadcrumbs->unshift(2, 'Students', 'students');
                 $this->breadcrumbs->unshift(3, 'Enroll Student', 'create-student');
+
+
+                /**
+                 * preparing configuration for image upload
+                 *
+                 * load upload library including configuration for upload
+                 */
+                $this->load->library('upload', $this->Student_model->image_config());
         }
 
         public function index()
@@ -41,14 +33,7 @@ class Create_student extends CI_Capstone_Controller
                 $__post_button    = (bool) $this->input->post('submit');
                 $_post_image_name = 'image';
 
-                /**
-                 * preparing image
-                 */
-                $upload_return       = $this->upload->_preparing_image($_post_image_name, $__post_button);
-                $uploaded            = $upload_return['uploaded'];
-                $image_error_message = $upload_return['error_message'];
-
-
+                $image_error_message = '';
 
                 /**
                  * check if the button in POST is triggered
@@ -56,9 +41,16 @@ class Create_student extends CI_Capstone_Controller
                 if ($__post_button)
                 {
                         /**
+                         * preparing image
+                         */
+                        $upload_return       = $this->upload->_preparing_image($_post_image_name);
+                        $uploaded            = $upload_return['uploaded'];
+                        $image_error_message = $upload_return['error_message'];
+
+                        /**
                          * start the submittion
                          */
-                        $this->_input_ready($__post_button, $_post_image_name, $uploaded);
+                        $this->_input_ready($uploaded);
                 }
 
                 /**
@@ -82,12 +74,12 @@ class Create_student extends CI_Capstone_Controller
                 }
         }
 
-        private function _input_ready($__post_button, $_post_image_name, $uploaded)
+        private function _input_ready($uploaded)
         {
                 /**
                  * preparing the image name from uploading image
                  */
-                $img_name = (string) $this->upload->data()['file_name'];
+                $img_name = (string) $this->upload->data('file_name');
                 /**
                  * 
                  */

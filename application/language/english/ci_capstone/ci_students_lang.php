@@ -71,5 +71,7 @@ $lang['index_student_image_th']       = 'Image';
 
 $lang['student_image_required'] = 'Image Reqired!';
 
+$lang['edit_student_submit_button_label']     = 'Edit Student';
+
 
 

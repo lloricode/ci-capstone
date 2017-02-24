@@ -2,7 +2,7 @@
 defined('BASEPATH') or exit('no direct script allowed');
 echo form_open_multipart(base_url("edit-student?student-id=" . $this->student->id), array(
     'class' => 'form-horizontal'
-        ), $student_school_id);
+));
 ?>
 <?php echo (isset($message)) ? $message : ''; ?>
 <div class="container-fluid">
@@ -40,11 +40,11 @@ echo form_open_multipart(base_url("edit-student?student-id=" . $this->student->i
 
 
                         //student_gender:
-                        $tmp             = (form_error('student_gender') == '') ? '' : ' error';
+                        $gender_field    = $student_gender['name'];
+                        $tmp             = (form_error($gender_field) == '') ? '' : ' error';
                         echo '<div class="control-group' . $tmp . '">';
-                        echo lang('create_student_gender_label', 'student_gender', array(
+                        echo lang('create_student_gender_label', $gender_field, array(
                             'class' => 'control-label',
-                            'id'    => 'inputError'
                         ));
                         echo '<div class="controls">';
                         $set_vale_gender = $student_gender['value'];
@@ -60,15 +60,15 @@ echo form_open_multipart(base_url("edit-student?student-id=" . $this->student->i
                         }
                         ?>
                         <label>
-                            <?php echo form_radio('student_gender', 'Female', $female); ?>
+                            <?php echo form_radio($gender_field, 'Female', $female); ?>
                             Female
                         </label>   
                         <label>
-                            <?php echo form_radio('student_gender', 'Male', $male); ?>
+                            <?php echo form_radio($gender_field, 'Male', $male); ?>
                             Male
                         </label> 
                         <?php
-                        echo form_error('student_gender');
+                        echo form_error($gender_field);
 
                         echo '</div></div>';
 
@@ -102,16 +102,16 @@ echo form_open_multipart(base_url("edit-student?student-id=" . $this->student->i
                         echo input_bootstrap($student_school_id_temp, 'create_student_school_id_label');
 
                         //course_id:                      
-                        echo input_dropdown_bootstrap('course_id', 'create_course_label', $course_id_value, $this->student->course_id);
+                        echo input_dropdown_bootstrap($course_id['name'], 'create_course_label', $course_id['value']);
 
                         //student_year_level:
-                        echo input_dropdown_bootstrap('enrollment_year_level', 'create_student_year_level_label', $enrollment_year_level_value, $this->student->level);
+                        echo input_dropdown_bootstrap($enrollment_year_level['name'], 'create_student_year_level_label', $enrollment_year_level['value'], $enrollment_year_level['default']);
 
                         //course_id:                      
-                        echo input_dropdown_bootstrap('enrollment_school_year', 'create_student_school_year_label', $enrollment_school_year_value, $this->student->school_year);
+                        echo input_dropdown_bootstrap($enrollment_school_year['name'], 'create_student_school_year_label', $enrollment_school_year['value'], $enrollment_school_year['default']);
 
                         //student_year_level:
-                        echo input_dropdown_bootstrap('enrollment_semester', 'create_student_semester_label', $enrollment_semester_value, $this->student->semester);
+                        echo input_dropdown_bootstrap($enrollment_semester['name'], 'create_student_semester_label', $enrollment_semester['value'], $enrollment_semester['default']);
                         ?>
                     </div>
                 </div>
@@ -126,8 +126,11 @@ echo form_open_multipart(base_url("edit-student?student-id=" . $this->student->i
                 <div class="widget-content nopadding">
                     <div class="form-horizontal">
                         <?php
-                        //guardian_fullname:
-                        echo input_bootstrap($student_guardian_fullname, 'create_student_guardian_fullname_label');
+                        //personal_email:
+                        echo input_bootstrap($student_personal_email, 'create_student_personal_email_label');
+
+                        //personal_contact_number:
+                        echo input_bootstrap($student_personal_contact_number, 'create_student_personal_contact_label');
 
                         //address_town:
                         echo input_bootstrap($student_address_town, 'create_student_town_label');
@@ -135,20 +138,19 @@ echo form_open_multipart(base_url("edit-student?student-id=" . $this->student->i
                         //address_region:
                         echo input_bootstrap($student_address_region, 'create_student_region_label');
 
-                        //guardian_address:
-                        echo input_bootstrap($student_guardian_address, 'create_student_guardian_address_label', 'textarea');
 
-                        //personal_contact_number:
-                        echo input_bootstrap($student_personal_contact_number, 'create_student_personal_contact_label');
 
                         //guardian_contact_number:
                         echo input_bootstrap($student_guardian_contact_number, 'create_student_guardian_contact_label');
 
-                        //personal_email:
-                        echo input_bootstrap($student_personal_email, 'create_student_personal_email_label');
+
+                        //guardian_fullname:
+                        echo input_bootstrap($student_guardian_fullname, 'create_student_guardian_fullname_label');
 
                         //guardian_email:
                         echo input_bootstrap($student_guardian_email, 'create_student_guardian_email_label');
+                        //guardian_address:
+                        echo input_bootstrap($student_guardian_address, 'create_student_guardian_address_label', 'textarea');
                         ?>
                     </div>
                 </div>
@@ -163,7 +165,7 @@ echo form_open_multipart(base_url("edit-student?student-id=" . $this->student->i
                             <label class="control-label">Old</label>
                             <div class="controls">
                                 <label>
-                                    <input type="checkbox" name="radios" />
+                                    <?php echo form_checkbox('newsletter', 'accept', TRUE); ?>
                                     First One</label>
                                 <label>
                                     <input type="checkbox" name="radios" />
@@ -215,7 +217,7 @@ echo form_open_multipart(base_url("edit-student?student-id=" . $this->student->i
                     'class' => 'btn btn-default'
                 ));
 
-                echo form_submit('btn2', lang('create_student_submit_button_label'), array(
+                echo form_submit('submit', lang('edit_student_submit_button_label'), array(
                     'class' => 'btn btn-primary'
                 ));
                 echo '<div id="status"></div>';

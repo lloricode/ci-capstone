@@ -13,9 +13,9 @@ if (!function_exists('my_semester_for_combo'))
         function my_semester_for_combo()
         {
                 return array(
-                    '1' => '1st Semester',
-                    '2' => '2nd Semester',
-                    '3' => 'Summer Semester',
+                    'first'  => '1st Semester',
+                    'second' => '2nd Semester',
+                    'summer' => 'Summer Semester',
                 );
         }
 
