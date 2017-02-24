@@ -8,7 +8,7 @@ class Create_subject_offer extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
-                $this->lang->load('ci_capstone/ci_subject_offers');
+                $this->load->model('Subject_offer_model');
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
                 $this->breadcrumbs->unshift(2, 'Subject Offers', 'subject-offers');
@@ -18,6 +18,26 @@ class Create_subject_offer extends CI_Capstone_Controller
                  */
                 $this->load->library('table');
                 $this->load->helper('time');
+        }
+
+        /**
+         * @Contributor: Jinkee Po <pojinkee1@gmail.com>
+         *         
+         */
+        public function index()
+        {
+                if ($this->input->post('submit'))
+                {
+                        $id = $this->Subject_offer_model->from_form(NULL, array(
+                                    'created_user_id' => $this->session->userdata('user_id')
+                                ))->insert();
+                        if ($id)
+                        {
+                                $this->session->set_flashdata('message', $this->config->item('message_start_delimiter', 'ion_auth') . lang('create_subject_offer_succesfully_added_message') . $this->config->item('message_end_delimiter', 'ion_auth'));
+                                redirect(base_url('create-subject-offer'), 'refresh');
+                        }
+                }
+                $this->_form_view();
         }
 
         public function subject_offer_check_check_conflict()
@@ -60,101 +80,61 @@ class Create_subject_offer extends CI_Capstone_Controller
                 return $conflic;
         }
 
-        /**
-         * @Contributor: Jinkee Po <pojinkee1@gmail.com>
-         *         
-         */
-        public function index()
+        private function _form_view()
         {
-
-                $this->form_validation->set_rules(array(
-                    array(
-                        'label' => lang('create_subject_offer_start_label'),
-                        'field' => 'subject_offer_start',
-                        'rules' => 'required|trim|min_length[3]|max_length[5]|time_24hr|time_24hr|time_lessthan[' . $this->input->post('subject_offer_end', TRUE) . ']',
-                    ),
-                    array(
-                        'label' => lang('create_subject_offer_end_label'),
-                        'field' => 'subject_offer_end',
-                        'rules' => 'required|trim|min_length[3]|max_length[5]',
-                    ),
-                    array(
-                        'label' => lang('create_user_id_label'),
-                        'field' => 'user_id',
-                        'rules' => 'trim|required|is_natural_no_zero',
-                    ),
-                    array(
-                        'label' => lang('create_subject_id_label'),
-                        'field' => 'subject_id',
-                        'rules' => 'trim|required|is_natural_no_zero',
-                    ),
-                    array(
-                        'label' => lang('create_room_id_label'),
-                        'field' => 'room_id',
-                        'rules' => 'trim|required|is_natural_no_zero',
-                    ),
-                    array(
-                        'label' => 'Subject Offer',
-                        'field' => 'subject_offer_check_check_conflict',
-                        'rules' => 'callback_subject_offer_check_check_conflict',
-                    ),
-                ));
-                $days = array(
-                    'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'
-                );
-                if ($this->form_validation->run())
-                {
-                        $subject_offer = array(
-                            /**
-                             * time
-                             */
-                            'subject_offer_start' => $this->input->post('subject_offer_start', TRUE),
-                            'subject_offer_end'   => $this->input->post('subject_offer_end', TRUE),
-                            /**
-                             * foreign
-                             */
-                            'user_id'             => $this->input->post('user_id', TRUE),
-                            'subject_id'          => $this->input->post('subject_id', TRUE),
-                            'room_id'             => $this->input->post('room_id', TRUE),
-                            /**
-                             * 
-                             */
-                            'created_user_id'     => $this->ion_auth->user()->row()->id
-                        );
-                        $days          = array(
-                            'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'
-                        );
-                        /**
-                         * get input from check box, days
-                         */
-                        foreach ($days as $d)
-                        {
-                                $subject_offer['subject_offer_' . $d] = ($this->input->post('subject_offer_' . $d, TRUE) == $d) ? TRUE : FALSE;
-                        }
-                        $this->load->model('Subject_offer_model');
-                        if ($this->Subject_offer_model->insert($subject_offer))
-                        {
-                                $this->session->set_flashdata('message', $this->config->item('message_start_delimiter', 'ion_auth') . lang('create_subject_offer_succesfully_added_message') . $this->config->item('message_end_delimiter', 'ion_auth'));
-                                redirect(current_url(), 'refresh');
-                        }
-                }
-
                 $this->load->model(array('User_model', 'Subject_model', 'Room_model'));
-                $this->load->helper('combobox');
-                $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                $this->load->helper(array('combobox', 'day'));
+
+                $this->data['message'] = ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message'));
 
                 $this->data['subject_offer_start'] = array(
-                    'name'  => 'subject_offer_start',
-                    'type'  => 'time',
-                    'value' => $this->form_validation->set_value('subject_offer_start'),
+                    'name'  => 'start',
+                    'value' => $this->form_validation->set_value('start'),
                 );
-
 
                 $this->data['subject_offer_end'] = array(
-                    'name'  => 'subject_offer_end',
-                    'type'  => 'time',
-                    'value' => $this->form_validation->set_value('subject_offer_end'),
+                    'name'  => 'end',
+                    'value' => $this->form_validation->set_value('end'),
                 );
+
+                /**
+                 * foreign
+                 */
+                $this->data['user_id'] = array(
+                    'name'  => 'faculty',
+                    'value' => $this->_faculties(),
+                );
+
+                $this->data['subject_id'] = array(
+                    'name'  => 'subject',
+                    'value' => $this->Subject_model->as_dropdown('subject_code')->get_all(),
+                );
+
+                $this->data['room_id'] = array(
+                    'name'  => 'room',
+                    'value' => $this->Room_model->as_dropdown('room_number')->get_all(),
+                );
+
+                /**
+                 * for check box
+                 */
+                $this->data['days'] = days_for_db();
+
+                $this->data['bootstrap']     = $this->bootstrap();
+                $this->data['conflict_data'] = $this->_render_page('admin/_templates/create_subject_offer/conflict_data', $this->data, TRUE);
+                $this->_render_admin_page('admin/create_subject_offer', $this->data);
+        }
+
+        /**
+         * 
+         * @return array
+         */
+        private function _faculties()
+        {
+                /**
+                 * create drop_down for <select></select>'s <option>
+                 */
+                $faculty_drop_down = array();
 
                 /**
                  * get all user that has faculty group
@@ -162,29 +142,13 @@ class Create_subject_offer extends CI_Capstone_Controller
                 $faculties_obj = $this->ion_auth->users('faculty')->result();
 
                 /**
-                 * create dropdown for <select></select>'s <option>
-                 */
-                $faculty_drop_down = array();
-                /**
-                 * convert to array with specific value id|fullname
+                 * convert to array with specific value id|full_name
                  */
                 foreach ($faculties_obj as $f)
                 {
                         $faculty_drop_down[$f->id] = $f->last_name . ', ' . $f->first_name;
                 }
-                $this->data['user_id_value']    = $faculty_drop_down;
-                $this->data['subject_id_value'] = $this->Subject_model->as_dropdown('subject_code')->get_all();
-                $this->data['room_id_value']    = $this->Room_model->as_dropdown('room_number')->get_all();
-
-
-                /**
-                 * for check box
-                 */
-                $this->data['days'] = $days;
-
-                $this->data['bootstrap']     = $this->bootstrap();
-                $this->data['conflict_data'] = $this->_render_page('admin/_templates/create_subject_offer/conflict_data', $this->data, TRUE);
-                $this->_render_admin_page('admin/create_subject_offer', $this->data);
+                return $faculty_drop_down;
         }
 
         private function bootstrap()

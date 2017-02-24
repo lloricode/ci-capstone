@@ -11,7 +11,7 @@ if (isset($conflict_data))
 
             <div class="widget-box">
                 <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
-                    <h5><?php echo lang('create_education_heading') ?></h5>
+                    <h5><?php echo lang('create_subject_offer_heading') ?></h5>
                 </div>
                 <div class="widget-content nopadding">
                     <?php
@@ -28,13 +28,11 @@ if (isset($conflict_data))
                     ));
 
                     //subject_offer_start:
-                    //  echo input_bootstrap($subject_offer_start, 'create_subject_offer_start_label');
-                    echo input_dropdown_bootstrap('subject_offer_start', 'create_subject_offer_start_label', time_list());
+                    echo input_dropdown_bootstrap($subject_offer_start['name'], 'create_subject_offer_start_label', time_list());
 
 
                     //subject_offer_end:
-                    // echo input_bootstrap($subject_offer_end, 'create_subject_offer_end_label');
-                    echo input_dropdown_bootstrap('subject_offer_end', 'create_subject_offer_end_label', time_list());
+                    echo input_dropdown_bootstrap($subject_offer_end['name'], 'create_subject_offer_end_label', time_list());
                     ?>
                     <div class="control-group">
                         <div class="controls">
@@ -44,16 +42,16 @@ if (isset($conflict_data))
                             ));
                             ?>
                             <?php foreach ($days as $d): ?>
-                                    <?php $this->table->add_row(form_label(ucfirst($d), 'subject_offer_' . $d), form_label(form_checkbox('subject_offer_' . $d, $d, set_checkbox('subject_offer_' . $d, set_value('subject_offer_' . $d))), 'subject_offer_' . $d)); ?>
+                                    <?php $this->table->add_row(form_label(ucfirst($d), $d), form_label(form_checkbox($d, TRUE/* i set this TRUE for directly insert, */, set_checkbox($d, set_value($d))), $d)); ?>
                             <?php endforeach; ?>
                             <?php echo $this->table->generate(); ?>
                         </div>
                     </div>
 
                     <?php
-                    echo input_dropdown_bootstrap('user_id', 'create_user_id_label', $user_id_value);
-                    echo input_dropdown_bootstrap('subject_id', 'create_subject_id_label', $subject_id_value);
-                    echo input_dropdown_bootstrap('room_id', 'create_room_id_label', $room_id_value);
+                    echo input_dropdown_bootstrap($user_id['name'], 'create_user_id_label', $user_id['value']);
+                    echo input_dropdown_bootstrap($subject_id['name'], 'create_subject_id_label', $subject_id['value']);
+                    echo input_dropdown_bootstrap($room_id['name'], 'create_room_id_label', $room_id['value']);
 
                     echo ' <div class="form-actions">';
 

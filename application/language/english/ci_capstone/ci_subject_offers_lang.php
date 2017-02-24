@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ENGLISH
  */
@@ -9,7 +10,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
  *         @shikai06
  */
 //Subject Offer Form
-$lang['create_subject_offer_heading']                   = 'Add Subject Offers';
+$lang['create_subject_offer_heading']                   = 'Create Subject Offers';
 $lang['create_subject_offer_start_label']               = 'Subject Offer Start:';
 $lang['create_subject_offer_end_label']                 = 'Subject Offer End:';
 $lang['create_user_id_label']                           = 'Instructor:';

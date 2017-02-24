@@ -14,9 +14,13 @@ class Student_model extends MY_Model
                 $this->_relations();
                 $this->_form();
 
-                $this->timestamps                = TRUE;
-                $this->return_as                 = 'object';
-                $this->timestamps_format         = 'timestamp';
+                $this->timestamps        = TRUE;
+                $this->return_as         = 'object';
+                $this->timestamps_format = 'timestamp';
+
+                /**
+                 * some of field is not required, so remove it in array when no value, in inside the *->from_form()->insert() in core MY_Model,
+                 */
                 $this->remove_empty_before_write = TRUE;
                 parent::__construct();
         }
