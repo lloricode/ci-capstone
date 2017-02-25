@@ -155,18 +155,16 @@ class Edit_student extends CI_Capstone_Controller
                                 if ($img_name)
                                 {
                                         /**
-                                         * prepare the image directory,then if exist
+                                         * prepare the image directory,then check file if exist
                                          */
                                         $old_img = $this->config->item('student_image_dir') . $this->student->image;
-                                        if (is_dir($old_img))
+
+                                        if (file_exists($old_img))
                                         {
                                                 /**
                                                  * remove the old image
                                                  */
-                                                /**
-                                                 * still not work on my linux -- Lloric
-                                                 */
-                                                unlink($olm_imge);
+                                                unlink($old_img);
                                         }
                                 }
                                 redirect(base_url('students/view?student-id=' . $s_id), 'refresh');
