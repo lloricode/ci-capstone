@@ -30,3 +30,43 @@ if (!function_exists('my_month_array'))
         }
 
 }
+if (!function_exists('get_months_in_between'))
+{
+
+        /**
+         * get months in between
+         * 
+         * @param int $start
+         * @param int $end
+         * @return array of int
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        function get_months_in_between($start, $end)
+        {
+                $output = array();
+                if (($start < 1 || $start > 12) || ($end < 1 || $end > 12))
+                {
+                        show_error('invalid in ' . __FILE__ . ' at line:' . __LINE__);
+                }
+                if ($start < $end)
+                {
+                        for ($i = $start; $i < $end; $i++)
+                        {
+                                $output[] = $i;
+                        }
+                }
+                elseif ($start > $end)
+                {
+                        for ($i = $start; $i <= 12; $i++)
+                        {
+                                $output[] = $i;
+                        }
+                        for ($i = 1; $i < $end; $i++)
+                        {
+                                $output[] = $i;
+                        }
+                }
+                return $output;
+        }
+
+}

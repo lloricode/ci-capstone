@@ -88,7 +88,7 @@ echo form_open_multipart(base_url("create-student/index"), array(
                     <div  class="form-horizontal">
                         <?php
                         //student_school_id:
-                        echo input_bootstrap($student_school_id_temp, 'create_student_school_id_label');
+                        echo input_bootstrap($student_school_id_temp, 'create_student_school_id_label', 'input', 'Course Code');
 
                         //course_id:                      
                         echo input_dropdown_bootstrap($course_id['name'], 'create_course_label', $course_id['value']);
@@ -96,11 +96,12 @@ echo form_open_multipart(base_url("create-student/index"), array(
                         //student_year_level:
                         echo input_dropdown_bootstrap($enrollment_year_level['name'], 'create_student_year_level_label', $enrollment_year_level['value']);
 
-                        //course_id:                      
-                        echo input_dropdown_bootstrap($enrollment_school_year['name'], 'create_student_school_year_label', $enrollment_school_year['value']);
-
-                        //student_year_level:
-                        echo input_dropdown_bootstrap($enrollment_semester['name'], 'create_student_semester_label', $enrollment_semester['value']);
+                        //student_school_year: 
+                        echo input_bootstrap($enrollment_school_year, 'create_student_school_year_label');
+                        //    echo input_dropdown_bootstrap($enrollment_school_year['name'], 'create_student_school_year_label', $enrollment_school_year['value']);
+                        //student_semesterl:
+                        echo input_bootstrap($enrollment_semester, 'create_student_semester_label');
+                        // echo input_dropdown_bootstrap($enrollment_semester['name'], 'create_student_semester_label', $enrollment_semester['value']);
                         ?>
                     </div>
                 </div>

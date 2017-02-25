@@ -12,6 +12,7 @@ class Create_student extends CI_Capstone_Controller
                 $this->load->library(array('form_validation', 'school_id'));
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span>');
                 $this->lang->load('ci_capstone/ci_students');
+                $this->load->helper('school');
                 $this->load->model(array('Student_model', 'Enrollment_model'));
                 $this->_get_school_id_code();
 
@@ -99,14 +100,28 @@ class Create_student extends CI_Capstone_Controller
                  */
                 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::start
                 $s_id = $this->Student_model->from_form(NULL, array(
-                            'student_image'     => $img_name,
+                            /**
+                             * so users cant override the valid value
+                             * not recommended hidden inputs
+                             * --Lloric
+                             */
                             'student_school_id' => (string) $this->school_id->generate(),
+                            //--
+                            'student_image'     => $img_name,
                             'created_user_id'   => $this->session->userdata('user_id')
                         ))->insert();
 
                 $id = $this->Enrollment_model->from_form(NULL, array(
-                            'student_id'      => $s_id,
-                            'created_user_id' => $this->session->userdata('user_id')
+                            /**
+                             * so users cant override the valid value
+                             * not recommended hidden inputs
+                             * --Lloric
+                             */
+                            'enrollment_semester'    => current_school_semester(),
+                            'enrollment_school_year' => current_school_year(),
+                            //--
+                            'student_id'             => $s_id,
+                            'created_user_id'        => $this->session->userdata('user_id')
                         ))->insert();
                 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::end
 
@@ -153,28 +168,20 @@ class Create_student extends CI_Capstone_Controller
 
                 $this->data['student_firstname']  = array(
                     'name'  => 'firstname',
-                    'id'    => 'firstname',
                     'value' => $this->form_validation->set_value('firstname'),
                 );
                 $this->data['student_middlename'] = array(
                     'name'  => 'middlename',
-                    'id'    => 'middlename',
                     'value' => $this->form_validation->set_value('middlename'),
                 );
 
                 $this->data['student_lastname'] = array(
                     'name'  => 'lastname',
-                    'id'    => 'lastname',
                     'value' => $this->form_validation->set_value('lastname'),
                 );
-//
-//                $this->data['student_school_id'] = array(
-//                    'student_school_id' => $this->school_id->generate()
-//                );
 
                 $this->data['student_gender']    = array(
                     'name'  => 'gender',
-                    'id'    => 'gender',
                     'value' => $this->form_validation->set_value('gender'),
                 );
                 $this->data['student_birthdate'] = array(
@@ -194,13 +201,11 @@ class Create_student extends CI_Capstone_Controller
 
                 $this->data['student_civil_status'] = array(
                     'name'  => 'status',
-                    'id'    => 'status',
                     'value' => $this->form_validation->set_value('status'),
                 );
 
                 $this->data['student_nationality'] = array(
                     'name'  => 'nationality',
-                    'id'    => 'nationality',
                     'value' => $this->form_validation->set_value('nationality'),
                 );
 
@@ -211,9 +216,14 @@ class Create_student extends CI_Capstone_Controller
                     'id'    => 'address',
                     'value' => $this->form_validation->set_value('address'),
                 );
-                $this->data['student_school_id_temp']    = array(
+
+                /**
+                 * i used temp, because, when form submmited,
+                 *  i will use freshly from helper, just to make sure client cant override value
+                 * --Lloric
+                 */
+                $this->data['student_school_id_temp'] = array(
                     'name'     => 'id_temp',
-                    'id'       => 'id_temp',
                     'disabled' => '',
                     'value'    => $this->school_id->temporary_id(),
                 );
@@ -223,14 +233,12 @@ class Create_student extends CI_Capstone_Controller
                 //++++++++++++++++++++++++++++++++++++++=
                 $this->data['student_guardian_fullname'] = array(
                     'name'  => 'guardian_fullname',
-                    'id'    => 'guardian_fullname',
                     'value' => $this->form_validation->set_value('guardian_fullname'),
                 );
 
 
                 $this->data['student_address_town'] = array(
                     'name'  => 'town',
-                    'id'    => 'town',
                     'value' => $this->form_validation->set_value('town'),
                 );
 
@@ -238,7 +246,6 @@ class Create_student extends CI_Capstone_Controller
 
                 $this->data['student_address_region'] = array(
                     'name'  => 'region',
-                    'id'    => 'region',
                     'value' => $this->form_validation->set_value('region'),
                 );
 
@@ -246,7 +253,6 @@ class Create_student extends CI_Capstone_Controller
 
                 $this->data['student_guardian_address'] = array(
                     'name'  => 'guardian_address',
-                    'id'    => 'guardian_address',
                     'value' => $this->form_validation->set_value('guardian_address'),
                 );
 
@@ -254,7 +260,6 @@ class Create_student extends CI_Capstone_Controller
 
                 $this->data['student_personal_contact_number'] = array(
                     'name'  => 'ontact_number',
-                    'id'    => 'ontact_number',
                     'value' => $this->form_validation->set_value('ontact_number'),
                 );
 
@@ -262,7 +267,6 @@ class Create_student extends CI_Capstone_Controller
 
                 $this->data['student_guardian_contact_number'] = array(
                     'name'  => 'guardian_contact_number',
-                    'id'    => 'guardian_contact_number',
                     'value' => $this->form_validation->set_value('guardian_contact_number'),
                 );
 
@@ -270,39 +274,41 @@ class Create_student extends CI_Capstone_Controller
 
                 $this->data['student_personal_email'] = array(
                     'name'  => 'personal_email',
-                    'id'    => 'personal_email',
                     'value' => $this->form_validation->set_value('personal_email'),
                 );
 
 
                 $this->data['student_guardian_email'] = array(
                     'name'  => 'guardian_email',
-                    'id'    => 'guardian_email',
                     'value' => $this->form_validation->set_value('guardian_email'),
                 );
 
                 /**
                  * enrollment inputs
                  */
-                $this->data['course_id']              = array(
+                $this->data['course_id']             = array(
                     'name'  => 'courseid',
-                    'id'    => 'courseid',
                     'value' => $this->Course_model->as_dropdown('course_code')->get_all(),
                 );
-                $this->data['enrollment_year_level']  = array(
+                $this->data['enrollment_year_level'] = array(
                     'name'  => 'level',
-                    'id'    => 'level',
                     'value' => _numbers_for_drop_down(0, $this->config->item('max_year_level')),
                 );
+
+                /**
+                 * i used temp, because, when form submmited,
+                 *  i will use freshly from helper, just to make sure client cant override value
+                 * --Lloric
+                 */
                 $this->data['enrollment_semester']    = array(
-                    'name'  => 'semester',
-                    'id'    => 'semester',
-                    'value' => my_semester_for_combo(),
+                    'name'     => 'semester_temp',
+                    'disabled' => '',
+                    'value'    => current_school_semester(),
                 );
                 $this->data['enrollment_school_year'] = array(
-                    'name'  => 'school_year',
-                    'id'    => 'school_year',
-                    'value' => my_schoolyear_for_combo(),
+                    'name'     => 'school_year_temp',
+                    'disabled' => '',
+                    'value'    => current_school_year(),
                 );
                 /**
                  * redering

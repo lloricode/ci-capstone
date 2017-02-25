@@ -180,7 +180,7 @@ class Edit_student extends CI_Capstone_Controller
                  * if reach here, load the model, etc...
                  */
                 $this->load->model('Course_model');
-                $this->load->helper('combobox');
+                $this->load->helper(array('combobox', 'school'));
 
 
                 $this->data['message'] = $image_error_message;
@@ -324,7 +324,7 @@ class Edit_student extends CI_Capstone_Controller
                 $this->data['enrollment_school_year'] = array(
                     'name'    => 'school_year',
                     'default' => $this->student->school_year,
-                    'value'   => my_schoolyear_for_combo(),
+                    'value'   => school_years($this->student->school_year),
                 );
                 /**
                  * redering

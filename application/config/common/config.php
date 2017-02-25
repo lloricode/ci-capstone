@@ -27,7 +27,7 @@ $config['school_year_end']   = 5; //MAY
 /**
  * automatically first semester is start of class
  */
-$config['first_semester_start']  = $config['school_year_start'];
+$config['first_semester_start']  = $config['school_year_start']; //6
 $config['second_semester_start'] = 10; //oct
 $config['summer_semester_start'] = 4;
 

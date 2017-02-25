@@ -44,18 +44,29 @@ class Enrollment_model extends MY_Model
 
                 $this->rules = array(
                     'insert' => $this->_common(),
-                    'update' => $this->_common()
+                    'update' => array_merge($this->_common(), $this->_update())
                 );
         }
 
         private function _common()
         {
                 return array(
-                    'enrollment_year_level'  => array(
+                    'enrollment_year_level' => array(
                         'label' => lang('index_student_year_level_th'),
                         'field' => 'level',
                         'rules' => 'trim|required|is_natural_no_zero',
                     ),
+                    'course_id'             => array(
+                        'label' => lang('index_course_id_th'),
+                        'field' => 'courseid',
+                        'rules' => 'trim|required|is_natural_no_zero',
+                    ),
+                );
+        }
+
+        private function _update()
+        {
+                return array(
                     'enrollment_school_year' => array(
                         'label' => lang('index_student_school_year_th'),
                         'field' => 'school_year',
@@ -65,12 +76,7 @@ class Enrollment_model extends MY_Model
                         'label' => lang('index_student_semesterl_th'),
                         'field' => 'semester',
                         'rules' => 'trim|required',
-                    ),
-                    'course_id'              => array(
-                        'label' => lang('index_course_id_th'),
-                        'field' => 'courseid',
-                        'rules' => 'trim|required|is_natural_no_zero',
-                    ),
+                    )
                 );
         }
 

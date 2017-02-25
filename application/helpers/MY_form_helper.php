@@ -11,7 +11,7 @@ if (!function_exists('input_bootstrap'))
          * @param string $lang lang
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        function input_bootstrap($field, $lang, $input = 'input')
+        function input_bootstrap($field, $lang, $input = 'input', $prepend = FALSE)
         {
                 $CI  = &get_instance();
                 $CI->load->helper('html');
@@ -22,6 +22,11 @@ if (!function_exists('input_bootstrap'))
                     'class' => 'control-label',
                 )) . "\n";
                 echo '<div class="controls">' . "\n";
+
+                if ($prepend)
+                {
+                        echo '<div class="input-prepend"> <span class="add-on">' . $prepend . '</span>';
+                }
 
                 switch ($input)
                 {
@@ -36,6 +41,10 @@ if (!function_exists('input_bootstrap'))
                                 break;
                         default:
                                 break;
+                }
+                if ($prepend)
+                {
+                        echo '</div>';
                 }
                 echo form_error($field['name']);
                 echo '</div>' . "\n";
@@ -71,7 +80,7 @@ if (!function_exists('image_view'))
 
                 echo '</div>' . "\n";
                 echo '</div>' . "\n";
-                echo comment_tag('end-imgae' ) . "\n";
+                echo comment_tag('end-imgae') . "\n";
         }
 
 }
