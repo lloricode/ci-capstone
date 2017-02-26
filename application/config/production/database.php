@@ -71,37 +71,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   | The $query_builder variables lets you determine whether or not to load
   | the query builder class.
  */
-if (ENVIRONMENT === 'development' || ENVIRONMENT === 'testing') {
-    $active_group = '_testing_';
-} else if (ENVIRONMENT === 'production') {
-    $active_group = '_live_production_';
-}
+
+$active_group  = ENVIRONMENT;
 $query_builder = TRUE;
 
-$db['_testing_'] = array(
-    'dsn' => '',
-    'hostname' => 'localhost',
-    'username' => 'root',
-    'password' => '',
-    'database' => 'ci_capstone',
-    'dbdriver' => 'mysqli',
-    'dbprefix' => '',
-    'pconnect' => FALSE,
-    'db_debug' => (ENVIRONMENT !== 'production'),
-    'cache_on' => FALSE,
-    'cachedir' => '',
-    'char_set' => 'utf8',
-    'dbcollat' => 'utf8_general_ci',
-    'swap_pre' => '',
-    'encrypt' => FALSE,
-    'compress' => FALSE,
-    'stricton' => FALSE,
-    'failover' => array(),
-    'save_queries' => TRUE
-);
-
-$db['_live_production_'] = array(
-    'dsn' => '',
+$db['production'] = array(
+    'dsn'      => '',
     'hostname' => 'localhost',
     'username' => 'lloricga_cpstone',
     'password' => 'sfa3w#$sa@sDFA23@aa*$@',
@@ -109,13 +84,13 @@ $db['_live_production_'] = array(
     'dbdriver' => 'mysqli',
     'dbprefix' => '',
     'pconnect' => FALSE,
-    'db_debug' => (ENVIRONMENT !== 'development'),
-    'cache_on' => FALSE,
+    'db_debug' => FALSE,
+    'cache_on' => TRUE,
     'cachedir' => '',
     'char_set' => 'utf8',
     'dbcollat' => 'utf8_general_ci',
     'swap_pre' => '',
-    'encrypt' => FALSE,
+    'encrypt'  => FALSE,
     'compress' => FALSE,
     'stricton' => FALSE,
     'failover' => array(),

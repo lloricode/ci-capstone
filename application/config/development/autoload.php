@@ -58,12 +58,8 @@ $autoload['packages'] = array();
 |
 |	$autoload['libraries'] = array('user_agent' => 'ua');
 */
-$libs_ = array('ion_auth','migration','breadcrumbs');
-if (ENVIRONMENT === 'production')
-{
-        $libs_[]='lib_log';
-}
-$autoload['libraries'] = $libs_;
+
+$autoload['libraries'] = array('ion_auth','migration','breadcrumbs');
 
 /*
 | -------------------------------------------------------------------
@@ -108,7 +104,7 @@ $autoload['helper'] = array('date','url','html','language','navigation','permiss
 | config files.  Otherwise, leave it blank.
 |
 */
-$autoload['config'] = array('common/config');
+$autoload['config'] = array('common/config','common/my_model');
 
 /*
 | -------------------------------------------------------------------

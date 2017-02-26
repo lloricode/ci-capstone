@@ -12,11 +12,25 @@ class Course_model extends MY_Model
 
                 $this->_relations();
                 $this->_form();
+                $this->_config();
 
-                $this->timestamps        = TRUE;
-                $this->return_as         = 'object';
-                $this->timestamps_format = 'timestamp';
                 parent::__construct();
+        }
+
+        private function _config()
+        {
+                $this->timestamps        = (bool) $this->config->item('my_model_timestamps');
+                $this->return_as         = $this->config->item('my_model_return_as');
+                $this->timestamps_format = $this->config->item('my_model_timestamps_format');
+
+
+                $this->cache_driver = $this->config->item('my_model_cache_driver');
+                $this->cache_prefix = $this->config->item('my_model_cache_prefix');
+                /**
+                 * some of field is not required, so remove it in array when no value, in inside the *->from_form()->insert() in core MY_Model,
+                 */
+                //$this->remove_empty_before_write = (bool) $this->config->item('my_model_remove_empty_before_write');
+                //$this->delete_cache_on_save      = (bool) $this->config->item('my_model_delete_cache_on_save');
         }
 
         private function _relations()
@@ -41,7 +55,7 @@ class Course_model extends MY_Model
 
                 $this->rules = array(
                     'insert' => array(
-                        'course_code' => array(
+                        'course_code'        => array(
                             'label' => lang('index_course_code_th'),
                             'field' => 'code',
                             'rules' => 'trim|required|human_name|min_length[2]|max_length[50]',
@@ -51,12 +65,12 @@ class Course_model extends MY_Model
                             'field' => 'desc',
                             'rules' => 'trim|required|human_name|min_length[2]|max_length[50]',
                         ),
-                        'course_code_id'   => array(
+                        'course_code_id'     => array(
                             'label' => lang('index_course_code_id_th'),
                             'field' => 'id',
                             'rules' => 'trim|required|min_length[2]|max_length[5]|is_natural_no_zero',
                         ),
-                        'education_id' => array(
+                        'education_id'       => array(
                             'label' => lang('index_course_education_th'),
                             'field' => 'educ',
                             'rules' => 'trim|required|is_natural_no_zero',
