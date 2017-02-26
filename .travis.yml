@@ -43,6 +43,6 @@ matrix:
 
 branches:
   only:
-    - development
+    - developing
     - version1
     - version2
