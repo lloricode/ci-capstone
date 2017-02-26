@@ -126,17 +126,17 @@ class Permissions extends CI_Capstone_Controller
                 if ($controller_obj)
                 {
                         $this->data['controller_obj']      = $controller_obj;
-                        $this->template['permission_form'] = $this->_render_page('admin/_templates/permission/edit', $this->data, TRUE);
+                        $this->template['permission_form'] = MY_Controller::_render('admin/_templates/permission/edit', $this->data, TRUE);
                 }
 
-                $this->template['table_data_permission'] = $this->_render_page('admin/_templates/table', $this->data, TRUE);
+                $this->template['table_data_permission'] = MY_Controller::_render('admin/_templates/table', $this->data, TRUE);
                 $this->template['controller']            = 'table';
 
                 $this->template['bootstrap'] = $this->bootstrap();
                 /**
                  * rendering users view
                  */
-                $this->_render_admin_page('admin/permission', $this->template);
+                $this->_render('admin/permission', $this->template);
         }
 
         public function edit()

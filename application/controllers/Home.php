@@ -26,11 +26,11 @@ class Home extends CI_Capstone_Controller
                 $this->data['student_enrolled_count'] = $this->Enrollment_model->where(array(
                             'enrollment_status' => TRUE
                         ))->count_rows();
-                $this->template['active_user_count']  = $this->_render_page('admin/_templates/home/user_count', $this->data, TRUE);
-                $this->template['dashboard_ctrl_var'] = $this->_render_page('admin/_templates/home/dashboard_ctrl', $this->data, TRUE);
+                $this->template['active_user_count']  = MY_Controller::_render('admin/_templates/home/user_count', $this->data, TRUE);
+                $this->template['dashboard_ctrl_var'] = MY_Controller::_render('admin/_templates/home/dashboard_ctrl', $this->data, TRUE);
                 $this->template['message']            = $this->session->flashdata('message');
                 $this->template['bootstrap']          = $this->bootstrap();
-                $this->_render_admin_page('admin/home', $this->template);
+                $this->_render('admin/home', $this->template);
         }
 
         /**

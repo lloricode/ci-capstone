@@ -92,14 +92,14 @@ class Subject_offers extends CI_Capstone_Controller
                  */
                 $this->data['caption'] = lang('index_subject_offer_heading');
 
-                $this->template['table_data_groups'] = $this->_render_page('admin/_templates/table', $this->data, TRUE);
+                $this->template['table_data_groups'] = MY_Controller::_render('admin/_templates/table', $this->data, TRUE);
                 $this->template['controller']        = 'table';
 
                 $this->template['bootstrap'] = $this->bootstrap();
                 /**
                  * rendering users view
                  */
-                $this->_render_admin_page('admin/subject_offers', $this->template);
+                $this->_render('admin/subject_offers', $this->template);
         }
 
         /**

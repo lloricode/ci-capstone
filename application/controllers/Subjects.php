@@ -5,6 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Subjects extends CI_Capstone_Controller
 {
 
+
         private $page_;
         private $limit;
 
@@ -82,7 +83,7 @@ class Subjects extends CI_Capstone_Controller
                 /**
                  * templates for group controller
                  */
-                $this->template['table_data_groups'] = $this->_render_page('admin/_templates/table', $this->data, TRUE);
+                $this->template['table_data_groups'] = MY_Controller::_render('admin/_templates/table', $this->data, TRUE);
                 $this->template['controller']        = 'table';
                 $this->template['message']           = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
@@ -90,7 +91,7 @@ class Subjects extends CI_Capstone_Controller
                 /**
                  * rendering users view
                  */
-                $this->_render_admin_page('admin/subjects', $this->template);
+                $this->_render('admin/subjects', $this->template);
         }
 
         /**

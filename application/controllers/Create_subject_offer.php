@@ -121,8 +121,8 @@ class Create_subject_offer extends CI_Capstone_Controller
                 $this->data['days'] = days_for_db();
 
                 $this->data['bootstrap']     = $this->bootstrap();
-                $this->data['conflict_data'] = $this->_render_page('admin/_templates/create_subject_offer/conflict_data', $this->data, TRUE);
-                $this->_render_admin_page('admin/create_subject_offer', $this->data);
+                $this->data['conflict_data'] = MY_Controller::_render('admin/_templates/create_subject_offer/conflict_data', $this->data, TRUE);
+                $this->_render('admin/create_subject_offer', $this->data);
         }
 
         /**

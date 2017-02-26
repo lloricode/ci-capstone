@@ -74,7 +74,7 @@ class Log extends CI_Capstone_Controller
                                 $this->table->add_row($tmp);
                         }
                 }
-                $this->data['logs']       = $this->table->generate();
+                $this->data['logs'] = $this->table->generate();
 
 
 
@@ -89,7 +89,7 @@ class Log extends CI_Capstone_Controller
                 $this->data['caption']   = lang('index_heading');
                 $this->data['bootstrap'] = $this->bootstrap();
 
-                $this->_render_admin_page('admin/log', $this->data);
+                $this->_render('admin/log', $this->data);
         }
 
         /**

@@ -58,7 +58,7 @@ class Create_group extends CI_Capstone_Controller
                     'value' => $this->form_validation->set_value('desc'),
                 );
                 $this->data['bootstrap'] = $this->bootstrap();
-                $this->_render_admin_page('admin/create_group', $this->data);
+                $this->_render('admin/create_group', $this->data);
         }
 
         /**

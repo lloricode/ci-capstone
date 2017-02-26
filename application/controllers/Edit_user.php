@@ -187,7 +187,7 @@ class Edit_user extends CI_Capstone_Controller
                     'type' => 'password'
                 );
                 $this->data['bootstrap']        = $this->bootstrap();
-                $this->_render_admin_page('admin/edit_user', $this->data);
+                $this->_render('admin/edit_user', $this->data);
         }
 
         /**

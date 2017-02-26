@@ -45,7 +45,7 @@ class MY_Controller extends CI_Controller
          * @return type
          * @author ion_auth
          */
-        public function _render_page($view, $data = null, $returnhtml = false)
+        public function _render($view, $data = null, $returnhtml = false)
         {//I think this makes more sense
                 $this->viewdata = (empty($data)) ? $this->data : $data;
 
@@ -110,8 +110,25 @@ class MY_Controller extends CI_Controller
                     'user_first_name'          => $user_obj->first_name,
                     'user_last_name'           => $user_obj->last_name,
                     'user_fullname'            => $user_obj->last_name . ', ' . $user_obj->first_name,
-                    'user_current_logged_time' => $user_obj->last_login
+                    'user_current_logged_time' => $user_obj->last_login, //this will be use for checking multiple logged machines in one account
+                    'user_groups_descriptions' => $this->current_group_string(),
+                    'user_groups_names'        => $this->current_group_string('name'),
                 ));
+        }
+
+        /**
+
+         * @return string | all user_group of current logged user
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        private function current_group_string($type = 'description')
+        {
+                $return = '';
+                foreach ($this->ion_auth->get_users_groups()->result() as $g)
+                {
+                        $return .= $g->$type . '|';
+                }
+                return trim($return, '|');
         }
 
 }
@@ -145,45 +162,29 @@ class CI_Capstone_Controller extends MY_Controller
          * @return null if content is missing
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        public function _render_admin_page($content, $data = NULL)
+        public function _render($content, $data = NULL, $returnhtml = FALSE)
         {
                 if (!$content)
                 {
                         return NULL;
                 }
                 $data['user_info']           = $this->session->userdata('user_fullname') .
-                        ' [' . $this->current_gruop_string() . ']';
+                        ' [' . $this->session->userdata('user_groups_descriptions') . ']';
                 $data['navigations']         = navigations_main();
                 $data['setting_vavigations'] = navigations_setting();
 
-                $this->template['header']  = $this->_render_page('admin/_templates/header', $data, TRUE);
-                $this->template['content'] = $this->_render_page($content, $data, TRUE);
-                $this->template['footer']  = $this->_render_page('admin/_templates/footer', $data, TRUE);
+                $this->template['header']  = parent::_render('admin/_templates/header', $data, TRUE);
+                $this->template['content'] = parent::_render($content, $data, TRUE);
+                $this->template['footer']  = parent::_render('admin/_templates/footer', $data, TRUE);
 
-                $this->_render_page('template', $this->template);
-        }
-
-        /**
-         * this will display all user_group of current user in top, beside of user detail in name,last name, 
-         * 
-         * @return string | all user_group of current logged user
-         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
-         */
-        private function current_gruop_string()
-        {
-                $return = '';
-                foreach ($this->ion_auth->get_users_groups()->result() as $g)
-                {
-                        $return .= $g->name . '|';
-                }
-                return trim($return, '|');
+                parent::_render('template', $this->template, $returnhtml);
         }
 
         /**
          * 
-         * @param type $header
-         * @param type $data
-         * @return type
+         * @param array $header
+         * @param array $data
+         * @return string | generated html table with header/data/table-type depend on parameters
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
         public function my_table_view($header, $data, $table_config)

@@ -94,14 +94,14 @@ class Students extends CI_Capstone_Controller
                 /**
                  * templates for group controller
                  */
-                $this->template['table_data_groups'] = $this->_render_page('admin/_templates/table', $this->data, TRUE);
+                $this->template['table_data_groups'] = MY_Controller::_render('admin/_templates/table', $this->data, TRUE);
                 $this->template['controller']        = 'table';
 
                 $this->template['bootstrap'] = $this->bootstrap();
                 /**
                  * rendering users view
                  */
-                $this->_render_admin_page('admin/students', $this->template);
+                $this->_render('admin/students', $this->template);
         }
 
         /**
@@ -179,9 +179,9 @@ class Students extends CI_Capstone_Controller
                  * here we go!
                  * rendering page for view
                  */
-                $this->template['view']      = $this->_render_page('admin/_templates/students/view', $this->data, TRUE);
+                $this->template['view']      = MY_Controller::_render('admin/_templates/students/view', $this->data, TRUE);
                 $this->template['bootstrap'] = $this->bootstrap_for_view();
-                $this->_render_admin_page('admin/students', $this->template);
+                $this->_render('admin/students', $this->template);
         }
 
         /**

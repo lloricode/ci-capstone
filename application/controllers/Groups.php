@@ -95,14 +95,14 @@ class Groups extends CI_Capstone_Controller
                 /**
                  * templates for group controller
                  */
-                $this->template['table_data_groups'] = $this->_render_page('admin/_templates/table', $this->data, TRUE);
+                $this->template['table_data_groups'] = MY_Controller::_render('admin/_templates/table', $this->data, TRUE);
                 $this->template['controller']        = 'table';
 
                 $this->template['bootstrap'] = $this->bootstrap();
                 /**
                  * rendering users view
                  */
-                $this->_render_admin_page('admin/groups', $this->template);
+                $this->_render('admin/groups', $this->template);
         }
 
         /**

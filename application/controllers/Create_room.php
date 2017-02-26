@@ -48,7 +48,7 @@ class Create_room extends CI_Capstone_Controller
                     'value' => $this->form_validation->set_value('description'),
                 );
                 $this->data['bootstrap']        = $this->bootstrap();
-                $this->_render_admin_page('admin/create_room', $this->data);
+                $this->_render('admin/create_room', $this->data);
         }
 
         /**

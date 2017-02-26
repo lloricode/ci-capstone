@@ -69,7 +69,7 @@ class Language extends CI_Capstone_Controller
                         }
                 }
                 $data['bootstrap'] = $this->bootstrap();
-                $this->_render_admin_page('admin/lang_view', $data);
+                $this->_render('admin/lang_view', $data);
         }
 
         /**

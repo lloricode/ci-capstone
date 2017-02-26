@@ -55,7 +55,7 @@ class Create_subject extends CI_Capstone_Controller
                 );
 
                 $this->data['bootstrap'] = $this->bootstrap();
-                $this->_render_admin_page('admin/create_subject', $this->data);
+                $this->_render('admin/create_subject', $this->data);
         }
 
         private function bootstrap()

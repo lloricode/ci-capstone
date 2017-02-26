@@ -48,7 +48,7 @@ class Create_education extends CI_Capstone_Controller
                 );
 
                 $this->data['bootstrap'] = $this->bootstrap();
-                $this->_render_admin_page('admin/create_education', $this->data);
+                $this->_render('admin/create_education', $this->data);
         }
 
         private function bootstrap()

@@ -138,24 +138,24 @@ class Users extends CI_Capstone_Controller
                 // set the flash data error message if there is one
 
                 $this->template['message']          = $this->session->flashdata('message');
-                $this->template['table_data_users'] = $this->_render_page('admin/_templates/table', $this->data, TRUE);
+                $this->template['table_data_users'] = MY_Controller::_render('admin/_templates/table', $this->data, TRUE);
                 $this->template['controller']       = 'table';
                 if (in_array('create-user', permission_controllers()))
                 {
 
-                        $this->template['create_user_button'] = $this->_render_page('admin/_templates/button_view', array(
-                            'href'         => 'create-user',
-                            'button_label' => lang('create_user_heading'),
-                            'extra'        => array('class' => 'btn btn-success icon-edit'),
-                                ), TRUE);
+                        $this->template['create_user_button'] = MY_Controller::_render('admin/_templates/button_view', array(
+                                    'href'         => 'create-user',
+                                    'button_label' => lang('create_user_heading'),
+                                    'extra'        => array('class' => 'btn btn-success icon-edit'),
+                                        ), TRUE);
                 }
                 if ($this->ion_auth->is_admin())
                 {
-                        $this->template['export_user_button'] = $this->_render_page('admin/_templates/button_view', array(
-                            'href'         => 'users/export-excel',
-                            'button_label' => lang('excel_export'),
-                            'extra'        => array('class' => 'btn btn-info icon-download-alt')
-                                ), TRUE);
+                        $this->template['export_user_button'] = MY_Controller::_render('admin/_templates/button_view', array(
+                                    'href'         => 'users/export-excel',
+                                    'button_label' => lang('excel_export'),
+                                    'extra'        => array('class' => 'btn btn-info icon-download-alt')
+                                        ), TRUE);
                 }
                 $this->template['bootstrap'] = $this->bootstrap();
 
@@ -165,7 +165,7 @@ class Users extends CI_Capstone_Controller
                 ;
 
 
-                $this->_render_admin_page('admin/users', $this->template);
+                $this->_render('admin/users', $this->template);
         }
 
         /**

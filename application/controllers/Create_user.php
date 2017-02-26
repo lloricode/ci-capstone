@@ -138,7 +138,7 @@ class Create_user extends CI_Capstone_Controller
                     'value' => $this->form_validation->set_value('password_confirm'),
                 );
                 $this->data['bootstrap']        = $this->bootstrap();
-                $this->_render_admin_page('admin/create_user', $this->data);
+                $this->_render('admin/create_user', $this->data);
         }
 
         /**

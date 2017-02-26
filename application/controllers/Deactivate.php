@@ -33,7 +33,7 @@ class Deactivate extends CI_Capstone_Controller
                         }
                         $this->session->set_flashdata('message', (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->ion_auth->messages())));
                         $this->data['bootstrap'] = $this->bootstrap();
-                        $this->_render_admin_page('admin/deactivate_user', $this->data);
+                        $this->_render('admin/deactivate_user', $this->data);
                 }
                 else
                 {

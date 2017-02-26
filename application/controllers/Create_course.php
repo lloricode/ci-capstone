@@ -57,7 +57,7 @@ class Create_course extends CI_Capstone_Controller
                 );
                 $this->data['education_id_value'] = $this->Education_model->as_dropdown('education_code')->get_all();
                 $this->data['bootstrap']          = $this->bootstrap();
-                $this->_render_admin_page('admin/create_course', $this->data);
+                $this->_render('admin/create_course', $this->data);
         }
 
         /**
