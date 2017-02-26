@@ -33,7 +33,10 @@ class Subjects extends CI_Capstone_Controller
         {
 
 
-                $subject_obj = $this->Subject_model->limit($this->limit, $this->limit * $this->page_ - $this->limit)->get_all();
+                $subject_obj = $this->Subject_model->
+                        limit($this->limit, $this->limit * $this->page_ - $this->limit)->
+                        set_cache('subjects')->
+                        get_all();
 
 
                 $table_data = array();

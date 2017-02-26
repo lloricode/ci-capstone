@@ -39,7 +39,10 @@ class Groups extends CI_Capstone_Controller
                 // set the flash data error message if there is one
                 // $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
                 //list the users
-                $group_obj = $this->Group_model->limit($this->limit, $this->limit * $this->page_ - $this->limit)->get_all();
+                $group_obj = $this->Group_model->
+                        limit($this->limit, $this->limit * $this->page_ - $this->limit)->
+                        set_cache('groups')->
+                        get_all();
 
                 /**
                  * where data array from db stored

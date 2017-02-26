@@ -51,7 +51,10 @@ class Permissions extends CI_Capstone_Controller
 
         private function main($controller_obj = NULL)
         {
-                $controllers_obj = $this->Controller_model->limit($this->limit, $this->limit * $this->page_ - $this->limit)->get_all();
+                $controllers_obj = $this->Controller_model->
+                        limit($this->limit, $this->limit * $this->page_ - $this->limit)->
+                        set_cache('permissions')->
+                        get_all();
                 $table_data      = array();
                 if ($controllers_obj)
                 {

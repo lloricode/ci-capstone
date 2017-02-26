@@ -111,11 +111,11 @@ class Edit_student extends CI_Capstone_Controller
                  */
                 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::start
 
-                $s_id = $this->Student_model->from_form(NULL, $additional_values_in_student, array(
+                $s_affected_rows = $this->Student_model->from_form(NULL, $additional_values_in_student, array(
                             'student_id' => $this->student->id
                         ))->update();
 
-                $e_id = $this->Enrollment_model->from_form(NULL, array(
+                $e_affected_rows = $this->Enrollment_model->from_form(NULL, array(
                             'updated_user_id' => $this->session->userdata('user_id')
                                 ), array(
                             'enrollment_id' => $this->student->enrollment_id
@@ -125,7 +125,7 @@ class Edit_student extends CI_Capstone_Controller
                 /**
                  * checking if one of the update is failed, either in [form validation] or in [syntax error] or [upload]
                  */
-                if (!$s_id || !$e_id || !$uploaded)
+                if (!$s_affected_rows || !$e_affected_rows || !$uploaded)
                 {
                         /**
                          * rollback database
@@ -167,7 +167,7 @@ class Edit_student extends CI_Capstone_Controller
                                                 unlink($old_img);
                                         }
                                 }
-                                redirect(base_url('students/view?student-id=' . $s_id), 'refresh');
+                                redirect(base_url('students/view?student-id=' . $this->student->id), 'refresh');
                         }
                 }
         }

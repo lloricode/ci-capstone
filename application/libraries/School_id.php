@@ -105,6 +105,7 @@ class Id_generator_v2 extends Id__
                          */
                         $this->total_student_plus_one = $this->CI->{$this->model}->
                                         //    where($this->db_table_school_id, 'LIKE', $this->year)->
+                                        set_cache('get_total_number_of_stundent')->
                                         count_rows() + 1;
                 }
                 else

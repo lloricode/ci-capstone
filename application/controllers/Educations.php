@@ -36,7 +36,10 @@ class Educations extends CI_Capstone_Controller
         {
 
 
-                $education_obj = $this->Education_model->limit($this->limit, $this->limit * $this->page_ - $this->limit)->get_all();
+                $education_obj = $this->Education_model->
+                        limit($this->limit, $this->limit * $this->page_ - $this->limit)->
+                        set_cache('educations')->
+                        get_all();
 
 
                 $table_data = array();

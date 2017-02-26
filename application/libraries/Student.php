@@ -83,7 +83,9 @@ class Student extends CI_capstone
                 /**
                  * check if exist student id
                  */
-                $this->student = $this->CI->Student_model->get($studen_id);
+                $this->student = $this->CI->Student_model->
+                        set_cache('students_id_' . $studen_id)->
+                        get($studen_id);
                 if (!$this->student)
                 {
                         show_error('student id not found');
@@ -200,7 +202,9 @@ class Student extends CI_capstone
          */
         public function subject_total()
         {
-                return (int) $this->CI->Students_subjects_model->count_rows(array(
+                return (int) $this->CI->Students_subjects_model->
+                        set_cache('students_subject_total' . $this->enrollment->enrollment_id)->
+                        count_rows(array(
                             'enrollment_id' => $this->enrollment->enrollment_id
                 ));
         }
@@ -281,7 +285,11 @@ class CI_capstone
 
         protected function load_enrollment()
         {
-                $this->enrollment = $this->CI->Enrollment_model->with_course()->with_education()->get(array(
+                $this->enrollment = $this->CI->Enrollment_model->
+                        with_course()->
+                        with_education()->
+                        set_cache('students_load_enrollment' . $this->student->student_id)->
+                        get(array(
                     'student_id' => $this->student->student_id
                 ));
 
@@ -294,7 +302,9 @@ class CI_capstone
 
         protected function _load_education()
         {
-                $this->education = $this->CI->Education_model->get(array(
+                $this->education = $this->CI->Education_model->
+                        set_cache('students_load_education' . $this->course->education_id)->
+                        get(array(
                     'education_id' => $this->course->education_id
                 ));
         }
@@ -306,6 +316,7 @@ class CI_capstone
                                     'enrollment_id' => $this->enrollment->enrollment_id
                                 ))->
                                 as_object()->
+                                set_cache('students_suject_offers_' . $this->enrollment->enrollment_id)->
                                 limit($limit, $offset)->get_all();
         }
 

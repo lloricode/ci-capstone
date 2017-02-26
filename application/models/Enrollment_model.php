@@ -30,7 +30,7 @@ class Enrollment_model extends MY_Model
                  * some of field is not required, so remove it in array when no value, in inside the *->from_form()->insert() in core MY_Model,
                  */
                 //$this->remove_empty_before_write = (bool) $this->config->item('my_model_remove_empty_before_write');
-                //$this->delete_cache_on_save      = (bool) $this->config->item('my_model_delete_cache_on_save');
+                $this->delete_cache_on_save      = (bool) $this->config->item('my_model_delete_cache_on_save');
         }
 
         private function _relations()
@@ -54,7 +54,8 @@ class Enrollment_model extends MY_Model
 
         private function _form()
         {
-                $this->lang->load('ci_capstone/ci_educations');
+                $this->lang->load('ci_capstone/ci_students');
+                $this->lang->load('ci_capstone/ci_courses');
 
                 $this->rules = array(
                     'insert' => $this->_common(),

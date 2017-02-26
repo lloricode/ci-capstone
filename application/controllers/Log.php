@@ -58,7 +58,10 @@ class Log extends CI_Capstone_Controller
                 $this->table->set_heading($key);
 
                 //get data from database table logs
-                $logs = $this->Log_model->limit($this->limit, $this->limit * $this->page_ - $this->limit)->get_all();
+                $logs = $this->Log_model->
+                        limit($this->limit, $this->limit * $this->page_ - $this->limit)->
+                        set_cache('log')->
+                        get_all();
 
                 //if has vale
                 if ($logs)

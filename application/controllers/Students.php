@@ -36,6 +36,7 @@ class Students extends CI_Capstone_Controller
                         limit($this->limit, $this->limit * $this->page_ - $this->limit)->
                         order_by('created_at', 'DESC')->
                         order_by('updated_at', 'DESC')->
+                        set_cache('students')->
                         get_all();
 
 

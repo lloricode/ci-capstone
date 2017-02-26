@@ -126,6 +126,17 @@ class Subject_offer
          */
         public function subject_offer_check_check_conflict()
         {
+                /**
+                 * generate name for db cache, so i will use all post value to be using
+                 */
+                $db_cache_name = '';
+                foreach ($this->CI->input->post() as $p)
+                {
+                        $tmp           = str_replace(' ', '_', $p);
+                        $db_cache_name .= $tmp . '_';
+                }
+                $db_cache_name = trim($db_cache_name, '_');
+
                 $foriegn_ids = array();
                 $days        = array();
 
@@ -271,6 +282,7 @@ class Subject_offer
                         or_where($days)->
                         group_end()->
                         //-----------
+                        set_cache('subject_offer_check_check_conflict_' . $db_cache_name)->
                         get_all();
 
                 /**

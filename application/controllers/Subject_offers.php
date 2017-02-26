@@ -37,7 +37,8 @@ class Subject_offers extends CI_Capstone_Controller
                 $this->page_       = get_page_in_url();
 //list students
                 $subject_offer_obj = $this->Subject_offer_model;
-                $subject_offer_obj = $subject_offer_obj->limit($this->limit, $this->limit * $this->page_ - $this->limit);
+                $subject_offer_obj = $subject_offer_obj->
+                        limit($this->limit, $this->limit * $this->page_ - $this->limit);
 
 
                 foreach (days_for_db() as $d)
@@ -45,7 +46,8 @@ class Subject_offers extends CI_Capstone_Controller
                         $subject_offer_obj = $subject_offer_obj->order_by('subject_offer_' . $d, 'ASC');
                 }
                 $subject_offer_obj = $subject_offer_obj->order_by('subject_offer_start', 'ASC');
-                $subject_offer_obj = $subject_offer_obj->get_all();
+                $subject_offer_obj = $subject_offer_obj->
+                        set_cache('subject-offers')->get_all();
 
                 $table_data = array();
                 if ($subject_offer_obj)

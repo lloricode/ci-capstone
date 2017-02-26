@@ -39,7 +39,10 @@ class Last_logins extends CI_Capstone_Controller
         {
 
 
-                $last_login_obj = $this->Users_last_login_model->limit($this->limit, $this->limit * $this->page_ - $this->limit)->get_all();
+                $last_login_obj = $this->Users_last_login_model->
+                        limit($this->limit, $this->limit * $this->page_ - $this->limit)->
+                        set_cache('last-logins')->
+                        get_all();
 
 
                 $table_data = array();

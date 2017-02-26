@@ -105,6 +105,11 @@ class Edit_user extends CI_Capstone_Controller
                                 if ($this->ion_auth->update($user->id, $data))
                                 {
                                         /**
+                                         * delete all query cache 
+                                         */
+                                        $this->load->model('User_model');
+                                        $this->User_model->delete_cache();
+                                        /**
                                          * refresh session data
                                          * if edit from current user
                                          */

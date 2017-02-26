@@ -30,7 +30,7 @@ class Course_model extends MY_Model
                  * some of field is not required, so remove it in array when no value, in inside the *->from_form()->insert() in core MY_Model,
                  */
                 //$this->remove_empty_before_write = (bool) $this->config->item('my_model_remove_empty_before_write');
-                //$this->delete_cache_on_save      = (bool) $this->config->item('my_model_delete_cache_on_save');
+                $this->delete_cache_on_save      = (bool) $this->config->item('my_model_delete_cache_on_save');
         }
 
         private function _relations()
