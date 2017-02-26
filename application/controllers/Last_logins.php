@@ -81,7 +81,7 @@ class Last_logins extends CI_Capstone_Controller
                 /**
                  * pagination
                  */
-                $this->data['pagination'] = $this->pagination->generate_link('educations/index', $this->Users_last_login_model->count_rows() / $this->limit);
+                $this->data['pagination'] = $this->pagination->generate_link('last-logins/index', $this->Users_last_login_model->count_rows() / $this->limit);
 
                 /**
                  * caption of table
