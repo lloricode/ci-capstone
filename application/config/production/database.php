@@ -85,7 +85,7 @@ $db['production'] = array(
     'dbprefix' => '',
     'pconnect' => FALSE,
     'db_debug' => FALSE,
-    'cache_on' => TRUE,
+    'cache_on' => FALSE,
     'cachedir' => APPPATH.'cache/db/',
     'char_set' => 'utf8',
     'dbcollat' => 'utf8_general_ci',
@@ -94,4 +94,5 @@ $db['production'] = array(
     'compress' => FALSE,
     'stricton' => FALSE,
     'failover' => array(),
+    'save_queries' => FALSE
 );

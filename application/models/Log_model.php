@@ -10,7 +10,6 @@ class Log_model extends MY_Model
                 $this->table       = 'logs';
                 $this->primary_key = 'id';
 
-                $this->_relations();
                 $this->_config();
 
                 parent::__construct();

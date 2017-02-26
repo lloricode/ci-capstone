@@ -29,9 +29,11 @@ if (!function_exists('permission_controllers'))
                         foreach ($user_groups as $g)
                         {
                                 /**
-                                 * get all controller ids in permission table where group id is equeal
+                                 * get all controller id's in permission table where group id is equal
                                  */
-                                $p_o = $CI->Permission_model->where(array('group_id' => $g->id))->get_all();
+                                $p_o = $CI->Permission_model->where(array('group_id' => $g->id))->
+                                        set_cache('permission_controllers_' . $g->id)->
+                                        get_all();
                                 if ($p_o)
                                 {
                                         foreach ($p_o as $p)
