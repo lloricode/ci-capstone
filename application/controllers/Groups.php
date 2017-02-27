@@ -41,7 +41,7 @@ class Groups extends CI_Capstone_Controller
                 //list the users
                 $group_obj = $this->Group_model->
                         limit($this->limit, $this->limit * $this->page_ - $this->limit)->
-                        set_cache('groups')->
+                        set_cache('groups_page_' . $this->page_)->
                         get_all();
 
                 /**

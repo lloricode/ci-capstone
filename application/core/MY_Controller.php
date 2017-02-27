@@ -261,4 +261,16 @@ class CI_Capstone_Controller extends MY_Controller
                 }
         }
 
+        /**
+         * delete all query cache by using one of model, cant statically call MY_Model so i did this 
+         *       
+         * using this with ion_auth update/insert/
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>  
+         */
+        public function delete_all_query_cache()
+        {
+                $this->load->model('User_model');
+                $this->User_model->delete_cache();
+        }
+
 }

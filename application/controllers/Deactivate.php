@@ -45,7 +45,13 @@ class Deactivate extends CI_Capstone_Controller
                                 // do we have the right userlevel?
                                 if ($this->ion_auth->logged_in() && $this->ion_auth->is_admin())
                                 {
-                                        $this->ion_auth->deactivate($id);
+                                        if ($this->ion_auth->deactivate($id))
+                                        {
+                                                /**
+                                                 * delete all query cache 
+                                                 */
+                                                $this->delete_all_query_cache();
+                                        }
                                 }
                         }
                         $this->session->set_flashdata('message', (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->ion_auth->messages())));

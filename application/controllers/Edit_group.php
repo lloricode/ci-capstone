@@ -49,9 +49,8 @@ class Edit_group extends CI_Capstone_Controller
                                         /**
                                          * delete all query cache 
                                          */
-                                        $this->load->model('User_model');
-                                        $this->User_model->delete_cache();
-                                        
+                                        $this->delete_all_query_cache();
+
                                         $this->session->set_flashdata('message', $this->lang->line('edit_group_saved'));
                                 }
                                 else

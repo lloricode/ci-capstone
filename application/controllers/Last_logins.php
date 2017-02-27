@@ -41,7 +41,7 @@ class Last_logins extends CI_Capstone_Controller
 
                 $last_login_obj = $this->Users_last_login_model->
                         limit($this->limit, $this->limit * $this->page_ - $this->limit)->
-                        set_cache('last-logins')->
+                        set_cache('last-logins_page_' . $this->page_)->
                         get_all();
 
 

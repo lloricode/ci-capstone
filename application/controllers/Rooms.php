@@ -35,7 +35,7 @@ class Rooms extends CI_Capstone_Controller
 
                 $room_obj = $this->Room_model->
                         limit($this->limit, $this->limit * $this->page_ - $this->limit)->
-                        set_cache('rooms')->
+                        set_cache('rooms_page_' . $this->page_)->
                         get_all();
 
 

@@ -41,7 +41,7 @@ class Users extends CI_Capstone_Controller
                         limit($this->limit, $this->limit * $this->page_ - $this->limit)->
                         order_by('created_on', 'DESC')->
                         order_by('updated_at', 'DESC')->
-                        set_cache('users')->
+                        set_cache('users_page_' . $this->page_)->
                         get_all();
 
 
@@ -227,6 +227,10 @@ class Users extends CI_Capstone_Controller
 
                 if ($activation)
                 {
+                        /**
+                         * delete all query cache 
+                         */
+                        $this->delete_all_query_cache();
                         // redirect them to the auth page
                         $this->session->set_flashdata('message', $this->ion_auth->messages());
                         redirect(base_url('users'), 'refresh');

@@ -47,7 +47,8 @@ class Subject_offers extends CI_Capstone_Controller
                 }
                 $subject_offer_obj = $subject_offer_obj->order_by('subject_offer_start', 'ASC');
                 $subject_offer_obj = $subject_offer_obj->
-                        set_cache('subject-offers')->get_all();
+                        set_cache('subject-offers_page_' . $this->page_)->
+                        get_all();
 
                 $table_data = array();
                 if ($subject_offer_obj)

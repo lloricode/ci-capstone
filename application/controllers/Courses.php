@@ -40,7 +40,7 @@ class Courses extends CI_Capstone_Controller
                 //list the Courses
                 $course_obj = $this->Course_model->
                         limit($this->limit, $this->limit * $this->page_ - $this->limit)->
-                        set_cache('courses')->
+                        set_cache('courses_page_' . $this->page_)->
                         get_all();
 
 

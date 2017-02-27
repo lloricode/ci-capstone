@@ -79,6 +79,10 @@ class Create_user extends CI_Capstone_Controller
                         );
                         if ($this->ion_auth->register($identity, $password, $email, $additional_data))
                         {
+                                /**
+                                 * delete all db cache
+                                 */
+                                $this->delete_all_query_cache();
                                 // check to see if we are creating the user
                                 // redirect them back to the admin page
                                 $this->session->set_flashdata('message', $this->ion_auth->messages());

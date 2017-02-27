@@ -203,9 +203,9 @@ class Student extends CI_capstone
         public function subject_total()
         {
                 return (int) $this->CI->Students_subjects_model->
-                        set_cache('students_subject_total' . $this->enrollment->enrollment_id)->
-                        count_rows(array(
-                            'enrollment_id' => $this->enrollment->enrollment_id
+                                set_cache('students_subject_total' . $this->enrollment->enrollment_id)->
+                                count_rows(array(
+                                    'enrollment_id' => $this->enrollment->enrollment_id
                 ));
         }
 
@@ -316,7 +316,7 @@ class CI_capstone
                                     'enrollment_id' => $this->enrollment->enrollment_id
                                 ))->
                                 as_object()->
-                                set_cache('students_suject_offers_' . $this->enrollment->enrollment_id)->
+                                set_cache('students_suject_offers_' . $this->enrollment->enrollment_id . '_limit_' . $limit . '_offset_' . $offset)->
                                 limit($limit, $offset)->get_all();
         }
 
