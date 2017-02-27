@@ -36,7 +36,7 @@ class Permissions extends CI_Capstone_Controller
                  */
                 $this->page_ = get_page_in_url();
                 $this->breadcrumbs->unshift(2, 'Settings', '#');
-                $this->breadcrumbs->unshift(3, 'Permissions', 'permissions');
+                $this->breadcrumbs->unshift(3, lang('permission_label'), 'permissions');
         }
 
         /**
@@ -88,7 +88,7 @@ class Permissions extends CI_Capstone_Controller
                                     my_htmlspecialchars($c->controller_name),
                                     my_htmlspecialchars($c->controller_description),
                                     trim($gruops, ' | '),
-                                    anchor(base_url('permissions/edit?controller-id=' . $c->controller_id), 'Edit')
+                                    anchor(site_url('permissions/edit?controller-id=' . $c->controller_id), 'Edit')
                                 );
                         }
                 }

@@ -1,4 +1,5 @@
 <?php
+defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
  * COMMON
@@ -39,3 +40,15 @@ $config['summer_semester_start'] = 4;
  */
 $config['version_id_generator']      = 2;
 $config['start_id_number_generator'] = 0;
+
+
+/*
+ * SEGMENT FOR GET CONTROLLER
+ */
+
+$config['segment_controller'] = 2;
+/*
+ * SEGMENT FOR PAGINATION
+ */
+
+$config['segment_pagination'] = 4;

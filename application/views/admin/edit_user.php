@@ -15,7 +15,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     echo '<div class="alert-success">'.$message.'</div>';                   
                     
 
-                    echo form_open(base_url('edit-user/?user-id=' . $user->id), array(
+                    echo form_open(site_url('edit-user/?user-id=' . $user->id), array(
                         'class'      => 'form-horizontal',
                         'name'       => 'basic_validate',
                         'id'         => 'basic_validate',

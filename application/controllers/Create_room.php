@@ -14,8 +14,8 @@ class Create_room extends CI_Capstone_Controller
                 $this->load->model('Room_model');
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span>');
-                $this->breadcrumbs->unshift(2, 'Rooms', 'rooms');
-                $this->breadcrumbs->unshift(3, 'Create Room', 'create-room');
+                $this->breadcrumbs->unshift(2, lang('index_room_heading'), 'rooms');
+                $this->breadcrumbs->unshift(3, lang('create_room_heading'), 'create-room');
         }
 
         public function index()
@@ -31,7 +31,7 @@ class Create_room extends CI_Capstone_Controller
                                 ))->insert();
                         if ($id)
                         {
-                                redirect(base_url('rooms'), 'refresh');
+                                redirect(site_url('rooms'), 'refresh');
                         }
                 }
 
@@ -129,7 +129,7 @@ class Create_room extends CI_Capstone_Controller
                         /*
                          * for frontend validation
                          */
-                        base_url('assets/framework/bootstrap/admin/matrixwizard.js'),
+                        site_url('assets/framework/bootstrap/admin/matrixwizard.js'),
                     /**
                      * addition for form
                      */

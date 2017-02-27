@@ -19,7 +19,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                      */
                     echo $message;
 
-                    echo form_open(base_url('create-subject'), array(
+                    echo form_open(site_url('create-subject'), array(
                         'class'      => 'form-horizontal',
                         'name'       => 'basic_validate',
                         'id'         => 'basic_validate',

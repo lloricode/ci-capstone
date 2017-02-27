@@ -26,7 +26,7 @@ class Courses extends CI_Capstone_Controller
                  * 
                  */
                 $this->page_ = get_page_in_url();
-                $this->breadcrumbs->unshift(2, 'Courses', 'courses');
+                $this->breadcrumbs->unshift(2, lang('index_course_heading'), 'courses');
         }
 
         /**

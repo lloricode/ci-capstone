@@ -1,5 +1,5 @@
 <?php
-echo form_open_multipart(base_url("create-student/index"), array(
+echo form_open_multipart(site_url("create-student/index"), array(
     'class' => 'form-horizontal'
 )); //echo validation_errors();
 ?>

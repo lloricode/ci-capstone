@@ -43,7 +43,6 @@ class Education_model extends MY_Model
 
         private function _form()
         {
-                $this->lang->load('ci_capstone/ci_educations');
 
                 $this->rules = array(
                     'insert' => array(

@@ -38,7 +38,7 @@ class Log extends CI_Capstone_Controller
                  */
                 $this->page_ = get_page_in_url();
                 $this->breadcrumbs->unshift(2, 'Settings', '#');
-                $this->breadcrumbs->unshift(3, 'Error Logs', 'log');
+                $this->breadcrumbs->unshift(3, lang('error_label'), 'log');
         }
 
         /**

@@ -58,7 +58,13 @@ class Migration_Controller extends CI_Migration
                         'type'       => 'VARCHAR',
                         'constraint' => '50',
                         'null'       => FALSE
-                    )
+                    ),
+                    //------------------------------------
+                    'created_at'       => array(
+                        'type'       => 'VARCHAR',
+                        'constraint' => '100',
+                        'null'       => FALSE
+                    ),
                 );
 
 

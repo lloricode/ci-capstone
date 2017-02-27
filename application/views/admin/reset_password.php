@@ -19,7 +19,7 @@ $link = base_url($this->config->item('bootstarp_dir'));
     </head>
     <body>
         <div id="loginbox">            
-            <?php echo form_open(base_url('auth/reset_password/' . $code), array('class' => 'form-vertical', 'id' => 'loginform'), $user) ?>
+            <?php echo form_open(site_url('auth/reset_password/' . $code), array('class' => 'form-vertical', 'id' => 'loginform'), $user) ?>
             <div class="control-group normal_text"> <h3><img src="<?php echo $link; ?>img/logo.png" alt="Logo" /></h3></div>
             <div class="control-group">
                 <div class="controls">

@@ -15,7 +15,7 @@ defined('BASEPATH') or exit('no direct script allowed');
  *  first MUST use $this->student->get($student_id);
  * +++++++++++++++++++++++++++++++++++++++++++++++
  * then you can now call all public functions
- * description of usage functions is on comment
+ * description of usage functions/attributes is on comment
  * 
  * 
  * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
@@ -295,7 +295,7 @@ class CI_capstone
 
                 if (!$this->enrollment)
                 {
-                        show_error('student hos no enrollment result"');
+                        show_error('student has no enrollment result"');
                 }
                 $this->course = $this->enrollment->course;
         }

@@ -44,7 +44,6 @@ class Room_model extends MY_Model
 
         private function _form()
         {
-                $this->lang->load('ci_capstone/ci_rooms');
 
                 $this->rules = array(
                     'insert' => array(

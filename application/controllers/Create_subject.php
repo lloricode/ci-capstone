@@ -11,8 +11,8 @@ class Create_subject extends CI_Capstone_Controller
                 $this->load->model('Subject_model');
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
-                $this->breadcrumbs->unshift(2, 'Subjects', 'subjects');
-                $this->breadcrumbs->unshift(3, 'Create Subjects', 'create-subject');
+                $this->breadcrumbs->unshift(2, lang('index_subject_heading_th'), 'subjects');
+                $this->breadcrumbs->unshift(3, lang('create_subject_heading'), 'create-subject');
         }
 
         public function index()
@@ -28,7 +28,7 @@ class Create_subject extends CI_Capstone_Controller
                                 ))->insert();
                         if ($id)
                         {
-                                redirect(base_url('subjects'), 'refresh');
+                                redirect(site_url('subjects'), 'refresh');
                         }
                 }
 

@@ -59,7 +59,6 @@ class Subject_offer_model extends MY_Model
 
         private function _form()
         {
-                $this->lang->load('ci_capstone/ci_subject_offers');
                 $this->load->helper('day');
 
                 $__insert__ = $this->_insert();

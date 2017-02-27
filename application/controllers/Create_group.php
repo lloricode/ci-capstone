@@ -10,8 +10,8 @@ class Create_group extends CI_Capstone_Controller
                 parent::__construct();
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
-                $this->breadcrumbs->unshift(2, 'Groups', 'groups');
-                $this->breadcrumbs->unshift(3, 'Create Group', 'create-group');
+                $this->breadcrumbs->unshift(2, lang('index_groups_th'), 'groups');
+                $this->breadcrumbs->unshift(3, lang('create_group_heading'), 'create-group');
         }
 
         public function index()

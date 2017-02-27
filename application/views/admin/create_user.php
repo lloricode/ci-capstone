@@ -14,7 +14,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
 //echo validation_errors();
                     echo '<div class="alert-success">' . $message . '</div>';
 
-                    echo form_open(base_url("create-user/index"), array(
+                    echo form_open(site_url("create-user/index"), array(
                         'class'      => 'form-horizontal',
                         'name'       => 'basic_validate',
                         'id'         => 'basic_validate',

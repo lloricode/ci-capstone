@@ -19,7 +19,7 @@ echo validation_errors();
                      */
                     echo $message;
 
-                    echo form_open(base_url("create-course/index"), array(
+                    echo form_open(site_url("create-course/index"), array(
                         'class'      => 'form-horizontal',
                         'name'       => 'basic_validate',
                         'id'         => 'basic_validate',

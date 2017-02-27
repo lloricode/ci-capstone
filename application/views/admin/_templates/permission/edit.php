@@ -14,7 +14,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     echo validation_errors();
                     echo $message;
 
-                    echo form_open(base_url("permissions/edit?controller-id=" . $controller_obj->controller_id), array(
+                    echo form_open(site_url("permissions/edit?controller-id=" . $controller_obj->controller_id), array(
                         'class'      => 'form-horizontal',
                         'name'       => 'basic_validate',
                         'id'         => 'basic_validate',

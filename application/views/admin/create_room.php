@@ -8,7 +8,7 @@
                 <div class="widget-content nopadding">
                     <div class="form-horizontal">
                         <?php
-                        echo form_open(base_url('create-room'), array(
+                        echo form_open(site_url('create-room'), array(
                             'class' => 'form-horizontal'));
                         //room_number:
                         echo input_bootstrap($room_number, 'create_room_number_label');

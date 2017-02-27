@@ -59,7 +59,7 @@ function inputs($attr)
                     <?php
 //echo validation_errors();
 
-                    echo form_open(base_url($myform['action']), array(
+                    echo form_open(site_url($myform['action']), array(
                         'class'      => 'form-horizontal',
                         'name'       => 'basic_validate',
                         'id'         => 'basic_validate',

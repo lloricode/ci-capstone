@@ -20,7 +20,7 @@ if (isset($conflict_data))
                      * @Contributor: Jinkee Po <pojinkee1@gmail.com>
                      *         
                      */
-                    echo form_open(base_url('create-subject-offer'), array(
+                    echo form_open(site_url('create-subject-offer'), array(
                         'class'      => 'form-horizontal',
                         'name'       => 'basic_validate',
                         'id'         => 'basic_validate',
@@ -42,7 +42,7 @@ if (isset($conflict_data))
                             ));
                             ?>
                             <?php foreach ($days as $d): ?>
-                                    <?php $this->table->add_row(form_label(ucfirst($d), $d), form_label(form_checkbox($d, TRUE/* i set this TRUE for directly insert, */, set_checkbox($d, set_value($d))), $d)); ?>
+                                    <?php $this->table->add_row(form_label(lang('cal_' . $d), $d), form_label(form_checkbox($d, TRUE/* i set this TRUE for directly insert, */, set_checkbox($d, set_value($d))), $d)); ?>
                             <?php endforeach; ?>
                             <?php echo $this->table->generate(); ?>
                         </div>

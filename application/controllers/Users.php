@@ -27,7 +27,7 @@ class Users extends CI_Capstone_Controller
                  * if has not, default $page will is 1
                  */
                 $this->page_ = get_page_in_url();
-                $this->breadcrumbs->unshift(2, 'Users', 'users');
+                $this->breadcrumbs->unshift(2, lang('index_heading'), 'users');
         }
 
         /**
@@ -69,7 +69,7 @@ class Users extends CI_Capstone_Controller
                                 $groups = '';
                                 foreach ($user->groups as $group)
                                 {
-                                        $groups .= anchor("edit-group/?group-id=" . $group->id, my_htmlspecialchars($group->name)) . ' | ';
+                                        $groups .= anchor(site_url("edit-group/?group-id=" . $group->id), my_htmlspecialchars($group->name)) . ' | ';
                                 }
                                 $tmp   = array();
                                 $tmp[] = my_htmlspecialchars($user->last_name);
@@ -80,13 +80,13 @@ class Users extends CI_Capstone_Controller
 
                                 if (in_array('deactivate', permission_controllers()))
                                 {
-                                        $active_      = (($user->active) ? anchor("deactivate/?user-id=" . $user->id, 'set deactive') : anchor("users/activate/" . $user->id, 'set active'));
+                                        $active_      = (($user->active) ? anchor(site_url("deactivate/?user-id=" . $user->id), 'set deactive') : anchor("users/activate/" . $user->id, 'set active'));
                                         $active_label = (($user->active) ? '<span class="done">' . lang('index_active_link') : '<span class="pending">' . lang('index_inactive_link')) . '</span>';
                                         $tmp[]        = array('data' => $active_label . nbs() . $active_, 'class' => 'taskStatus');
                                 }
                                 if (in_array('edit-user', permission_controllers()))
                                 {
-                                        $tmp[] = anchor("edit-user/?user-id=" . $user->id, 'Edit');
+                                        $tmp[] = anchor(site_url("edit-user/?user-id=" . $user->id), 'Edit');
                                 }
                                 array_push($table_data, $tmp);
                         }
@@ -101,7 +101,7 @@ class Users extends CI_Capstone_Controller
                 $header   = array();
                 $header[] = lang('index_lname_th');
                 $header[] = lang('index_fname_th');
-                $header[] = lang('index_username_th');
+                $header[] = lang('login_identity_label');
                 $header[] = lang('index_email_th');
                 $header[] = lang('index_groups_th');
 
@@ -233,13 +233,13 @@ class Users extends CI_Capstone_Controller
                         $this->delete_all_query_cache();
                         // redirect them to the auth page
                         $this->session->set_flashdata('message', $this->ion_auth->messages());
-                        redirect(base_url('users'), 'refresh');
+                        redirect(site_url('users'), 'refresh');
                 }
                 else
                 {
                         // redirect them to the forgot password page
                         $this->session->set_flashdata('message', $this->ion_auth->errors());
-                        redirect(base_url('users'), 'refresh');
+                        redirect(site_url('users'), 'refresh');
                 }
         }
 

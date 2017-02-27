@@ -11,8 +11,8 @@ class Create_course extends CI_Capstone_Controller
                 $this->load->model(array('Course_model', 'Education_model'));
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
-                $this->breadcrumbs->unshift(2, 'Courses', 'courses');
-                $this->breadcrumbs->unshift(3, 'Create Courses', 'create-course');
+                $this->breadcrumbs->unshift(2, lang('index_course_heading'), 'courses');
+                $this->breadcrumbs->unshift(3, lang('create_course_heading'), 'create-course');
         }
 
         /**
@@ -31,7 +31,7 @@ class Create_course extends CI_Capstone_Controller
                         if ($id)
                         {
                                 $this->session->set_flashdata('message', $this->config->item('message_start_delimiter', 'ion_auth') . lang('create_course_succesfully_added_message') . $this->config->item('message_end_delimiter', 'ion_auth'));
-                                redirect(base_url('courses'), 'refresh');
+                                redirect(site_url('courses'), 'refresh');
                         }
                 }
 

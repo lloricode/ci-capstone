@@ -11,8 +11,8 @@ class Create_subject_offer extends CI_Capstone_Controller
                 $this->load->model('Subject_offer_model');
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
-                $this->breadcrumbs->unshift(2, 'Subject Offers', 'subject-offers');
-                $this->breadcrumbs->unshift(3, 'Create Subject Offers', 'create-subject-offer');
+                $this->breadcrumbs->unshift(2, lang('index_subject_offer_heading'), 'subject-offers');
+                $this->breadcrumbs->unshift(3, lang('create_subject_offer_heading'), 'create-subject-offer');
                 /**
                  * for check box, in days
                  */
@@ -34,7 +34,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                         if ($id)
                         {
                                 $this->session->set_flashdata('message', $this->config->item('message_start_delimiter', 'ion_auth') . lang('create_subject_offer_succesfully_added_message') . $this->config->item('message_end_delimiter', 'ion_auth'));
-                                redirect(base_url('create-subject-offer'), 'refresh');
+                                redirect(site_url('create-subject-offer'), 'refresh');
                         }
                 }
                 $this->_form_view();

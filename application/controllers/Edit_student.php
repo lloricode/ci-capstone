@@ -11,7 +11,7 @@ class Edit_student extends CI_Capstone_Controller
                 $this->lang->load('ci_capstone/ci_students');
                 $this->load->library(array('form_validation', 'student'));
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span>');
-                $this->breadcrumbs->unshift(2, 'Students', 'students');
+                $this->breadcrumbs->unshift(2, lang('index_student_heading'), 'students');
                 $this->load->model(array('Student_model', 'Enrollment_model'));
                 /**
                  * preparing configuration for image upload
@@ -167,7 +167,7 @@ class Edit_student extends CI_Capstone_Controller
                                                 unlink($old_img);
                                         }
                                 }
-                                redirect(base_url('students/view?student-id=' . $this->student->id), 'refresh');
+                                redirect(site_url('students/view?student-id=' . $this->student->id), 'refresh');
                         }
                 }
         }

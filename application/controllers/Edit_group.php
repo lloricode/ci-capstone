@@ -10,7 +10,7 @@ class Edit_group extends CI_Capstone_Controller
                 parent::__construct();
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
-                $this->breadcrumbs->unshift(2, 'Groups', 'groups');
+                $this->breadcrumbs->unshift(2, lang('index_groups_th'), 'groups');
         }
 
         public function index($id = NULL)
@@ -57,7 +57,7 @@ class Edit_group extends CI_Capstone_Controller
                                 {
                                         $this->session->set_flashdata('message', $this->ion_auth->errors());
                                 }
-                                redirect(base_url('users'), 'refresh');
+                                redirect(site_url('users'), 'refresh');
                         }
                 }
 

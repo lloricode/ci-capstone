@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') or exit('Direct Script is not allowed');
-//english
 
-$lang['db_back_up']='Download backup database';
+defined('BASEPATH') or exit('Direct Script is not allowed');
+
+$lang['last_login_label'] = 'Last Logins';

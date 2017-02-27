@@ -15,8 +15,8 @@ class Create_education extends CI_Capstone_Controller
                 $this->load->model('Education_model');
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
-                $this->breadcrumbs->unshift(2, 'Educations', 'educations');
-                $this->breadcrumbs->unshift(3, 'Create Education', 'create-education');
+                $this->breadcrumbs->unshift(2, lang('index_education_heading'), 'educations');
+                $this->breadcrumbs->unshift(3, lang('create_education_heading'), 'create-education');
         }
 
         public function index()
@@ -28,7 +28,7 @@ class Create_education extends CI_Capstone_Controller
                                 ))->insert();
                         if ($id)
                         {
-                                redirect(base_url('educations'), 'refresh');
+                                redirect(site_url('educations'), 'refresh');
                         }
                 }
                 $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));

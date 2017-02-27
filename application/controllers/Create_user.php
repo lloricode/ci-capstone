@@ -11,7 +11,7 @@ class Create_user extends CI_Capstone_Controller
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
                 $this->breadcrumbs->unshift(2, 'Users', 'users');
-                $this->breadcrumbs->unshift(3, 'Create User', 'create-user');
+                $this->breadcrumbs->unshift(3, lang('create_user_heading'), 'create-user');
         }
 
         public function index()
@@ -86,7 +86,7 @@ class Create_user extends CI_Capstone_Controller
                                 // check to see if we are creating the user
                                 // redirect them back to the admin page
                                 $this->session->set_flashdata('message', $this->ion_auth->messages());
-                                redirect(base_url('users'), 'refresh');
+                                redirect(site_url('users'), 'refresh');
                         }
                 }
                 // display the create user form

@@ -30,7 +30,7 @@ class MY_Pagination extends CI_Pagination
         public function generate_link($url, $total_row, $tmp = FALSE)
         {
                 $this->CI->pagination->initialize(array(
-                    'base_url'         => base_url($url),
+                    'base_url'         => site_url($url),
                     'total_rows'       => $total_row,
                     'page_query_string' => $tmp
                 ));

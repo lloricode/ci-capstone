@@ -17,14 +17,13 @@ const HOME_REDIRECT = ''; // sample    admin/
 /**
  * replace '_' to '-' in controller, to prevent error in navigation
  */
-$segment__  = str_replace('_', '-', $this->uri->segment(1)); //base_url 0,
+$segment__  = str_replace('_', '-', $this->uri->segment($this->config->item('segment_controller'))); //base_url 0,
 $main_sub   = '';
 /**
  * navigation
  */
 $menu_items = $navigations;
 
-$menu_settings = $setting_vavigations;
 
 $active_link  = TRUE;
 // Determine the current menu item.
@@ -82,7 +81,7 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
 
         <!--Header-part-->
         <div id="header">
-            <h1><a href="<?php echo base_url(HOME_REDIRECT); ?>"><?php echo $this->config->item('project_title'); ?></a></h1>
+            <h1><a href="<?php echo site_url(HOME_REDIRECT); ?>"><?php echo $this->config->item('project_title'); ?></a></h1>
         </div>
         <!--close-Header-part--> 
 
@@ -97,35 +96,32 @@ $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $m
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="<?php echo base_url('edit-user/?user-id=' . $this->session->userdata('user_id')); ?>">
+                        <li><a href="<?php echo site_url('edit-user/?user-id=' . $this->session->userdata('user_id')); ?>">
                                 <i class="icon-user"></i> Profile</a>
                         </li>
-                        <li><a href="<?php echo base_url('auth/logout'); ?>">
+                        <li><a href="<?php echo site_url('auth/logout'); ?>">
                                 <i class="icon-key"></i> Log Out</a>
                         </li>
                     </ul>
                 </li>
                 <li class="dropdown" id="menu-messages">
                     <a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle">
-                        <i class="icon icon-cog"></i> 
-                        <span class="text">Settings</span> 
+                        <i class="icon icon-flag"></i> 
+                        <span class="text"><?php echo lang('lang_label'); ?></span> 
 <!--                        <span class="label label-important">5</span> -->
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
-                        <?php foreach ($menu_settings as $k => $v): ?>  
+                        <?php foreach (lang_array_() as $k => $v): ?>  
                                 <li class="divider"></li>
                                 <li>
-                                    <a class="sAdd" title="" href="<?php echo base_url(HOME_REDIRECT . $k); ?>">
-                                        <i class="icon-<?php echo $v['icon']; ?>"></i>
-                                        <?php echo $v['label']; ?>
-                                    </a>
+                                    <?php echo anchor($this->lang->switch_uri($k), $v, array('class' => 'sAdd')); ?>
                                 </li>
                         <?php endforeach; ?>
                     </ul>
                 </li>
                 <li class="">
-                    <a title="" href="<?php echo base_url('auth/logout'); ?>">
+                    <a title="" href="<?php echo site_url('auth/logout'); ?>">
                         <i class="icon icon-share-alt"></i> 
                         <span class="text">Logout</span>
                     </a>

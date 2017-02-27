@@ -39,7 +39,7 @@
                             <table class="table table-bordered table-invoice">
                                 <tbody>
                                     <tr>
-                                        <td><img src="<?php echo base_url($this->config->item('student_image_dir') . $this->student->image); ?>" width="200" alt="no image" /></td>
+                                        <td><img src="<?php echo site_url($this->config->item('student_image_dir') . $this->student->image); ?>" width="200" alt="no image" /></td>
                                     </tr>
 
                                     <tr>

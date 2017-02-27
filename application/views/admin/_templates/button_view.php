@@ -2,7 +2,7 @@
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span12"> 
-            <?php echo anchor(base_url($href), ' ' . $button_label, $extra); ?> 
+            <?php echo anchor(site_url($href), ' ' . $button_label, $extra); ?> 
         </div>
     </div>
 </div>

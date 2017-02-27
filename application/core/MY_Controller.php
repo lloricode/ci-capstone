@@ -17,17 +17,6 @@ class MY_Controller extends CI_Controller
 //                }
 
                 $this->migration->current();
-                //load the preffer user language (if logged)
-                if ($this->ion_auth->logged_in() OR $this->ion_auth->is_admin())
-                {
-                        $this->load->model('Language_model');
-                        $data_return = $this->Language_model->where('user_id', $this->session->userdata('user_id'))->get();
-
-                        if ($data_return)
-                        {
-                                $this->config->set_item('language', $data_return->language_value);
-                        }
-                }
 
                 /**
                  * we set here , must before check login or before calling a trigger for a name of event
@@ -146,7 +135,7 @@ class CI_Capstone_Controller extends MY_Controller
                 /**
                  * check permission
                  */
-                if (!in_array($this->uri->segment(1), permission_controllers()))
+                if (!in_array($this->uri->segment($this->config->item('segment_controller')), permission_controllers()))
                 {
                         show_404();
                 }
@@ -171,7 +160,6 @@ class CI_Capstone_Controller extends MY_Controller
                 $data['user_info']           = $this->session->userdata('user_fullname') .
                         ' [' . $this->session->userdata('user_groups_descriptions') . ']';
                 $data['navigations']         = navigations_main();
-                $data['setting_vavigations'] = navigations_setting();
 
                 $this->template['header']  = parent::_render('admin/_templates/header', $data, TRUE);
                 $this->template['content'] = parent::_render($content, $data, TRUE);

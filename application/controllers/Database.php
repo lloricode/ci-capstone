@@ -12,7 +12,7 @@ class Database extends CI_Capstone_Controller
                 $this->lang->load('ci_capstone/ci_db');
                 $this->config->load('admin/table');
                 $this->breadcrumbs->unshift(2, 'Settings', '#');
-                $this->breadcrumbs->unshift(3, 'Database', 'database');
+                $this->breadcrumbs->unshift(3, lang('database_label'), 'database');
         }
 
         public function index()
@@ -50,7 +50,7 @@ class Database extends CI_Capstone_Controller
                             'button_label' => 'delete cache',
                             'extra'        => array('class' => 'btn btn-info icon-tasks'),
                                 ), TRUE);
-                $this->template['message']                 = $this->session->flashdata('message');
+                $this->template['message']             = $this->session->flashdata('message');
                 $this->template['bootstrap']           = $this->bootstrap();
                 $this->_render('admin/database', $this->template);
         }

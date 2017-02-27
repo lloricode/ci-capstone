@@ -45,7 +45,6 @@ class Subject_model extends MY_Model
 
         private function _form()
         {
-                $this->lang->load('ci_capstone/ci_subjects');
 
                 $this->rules = array(
                     'insert' => array(

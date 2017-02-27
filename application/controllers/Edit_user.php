@@ -10,7 +10,7 @@ class Edit_user extends CI_Capstone_Controller
                 parent::__construct();
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
-                $this->breadcrumbs->unshift(2, 'Users', 'users');
+                $this->breadcrumbs->unshift(2, lang('index_heading'), 'users');
         }
 
         private function set_hook($user_id)
@@ -125,7 +125,7 @@ class Edit_user extends CI_Capstone_Controller
                                         $this->session->set_flashdata('message', $this->ion_auth->messages());
                                         if ($this->ion_auth->is_admin())
                                         {
-                                                redirect(base_url('users'), 'refresh');
+                                                redirect(site_url('users'), 'refresh');
                                         }
                                         else
                                         {

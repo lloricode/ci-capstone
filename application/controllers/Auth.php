@@ -29,7 +29,7 @@ class Auth extends MY_Controller
 
         public function index()
         {
-                redirect(base_url(), 'refresh');
+                redirect(site_url(), 'refresh');
         }
 
         /**

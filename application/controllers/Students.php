@@ -19,7 +19,7 @@ class Students extends CI_Capstone_Controller
                  * pagination limit
                  */
                 $this->limit = 10;
-                $this->breadcrumbs->unshift(2, 'Students', 'students');
+                $this->breadcrumbs->unshift(2, lang('index_student_heading'), 'students');
         }
 
         public function index()
@@ -47,8 +47,8 @@ class Students extends CI_Capstone_Controller
 
                         foreach ($student_obj as $student)
                         {
-                                $view_ = anchor(base_url('students/view?student-id=' . $student->student_id), 'View');
-                                $edit_ = anchor(base_url('edit-student?student-id=' . $student->student_id), 'Edit');
+                                $view_ = anchor(site_url('students/view?student-id=' . $student->student_id), 'View');
+                                $edit_ = anchor(site_url('edit-student?student-id=' . $student->student_id), 'Edit');
 
                                 array_push($table_data, array(
                                     my_htmlspecialchars($student->student_school_id),

@@ -19,7 +19,7 @@ $link = base_url($this->config->item('bootstarp_dir'));
     </head>
     <body>
         <div id="loginbox">            
-            <?php echo form_open(base_url('auth/login'), array('class' => 'form-vertical', 'id' => 'loginform')) ?>
+            <?php echo form_open(site_url('auth/login'), array('class' => 'form-vertical', 'id' => 'loginform')) ?>
             <div class="control-group normal_text"> <h3><img src="<?php echo $link; ?>img/logo.png" alt="Logo" /></h3></div>
             <div class="control-group">
                 <div class="controls">
@@ -58,7 +58,7 @@ $link = base_url($this->config->item('bootstarp_dir'));
                 </span>
             </div>
             <?php echo form_close(); ?>
-            <?php echo form_open(base_url('auth/forgot_password'), array('class' => 'form-vertical', 'id' => 'recoverform')) ?>
+            <?php echo form_open(site_url('auth/forgot_password'), array('class' => 'form-vertical', 'id' => 'recoverform')) ?>
             <p class="normal_text">Enter your Username below and we will send you instructions how to recover a password.</p>
 
             <div class="controls">

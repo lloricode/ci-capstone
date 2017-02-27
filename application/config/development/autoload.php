@@ -118,8 +118,20 @@ $autoload['config'] = array('common/config');
 | "codeigniter_lang.php" would be referenced as array('codeigniter');
 |
 */
-$autoload['language'] = array('ci_capstone/ci_change_language', 'ci_capstone/ci_validation', 'auth');
+$autoload['language'] = array('auth','calendar');
+require BASEPATH."helpers/directory_helper.php";
 
+$languages = directory_map(APPPATH."language/english/ci_capstone/", TRUE);
+
+foreach($languages as $language)
+{
+    if( ! is_array($language))
+    {
+        $class = str_replace("_lang.php", "", $language);
+        $autoload['language'][] = strtolower('ci_capstone/'.$class);
+        
+    }
+}
 /*
 | -------------------------------------------------------------------
 |  Auto-load Models

@@ -8,7 +8,7 @@ class Deactivate extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
-                $this->breadcrumbs->unshift(2, 'Users', 'users');
+                $this->breadcrumbs->unshift(2, lang('index_heading'), 'users');
         }
 
         public function index()

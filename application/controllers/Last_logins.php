@@ -29,7 +29,7 @@ class Last_logins extends CI_Capstone_Controller
                  */
                 $this->page_ = get_page_in_url();
                 $this->breadcrumbs->unshift(2, 'Settings', '#');
-                $this->breadcrumbs->unshift(3, 'Last Logins', 'last-logins');
+                $this->breadcrumbs->unshift(3, lang('last_login_label'), 'last-logins');
         }
 
         /**

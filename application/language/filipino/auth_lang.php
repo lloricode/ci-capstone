@@ -35,11 +35,11 @@ $lang['index_subheading']        = 'Sa ibaba ay isang listahan ng mga users.';
 $lang['index_fname_th']          = 'Pangalan';
 $lang['index_lname_th']          = 'Huling pangalan';
 $lang['index_email_th']          = 'Email';
-$lang['index_groups_th']         = 'Gropo';
-$lang['index_status_th']         = 'katayuan';
-$lang['index_action_th']         = 'aksyon';
-$lang['index_active_link']       = 'aktibo';
-$lang['index_inactive_link']     = 'Hindi aktibo';
+$lang['index_groups_th']         = 'Grupo';
+$lang['index_status_th']         = 'Katayuan';
+$lang['index_action_th']         = 'Aksyon';
+$lang['index_active_link']       = 'Aktibo';
+$lang['index_inactive_link']     = 'Hindi Aktibo';
 $lang['index_create_user_link']  = 'Lumikha ng isang bagong user';
 $lang['index_create_group_link'] = 'Lumikha ng isang bagong grupo';
 

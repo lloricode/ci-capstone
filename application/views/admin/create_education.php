@@ -18,7 +18,7 @@ echo validation_errors();
                      * @Contributor: Jinkee Po <pojinkee1@gmail.com>
                      *         
                      */
-                    echo form_open(base_url('create-education'), array(
+                    echo form_open(site_url('create-education'), array(
                         'class'      => 'form-horizontal',
                         'name'       => 'basic_validate',
                         'id'         => 'basic_validate',

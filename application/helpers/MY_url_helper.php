@@ -15,7 +15,7 @@ if (!function_exists('get_page_in_url'))
         {
                 $CI = & get_instance();
 
-                if ($int_value = $CI->uri->segment(3))
+                if ($int_value = $CI->uri->segment($CI->config->item('segment_pagination')))
                 {
                         if (is_numeric($int_value))
                         {

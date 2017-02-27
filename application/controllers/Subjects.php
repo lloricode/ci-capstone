@@ -26,7 +26,7 @@ class Subjects extends CI_Capstone_Controller
                  * 
                  */
                 $this->page_ = get_page_in_url();
-                $this->breadcrumbs->unshift(2, 'Subjects', 'subjects');
+                $this->breadcrumbs->unshift(2, lang('index_subject_heading_th'), 'subjects');
         }
 
         public function index()

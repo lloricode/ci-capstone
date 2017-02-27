@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') or exit('no direct script allowed');
-echo form_open_multipart(base_url("edit-student?student-id=" . $this->student->id), array(
+echo form_open_multipart(site_url("edit-student?student-id=" . $this->student->id), array(
     'class' => 'form-horizontal'
 ));
 ?>

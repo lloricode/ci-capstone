@@ -16,8 +16,8 @@ class Create_student extends CI_Capstone_Controller
                 $this->load->model(array('Student_model', 'Enrollment_model'));
                 $this->_get_school_id_code();
 
-                $this->breadcrumbs->unshift(2, 'Students', 'students');
-                $this->breadcrumbs->unshift(3, 'Enroll Student', 'create-student');
+                $this->breadcrumbs->unshift(2, lang('index_student_heading'), 'students');
+                $this->breadcrumbs->unshift(3, lang('create_student_heading'), 'create-student');
 
 
                 /**
@@ -146,7 +146,7 @@ class Create_student extends CI_Capstone_Controller
                 {
                         if ($this->db->trans_commit())
                         {
-                                redirect(base_url('students/view?student-id=' . $s_id), 'refresh');
+                                redirect(site_url('students/view?student-id=' . $s_id), 'refresh');
                         }
                 }
         }
@@ -395,7 +395,7 @@ class Create_student extends CI_Capstone_Controller
                         /*
                          * for frontend validation
                          */
-                        base_url('assets/framework/bootstrap/admin/matrixwizard.js'),
+                        site_url('assets/framework/bootstrap/admin/matrixwizard.js'),
                     /**
                      * addition for form
                      */
