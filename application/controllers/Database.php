@@ -75,7 +75,7 @@ class Database extends CI_Capstone_Controller
                 $this->load->model('User_model');
                 $this->User_model->delete_cache();
                 $this->session->set_flashdata('message', 'done');
-                redirect(base_url('database', 'refresh'));
+                $this->index();
         }
 
         /**

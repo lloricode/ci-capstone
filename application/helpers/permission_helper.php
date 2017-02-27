@@ -32,7 +32,7 @@ if (!function_exists('permission_controllers'))
                                  * get all controller id's in permission table where group id is equal
                                  */
                                 $p_o = $CI->Permission_model->where(array('group_id' => $g->id))->
-                                        set_cache('permission_controllers_' . $g->id)->
+                                        set_cache('permission_controllers_group_' . $g->id)->
                                         get_all();
                                 if ($p_o)
                                 {
@@ -41,7 +41,9 @@ if (!function_exists('permission_controllers'))
                                                 /**
                                                  * get all controller where controller id
                                                  */
-                                                $c = $CI->Controller_model->get($p->controller_id);
+                                                $c = $CI->Controller_model->
+                                                        set_cache('permission_controllers_' . $p->controller_id)->
+                                                        get($p->controller_id);
                                                 if ($c)
                                                 {
                                                         /**

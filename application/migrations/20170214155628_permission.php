@@ -36,38 +36,7 @@ class Migration_Permission extends CI_Migration
                         'type'       => 'INT',
                         'constraint' => '11',
                         'null'       => FALSE
-                    ),
-                    //------------------------------------
-                    'created_at'      => array(
-                        'type'       => 'VARCHAR',
-                        'constraint' => '100',
-                        'null'       => FALSE
-                    ),
-                    'created_user_id' => array(
-                        'type'       => 'INT',
-                        'constraint' => '11',
-                        'null'       => FALSE
-                    ),
-                    'deleted_at'      => array(
-                        'type'       => 'VARCHAR',
-                        'constraint' => '100',
-                        'null'       => TRUE
-                    ),
-                    'deleted_user_id' => array(
-                        'type'       => 'INT',
-                        'constraint' => '11',
-                        'null'       => TRUE
-                    ),
-                    'updated_at'      => array(
-                        'type'       => 'VARCHAR',
-                        'constraint' => '100',
-                        'null'       => TRUE
-                    ),
-                    'updated_user_id' => array(
-                        'type'       => 'INT',
-                        'constraint' => '11',
-                        'null'       => TRUE
-                    ),
+                    )
                 );
 
 

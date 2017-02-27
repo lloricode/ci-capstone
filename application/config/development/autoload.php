@@ -104,7 +104,7 @@ $autoload['helper'] = array('date','url','html','language','navigation','permiss
 | config files.  Otherwise, leave it blank.
 |
 */
-$autoload['config'] = array('common/config','common/my_model');
+$autoload['config'] = array('common/config');
 
 /*
 | -------------------------------------------------------------------

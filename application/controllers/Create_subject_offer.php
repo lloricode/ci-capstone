@@ -107,12 +107,12 @@ class Create_subject_offer extends CI_Capstone_Controller
 
                 $this->data['subject_id'] = array(
                     'name'  => 'subject',
-                    'value' => $this->Subject_model->as_dropdown('subject_code')->get_all(),
+                    'value' => $this->Subject_model->set_cache('dropdown_subject_code')->as_dropdown('subject_code')->get_all(),
                 );
 
                 $this->data['room_id'] = array(
                     'name'  => 'room',
-                    'value' => $this->Room_model->as_dropdown('room_number')->get_all(),
+                    'value' => $this->Room_model->set_cache('dropdown_room_number')->as_dropdown('room_number')->get_all(),
                 );
 
                 /**
