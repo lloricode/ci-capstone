@@ -64,10 +64,13 @@ class Create_student extends CI_Capstone_Controller
         {
                 if (!is_null($course_id))
                 {
-                        $this->load->model('Course_model');
-                        $tmp = $this->Course_model->get($course_id)->course_code_id;
+                        if($course_id>0)
+                        {
+                                $this->load->model('Course_model');
+                                $tmp = $this->Course_model->get($course_id)->course_code_id;
 
-                        $this->school_id->initialize($tmp);
+                                $this->school_id->initialize($tmp);
+                        }
                 }
                 else
                 {

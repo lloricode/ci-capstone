@@ -12,6 +12,7 @@ if (!function_exists('lang_array_'))
                     'fi' => 'Filipino',
                     'ce' => 'Cebuano',
                     'sp' => 'Spanish',
+                    'jp' => 'Japanese',
                 );
         }
 

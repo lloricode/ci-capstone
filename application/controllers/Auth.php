@@ -29,7 +29,7 @@ class Auth extends MY_Controller
 
         public function index()
         {
-                redirect(site_url(), 'refresh');
+                redirect(site_url('home'), 'refresh');
         }
 
         /**
@@ -103,14 +103,14 @@ class Auth extends MY_Controller
                                 //      $this->session->set_flashdata('message', $this->ion_auth->messages());
                                 //redirect them back to the home page
                                 $this->session->set_flashdata('message', $this->ion_auth->messages());
-                                redirect('', 'refresh');
+                                redirect(site_url('home'), 'refresh');
                         }
                         else
                         {
                                 // if the login was un-successful
                                 // redirect them back to the login page
                                 $this->session->set_flashdata('message', $this->ion_auth->errors());
-                                redirect('auth/login', 'refresh'); // use redirects instead of loading views for compatibility with MY_Controller libraries
+                                redirect(site_url('auth/login'), 'refresh'); // use redirects instead of loading views for compatibility with MY_Controller libraries
                         }
                 }
                 else
