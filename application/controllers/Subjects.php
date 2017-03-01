@@ -35,6 +35,8 @@ class Subjects extends CI_Capstone_Controller
 
                 $subject_obj = $this->Subject_model->
                         limit($this->limit, $this->limit * $this->page_ - $this->limit)->
+                        order_by('updated_at', 'DESC')->
+                        order_by('created_at', 'DESC')->
                         set_cache('subjects_page_' . $this->page_)->
                         get_all();
 

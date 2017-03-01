@@ -21,7 +21,7 @@ class Migration_Users_last_login extends CI_Migration
                 $this->down();
                 $fields = array(
                     'users_last_login_id' => array(
-                        'type'           => 'MEDIUMINT',
+                        'type'           => 'INT',
                         'constraint'     => 8,
                         'unsigned'       => TRUE,
                         'null'           => FALSE,

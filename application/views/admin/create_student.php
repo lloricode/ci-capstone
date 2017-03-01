@@ -27,39 +27,9 @@ echo form_open_multipart(site_url("create-student/index"), array(
                         echo input_bootstrap($student_lastname, 'create_student_lastname_label');
 
 
-
                         //student_gender:
-                        $gender_field    = $student_gender['name'];
-                        $tmp             = (form_error($gender_field) == '') ? '' : ' error';
-                        echo '<div class="control-group' . $tmp . '">';
-                        echo lang('create_student_gender_label', $gender_field, array(
-                            'class' => 'control-label',
-                        ));
-                        echo '<div class="controls">';
-                        $set_vale_gender = $student_gender['value'];
-                        $male            = FALSE;
-                        $female          = FALSE;
-                        if ($set_vale_gender == 'Male')
-                        {
-                                $male = TRUE;
-                        }
-                        else if ($set_vale_gender == 'Female')
-                        {
-                                $female = TRUE;
-                        }
-                        ?>
-                        <label>
-                            <?php echo form_radio($gender_field, 'Female', $female); ?>
-                            Female
-                        </label>   
-                        <label>
-                            <?php echo form_radio($gender_field, 'Male', $male); ?>
-                            Male
-                        </label> 
-                        <?php
-                        echo form_error($gender_field);
+                        echo input_bootstrap($student_gender, 'create_student_gender_label', 'radio');
 
-                        echo '</div></div>';
 
                         //student_birthdate:                        
                         echo input_bootstrap($student_birthdate, 'create_student_birthdate_label');
@@ -91,17 +61,16 @@ echo form_open_multipart(site_url("create-student/index"), array(
                         echo input_bootstrap($student_school_id_temp, 'create_student_school_id_label', 'input', 'Course Code');
 
                         //course_id:                      
-                        echo input_dropdown_bootstrap($course_id['name'], 'create_course_label', $course_id['value']);
+                        echo input_bootstrap($course_id, 'create_course_label', 'dropdown');
 
                         //student_year_level:
-                        echo input_dropdown_bootstrap($enrollment_year_level['name'], 'create_student_year_level_label', $enrollment_year_level['value']);
+                        echo input_bootstrap($enrollment_year_level, 'create_student_year_level_label', 'dropdown');
 
                         //student_school_year: 
                         echo input_bootstrap($enrollment_school_year, 'create_student_school_year_label');
-                        //    echo input_dropdown_bootstrap($enrollment_school_year['name'], 'create_student_school_year_label', $enrollment_school_year['value']);
+
                         //student_semesterl:
                         echo input_bootstrap($enrollment_semester, 'create_student_semester_label');
-                        // echo input_dropdown_bootstrap($enrollment_semester['name'], 'create_student_semester_label', $enrollment_semester['value']);
                         ?>
                     </div>
                 </div>

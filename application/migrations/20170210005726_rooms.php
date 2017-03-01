@@ -21,7 +21,7 @@ class Migration_Rooms extends CI_Migration
                 $this->down();
                 $fields = array(
                     'room_id'          => array(
-                        'type'           => 'MEDIUMINT',
+                        'type'           => 'INT',
                         'constraint'     => 8,
                         'unsigned'       => TRUE,
                         'null'           => FALSE,
@@ -48,6 +48,7 @@ class Migration_Rooms extends CI_Migration
                     'created_user_id'  => array(
                         'type'       => 'INT',
                         'constraint' => '11',
+                        'unsigned'   => TRUE,
                         'null'       => FALSE
                     ),
                     'deleted_at'       => array(
@@ -58,6 +59,7 @@ class Migration_Rooms extends CI_Migration
                     'deleted_user_id'  => array(
                         'type'       => 'INT',
                         'constraint' => '11',
+                        'unsigned'   => TRUE,
                         'null'       => TRUE
                     ),
                     'updated_at'       => array(
@@ -68,6 +70,7 @@ class Migration_Rooms extends CI_Migration
                     'updated_user_id'  => array(
                         'type'       => 'INT',
                         'constraint' => '11',
+                        'unsigned'   => TRUE,
                         'null'       => TRUE
                     ),
                 );

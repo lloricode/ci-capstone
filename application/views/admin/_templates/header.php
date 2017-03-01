@@ -61,7 +61,8 @@ if (MENU_ITEM_DEFAULT == $menu_current)
 
 $label     = html_escape(((isset($menu_items[$menu_current]['label'])) ? $menu_items[$menu_current]['label'] : $menu_items[$main_sub]['label']));
 $sub_label = html_escape(((isset($menu_items[$menu_current]['label'])) ? '' : $menu_items[$main_sub]['sub'][$segment__]['label']));
-?><!DOCTYPE html>
+echo doctype();
+?>
 <html lang="en">
     <head>
         <title><?php echo ($sub_label != '') ? $sub_label : $label; ?> | <?php echo $this->config->item('project_title'); ?></title>

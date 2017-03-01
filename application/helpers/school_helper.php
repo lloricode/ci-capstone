@@ -108,7 +108,7 @@ if (!function_exists('school_years'))
          * @return array  or school year
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        function school_years($default = NULL, $year_range = 3)
+        function  school_years($default = NULL, $year_range = 3)
         {
 
                 $CI     = &get_instance();

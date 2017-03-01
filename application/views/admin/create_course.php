@@ -11,7 +11,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                 </div>
                 <div class="widget-content nopadding">
                     <?php
-echo validation_errors();
+                   // echo validation_errors();
 
                     /**
                      * @Contributor: Jinkee Po <pojinkee1@gmail.com>
@@ -38,7 +38,7 @@ echo validation_errors();
                     echo input_bootstrap($course_code_id, 'create_course_code_id_label');
 
                     //education_id                     
-                    echo input_dropdown_bootstrap('educ', 'create_course_education_label', $education_id_value);
+                    echo input_bootstrap($education_id, 'create_course_education_label', 'dropdown');
 
 
                     echo ' <div class="form-actions">';

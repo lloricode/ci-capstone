@@ -34,8 +34,8 @@ class Students extends CI_Capstone_Controller
                 //list students
                 $student_obj = $this->Student_model->
                         limit($this->limit, $this->limit * $this->page_ - $this->limit)->
-                        order_by('created_at', 'DESC')->
                         order_by('updated_at', 'DESC')->
+                        order_by('created_at', 'DESC')->
                         set_cache('students_page_' . $this->page_)->
                         get_all();
 

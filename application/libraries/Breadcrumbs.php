@@ -62,7 +62,7 @@ class Breadcrumbs
         {
                 if ($this->breadcrumbs)
                 {
-                        $output = '<!--breadcrumbs-->' . "\n" . $this->breadcrumb_open . "\n";
+                        $output = comment_tag('breadcrumbs') . PHP_EOL . $this->breadcrumb_open . PHP_EOL;
 
                         usort($this->breadcrumbs, $this->array_sorter('id'));
 
@@ -80,25 +80,25 @@ class Breadcrumbs
                                                         $extr .= ' ' . $k . '="' . $v . '" ';
                                                 }
                                         }
-                                        $output .= $this->breadcrumb_el_last_open . '<a' . $extr . '>' . $value['page'] . '</a>' . $this->breadcrumb_el_last_close . $this->breadcrumb_el_close . "\n";
+                                        $output .= $this->breadcrumb_el_last_open . '<a' . $extr . '>' . $value['page'] . '</a>' . $this->breadcrumb_el_last_close . $this->breadcrumb_el_close . PHP_EOL;
                                 }
                                 elseif (reset($keys) == $key)
                                 {
-                                        $output .= $this->breadcrumb_el_open . anchor($value['href'], $this->breadcrumb_el_first . ' ' . $value['page'], $this->breadcrumb_el_first_extra) . $this->breadcrumb_el_close . "\n";
+                                        $output .= $this->breadcrumb_el_open . anchor($value['href'], $this->breadcrumb_el_first . ' ' . $value['page'], $this->breadcrumb_el_first_extra) . $this->breadcrumb_el_close . PHP_EOL;
                                 }
                                 elseif (end($keys) == $key)
                                 {
-                                        $this->breadcrumb_el_last_open_extra['title'] = 'Refresh To ' . $value['page'];
-                                        $output                                       .= $this->breadcrumb_el_last_open . anchor($value['href'], $value['page'], $this->breadcrumb_el_last_open_extra) . $this->breadcrumb_el_last_close . $this->breadcrumb_el_close . "\n";
+                                        $this->breadcrumb_el_last_open_extra['title'] = lang('breadcrumd_refresh_to') . ' ' . $value['page'];
+                                        $output                                       .= $this->breadcrumb_el_last_open . anchor($value['href'], $value['page'], $this->breadcrumb_el_last_open_extra) . $this->breadcrumb_el_last_close . $this->breadcrumb_el_close . PHP_EOL;
                                 }
                                 else
                                 {
-                                        $this->breadcrumb_el_open_extra['title'] = 'Go To ' . $value['page'];
-                                        $output                                  .= $this->breadcrumb_el_open . anchor($value['href'], $value['page'], $this->breadcrumb_el_open_extra) . $this->breadcrumb_el_close . "\n";
+                                        $this->breadcrumb_el_open_extra['title'] = lang('breadcrumd_go_to') . ' ' . $value['page'];
+                                        $output                                  .= $this->breadcrumb_el_open . anchor($value['href'], $value['page'], $this->breadcrumb_el_open_extra) . $this->breadcrumb_el_close . PHP_EOL;
                                 }
                         }
 
-                        return $output . $this->breadcrumb_close . "\n" . '<!--End-breadcrumbs-->' . "\n";
+                        return $output . $this->breadcrumb_close . PHP_EOL . comment_tag('End-breadcrumbs') . PHP_EOL;
                 }
 
                 return NULL;

@@ -205,11 +205,17 @@ class Edit_student extends CI_Capstone_Controller
 //                    'student_school_id' => $this->school_id->generate()
 //                );
 
-                $this->data['student_gender']    = array(
-                    'name'  => 'gender',
-                    'id'    => 'gender',
-                    'value' => $this->form_validation->set_value('gender', $this->student->gender),
+
+                $this->data['student_gender'] = array(
+                    'name'   => 'gender',
+                    'fields' => array(//we used radio here 
+                        'female' => lang('gender_female_label'),
+                        'male'   => lang('gender_male_label')
+                    ),
+                    'value'  => $this->form_validation->set_value('gender', $this->student->gender),
                 );
+
+
                 $this->data['student_birthdate'] = array(
                     'name'             => 'birthdate',
                     'data-date-format' => 'mm-dd-yyyy',

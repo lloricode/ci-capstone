@@ -64,7 +64,7 @@ class Create_student extends CI_Capstone_Controller
         {
                 if (!is_null($course_id))
                 {
-                        if($course_id>0)
+                        if ($course_id > 0)
                         {
                                 $this->load->model('Course_model');
                                 $tmp = $this->Course_model->get($course_id)->course_code_id;
@@ -184,8 +184,12 @@ class Create_student extends CI_Capstone_Controller
                 );
 
                 $this->data['student_gender']    = array(
-                    'name'  => 'gender',
-                    'value' => $this->form_validation->set_value('gender'),
+                    'name'   => 'gender',
+                    'fields' => array(//we used radio here 
+                        'female' => lang('gender_female_label'),
+                        'male'   => lang('gender_male_label')
+                    ),
+                    'value'  => $this->form_validation->set_value('gender'),
                 );
                 $this->data['student_birthdate'] = array(
                     'name'             => 'birthdate',

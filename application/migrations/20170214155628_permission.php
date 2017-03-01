@@ -21,7 +21,7 @@ class Migration_Permission extends CI_Migration
                 $this->down();
                 $fields = array(
                     'permission_id' => array(
-                        'type'           => 'MEDIUMINT',
+                        'type'           => 'INT',
                         'constraint'     => 8,
                         'unsigned'       => TRUE,
                         'null'           => FALSE,

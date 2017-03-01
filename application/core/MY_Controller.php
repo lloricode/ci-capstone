@@ -130,7 +130,7 @@ class CI_Capstone_Controller extends MY_Controller
                 parent::__construct();
                 if (!$this->ion_auth->logged_in())
                 {
-                        redirect(base_url('auth/login'), 'refresh');
+                        redirect(site_url('auth/login'), 'refresh');
                 }
                 /**
                  * check permission
@@ -140,7 +140,7 @@ class CI_Capstone_Controller extends MY_Controller
                         show_404();
                 }
 
-                $this->breadcrumbs->unshift(1, 'Home', 'home');
+                $this->breadcrumbs->unshift(1, lang('home_label'), 'home');
         }
 
         /**
@@ -157,9 +157,9 @@ class CI_Capstone_Controller extends MY_Controller
                 {
                         return NULL;
                 }
-                $data['user_info']           = $this->session->userdata('user_fullname') .
+                $data['user_info']   = $this->session->userdata('user_fullname') .
                         ' [' . $this->session->userdata('user_groups_descriptions') . ']';
-                $data['navigations']         = navigations_main();
+                $data['navigations'] = navigations_main();
 
                 $this->template['header']  = parent::_render('admin/_templates/header', $data, TRUE);
                 $this->template['content'] = parent::_render($content, $data, TRUE);
@@ -244,7 +244,7 @@ class CI_Capstone_Controller extends MY_Controller
                                  */
                                 $message = str_replace(' ', '_', $message);
 
-                                redirect(base_url('auth/logout/' . $message), 'refresh');
+                                redirect(site_url('auth/logout/' . $message), 'refresh');
                         }
                 }
         }

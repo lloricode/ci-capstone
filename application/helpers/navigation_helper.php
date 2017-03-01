@@ -16,11 +16,11 @@ if (!function_exists('navigations_main'))
                 return array(
                     'home'               =>
                     array(
-                        'label' => 'Home',
-                        'desc'  => 'Home Description',
+                        'label' => lang('home_label'),
                         'icon'  => 'home',
                     ),
                     //sub menu
+                    //---------USERS------------
                     'user_menus'         =>
                     array(
                         'label' => lang('index_heading'),
@@ -30,36 +30,67 @@ if (!function_exists('navigations_main'))
                             'users'       =>
                             array(
                                 'label' => lang('index_heading'),
-                                'desc'  => 'Users Description',
                                 'seen'  => TRUE,
                             ),
                             'create-user' =>
                             array(
                                 'label' => lang('create_user_heading'),
-                                'desc'  => 'Create Users Description',
                                 'seen'  => TRUE,
                             ),
                             'edit-group'  =>
                             array(
                                 'label' => lang('edit_group_title'),
-                                'desc'  => 'Edit Group Description',
                                 'seen'  => FALSE,
                             ),
                             'deactivate'  =>
                             array(
                                 'label' => lang('deactivate_heading'),
-                                'desc'  => 'Deactivate User Description',
                                 'seen'  => FALSE,
                             ),
                             'edit-user'   =>
                             array(
                                 'label' => lang('edit_user_heading'),
-                                'desc'  => 'Edit User Description',
                                 'seen'  => FALSE,
                             ),
                         ),
                     ),
-                    //sub menu
+                    //---------END USERS--------
+                    //---------START curriculum-----
+                    'curriculum_menu'      =>
+                    array(
+                        'label' => lang('curriculum_label'),
+                        'icon'  => 'book',
+                        'sub'   =>
+                        array(
+                            /**
+                             * viewer
+                             */
+                            'curriculums'               =>
+                            array(
+                                'label' => lang('curriculum_label'),
+                                'seen'  => TRUE,
+                            ),
+                            'curriculum-subjects'       =>
+                            array(
+                                'label' => lang('curriculum_subject_label'),
+                                'seen'  => TRUE,
+                            ),
+                            /**
+                             * create
+                             */
+                            'create-curriculum'         =>
+                            array(
+                                'label' => lang('create_curriculum_label'),
+                                'seen'  => TRUE,
+                            ),
+                            'create-curriculum-subject' =>
+                            array(
+                                'label' => lang('create_curriculum_subject_label'),
+                                'seen'  => TRUE,
+                            ),
+                        ),
+                    ),
+                    //---------END curriculum-------
                     //---------STUDENT------------
                     'student_menu'       =>
                     array(
@@ -70,19 +101,16 @@ if (!function_exists('navigations_main'))
                             'students'       =>
                             array(
                                 'label' => lang('index_student_heading'),
-                                'desc'  => 'Student Description',
                                 'seen'  => TRUE,
                             ),
                             'create-student' =>
                             array(
                                 'label' => lang('create_student_heading'),
-                                'desc'  => 'Add Student Description',
                                 'seen'  => TRUE,
                             ),
                             'edit-student'   =>
                             array(
                                 'label' => 'Edit Student',
-                                'desc'  => 'Edit Student Description',
                                 'seen'  => FALSE,
                             ),
                         ),
@@ -99,13 +127,11 @@ if (!function_exists('navigations_main'))
                             'subjects'       =>
                             array(
                                 'label' => lang('index_subject_heading_th'),
-                                'desc'  => 'Subject Description',
                                 'seen'  => TRUE,
                             ),
                             'create-subject' =>
                             array(
                                 'label' => lang('create_subject_heading'),
-                                'desc'  => 'Add Subject Description',
                                 'seen'  => TRUE,
                             ),
                         ),
@@ -122,13 +148,11 @@ if (!function_exists('navigations_main'))
                             'courses'       =>
                             array(
                                 'label' => lang('index_course_heading'),
-                                'desc'  => 'Course Description',
                                 'seen'  => TRUE,
                             ),
                             'create-course' =>
                             array(
                                 'label' => lang('create_course_heading'),
-                                'desc'  => 'Create Course Description',
                                 'seen'  => TRUE,
                             ),
                         ),
@@ -145,13 +169,11 @@ if (!function_exists('navigations_main'))
                             'educations'       =>
                             array(
                                 'label' => lang('index_education_heading'),
-                                'desc'  => 'Education Description',
                                 'seen'  => TRUE,
                             ),
                             'create-education' =>
                             array(
                                 'label' => lang('create_education_heading'),
-                                'desc'  => 'Create Education Description',
                                 'seen'  => TRUE,
                             ),
                         ),
@@ -169,13 +191,11 @@ if (!function_exists('navigations_main'))
                             'rooms'       =>
                             array(
                                 'label' => lang('index_room_heading'),
-                                'desc'  => 'Room Description',
                                 'seen'  => TRUE,
                             ),
                             'create-room' =>
                             array(
                                 'label' => lang('create_room_heading'),
-                                'desc'  => 'Create Room Description',
                                 'seen'  => TRUE,
                             ),
                         ),
@@ -192,13 +212,11 @@ if (!function_exists('navigations_main'))
                             'subject-offers'       =>
                             array(
                                 'label' => lang('index_subject_offer_heading'),
-                                'desc'  => 'Subject Offer Description',
                                 'seen'  => TRUE,
                             ),
                             'create-subject-offer' =>
                             array(
                                 'label' => lang('create_subject_offer_heading'),
-                                'desc'  => 'Create Subject Offer Description',
                                 'seen'  => TRUE,
                             ),
                         ),
@@ -214,13 +232,11 @@ if (!function_exists('navigations_main'))
                             'groups'       =>
                             array(
                                 'label' => lang('index_groups_th'),
-                                'desc'  => lang('index_groups_th') . ' Description',
                                 'seen'  => TRUE,
                             ),
                             'create-group' =>
                             array(
                                 'label' => lang('create_group_heading'),
-                                'desc'  => lang('create_group_heading') . ' Description',
                                 'seen'  => TRUE,
                             ),
                         ),
@@ -235,25 +251,21 @@ if (!function_exists('navigations_main'))
                             'database'    =>
                             array(
                                 'label' => lang('database_label'),
-                                'desc'  => 'Database Description',
                                 'seen'  => TRUE,
                             ),
                             'log'         =>
                             array(
                                 'label' => lang('error_label'),
-                                'desc'  => 'Error Logsn Description',
                                 'seen'  => TRUE,
                             ),
                             'permissions' =>
                             array(
                                 'label' => lang('permission_label'),
-                                'desc'  => 'permission Description',
                                 'seen'  => TRUE,
                             ),
                             'last-logins' =>
                             array(
                                 'label' => lang('last_login_label'),
-                                'desc'  => 'Last Logins Description',
                                 'seen'  => TRUE,
                             ),
                         ),
@@ -350,7 +362,7 @@ if (!function_exists('sidebar_menu_ci_capstone'))
                 /**
                  * navigations
                  */
-                $return = '<ul>' . "\n";
+                $return = comment_tag('navigations') . '<ul>' . PHP_EOL;
                 foreach (navigations_main() as $key => $item)
                 {
 
@@ -399,11 +411,11 @@ if (!function_exists('sidebar_menu_ci_capstone'))
                                                 }
                                         }
 
-                                        $return .= '<li class="submenu' . $active1 . '">' . "\n"
-                                                . '<a href="#"><i class="icon icon-' . $item['icon'] . '"></i>' . "\n"
-                                                . '<span>' . $item['label'] . '</span> <span class="label label-important">' . $count . '</span>' . "\n"
-                                                . '</a>' . "\n"
-                                                . '<ul>' . "\n";
+                                        $return .= '<li class="submenu' . $active1 . '">' . PHP_EOL
+                                                . '<a href="#"><i class="icon icon-' . $item['icon'] . '"></i>' . PHP_EOL
+                                                . '<span>' . $item['label'] . '</span> <span class="label label-important">' . $count . '</span>' . PHP_EOL
+                                                . '</a>' . PHP_EOL
+                                                . '<ul>' . PHP_EOL;
                                         foreach ($item['sub'] as $sub_key => $sub_item)
                                         {
                                                 /**
@@ -413,12 +425,12 @@ if (!function_exists('sidebar_menu_ci_capstone'))
                                                 {
                                                         if ($sub_item['seen'])
                                                         {
-                                                                $return .= '<li><a href="' . site_url(HOME_REDIRECT . $sub_key) . '">' . $sub_item['label'] . '</a></li>' . "\n";
+                                                                $return .= '<li><a href="' . site_url(HOME_REDIRECT . $sub_key) . '">' . $sub_item['label'] . '</a></li>' . PHP_EOL;
                                                         }
                                                 }
                                         }
-                                        $return .= '</ul>' . "\n"
-                                                . '</li>' . "\n";
+                                        $return .= '</ul>' . PHP_EOL
+                                                . '</li>' . PHP_EOL;
                                 }
                         }
                         else
@@ -432,15 +444,15 @@ if (!function_exists('sidebar_menu_ci_capstone'))
                                         $active = ($key == $menu_current ? ' class="active"' : '');
 
                                         $return .= '<li' . $active . '>'
-                                                . '<a href="' . site_url(HOME_REDIRECT . $key) . '">' . "\n"
-                                                . '<i class="icon icon-' . $item['icon'] . '"></i>' . "\n"
-                                                . '<span>' . $item['label'] . '</span>' . "\n"
-                                                . '</a>' . "\n"
-                                                . '</li>' . "\n";
+                                                . '<a href="' . site_url(HOME_REDIRECT . $key) . '">' . PHP_EOL
+                                                . '<i class="icon icon-' . $item['icon'] . '"></i>' . PHP_EOL
+                                                . '<span>' . $item['label'] . '</span>' . PHP_EOL
+                                                . '</a>' . PHP_EOL
+                                                . '</li>' . PHP_EOL;
                                 }
                         }
                 }
-                return $return .= '</ul>' . "\n";
+                return $return .= '</ul>' . PHP_EOL . comment_tag('end-navigations');
         }
 
 }

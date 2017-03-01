@@ -31,7 +31,7 @@ class Database extends CI_Capstone_Controller
                         $this->table->add_row(array(array('data' => '<h4>' . $db . '</h4>', 'colspan' => '4')));
                         foreach ($this->db->field_data($db) as $field)
                         {
-                                $this->table->add_row($field->name, $field->type, $field->max_length, ($field->primary_key) ? 'YES' : 'NO');
+                                $this->table->add_row($field->name, $field->type, $field->max_length, ($field->primary_key) ? 'yes' : 'no');
                         }
                 }
 
@@ -50,7 +50,7 @@ class Database extends CI_Capstone_Controller
                             'button_label' => 'delete cache',
                             'extra'        => array('class' => 'btn btn-info icon-tasks'),
                                 ), TRUE);
-                $this->template['message']             = $this->session->flashdata('message');
+                $this->template['message']             = $this->session->flashdata('dbmessage');
                 $this->template['bootstrap']           = $this->bootstrap();
                 $this->_render('admin/database', $this->template);
         }
@@ -74,7 +74,7 @@ class Database extends CI_Capstone_Controller
                  */
                 $this->load->model('User_model');
                 $this->User_model->delete_cache();
-                $this->session->set_flashdata('message', 'done');
+                $this->session->set_flashdata('dbmessage', 'query cache deleted!!');
                 $this->index();
         }
 

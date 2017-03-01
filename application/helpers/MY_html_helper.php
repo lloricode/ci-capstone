@@ -46,7 +46,7 @@ if (!function_exists('script_tag'))
                         $link .= $src;
                 }
 
-                return '<script src="' . $link . '"></script>' . "\n";
+                return '<script src="' . $link . '"></script>' . PHP_EOL;
         }
 
 }
@@ -65,7 +65,7 @@ if (!function_exists('comment_tag'))
         function comment_tag($conntent = '')
         {
 
-                return '<!-- ' . $conntent . ' -->' . "\n";
+                return '<!-- ' . $conntent . ' -->' . PHP_EOL;
         }
 
 }

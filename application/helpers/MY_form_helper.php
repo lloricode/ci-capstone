@@ -7,21 +7,23 @@ if (!function_exists('input_bootstrap'))
 
         /**
          * 
-         * @param string $field field
-         * @param string $lang lang
+         * @param array $field
+         * @param string $lang
+         * @param string $input
+         * @param string $prepend
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
         function input_bootstrap($field, $lang, $input = 'input', $prepend = FALSE)
         {
                 $CI  = &get_instance();
                 $CI->load->helper('html');
-                echo "\n" . comment_tag($field['name']);
+                echo PHP_EOL . comment_tag($field['name'] . ' [' . $input . ']');
                 $tmp = (form_error($field['name']) == '') ? '' : ' error';
-                echo '<div class="control-group' . $tmp . '">' . "\n";
+                echo '<div class="control-group' . $tmp . '">' . PHP_EOL;
                 echo lang($lang, $field['name'], array(
                     'class' => 'control-label',
-                )) . "\n";
-                echo '<div class="controls">' . "\n";
+                )) . PHP_EOL;
+                echo '<div class="controls">' . PHP_EOL;
 
                 if ($prepend)
                 {
@@ -39,6 +41,41 @@ if (!function_exists('input_bootstrap'))
                         case 'file':
                                 echo form_upload($field);
                                 break;
+                        case 'dropdown':
+                                $default_value = (isset($field['default'])) ? $field['default'] : NULL;
+                                echo form_dropdown($field['name'], $field['value'], set_value($field['name'], $default_value));
+                                break;
+                        case 'radio':
+                        case 'checkbox':
+                                if (isset($field['fields']))
+                                {
+                                        $labels = $field['fields'];
+
+                                        if (!is_array($labels))
+                                        {
+                                                $labels = array($labels);
+                                        }
+                                        switch ($input)
+                                        {
+                                                case 'radio':
+                                                        foreach ($labels as $k => $v)
+                                                        {
+                                                                $defaut = ($field['value'] == $k);
+                                                                echo form_label(form_radio($field['name'], $k, $defaut) . ' ' . $v) . PHP_EOL;
+                                                        }
+                                                        break;
+                                                case 'checkbox':
+                                                        foreach ($labels as $k => $v)
+                                                        {
+                                                                $defaut = ($field['value'] == $k);
+                                                                echo form_label(form_checkbox($field['name'], $k, $defaut) . ' ' . $v) . PHP_EOL;
+                                                        }
+                                                        break;
+                                                default:
+                                                        break;
+                                        }
+                                }
+                                break;
                         default:
                                 break;
                 }
@@ -46,10 +83,10 @@ if (!function_exists('input_bootstrap'))
                 {
                         echo '</div>';
                 }
-                echo form_error($field['name']);
-                echo '</div>' . "\n";
-                echo '</div>' . "\n";
-                echo comment_tag('end-' . $field['name']) . "\n";
+                echo form_error($field['name']) . PHP_EOL;
+                echo '</div>' . PHP_EOL;
+                echo '</div>' . PHP_EOL;
+                echo comment_tag('end-' . $field['name'] . ' [' . $input . ']') . PHP_EOL;
         }
 
 }
@@ -66,83 +103,21 @@ if (!function_exists('image_view'))
         {
                 $CI = &get_instance();
                 $CI->load->helper('html');
-                echo "\n" . comment_tag('image');
+                echo PHP_EOL . comment_tag('image');
                 //  $tmp = (form_error($field['name']) == '') ? '' : ' error';
-                echo '<div class="control-group' . /* $tmp . */ '">' . "\n";
+                echo '<div class="control-group' . /* $tmp . */ '">' . PHP_EOL;
 //                echo lang($lang, $field['name'], array(
 //                    'class' => 'control-label',
-//                )) . "\n";
-                echo '<div class="controls">' . "\n";
+//                )) . PHP_EOL;
+                echo '<div class="controls">' . PHP_EOL;
 
 
                 echo img($image_properties);
 
 
-                echo '</div>' . "\n";
-                echo '</div>' . "\n";
-                echo comment_tag('end-imgae') . "\n";
-        }
-
-}
-//if (!function_exists('input_date_picker_bootstrap'))
-//{
-//
-//        /**
-//         * 
-//         * @param string $field field
-//         * @param string $lang lang
-//         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
-//         */
-//        function input_date_picker_bootstrap($field, $lang)
-//        {
-//                $tmp = (form_error($field['name']) == '') ? '' : ' error';
-//                echo '<div class = "control-group' . $tmp . '">' . "\n";
-//                echo lang($lang, $field['name'], array(
-//                    'class' => 'control-label',
-//                    'id'    => 'inputError'
-//                )) . "\n";
-//                echo '<div class = "controls">' . "\n";
-//
-//                echo ' <div data-date = "12-02-2012" class = "input-append date datepicker">';
-//                echo form_input($field);
-//                echo ' <span class = "add-on"><i class = "icon-th"></i></span> ';
-//                echo form_error($field['name']);
-//                echo '</div>' . "\n";
-//                echo '</div>' . "\n";
-//
-//
-//             
-//        }
-//
-//}
-if (!function_exists('input_dropdown_bootstrap'))
-{
-
-        /**
-         * 
-         * @param string $field
-         * @param string $lang
-         * @param array $value_combo
-         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
-         */
-        function input_dropdown_bootstrap($field, $lang, $value_combo, $default = NULL)
-        {
-                $CI  = &get_instance();
-                $CI->load->helper('html');
-                echo "\n" . comment_tag($field);
-                $tmp = (form_error($field) == '') ? '' : ' error';
-                echo '<div class = "control-group' . $tmp . '">' . "\n";
-                echo lang($lang, $field, array(
-                    'class' => 'control-label',
-                )) . "\n";
-                echo '<div class = "controls">' . "\n";
-
-                echo form_dropdown($field, $value_combo, set_value($field, $default));
-
-                echo form_error($field);
-                echo '</div>' . "\n";
-                echo '</div>' . "\n";
-                echo comment_tag('end-' . $field) . "\n";
+                echo '</div>' . PHP_EOL;
+                echo '</div>' . PHP_EOL;
+                echo comment_tag('end-imgae') . PHP_EOL;
         }
 
 }
