@@ -50,7 +50,7 @@ class Subjects extends CI_Capstone_Controller
                                 array_push($table_data, array(
                                     my_htmlspecialchars($subject->subject_code),
                                     my_htmlspecialchars($subject->subject_description),
-                                    my_htmlspecialchars($subject->subject_unit),
+                                        //my_htmlspecialchars($subject->subject_unit),
                                 ));
                         }
                 }
@@ -63,7 +63,7 @@ class Subjects extends CI_Capstone_Controller
                 $header = array(
                     lang('index_subject_code_th'),
                     lang('index_subject_description_th'),
-                    lang('index_subject_unit_th'),
+                        //lang('index_subject_unit_th'),
                 );
 
                 /**

@@ -21,7 +21,7 @@ class Migration_Subjects extends CI_Migration
                 $this->down();
                 $fields = array(
                     'subject_id'          => array(
-                        'type'           => 'MEDIUMINT',
+                        'type'           => 'INT',
                         'constraint'     => 8,
                         'unsigned'       => TRUE,
                         'null'           => FALSE,
@@ -39,11 +39,11 @@ class Migration_Subjects extends CI_Migration
                         'unique'     => TRUE,
                         'null'       => FALSE
                     ),
-                    'subject_unit'        => array(
-                        'type'       => 'INT',
-                        'constraint' => '11',
-                        'null'       => FALSE
-                    ),
+//                    'subject_unit'        => array(
+//                        'type'       => 'INT',
+//                        'constraint' => '11',
+//                        'null'       => FALSE
+//                    ),
                     /**
                      * who add subject
                      */

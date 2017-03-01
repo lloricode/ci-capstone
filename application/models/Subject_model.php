@@ -64,14 +64,14 @@ class Subject_model extends MY_Model
                                 'is_unique' => 'The {field} already exist.'
                             )
                         ),
-                        'subject_unit'        => array(
-                            'label'  => lang('create_subject_unit_label'),
-                            'field'  => 'unit',
-                            'rules'  => 'trim|required|is_natural_no_zero',
-                            'errors' => array(
-                                'is_unique' => 'The {field} already exist.'
-                            )
-                        ),
+//                        'subject_unit'        => array(
+//                            'label'  => lang('create_subject_unit_label'),
+//                            'field'  => 'unit',
+//                            'rules'  => 'trim|required|is_natural_no_zero',
+//                            'errors' => array(
+//                                'is_unique' => 'The {field} already exist.'
+//                            )
+//                        ),
                     ),
                 );
         }

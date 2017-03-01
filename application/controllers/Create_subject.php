@@ -47,12 +47,12 @@ class Create_subject extends CI_Capstone_Controller
                     'type'  => 'text',
                     'value' => $this->form_validation->set_value('desc'),
                 );
-                $this->data['subject_unit']        = array(
-                    'name'  => 'unit',
-                    'id'    => 'unit',
-                    'type'  => 'text',
-                    'value' => $this->form_validation->set_value('unit'),
-                );
+//                $this->data['subject_unit']        = array(
+//                    'name'  => 'unit',
+//                    'id'    => 'unit',
+//                    'type'  => 'text',
+//                    'value' => $this->form_validation->set_value('unit'),
+//                );
 
                 $this->data['bootstrap'] = $this->bootstrap();
                 $this->_render('admin/create_subject', $this->data);

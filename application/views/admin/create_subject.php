@@ -35,7 +35,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     echo input_bootstrap($subject_description, 'create_subject_description_label');
 
                     //subject_unit:
-                    echo input_bootstrap($subject_unit, 'create_subject_unit_label');
+                    //echo input_bootstrap($subject_unit, 'create_subject_unit_label');
 
 
 
