@@ -24,9 +24,9 @@ class Migration_Controller extends CI_Migration
         private function enum()
         {
                 $return = '';
-                foreach (controllers__() as $controller)
+                foreach (controllers__() as $k => $controller)
                 {
-                        $return .= "\"$controller\",";
+                        $return .= "\"$k\",";
                 }
 
                 /**
@@ -59,8 +59,14 @@ class Migration_Controller extends CI_Migration
                         'constraint' => '50',
                         'null'       => FALSE
                     ),
+                    'controller_admin_only'       => array(
+                        'type'       => 'TINYINT',
+                        'constraint' => '1',
+                        'default'    => '0',
+                        'null'       => FALSE
+                    ),
                     //------------------------------------
-                    'created_at'       => array(
+                    'created_at'             => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
                         'null'       => FALSE

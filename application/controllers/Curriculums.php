@@ -15,6 +15,7 @@ class Curriculums extends CI_Capstone_Controller
                 $this->lang->load('ci_capstone/ci_educations');
                 $this->load->model(array('Curriculum_model', 'Course_model'));
                 $this->load->library('pagination');
+                $this->load->helper('school');
                 /**
                  * @Contributor: Jinkee Po <pojinkee1@gmail.com>
                  *         
@@ -55,7 +56,7 @@ class Curriculums extends CI_Capstone_Controller
                                 array_push($table_data, array(
                                     my_htmlspecialchars($curriculum->curriculum_description),
                                     my_htmlspecialchars($curriculum->curriculum_effective_school_year),
-                                    my_htmlspecialchars($curriculum->curriculum_effective_semester),
+                                    my_htmlspecialchars(semesters($curriculum->curriculum_effective_semester)),
                                     my_htmlspecialchars($this->Course_model->get($curriculum->course_id)->course_code),
                                     my_htmlspecialchars($curriculum->curriculum_status),
                                 ));

@@ -20,28 +20,39 @@ class Migration_Permission extends CI_Migration
         {
                 $this->down();
                 $fields = array(
-                    'permission_id' => array(
+                    'permission_id'   => array(
                         'type'           => 'INT',
                         'constraint'     => 8,
                         'unsigned'       => TRUE,
                         'null'           => FALSE,
                         'auto_increment' => TRUE
                     ),
-                    'controller_id' => array(
+                    'controller_id'   => array(
                         'type'       => 'INT',
                         'constraint' => '11',
                         'null'       => FALSE
                     ),
-                    'group_id'      => array(
+                    'group_id'        => array(
                         'type'       => 'INT',
                         'constraint' => '11',
                         'null'       => FALSE
                     ),
                     //------------------------------------
-                    'created_at'    => array(
+                    'created_at'      => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
                         'null'       => FALSE
+                    ),
+                    'updated_at'      => array(
+                        'type'       => 'VARCHAR',
+                        'constraint' => '100',
+                        'null'       => TRUE
+                    ),
+                    'updated_user_id' => array(
+                        'type'       => 'INT',
+                        'constraint' => '11',
+                        'unsigned'   => TRUE,
+                        'null'       => TRUE
                     )
                 );
 

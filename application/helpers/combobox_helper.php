@@ -2,46 +2,6 @@
 
 defined('BASEPATH') or exit('no direct script allowed');
 
-if (!function_exists('my_semester_for_combo'))
-{
-
-        /**
-         * 
-         * @return array 1-1st Semester,2-2nd Semester,3-Summer Semester
-         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
-         */
-        function my_semester_for_combo()
-        {
-                return array(
-                    'first'  => '1st Semester',
-                    'second' => '2nd Semester',
-                    'summer' => 'Summer Semester',
-                );
-        }
-
-}
-
-
-if (!function_exists('my_lang_combo'))
-{
-
-        /**
-         * 
-         * @return type
-         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
-         */
-        function my_lang_combo()
-        {
-                return array(
-                    'english'  => 'English',
-                    'filipino' => 'Filipino',
-                    'cebuano'  => 'Cebuano',
-                );
-        }
-
-}
-
-
 if (!function_exists('_numbers_for_drop_down'))
 {
 

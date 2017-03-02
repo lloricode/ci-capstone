@@ -323,7 +323,7 @@ class Edit_student extends CI_Capstone_Controller
                 $this->data['enrollment_semester']    = array(
                     'name'    => 'semester',
                     'default' => $this->student->semester,
-                    'value'   => my_semester_for_combo(),
+                    'value'   => semesters(),
                 );
                 $this->data['enrollment_school_year'] = array(
                     'name'    => 'school_year',

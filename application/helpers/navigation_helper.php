@@ -14,49 +14,13 @@ if (!function_exists('navigations_main'))
         function navigations_main()
         {
                 return array(
-                    'home'               =>
+                    'home'                =>
                     array(
                         'label' => lang('home_label'),
                         'icon'  => 'home',
                     ),
-                    //sub menu
-                    //---------USERS------------
-                    'user_menus'         =>
-                    array(
-                        'label' => lang('index_heading'),
-                        'icon'  => 'user',
-                        'sub'   =>
-                        array(
-                            'users'       =>
-                            array(
-                                'label' => lang('index_heading'),
-                                'seen'  => TRUE,
-                            ),
-                            'create-user' =>
-                            array(
-                                'label' => lang('create_user_heading'),
-                                'seen'  => TRUE,
-                            ),
-                            'edit-group'  =>
-                            array(
-                                'label' => lang('edit_group_title'),
-                                'seen'  => FALSE,
-                            ),
-                            'deactivate'  =>
-                            array(
-                                'label' => lang('deactivate_heading'),
-                                'seen'  => FALSE,
-                            ),
-                            'edit-user'   =>
-                            array(
-                                'label' => lang('edit_user_heading'),
-                                'seen'  => FALSE,
-                            ),
-                        ),
-                    ),
-                    //---------END USERS--------
                     //---------START curriculum-----
-                    'curriculum_menu'      =>
+                    'curriculum_menu'     =>
                     array(
                         'label' => lang('curriculum_label'),
                         'icon'  => 'book',
@@ -92,7 +56,7 @@ if (!function_exists('navigations_main'))
                     ),
                     //---------END curriculum-------
                     //---------STUDENT------------
-                    'student_menu'       =>
+                    'student_menu'        =>
                     array(
                         'label' => lang('index_student_heading'),
                         'icon'  => 'user-md',
@@ -117,29 +81,8 @@ if (!function_exists('navigations_main'))
                     ),
                     //---------END STUDENT--------
                     //sub menu
-                    //---------START SUBJECTS-----
-                    'subjects_menu'      =>
-                    array(
-                        'label' => lang('index_subject_heading_th'),
-                        'icon'  => 'book',
-                        'sub'   =>
-                        array(
-                            'subjects'       =>
-                            array(
-                                'label' => lang('index_subject_heading_th'),
-                                'seen'  => TRUE,
-                            ),
-                            'create-subject' =>
-                            array(
-                                'label' => lang('create_subject_heading'),
-                                'seen'  => TRUE,
-                            ),
-                        ),
-                    ),
-                    //---------END SUBJECTS-------
-                    //sub menu
                     //--------START COURSE--------
-                    'course_menu'        =>
+                    'course_menu'         =>
                     array(
                         'label' => lang('index_course_heading'),
                         'icon'  => 'list',
@@ -160,7 +103,7 @@ if (!function_exists('navigations_main'))
                     //--------END COURSE----------
                     //
                     //--------START EDUCATION--------
-                    'education_menu'     =>
+                    'education_menu'      =>
                     array(
                         'label' => lang('index_education_heading'),
                         'icon'  => 'pencil',
@@ -182,7 +125,7 @@ if (!function_exists('navigations_main'))
                     //
                     //
                     //--------START ROOM--------
-                    'room_menu'          =>
+                    'room_menu'           =>
                     array(
                         'label' => lang('index_room_heading'),
                         'icon'  => 'lock',
@@ -203,12 +146,17 @@ if (!function_exists('navigations_main'))
                     //--------END ROOM----------
                     //sub menu
                     //--------START SCHEDULE------
-                    'subject_offer_menu' =>
+                    'subject_offer_menu'  =>
                     array(
-                        'label' => lang('index_subject_offer_heading'),
+                        'label' => lang('index_subject_heading_th'),
                         'icon'  => 'calendar',
                         'sub'   =>
                         array(
+                            'subjects'             =>
+                            array(
+                                'label' => lang('index_subject_heading_th'),
+                                'seen'  => TRUE,
+                            ),
                             'subject-offers'       =>
                             array(
                                 'label' => lang('index_subject_offer_heading'),
@@ -219,30 +167,68 @@ if (!function_exists('navigations_main'))
                                 'label' => lang('create_subject_offer_heading'),
                                 'seen'  => TRUE,
                             ),
+                            'create-subject'       =>
+                            array(
+                                'label' => lang('create_subject_heading'),
+                                'seen'  => TRUE,
+                            ),
                         ),
                     ),
                     //--------END SCHEDULE--------
                     //sub menu
-                    'group_menu'         =>
+                    'administrator_menus' =>
                     array(
-                        'label' => lang('index_groups_th'),
+                        'label' => lang('administrators_label'),
                         'icon'  => 'group',
                         'sub'   =>
                         array(
+                            'users'        =>
+                            array(
+                                'label' => lang('index_heading'),
+                                'seen'  => TRUE,
+                            ),
                             'groups'       =>
                             array(
                                 'label' => lang('index_groups_th'),
                                 'seen'  => TRUE,
                             ),
+                            'create-user'  =>
+                            array(
+                                'label' => lang('create_user_heading'),
+                                'seen'  => TRUE,
+                                'admin' => TRUE
+                            ),
                             'create-group' =>
                             array(
                                 'label' => lang('create_group_heading'),
                                 'seen'  => TRUE,
+                                'admin' => TRUE
+                            ),
+                            /**
+                             * hidden
+                             */
+                            'edit-group'   =>
+                            array(
+                                'label' => lang('edit_group_title'),
+                                'seen'  => FALSE,
+                                'admin' => TRUE
+                            ),
+                            'deactivate'   =>
+                            array(
+                                'label' => lang('deactivate_heading'),
+                                'seen'  => FALSE,
+                                'admin' => TRUE
+                            ),
+                            'edit-user'    =>
+                            array(
+                                'label' => lang('edit_user_heading'),
+                                'seen'  => FALSE,
+                                'admin' => TRUE
                             ),
                         ),
                     ),
                     //sub menu
-                    'setting_menu'       =>
+                    'setting_menu'        =>
                     array(
                         'label' => 'Settings',
                         'icon'  => 'cogs',
@@ -252,21 +238,25 @@ if (!function_exists('navigations_main'))
                             array(
                                 'label' => lang('database_label'),
                                 'seen'  => TRUE,
+                                'admin' => TRUE
                             ),
                             'log'         =>
                             array(
                                 'label' => lang('error_label'),
                                 'seen'  => TRUE,
+                                'admin' => TRUE
                             ),
                             'permissions' =>
                             array(
                                 'label' => lang('permission_label'),
                                 'seen'  => TRUE,
+                                'admin' => TRUE
                             ),
                             'last-logins' =>
                             array(
                                 'label' => lang('last_login_label'),
                                 'seen'  => TRUE,
+                                'admin' => TRUE
                             ),
                         ),
                     ),
@@ -326,14 +316,14 @@ if (!function_exists('controllers__'))
                                 foreach ($v['sub'] as $kk => $vv)
                                 {
 
-                                        $return_arr[] = $kk;
-                                        $return_str   .= $kk . $delimeter;
+                                        $return_arr[$kk] = $vv;
+                                        $return_str      .= $kk . $delimeter;
                                 }
                         }
                         else
                         {
-                                $return_arr[] = $k;
-                                $return_str   .= $k . $delimeter;
+                                $return_arr[$k] = $v;
+                                $return_str     .= $k . $delimeter;
                         }
                 }
                 if ($delimeter == '')

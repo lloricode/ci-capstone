@@ -11,8 +11,9 @@ class Create_subject_offer extends CI_Capstone_Controller
                 $this->load->model('Subject_offer_model');
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
-                $this->breadcrumbs->unshift(2, lang('index_subject_offer_heading'), 'subject-offers');
-                $this->breadcrumbs->unshift(3, lang('create_subject_offer_heading'), 'create-subject-offer');
+                $this->breadcrumbs->unshift(2, lang('index_subject_heading_th'), 'subjects');
+                $this->breadcrumbs->unshift(3, lang('index_subject_offer_heading'), 'subject-offers');
+                $this->breadcrumbs->unshift(4, lang('create_subject_offer_heading'), 'create-subject-offer');
                 /**
                  * for check box, in days
                  */
@@ -89,12 +90,12 @@ class Create_subject_offer extends CI_Capstone_Controller
 
                 $this->data['subject_offer_start'] = array(
                     'name'  => 'start',
-                    'value' => $this->form_validation->set_value('start'),
+                    'value' => time_list()
                 );
 
                 $this->data['subject_offer_end'] = array(
                     'name'  => 'end',
-                    'value' => $this->form_validation->set_value('end'),
+                    'value' => time_list(),
                 );
 
                 /**

@@ -19,7 +19,8 @@ class Subject_offers extends CI_Capstone_Controller
                  * pagination limit
                  */
                 $this->limit = 10;
-                $this->breadcrumbs->unshift(2, lang('index_subject_offer_heading'), 'subject-offers');
+                $this->breadcrumbs->unshift(2, lang('index_subject_heading_th'), 'subjects');
+                $this->breadcrumbs->unshift(3, lang('index_subject_offer_heading'), 'subject-offers');
                 $this->load->helper(array('day', 'time'));
 
 // echo print_r(time_list(FALSE,'10:30'));

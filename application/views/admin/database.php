@@ -3,11 +3,11 @@
 <?php echo $delete_cache_button; ?>
 <?php echo $message; ?>
 <div class="container-fluid">
-    <h2>Platform</h2>
-    <?php echo $platform; ?>
+    <h5>Platform</h5>
+    <h2><?php echo $platform; ?></h2>
 
-    <h2>Version</h2>
-    <?php echo $version; ?>
+    <h5>Version</h5>
+    <h2><?php echo $version; ?></h2>
     <div class="row-fluid">
         <div class="span12">
             <div class="widget-box">

@@ -8,10 +8,18 @@ class Create_user extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
+                /**
+                 * just to make sure
+                 */
+                if (!$this->ion_auth->is_admin())
+                {
+                        show_error(lang('access_denied_of_current_user_group'));
+                }
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
-                $this->breadcrumbs->unshift(2, 'Users', 'users');
-                $this->breadcrumbs->unshift(3, lang('create_user_heading'), 'create-user');
+                $this->breadcrumbs->unshift(2, lang('administrators_label'), '#');
+                $this->breadcrumbs->unshift(3, lang('index_heading'), 'users');
+                $this->breadcrumbs->unshift(4, lang('create_user_heading'), 'create-user');
         }
 
         public function index()

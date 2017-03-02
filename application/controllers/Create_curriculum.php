@@ -14,7 +14,7 @@ class Create_curriculum extends CI_Capstone_Controller
                 parent::__construct();
                 $this->load->model(array('Curriculum_model', 'Course_model'));
                 $this->load->library('form_validation');
-                $this->load->helper(array('combobox', 'school'));
+                $this->load->helper('school');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
                 $this->breadcrumbs->unshift(2, lang('curriculum_label'), 'curriculums');
                 $this->breadcrumbs->unshift(3, lang('create_curriculum_label'), 'create-curriculum');
@@ -52,7 +52,7 @@ class Create_curriculum extends CI_Capstone_Controller
 
                 $this->data['curriculum_effective_semester'] = array(
                     'name'  => 'semester',
-                    'value' => my_semester_for_combo(),
+                    'value' => semesters(),
                 );
 
                 $this->data['course_id'] = array(
@@ -63,7 +63,10 @@ class Create_curriculum extends CI_Capstone_Controller
                 $this->data['curriculum_status'] = array(
                     'name'   => 'status',
                     'fields' => array(//we used check here 
-                        'enable' => lang('curriculumn_status_enable'),
+                        'enable' => array(
+                            'label' => lang('curriculumn_status_enable'),
+                            'value' => TRUE
+                        ),
                     ),
                     'value'  => $this->form_validation->set_value('status'),
                 );

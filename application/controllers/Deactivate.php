@@ -8,7 +8,15 @@ class Deactivate extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
-                $this->breadcrumbs->unshift(2, lang('index_heading'), 'users');
+                /**
+                 * just to make sure
+                 */
+                if (!$this->ion_auth->is_admin())
+                {
+                        show_error(lang('access_denied_of_current_user_group'));
+                }
+                $this->breadcrumbs->unshift(2, lang('administrators_label'), '#');
+                $this->breadcrumbs->unshift(3, lang('index_heading'), 'users');
         }
 
         public function index()

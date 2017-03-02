@@ -48,7 +48,7 @@ $link = base_url($this->config->item('bootstarp_dir'));
                 </div>
             </div>
             <div class="form-actions">
-                <span class="pull-left"><a href="#" class="flip-link btn btn-info" id="to-recover">Lost password?</a></span>
+                <span class="pull-left"><a href="#" class="flip-link btn btn-info" id="to-recover"><?php echo lang('login_forgot_password'); ?></a></span>
                 <span class="pull-right">
                     <?php
                     echo form_submit('submit', lang('login_submit_btn'), array(

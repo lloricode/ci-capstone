@@ -6,6 +6,7 @@ if (!function_exists('input_bootstrap'))
 {
 
         /**
+         * form input designed by current bootstrap framework
          * 
          * @param array $field
          * @param string $lang
@@ -65,18 +66,25 @@ if (!function_exists('input_bootstrap'))
                                                         }
                                                         break;
                                                 case 'checkbox':
-                                                        foreach ($labels as $k => $v)
+                                                        foreach ($labels as $v)
                                                         {
-                                                                $defaut = ($field['value'] == $k);
-                                                                echo form_label(form_checkbox($field['name'], $k, $defaut) . ' ' . $v) . PHP_EOL;
+                                                                $defaut = ($field['value'] == $v['value']);
+                                                                echo form_label(form_checkbox($field['name'], $v['value'], $defaut) . ' ' . $v['label']) . PHP_EOL;
                                                         }
                                                         break;
                                                 default:
+                                                        /**
+                                                         * not supposed to be here.
+                                                         * impossible
+                                                         * --Lloric
+                                                         */
+                                                        show_error('No type of form input defined, either radio or checkbox.');
                                                         break;
                                         }
                                 }
                                 break;
                         default:
+                                show_error('No type of form input defined.');
                                 break;
                 }
                 if ($prepend)

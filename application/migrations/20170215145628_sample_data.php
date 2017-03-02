@@ -103,12 +103,21 @@ class Migration_Sample_data extends CI_Migration
         {
                 $data_con_arr = array();
 
-                foreach (controllers__() as $v)
+                foreach (controllers__() as $k => $v)
                 {
-                        $data_con_arr[] = array(
-                            'controller_name'        => $v,
-                            'controller_description' => ucwords(str_replace('-', ' ', $v)) . ' Description',
+                        $tmp = array(
+                            'controller_name'        => $k,
+                            'controller_description' => ucwords(str_replace('-', ' ', $k)) . ' Description',
                         );
+                        if (isset($v['admin']))
+                        {
+                                if ((bool) $v['admin'])
+                                {
+                                        $tmp['controller_admin_only'] = TRUE;
+                                }
+                        }
+
+                        $data_con_arr[] = $tmp;
                 }
                 $data_con_arr[]       = array(
                     'controller_name'        => '',

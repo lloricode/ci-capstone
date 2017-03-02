@@ -2,6 +2,34 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+if (!function_exists('semesters'))
+{
+
+        /**
+         * 
+         * @return array first-1st Semester, second-2nd Semester, summer-Summer Semester
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        function semesters($index = FALSE)
+        {
+                $_semesters = array(
+                    'first'  => '1st Semester',
+                    'second' => '2nd Semester',
+                    'summer' => 'Summer Semester',
+                );
+                if ($index)
+                {
+                        if (array_key_exists($index, $_semesters))
+                        {
+
+                                return $_semesters[$index];
+                        }
+                }
+                return $_semesters;
+        }
+
+}
+
 if (!function_exists('current_school_year'))
 {
 
@@ -53,8 +81,8 @@ if (!function_exists('current_school_semester'))
         {
 
                 $CI                       = &get_instance();
-                $CI->load->helper(array('combobox', 'month'));
-                $terms                    = my_semester_for_combo();
+                $CI->load->helper('month');
+                $terms                    = semesters();
                 $output                   = NULL;
                 /**
                  * get configuration 
@@ -108,7 +136,7 @@ if (!function_exists('school_years'))
          * @return array  or school year
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        function  school_years($default = NULL, $year_range = 3)
+        function school_years($default = NULL, $year_range = 3)
         {
 
                 $CI     = &get_instance();

@@ -27,7 +27,8 @@ class Users extends CI_Capstone_Controller
                  * if has not, default $page will is 1
                  */
                 $this->page_ = get_page_in_url();
-                $this->breadcrumbs->unshift(2, lang('index_heading'), 'users');
+                $this->breadcrumbs->unshift(2, lang('administrators_label'), '#');
+                $this->breadcrumbs->unshift(3, lang('index_heading'), 'users');
         }
 
         /**

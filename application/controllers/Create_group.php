@@ -8,10 +8,18 @@ class Create_group extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
+                /**
+                 * just to make sure
+                 */
+                if (!$this->ion_auth->is_admin())
+                {
+                        show_error(lang('access_denied_of_current_user_group'));
+                }
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
-                $this->breadcrumbs->unshift(2, lang('index_groups_th'), 'groups');
-                $this->breadcrumbs->unshift(3, lang('create_group_heading'), 'create-group');
+                $this->breadcrumbs->unshift(2, lang('administrators_label'), '#');
+                $this->breadcrumbs->unshift(3, lang('index_groups_th'), 'groups');
+                $this->breadcrumbs->unshift(4, lang('create_group_heading'), 'create-group');
         }
 
         public function index()

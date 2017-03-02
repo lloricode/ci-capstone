@@ -13,7 +13,7 @@ $lang['create_curriculum_label'] = 'Create Curriculum';
 $lang['curriculumn_description']        = 'Description';
 $lang['curriculumn_effective_year']     = 'Effective Year';
 $lang['curriculumn_effective_semester'] = 'Effective Semester';
-$lang['curriculumn_course']             = 'Course';
+$lang['curriculumn_course']             = 'Course Code';
 $lang['curriculumn_status']             = 'Status';
 
 //other

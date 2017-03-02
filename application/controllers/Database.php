@@ -23,15 +23,15 @@ class Database extends CI_Capstone_Controller
                 $this->table->set_template(array(
                     'table_open' => $this->config->item('table_open_bordered'),
                 ));
-                $this->table->set_heading('Name', 'Type', 'max_length', 'primary_key');
+                $this->table->set_heading('Name', 'Type', 'Default', 'max_length', 'primary_key');
 
                 foreach ($this->db->list_tables() as $db)
                 {
 
-                        $this->table->add_row(array(array('data' => '<h4>' . $db . '</h4>', 'colspan' => '4')));
+                        $this->table->add_row(array(array('data' => '<h4>' . $db . '</h4>', 'colspan' => '5')));
                         foreach ($this->db->field_data($db) as $field)
                         {
-                                $this->table->add_row($field->name, $field->type, $field->max_length, ($field->primary_key) ? 'yes' : 'no');
+                                $this->table->add_row($field->name, $field->type, $field->default, $field->max_length, ($field->primary_key) ? 'yes' : 'no');
                         }
                 }
 

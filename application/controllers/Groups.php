@@ -27,7 +27,8 @@ class Groups extends CI_Capstone_Controller
                  * if has not, default $page will is 1
                  */
                 $this->page_ = get_page_in_url();
-                $this->breadcrumbs->unshift(2, lang('index_groups_th'), 'groups');
+                $this->breadcrumbs->unshift(2, lang('administrators_label'), '#');
+                $this->breadcrumbs->unshift(3, lang('index_groups_th'), 'groups');
         }
 
         /**
@@ -41,8 +42,8 @@ class Groups extends CI_Capstone_Controller
                 //list the users
                 $group_obj = $this->Group_model->
                         limit($this->limit, $this->limit * $this->page_ - $this->limit)->
-                        order_by('updated_at', 'DESC')->
-                        order_by('created_at', 'DESC')->
+                        //order_by('updated_at', 'DESC')->
+                        //order_by('created_at', 'DESC')->
                         set_cache('groups_page_' . $this->page_)->
                         get_all();
 

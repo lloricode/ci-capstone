@@ -28,11 +28,11 @@ if (isset($conflict_data))
                     ));
 
                     //subject_offer_start:
-                    echo input_dropdown_bootstrap($subject_offer_start['name'], 'create_subject_offer_start_label', time_list());
+                    echo input_bootstrap($subject_offer_start, 'create_subject_offer_start_label', 'dropdown');
 
 
                     //subject_offer_end:
-                    echo input_dropdown_bootstrap($subject_offer_end['name'], 'create_subject_offer_end_label', time_list());
+                    echo input_bootstrap($subject_offer_end, 'create_subject_offer_end_label', 'dropdown');
                     ?>
                     <div class="control-group">
                         <div class="controls">
@@ -49,9 +49,9 @@ if (isset($conflict_data))
                     </div>
 
                     <?php
-                    echo input_dropdown_bootstrap($user_id['name'], 'create_user_id_label', $user_id['value']);
-                    echo input_dropdown_bootstrap($subject_id['name'], 'create_subject_id_label', $subject_id['value']);
-                    echo input_dropdown_bootstrap($room_id['name'], 'create_room_id_label', $room_id['value']);
+                    echo input_bootstrap($user_id, 'create_user_id_label', 'dropdown');
+                    echo input_bootstrap($subject_id, 'create_subject_id_label', 'dropdown');
+                    echo input_bootstrap($room_id, 'create_room_id_label', 'dropdown');
 
                     echo ' <div class="form-actions">';
 

@@ -18,10 +18,8 @@ class Permissions extends CI_Capstone_Controller
                  */
                 if (!$this->ion_auth->is_admin())
                 {
-                        show_error('Permission denied of current user group.');
+                        show_error(lang('access_denied_of_current_user_group'));
                 }
-
-                //  $this->lang->load('ci_courses');
                 $this->load->model('Group_model');
                 $this->load->library('pagination');
 
@@ -52,8 +50,8 @@ class Permissions extends CI_Capstone_Controller
         private function main($controller_obj = NULL)
         {
                 $controllers_obj = $this->Controller_model->
-                        limit($this->limit, $this->limit * $this->page_ - $this->limit)->
-                        set_cache('permissions_page_' . $this->page_)->
+                        //  limit($this->limit, $this->limit * $this->page_ - $this->limit)->
+                        set_cache('permissions_page_'/* . $this->page_ */)->
                         get_all();
                 $table_data      = array();
                 if ($controllers_obj)
@@ -84,11 +82,19 @@ class Permissions extends CI_Capstone_Controller
                                 {
                                         $gruops = 'no permission to all';
                                 }
-                                $table_data[] = array(
+                                if ($c->controller_admin_only)
+                                {
+                                        $edit = '--';
+                                }
+                                else
+                                {
+                                        $edit = anchor(site_url('permissions/edit?controller-id=' . $c->controller_id), 'Edit');
+                                } $table_data[] = array(
                                     my_htmlspecialchars($c->controller_name),
                                     my_htmlspecialchars($c->controller_description),
                                     trim($gruops, ' | '),
-                                    anchor(site_url('permissions/edit?controller-id=' . $c->controller_id), 'Edit')
+                                    my_htmlspecialchars(($c->controller_admin_only) ? 'admin only' : 'no'),
+                                    $edit
                                 );
                         }
                 }
@@ -100,6 +106,7 @@ class Permissions extends CI_Capstone_Controller
                 $header = array(
                     array('data' => 'Controllers', 'colspan' => '2'),
                     'Users Group',
+                    'admin only',
                     'Option'
                 );
 
@@ -111,7 +118,7 @@ class Permissions extends CI_Capstone_Controller
                 /**
                  * pagination
                  */
-                $this->data['pagination'] = $this->pagination->generate_link('permissions/index', $this->Controller_model->count_rows() / $this->limit);
+                //  $this->data['pagination'] = $this->pagination->generate_link('permissions/index', $this->Controller_model->count_rows() / $this->limit);
 
                 /**
                  * caption of table
@@ -128,8 +135,15 @@ class Permissions extends CI_Capstone_Controller
                  */
                 if ($controller_obj)
                 {
-                        $this->data['controller_obj']      = $controller_obj;
-                        $this->template['permission_form'] = MY_Controller::_render('admin/_templates/permission/edit', $this->data, TRUE);
+                        $this->data['controller_obj'] = $controller_obj;
+                        if ($controller_obj->controller_admin_only)
+                        {
+                                $this->template['permission_form'] = MY_Controller::_render('admin/_templates/permission/invalid', $this->data, TRUE);
+                        }
+                        else
+                        {
+                                $this->template['permission_form'] = MY_Controller::_render('admin/_templates/permission/edit', $this->data, TRUE);
+                        }
                 }
 
                 $this->template['table_data_permission'] = MY_Controller::_render('admin/_templates/table', $this->data, TRUE);
@@ -157,7 +171,7 @@ class Permissions extends CI_Capstone_Controller
                 ));
                 $this->load->library('permission');
                 $this->data['message'] = '';
-                if ($this->form_validation->run())
+                if ($this->form_validation->run() && !$controller_obj->controller_admin_only)//double check maybe user use ctrl + u to edit html output
                 {
 
 
