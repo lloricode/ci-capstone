@@ -22,11 +22,11 @@ class Migration_Sample_data extends CI_Migration
         //---
         private $user_count;
         private $student_count;
-        private $educaton_count;
+        //private $educaton_count;
         private $subject_offer_count;
         private $room_count;
         private $subject_count;
-        private $courses_count;
+        //private $courses_count;
         private $enable;
 
         public function __construct($config = array())
@@ -35,20 +35,20 @@ class Migration_Sample_data extends CI_Migration
                 /**
                  * set this TRU if you want to enable
                  */
-                $this->enable              = FALSE;
+                $this->enable              = TRUE;
                 /**
                  * set counts
                  */
                 /**
                  * this will be use if you set enable for migration sample data  |>>>> $this->enable = FALSE;
                  */
-                $this->user_count          = 2;
-                $this->student_count       = 1000;
-                $this->educaton_count      = 1000;
-                $this->subject_offer_count = 1000;
-                $this->room_count          = 1000;
-                $this->subject_count       = 1000;
-                $this->courses_count       = 1000;
+                $this->user_count          = 5;
+                $this->student_count       = 0;
+                //$this->educaton_count      = 1000;
+                $this->subject_offer_count = 0;
+                $this->room_count          = 0;
+                $this->subject_count       = 0;
+                //$this->courses_count       = 1000;
 
                 /**
                  * loading needed files
@@ -93,7 +93,6 @@ class Migration_Sample_data extends CI_Migration
                         }
 
                         $this->student_subjects();
-                        $this->users();
                 }
                 $this->controllers();
                 $this->permission();
@@ -333,15 +332,27 @@ class Migration_Sample_data extends CI_Migration
 
         private function education()
         {
+                $_data = array(
+                    array(
+                        'code' => 'collge',
+                        'desc' => 'College'
+                    ),
+                    array(
+                        'code' => 'high school',
+                        'desc' => 'High School'
+                    )
+                );
+
                 $education_arr = array();
 
-                $dplicate1 = 1;
-                $dplicate2 = 'A';
-                for ($i = 1; $i <= $this->educaton_count; $i++)
+//                $dplicate1 = 1;
+//                $dplicate2 = 'A';
+                // for ($i = 1; $i <= $this->educaton_count; $i++)
+                foreach ($_data as $v)
                 {
                         $education_arr[] = array(
-                            'education_code'        => 'Educode' . $dplicate1++,
-                            'education_description' => 'Edudesc' . $dplicate2++,
+                            'education_code'        => $v ['code'],
+                            'education_description' => $v ['desc'],
                             'created_user_id'       => random_element($this->user_ids)
                         );
                 }
@@ -350,15 +361,75 @@ class Migration_Sample_data extends CI_Migration
 
         private function course()
         {
-                $course_arr = array();
-                $dplicate1  = 1;
-                $dplicate2  = 'A';
-                for ($i = 1; $i <= $this->courses_count; $i++)
+                $educ_collge_id     = $this->Education_model->get(array('education_code' => 'collge'))->education_id;
+                $educ_highschool_id = $this->Education_model->get(array('education_code' => 'high school'))->education_id;
+                $_data              = array(
+                    array(
+                        'code'    => 'BEED',
+                        'desc'    => 'BEED description',
+                        'educ'    => $educ_collge_id,
+                        'code_id' => '20'
+                    ),
+                    array(
+                        'code'    => 'HRM',
+                        'desc'    => 'HRM description',
+                        'educ'    => $educ_collge_id,
+                        'code_id' => '30'
+                    ),
+                    array(
+                        'code'    => 'Paramedical',
+                        'desc'    => 'Paramedical  description',
+                        'educ'    => $educ_collge_id,
+                        'code_id' => '40'
+                    ),
+                    array(
+                        'code'    => 'ICT',
+                        'desc'    => 'ICT description',
+                        'educ'    => $educ_collge_id,
+                        'code_id' => '50'
+                    ),
+                    array(
+                        'code'    => 'High School',
+                        'desc'    => 'High School Department',
+                        'educ'    => $educ_highschool_id,
+                        'code_id' => '60'
+                    ),
+                    array(
+                        'code'    => 'AMT',
+                        'desc'    => 'AMT description',
+                        'educ'    => $educ_collge_id,
+                        'code_id' => '70'
+                    ),
+                    array(
+                        'code'    => 'TESDA',
+                        'desc'    => 'Tesda Courses',
+                        'educ'    => $educ_collge_id,
+                        'code_id' => '80'
+                    ),
+                    array(
+                        'code'    => 'CME',
+                        'desc'    => 'CME description',
+                        'educ'    => $educ_collge_id,
+                        'code_id' => '90'
+                    ),
+                    array(
+                        'code'    => 'Cross Enroll',
+                        'desc'    => 'Cross Enroll description',
+                        'educ'    => $educ_collge_id,
+                        'code_id' => '01'
+                    )
+                );
+                $course_arr         = array();
+//                $dplicate1  = 1;
+//                $dplicate2  = 'A';
+                //for ($i = 1; $i <= $this->courses_count; $i++)
+                foreach ($_data AS $v)
                 {
                         $course_arr[] = array(
-                            'course_code'        => 'Coursecode' . $dplicate1++,
-                            'course_description' => 'Cousedesc' . $dplicate2++,
-                            'education_id'       => random_element($this->education_ids),
+                            'course_code'        => $v ['code'],
+                            'course_description' => $v ['desc'],
+                            'education_id'       => $v ['educ'],
+                            'course_code_id'     => $v ['code_id'],
                             'created_user_id'    => random_element($this->user_ids)
                         );
                 }
