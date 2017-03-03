@@ -16,7 +16,10 @@ class MY_Controller extends CI_Controller
 //                        $this->dbforge->create_database($DB_NAME);
 //                }
 
-                $this->migration->current();
+                if ($this->migration->current())
+                {
+                        $this->delete_all_query_cache();
+                }
 
                 /**
                  * we set here , must before check login or before calling a trigger for a name of event
@@ -118,6 +121,18 @@ class MY_Controller extends CI_Controller
                         $return .= $g->$type . '|';
                 }
                 return trim($return, '|');
+        }
+
+        /**
+         * delete all query cache by using one of model, cant statically call MY_Model so i did this 
+         *       
+         * using this with ion_auth update/insert/
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>  
+         */
+        public function delete_all_query_cache()
+        {
+                $this->load->model('User_model');
+                $this->User_model->delete_cache();
         }
 
 }
@@ -258,18 +273,6 @@ class CI_Capstone_Controller extends MY_Controller
                                 redirect(site_url('auth/logout/' . $message), 'refresh');
                         }
                 }
-        }
-
-        /**
-         * delete all query cache by using one of model, cant statically call MY_Model so i did this 
-         *       
-         * using this with ion_auth update/insert/
-         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>  
-         */
-        public function delete_all_query_cache()
-        {
-                $this->load->model('User_model');
-                $this->User_model->delete_cache();
         }
 
 }

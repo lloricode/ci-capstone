@@ -25,6 +25,9 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
 
 
 
+                    //curriculum_subject_year_level:
+                    echo input_bootstrap($curriculum_subject_year_level, 'curriculum_subject_year_level_label', 'dropdown');
+                    
                     //curriculum_id:
                     echo input_bootstrap($curriculum_id, 'curriculum_subject_curriculum_label', 'dropdown');
 
@@ -35,10 +38,10 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                     echo input_bootstrap($subject_id, 'curriculum_subject_subject_label', 'dropdown');
 
                     //subject_id_pre:
-                    echo input_bootstrap($subject_id_pre, 'curriculum_subject_co_subject_label', 'dropdown');
+                    echo input_bootstrap($subject_id_pre, 'curriculum_subject_pre_subject_label', 'dropdown');
 
                     //subject_id_co:
-                    echo input_bootstrap($subject_id_co, 'curriculum_subject_pre_subject_label', 'dropdown');
+                    echo input_bootstrap($subject_id_co, 'curriculum_subject_co_subject_label', 'dropdown');
 
 
 

@@ -147,14 +147,14 @@ if (!function_exists('navigations_main'))
                         'icon'  => 'calendar',
                         'sub'   =>
                         array(
-                            'subjects'             =>
-                            array(
-                                'label' => lang('index_subject_heading_th'),
-                                'seen'  => TRUE,
-                            ),
                             'subject-offers'       =>
                             array(
                                 'label' => lang('index_subject_offer_heading'),
+                                'seen'  => TRUE,
+                            ),
+                            'subjects'             =>
+                            array(
+                                'label' => lang('index_subject_heading_th'),
                                 'seen'  => TRUE,
                             ),
                             'create-subject-offer' =>

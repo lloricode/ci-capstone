@@ -17,8 +17,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                 $this->load->helper(array('school', 'combobox'));
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
                 $this->breadcrumbs->unshift(2, lang('curriculum_label'), 'curriculums');
-                $this->breadcrumbs->unshift(3, lang('curriculum_subject_label'), 'curriculum-subjects');
-                $this->breadcrumbs->unshift(4, lang('create_curriculum_subject_label'), 'create-curriculum-subject');
+                $this->breadcrumbs->unshift(3, lang('create_curriculum_subject_label'), 'create-curriculum-subject');
         }
 
         public function index()
@@ -30,7 +29,8 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                                 ))->insert();
                         if ($id)
                         {
-                                redirect(site_url('curriculum-subjects'), 'refresh');
+                                $this->session->set_flashdata('message', 'Added!');
+                                redirect(site_url('create-curriculum-subject'), 'refresh');
                         }
                 }
                 $this->_form_view();
@@ -65,7 +65,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
         private function _dropdown_for_subjects()
         {
                 $return       = array();
-                $return[NULL]     = 'no subject';
+                $return[NULL] = 'no subject';
                 $subjects_obj = $this->Subject_model->
                         as_dropdown('subject_code')->
                         set_cache('as_dropdown_subject_code')->
@@ -83,8 +83,13 @@ class Create_curriculum_subject extends CI_Capstone_Controller
 
         private function _form_view()
         {
-                $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                $this->data['message'] = $this->session->flashdata('message');
 
+
+                $this->data['curriculum_subject_year_level'] = array(
+                    'name'  => 'level',
+                    'value' => _numbers_for_drop_down(1, $this->config->item('max_year_level')),
+                );
 
                 $this->data['curriculum_subject_semester'] = array(
                     'name'  => 'semester',

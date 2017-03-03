@@ -16,6 +16,17 @@ class Migration_Curriculum_subjects extends CI_Migration
                 parent::__construct($config);
         }
 
+        private function _semesters()
+        {
+                $return = '';
+                $this->load->helper('school');
+                foreach (semesters() as $k => $v)
+                {
+                        $return .= '"' . $k . '",';
+                }
+                return trim($return, ',');
+        }
+
         public function up()
         {
                 $this->down();
@@ -27,8 +38,14 @@ class Migration_Curriculum_subjects extends CI_Migration
                         'null'           => FALSE,
                         'auto_increment' => TRUE
                     ),
+                    'curriculum_subject_year_level'       => array(
+                        'type'       => 'TINYINT',
+                        'constraint' => '11',
+                        'unsigned'   => TRUE,
+                        'null'       => FALSE
+                    ),
                     'curriculum_subject_semester'         => array(
-                        'type' => 'ENUM("first","second","summer")',
+                        'type' => 'ENUM(' . $this->_semesters() . ')',
                         'null' => FALSE
                     ),
                     'curriculum_subject_units'            => array(

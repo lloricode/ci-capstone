@@ -92,10 +92,12 @@ class Curriculums extends CI_Capstone_Controller
                 $this->breadcrumbs->unshift(3, lang('curriculum_subject_label'), 'curriculums/view?curriculum-id=' . $curriculum_obj->curriculum_id);
 
 
-                $this->load->model('Curriculum_subject_model');
+                $this->load->model(array('Curriculum_subject_model', 'Subject_model'));
 
                 $cur_subj_obj = $this->Curriculum_subject_model->
                         where(array('curriculum_id' => $curriculum_obj->curriculum_id))->
+                        order_by('curriculum_subject_year_level', 'ASC')->
+                        order_by('curriculum_subject_semester', 'ASC')->
                         set_cache('curriculum_subject_' . $curriculum_obj->curriculum_id)->
                         get_all();
 
@@ -103,29 +105,45 @@ class Curriculums extends CI_Capstone_Controller
 
                 if ($cur_subj_obj)
                 {
-                        $table_data[] = array(
-                            lang('index_student_school_id_th'),
-                            lang('index_student_lastname_th'),
-                            lang('index_student_firstname_th'),
-                            lang('index_student_middlename_th'),
-                            'Options'
-                        );
+                        foreach ($cur_subj_obj as $cs)
+                        {
+                                $subj_pre = '';
+                                $subj_co  = '';
+                                if ($cs->subject_id_pre)
+                                {
+                                        $subj_pre = $this->Subject_model->get($cs->subject_id_pre)->subject_code;
+                                }
+                                if ($cs->subject_id_co)
+                                {
+                                        $subj_co = $this->Subject_model->get($cs->subject_id_co)->subject_code;
+                                }
+                                $table_data[] = array(
+                                    my_htmlspecialchars($cs->curriculum_subject_year_level),
+                                    my_htmlspecialchars($this->Subject_model->get($cs->subject_id)->subject_code . $cs->subject_id),
+                                    my_htmlspecialchars($cs->curriculum_subject_units),
+                                    my_htmlspecialchars($cs->curriculum_subject_lecture_hours . ' Hours'),
+                                    my_htmlspecialchars($cs->curriculum_subject_laboratory_hours . ' Hours'),
+                                    my_htmlspecialchars(semesters($cs->curriculum_subject_semester)),
+                                    my_htmlspecialchars($subj_pre),
+                                    my_htmlspecialchars($subj_co),
+                                );
+                        }
                 }
                 /*
                  * Table headers
                  */
                 $header = array(
-                    lang('index_student_school_id_th'),
-                    lang('index_student_lastname_th'),
-                    lang('index_student_firstname_th'),
-                    lang('index_student_middlename_th'),
-                    'Options'
+                    lang('curriculum_subject_year_level_label'),
+                    lang('curriculum_subject_subject_label'),
+                    lang('curriculum_subject_units_label'),
+                    lang('curriculum_subject_lecture_hours_label'),
+                    lang('curriculum_subject_laboratory_hours_label'),
+                    lang('curriculum_subject_semester_label'),
+                    lang('curriculum_subject_pre_subject_label'),
+                    lang('curriculum_subject_co_subject_label')
                 );
-                //    $pagination = $this->pagination->generate_bootstrap_link('curriculums/index', $this->Curriculum_model->set_cache('curriculum_count_rows')->count_rows() / $this->limit);
 
-
-
-                $this->template['table_corriculum_subjects'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'curriculum_subject_label', FALSE/* temporary */, TRUE);
+                $this->template['table_corriculum_subjects'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'curriculum_subject_label', FALSE, TRUE);
                 $this->template['message']                   = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
                 $this->template['bootstrap']                 = $this->bootstrap();
                 $this->_render('admin/curriculums', $this->template);

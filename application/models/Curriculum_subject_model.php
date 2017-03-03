@@ -72,6 +72,11 @@ class Curriculum_subject_model extends MY_Model
         private function _insert()
         {
                 return array(
+                    'curriculum_subject_year_level'       => array(
+                        'label' => lang('curriculum_subject_year_level_label'),
+                        'field' => 'level',
+                        'rules' => 'trim|required|is_natural_no_zero'
+                    ),
                     'curriculum_subject_semester'         => array(
                         'label'  => lang('curriculum_subject_semester_label'),
                         'field'  => 'semester',
@@ -103,17 +108,17 @@ class Curriculum_subject_model extends MY_Model
                     'subject_id'                          => array(
                         'label' => lang('curriculum_subject_subject_label'),
                         'field' => 'subject',
-                        'rules' => 'trim|required|is_natural_no_zero'
+                        'rules' => 'trim|required|is_natural_no_zero|differs[pre_requisite]|differs[co_requisite]'
                     ),
                     'subject_id_pre'                      => array(
                         'label' => lang('curriculum_subject_pre_subject_label'),
                         'field' => 'pre_requisite',
-                        'rules' => 'trim|is_natural_no_zero|differs[co_requisite]'//no co with the same in pre
+                        'rules' => 'trim|is_natural_no_zero|differs[co_requisite]|differs[subject]'
                     ),
                     'subject_id_co'                       => array(
                         'label' => lang('curriculum_subject_co_subject_label'),
                         'field' => 'co_requisite',
-                        'rules' => 'trim|is_natural_no_zero|differs[pre_requisite]'//no co with the same in pre
+                        'rules' => 'trim|is_natural_no_zero|differs[pre_requisite]|differs[subject]'
                     ),
                 );
         }
