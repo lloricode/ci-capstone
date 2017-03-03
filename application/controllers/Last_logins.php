@@ -41,6 +41,7 @@ class Last_logins extends CI_Capstone_Controller
 
                 $last_login_obj = $this->Users_last_login_model->
                         limit($this->limit, $this->limit * $this->page_ - $this->limit)->
+                        order_by('created_at', 'DESC')->
                         set_cache('last-logins_page_' . $this->page_)->
                         get_all();
 
@@ -63,48 +64,25 @@ class Last_logins extends CI_Capstone_Controller
                         }
                 }
 
-
-
                 /*
                  * Table headers
                  */
-                $header = array(
+                $header     = array(
                     lang('users_header'),
                     lang('ip_address_header'),
                     lang('agent_header'),
                     lang('platform_header'),
                     lang('time_header')
                 );
+                $pagination = $this->pagination->generate_bootstrap_link('last-logins/index', $this->Users_last_login_model->set_cache('users_last_login_count_rows')->count_rows() / $this->limit);
 
-                /**
-                 * table values
-                 */
-                $this->data['table_data'] = $this->my_table_view($header, $table_data, 'table_open_bordered');
-
-                /**
-                 * pagination
-                 */
-                $this->data['pagination'] = $this->pagination->generate_link('last-logins/index', $this->Users_last_login_model->count_rows() / $this->limit);
-
-                /**
-                 * caption of table
-                 */
-                $this->data['caption'] = lang('user_last_login_capstion_table');
-
-
-
-                /**
-                 * templates for group controller
-                 */
-                $this->template['table_data_groups'] = MY_Controller::_render('admin/_templates/table', $this->data, TRUE);
-                $this->template['controller']        = 'table';
-                $this->template['message']           = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-
-                $this->template['bootstrap'] = $this->bootstrap();
+                $this->template['table_data_last_logins'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'user_last_login_capstion_table', $pagination, TRUE);
+                $this->template['message']                = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                $this->template['bootstrap']              = $this->bootstrap();
                 /**
                  * rendering users view
                  */
-                $this->_render('admin/educations', $this->template);
+                $this->_render('admin/last_logins', $this->template);
         }
 
         /**

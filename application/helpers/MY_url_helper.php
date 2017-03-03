@@ -58,7 +58,7 @@ if (!function_exists('check_id_form_url'))
                 $CI = & get_instance();
 
                 /**
-                 * load model dynaically
+                 * load model dynamically
                  */
                 $CI->load->model($model);
 

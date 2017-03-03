@@ -118,11 +118,14 @@ class Migration_Sample_data extends CI_Migration
 
                         $data_con_arr[] = $tmp;
                 }
-                $data_con_arr[]       = array(
+                $data_con_arr[] = array(
                     'controller_name'        => '',
                     'controller_description' => 'Default Controller Description',
                 );
-                $this->controller_ids = $this->Controller_model->insert($data_con_arr);
+                if ($data_con_arr)
+                {
+                        $this->controller_ids = $this->Controller_model->insert($data_con_arr);
+                }
         }
 
         private function permission()
@@ -135,8 +138,10 @@ class Migration_Sample_data extends CI_Migration
                             'group_id'      => 1,
                         );
                 }
-
-                $this->permission_ids = $this->Permission_model->insert($per_arr);
+                if ($per_arr)
+                {
+                        $this->permission_ids = $this->Permission_model->insert($per_arr);
+                }
         }
 
         private function users()
@@ -209,10 +214,12 @@ class Migration_Sample_data extends CI_Migration
                                 );
                         }
                 }
-
-                if (!$this->Students_subjects_model->insert($students_subjects_model_arr))
+                if ($students_subjects_model_arr)
                 {
-                        show_error('failed add student subjects');
+                        if (!$this->Students_subjects_model->insert($students_subjects_model_arr))
+                        {
+                                show_error('failed add student subjects');
+                        }
                 }
         }
 
@@ -269,8 +276,10 @@ class Migration_Sample_data extends CI_Migration
 
                         $subj_offr_arr[] = $sub_ofrr;
                 }
-
-                $this->subject_offer_ids = $this->Subject_offer_model->insert($subj_offr_arr);
+                if ($subj_offr_arr)
+                {
+                        $this->subject_offer_ids = $this->Subject_offer_model->insert($subj_offr_arr);
+                }
         }
 
         private function check_conflict($sub_offr)
@@ -306,8 +315,10 @@ class Migration_Sample_data extends CI_Migration
                             'created_user_id'  => random_element($this->user_ids)
                         );
                 }
-
-                $this->room_ids = $this->Room_model->insert($room_arr);
+                if ($room_arr)
+                {
+                        $this->room_ids = $this->Room_model->insert($room_arr);
+                }
         }
 
         private function subjects()
@@ -326,8 +337,10 @@ class Migration_Sample_data extends CI_Migration
                             'created_user_id'     => random_element($this->user_ids)
                         );
                 }
-
-                $this->subject_ids = $this->Subject_model->insert($subject_arr);
+                if ($subject_arr)
+                {
+                        $this->subject_ids = $this->Subject_model->insert($subject_arr);
+                }
         }
 
         private function education()
@@ -356,7 +369,10 @@ class Migration_Sample_data extends CI_Migration
                             'created_user_id'       => random_element($this->user_ids)
                         );
                 }
-                $this->education_ids = $this->Education_model->insert($education_arr);
+                if ($_data)
+                {
+                        $this->education_ids = $this->Education_model->insert($education_arr);
+                }
         }
 
         private function course()
@@ -433,8 +449,10 @@ class Migration_Sample_data extends CI_Migration
                             'created_user_id'    => random_element($this->user_ids)
                         );
                 }
-
-                $this->course_ids = $this->Course_model->insert($course_arr);
+                if ($_data)
+                {
+                        $this->course_ids = $this->Course_model->insert($course_arr);
+                }
         }
 
         /**

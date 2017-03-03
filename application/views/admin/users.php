@@ -14,9 +14,8 @@ if (isset($export_user_button))
 {
         echo $message;
 }
-if (isset($table_data_users))
+if (isset($table_users))
 {
-        echo $table_data_users;
+        // echo '<div class="alert-success">' . $message . '</div>';
+        echo $table_users;
 }
-
-                

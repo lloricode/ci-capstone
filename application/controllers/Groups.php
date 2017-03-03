@@ -75,36 +75,14 @@ class Groups extends CI_Capstone_Controller
                  */
                 $header = array(
                     lang('index_groups_th'),
-                    lang('index_group_desc_th')
+                    lang('index_groups_th')
                 );
 
-                /**
-                 * table values
-                 */
-                $this->data['table_data'] = $this->my_table_view($header, $table_data, 'table_open_bordered');
+                $pagination = $this->pagination->generate_bootstrap_link('admin/groups/index', $this->Group_model->set_cache('group_count_rows')->count_rows() / $this->limit);
 
-                /**
-                 * pagination
-                 */
-                $this->data['pagination'] = $this->pagination->generate_link('admin/groups/index', $this->Group_model->count_rows() / $this->limit);
-
-                /**
-                 * caption of table
-                 */
-                $this->data['caption'] = lang('index_heading');
-
-
-                /**
-                 * table of users ready,
-                 * so whole html table with datas passing as var table_data_users
-                 */
-                /**
-                 * templates for group controller
-                 */
-                $this->template['table_data_groups'] = MY_Controller::_render('admin/_templates/table', $this->data, TRUE);
-                $this->template['controller']        = 'table';
-
-                $this->template['bootstrap'] = $this->bootstrap();
+                $this->template['table_groups'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_heading', $pagination, TRUE);
+                $this->template['message']      = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                $this->template['bootstrap']    = $this->bootstrap();
                 /**
                  * rendering users view
                  */

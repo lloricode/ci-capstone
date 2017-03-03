@@ -114,34 +114,7 @@ class Users extends CI_Capstone_Controller
                 {
                         $header[] = lang('index_action_th');
                 }
-                /**
-                 * table values
-                 */
-                $this->data['table_data'] = $this->my_table_view($header, $table_data, 'table_open_bordered');
 
-                /**
-                 * pagination
-                 */
-                $this->data['pagination'] = $this->pagination->generate_link('users/index', $this->User_model->count_rows() / $this->limit);
-
-                /**
-                 * caption of table
-                 */
-                $this->data['caption'] = lang('index_heading');
-
-
-                /**
-                 * table of users ready,
-                 * so whole html table with datas passing as var table_data_users
-                 */
-                /**
-                 * templates for users controller
-                 */
-                // set the flash data error message if there is one
-
-                $this->template['message']          = $this->session->flashdata('message');
-                $this->template['table_data_users'] = MY_Controller::_render('admin/_templates/table', $this->data, TRUE);
-                $this->template['controller']       = 'table';
                 if (in_array('create-user', permission_controllers()))
                 {
 
@@ -159,7 +132,13 @@ class Users extends CI_Capstone_Controller
                                     'extra'        => array('class' => 'btn btn-info icon-download-alt')
                                         ), TRUE);
                 }
-                $this->template['bootstrap'] = $this->bootstrap();
+
+
+                $pagination = $this->pagination->generate_bootstrap_link('users/index', $this->User_model->set_cache('users_count_rows')->count_rows() / $this->limit);
+
+                $this->template['table_users'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_heading', $pagination, TRUE);
+                $this->template['message']     = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                $this->template['bootstrap']   = $this->bootstrap();
 
                 /**
                  * rendering users view

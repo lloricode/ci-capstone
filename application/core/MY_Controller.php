@@ -170,12 +170,16 @@ class CI_Capstone_Controller extends MY_Controller
 
         /**
          * 
-         * @param array $header
-         * @param array $data
-         * @return string | generated html table with header/data/table-type depend on parameters
+         * @param array $header header
+         * @param array $table_data_rows rows
+         * @param string $table_config table bootstrap
+         * @param string $caption_lang caption
+         * @param string $pagination | must generated html pagination | default = FALSE
+         * @param bool $return_html either return html or not
+         * @return string | generated html table with header/data/table-type/pagination depend on parameters
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        public function my_table_view($header, $data, $table_config)
+        public function table_bootstrap($header, $table_data_rows, $table_config, $caption_lang, $pagination = FALSE, $return_html = FALSE)
         {
                 $this->config->load('admin/table');
                 $this->load->library('table');
@@ -183,7 +187,14 @@ class CI_Capstone_Controller extends MY_Controller
                 $this->table->set_template(array(
                     'table_open' => $this->config->item($table_config),
                 ));
-                return $this->table->generate($data);
+                $_data['caption']     = lang($caption_lang);
+                $_data['table_data']  = $this->table->generate($table_data_rows);
+                $_data['pagination']  = $pagination;
+                $generated_html_table = parent::_render('admin/_templates/table', $_data, $return_html);
+                if ($return_html)
+                {
+                        return $generated_html_table;
+                }
         }
 
         /**

@@ -84,7 +84,7 @@ class Log extends CI_Capstone_Controller
                 /**
                  * pagination
                  */
-                $this->data['pagination'] = $this->pagination->generate_link('log/index', $this->Log_model->count_rows() / $this->limit);
+                $this->data['pagination'] = $this->pagination->generate_bootstrap_link('log/index', $this->Log_model->count_rows() / $this->limit);
 
                 /**
                  * caption of table

@@ -20,6 +20,8 @@ $lang['curriculumn_status']             = 'Status';
 
 $lang['curriculumn_create_button'] = 'Create Curriculum';
 $lang['curriculumn_status_enable'] = 'Enable';
+$lang['curriculumn_option']        = 'Option';
+$lang['curriculumn_view']        = 'View';
 
 
 

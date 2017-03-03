@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
@@ -11,11 +12,12 @@ class Create_curriculum_subject extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
-                $this->load->model('Education_model');
+                $this->load->model(array('Curriculum_subject_model', 'Curriculum_model', 'Subject_model', 'Course_model'));
                 $this->load->library('form_validation');
+                $this->load->helper(array('school', 'combobox'));
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
                 $this->breadcrumbs->unshift(2, lang('curriculum_label'), 'curriculums');
-                $this->breadcrumbs->unshift(2, lang('curriculum_subject_label'), 'curriculum-subjects');
+                $this->breadcrumbs->unshift(3, lang('curriculum_subject_label'), 'curriculum-subjects');
                 $this->breadcrumbs->unshift(4, lang('create_curriculum_subject_label'), 'create-curriculum-subject');
         }
 
@@ -23,32 +25,120 @@ class Create_curriculum_subject extends CI_Capstone_Controller
         {
                 if ($this->input->post('submit'))
                 {
-                        $id = $this->Education_model->from_form(NULL, array(
+                        $id = $this->Curriculum_subject_model->from_form(NULL, array(
                                     'created_user_id' => $this->session->userdata('user_id')
                                 ))->insert();
                         if ($id)
                         {
-                                redirect(site_url('educations'), 'refresh');
+                                redirect(site_url('curriculum-subjects'), 'refresh');
                         }
                 }
+                $this->_form_view();
+        }
+
+        private function _dropdown_for_curriculumn()
+        {
+                $return = array();
+
+                $cur_obj = $this->Curriculum_model->
+                        set_cache('as_dropdown_subject_code')->
+                        get_all();
+
+                if ($cur_obj)
+                {
+                        foreach ($cur_obj as $v)
+                        {
+                                $semester                  = semesters($v->curriculum_effective_semester);
+                                $course_code               = $this->Course_model->
+                                                set_cache('course_' . $v->course_id)->
+                                                get($v->course_id)->
+                                        course_code;
+                                $return[$v->curriculum_id] = $v->curriculum_effective_school_year . ' | ' .
+                                        $semester . ' | ' .
+                                        $course_code . ' | ' .
+                                        $v->curriculum_description;
+                        }
+                }
+                return $return;
+        }
+
+        private function _dropdown_for_subjects()
+        {
+                $return       = array();
+                $return[NULL]     = 'no subject';
+                $subjects_obj = $this->Subject_model->
+                        as_dropdown('subject_code')->
+                        set_cache('as_dropdown_subject_code')->
+                        get_all();
+                if ($subjects_obj)
+                {
+                        foreach ($subjects_obj as $k => $v)
+                        {
+                                $return[$k] = $v;
+                        }
+                }
+
+                return $return; // array_merge(array('' => 'no subject'), (array) $subjects_obj);
+        }
+
+        private function _form_view()
+        {
                 $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
 
-                $this->data['education_code']        = array(
-                    'name'  => 'code',
-                    'id'    => 'code',
-                    'type'  => 'text',
-                    'value' => $this->form_validation->set_value('code'),
-                );
-                $this->data['education_description'] = array(
-                    'name'  => 'description',
-                    'id'    => 'description',
-                    'type'  => 'text',
-                    'value' => $this->form_validation->set_value('description'),
+                $this->data['curriculum_subject_semester'] = array(
+                    'name'  => 'semester',
+                    'value' => semesters(),
                 );
 
+
+                $this->data['curriculum_subject_units'] = array(
+                    'name'  => 'units',
+                    'value' => _numbers_for_drop_down(1, 8),
+                );
+
+
+                $this->data['curriculum_subject_lecture_hours'] = array(
+                    'name'  => 'lecture',
+                    'value' => _numbers_for_drop_down(1, 8),
+                );
+
+
+                $this->data['curriculum_subject_laboratory_hours'] = array(
+                    'name'  => 'laboratory',
+                    'value' => _numbers_for_drop_down(1, 8),
+                );
+
+
+                $this->data['curriculum_id'] = array(
+                    'name'  => 'curriculum',
+                    'value' => $this->_dropdown_for_curriculumn()
+                );
+
+
+
+
+                $this->data['subject_id'] = array(
+                    'name'  => 'subject',
+                    'value' => $this->_dropdown_for_subjects()
+                );
+
+
+                $this->data['subject_id_pre'] = array(
+                    'name'  => 'pre_requisite',
+                    'value' => $this->_dropdown_for_subjects()
+                );
+
+
+                $this->data['subject_id_co'] = array(
+                    'name'  => 'co_requisite',
+                    'value' => $this->_dropdown_for_subjects()
+                );
+
+
+
                 $this->data['bootstrap'] = $this->bootstrap();
-                $this->_render('admin/create_education', $this->data);
+                $this->_render('admin/create_curriculum_subject', $this->data);
         }
 
         private function bootstrap()
@@ -127,5 +217,3 @@ class Create_curriculum_subject extends CI_Capstone_Controller
         }
 
 }
-
-

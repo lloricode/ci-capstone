@@ -6,9 +6,9 @@ if (isset($permission_form))
 {
         echo $permission_form;
 }
-if (isset($table_data_permission))
+if (isset($table_permissions))
 {
-        echo $table_data_permission;
+        echo $table_permissions;
 }
 ?>
                 

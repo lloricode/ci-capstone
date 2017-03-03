@@ -34,11 +34,6 @@ if (!function_exists('navigations_main'))
                                 'label' => lang('curriculum_label'),
                                 'seen'  => TRUE,
                             ),
-                            'curriculum-subjects'       =>
-                            array(
-                                'label' => lang('curriculum_subject_label'),
-                                'seen'  => TRUE,
-                            ),
                             /**
                              * create
                              */

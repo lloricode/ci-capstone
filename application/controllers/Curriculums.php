@@ -41,7 +41,7 @@ class Curriculums extends CI_Capstone_Controller
                         limit($this->limit, $this->limit * $this->page_ - $this->limit)->
                         order_by('updated_at', 'DESC')->
                         order_by('created_at', 'DESC')->
-                        set_cache('educations_page_' . $this->page_)->
+                        set_cache('curriculum_page_' . $this->page_)->
                         get_all();
 
 
@@ -52,59 +52,83 @@ class Curriculums extends CI_Capstone_Controller
 
                         foreach ($curriculum_obj as $curriculum)
                         {
-
+                                $view = anchor(site_url('curriculums/view?curriculum-id=' . $curriculum->curriculum_id), lang('curriculumn_view'));
                                 array_push($table_data, array(
                                     my_htmlspecialchars($curriculum->curriculum_description),
                                     my_htmlspecialchars($curriculum->curriculum_effective_school_year),
                                     my_htmlspecialchars(semesters($curriculum->curriculum_effective_semester)),
                                     my_htmlspecialchars($this->Course_model->get($curriculum->course_id)->course_code),
                                     my_htmlspecialchars($curriculum->curriculum_status),
+                                    $view
                                 ));
                         }
                 }
 
-
-
                 /*
                  * Table headers
                  */
-                $header = array(
+                $header     = array(
                     lang('curriculumn_description'),
                     lang('curriculumn_effective_year'),
                     lang('curriculumn_effective_semester'),
                     lang('curriculumn_course'),
                     lang('curriculumn_status'),
+                    lang('curriculumn_option')
                 );
+                $pagination = $this->pagination->generate_bootstrap_link('curriculums/index', $this->Curriculum_model->set_cache('curriculum_count_rows')->count_rows() / $this->limit);
 
-                /**
-                 * table values
-                 */
-                $this->data['table_data'] = $this->my_table_view($header, $table_data, 'table_open_bordered');
-
-                /**
-                 * pagination
-                 */
-                $this->data['pagination'] = $this->pagination->generate_link('curriculums/index', $this->Curriculum_model->count_rows() / $this->limit);
-
-                /**
-                 * caption of table
-                 */
-                $this->data['caption'] = lang('curriculum_label');
-
-
-
-                /**
-                 * templates for group controller
-                 */
-                $this->template['table_data_groups'] = MY_Controller::_render('admin/_templates/table', $this->data, TRUE);
-                $this->template['controller']        = 'table';
-                $this->template['message']           = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-
-                $this->template['bootstrap'] = $this->bootstrap();
+                $this->template['table_curriculm'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'curriculum_label', $pagination, TRUE);
+                $this->template['message']         = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                $this->template['bootstrap']       = $this->bootstrap();
                 /**
                  * rendering users view
                  */
-                $this->_render('admin/educations', $this->template);
+                $this->_render('admin/curriculums', $this->template);
+        }
+
+        public function view()
+        {
+                $curriculum_obj = check_id_from_url('curriculum_id', 'Curriculum_model', $this->input->get('curriculum-id'));
+                $this->breadcrumbs->unshift(3, lang('curriculum_subject_label'), 'curriculums/view?curriculum-id=' . $curriculum_obj->curriculum_id);
+
+
+                $this->load->model('Curriculum_subject_model');
+
+                $cur_subj_obj = $this->Curriculum_subject_model->
+                        where(array('curriculum_id' => $curriculum_obj->curriculum_id))->
+                        set_cache('curriculum_subject_' . $curriculum_obj->curriculum_id)->
+                        get_all();
+
+                $table_data = array();
+
+                if ($cur_subj_obj)
+                {
+                        $table_data[] = array(
+                            lang('index_student_school_id_th'),
+                            lang('index_student_lastname_th'),
+                            lang('index_student_firstname_th'),
+                            lang('index_student_middlename_th'),
+                            'Options'
+                        );
+                }
+                /*
+                 * Table headers
+                 */
+                $header = array(
+                    lang('index_student_school_id_th'),
+                    lang('index_student_lastname_th'),
+                    lang('index_student_firstname_th'),
+                    lang('index_student_middlename_th'),
+                    'Options'
+                );
+                //    $pagination = $this->pagination->generate_bootstrap_link('curriculums/index', $this->Curriculum_model->set_cache('curriculum_count_rows')->count_rows() / $this->limit);
+
+
+
+                $this->template['table_corriculum_subjects'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'curriculum_subject_label', FALSE/* temporary */, TRUE);
+                $this->template['message']                   = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                $this->template['bootstrap']                 = $this->bootstrap();
+                $this->_render('admin/curriculums', $this->template);
         }
 
         /**

@@ -62,31 +62,11 @@ class Rooms extends CI_Capstone_Controller
                     lang('index_room_description_th')
                 );
 
-                /**
-                 * table values
-                 */
-                $this->data['table_data'] = $this->my_table_view($header, $table_data, 'table_open_bordered');
+                $pagination = $this->pagination->generate_bootstrap_link('rooms/index', $this->Room_model->set_cache('rooms_count_rows')->count_rows() / $this->limit);
 
-                /**
-                 * pagination
-                 */
-                $this->data['pagination'] = $this->pagination->generate_link('rooms/index', $this->Room_model->count_rows() / $this->limit);
-
-                /**
-                 * caption of table
-                 */
-                $this->data['caption'] = lang('index_room_heading');
-
-
-                /**
-                 * templates for group controller
-                 */
-                $this->template['table_data_groups'] = MY_Controller::_render('admin/_templates/table', $this->data, TRUE);
-                $this->template['controller']        = 'table';
-                $this->template['message']           = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-
-
-                $this->template['bootstrap'] = $this->bootstrap();
+                $this->template['table_rooms'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_room_heading', $pagination, TRUE);
+                $this->template['message']     = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                $this->template['bootstrap']   = $this->bootstrap();
                 /**
                  * rendering users view
                  */

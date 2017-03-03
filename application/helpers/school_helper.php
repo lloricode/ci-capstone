@@ -6,8 +6,12 @@ if (!function_exists('semesters'))
 {
 
         /**
+         * 'first'  => '1st Semester',
+         * 'second' => '2nd Semester',
+         * 'summer' => 'Summer Semester',
          * 
-         * @return array first-1st Semester, second-2nd Semester, summer-Summer Semester
+         * @param string $index | default FALSE just return array (all data)]
+         * @return string|array
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
         function semesters($index = FALSE)

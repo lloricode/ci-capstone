@@ -295,11 +295,14 @@ class Create_student extends CI_Capstone_Controller
                  */
                 $this->data['course_id']             = array(
                     'name'  => 'courseid',
-                    'value' => $this->Course_model->set_cache('dropdown_course_code')->as_dropdown('course_code')->get_all(),
+                    'value' => $this->Course_model->
+                            as_dropdown('course_code')->
+                            set_cache('dropdown_course_code')->
+                            get_all(),
                 );
                 $this->data['enrollment_year_level'] = array(
                     'name'  => 'level',
-                    'value' => _numbers_for_drop_down(0, $this->config->item('max_year_level')),
+                    'value' => _numbers_for_drop_down(1, $this->config->item('max_year_level')),
                 );
 
                 /**

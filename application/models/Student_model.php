@@ -18,21 +18,22 @@ class Student_model extends MY_Model
                 parent::__construct();
         }
 
-       private function _config()
+        private function _config()
         {
-                $this->timestamps        = TRUE;//(bool) $this->config->item('my_model_timestamps');
-                $this->return_as         = 'object';//$this->config->item('my_model_return_as');
-                $this->timestamps_format = 'timestamp';//$this->config->item('my_model_timestamps_format');
+                $this->timestamps        = TRUE; //(bool) $this->config->item('my_model_timestamps');
+                $this->return_as         = 'object'; //$this->config->item('my_model_return_as');
+                $this->timestamps_format = 'timestamp'; //$this->config->item('my_model_timestamps_format');
 
 
-                $this->cache_driver              = 'file';//$this->config->item('my_model_cache_driver');
-                $this->cache_prefix              = 'cicapstone';//$this->config->item('my_model_cache_prefix');
+                $this->cache_driver              = 'file'; //$this->config->item('my_model_cache_driver');
+                $this->cache_prefix              = 'cicapstone'; //$this->config->item('my_model_cache_prefix');
                 /**
                  * some of field is not required, so remove it in array when no value, in inside the *->from_form()->insert() in core MY_Model,
                  */
-                $this->remove_empty_before_write = TRUE;//(bool) $this->config->item('my_model_remove_empty_before_write');
-                $this->delete_cache_on_save      = TRUE;//(bool) $this->config->item('my_model_delete_cache_on_save');
+                $this->remove_empty_before_write = TRUE; //(bool) $this->config->item('my_model_remove_empty_before_write');
+                $this->delete_cache_on_save      = TRUE; //(bool) $this->config->item('my_model_delete_cache_on_save');
         }
+
         private function _relations()
         {
                 $this->has_many['students_subjects'] = array(
@@ -71,9 +72,12 @@ class Student_model extends MY_Model
                         'rules' => 'trim|required|human_name|min_length[1]|max_length[30]',
                     ),
                     'student_gender'                  => array(
-                        'label' => lang('index_student_gender_th'),
-                        'field' => 'gender',
-                        'rules' => 'trim|required|min_length[4]|max_length[6]',
+                        'label'  => lang('index_student_gender_th'),
+                        'field'  => 'gender',
+                        'rules'  => 'trim|required|min_length[4]|in_list[male,female]',
+                        'errors' => array(
+                            'in_list' => 'Invalid value in {field}'
+                        )
                     ),
                     'student_birthdate'               => array(
                         'label' => lang('index_student_birthdate_th'),

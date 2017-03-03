@@ -27,7 +27,7 @@ class MY_Pagination extends CI_Pagination
          * @return type
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        public function generate_link($url, $total_row, $tmp = FALSE)
+        public function generate_bootstrap_link($url, $total_row, $tmp = FALSE)
         {
                 $this->CI->pagination->initialize(array(
                     'base_url'         => site_url($url),

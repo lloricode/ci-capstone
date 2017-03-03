@@ -27,7 +27,7 @@ class Migration_Curriculum_subjects extends CI_Migration
                         'null'           => FALSE,
                         'auto_increment' => TRUE
                     ),
-                    'curriculum_subjecto_semester'        => array(
+                    'curriculum_subject_semester'         => array(
                         'type' => 'ENUM("first","second","summer")',
                         'null' => FALSE
                     ),
@@ -52,6 +52,12 @@ class Migration_Curriculum_subjects extends CI_Migration
                     /**
                      * foreign
                      */
+                    'curriculum_id'                       => array(//
+                        'type'       => 'INT',
+                        'constraint' => '11',
+                        'unsigned'   => TRUE,
+                        'null'       => FALSE
+                    ),
                     'subject_id'                          => array(//current subject
                         'type'       => 'INT',
                         'constraint' => '11',

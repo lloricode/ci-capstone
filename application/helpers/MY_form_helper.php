@@ -78,13 +78,13 @@ if (!function_exists('input_bootstrap'))
                                                          * impossible
                                                          * --Lloric
                                                          */
-                                                        show_error('No type of form input defined, either radio or checkbox.');
+                                                        show_error('No valid type of form input defined, either radio or checkbox.');
                                                         break;
                                         }
                                 }
                                 break;
                         default:
-                                show_error('No type of form input defined.');
+                                show_error('No valid type of form input defined.');
                                 break;
                 }
                 if ($prepend)

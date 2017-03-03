@@ -60,7 +60,6 @@ class Students extends CI_Capstone_Controller
                         }
                 }
 
-
                 /*
                  * Table headers
                  */
@@ -72,33 +71,11 @@ class Students extends CI_Capstone_Controller
                     'Options'
                 );
 
-                /**
-                 * table values
-                 */
-                $this->data['table_data'] = $this->my_table_view($header, $table_data, 'table_open_bordered');
+                $pagination = $this->pagination->generate_bootstrap_link('students/index', $this->Student_model->set_cache('student_count_rows')->count_rows() / $this->limit);
 
-                /**
-                 * pagination
-                 */
-                $this->data['pagination'] = $this->pagination->generate_link('students/index', $this->Student_model->count_rows() / $this->limit);
-
-                /**
-                 * caption of table
-                 */
-                $this->data['caption'] = lang('index_student_heading');
-
-
-                /**
-                 * table of users ready,
-                 * 
-                 */
-                /**
-                 * templates for group controller
-                 */
-                $this->template['table_data_groups'] = MY_Controller::_render('admin/_templates/table', $this->data, TRUE);
-                $this->template['controller']        = 'table';
-
-                $this->template['bootstrap'] = $this->bootstrap();
+                $this->template['table_students'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_student_heading', $pagination, TRUE);
+                $this->template['message']        = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                $this->template['bootstrap']      = $this->bootstrap();
                 /**
                  * rendering users view
                  */
@@ -173,7 +150,7 @@ class Students extends CI_Capstone_Controller
                 /**
                  * generating html pagination
                  */
-                $this->data['table_subjects_pagination'] = $this->pagination->generate_link('students/view?student-id=' . $this->student->id, $this->student->subject_total() / $this->limit, TRUE);
+                $this->data['table_subjects_pagination'] = $this->pagination->generate_bootstrap_link('students/view?student-id=' . $this->student->id, $this->student->subject_total() / $this->limit, TRUE);
 
 
                 /**

@@ -52,7 +52,10 @@ class Create_course extends CI_Capstone_Controller
 
                 $this->data['education_id'] = array(
                     'name'  => 'educ',
-                    'value' => $this->Education_model->set_cache('dropdown_education')->as_dropdown('education_code')->get_all()
+                    'value' => $this->Education_model->
+                            as_dropdown('education_code')->
+                            set_cache('as_dropdown_education_code')->
+                            get_all()
                 );
 
                 $this->data['bootstrap'] = $this->bootstrap();

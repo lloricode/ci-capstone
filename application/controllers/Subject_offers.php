@@ -61,7 +61,7 @@ class Subject_offers extends CI_Capstone_Controller
                         {
                                 $user = $this->User_model->get($subject_offer->user_id);
                                 array_push($table_data, array(
-                                    $subject_offer->subject_offer_id,
+                                    //$subject_offer->subject_offer_id,
                                     my_htmlspecialchars(convert_24_to_12hrs($subject_offer->subject_offer_start)),
                                     my_htmlspecialchars(convert_24_to_12hrs($subject_offer->subject_offer_end)),
                                     my_htmlspecialchars(subject_offers_days($subject_offer)),
@@ -74,8 +74,8 @@ class Subject_offers extends CI_Capstone_Controller
                 /*
                  * Table headers
                  */
-                $header                   = array(
-                    'id',
+                $header = array(
+                    //'id',
                     lang('index_subject_offer_start_th'),
                     lang('index_subject_offer_end_th'),
                     lang('index_subject_offer_days_th'),
@@ -83,25 +83,12 @@ class Subject_offers extends CI_Capstone_Controller
                     lang('index_subject_id_th'),
                     lang('index_room_id_th'),
                 );
-                /**
-                 * table values
-                 */
-                $this->data['table_data'] = $this->my_table_view($header, $table_data, 'table_open_bordered');
 
-                /**
-                 * pagination
-                 */
-                $this->data['pagination'] = $this->pagination->generate_link('subject-offers/index', $this->Subject_offer_model->count_rows() / $this->limit);
+                $pagination = $this->pagination->generate_bootstrap_link('subject-offers/index', $this->Subject_offer_model->count_rows() / $this->limit);
 
-                /**
-                 * caption of table
-                 */
-                $this->data['caption'] = lang('index_subject_offer_heading');
-
-                $this->template['table_data_groups'] = MY_Controller::_render('admin/_templates/table', $this->data, TRUE);
-                $this->template['controller']        = 'table';
-
-                $this->template['bootstrap'] = $this->bootstrap();
+                $this->template['table_subject_offers'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_subject_offer_heading', $pagination, TRUE);
+                $this->template['message']              = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                $this->template['bootstrap']            = $this->bootstrap();
                 /**
                  * rendering users view
                  */

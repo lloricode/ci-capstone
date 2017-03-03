@@ -57,7 +57,10 @@ class Create_curriculum extends CI_Capstone_Controller
 
                 $this->data['course_id'] = array(
                     'name'  => 'course',
-                    'value' => $this->Course_model->as_dropdown('course_code')->get_all(),
+                    'value' => $this->Course_model->
+                            as_dropdown('course_code')->
+                            set_cache('as_dropdown_course_code')->
+                            get_all(),
                 );
 
                 $this->data['curriculum_status'] = array(

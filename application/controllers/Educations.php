@@ -59,8 +59,6 @@ class Educations extends CI_Capstone_Controller
                         }
                 }
 
-
-
                 /*
                  * Table headers
                  */
@@ -69,32 +67,14 @@ class Educations extends CI_Capstone_Controller
                     lang('index_education_description_th'),
                 );
 
+                $pagination = $this->pagination->generate_bootstrap_link('educations/index', $this->Education_model->set_cache('education_count_rows')->count_rows() / $this->limit);
+
+                $this->template['table_educations'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_education_heading', $pagination, TRUE);
+                $this->template['message']          = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                $this->template['bootstrap']        = $this->bootstrap();
                 /**
-                 * table values
-                 */
-                $this->data['table_data'] = $this->my_table_view($header, $table_data, 'table_open_bordered');
 
-                /**
-                 * pagination
-                 */
-                $this->data['pagination'] = $this->pagination->generate_link('educations/index', $this->Education_model->count_rows() / $this->limit);
-
-                /**
-                 * caption of table
-                 */
-                $this->data['caption'] = lang('index_education_heading');
-
-
-
-                /**
-                 * templates for group controller
-                 */
-                $this->template['table_data_groups'] = MY_Controller::_render('admin/_templates/table', $this->data, TRUE);
-                $this->template['controller']        = 'table';
-                $this->template['message']           = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-
-                $this->template['bootstrap'] = $this->bootstrap();
-                /**
+                  /**
                  * rendering users view
                  */
                 $this->_render('admin/educations', $this->template);

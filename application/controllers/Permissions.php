@@ -51,14 +51,17 @@ class Permissions extends CI_Capstone_Controller
         {
                 $controllers_obj = $this->Controller_model->
                         //  limit($this->limit, $this->limit * $this->page_ - $this->limit)->
-                        set_cache('permissions_page_'/* . $this->page_ */)->
+                        order_by('controller_name', 'ASC')->
+                        set_cache('controllers_all'/* . $this->page_ */)->
                         get_all();
                 $table_data      = array();
                 if ($controllers_obj)
                 {
                         foreach ($controllers_obj as $c)
                         {
-                                $permission_obj = $this->Permission_model->get_all(array(
+                                $permission_obj = $this->Permission_model->
+                                        set_cache('permission_controllers_' . $c->controller_id)->
+                                        get_all(array(
                                     'controller_id' => $c->controller_id
                                 ));
                                 $gruops         = NULL;
@@ -66,7 +69,9 @@ class Permissions extends CI_Capstone_Controller
                                 {
                                         foreach ($permission_obj as $p)
                                         {
-                                                $group_obj = $this->Group_model->get_all(array(
+                                                $group_obj = $this->Group_model->
+                                                        set_cache('permission_group_' . $p->group_id)->
+                                                        get_all(array(
                                                     'id' => $p->group_id
                                                 ));
                                                 if ($group_obj)
@@ -89,7 +94,8 @@ class Permissions extends CI_Capstone_Controller
                                 else
                                 {
                                         $edit = anchor(site_url('permissions/edit?controller-id=' . $c->controller_id), 'Edit');
-                                } $table_data[] = array(
+                                }
+                                $table_data[] = array(
                                     my_htmlspecialchars($c->controller_name),
                                     my_htmlspecialchars($c->controller_description),
                                     trim($gruops, ' | '),
@@ -109,23 +115,6 @@ class Permissions extends CI_Capstone_Controller
                     'admin only',
                     'Option'
                 );
-
-                /**
-                 * table values
-                 */
-                $this->data['table_data'] = $this->my_table_view($header, $table_data, 'table_open_bordered');
-
-                /**
-                 * pagination
-                 */
-                //  $this->data['pagination'] = $this->pagination->generate_link('permissions/index', $this->Controller_model->count_rows() / $this->limit);
-
-                /**
-                 * caption of table
-                 */
-                $this->data['caption'] = 'Permission';
-
-
                 /**
                  * table of users ready,
                  * 
@@ -146,10 +135,9 @@ class Permissions extends CI_Capstone_Controller
                         }
                 }
 
-                $this->template['table_data_permission'] = MY_Controller::_render('admin/_templates/table', $this->data, TRUE);
-                $this->template['controller']            = 'table';
-
-                $this->template['bootstrap'] = $this->bootstrap();
+                $this->template['table_permissions'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'permission_label', FALSE, TRUE);
+                $this->template['message']           = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                $this->template['bootstrap']         = $this->bootstrap();
                 /**
                  * rendering users view
                  */
