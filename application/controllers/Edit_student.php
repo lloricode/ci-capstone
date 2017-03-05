@@ -264,7 +264,7 @@ class Edit_student extends CI_Capstone_Controller
                     'name'  => 'address',
                     'value' => $this->form_validation->set_value('address', $this->student->address),
                     'type'  => 'textarea',
-                    'lang'  => 'create_group_name_label'
+                    'lang'  => 'create_student_permanent_address_label'
                 );
                 $this->data['student_school_id_temp']    = array(
                     'name'     => 'id_temp',

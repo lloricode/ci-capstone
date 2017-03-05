@@ -241,7 +241,7 @@ class Create_student extends CI_Capstone_Controller
                     'id'    => 'address',
                     'value' => $this->form_validation->set_value('address'),
                     'type'  => 'textarea',
-                    'lang'  => 'create_group_name_label'
+                    'lang'  => 'create_student_permanent_address_label'
                 );
 
                 /**

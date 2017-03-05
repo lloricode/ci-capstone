@@ -69,7 +69,7 @@ echo form_open_multipart(site_url("edit-student?student-id=" . $this->student->i
                     <div  class="form-horizontal">
                         <?php
                         //student_school_id:
-                        echo input_bootstrap($student_school_id_temp, 'Course Code');
+                        echo input_bootstrap($student_school_id_temp);
 
                         //course_id:                      
                         echo input_bootstrap($course_id);
