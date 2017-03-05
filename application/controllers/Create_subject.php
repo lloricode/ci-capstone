@@ -32,33 +32,35 @@ class Create_subject extends CI_Capstone_Controller
                         }
                 }
 
-                $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                $this->_form_view();
+        }
 
-
-                $this->data['subject_code']        = array(
+        private function _form_view()
+        {
+                $inputs['subject_code'] = array(
                     'name'  => 'code',
                     'id'    => 'code',
                     'type'  => 'text',
                     'value' => $this->form_validation->set_value('code'),
+                    'type'  => 'text',
+                    'lang'  => 'create_subject_code_label',
                 );
-                $this->data['subject_description'] = array(
+
+                $inputs['subject_description'] = array(
                     'name'  => 'desc',
                     'id'    => 'desc',
                     'type'  => 'text',
                     'value' => $this->form_validation->set_value('desc'),
+                    'type'  => 'text',
+                    'lang'  => 'create_subject_description_label'
                 );
-//                $this->data['subject_unit']        = array(
-//                    'name'  => 'unit',
-//                    'id'    => 'unit',
-//                    'type'  => 'text',
-//                    'value' => $this->form_validation->set_value('unit'),
-//                );
 
-                $this->data['bootstrap'] = $this->bootstrap();
+                $this->data['subject_form'] = $this->form_boostrap('create-subject', $inputs, NULL, 'create_subject_heading', 'create_subject_submit_button_label', 'info-sign', NULL, TRUE);
+                $this->data['bootstrap']    = $this->_bootstrap();
                 $this->_render('admin/create_subject', $this->data);
         }
 
-        private function bootstrap()
+        private function _bootstrap()
         {
                 /**
                  * for header

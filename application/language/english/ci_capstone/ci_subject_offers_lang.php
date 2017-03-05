@@ -29,5 +29,8 @@ $lang['index_subject_id_th']          = 'Subject';
 $lang['index_room_id_th']             = 'Room';
 
 
+$lang['subject_offer_conflict_data'] = 'Conflict Data';
+
+
 
 

@@ -38,7 +38,7 @@ class Auth extends MY_Controller
          * @author Lloric Garcia
          * @version 2017-2-1
          */
-        private function set_data($message = NULL)
+        private function _set_data($message = NULL)
         {
                 $label = '';
                 if ($this->config->item('identity', 'ion_auth') != 'email')
@@ -115,7 +115,7 @@ class Auth extends MY_Controller
                 }
                 else
                 {
-                        $this->set_data($message);
+                        $this->_set_data($message);
                         $this->_render('admin/login', $this->data);
                 }
         }
@@ -142,7 +142,7 @@ class Auth extends MY_Controller
                 if ($this->form_validation->run() == false)
                 {
 
-                        $this->set_data();
+                        $this->_set_data();
                         $this->_render('admin/login', $this->data);
                 }
                 else

@@ -34,31 +34,44 @@ class Create_course extends CI_Capstone_Controller
                                 redirect(site_url('courses'), 'refresh');
                         }
                 }
+                $this->_form_view();
+        }
 
-
-                $this->data['message']            = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-                $this->data['course_code']        = array(
+        private function _form_view()
+        {
+                $inputs['course_code'] = array(
                     'name'  => 'code',
                     'value' => $this->form_validation->set_value('code'),
-                );
-                $this->data['course_description'] = array(
-                    'name'  => 'desc',
-                    'value' => $this->form_validation->set_value('desc'),
-                );
-                $this->data['course_code_id']     = array(
-                    'name'  => 'id',
-                    'value' => $this->form_validation->set_value('id'),
+                    'type'  => 'text',
+                    'lang'  => 'create_course_code_label'
                 );
 
-                $this->data['education_id'] = array(
+                $inputs['course_description'] = array(
+                    'name'  => 'desc',
+                    'value' => $this->form_validation->set_value('desc'),
+                    'type'  => 'text',
+                    'lang'  => 'create_course_description_label'
+                );
+
+                $inputs['course_code_id'] = array(
+                    'name'  => 'id',
+                    'value' => $this->form_validation->set_value('id'),
+                    'type'  => 'text',
+                    'lang'  => 'create_course_code_id_label'
+                );
+
+                $inputs['education_id'] = array(
                     'name'  => 'educ',
                     'value' => $this->Education_model->
                             as_dropdown('education_code')->
                             set_cache('as_dropdown_education_code')->
-                            get_all()
+                            get_all(),
+                    'type'  => 'dropdown',
+                    'lang'  => 'create_course_education_label'
                 );
 
-                $this->data['bootstrap'] = $this->bootstrap();
+                $this->data['course_form'] = $this->form_boostrap('create-course/index', $inputs, NULL, 'create_course_heading', 'create_course_submit_button_label', 'info-sign', NULL, TRUE);
+                $this->data['bootstrap']   = $this->_bootstrap();
                 $this->_render('admin/create_course', $this->data);
         }
 
@@ -67,7 +80,7 @@ class Create_course extends CI_Capstone_Controller
          * @return array
          *  @author Lloric Garcia <emorickfighter@gmail.com>
          */
-        private function bootstrap()
+        private function _bootstrap()
         {
                 /**
                  * for header

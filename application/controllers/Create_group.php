@@ -49,23 +49,28 @@ class Create_group extends CI_Capstone_Controller
                                 redirect(current_url(), 'refresh');
                         }
                 }
+                $this->_form_view();
+        }
+
+        private function _form_view()
+        {
+                $inputs['name'] = array(
+                    'name'  => 'name',
+                    'value' => $this->form_validation->set_value('name'),
+                    'type'  => 'text',
+                    'lang'  => 'create_group_name_label'
+                );
+                $inputs['desc'] = array(
+                    'name'  => 'desc',
+                    'value' => $this->form_validation->set_value('desc'),
+                    'type'  => 'text',
+                    'lang'  => 'create_group_desc_label'
+                );
 
                 // set the flash data error message if there is one
-                $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-
-                $this->data['name']      = array(
-                    'name'  => 'name',
-                    'id'    => 'name',
-                    'type'  => 'text',
-                    'value' => $this->form_validation->set_value('name'),
-                );
-                $this->data['desc']      = array(
-                    'name'  => 'desc',
-                    'id'    => 'desc',
-                    'type'  => 'text',
-                    'value' => $this->form_validation->set_value('desc'),
-                );
-                $this->data['bootstrap'] = $this->bootstrap();
+                $message                    = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                $this->data['group_form'] = $this->form_boostrap('create-group/index', $inputs, $message, 'create_group_heading', 'create_group_submit_btn', 'info-sign', NULL, TRUE);
+                $this->data['bootstrap']    = $this->_bootstrap();
                 $this->_render('admin/create_group', $this->data);
         }
 
@@ -74,7 +79,7 @@ class Create_group extends CI_Capstone_Controller
          * @return array
          *  @author Lloric Garcia <emorickfighter@gmail.com>
          */
-        private function bootstrap()
+        private function _bootstrap()
         {
                 /**
                  * for header

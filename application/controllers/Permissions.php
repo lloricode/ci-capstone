@@ -137,7 +137,7 @@ class Permissions extends CI_Capstone_Controller
 
                 $this->template['table_permissions'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'permission_label', FALSE, TRUE);
                 $this->template['message']           = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-                $this->template['bootstrap']         = $this->bootstrap();
+                $this->template['bootstrap']         = $this->_bootstrap();
                 /**
                  * rendering users view
                  */
@@ -190,7 +190,7 @@ class Permissions extends CI_Capstone_Controller
          * @return array
          *  @author Lloric Garcia <emorickfighter@gmail.com>
          */
-        private function bootstrap()
+        private function _bootstrap()
         {
                 /**
                  * for header

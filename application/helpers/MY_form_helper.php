@@ -14,14 +14,22 @@ if (!function_exists('input_bootstrap'))
          * @param string $prepend
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        function input_bootstrap($field, $lang, $input = 'input', $prepend = FALSE)
+        function input_bootstrap($field, $prepend = FALSE)
         {
+                if (!isset($field['type']))
+                {
+                        $field['type'] = 'text';
+                }
+                if (!isset($field['lang']))
+                {
+                        $field['lang'] = 'test';
+                }
                 $CI  = &get_instance();
                 $CI->load->helper('html');
-                echo PHP_EOL . comment_tag($field['name'] . ' [' . $input . ']');
+                echo PHP_EOL . comment_tag($field['name'] . ' [' . $field['type'] . ']');
                 $tmp = (form_error($field['name']) == '') ? '' : ' error';
                 echo '<div class="control-group' . $tmp . '">' . PHP_EOL;
-                echo lang($lang, $field['name'], array(
+                echo lang($field['lang'], $field['name'], array(
                     'class' => 'control-label',
                 )) . PHP_EOL;
                 echo '<div class="controls">' . PHP_EOL;
@@ -30,10 +38,17 @@ if (!function_exists('input_bootstrap'))
                 {
                         echo '<div class="input-prepend"> <span class="add-on">' . $prepend . '</span>';
                 }
-
-                switch ($input)
+                if (isset($field['lang']))
                 {
-                        case 'input':
+                        /**
+                         * remove lang, to exclude in attributes in form_inputs
+                         */
+                        unset($field['lang']);
+                }
+                switch ($field['type'])
+                {
+                        case 'text':
+                                $field['id']   = $field['name'];
                                 echo form_input($field);
                                 break;
                         case 'textarea':
@@ -56,7 +71,7 @@ if (!function_exists('input_bootstrap'))
                                         {
                                                 $labels = array($labels);
                                         }
-                                        switch ($input)
+                                        switch ($field['type'])
                                         {
                                                 case 'radio':
                                                         foreach ($labels as $k => $v)
@@ -94,7 +109,7 @@ if (!function_exists('input_bootstrap'))
                 echo form_error($field['name']) . PHP_EOL;
                 echo '</div>' . PHP_EOL;
                 echo '</div>' . PHP_EOL;
-                echo comment_tag('end-' . $field['name'] . ' [' . $input . ']') . PHP_EOL;
+                echo comment_tag('end-' . $field['name'] . ' [' . $field['type'] . ']') . PHP_EOL;
         }
 
 }

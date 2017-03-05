@@ -88,7 +88,7 @@ class Subject_offers extends CI_Capstone_Controller
 
                 $this->template['table_subject_offers'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_subject_offer_heading', $pagination, TRUE);
                 $this->template['message']              = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-                $this->template['bootstrap']            = $this->bootstrap();
+                $this->template['bootstrap']            = $this->_bootstrap();
                 /**
                  * rendering users view
                  */
@@ -100,7 +100,7 @@ class Subject_offers extends CI_Capstone_Controller
          * @return array
          *  @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        private function bootstrap_for_view()
+        private function _bootstrap_for_view()
         {
                 /**
                  * for header
@@ -142,7 +142,7 @@ class Subject_offers extends CI_Capstone_Controller
          * @return array
          *  @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        private function bootstrap()
+        private function _bootstrap()
         {
                 /**
                  * for header

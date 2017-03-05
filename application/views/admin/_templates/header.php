@@ -122,12 +122,6 @@ echo doctype();
                     </ul>
                 </li>
                 <li class="">
-                    <a title="" href="<?php echo site_url('auth/logout'); ?>">
-                        <i class="icon icon-share-alt"></i> 
-                        <span class="text">Logout</span>
-                    </a>
-                </li>
-                <li class="">
                     <a title="">
                         <i class="icon icon-bolt"></i> 
                         <span class="text">

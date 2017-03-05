@@ -40,7 +40,7 @@ class Deactivate extends CI_Capstone_Controller
                                 show_error('Invalid request.');
                         }
                         $this->session->set_flashdata('message', (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->ion_auth->messages())));
-                        $this->data['bootstrap'] = $this->bootstrap();
+                        $this->data['bootstrap'] = $this->_bootstrap();
                         $this->_render('admin/deactivate_user', $this->data);
                 }
                 else
@@ -73,7 +73,7 @@ class Deactivate extends CI_Capstone_Controller
          * @return array
          *  @author Lloric Garcia <emorickfighter@gmail.com>
          */
-        private function bootstrap()
+        private function _bootstrap()
         {
                 /**
                  * for header

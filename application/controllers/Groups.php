@@ -80,9 +80,9 @@ class Groups extends CI_Capstone_Controller
 
                 $pagination = $this->pagination->generate_bootstrap_link('admin/groups/index', $this->Group_model->set_cache('group_count_rows')->count_rows() / $this->limit);
 
-                $this->template['table_groups'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_heading', $pagination, TRUE);
+                $this->template['table_groups'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_groups_th', $pagination, TRUE);
                 $this->template['message']      = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-                $this->template['bootstrap']    = $this->bootstrap();
+                $this->template['bootstrap']    = $this->_bootstrap();
                 /**
                  * rendering users view
                  */
@@ -94,7 +94,7 @@ class Groups extends CI_Capstone_Controller
          * @return array
          *  @author Lloric Garcia <emorickfighter@gmail.com>
          */
-        private function bootstrap()
+        private function _bootstrap()
         {
                 /**
                  * for header

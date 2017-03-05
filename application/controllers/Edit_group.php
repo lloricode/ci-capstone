@@ -93,7 +93,7 @@ class Edit_group extends CI_Capstone_Controller
                     'type'  => 'text',
                     'value' => $this->form_validation->set_value('group_description', $group->description),
                 );
-                $this->data['bootstrap']         = $this->bootstrap();
+                $this->data['bootstrap']         = $this->_bootstrap();
                 $this->_render('admin/edit_group', $this->data);
         }
 
@@ -102,7 +102,7 @@ class Edit_group extends CI_Capstone_Controller
          * @return array
          *  @author Lloric Garcia <emorickfighter@gmail.com>
          */
-        private function bootstrap()
+        private function _bootstrap()
         {
                 /**
                  * for header

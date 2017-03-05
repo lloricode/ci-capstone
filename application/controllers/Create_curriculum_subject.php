@@ -83,70 +83,75 @@ class Create_curriculum_subject extends CI_Capstone_Controller
 
         private function _form_view()
         {
-                $this->data['message'] = $this->session->flashdata('message');
-
-
-                $this->data['curriculum_subject_year_level'] = array(
+                $inputs['curriculum_subject_year_level'] = array(
                     'name'  => 'level',
                     'value' => _numbers_for_drop_down(1, $this->config->item('max_year_level')),
+                    'type'  => 'dropdown',
+                    'lang'  => 'curriculum_subject_year_level_label'
                 );
 
-                $this->data['curriculum_subject_semester'] = array(
+                $inputs['curriculum_id'] = array(
+                    'name'  => 'curriculum',
+                    'value' => $this->_dropdown_for_curriculumn(),
+                    'type'  => 'dropdown',
+                    'lang'  => 'curriculum_subject_curriculum_label'
+                );
+
+                $inputs['curriculum_subject_semester'] = array(
                     'name'  => 'semester',
                     'value' => semesters(),
+                    'type'  => 'dropdown',
+                    'lang'  => 'curriculum_subject_semester_label'
                 );
 
-
-                $this->data['curriculum_subject_units'] = array(
-                    'name'  => 'units',
-                    'value' => _numbers_for_drop_down(1, 8),
+                $inputs['subject_id'] = array(
+                    'name'  => 'subject',
+                    'value' => $this->_dropdown_for_subjects(),
+                    'type'  => 'dropdown',
+                    'lang'  => 'curriculum_subject_subject_label'
                 );
 
+                $inputs['subject_id_pre'] = array(
+                    'name'  => 'pre_requisite',
+                    'value' => $this->_dropdown_for_subjects(),
+                    'type'  => 'dropdown',
+                    'lang'  => 'curriculum_subject_pre_subject_label'
+                );
 
-                $this->data['curriculum_subject_lecture_hours'] = array(
+                $inputs['subject_id_co'] = array(
+                    'name'  => 'co_requisite',
+                    'value' => $this->_dropdown_for_subjects(),
+                    'type'  => 'dropdown',
+                    'lang'  => 'curriculum_subject_co_subject_label'
+                );
+
+                $inputs['curriculum_subject_lecture_hours'] = array(
                     'name'  => 'lecture',
                     'value' => _numbers_for_drop_down(1, 8),
+                    'type'  => 'dropdown',
+                    'lang'  => 'curriculum_subject_lecture_hours_label'
                 );
 
-
-                $this->data['curriculum_subject_laboratory_hours'] = array(
+                $inputs['curriculum_subject_laboratory_hours'] = array(
                     'name'  => 'laboratory',
                     'value' => _numbers_for_drop_down(1, 8),
+                    'type'  => 'dropdown',
+                    'lang'  => 'curriculum_subject_laboratory_hours_label'
                 );
 
-
-                $this->data['curriculum_id'] = array(
-                    'name'  => 'curriculum',
-                    'value' => $this->_dropdown_for_curriculumn()
+                $inputs['curriculum_subject_units'] = array(
+                    'name'  => 'units',
+                    'value' => _numbers_for_drop_down(1, 8),
+                    'type'  => 'dropdown',
+                    'lang'  => 'curriculum_subject_units_label'
                 );
 
-
-
-
-                $this->data['subject_id'] = array(
-                    'name'  => 'subject',
-                    'value' => $this->_dropdown_for_subjects()
-                );
-
-
-                $this->data['subject_id_pre'] = array(
-                    'name'  => 'pre_requisite',
-                    'value' => $this->_dropdown_for_subjects()
-                );
-
-
-                $this->data['subject_id_co'] = array(
-                    'name'  => 'co_requisite',
-                    'value' => $this->_dropdown_for_subjects()
-                );
-
-
-
-                $this->data['bootstrap'] = $this->bootstrap();
+                $this->data['curriculum_subject_form'] = $this->form_boostrap('create-curriculum-subject', $inputs, NULL, 'create_curriculum_subject_label', 'create_curriculum_subject_label', 'info-sign', NULL, TRUE);
+                $this->data['bootstrap']               = $this->_bootstrap();
                 $this->_render('admin/create_curriculum_subject', $this->data);
         }
 
-        private function bootstrap()
+        private function _bootstrap()
         {
                 /**
                  * for header

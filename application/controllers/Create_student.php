@@ -167,20 +167,28 @@ class Create_student extends CI_Capstone_Controller
 
                 $this->data['student_image'] = array(
                     'name' => $_post_image_name,
+                    'type' => 'file',
+                    'lang' => 'create_student_image_label'
                 );
 
                 $this->data['student_firstname']  = array(
                     'name'  => 'firstname',
                     'value' => $this->form_validation->set_value('firstname'),
+                    'type'  => 'text',
+                    'lang'  => 'create_student_firstname_label'
                 );
                 $this->data['student_middlename'] = array(
                     'name'  => 'middlename',
                     'value' => $this->form_validation->set_value('middlename'),
+                    'type'  => 'text',
+                    'lang'  => 'create_student_middlename_label'
                 );
 
                 $this->data['student_lastname'] = array(
                     'name'  => 'lastname',
                     'value' => $this->form_validation->set_value('lastname'),
+                    'type'  => 'text',
+                    'lang'  => 'create_student_lastname_label'
                 );
 
                 $this->data['student_gender']    = array(
@@ -190,12 +198,16 @@ class Create_student extends CI_Capstone_Controller
                         'male'   => lang('gender_male_label')
                     ),
                     'value'  => $this->form_validation->set_value('gender'),
+                    'type'   => 'radio',
+                    'lang'   => 'create_student_gender_label'
                 );
                 $this->data['student_birthdate'] = array(
                     'name'             => 'birthdate',
                     'data-date-format' => 'mm-dd-yyyy',
                     'class'            => 'zpicker',
                     'value'            => $this->form_validation->set_value('birthdate'),
+                    'type'             => 'text',
+                    'lang'             => 'create_student_birthdate_label'
                 );
 
 
@@ -204,16 +216,22 @@ class Create_student extends CI_Capstone_Controller
                     'name'  => 'birthplace',
                     'id'    => 'birthplace',
                     'value' => $this->form_validation->set_value('birthplace'),
+                    'type'  => 'text',
+                    'lang'  => 'create_student_birthplace_label'
                 );
 
                 $this->data['student_civil_status'] = array(
                     'name'  => 'status',
                     'value' => $this->form_validation->set_value('status'),
+                    'type'  => 'text',
+                    'lang'  => 'create_student_civil_status_label'
                 );
 
                 $this->data['student_nationality'] = array(
                     'name'  => 'nationality',
                     'value' => $this->form_validation->set_value('nationality'),
+                    'type'  => 'text',
+                    'lang'  => 'create_student_nationality_label'
                 );
 
 
@@ -222,6 +240,8 @@ class Create_student extends CI_Capstone_Controller
                     'name'  => 'address',
                     'id'    => 'address',
                     'value' => $this->form_validation->set_value('address'),
+                    'type'  => 'textarea',
+                    'lang'  => 'create_group_name_label'
                 );
 
                 /**
@@ -233,6 +253,8 @@ class Create_student extends CI_Capstone_Controller
                     'name'     => 'id_temp',
                     'disabled' => '',
                     'value'    => $this->school_id->temporary_id(),
+                    'type'     => 'text',
+                    'lang'     => 'create_student_school_id_label'
                 );
 
 
@@ -241,12 +263,16 @@ class Create_student extends CI_Capstone_Controller
                 $this->data['student_guardian_fullname'] = array(
                     'name'  => 'guardian_fullname',
                     'value' => $this->form_validation->set_value('guardian_fullname'),
+                    'type'  => 'text',
+                    'lang'  => 'create_student_guardian_fullname_label'
                 );
 
 
                 $this->data['student_address_town'] = array(
                     'name'  => 'town',
                     'value' => $this->form_validation->set_value('town'),
+                    'type'  => 'text',
+                    'lang'  => 'create_student_town_label'
                 );
 
 
@@ -254,6 +280,8 @@ class Create_student extends CI_Capstone_Controller
                 $this->data['student_address_region'] = array(
                     'name'  => 'region',
                     'value' => $this->form_validation->set_value('region'),
+                    'type'  => 'text',
+                    'lang'  => 'create_student_region_label'
                 );
 
 
@@ -261,6 +289,8 @@ class Create_student extends CI_Capstone_Controller
                 $this->data['student_guardian_address'] = array(
                     'name'  => 'guardian_address',
                     'value' => $this->form_validation->set_value('guardian_address'),
+                    'type'  => 'textarea',
+                    'lang'  => 'create_student_guardian_address_label'
                 );
 
 
@@ -268,6 +298,8 @@ class Create_student extends CI_Capstone_Controller
                 $this->data['student_personal_contact_number'] = array(
                     'name'  => 'ontact_number',
                     'value' => $this->form_validation->set_value('ontact_number'),
+                    'type'  => 'text',
+                    'lang'  => 'create_student_personal_contact_label'
                 );
 
 
@@ -275,6 +307,8 @@ class Create_student extends CI_Capstone_Controller
                 $this->data['student_guardian_contact_number'] = array(
                     'name'  => 'guardian_contact_number',
                     'value' => $this->form_validation->set_value('guardian_contact_number'),
+                    'type'  => 'text',
+                    'lang'  => 'create_student_guardian_contact_label'
                 );
 
 
@@ -282,12 +316,16 @@ class Create_student extends CI_Capstone_Controller
                 $this->data['student_personal_email'] = array(
                     'name'  => 'personal_email',
                     'value' => $this->form_validation->set_value('personal_email'),
+                    'type'  => 'text',
+                    'lang'  => 'create_student_personal_email_label'
                 );
 
 
                 $this->data['student_guardian_email'] = array(
                     'name'  => 'guardian_email',
                     'value' => $this->form_validation->set_value('guardian_email'),
+                    'type'  => 'text',
+                    'lang'  => 'create_student_guardian_email_label'
                 );
 
                 /**
@@ -299,10 +337,14 @@ class Create_student extends CI_Capstone_Controller
                             as_dropdown('course_code')->
                             set_cache('dropdown_course_code')->
                             get_all(),
+                    'type'  => 'dropdown',
+                    'lang'  => 'create_course_label'
                 );
                 $this->data['enrollment_year_level'] = array(
                     'name'  => 'level',
                     'value' => _numbers_for_drop_down(1, $this->config->item('max_year_level')),
+                    'type'  => 'dropdown',
+                    'lang'  => 'create_student_year_level_label'
                 );
 
                 /**
@@ -314,16 +356,20 @@ class Create_student extends CI_Capstone_Controller
                     'name'     => 'semester_temp',
                     'disabled' => '',
                     'value'    => current_school_semester(),
+                    'type'     => 'text',
+                    'lang'     => 'create_student_semester_label'
                 );
                 $this->data['enrollment_school_year'] = array(
                     'name'     => 'school_year_temp',
                     'disabled' => '',
                     'value'    => current_school_year(),
+                    'type'     => 'text',
+                    'lang'     => 'create_student_school_year_label'
                 );
                 /**
                  * redering
                  */
-                $this->data['bootstrap']              = $this->bootstrap();
+                $this->data['bootstrap']              = $this->_bootstrap();
                 $this->_render('admin/create_student', $this->data);
         }
 
@@ -332,7 +378,7 @@ class Create_student extends CI_Capstone_Controller
          * @return array
          *  @author Lloric Garcia <emorickfighter@gmail.com>
          */
-        private function bootstrap()
+        private function _bootstrap()
         {
                 /**
                  * for header

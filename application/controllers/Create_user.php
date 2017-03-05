@@ -24,10 +24,39 @@ class Create_user extends CI_Capstone_Controller
 
         public function index()
         {
+                $tables          = $this->config->item('tables', 'ion_auth');
+                $identity_column = $this->config->item('identity', 'ion_auth');
+                $this->_set_validation($tables, $identity_column);
 
-                $tables                        = $this->config->item('tables', 'ion_auth');
-                $identity_column               = $this->config->item('identity', 'ion_auth');
-                $this->data['identity_column'] = $identity_column;
+                if ($this->form_validation->run())
+                {
+                        $email    = strtolower($this->input->post('email', TRUE));
+                        $identity = ($identity_column === 'email') ? $email : $this->input->post('identity', TRUE);
+                        $password = $this->input->post('password', TRUE);
+
+                        $additional_data = array(
+                            'first_name' => $this->input->post('first_name', TRUE),
+                            'last_name'  => $this->input->post('last_name', TRUE),
+                            'company'    => $this->input->post('company', TRUE),
+                            'phone'      => $this->input->post('phone', TRUE),
+                        );
+                        if ($this->ion_auth->register($identity, $password, $email, $additional_data))
+                        {
+                                /**
+                                 * delete all db cache
+                                 */
+                                $this->delete_all_query_cache();
+                                // check to see if we are creating the user
+                                // redirect them back to the admin page
+                                $this->session->set_flashdata('message', $this->ion_auth->messages());
+                                redirect(site_url('users'), 'refresh');
+                        }
+                }
+                $this->_form_view();
+        }
+
+        private function _set_validation($tables, $identity_column)
+        {
 
                 // validate form input 
                 $this->form_validation->set_rules(array(
@@ -72,84 +101,80 @@ class Create_user extends CI_Capstone_Controller
                         'rules' => 'trim|required',
                     ),
                 ));
+        }
 
-                if ($this->form_validation->run())
-                {
-                        $email    = strtolower($this->input->post('email', TRUE));
-                        $identity = ($identity_column === 'email') ? $email : $this->input->post('identity', TRUE);
-                        $password = $this->input->post('password', TRUE);
+        private function _form_view()
+        {
 
-                        $additional_data = array(
-                            'first_name' => $this->input->post('first_name', TRUE),
-                            'last_name'  => $this->input->post('last_name', TRUE),
-                            'company'    => $this->input->post('company', TRUE),
-                            'phone'      => $this->input->post('phone', TRUE),
-                        );
-                        if ($this->ion_auth->register($identity, $password, $email, $additional_data))
-                        {
-                                /**
-                                 * delete all db cache
-                                 */
-                                $this->delete_all_query_cache();
-                                // check to see if we are creating the user
-                                // redirect them back to the admin page
-                                $this->session->set_flashdata('message', $this->ion_auth->messages());
-                                redirect(site_url('users'), 'refresh');
-                        }
-                }
-                // display the create user form
-                // set the flash data error message if there is one
-                $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-
-                $this->data['first_name']       = array(
+                $inputs['first_name'] = array(
                     'name'  => 'first_name',
-                    'id'    => 'first_name',
                     'type'  => 'text',
                     'value' => $this->form_validation->set_value('first_name'),
+                    'type'  => 'text',
+                    'lang'  => 'create_user_fname_label',
                 );
-                $this->data['last_name']        = array(
+
+                $inputs['last_name'] = array(
                     'name'  => 'last_name',
-                    'id'    => 'last_name',
                     'type'  => 'text',
                     'value' => $this->form_validation->set_value('last_name'),
-                );
-                $this->data['identity']         = array(
-                    'name'  => 'identity',
-                    'id'    => 'identity',
                     'type'  => 'text',
-                    'value' => $this->form_validation->set_value('identity'),
+                    'lang'  => 'create_user_lname_label',
                 );
-                $this->data['email']            = array(
-                    'name'  => 'email',
-                    'id'    => 'email',
-                    'type'  => 'text',
-                    'value' => $this->form_validation->set_value('email'),
-                );
-                $this->data['company']          = array(
+
+                $inputs['company'] = array(
                     'name'  => 'company',
-                    'id'    => 'company',
                     'type'  => 'text',
                     'value' => $this->form_validation->set_value('company'),
+                    'type'  => 'text',
+                    'lang'  => 'create_user_company_label',
                 );
-                $this->data['phone']            = array(
+
+                $inputs['email'] = array(
+                    'name'  => 'email',
+                    'type'  => 'text',
+                    'value' => $this->form_validation->set_value('email'),
+                    'type'  => 'text',
+                    'lang'  => 'create_user_email_label',
+                );
+
+                $inputs['identity'] = array(
+                    'name'  => 'identity',
+                    'type'  => 'text',
+                    'value' => $this->form_validation->set_value('identity'),
+                    'type'  => 'text',
+                    'lang'  => 'create_user_validation_identity_label',
+                );
+
+                $inputs['phone'] = array(
                     'name'  => 'phone',
-                    'id'    => 'phone',
                     'type'  => 'text',
                     'value' => $this->form_validation->set_value('phone'),
+                    'type'  => 'text',
+                    'lang'  => 'create_user_phone_label',
                 );
-                $this->data['password']         = array(
+
+                $inputs['password'] = array(
                     'name'  => 'password',
-                    'id'    => 'password',
                     'type'  => 'password',
                     'value' => $this->form_validation->set_value('password'),
+                    'type'  => 'text',
+                    'lang'  => 'create_user_password_label',
                 );
-                $this->data['password_confirm'] = array(
+
+                $inputs['password_confirm'] = array(
                     'name'  => 'password_confirm',
-                    'id'    => 'password_confirm',
                     'type'  => 'password',
                     'value' => $this->form_validation->set_value('password_confirm'),
+                    'type'  => 'text',
+                    'lang'  => 'create_user_password_confirm_label',
                 );
-                $this->data['bootstrap']        = $this->bootstrap();
+
+                // display the create user form
+                // set the flash data error message if there is one
+                $message                 = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                $this->data['user_form'] = $this->form_boostrap('create-user/index', $inputs, $message, 'create_user_heading', 'create_user_submit_btn', 'info-sign', NULL, TRUE);
+                $this->data['bootstrap'] = $this->_bootstrap();
                 $this->_render('admin/create_user', $this->data);
         }
 
@@ -158,7 +183,7 @@ class Create_user extends CI_Capstone_Controller
          * @return array
          *  @author Lloric Garcia <emorickfighter@gmail.com>
          */
-        private function bootstrap()
+        private function _bootstrap()
         {
                 /**
                  * for header

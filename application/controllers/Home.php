@@ -29,7 +29,7 @@ class Home extends CI_Capstone_Controller
                 $this->template['active_user_count']  = MY_Controller::_render('admin/_templates/home/user_count', $this->data, TRUE);
                 $this->template['dashboard_ctrl_var'] = MY_Controller::_render('admin/_templates/home/dashboard_ctrl', $this->data, TRUE);
                 $this->template['message']            = $this->session->flashdata('message');
-                $this->template['bootstrap']          = $this->bootstrap();
+                $this->template['bootstrap']          = $this->_bootstrap();
                 $this->_render('admin/home', $this->template);
         }
 
@@ -38,7 +38,7 @@ class Home extends CI_Capstone_Controller
          * @return array
          *  @author Lloric Garcia <emorickfighter@gmail.com>
          */
-        private function bootstrap()
+        private function _bootstrap()
         {
                 /**
                  * for header

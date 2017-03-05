@@ -35,19 +35,29 @@ class Create_room extends CI_Capstone_Controller
                         }
                 }
 
-                $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                $this->_form_view();
+        }
 
-                $this->data['room_number']      = array(
+        private function _form_view()
+        {
+
+                $inputs['room_number']      = array(
                     'name'  => 'number',
                     'id'    => 'number',
                     'value' => $this->form_validation->set_value('number'),
+                    'type'  => 'text',
+                    'lang'  => 'create_room_number_label'
                 );
-                $this->data['room_description'] = array(
+                $inputs['room_description'] = array(
                     'name'  => 'description',
                     'id'    => 'description',
                     'value' => $this->form_validation->set_value('description'),
+                    'type'  => 'text',
+                    'lang'  => 'create_room_description_label'
                 );
-                $this->data['bootstrap']        = $this->bootstrap();
+
+                $this->data['room_form'] = $this->form_boostrap('create-room', $inputs, NULL, 'create_room_heading', 'create_room_submit_button_label', 'info-sign', NULL, TRUE);
+                $this->data['bootstrap']   = $this->_bootstrap();
                 $this->_render('admin/create_room', $this->data);
         }
 
@@ -56,7 +66,7 @@ class Create_room extends CI_Capstone_Controller
          * @return array
          *  @author Lloric Garcia <emorickfighter@gmail.com>
          */
-        private function bootstrap()
+        private function _bootstrap()
         {
                 /**
                  * for header

@@ -45,15 +45,15 @@ class Create_subject_offer extends CI_Capstone_Controller
         {
                 $this->load->helper('day');
                 $this->load->model(array('User_model', 'Subject_model', 'Room_model'));
-                $this->load->library('subject_offer');
-                $this->subject_offer->init('post');
-                $conflic = $this->subject_offer->subject_offer_check_check_conflict();
-                $data    = $this->subject_offer->conflict();
+                $this->load->library('subject_offer_validation');
+                $this->subject_offer_validation->init('post');
+                $conflic = $this->subject_offer_validation->subject_offer_check_check_conflict();
+                $data    = $this->subject_offer_validation->conflict();
                 if ($data)
                 {
                         $inc        = 1;
                         $header     = array(
-                            '#', 'id',
+                            '#',
                             lang('index_subject_offer_start_th'),
                             lang('index_subject_offer_end_th'),
                             lang('index_subject_offer_days_th'),
@@ -67,7 +67,6 @@ class Create_subject_offer extends CI_Capstone_Controller
                                 $user = $this->User_model->get($subject_offer->user_id);
                                 array_push($table_data, array(
                                     $inc++,
-                                    $subject_offer->subject_offer_id,
                                     my_htmlspecialchars(convert_24_to_12hrs($subject_offer->subject_offer_start)),
                                     my_htmlspecialchars(convert_24_to_12hrs($subject_offer->subject_offer_end)),
                                     my_htmlspecialchars(subject_offers_days($subject_offer)),
@@ -76,7 +75,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                                     my_htmlspecialchars($this->Room_model->get($subject_offer->room_id)->room_number),
                                 ));
                         }
-                        $this->data['data_conflict'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered');
+                        $this->data['conflict_data'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'subject_offer_conflict_data', FALSE, TRUE);
                 }
                 return $conflic;
         }
@@ -90,12 +89,16 @@ class Create_subject_offer extends CI_Capstone_Controller
 
                 $this->data['subject_offer_start'] = array(
                     'name'  => 'start',
-                    'value' => time_list()
+                    'value' => time_list(),
+                    'type'  => 'dropdown',
+                    'lang'  => 'create_subject_offer_start_label'
                 );
 
                 $this->data['subject_offer_end'] = array(
                     'name'  => 'end',
                     'value' => time_list(),
+                    'type'  => 'dropdown',
+                    'lang'  => 'create_subject_offer_end_label'
                 );
 
                 /**
@@ -104,6 +107,8 @@ class Create_subject_offer extends CI_Capstone_Controller
                 $this->data['user_id'] = array(
                     'name'  => 'faculty',
                     'value' => $this->_faculties(),
+                    'type'  => 'dropdown',
+                    'lang'  => 'create_user_id_label'
                 );
 
                 $this->data['subject_id'] = array(
@@ -112,6 +117,8 @@ class Create_subject_offer extends CI_Capstone_Controller
                             as_dropdown('subject_code')->
                             set_cache('as_dropdown_subject_code')->
                             get_all(),
+                    'type'  => 'dropdown',
+                    'lang'  => 'create_subject_id_label'
                 );
 
                 $this->data['room_id'] = array(
@@ -120,6 +127,8 @@ class Create_subject_offer extends CI_Capstone_Controller
                             as_dropdown('room_number')->
                             set_cache('as_dropdown_room_number')->
                             get_all(),
+                    'type'  => 'dropdown',
+                    'lang'  => 'create_room_id_label'
                 );
 
                 /**
@@ -127,8 +136,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                  */
                 $this->data['days'] = days_for_db();
 
-                $this->data['bootstrap']     = $this->bootstrap();
-                $this->data['conflict_data'] = MY_Controller::_render('admin/_templates/create_subject_offer/conflict_data', $this->data, TRUE);
+                $this->data['bootstrap'] = $this->_bootstrap();
                 $this->_render('admin/create_subject_offer', $this->data);
         }
 
@@ -158,7 +166,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                 return $faculty_drop_down;
         }
 
-        private function bootstrap()
+        private function _bootstrap()
         {
                 /**
                  * for header

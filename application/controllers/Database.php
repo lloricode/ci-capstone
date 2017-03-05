@@ -51,7 +51,7 @@ class Database extends CI_Capstone_Controller
                             'extra'        => array('class' => 'btn btn-info icon-tasks'),
                                 ), TRUE);
                 $this->template['message']             = $this->session->flashdata('dbmessage');
-                $this->template['bootstrap']           = $this->bootstrap();
+                $this->template['bootstrap']           = $this->_bootstrap();
                 $this->_render('admin/database', $this->template);
         }
 
@@ -83,7 +83,7 @@ class Database extends CI_Capstone_Controller
          * @return array
          *  @author Lloric Garcia <emorickfighter@gmail.com>
          */
-        private function bootstrap()
+        private function _bootstrap()
         {
                 /**
                  * for header

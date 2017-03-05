@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('no direct script allowed');
 
-class Subject_offer
+class Subject_offer_validation
 {
 
 

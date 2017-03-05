@@ -90,7 +90,7 @@ class Log extends CI_Capstone_Controller
                  * caption of table
                  */
                 $this->data['caption']   = lang('index_heading');
-                $this->data['bootstrap'] = $this->bootstrap();
+                $this->data['bootstrap'] = $this->_bootstrap();
 
                 $this->_render('admin/log', $this->data);
         }
@@ -100,7 +100,7 @@ class Log extends CI_Capstone_Controller
          * @return array
          *  @author Lloric Garcia <emorickfighter@gmail.com>
          */
-        private function bootstrap()
+        private function _bootstrap()
         {
                 /**
                  * for header

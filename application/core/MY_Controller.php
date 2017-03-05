@@ -202,13 +202,43 @@ class CI_Capstone_Controller extends MY_Controller
                 $this->table->set_template(array(
                     'table_open' => $this->config->item($table_config),
                 ));
-                $_data['caption']     = lang($caption_lang);
-                $_data['table_data']  = $this->table->generate($table_data_rows);
-                $_data['pagination']  = $pagination;
-                $generated_html_table = parent::_render('admin/_templates/table', $_data, $return_html);
+                $_data['caption_lang'] = $caption_lang;
+                $_data['table_data']   = $this->table->generate($table_data_rows);
+                $_data['pagination']   = $pagination;
+                $generated_html_table  = parent::_render('admin/_templates/table', $_data, $return_html);
                 if ($return_html)
                 {
                         return $generated_html_table;
+                }
+        }
+
+        /**
+         * 
+         * @param string $_action
+         * @param array $_inputs
+         * @param string $_messages
+         * @param string $_lang_header
+         * @param string $_lang_button
+         * @param string $_icon
+         * @param array $_hidden_inputs
+         * @param bool $return_html
+         * @return string
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        public function form_boostrap($_action, $_inputs, $_messages, $_lang_header, $_lang_button, $_icon, $_hidden_inputs = NULL, $return_html = FALSE)
+        {
+                $_data['inputs']        = $_inputs;
+                $_data['action']        = $_action;
+                $_data['message']       = $_messages;
+                $_data['lang_header']   = $_lang_header;
+                $_data['lang_button']   = $_lang_button;
+                $_data['icon']          = $_icon;
+                $_data['hidden_inputs'] = $_hidden_inputs;
+
+                $generated_html_form = parent::_render('admin/_templates/form', $_data, $return_html);
+                if ($return_html)
+                {
+                        return $generated_html_form;
                 }
         }
 
@@ -228,7 +258,7 @@ class CI_Capstone_Controller extends MY_Controller
                  * not using core My_Model, because, we needed is updated_at to be update
                  */
                 /**
-                 * for very spcific, we use table set in ion auth config,
+                 * for very specific, we use table set in ion auth config,
                  * see on set hook in edit_user controller
                  */
                 return (bool) $this->db->update($table, array(

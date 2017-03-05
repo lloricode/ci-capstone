@@ -37,48 +37,58 @@ class Create_curriculum extends CI_Capstone_Controller
 
         private function _form_view()
         {
-                $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
-
-                $this->data['curriculum_description'] = array(
+                $inputs['curriculum_description'] = array(
                     'name'  => 'desc',
                     'value' => $this->form_validation->set_value('desc'),
+                    'type'  => 'textarea',
+                    'lang'  => 'curriculumn_description'
                 );
 
-                $this->data['curriculum_effective_school_year'] = array(
+                $inputs['curriculum_effective_school_year'] = array(
                     'name'  => 'year',
                     'value' => school_years(),
+                    'type'  => 'dropdown',
+                    'lang'  => 'curriculumn_effective_year'
                 );
 
-                $this->data['curriculum_effective_semester'] = array(
+                $inputs['curriculum_effective_semester'] = array(
                     'name'  => 'semester',
                     'value' => semesters(),
+                    'type'  => 'dropdown',
+                    'lang'  => 'curriculumn_effective_semester'
                 );
 
-                $this->data['course_id'] = array(
+                $inputs['course_id'] = array(
                     'name'  => 'course',
                     'value' => $this->Course_model->
                             as_dropdown('course_code')->
                             set_cache('as_dropdown_course_code')->
                             get_all(),
+                    'type'  => 'dropdown',
+                    'lang'  => 'curriculumn_course'
                 );
 
-                $this->data['curriculum_status'] = array(
+                $inputs['curriculum_status'] = array(
                     'name'   => 'status',
-                    'fields' => array(//we used check here 
+                    'fields' => array(//we used checkbox here 
                         'enable' => array(
                             'label' => lang('curriculumn_status_enable'),
                             'value' => TRUE
                         ),
                     ),
                     'value'  => $this->form_validation->set_value('status'),
+                    'type'   => 'checkbox',
+                    'lang'   => 'curriculumn_status'
                 );
 
-                $this->data['bootstrap'] = $this->bootstrap();
+
+                $this->data['curriculum_form'] = $this->form_boostrap('create-curriculum', $inputs, NULL, 'create_curriculum_label', 'curriculumn_create_button', 'info-sign', NULL, TRUE);
+                $this->data['bootstrap']       = $this->_bootstrap();
                 $this->_render('admin/create_curriculum', $this->data);
         }
 
-        private function bootstrap()
+        private function _bootstrap()
         {
                 /**
                  * for header

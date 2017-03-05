@@ -199,7 +199,7 @@ class Edit_user extends CI_Capstone_Controller
                     'id'   => 'password_confirm',
                     'type' => 'password'
                 );
-                $this->data['bootstrap']        = $this->bootstrap();
+                $this->data['bootstrap']        = $this->_bootstrap();
                 $this->_render('admin/edit_user', $this->data);
         }
 
@@ -208,7 +208,7 @@ class Edit_user extends CI_Capstone_Controller
          * @return array
          *  @author Lloric Garcia <emorickfighter@gmail.com>
          */
-        private function bootstrap()
+        private function _bootstrap()
         {
                 /**
                  * for header

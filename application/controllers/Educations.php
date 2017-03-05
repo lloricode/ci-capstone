@@ -71,7 +71,7 @@ class Educations extends CI_Capstone_Controller
 
                 $this->template['table_educations'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_education_heading', $pagination, TRUE);
                 $this->template['message']          = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-                $this->template['bootstrap']        = $this->bootstrap();
+                $this->template['bootstrap']        = $this->_bootstrap();
                 /**
 
                   /**
@@ -85,7 +85,7 @@ class Educations extends CI_Capstone_Controller
          * @return array
          *  @author Lloric Garcia <emorickfighter@gmail.com>
          */
-        private function bootstrap()
+        private function _bootstrap()
         {
                 /**
                  * for header

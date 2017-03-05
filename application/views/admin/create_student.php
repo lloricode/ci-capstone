@@ -15,36 +15,36 @@ echo form_open_multipart(site_url("create-student/index"), array(
                     <div class="form-horizontal">
                         <?php
                         //student_image:
-                        echo input_bootstrap($student_image, 'create_student_image_label', 'file');
+                        echo input_bootstrap($student_image);
 
                         //student_firstname:
-                        echo input_bootstrap($student_firstname, 'create_student_firstname_label');
+                        echo input_bootstrap($student_firstname);
 
                         //student_middlename:
-                        echo input_bootstrap($student_middlename, 'create_student_middlename_label');
+                        echo input_bootstrap($student_middlename);
 
                         //student_lastname:
-                        echo input_bootstrap($student_lastname, 'create_student_lastname_label');
+                        echo input_bootstrap($student_lastname);
 
 
                         //student_gender:
-                        echo input_bootstrap($student_gender, 'create_student_gender_label', 'radio');
+                        echo input_bootstrap($student_gender);
 
 
                         //student_birthdate:                        
-                        echo input_bootstrap($student_birthdate, 'create_student_birthdate_label');
+                        echo input_bootstrap($student_birthdate);
 
                         //student_birthplace:
-                        echo input_bootstrap($student_birthplace, 'create_student_birthplace_label');
+                        echo input_bootstrap($student_birthplace);
 
                         //student_civil_status:
-                        echo input_bootstrap($student_civil_status, 'create_student_civil_status_label');
+                        echo input_bootstrap($student_civil_status);
 
                         //student_nationality:
-                        echo input_bootstrap($student_nationality, 'create_student_nationality_label');
+                        echo input_bootstrap($student_nationality);
 
                         //student_permanent_address:
-                        echo input_bootstrap($student_permanent_address, 'create_student_permanent_address_label', 'textarea');
+                        echo input_bootstrap($student_permanent_address);
                         ?>
 
                     </div>
@@ -58,19 +58,19 @@ echo form_open_multipart(site_url("create-student/index"), array(
                     <div  class="form-horizontal">
                         <?php
                         //student_school_id:
-                        echo input_bootstrap($student_school_id_temp, 'create_student_school_id_label', 'input', 'Course Code');
+                        echo input_bootstrap($student_school_id_temp, 'Course Code');
 
                         //course_id:                      
-                        echo input_bootstrap($course_id, 'create_course_label', 'dropdown');
+                        echo input_bootstrap($course_id);
 
                         //student_year_level:
-                        echo input_bootstrap($enrollment_year_level, 'create_student_year_level_label', 'dropdown');
+                        echo input_bootstrap($enrollment_year_level);
 
                         //student_school_year: 
-                        echo input_bootstrap($enrollment_school_year, 'create_student_school_year_label');
+                        echo input_bootstrap($enrollment_school_year);
 
                         //student_semesterl:
-                        echo input_bootstrap($enrollment_semester, 'create_student_semester_label');
+                        echo input_bootstrap($enrollment_semester);
                         ?>
                     </div>
                 </div>
@@ -86,30 +86,30 @@ echo form_open_multipart(site_url("create-student/index"), array(
                     <div class="form-horizontal">
                         <?php
                         //personal_email:
-                        echo input_bootstrap($student_personal_email, 'create_student_personal_email_label');
+                        echo input_bootstrap($student_personal_email);
 
                         //personal_contact_number:
-                        echo input_bootstrap($student_personal_contact_number, 'create_student_personal_contact_label');
+                        echo input_bootstrap($student_personal_contact_number);
 
                         //address_town:
-                        echo input_bootstrap($student_address_town, 'create_student_town_label');
+                        echo input_bootstrap($student_address_town);
 
                         //address_region:
-                        echo input_bootstrap($student_address_region, 'create_student_region_label');
+                        echo input_bootstrap($student_address_region);
 
 
 
                         //guardian_contact_number:
-                        echo input_bootstrap($student_guardian_contact_number, 'create_student_guardian_contact_label');
+                        echo input_bootstrap($student_guardian_contact_number);
 
 
                         //guardian_fullname:
-                        echo input_bootstrap($student_guardian_fullname, 'create_student_guardian_fullname_label');
+                        echo input_bootstrap($student_guardian_fullname);
 
                         //guardian_email:
-                        echo input_bootstrap($student_guardian_email, 'create_student_guardian_email_label');
+                        echo input_bootstrap($student_guardian_email);
                         //guardian_address:
-                        echo input_bootstrap($student_guardian_address, 'create_student_guardian_address_label', 'textarea');
+                        echo input_bootstrap($student_guardian_address);
                         ?>
                     </div>
                 </div>

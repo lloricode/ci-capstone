@@ -31,27 +31,30 @@ class Create_education extends CI_Capstone_Controller
                                 redirect(site_url('educations'), 'refresh');
                         }
                 }
-                $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                $this->_form_view();
+        }
 
-
-                $this->data['education_code']        = array(
+        private function _form_view()
+        {
+                $inputs['education_code']        = array(
                     'name'  => 'code',
-                    'id'    => 'code',
-                    'type'  => 'text',
                     'value' => $this->form_validation->set_value('code'),
-                );
-                $this->data['education_description'] = array(
-                    'name'  => 'description',
-                    'id'    => 'description',
                     'type'  => 'text',
+                    'lang'  => 'create_education_code_label'
+                );
+                $inputs['education_description'] = array(
+                    'name'  => 'description',
                     'value' => $this->form_validation->set_value('description'),
+                    'type'  => 'text',
+                    'lang'  => 'create_education_description_label'
                 );
 
-                $this->data['bootstrap'] = $this->bootstrap();
+                $this->data['education_form'] = $this->form_boostrap('create-education', $inputs, NULL, 'create_education_heading', 'create_education_submit_button_label', 'info-sign', NULL, TRUE);
+                $this->data['bootstrap']      = $this->_bootstrap();
                 $this->_render('admin/create_education', $this->data);
         }
 
-        private function bootstrap()
+        private function _bootstrap()
         {
                 /**
                  * for header
