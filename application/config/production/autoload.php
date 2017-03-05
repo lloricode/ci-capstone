@@ -127,8 +127,8 @@ foreach($languages as $language)
 {
     if( ! is_array($language))
     {
-        $class = str_replace("_lang.php", "", $language);
-        $autoload['language'][] = strtolower('ci_capstone/'.$class);
+        $lang_to_be_load = str_replace("_lang.php", "", $language);
+        $autoload['language'][] = strtolower('ci_capstone/'.$lang_to_be_load);
         
     }
 }

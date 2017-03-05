@@ -65,7 +65,7 @@ if (!function_exists('comment_tag'))
         function comment_tag($conntent = '')
         {
 
-                return '<!-- ' . $conntent . ' -->' . PHP_EOL;
+                return PHP_EOL . '<!-- ' . $conntent . ' -->' . PHP_EOL;
         }
 
 }

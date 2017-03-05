@@ -241,7 +241,7 @@ class CI_Capstone_Controller extends MY_Controller
          * checking if one account log in another machine
          * ,this is set hook in constructor in MY_Controller
          * 
-         * then will call thin when trigger the name 'logged_in
+         * then will call this when trigger the name 'logged_in
          * 
          * 
          * this idea is came from https://github.com/benedmunds/CodeIgniter-Ion-Auth/issues/947
@@ -262,7 +262,7 @@ class CI_Capstone_Controller extends MY_Controller
 
                         if ($last_logged_in_session != $last_logged_in_db)
                         {
-                                $message = 'Another Logged In User in this Account.';
+                                $message = lang('another_logged_in_user_in_this_account');
 
                                 /**
                                  * replace 'space' to 'undescore
