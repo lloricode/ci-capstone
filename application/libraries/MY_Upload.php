@@ -73,4 +73,40 @@ class MY_Upload extends CI_Upload
                 );
         }
 
+        public function image_resize($img_name)
+        {
+                $original_dir               = $this->_CI->config->item('student_image_dir');
+                $student_image_size_profile = $this->_CI->config->item('student_image_size_profile');
+                $student_image_size_table   = $this->_CI->config->item('student_image_size_table');
+
+                $this->_resize($img_name, $original_dir, $student_image_size_profile);
+                $this->_resize($img_name, $original_dir, $student_image_size_table);
+        }
+
+        private function _resize($img_name, $original_dir, $image_resize_dir)
+        {
+                $this->_CI->load->library('image_lib');
+
+                /**
+                 * for table
+                 */
+                list($w, $h) = explode('x', str_replace('/', '', $image_resize_dir));
+
+                $new_dir = $original_dir . $image_resize_dir;
+
+                if (!is_dir($new_dir))
+                {
+                        mkdir($new_dir);
+                }
+                $config['source_image'] = $original_dir . $img_name;
+                $config['create_thumb'] = TRUE;
+                $config['width']        = (int) $w;
+                $config['height']       = (int) $h;
+                $config['new_image']    = $new_dir . $img_name;
+
+                $this->_CI->image_lib->initialize($config);
+                $this->_CI->image_lib->resize();
+                $this->_CI->image_lib->clear();
+        }
+
 }

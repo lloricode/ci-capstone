@@ -102,7 +102,7 @@ class Create_student extends CI_Capstone_Controller
                  * insert directly from forms
                  */
                 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::start
-                $s_id                   = $this->Student_model->from_form(NULL, array(
+                $s_id                      = $this->Student_model->from_form(NULL, array(
                             /**
                              * so users cant override the valid value
                              * not recommended hidden inputs
@@ -116,7 +116,7 @@ class Create_student extends CI_Capstone_Controller
                 /**
                  * get the validated fields
                  */
-                $student_validated_form = $this->form_validation->get__field_data();
+                $student_validated_form    = $this->form_validation->get__field_data();
                 /**
                  * reset the validation arrays
                  */
@@ -172,6 +172,10 @@ class Create_student extends CI_Capstone_Controller
                 {
                         if ($this->db->trans_commit())
                         {
+                                /**
+                                 * start resize image
+                                 */
+                                $this->upload->image_resize($img_name);
                                 redirect(site_url('students/view?student-id=' . $s_id), 'refresh');
                         }
                 }

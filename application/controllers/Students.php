@@ -51,6 +51,7 @@ class Students extends CI_Capstone_Controller
                                 $edit_ = anchor(site_url('edit-student?student-id=' . $student->student_id), 'Edit');
 
                                 array_push($table_data, array(
+                                    $this->_image($student),
                                     my_htmlspecialchars($student->student_school_id),
                                     my_htmlspecialchars($student->student_lastname),
                                     my_htmlspecialchars($student->student_firstname),
@@ -64,6 +65,7 @@ class Students extends CI_Capstone_Controller
                  * Table headers
                  */
                 $header = array(
+                    lang('index_student_image_th'),
                     lang('index_student_school_id_th'),
                     lang('index_student_lastname_th'),
                     lang('index_student_firstname_th'),
@@ -80,6 +82,17 @@ class Students extends CI_Capstone_Controller
                  * rendering users view
                  */
                 $this->_render('admin/students', $this->template);
+        }
+
+        private function _image($student)
+        {
+                list($filename, $extension) = explode('.', $student->student_image);
+
+                return '<div class="user-thumb">' . img(array(
+                            'src'   => $this->config->item('student_image_dir') . $this->config->item('student_image_size_table') . $filename . '_thumb.' . $extension,
+                            'alt'   => 'no image',
+                            'title' => $student->student_school_id . ' - ' . $student->student_lastname
+                        )) . '</div>';
         }
 
         /**

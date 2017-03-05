@@ -1,4 +1,5 @@
 <?php
+
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /*
@@ -52,3 +53,10 @@ $config['segment_controller'] = 2;
  */
 
 $config['segment_pagination'] = 4;
+
+
+/**
+ * image resize folders
+ */
+$config['student_image_size_profile'] = '200x200/';
+$config['student_image_size_table']   = '40x40/';
