@@ -81,13 +81,13 @@ class Users extends CI_Capstone_Controller
 
                                 if (in_array('deactivate', permission_controllers()))
                                 {
-                                        $active_      = (($user->active) ? anchor(site_url("deactivate/?user-id=" . $user->id), 'set deactive') : anchor("users/activate/" . $user->id, 'set active'));
-                                        $active_label = (($user->active) ? '<span class="done">' . lang('index_active_link') : '<span class="pending">' . lang('index_inactive_link')) . '</span>';
+                                        $active_      = (($user->active) ? anchor(site_url("deactivate/?user-id=" . $user->id), '<button class="btn btn-mini pending">Set Deactive</button>') : anchor("users/activate/" . $user->id, '<button class="btn btn-mini done">Set Active</button>'));
+                                        $active_label = (($user->active) ? '<span class="date badge badge-success">' . lang('index_active_link') : '<span class="date badge badge-important">' . lang('index_inactive_link')) . '</span>';
                                         $tmp[]        = array('data' => $active_label . nbs() . $active_, 'class' => 'taskStatus');
                                 }
                                 if (in_array('edit-user', permission_controllers()))
                                 {
-                                        $tmp[] = anchor(site_url("edit-user/?user-id=" . $user->id), 'Edit');
+                                        $tmp[] = anchor(site_url("edit-user/?user-id=" . $user->id), '<button class="btn btn-info btn-mini">Edit</button>');
                                 }
                                 array_push($table_data, $tmp);
                         }
