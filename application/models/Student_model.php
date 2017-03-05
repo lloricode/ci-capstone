@@ -146,8 +146,8 @@ class Student_model extends MY_Model
                         'label'  => lang('index_student_personal_email_th'),
                         'field'  => 'personal_email',
                         'rules'  => 'trim|max_length[50]|valid_email' .
-                        (('' != $this->input->post('personal_email', TRUE)) ?
-                        '|is_unique[students.student_personal_email]' : ''),
+                        (( $this->input->post('personal_email', TRUE)) ?
+                        '|is_unique[' . $this->table . '.student_personal_email]' : ''),
                         'errors' => array(
                             'is_unique' => 'The {field} already exist.'
                         )
@@ -156,8 +156,8 @@ class Student_model extends MY_Model
                         'label'  => lang('index_student_guardian_email_th'),
                         'field'  => 'guardian_email',
                         'rules'  => 'trim|max_length[50]|valid_email' .
-                        (('' != $this->input->post('guardian_email', TRUE)) ?
-                        '|is_unique[students.student_guardian_email]' : ''),
+                        (( $this->input->post('guardian_email', TRUE)) ?
+                        '|is_unique[' . $this->table . '.student_guardian_email]' : ''),
                         'errors' => array(
                             'is_unique' => 'The {field} already exist.'
                         )

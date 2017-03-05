@@ -102,7 +102,7 @@ class Create_student extends CI_Capstone_Controller
                  * insert directly from forms
                  */
                 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::start
-                $s_id = $this->Student_model->from_form(NULL, array(
+                $s_id                   = $this->Student_model->from_form(NULL, array(
                             /**
                              * so users cant override the valid value
                              * not recommended hidden inputs
@@ -113,8 +113,16 @@ class Create_student extends CI_Capstone_Controller
                             'student_image'     => $img_name,
                             'created_user_id'   => $this->session->userdata('user_id')
                         ))->insert();
-
-                $id = $this->Enrollment_model->from_form(NULL, array(
+                /**
+                 * get the validated fields
+                 */
+                $student_validated_form = $this->form_validation->get__field_data();
+                /**
+                 * reset the validation arrays
+                 */
+                $this->form_validation->reset_validation();
+                $this->form_validation->set_rules($this->Enrollment_model->rules['insert']);
+                $id                        = $this->Enrollment_model->from_form(NULL, array(
                             /**
                              * so users cant override the valid value
                              * not recommended hidden inputs
@@ -126,6 +134,21 @@ class Create_student extends CI_Capstone_Controller
                             'student_id'             => $s_id,
                             'created_user_id'        => $this->session->userdata('user_id')
                         ))->insert();
+                /**
+                 * get the validated fields
+                 */
+                $enrollment_validated_form = $this->form_validation->get__field_data();
+
+                /**
+                 * merge the fields
+                 */
+                $temp['fields'] = array_merge($student_validated_form['fields'], $enrollment_validated_form['fields']);
+                $temp['errors'] = array_merge($student_validated_form['errors'], $enrollment_validated_form['errors']);
+                /**
+                 * restore the data
+                 * this is for the user view, to see where the error fields
+                 */
+                $this->form_validation->set__field_data($temp);
                 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::end
 
                 /**

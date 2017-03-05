@@ -48,6 +48,31 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
 class MY_Form_validation extends CI_Form_validation
 {
 
+        /**
+         * call this then store the return in temporary variable, before calling form_validation->reset_validation();
+         * to not conflict in another validation in array
+         * @return array
+         * @author Lloric Garcia <emorickfighter@gmail.com>
+         */
+        public function get__field_data()
+        {
+                return array(
+                    'fields' => $this->_field_data,
+                    'errors' => $this->_error_array
+                );
+        }
+
+        /**
+         * restore the data after validate some/other form,
+         * 
+         * @param array $validated_fields
+         */
+        public function set__field_data($validated_fields)
+        {
+                $this->_field_data  = $validated_fields['fields'];
+                $this->_error_array = $validated_fields['errors'];
+        }
+
         public function __construct($rules = array())
         {
                 parent::__construct($rules);
