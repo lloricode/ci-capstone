@@ -18,28 +18,30 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author Lloric Mayuga Garcia <emorickfighter@gmail.com> 
  * @reference http://stackoverflow.com/questions/36951678/how-to-load-external-config-file-for-pagination-in-codeigniter
  */
-$config['per_page']         = 1;
-$config['use_page_numbers'] = TRUE;
-$config['num_links']        = 3; // lesft&right - link number
-$config['full_tag_open']    = '<ul>';
-$config['full_tag_close']   = '</ul>' . "\n";
-$config['cur_tag_open']     = '<li class="active">' . "\n" . '<a>';
-$config['cur_tag_close']    = '</a>' . "\n" . '</li>' . "\n";
-$config['next_link']        = 'Next';
-$config['prev_link']        = 'Previous';
-$config['first_link']       = 'First';
-$config['last_link']        = 'Last';
-$config['uri_segment']      = 4;
-$config['first_tag_open']   = '<li>' . "\n";
-$config['first_tag_close']  = '</li>' . "\n";
-$config['last_tag_open']    = '<li>' . "\n";
-$config['last_tag_close']   = '</li>' . "\n";
-$config['next_tag_open']    = '<li>' . "\n";
-$config['next_tag_close']   = '</li>' . "\n";
-$config['prev_tag_open']    = '<li>' . "\n";
-$config['prev_tag_close']   = '</li>' . "\n";
-$config['first_tag_open']   = '<li>' . "\n";
-$config['first_tag_close']  = '</li>' . "\n";
-$config['num_tag_open']     = '<li>' . "\n";
-$config['num_tag_close']    = '</li>' . "\n";
+$config['per_page']           = 1;
+$config['use_page_numbers']   = TRUE;
+$config['num_links']          = 3; // lesft&right - link number
+$config['full_tag_open']      = '<ul>' . PHP_EOL;
+$config['full_tag_close']     = '</ul>' . PHP_EOL;
+$config['cur_tag_open']       = '<li class="active">' . PHP_EOL . '<a>';
+$config['cur_tag_close']      = '</a>' . PHP_EOL . '</li>' . PHP_EOL;
+$config['next_link']          = 'Next';
+$config['prev_link']          = 'Previous';
+$config['first_link']         = 'First';
+$config['last_link']          = 'Last';
+$config['uri_segment']        = 4;
+$config['first_tag_open']     = '<li>' . PHP_EOL;
+$config['first_tag_close']    = '</li>' . PHP_EOL;
+$config['last_tag_open']      = '<li>' . PHP_EOL;
+$config['last_tag_close']     = '</li>' . PHP_EOL;
+$config['next_tag_open']      = '<li>' . PHP_EOL;
+$config['next_tag_close']     = '</li>' . PHP_EOL;
+$config['prev_tag_open']      = '<li>' . PHP_EOL;
+$config['prev_tag_close']     = '</li>' . PHP_EOL;
+$config['num_tag_open']       = '<li>' . PHP_EOL;
+$config['num_tag_close']      = '</li>' . PHP_EOL;
+$config['prev_link_diabled']  = '<li class="disabled"><a>' . $config['prev_link'] . '</a></li>' . PHP_EOL;
+$config['next_link_diabled']  = '<li class="disabled"><a>' . $config['next_link'] . '</a></li>' . PHP_EOL;
+$config['first_link_diabled'] = '<li class="disabled"><a>' . $config['first_link'] . '</a></li>' . PHP_EOL;
+$config['last_link_diabled']  = '<li class="disabled"><a>' . $config['last_link'] . '</a></li>' . PHP_EOL;
 
