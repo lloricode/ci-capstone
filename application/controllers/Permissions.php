@@ -93,7 +93,7 @@ class Permissions extends CI_Capstone_Controller
                                 }
                                 else
                                 {
-                                        $edit = anchor(site_url('permissions/edit?controller-id=' . $c->controller_id), 'Edit');
+                                        $edit = anchor(site_url('permissions/edit?controller-id=' . $c->controller_id), '<button class="btn btn-info btn-mini">Edit</button>');
                                 }
                                 $table_data[] = array(
                                     my_htmlspecialchars($c->controller_name),
