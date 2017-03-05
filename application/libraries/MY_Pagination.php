@@ -68,7 +68,7 @@ class MY_Pagination extends CI_Pagination
                  */
                 if (!preg_match('!' . $this->next_link . '!', $output))
                 {
-                        $output = str_replace($this->full_tag_close, $output . $next_link_diabled, $output);
+                        $output = str_replace($this->full_tag_close, $this->full_tag_open . $next_link_diabled, $output);
                 }
 
 
