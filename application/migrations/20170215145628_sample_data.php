@@ -53,7 +53,7 @@ class Migration_Sample_data extends CI_Migration
                 /**
                  * loading needed files
                  */
-                $this->load->library(array('school_id', 'subject_offer'));
+                $this->load->library(array('school_id', 'subject_offer_validation'));
                 $this->load->helper(array('array', 'string', 'navigation', 'time', 'day'));
                 $this->load->model(array(
                     'Student_model',
@@ -284,9 +284,9 @@ class Migration_Sample_data extends CI_Migration
 
         private function check_conflict($sub_offr)
         {
-                $this->subject_offer->init('migrate');
-                $this->subject_offer->migrate_test($sub_offr);
-                return $this->subject_offer->subject_offer_check_check_conflict();
+                $this->subject_offer_validation->init('migrate');
+                $this->subject_offer_validation->migrate_test($sub_offr);
+                return $this->subject_offer_validation->subject_offer_check_check_conflict();
         }
 
         private function atleast_one_day($sub_offr)
