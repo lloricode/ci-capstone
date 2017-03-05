@@ -82,7 +82,7 @@ class Users extends CI_Capstone_Controller
                                 if (in_array('deactivate', permission_controllers()))
                                 {
                                         $active_      = (($user->active) ? anchor(site_url("deactivate/?user-id=" . $user->id), '<button class="btn btn-danger btn-mini">Set Deactive</button>') : anchor("users/activate/" . $user->id, '<button class="btn btn-success btn-mini">Set Active</button>'));
-                                        $active_label = (($user->active) ? '<span class="done">' . lang('index_active_link') : '<span class="pending">' . lang('index_inactive_link')) . '</span>';
+                                        $active_label = (($user->active) ? '<span class="date badge badge-success">' . lang('index_active_link') : '<span class="date badge badge-important">' . lang('index_inactive_link')) . '</span>';
                                         $tmp[]        = array('data' => $active_label . nbs() . $active_, 'class' => 'taskStatus');
                                 }
                                 if (in_array('edit-user', permission_controllers()))
