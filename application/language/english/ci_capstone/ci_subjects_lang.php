@@ -9,12 +9,12 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
  *         @shikai06
  */
 //Subject Form
-$lang['create_subject_heading']                   = 'Add Subject';
+$lang['create_subject_heading']                   = 'Create Subject';
 $lang['create_subject_code_label']                = 'Subject Code:';
 $lang['create_subject_description_label']         = 'Description:';
 $lang['create_subject_unit_label']                = 'Subject Unit:';
 $lang['create_subject_course_name_label']         = 'Course Name:';
-$lang['create_subject_submit_button_label']       = 'Add Subject';
+$lang['create_subject_submit_button_label']       = 'Create Subject';
 $lang['create_subject_succesfully_added_message'] = 'Subject Succesfully Added!!';
 
 //Subject Table header

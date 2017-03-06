@@ -72,7 +72,7 @@ class Courses extends CI_Capstone_Controller
                     lang('index_education_code_th')
                 );
 
-                $pagination = $this->pagination->generate_bootstrap_link('courses/index', $this->Course_model->set_cache('course_count_rows')->count_rows() / $this->limit);
+                $pagination = $this->pagination->generate_bootstrap_link('courses/index', $this->Course_model->count_rows() / $this->limit);
 
                 $this->template['table_courses'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_course_heading', $pagination, TRUE);
                 $this->template['message']       = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));

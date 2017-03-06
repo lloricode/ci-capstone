@@ -47,7 +47,7 @@ class Database extends CI_Capstone_Controller
                                 ), TRUE);
                 $this->template['delete_cache_button'] = MY_Controller::_render('admin/_templates/button_view', array(
                             'href'         => 'database/delete-cache',
-                            'button_label' => 'Delete Cache',
+                            'button_label' => 'Delete Query Cache',
                             'extra'        => array('class' => 'btn btn-info icon-trash'),
                                 ), TRUE);
                 $this->template['message']             = $this->session->flashdata('dbmessage');

@@ -78,7 +78,7 @@ class Groups extends CI_Capstone_Controller
                     lang('index_groups_th')
                 );
 
-                $pagination = $this->pagination->generate_bootstrap_link('admin/groups/index', $this->Group_model->set_cache('group_count_rows')->count_rows() / $this->limit);
+                $pagination = $this->pagination->generate_bootstrap_link('admin/groups/index', $this->Group_model->count_rows() / $this->limit);
 
                 $this->template['table_groups'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_groups_th', $pagination, TRUE);
                 $this->template['message']      = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));

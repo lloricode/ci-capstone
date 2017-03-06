@@ -74,27 +74,17 @@ class Subject_offer_validation
         private function post()
         {
                 /**
-                 * calling this in controller ,so directly access will this, so better check if button in form is triggered.
+                 * set foreign ids
                  */
-                if ((bool) $this->CI->input->post('submit'))
-                {
-                        /**
-                         * set foreign ids
-                         */
-                        $this->user_id    = $this->CI->input->post('faculty', TRUE);
-                        $this->room_id    = $this->CI->input->post('room', TRUE);
-                        $this->subject_id = $this->CI->input->post('subject', TRUE);
-                        $this->start      = $this->CI->input->post('start', TRUE);
-                        $this->end        = $this->CI->input->post('end', TRUE);
+                $this->user_id    = $this->CI->input->post('faculty', TRUE);
+                $this->room_id    = $this->CI->input->post('room', TRUE);
+                $this->subject_id = $this->CI->input->post('subject', TRUE);
+                $this->start      = $this->CI->input->post('start', TRUE);
+                $this->end        = $this->CI->input->post('end', TRUE);
 
-                        foreach ($this->days as $v)
-                        {
-                                $this->input_data_days['subject_offer_' . $v] = (is_null($this->CI->input->post($v, TRUE)) ? FALSE : TRUE);
-                        }
-                }
-                else
+                foreach ($this->days as $v)
                 {
-                        show_error('Invalid Request.');
+                        $this->input_data_days['subject_offer_' . $v] = (is_null($this->CI->input->post($v, TRUE)) ? FALSE : TRUE);
                 }
         }
 

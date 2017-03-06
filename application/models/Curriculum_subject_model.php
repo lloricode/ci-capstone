@@ -103,7 +103,7 @@ class Curriculum_subject_model extends MY_Model
                     'curriculum_id'                       => array(
                         'label' => lang('curriculum_subject_curriculum_label'),
                         'field' => 'curriculum',
-                        'rules' => 'trim|required|is_natural_no_zero'
+                        'rules' => 'trim|required|is_natural_no_zero|callback_check_subject_in_curiculum'
                     ),
                     'subject_id'                          => array(
                         'label' => lang('curriculum_subject_subject_label'),

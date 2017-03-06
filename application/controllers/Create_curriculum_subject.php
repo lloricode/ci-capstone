@@ -29,11 +29,30 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                                 ))->insert();
                         if ($id)
                         {
-                                $this->session->set_flashdata('message', 'Added!');
-                                redirect(site_url('create-curriculum-subject'), 'refresh');
+                                $this->session->set_flashdata('message', lang('curriculum_subject_add_successfull'));
+                                redirect(site_url('curriculums/view?curriculum-id=' . $this->input->post('curriculum')), 'refresh');
                         }
                 }
                 $this->_form_view();
+        }
+
+        /**
+         * check if subject is exist in curriculum
+         * 
+         * @return bool
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        public function check_subject_in_curiculum()
+        {
+                if (!$this->input->post('submit'))
+                {
+                        show_404();
+                }
+                $this->form_validation->set_message('check_subject_in_curiculum', 'Subject Already Added in this {field}.');
+                return (bool) $this->Curriculum_subject_model->where(array(
+                            'subject_id'    => $this->input->post('subject'),
+                            'curriculum_id' => $this->input->post('curriculum')
+                        ))->count_rows() == 0;
         }
 
         private function _dropdown_for_curriculumn()
@@ -83,25 +102,13 @@ class Create_curriculum_subject extends CI_Capstone_Controller
 
         private function _form_view()
         {
-                $inputs['curriculum_subject_year_level'] = array(
-                    'name'  => 'level',
-                    'value' => _numbers_for_drop_down(1, $this->config->item('max_year_level')),
-                    'type'  => 'dropdown',
-                    'lang'  => 'curriculum_subject_year_level_label'
-                );
 
                 $inputs['curriculum_id'] = array(
-                    'name'  => 'curriculum',
-                    'value' => $this->_dropdown_for_curriculumn(),
-                    'type'  => 'dropdown',
-                    'lang'  => 'curriculum_subject_curriculum_label'
-                );
-
-                $inputs['curriculum_subject_semester'] = array(
-                    'name'  => 'semester',
-                    'value' => semesters(),
-                    'type'  => 'dropdown',
-                    'lang'  => 'curriculum_subject_semester_label'
+                    'name'    => 'curriculum',
+                    'value'   => $this->_dropdown_for_curriculumn(),
+                    'type'    => 'dropdown',
+                    'lang'    => 'curriculum_subject_curriculum_label',
+                    'default' => $this->input->get('curriculum-id')//directly, if not found will return NULL
                 );
 
                 $inputs['subject_id'] = array(
@@ -123,6 +130,19 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                     'value' => $this->_dropdown_for_subjects(),
                     'type'  => 'dropdown',
                     'lang'  => 'curriculum_subject_co_subject_label'
+                );
+
+                $inputs['curriculum_subject_semester']   = array(
+                    'name'    => 'semester',
+                    'value'   => semesters(),
+                    'type'    => 'dropdown',
+                    'lang'    => 'curriculum_subject_semester_label',
+                );
+                $inputs['curriculum_subject_year_level'] = array(
+                    'name'  => 'level',
+                    'value' => _numbers_for_drop_down(1, $this->config->item('max_year_level')),
+                    'type'  => 'dropdown',
+                    'lang'  => 'curriculum_subject_year_level_label'
                 );
 
                 $inputs['curriculum_subject_lecture_hours'] = array(

@@ -39,8 +39,8 @@ class Curriculums extends CI_Capstone_Controller
 
                 $curriculum_obj = $this->Curriculum_model->
                         limit($this->limit, $this->limit * $this->page_ - $this->limit)->
-                        order_by('updated_at', 'DESC')->
                         order_by('created_at', 'DESC')->
+                        order_by('updated_at', 'DESC')->
                         set_cache('curriculum_page_' . $this->page_)->
                         get_all();
 
@@ -75,7 +75,7 @@ class Curriculums extends CI_Capstone_Controller
                     lang('curriculumn_status'),
                     lang('curriculumn_option')
                 );
-                $pagination = $this->pagination->generate_bootstrap_link('curriculums/index', $this->Curriculum_model->set_cache('curriculum_count_rows')->count_rows() / $this->limit);
+                $pagination = $this->pagination->generate_bootstrap_link('curriculums/index', $this->Curriculum_model->count_rows() / $this->limit);
 
                 $this->template['table_curriculm'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'curriculum_label', $pagination, TRUE);
                 $this->template['message']         = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
@@ -105,8 +105,17 @@ class Curriculums extends CI_Capstone_Controller
 
                 if ($cur_subj_obj)
                 {
+                        $year         = 1;
+                        $table_data[] = array(array('data' => '<h4>Level ' . $year . '</h4>', 'colspan' => '7'));
                         foreach ($cur_subj_obj as $cs)
                         {
+                                if ($year != $cs->curriculum_subject_year_level)
+                                {
+                                        $table_data[] = array(array('data' => '<h4>Level ' . $cs->curriculum_subject_year_level . '</h4>', 'colspan' => '7'));
+
+                                        $year++;
+                                }
+                                //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::start
                                 $subj_pre = '';
                                 $subj_co  = '';
                                 if ($cs->subject_id_pre)
@@ -117,13 +126,14 @@ class Curriculums extends CI_Capstone_Controller
                                 {
                                         $subj_co = $this->Subject_model->get($cs->subject_id_co)->subject_code;
                                 }
+                                //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::end
                                 $table_data[] = array(
-                                    my_htmlspecialchars($cs->curriculum_subject_year_level),
+                                    // my_htmlspecialchars($cs->curriculum_subject_year_level),
+                                    my_htmlspecialchars(semesters($cs->curriculum_subject_semester)),
                                     my_htmlspecialchars($this->Subject_model->get($cs->subject_id)->subject_code . $cs->subject_id),
                                     my_htmlspecialchars($cs->curriculum_subject_units),
                                     my_htmlspecialchars($cs->curriculum_subject_lecture_hours . ' Hours'),
                                     my_htmlspecialchars($cs->curriculum_subject_laboratory_hours . ' Hours'),
-                                    my_htmlspecialchars(semesters($cs->curriculum_subject_semester)),
                                     my_htmlspecialchars($subj_pre),
                                     my_htmlspecialchars($subj_co),
                                 );
@@ -132,16 +142,21 @@ class Curriculums extends CI_Capstone_Controller
                 /*
                  * Table headers
                  */
-                $header = array(
-                    lang('curriculum_subject_year_level_label'),
+                $header                                             = array(
+                    //  lang('curriculum_subject_year_level_label'),
+                    lang('curriculum_subject_semester_label'),
                     lang('curriculum_subject_subject_label'),
                     lang('curriculum_subject_units_label'),
                     lang('curriculum_subject_lecture_hours_label'),
                     lang('curriculum_subject_laboratory_hours_label'),
-                    lang('curriculum_subject_semester_label'),
                     lang('curriculum_subject_pre_subject_label'),
                     lang('curriculum_subject_co_subject_label')
                 );
+                $this->template['create_curriculum_subject_button'] = MY_Controller::_render('admin/_templates/button_view', array(
+                            'href'         => 'create-curriculum-subject?curriculum-id=' . $curriculum_obj->curriculum_id,
+                            'button_label' => lang('create_curriculum_subject_label'),
+                            'extra'        => array('class' => 'btn btn-success icon-edit'),
+                                ), TRUE);
 
                 $this->template['table_corriculum_subjects'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'curriculum_subject_label', FALSE, TRUE);
                 $this->template['message']                   = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
