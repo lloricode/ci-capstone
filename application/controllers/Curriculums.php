@@ -52,7 +52,7 @@ class Curriculums extends CI_Capstone_Controller
 
                         foreach ($curriculum_obj as $curriculum)
                         {
-                                $view = anchor(site_url('curriculums/view?curriculum-id=' . $curriculum->curriculum_id), lang('curriculumn_view'));
+                                $view = anchor(site_url('curriculums/view?curriculum-id=' . $curriculum->curriculum_id),'<span class="btn btn-warning btn-mini">'. lang('curriculumn_view'). '</span>');
                                 array_push($table_data, array(
                                     my_htmlspecialchars($curriculum->curriculum_description),
                                     my_htmlspecialchars($curriculum->curriculum_effective_school_year),

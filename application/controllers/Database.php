@@ -43,12 +43,12 @@ class Database extends CI_Capstone_Controller
                 $this->template['backup_button']       = MY_Controller::_render('admin/_templates/button_view', array(
                             'href'         => 'database/backup-database',
                             'button_label' => lang('db_back_up'),
-                            'extra'        => array('class' => 'btn btn-info icon-download-alt'),
+                            'extra'        => array('class' => 'btn btn-info icon-download-alt')
                                 ), TRUE);
                 $this->template['delete_cache_button'] = MY_Controller::_render('admin/_templates/button_view', array(
                             'href'         => 'database/delete-cache',
                             'button_label' => 'Delete Query Cache',
-                            'extra'        => array('class' => 'btn btn-info icon-trash'),
+                            'extra'        => array('class' => 'btn btn-danger icon-trash')
                                 ), TRUE);
                 $this->template['message']             = $this->session->flashdata('dbmessage');
                 $this->template['bootstrap']           = $this->_bootstrap();

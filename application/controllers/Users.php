@@ -87,7 +87,7 @@ class Users extends CI_Capstone_Controller
                                 }
                                 if (in_array('edit-user', permission_controllers()))
                                 {
-                                        $tmp[] = anchor(site_url("edit-user/?user-id=" . $user->id), '<button class="btn btn-info btn-mini">Edit</button>');
+                                        $tmp[] = anchor(site_url("edit-user/?user-id=" . $user->id), '<span class="btn btn-info btn-mini">Edit</span>');
                                 }
                                 array_push($table_data, $tmp);
                         }
