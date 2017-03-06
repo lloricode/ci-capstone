@@ -43,14 +43,12 @@ class Create_room extends CI_Capstone_Controller
 
                 $inputs['room_number']      = array(
                     'name'  => 'number',
-                    'id'    => 'number',
                     'value' => $this->form_validation->set_value('number'),
                     'type'  => 'text',
                     'lang'  => 'create_room_number_label'
                 );
                 $inputs['room_description'] = array(
                     'name'  => 'description',
-                    'id'    => 'description',
                     'value' => $this->form_validation->set_value('description'),
                     'type'  => 'text',
                     'lang'  => 'create_room_description_label'

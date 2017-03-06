@@ -15,6 +15,8 @@ class Deactivate extends CI_Capstone_Controller
                 {
                         show_error(lang('access_denied_of_current_user_group'));
                 }
+                $this->load->library('form_validation');
+                $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
                 $this->breadcrumbs->unshift(2, lang('administrators_label'), '#');
                 $this->breadcrumbs->unshift(3, lang('index_heading'), 'users');
         }
@@ -27,21 +29,18 @@ class Deactivate extends CI_Capstone_Controller
                         show_error('Invalid request.');
                 }
 
-                $this->breadcrumbs->unshift(3, 'Deactivate User', 'deactivate?user-id=74?user-id=' . $id);
-                $this->load->library('form_validation');
+                $this->breadcrumbs->unshift(3, lang('deactivate_heading'), 'deactivate?user-id=' . $id);
                 $this->form_validation->set_rules('confirm', $this->lang->line('deactivate_validation_confirm_label'), 'required');
                 $this->form_validation->set_rules('id', $this->lang->line('deactivate_validation_user_id_label'), 'required|alpha_numeric');
 
                 if ($this->form_validation->run() == FALSE)
                 {
-                        $this->data['user'] = $this->ion_auth->user($id)->row();
-                        if (!$this->data['user'])
+                        $_user = $this->ion_auth->user($id)->row();
+                        if (!$_user)
                         {
                                 show_error('Invalid request.');
                         }
-                        $this->session->set_flashdata('message', (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->ion_auth->messages())));
-                        $this->data['bootstrap'] = $this->_bootstrap();
-                        $this->_render('admin/deactivate_user', $this->data);
+                        $this->_form_view($_user);
                 }
                 else
                 {
@@ -66,6 +65,28 @@ class Deactivate extends CI_Capstone_Controller
                         // redirect them back to the auth page
                         redirect('users', 'refresh');
                 }
+        }
+
+        private function _form_view($_user)
+        {
+                $inputs['tmp'] = array(
+                    'name'   => 'confirm',
+                    'fields' => array(
+                        'yes' => 'deactivate_confirm_y_label',
+                        'no'  => 'deactivate_confirm_n_label'
+                    ),
+                    'value'  => $this->form_validation->set_value('confirm'),
+                    'type'   => 'radio',
+                    'lang'   => array(
+                        'main_lang' => 'deactivate_subheading',
+                        'sprintf'   => $_user->username
+                    )
+                );
+
+                $message                       = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->ion_auth->messages()));
+                $this->data['deactivate_form'] = $this->form_boostrap('deactivate/?user-id=' . $_user->id, $inputs, $message, 'deactivate_heading', 'deactivate_submit_btn', 'info-sign', array('id' => $_user->id), TRUE);
+                $this->data['bootstrap']       = $this->_bootstrap();
+                $this->_render('admin/deactivate_user', $this->data);
         }
 
         /**

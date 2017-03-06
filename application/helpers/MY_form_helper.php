@@ -29,9 +29,19 @@ if (!function_exists('input_bootstrap'))
                 echo PHP_EOL . comment_tag($field['name'] . ' [' . $field['type'] . ']');
                 $tmp = (form_error($field['name']) == '') ? '' : ' error';
                 echo '<div class="control-group' . $tmp . '">' . PHP_EOL;
-                echo lang($field['lang'], $field['name'], array(
-                    'class' => 'control-label',
-                )) . PHP_EOL;
+
+                if (isset($field['lang']['main_lang']))
+                {
+                        echo sprintf(lang($field['lang']['main_lang'], $field['name'], array(
+                            'class' => 'control-label',
+                                )), $field['lang']['sprintf']) . PHP_EOL;
+                }
+                else
+                {
+                        echo lang($field['lang'], $field['name'], array(
+                            'class' => 'control-label',
+                        )) . PHP_EOL;
+                }
                 echo '<div class="controls">' . PHP_EOL;
 
                 if ($prepend)
@@ -77,7 +87,7 @@ if (!function_exists('input_bootstrap'))
                                                         foreach ($labels as $k => $v)
                                                         {
                                                                 $defaut = ($field['value'] == $k);
-                                                                echo form_label(form_radio($field['name'], $k, $defaut) . ' ' . $v) . PHP_EOL;
+                                                                echo form_label(form_radio($field['name'], $k, $defaut) . ' ' . lang($v)) . PHP_EOL;
                                                         }
                                                         break;
                                                 case 'checkbox':
