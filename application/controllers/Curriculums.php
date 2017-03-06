@@ -52,7 +52,7 @@ class Curriculums extends CI_Capstone_Controller
 
                         foreach ($curriculum_obj as $curriculum)
                         {
-                                $view = anchor(site_url('curriculums/view?curriculum-id=' . $curriculum->curriculum_id),'<span class="btn btn-warning btn-mini">'. lang('curriculumn_view'). '</span>');
+                                $view = anchor(site_url('curriculums/view?curriculum-id=' . $curriculum->curriculum_id), '<span class="btn btn-warning btn-mini">' . lang('curriculumn_view') . '</span>');
                                 array_push($table_data, array(
                                     my_htmlspecialchars($curriculum->curriculum_description),
                                     my_htmlspecialchars($curriculum->curriculum_effective_school_year),
@@ -130,7 +130,7 @@ class Curriculums extends CI_Capstone_Controller
                                 $table_data[] = array(
                                     // my_htmlspecialchars($cs->curriculum_subject_year_level),
                                     my_htmlspecialchars(semesters($cs->curriculum_subject_semester)),
-                                    my_htmlspecialchars($this->Subject_model->get($cs->subject_id)->subject_code . $cs->subject_id),
+                                    my_htmlspecialchars($this->Subject_model->get($cs->subject_id)->subject_code),
                                     my_htmlspecialchars($cs->curriculum_subject_units),
                                     my_htmlspecialchars($cs->curriculum_subject_lecture_hours . ' Hours'),
                                     my_htmlspecialchars($cs->curriculum_subject_laboratory_hours . ' Hours'),
@@ -158,6 +158,7 @@ class Curriculums extends CI_Capstone_Controller
                             'extra'        => array('class' => 'btn btn-success icon-edit'),
                                 ), TRUE);
 
+                $this->template['curriculum_obj']            = $curriculum_obj;
                 $this->template['table_corriculum_subjects'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'curriculum_subject_label', FALSE, TRUE);
                 $this->template['message']                   = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
                 $this->template['bootstrap']                 = $this->_bootstrap();

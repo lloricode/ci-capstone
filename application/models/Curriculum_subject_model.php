@@ -103,22 +103,22 @@ class Curriculum_subject_model extends MY_Model
                     'curriculum_id'                       => array(
                         'label' => lang('curriculum_subject_curriculum_label'),
                         'field' => 'curriculum',
-                        'rules' => 'trim|required|is_natural_no_zero|callback_check_subject_in_curiculum'
+                        'rules' => 'trim|required|is_natural_no_zero'
                     ),
                     'subject_id'                          => array(
                         'label' => lang('curriculum_subject_subject_label'),
                         'field' => 'subject',
-                        'rules' => 'trim|required|is_natural_no_zero|differs[pre_requisite]|differs[co_requisite]'
+                        'rules' => 'trim|required|is_natural_no_zero|differs[pre_requisite]|differs[co_requisite]|callback_check_subject_in_curiculum'
                     ),
                     'subject_id_pre'                      => array(
                         'label' => lang('curriculum_subject_pre_subject_label'),
                         'field' => 'pre_requisite',
-                        'rules' => 'trim|is_natural_no_zero|differs[co_requisite]|differs[subject]'
+                        'rules' => 'trim|is_natural_no_zero|differs[co_requisite]|differs[subject]|callback_is_pre_requisite_low_level'
                     ),
                     'subject_id_co'                       => array(
                         'label' => lang('curriculum_subject_co_subject_label'),
                         'field' => 'co_requisite',
-                        'rules' => 'trim|is_natural_no_zero|differs[pre_requisite]|differs[subject]'
+                        'rules' => 'trim|is_natural_no_zero|differs[pre_requisite]|differs[subject]|callback_is_co_requisite_same_level'
                     ),
                 );
         }

@@ -48,11 +48,183 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                 {
                         show_404();
                 }
-                $this->form_validation->set_message('check_subject_in_curiculum', 'Subject Already Added in this {field}.');
+                $this->form_validation->set_message('check_subject_in_curiculum', 'Subject Already Added in this Curriculum.');
                 return (bool) $this->Curriculum_subject_model->where(array(
                             'subject_id'    => $this->input->post('subject'),
                             'curriculum_id' => $this->input->post('curriculum')
                         ))->count_rows() == 0;
+        }
+
+        /**
+         * check if adding Requisite is the same year level
+         * 
+         * @return bool
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        public function is_co_requisite_same_level()
+        {
+                if (!$this->input->post('submit'))
+                {
+                        show_404();
+                }
+
+
+                $input_year_level = $this->input->post('level', TRUE);
+                $co_requisite     = $this->input->post('co_requisite', TRUE);
+                $curriculum_id    = $this->input->post('curriculum', TRUE);
+                $semester         = $this->input->post('semester', TRUE);
+
+                /**
+                 * required first all the other field to be filled, it will validate first
+                 */
+                if ($input_year_level && $co_requisite && $semester)
+                {
+                        /**
+                         * get row in $co_requisite in current curriculum
+                         */
+                        $cur_sub_obj = $this->Curriculum_subject_model->where(array(
+                                    //main subject search by co-requisite , to get the year level of input co requsite using the exist subject in curiculum
+                                    'subject_id'    => $co_requisite,
+                                    'curriculum_id' => $curriculum_id // search in curiculum input
+                                ))->set_cache("curriculum_subject_validation_{$co_requisite}_{$curriculum_id}")->get();
+
+                        /**
+                         * if has, check the year level of $pre_requisite
+                         */
+                        if ($cur_sub_obj)
+                        {
+                                /**
+                                 * check if same year level, with input and the result OBJ->year level in model
+                                 */
+                                if ($cur_sub_obj->curriculum_subject_year_level == $input_year_level)
+                                {
+                                        /**
+                                         * validation pass, so lets also check semester
+                                         */
+                                        if ($cur_sub_obj->curriculum_subject_semester == $semester)
+                                        {
+                                                /**
+                                                 * accepted
+                                                 */
+                                                return TRUE;
+                                        }
+                                        /**
+                                         * return FALSE, because, because is not at same semester
+                                         */
+                                        $this->form_validation->set_message('is_co_requisite_same_level', 'Adding "{field}" must also in same semester.');
+                                        return FALSE;
+                                }
+                                /**
+                                 * return FALSE, because, it detect that has a subject BUT not same level
+                                 */
+                                $this->form_validation->set_message('is_co_requisite_same_level', 'Adding "{field}" must same in current year level.');
+                                return FALSE;
+                        }
+                        /**
+                         * no result so no conflict
+                         */
+                        return TRUE;
+                }
+                /**
+                 * not required, just pass the validation
+                 */
+                return TRUE;
+        }
+
+        /**
+         * check if adding Requisite is in low year level
+         * 
+         * @return bool
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        public function is_pre_requisite_low_level()
+        {
+                if (!$this->input->post('submit'))
+                {
+                        show_404();
+                }
+
+
+                $input_year_level = $this->input->post('level', TRUE);
+                $pre_requisite    = $this->input->post('pre_requisite', TRUE);
+                $curriculum_id    = $this->input->post('curriculum', TRUE);
+                $semester         = $this->input->post('semester', TRUE);
+
+                /**
+                 * required first all the other field to be filled, it will validate first
+                 */
+                if ($input_year_level && $pre_requisite && $semester)
+                {
+                        /**
+                         * check if  $pre_requisite exist in current curriculum
+                         */
+                        $cur_sub_obj = $this->Curriculum_subject_model->where(array(
+                                    //main subject search by $pre_requisite , to get the year level of input co requsite using the exist subject in curiculum
+                                    'subject_id'    => $pre_requisite,
+                                    'curriculum_id' => $curriculum_id
+                                ))->get();
+
+                        /**
+                         * if has, check the yeal level of $pre_requisite
+                         */
+                        if ($cur_sub_obj)
+                        {
+                                /**
+                                 * check lower year, i use == to include semester, 
+                                 */
+                                if ($cur_sub_obj->curriculum_subject_year_level <= $input_year_level)
+                                {
+
+                                        $int_semester_db    = $this->_numeric_semester($cur_sub_obj->curriculum_subject_semester);
+                                        $int_semester_input = $this->_numeric_semester($semester);
+
+                                        if ($int_semester_db < $int_semester_input || $int_semester_input == 1)//no lower year than 1
+                                        {
+                                                /**
+                                                 * accepted
+                                                 */
+                                                return TRUE;
+                                        }
+                                        /**
+                                         * return FALSE, because,not lower in semester
+                                         */
+                                        $this->form_validation->set_message('is_pre_requisite_low_level', 'Adding "{field}"\'s year must in lower in semester.');
+                                        return FALSE;
+                                }
+                                /**
+                                 * return FALSE, because, it detect that has a subject BUT not lower/equal level
+                                 */
+                                $this->form_validation->set_message('is_pre_requisite_low_level', 'Adding "{field}"\'s year must in lower/equal in current year level.');
+                                return FALSE;
+                        }
+                        /**
+                         * no result so no conflict
+                         */
+                        return TRUE;
+                }
+                /**
+                 * not required
+                 */
+                return TRUE;
+        }
+
+        private function _numeric_semester($tmp)
+        {
+                $int_semester = NULL;
+                switch ($tmp)
+                {
+                        case 'first':
+                                $int_semester = 1;
+                                break;
+                        case 'second':
+                                $int_semester = 2;
+                                break;
+                        case 'summer':
+                                $int_semester = 3;
+                                break;
+                        default: break;
+                }
+                return $int_semester;
         }
 
         private function _dropdown_for_curriculumn()
@@ -133,10 +305,10 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                 );
 
                 $inputs['curriculum_subject_semester']   = array(
-                    'name'    => 'semester',
-                    'value'   => semesters(),
-                    'type'    => 'dropdown',
-                    'lang'    => 'curriculum_subject_semester_label',
+                    'name'  => 'semester',
+                    'value' => semesters(),
+                    'type'  => 'dropdown',
+                    'lang'  => 'curriculum_subject_semester_label',
                 );
                 $inputs['curriculum_subject_year_level'] = array(
                     'name'  => 'level',

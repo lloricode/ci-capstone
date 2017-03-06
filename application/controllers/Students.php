@@ -176,17 +176,6 @@ class Students extends CI_Capstone_Controller
         }
 
         /**
-         *  @author Lloric Mayuga Garcia <emorickfighter@gmail.com> 
-         */
-        public function edit()
-        {
-                /*
-                 * check url with id
-                 */
-                $student_obj = check_id_from_url('student_id', 'Student_model', $this->input->get('student-id'));
-        }
-
-        /**
          * 
          * @return array
          *  @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
