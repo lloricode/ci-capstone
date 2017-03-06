@@ -43,6 +43,10 @@ class Create_subject_offer extends CI_Capstone_Controller
 
         public function subject_offer_check_check_conflict()
         {
+                if (!$this->input->post('submit'))
+                {
+                        show_404();
+                }
                 $this->load->helper('day');
                 $this->load->model(array('User_model', 'Subject_model', 'Room_model'));
                 $this->load->library('subject_offer_validation');

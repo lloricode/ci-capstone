@@ -67,7 +67,7 @@ class Educations extends CI_Capstone_Controller
                     lang('index_education_description_th'),
                 );
 
-                $pagination = $this->pagination->generate_bootstrap_link('educations/index', $this->Education_model->set_cache('education_count_rows')->count_rows() / $this->limit);
+                $pagination = $this->pagination->generate_bootstrap_link('educations/index', $this->Education_model->count_rows() / $this->limit);
 
                 $this->template['table_educations'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_education_heading', $pagination, TRUE);
                 $this->template['message']          = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));

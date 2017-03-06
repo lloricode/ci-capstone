@@ -81,7 +81,7 @@ if (!function_exists('current_school_semester'))
          * @return string current month that will be save in database
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        function current_school_semester()
+        function current_school_semester($key = FALSE)
         {
 
                 $CI                       = &get_instance();
@@ -110,18 +110,25 @@ if (!function_exists('current_school_semester'))
 
 
 
-
+                $key_value = NULL;
                 if (in_array($current_month, $first_array))
                 {
-                        $output = $terms['first'];
+                        $key_value = 'first';
+                        $output    = $terms['first'];
                 }
                 else if (in_array($current_month, $second_array))
                 {
-                        $output = $terms['second'];
+                        $key_value = 'second';
+                        $output    = $terms['second'];
                 }
                 else if (in_array($current_month, $summer_array))
                 {
-                        $output = $terms['summer'];
+                        $key_value = 'summer';
+                        $output    = $terms['summer'];
+                }
+                if ($key)
+                {
+                        return $key_value;
                 }
                 return $output;
         }

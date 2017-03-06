@@ -73,7 +73,7 @@ class Students extends CI_Capstone_Controller
                     'Options'
                 );
 
-                $pagination = $this->pagination->generate_bootstrap_link('students/index', $this->Student_model->set_cache('student_count_rows')->count_rows() / $this->limit);
+                $pagination = $this->pagination->generate_bootstrap_link('students/index', $this->Student_model->count_rows() / $this->limit);
 
                 $this->template['table_students'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_student_heading', $pagination, TRUE);
                 $this->template['message']        = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));

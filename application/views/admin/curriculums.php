@@ -2,6 +2,10 @@
 
 defined('BASEPATH') OR exit('No direct script allowed');
 
+if (isset($create_curriculum_subject_button))
+{
+        echo $create_curriculum_subject_button;
+}
 /**
  * for view
  */

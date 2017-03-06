@@ -53,7 +53,7 @@ class Edit_student extends CI_Capstone_Controller
         {
                 if (!(bool) $this->input->post('submit'))
                 {
-                        show_error('Invalid request.');
+                        show_404();
                 }
                 $row = 0;
                 if ($this->student->email != $this->input->post('personal_email', TRUE))
@@ -70,7 +70,7 @@ class Edit_student extends CI_Capstone_Controller
         {
                 if (!(bool) $this->input->post('submit'))
                 {
-                        show_error('Invalid request.');
+                        show_404();
                 }
                 $row = 0;
                 if ($this->student->email != $this->input->post('personal_email', TRUE))

@@ -134,7 +134,7 @@ class Users extends CI_Capstone_Controller
                 }
 
 
-                $pagination = $this->pagination->generate_bootstrap_link('users/index', $this->User_model->set_cache('users_count_rows')->count_rows() / $this->limit);
+                $pagination = $this->pagination->generate_bootstrap_link('users/index', $this->User_model->count_rows() / $this->limit);
 
                 $this->template['table_users'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_heading', $pagination, TRUE);
                 $this->template['message']     = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));

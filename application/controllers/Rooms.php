@@ -62,7 +62,7 @@ class Rooms extends CI_Capstone_Controller
                     lang('index_room_description_th')
                 );
 
-                $pagination = $this->pagination->generate_bootstrap_link('rooms/index', $this->Room_model->set_cache('rooms_count_rows')->count_rows() / $this->limit);
+                $pagination = $this->pagination->generate_bootstrap_link('rooms/index', $this->Room_model->count_rows() / $this->limit);
 
                 $this->template['table_rooms'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_room_heading', $pagination, TRUE);
                 $this->template['message']     = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
