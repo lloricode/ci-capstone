@@ -217,8 +217,8 @@ class Edit_student extends CI_Capstone_Controller
                 $this->data['student_gender'] = array(
                     'name'   => 'gender',
                     'fields' => array(//we used radio here 
-                        'female' => lang('gender_female_label'),
-                        'male'   => lang('gender_male_label')
+                        'female' => 'gender_female_label',
+                        'male'   => 'gender_male_label'
                     ),
                     'value'  => $this->form_validation->set_value('gender', $this->student->gender),
                     'type'   => 'radio',
