@@ -231,7 +231,7 @@ class Create_student extends CI_Capstone_Controller
                 $this->data['student_birthdate'] = array(
                     'name'             => 'birthdate',
                     'data-date-format' => 'mm-dd-yyyy',
-                    'class'            => 'zpicker',
+                    'class'            => 'datepicker',
                     'value'            => $this->form_validation->set_value('birthdate'),
                     'type'             => 'text',
                     'lang'             => 'create_student_birthdate_label'

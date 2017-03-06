@@ -47,8 +47,8 @@ class Students extends CI_Capstone_Controller
 
                         foreach ($student_obj as $student)
                         {
-                                $view_ = anchor(site_url('students/view?student-id=' . $student->student_id), 'View');
-                                $edit_ = anchor(site_url('edit-student?student-id=' . $student->student_id), 'Edit');
+                                $view_ = anchor(site_url('students/view?student-id=' . $student->student_id), '<span class="btn btn-warning btn-mini">View</span>');
+                                $edit_ = anchor(site_url('edit-student?student-id=' . $student->student_id), '<span class="btn btn-primary btn-mini">Edit</span>');
 
                                 array_push($table_data, array(
                                     $this->_image($student),
