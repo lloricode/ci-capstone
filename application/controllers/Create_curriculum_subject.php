@@ -170,7 +170,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                         if ($cur_sub_obj)
                         {
                                 /**
-                                 * check lower year, i use == to include semester, 
+                                 * check lower year, i use <= to include semester, 
                                  */
                                 if ($cur_sub_obj->curriculum_subject_year_level <= $input_year_level)
                                 {
@@ -178,7 +178,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                                         $int_semester_db    = $this->_numeric_semester($cur_sub_obj->curriculum_subject_semester);
                                         $int_semester_input = $this->_numeric_semester($semester);
 
-                                        if ($int_semester_db < $int_semester_input || $int_semester_input == 1)//no lower year than 1
+                                        if ($int_semester_db < $int_semester_input)
                                         {
                                                 /**
                                                  * accepted
