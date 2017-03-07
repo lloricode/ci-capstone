@@ -47,12 +47,6 @@ class Create_room extends CI_Capstone_Controller
                     'type'  => 'text',
                     'lang'  => 'create_room_number_label'
                 );
-                $inputs['room_description'] = array(
-                    'name'  => 'description',
-                    'value' => $this->form_validation->set_value('description'),
-                    'type'  => 'text',
-                    'lang'  => 'create_room_description_label'
-                );
 
                 $this->data['room_form'] = $this->form_boostrap('create-room', $inputs, NULL, 'create_room_heading', 'create_room_submit_button_label', 'info-sign', NULL, TRUE);
                 $this->data['bootstrap']   = $this->_bootstrap();
