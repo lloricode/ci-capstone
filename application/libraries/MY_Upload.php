@@ -79,7 +79,14 @@ class MY_Upload extends CI_Upload
                 $student_image_size_profile = $this->_CI->config->item('student_image_size_profile');
                 $student_image_size_table   = $this->_CI->config->item('student_image_size_table');
 
+                /**
+                 * for edit/profile
+                 */
                 $this->_resize($img_name, $original_dir, $student_image_size_profile);
+
+                /**
+                 * for table
+                 */
                 $this->_resize($img_name, $original_dir, $student_image_size_table);
         }
 
@@ -87,9 +94,7 @@ class MY_Upload extends CI_Upload
         {
                 $this->_CI->load->library('image_lib');
 
-                /**
-                 * for table
-                 */
+
                 list($w, $h) = explode('x', str_replace('/', '', $image_resize_dir));
 
                 $new_dir = $original_dir . $image_resize_dir;
