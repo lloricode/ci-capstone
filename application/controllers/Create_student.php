@@ -119,7 +119,7 @@ class Create_student extends CI_Capstone_Controller
                          * 
                          * then get the curriculum_id
                          */
-                        return $curriculum_obj->row()->curriculum_id;
+                        return $curriculum_obj[0]->curriculum_id; //expected only one result [no need advance loop] 
                 }
                 /**
                  * no curriculum found
