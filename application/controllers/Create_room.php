@@ -14,7 +14,7 @@ class Create_room extends CI_Capstone_Controller
                 $this->load->model('Room_model');
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span>');
-                $this->breadcrumbs->unshift(2, lang('index_room_heading'), 'rooms');
+                $this->breadcrumbs->unshift(2, lang('index_utility_label'), '#');
                 $this->breadcrumbs->unshift(3, lang('create_room_heading'), 'create-room');
         }
 

@@ -29,7 +29,8 @@ class Educations extends CI_Capstone_Controller
                  * 
                  */
                 $this->page_ = get_page_in_url();
-                $this->breadcrumbs->unshift(2, lang('index_education_heading'), 'educations');
+                $this->breadcrumbs->unshift(2, lang('index_utility_label'), '#');
+                $this->breadcrumbs->unshift(3, lang('index_education_heading'), 'educations');
         }
 
         public function index()

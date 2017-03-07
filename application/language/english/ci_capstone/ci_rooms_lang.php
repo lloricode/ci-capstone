@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ENGLISH
  */
@@ -19,6 +20,9 @@ $lang['create_room_submit_button_label']       = 'Add Room';
 $lang['index_room_heading']        = 'Rooms';
 $lang['index_room_number_th']      = 'Room Number';
 $lang['index_room_description_th'] = 'Description';
+
+
+$lang['view_room_label']           = 'View Rooms';
 
 
 

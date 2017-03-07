@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ENGLISH
  */
@@ -68,10 +69,13 @@ $lang['index_student_school_year_th'] = 'School Year';
 $lang['index_student_semesterl_th']   = 'Semester';
 $lang['index_student_image_th']       = 'Image';
 
+$lang['view_student_label'] = 'View Student';
+
 
 $lang['student_image_required'] = 'Image Reqired!';
 
-$lang['edit_student_submit_button_label']     = 'Edit Student';
+$lang['edit_student_submit_button_label'] = 'Edit Student';
+
 
 
 
