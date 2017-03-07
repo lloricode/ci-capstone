@@ -13,7 +13,7 @@ class Create_student extends CI_Capstone_Controller
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span>');
                 $this->lang->load('ci_capstone/ci_students');
                 $this->load->helper('school');
-                $this->load->model(array('Student_model', 'Enrollment_model'));
+                $this->load->model(array('Student_model', 'Enrollment_model', 'Curriculum_model'));
                 $this->_get_school_id_code();
 
                 $this->breadcrumbs->unshift(2, lang('index_student_heading'), 'students');
@@ -34,7 +34,8 @@ class Create_student extends CI_Capstone_Controller
                 $__post_button    = (bool) $this->input->post('submit');
                 $_post_image_name = 'image';
 
-                $image_error_message = '';
+                $image_error_message        = '';
+                $_input_ready_error_message = '';
 
                 /**
                  * check if the button in POST is triggered
@@ -51,13 +52,21 @@ class Create_student extends CI_Capstone_Controller
                         /**
                          * start the submittion
                          */
-                        $this->_input_ready($uploaded);
+                        $_input_ready_error_message = $this->_input_ready($uploaded);
                 }
 
                 /**
+                 * prioritise the error message
+                 */
+                $msg = $image_error_message;
+                if ($_input_ready_error_message != '')
+                {
+                        $msg = $_input_ready_error_message;
+                }
+                /**
                  * no need use else, because when submit success is redirecting to other controller,
                  */
-                $this->_form_view($image_error_message, $_post_image_name);
+                $this->_form_view($msg, $_post_image_name);
         }
 
         private function _get_school_id_code($course_id = NULL)
@@ -78,21 +87,72 @@ class Create_student extends CI_Capstone_Controller
                 }
         }
 
+        /**
+         * this will be use in
+         * adding curriculum_id in enrollment, 
+         * 
+         * @param int $_course_id_
+         * @return boolean
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        private function _get_active_currilumn_by_course_id($_course_id_)
+        {
+                /**
+                 * get_all to check also if only one active in curriculum by course_id
+                 */
+                $curriculum_obj = $this->Curriculum_model->where(array(
+                            'course_id'         => $_course_id_,
+                            'curriculum_status' => TRUE//only needed is the active
+                        ))->get_all();
+
+                if ($curriculum_obj)
+                {
+                        if (count($curriculum_obj) > 1)
+                        {
+                                /**
+                                 * the result i more than one, 
+                                 */
+                                return FALSE;
+                        }
+                        /**
+                         * convert in single row, because we used get_all() (more than one rows)
+                         * 
+                         * then get the curriculum_id
+                         */
+                        return $curriculum_obj->row()->curriculum_id;
+                }
+                /**
+                 * no curriculum found
+                 */
+                return FALSE;
+        }
+
         private function _input_ready($uploaded)
         {
                 /**
                  * preparing the image name from uploading image
                  */
-                $img_name = (string) $this->upload->data('file_name');
+                $img_name                         = (string) $this->upload->data('file_name');
                 /**
                  * 
                  */
                 /**
                  * generating id including code from course
                  */
-                $this->_get_school_id_code($this->input->post('courseid', TRUE));
+                $_course_id_                      = $this->input->post('courseid', TRUE);
+                $this->_get_school_id_code($_course_id_);
+                /**
+                 * get the active curriculum base on course_id
+                 */
+                $curriculum_id_from_active_course = $this->_get_active_currilumn_by_course_id($_course_id_);
 
-
+                /**
+                 * just to make sure is exist the $curriculum_id_from_active_course
+                 */
+                if (!$curriculum_id_from_active_course)
+                {
+                        return '<h3 style="color:red">$curriculum_id_from_active_course no value</h3>';
+                }
                 /**
                  * start the DB transaction
                  */
@@ -130,6 +190,10 @@ class Create_student extends CI_Capstone_Controller
                              */
                             'enrollment_semester'    => current_school_semester(),
                             'enrollment_school_year' => current_school_year(),
+                            /**
+                             * get the active curriculum base on selected course_id
+                             */
+                            'curriculum_id'          => $curriculum_id_from_active_course,
                             //--
                             'student_id'             => $s_id,
                             'created_user_id'        => $this->session->userdata('user_id')
@@ -181,7 +245,7 @@ class Create_student extends CI_Capstone_Controller
                 }
         }
 
-        private function _form_view($image_error_message, $_post_image_name)
+        private function _form_view($image_error, $_post_image_name)
         {
                 /**
                  * if reach here, load the model, etc...
@@ -190,7 +254,7 @@ class Create_student extends CI_Capstone_Controller
                 $this->load->helper('combobox');
 
 
-                $this->data['message'] = $image_error_message;
+                $this->data['message'] = $image_error;
 
                 $this->data['student_image'] = array(
                     'name' => $_post_image_name,

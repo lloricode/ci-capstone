@@ -38,6 +38,11 @@ class Migration_Enrollments extends CI_Migration
                         'constraint' => '11',
                         'null'       => FALSE
                     ),
+                    'curriculum_id'          => array(
+                        'type'       => 'TINYINT',
+                        'constraint' => '11',
+                        'null'       => FALSE
+                    ),
                     'enrollment_school_year' => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '10',
