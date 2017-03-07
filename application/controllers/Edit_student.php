@@ -24,7 +24,7 @@ class Edit_student extends CI_Capstone_Controller
         public function index()
         {
                 $this->student->get($this->input->get('student-id'));
-                $this->breadcrumbs->unshift(3, 'Edit Student [ ' . $this->student->school_id . ' ]', 'edit-student?student-id=' . $this->student->id);
+                $this->breadcrumbs->unshift(3, lang('edit_student_submit_button_label') . ' [ ' . $this->student->school_id . ' ]', 'edit-student?student-id=' . $this->student->id);
 
 
                 $__post_button    = (bool) $this->input->post('submit');

@@ -57,19 +57,27 @@ if (!function_exists('navigations_main'))
                         'icon'  => 'user-md',
                         'sub'   =>
                         array(
-                            'students'       =>
+                            'students'               =>
                             array(
                                 'label' => lang('index_student_heading'),
                                 'seen'  => TRUE,
                             ),
-                            'create-student' =>
+                            'create-student'         =>
                             array(
                                 'label' => lang('create_student_heading'),
                                 'seen'  => TRUE,
                             ),
-                            'edit-student'   =>
+                            /**
+                             * hidden
+                             */
+                            'edit-student'           =>
                             array(
-                                'label' => 'Edit Student',
+                                'label' => lang('edit_student_submit_button_label'),
+                                'seen'  => FALSE,
+                            ),
+                            'create-student-subject' =>
+                            array(
+                                'label' => lang('add_student_subject_label'),
                                 'seen'  => FALSE,
                             ),
                         ),
