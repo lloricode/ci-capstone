@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ENGLISH
  */
@@ -19,6 +20,12 @@ $lang['index_course_code_th']      = 'Course Code';
 $lang['index_course_code_id_th']   = 'Code School ID';
 $lang['index_course_desc_th']      = 'Course Description';
 $lang['index_course_education_th'] = 'Education';
+
+//utility label
+$lang['index_utility_label'] = 'Utilities';
+
+
+$lang['view_course_label']   = 'View Courses';
 
 
 

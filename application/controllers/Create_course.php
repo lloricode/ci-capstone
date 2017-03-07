@@ -11,7 +11,7 @@ class Create_course extends CI_Capstone_Controller
                 $this->load->model(array('Course_model', 'Education_model'));
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
-                $this->breadcrumbs->unshift(2, lang('index_course_heading'), 'courses');
+                $this->breadcrumbs->unshift(2, lang('index_utility_label'), '#');
                 $this->breadcrumbs->unshift(3, lang('create_course_heading'), 'create-course');
         }
 

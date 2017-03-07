@@ -28,6 +28,8 @@ $lang['index_user_id_th']             = 'Instructor';
 $lang['index_subject_id_th']          = 'Subject';
 $lang['index_room_id_th']             = 'Room';
 
+$lang['view_subject_offer_label'] = 'View Subject Offered';
+
 
 $lang['subject_offer_conflict_data'] = 'Conflict Data';
 

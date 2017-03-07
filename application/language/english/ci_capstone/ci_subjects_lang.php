@@ -24,6 +24,8 @@ $lang['index_subject_description_th'] = 'Description';
 $lang['index_subject_unit_th']        = 'Unit';
 $lang['index_subject_course_name_th'] = 'Course';
 
+$lang['view_subject_label'] = 'View Subjects';
+
 
 
 

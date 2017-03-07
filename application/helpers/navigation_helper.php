@@ -31,7 +31,7 @@ if (!function_exists('navigations_main'))
                              */
                             'curriculums'               =>
                             array(
-                                'label' => lang('curriculum_label'),
+                                'label' => lang('view_curriculum_label'),
                                 'seen'  => TRUE,
                             ),
                             /**
@@ -59,7 +59,7 @@ if (!function_exists('navigations_main'))
                         array(
                             'students'               =>
                             array(
-                                'label' => lang('index_student_heading'),
+                                'label' => lang('view_student_label'),
                                 'seen'  => TRUE,
                             ),
                             'create-student'         =>
@@ -84,70 +84,6 @@ if (!function_exists('navigations_main'))
                     ),
                     //---------END STUDENT--------
                     //sub menu
-                    //--------START COURSE--------
-                    'course_menu'         =>
-                    array(
-                        'label' => lang('index_course_heading'),
-                        'icon'  => 'list',
-                        'sub'   =>
-                        array(
-                            'courses'       =>
-                            array(
-                                'label' => lang('index_course_heading'),
-                                'seen'  => TRUE,
-                            ),
-                            'create-course' =>
-                            array(
-                                'label' => lang('create_course_heading'),
-                                'seen'  => TRUE,
-                            ),
-                        ),
-                    ),
-                    //--------END COURSE----------
-                    //
-                    //--------START EDUCATION--------
-                    'education_menu'      =>
-                    array(
-                        'label' => lang('index_education_heading'),
-                        'icon'  => 'pencil',
-                        'sub'   =>
-                        array(
-                            'educations'       =>
-                            array(
-                                'label' => lang('index_education_heading'),
-                                'seen'  => TRUE,
-                            ),
-                            'create-education' =>
-                            array(
-                                'label' => lang('create_education_heading'),
-                                'seen'  => TRUE,
-                            ),
-                        ),
-                    ),
-                    //--------END EDUCATION----------
-                    //
-                    //
-                    //--------START ROOM--------
-                    'room_menu'           =>
-                    array(
-                        'label' => lang('index_room_heading'),
-                        'icon'  => 'lock',
-                        'sub'   =>
-                        array(
-                            'rooms'       =>
-                            array(
-                                'label' => lang('index_room_heading'),
-                                'seen'  => TRUE,
-                            ),
-                            'create-room' =>
-                            array(
-                                'label' => lang('create_room_heading'),
-                                'seen'  => TRUE,
-                            ),
-                        ),
-                    ),
-                    //--------END ROOM----------
-                    //sub menu
                     //--------START SCHEDULE------
                     'subject_offer_menu'  =>
                     array(
@@ -155,19 +91,9 @@ if (!function_exists('navigations_main'))
                         'icon'  => 'calendar',
                         'sub'   =>
                         array(
-                            'subject-offers'       =>
-                            array(
-                                'label' => lang('index_subject_offer_heading'),
-                                'seen'  => TRUE,
-                            ),
                             'subjects'             =>
                             array(
-                                'label' => lang('index_subject_heading_th'),
-                                'seen'  => TRUE,
-                            ),
-                            'create-subject-offer' =>
-                            array(
-                                'label' => lang('create_subject_offer_heading'),
+                                'label' => lang('view_subject_label'),
                                 'seen'  => TRUE,
                             ),
                             'create-subject'       =>
@@ -175,9 +101,59 @@ if (!function_exists('navigations_main'))
                                 'label' => lang('create_subject_heading'),
                                 'seen'  => TRUE,
                             ),
+                            'subject-offers'       =>
+                            array(
+                                'label' => lang('view_subject_offer_label'),
+                                'seen'  => TRUE,
+                            ),
+                            'create-subject-offer' =>
+                            array(
+                                'label' => lang('create_subject_offer_heading'),
+                                'seen'  => TRUE,
+                            ),
                         ),
                     ),
                     //--------END SCHEDULE--------
+                    //--------START UTILITIES--------
+                    'utilities_menu'      =>
+                    array(
+                        'label' => lang('index_utility_label'),
+                        'icon'  => 'list',
+                        'sub'   =>
+                        array(
+                            'educations'       =>
+                            array(
+                                'label' => lang('view_education_label'),
+                                'seen'  => TRUE,
+                            ),
+                            'create-education' =>
+                            array(
+                                'label' => lang('create_education_heading'),
+                                'seen'  => TRUE,
+                            ),
+                            'courses'          =>
+                            array(
+                                'label' => lang('view_course_label'),
+                                'seen'  => TRUE,
+                            ),
+                            'create-course'    =>
+                            array(
+                                'label' => lang('create_course_heading'),
+                                'seen'  => TRUE,
+                            ),
+                            'rooms'            =>
+                            array(
+                                'label' => lang('view_room_label'),
+                                'seen'  => TRUE,
+                            ),
+                            'create-room'      =>
+                            array(
+                                'label' => lang('create_room_heading'),
+                                'seen'  => TRUE,
+                            ),
+                        ),
+                    ),
+                    //--------END UTILITIES----------
                     //sub menu
                     'administrator_menus' =>
                     array(
@@ -190,16 +166,16 @@ if (!function_exists('navigations_main'))
                                 'label' => lang('index_heading'),
                                 'seen'  => TRUE,
                             ),
-                            'groups'       =>
-                            array(
-                                'label' => lang('index_groups_th'),
-                                'seen'  => TRUE,
-                            ),
                             'create-user'  =>
                             array(
                                 'label' => lang('create_user_heading'),
                                 'seen'  => TRUE,
                                 'admin' => TRUE
+                            ),
+                            'groups'       =>
+                            array(
+                                'label' => lang('index_groups_th'),
+                                'seen'  => TRUE,
                             ),
                             'create-group' =>
                             array(
@@ -320,13 +296,13 @@ if (!function_exists('controllers__'))
                                 {
 
                                         $return_arr[$kk] = $vv;
-                                        $return_str      .= $kk . $delimeter;
+                                        $return_str .= $kk . $delimeter;
                                 }
                         }
                         else
                         {
                                 $return_arr[$k] = $v;
-                                $return_str     .= $k . $delimeter;
+                                $return_str .= $k . $delimeter;
                         }
                 }
                 if ($delimeter == '')

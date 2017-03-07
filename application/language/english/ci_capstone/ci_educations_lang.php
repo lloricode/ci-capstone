@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ENGLISH
  */
@@ -19,6 +20,7 @@ $lang['create_education_succesfully_added_message'] = 'Education Succesfully Add
 $lang['index_education_heading']        = 'Educations';
 $lang['index_education_code_th']        = 'Educations';
 $lang['index_education_description_th'] = 'Description';
+$lang['view_education_label']           = 'View Education';
 
 
 
