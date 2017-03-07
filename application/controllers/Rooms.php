@@ -50,8 +50,7 @@ class Rooms extends CI_Capstone_Controller
                         foreach ($room_obj as $room)
                         {
                                 array_push($table_data, array(
-                                    my_htmlspecialchars($room->room_number),
-                                    my_htmlspecialchars($room->room_description),
+                                    my_htmlspecialchars($room->room_number)
                                 ));
                         }
                 }
@@ -59,8 +58,7 @@ class Rooms extends CI_Capstone_Controller
                  * Table headers
                  */
                 $header = array(
-                    lang('index_room_number_th'),
-                    lang('index_room_description_th')
+                    lang('index_room_number_th')
                 );
 
                 $pagination = $this->pagination->generate_bootstrap_link('rooms/index', $this->Room_model->count_rows() / $this->limit);

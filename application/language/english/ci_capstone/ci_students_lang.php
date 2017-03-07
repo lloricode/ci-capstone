@@ -77,5 +77,5 @@ $lang['student_image_required'] = 'Image Reqired!';
 $lang['edit_student_submit_button_label'] = 'Edit Student';
 
 
-
+$lang['add_student_subject_label'] = 'Add Enroll Subject';
 

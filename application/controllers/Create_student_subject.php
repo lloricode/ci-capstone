@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Create_room extends CI_Capstone_Controller
+class Create_student_subject extends CI_Capstone_Controller
 {
 
 
@@ -11,28 +11,25 @@ class Create_room extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
-                $this->load->model('Room_model');
+               // $this->load->model('Room_model');
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span>');
-                $this->breadcrumbs->unshift(2, lang('index_utility_label'), '#');
-                $this->breadcrumbs->unshift(3, lang('create_room_heading'), 'create-room');
+                $this->breadcrumbs->unshift(2, lang('index_student_heading'), 'students');
+                $this->breadcrumbs->unshift(3, lang('add_student_subject_label'), 'create-student-subject');
         }
 
         public function index()
         {
-                /**
-                 * @Contributor: Jinkee Po <pojinkee1@gmail.com>
-                 *         
-                 */
+                
                 if ($this->input->post('submit'))
                 {
-                        $id = $this->Room_model->from_form(NULL, array(
-                                    'created_user_id' => $this->session->userdata('user_id')
-                                ))->insert();
-                        if ($id)
-                        {
-                                redirect(site_url('rooms'), 'refresh');
-                        }
+//                        $id = $this->Room_model->from_form(NULL, array(
+//                                    'created_user_id' => $this->session->userdata('user_id')
+//                                ))->insert();
+//                        if ($id)
+//                        {
+//                                redirect(site_url('rooms'), 'refresh');
+//                        }
                 }
 
                 $this->_form_view();
@@ -41,14 +38,14 @@ class Create_room extends CI_Capstone_Controller
         private function _form_view()
         {
 
-                $inputs['room_number']      = array(
-                    'name'  => 'number',
-                    'value' => $this->form_validation->set_value('number'),
+                $inputs['xx']      = array(
+                    'name'  => 'xx',
+                    'value' => $this->form_validation->set_value('xx'),
                     'type'  => 'text',
-                    'lang'  => 'create_room_number_label'
+                    'lang'  => 'xx'
                 );
 
-                $this->data['room_form'] = $this->form_boostrap('create-room', $inputs, NULL, 'create_room_heading', 'create_room_submit_button_label', 'info-sign', NULL, TRUE);
+                $this->data['room_form'] = $this->form_boostrap('create-student-subject', $inputs, NULL, 'add_student_subject_label', 'add_student_subject_label', 'info-sign', NULL, TRUE);
                 $this->data['bootstrap']   = $this->_bootstrap();
                 $this->_render('admin/create_room', $this->data);
         }

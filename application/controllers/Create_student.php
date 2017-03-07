@@ -147,13 +147,6 @@ class Create_student extends CI_Capstone_Controller
                 $curriculum_id_from_active_course = $this->_get_active_currilumn_by_course_id($_course_id_);
 
                 /**
-                 * just to make sure is exist the $curriculum_id_from_active_course
-                 */
-                if (!$curriculum_id_from_active_course)
-                {
-                        return '<h3 style="color:red">$curriculum_id_from_active_course no value</h3>';
-                }
-                /**
                  * start the DB transaction
                  */
                 $this->db->trans_start();
@@ -218,7 +211,7 @@ class Create_student extends CI_Capstone_Controller
                 /**
                  * checking if one of the insert is failed, either in [form validation] or in [syntax error] or [upload]
                  */
-                if (!$s_id || !$id || !$uploaded)
+                if (!$s_id || !$id || !$uploaded || !$curriculum_id_from_active_course)
                 {
                         /**
                          * rollback database
@@ -230,6 +223,13 @@ class Create_student extends CI_Capstone_Controller
                                  * remove the uploaded image
                                  */
                                 unlink($this->config->item('student_image_dir') . $img_name);
+                        }
+                        /**
+                         * just to make sure is exist the $curriculum_id_from_active_course
+                         */
+                        if (!$curriculum_id_from_active_course)
+                        {
+                                return '<h3 style="color:red">$curriculum_id_from_active_course no value</h3>';
                         }
                 }
                 else

@@ -58,8 +58,25 @@ if (!function_exists('input_bootstrap'))
                 switch ($field['type'])
                 {
                         case 'text':
-                                $field['id']   = $field['name'];
-                                echo form_input($field);
+                        case 'password':
+                                $field['id'] = $field['name'];
+                                switch ($field['type'])
+                                {
+                                        case 'text':
+                                                echo form_input($field);
+                                                break;
+                                        case 'password':
+                                                echo form_password($field);
+                                                break;
+                                        default:
+                                                /**
+                                                 * not supposed to be here.
+                                                 * impossible
+                                                 * --Lloric
+                                                 */
+                                                show_error('No valid type of form input defined, either text or password.');
+                                                break;
+                                }
                                 break;
                         case 'textarea':
                                 echo form_textarea($field);

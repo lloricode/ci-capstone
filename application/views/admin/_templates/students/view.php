@@ -9,7 +9,7 @@
                 <div class="widget-content">
                     <div class="row-fluid">
                         <div class="span6">
-                            <table class="">
+                            <table class="table table-bordered table-invoice">
                                 <tbody>
                                     <tr>
                                         <td><h4><?php echo $this->student->fullname; ?></h4></td>
@@ -31,6 +31,8 @@
                                     </tr> 
                                     <tr>
                                         <td ><?php echo $this->student->birthdate; ?></td>
+                                    </tr> 
+                                    <tr>
                                         <td ><?php echo $this->student->age(TRUE); ?></td>
                                     </tr> 
                                 </tbody>
@@ -65,20 +67,32 @@
                     </div>
                     <div class="row-fluid">
                         <div class="span12">
-<!--                            <table class="table table-bordered table-invoice-full">
+                            <table class="table table-bordered table-invoice-full">
                                 <tbody>
                                     <tr>
-                                        <td class="msg-invoice" width="85%"><h4>Payment method: </h4>
-                                            <a href="#" class="tip-bottom" title="Wire Transfer">Wire transfer</a> |  <a href="#" class="tip-bottom" title="Bank account">Bank account #</a> |  <a href="#" class="tip-bottom" title="SWIFT code">SWIFT code </a>|  <a href="#" class="tip-bottom" title="IBAN Billing address">IBAN Billing address </a></td>
-                                        <td class="right"><strong>Subtotal</strong> <br>
+<!--                                        <td class="msg-invoice" width="40%">
+                                            <h4>Payment method: </h4>
+                                            <a href="#" class="tip-bottom" title="Wire Transfer">Wire transfer</a> |
+                                            <a href="#" class="tip-bottom" title="Bank account">Bank account #</a> | 
+                                            <a href="#" class="tip-bottom" title="SWIFT code">SWIFT code </a>|  
+                                            <a href="#" class="tip-bottom" title="IBAN Billing address">IBAN Billing address </a>
+                                        </td>
+                                        <td class="right">
+                                            <strong>Subtotal</strong> <br>
                                             <strong>Tax (5%)</strong> <br>
-                                            <strong>Discount</strong></td>
-                                        <td class="right"><strong>$7,000 <br>
-                                                $600 <br>
-                                                $50</strong></td>
+                                            <strong>Discount</strong>
+                                        </td>-->
+                                        <td ">
+                                            <!--                                            <div class="pull-right">-->
+                                            <!--                                <h4><span>Amount Due:</span> $7,650.00</h4>-->
+                                            <!--<br>-->
+                                            <?php echo anchor(site_url('create-student-subject?student-id=' . $this->student->id), lang('add_student_subject_label'), array('class' => 'btn btn-primary btn-large pull')); ?>
+                                            <!--                                            </div>-->
+                                        </td>
                                     </tr>
                                 </tbody>
-                            </table>-->
+                            </table>
+
                             <?php
                             /*
                              * subjects table
@@ -89,11 +103,7 @@
                             echo '</div>';
                             ?>
 
-                            <!--                            <div class="pull-right">
-                                                            <h4><span>Amount Due:</span> $7,650.00</h4>
-                                                            <br>
-                                                            <a class="btn btn-primary btn-large pull-right" href="">Pay Invoice</a>
-                                                        </div>-->
+
                         </div>
                     </div>
                 </div>

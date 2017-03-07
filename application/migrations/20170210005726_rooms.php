@@ -33,12 +33,6 @@ class Migration_Rooms extends CI_Migration
                         'unique'     => TRUE,
                         'null'       => FALSE
                     ),
-                    'room_description' => array(
-                        'type'       => 'VARCHAR',
-                        'constraint' => '50',
-                        'unique'     => TRUE,
-                        'null'       => FALSE
-                    ),
                     //------------------------------------
                     'created_at'       => array(
                         'type'       => 'VARCHAR',

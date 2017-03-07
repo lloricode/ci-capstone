@@ -108,7 +108,6 @@ class Create_user extends CI_Capstone_Controller
 
                 $inputs['first_name'] = array(
                     'name'  => 'first_name',
-                    'type'  => 'text',
                     'value' => $this->form_validation->set_value('first_name'),
                     'type'  => 'text',
                     'lang'  => 'create_user_fname_label',
@@ -116,7 +115,6 @@ class Create_user extends CI_Capstone_Controller
 
                 $inputs['last_name'] = array(
                     'name'  => 'last_name',
-                    'type'  => 'text',
                     'value' => $this->form_validation->set_value('last_name'),
                     'type'  => 'text',
                     'lang'  => 'create_user_lname_label',
@@ -124,7 +122,6 @@ class Create_user extends CI_Capstone_Controller
 
                 $inputs['company'] = array(
                     'name'  => 'company',
-                    'type'  => 'text',
                     'value' => $this->form_validation->set_value('company'),
                     'type'  => 'text',
                     'lang'  => 'create_user_company_label',
@@ -132,7 +129,6 @@ class Create_user extends CI_Capstone_Controller
 
                 $inputs['email'] = array(
                     'name'  => 'email',
-                    'type'  => 'text',
                     'value' => $this->form_validation->set_value('email'),
                     'type'  => 'text',
                     'lang'  => 'create_user_email_label',
@@ -140,7 +136,6 @@ class Create_user extends CI_Capstone_Controller
 
                 $inputs['identity'] = array(
                     'name'  => 'identity',
-                    'type'  => 'text',
                     'value' => $this->form_validation->set_value('identity'),
                     'type'  => 'text',
                     'lang'  => 'create_user_validation_identity_label',
@@ -148,7 +143,6 @@ class Create_user extends CI_Capstone_Controller
 
                 $inputs['phone'] = array(
                     'name'  => 'phone',
-                    'type'  => 'text',
                     'value' => $this->form_validation->set_value('phone'),
                     'type'  => 'text',
                     'lang'  => 'create_user_phone_label',
@@ -156,17 +150,15 @@ class Create_user extends CI_Capstone_Controller
 
                 $inputs['password'] = array(
                     'name'  => 'password',
-                    'type'  => 'password',
                     'value' => $this->form_validation->set_value('password'),
-                    'type'  => 'text',
+                    'type'  => 'password',
                     'lang'  => 'create_user_password_label',
                 );
 
                 $inputs['password_confirm'] = array(
                     'name'  => 'password_confirm',
-                    'type'  => 'password',
                     'value' => $this->form_validation->set_value('password_confirm'),
-                    'type'  => 'text',
+                    'type'  => 'password',
                     'lang'  => 'create_user_password_confirm_label',
                 );
 
