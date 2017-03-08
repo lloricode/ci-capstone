@@ -83,8 +83,7 @@ class Deactivate extends CI_Capstone_Controller
                     )
                 );
 
-                $message                       = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->ion_auth->messages()));
-                $this->data['deactivate_form'] = $this->form_boostrap('deactivate/?user-id=' . $_user->id, $inputs, $message, 'deactivate_heading', 'deactivate_submit_btn', 'info-sign', array('id' => $_user->id), TRUE);
+                $this->data['deactivate_form'] = $this->form_boostrap('deactivate/?user-id=' . $_user->id, $inputs, 'deactivate_heading', 'deactivate_submit_btn', 'info-sign', array('id' => $_user->id), TRUE);
                 $this->data['bootstrap']       = $this->_bootstrap();
                 $this->_render('admin/deactivate_user', $this->data);
         }

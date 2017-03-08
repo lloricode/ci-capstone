@@ -34,8 +34,7 @@ class Create_student extends CI_Capstone_Controller
                 $__post_button    = (bool) $this->input->post('submit');
                 $_post_image_name = 'image';
 
-                $image_error_message        = '';
-                $_input_ready_error_message = '';
+                $image_error_message = '';
 
                 /**
                  * check if the button in POST is triggered
@@ -45,28 +44,18 @@ class Create_student extends CI_Capstone_Controller
                         /**
                          * preparing image
                          */
-                        $upload_return       = $this->upload->_preparing_image($_post_image_name);
-                        $uploaded            = $upload_return['uploaded'];
-                        $image_error_message = $upload_return['error_message'];
+                        $upload_return = $this->upload->_preparing_image($_post_image_name);
 
                         /**
                          * start the submittion
                          */
-                        $_input_ready_error_message = $this->_input_ready($uploaded);
+                        $this->_input_ready($upload_return);
                 }
 
                 /**
-                 * prioritise the error message
-                 */
-                $msg = $image_error_message;
-                if ($_input_ready_error_message != '')
-                {
-                        $msg = $_input_ready_error_message;
-                }
-                /**
                  * no need use else, because when submit success is redirecting to other controller,
                  */
-                $this->_form_view($msg, $_post_image_name);
+                $this->_form_view($_post_image_name);
         }
 
         private function _get_school_id_code($course_id = NULL)
@@ -110,8 +99,9 @@ class Create_student extends CI_Capstone_Controller
                         if (count($curriculum_obj) > 1)
                         {
                                 /**
-                                 * the result i more than one, 
+                                 * the result is more than one, 
                                  */
+                                $this->session->set_flashdata('message', '<div class="alert alert-error alert-block">curriculum is more than 1 active. </div>');
                                 return FALSE;
                         }
                         /**
@@ -124,6 +114,7 @@ class Create_student extends CI_Capstone_Controller
                 /**
                  * no curriculum found
                  */
+                $this->session->set_flashdata('message', '<div class="alert alert-error alert-block">no curriculumn found </div>');
                 return FALSE;
         }
 
@@ -211,25 +202,23 @@ class Create_student extends CI_Capstone_Controller
                 /**
                  * checking if one of the insert is failed, either in [form validation] or in [syntax error] or [upload]
                  */
-                if (!$s_id || !$id || !$uploaded || !$curriculum_id_from_active_course)
+                if (!$s_id || !$id || !$uploaded['uploaded'] || !$curriculum_id_from_active_course)
                 {
                         /**
                          * rollback database
                          */
                         $this->db->trans_rollback();
-                        if ($uploaded)
+                        if ($uploaded['uploaded'])
                         {
                                 /**
                                  * remove the uploaded image
                                  */
                                 unlink($this->config->item('student_image_dir') . $img_name);
                         }
-                        /**
-                         * just to make sure is exist the $curriculum_id_from_active_course
-                         */
-                        if (!$curriculum_id_from_active_course)
+                        else
                         {
-                                return '<h3 style="color:red">$curriculum_id_from_active_course no value</h3>';
+
+                                $this->session->set_flashdata('message', $uploaded['error_message']);
                         }
                 }
                 else
@@ -240,12 +229,13 @@ class Create_student extends CI_Capstone_Controller
                                  * start resize image
                                  */
                                 $this->upload->image_resize($img_name);
+                                $this->session->set_flashdata('message', lang('create_student_succesfully_added_message'));
                                 redirect(site_url('students/view?student-id=' . $s_id), 'refresh');
                         }
                 }
         }
 
-        private function _form_view($image_error, $_post_image_name)
+        private function _form_view($_post_image_name)
         {
                 /**
                  * if reach here, load the model, etc...
@@ -254,7 +244,6 @@ class Create_student extends CI_Capstone_Controller
                 $this->load->helper('combobox');
 
 
-                $this->data['message'] = $image_error;
 
                 $this->data['student_image'] = array(
                     'name' => $_post_image_name,

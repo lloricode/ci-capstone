@@ -17,21 +17,22 @@ class Course_model extends MY_Model
                 parent::__construct();
         }
 
-       private function _config()
+        private function _config()
         {
-                $this->timestamps        = TRUE;//(bool) $this->config->item('my_model_timestamps');
-                $this->return_as         = 'object';//$this->config->item('my_model_return_as');
-                $this->timestamps_format = 'timestamp';//$this->config->item('my_model_timestamps_format');
+                $this->timestamps        = TRUE; //(bool) $this->config->item('my_model_timestamps');
+                $this->return_as         = 'object'; //$this->config->item('my_model_return_as');
+                $this->timestamps_format = 'timestamp'; //$this->config->item('my_model_timestamps_format');
 
 
-                $this->cache_driver              = 'file';//$this->config->item('my_model_cache_driver');
-                $this->cache_prefix              = 'cicapstone';//$this->config->item('my_model_cache_prefix');
+                $this->cache_driver         = 'file'; //$this->config->item('my_model_cache_driver');
+                $this->cache_prefix         = 'cicapstone'; //$this->config->item('my_model_cache_prefix');
                 /**
                  * some of field is not required, so remove it in array when no value, in inside the *->from_form()->insert() in core MY_Model,
                  */
-             //   $this->remove_empty_before_write = TRUE;//(bool) $this->config->item('my_model_remove_empty_before_write');
-                $this->delete_cache_on_save      = TRUE;//(bool) $this->config->item('my_model_delete_cache_on_save');
+                //   $this->remove_empty_before_write = TRUE;//(bool) $this->config->item('my_model_remove_empty_before_write');
+                $this->delete_cache_on_save = TRUE; //(bool) $this->config->item('my_model_delete_cache_on_save');
         }
+
         private function _relations()
         {
                 $this->has_many['enrollment'] = array(
@@ -64,9 +65,12 @@ class Course_model extends MY_Model
                             'rules' => 'trim|required|human_name|min_length[2]|max_length[50]',
                         ),
                         'course_code_id'     => array(
-                            'label' => lang('index_course_code_id_th'),
-                            'field' => 'id',
-                            'rules' => 'trim|required|min_length[2]|max_length[5]|is_natural_no_zero',
+                            'label'  => lang('index_course_code_id_th'),
+                            'field'  => 'id',
+                            'rules'  => 'trim|required|min_length[2]|max_length[5]|is_natural_no_zero|is_unique[courses.course_code_id]',
+                            'errors' => array(
+                                'is_unique' => 'The {field} Already Exist.'
+                            )
                         ),
                         'education_id'       => array(
                             'label' => lang('index_course_education_th'),

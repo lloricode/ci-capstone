@@ -30,12 +30,10 @@ if (isset($table_corriculum_subjects))
         </div>
         <?php
         echo $create_curriculum_subject_button;
-        echo '<div class="alert-success">' . $message . '</div>';
         echo $table_corriculum_subjects;
 }
 
 if (isset($table_curriculm))
 {
-        echo '<div class="alert-success">' . $message . '</div>';
         echo $table_curriculm;
 }

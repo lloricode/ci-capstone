@@ -28,6 +28,7 @@ class Create_education extends CI_Capstone_Controller
                                 ))->insert();
                         if ($id)
                         {
+                                $this->session->set_flashdata('message', 'Education added!');
                                 redirect(site_url('educations'), 'refresh');
                         }
                 }
@@ -49,7 +50,7 @@ class Create_education extends CI_Capstone_Controller
                     'lang'  => 'create_education_description_label'
                 );
 
-                $this->data['education_form'] = $this->form_boostrap('create-education', $inputs, NULL, 'create_education_heading', 'create_education_submit_button_label', 'info-sign', NULL, TRUE);
+                $this->data['education_form'] = $this->form_boostrap('create-education', $inputs, 'create_education_heading', 'create_education_submit_button_label', 'info-sign', NULL, TRUE);
                 $this->data['bootstrap']      = $this->_bootstrap();
                 $this->_render('admin/create_education', $this->data);
         }

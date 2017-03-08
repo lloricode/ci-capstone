@@ -31,6 +31,7 @@ class Create_room extends CI_Capstone_Controller
                                 ))->insert();
                         if ($id)
                         {
+                                $this->session->set_flashdata('message', lang('create_room_succesfully_added_message'));
                                 redirect(site_url('rooms'), 'refresh');
                         }
                 }
@@ -41,15 +42,15 @@ class Create_room extends CI_Capstone_Controller
         private function _form_view()
         {
 
-                $inputs['room_number']      = array(
+                $inputs['room_number'] = array(
                     'name'  => 'number',
                     'value' => $this->form_validation->set_value('number'),
                     'type'  => 'text',
                     'lang'  => 'create_room_number_label'
                 );
 
-                $this->data['room_form'] = $this->form_boostrap('create-room', $inputs, NULL, 'create_room_heading', 'create_room_submit_button_label', 'info-sign', NULL, TRUE);
-                $this->data['bootstrap']   = $this->_bootstrap();
+                $this->data['room_form'] = $this->form_boostrap('create-room', $inputs, 'create_room_heading', 'create_room_submit_button_label', 'info-sign', NULL, TRUE);
+                $this->data['bootstrap'] = $this->_bootstrap();
                 $this->_render('admin/create_room', $this->data);
         }
 

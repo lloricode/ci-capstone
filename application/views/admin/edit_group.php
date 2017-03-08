@@ -12,7 +12,6 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                 <div class="widget-content nopadding">
                     <?php
 //echo validation_errors();
-                    echo $message;
 
                     echo form_open(site_url('edit-group/?group-id=' . $group->id), array(
                         'class'      => 'form-horizontal',

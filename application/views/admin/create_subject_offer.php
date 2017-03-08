@@ -15,7 +15,6 @@ if (isset($conflict_data))
                 </div>
                 <div class="widget-content nopadding">
                     <?php
-                    echo $message;
                     /**
                      * @Contributor: Jinkee Po <pojinkee1@gmail.com>
                      *         

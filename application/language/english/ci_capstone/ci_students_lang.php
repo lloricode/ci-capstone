@@ -36,7 +36,7 @@ $lang['create_student_personal_email_label']    = 'Personal Email:';
 $lang['create_student_guardian_email_label']    = 'Guardian Email:';
 
 $lang['create_student_succesfully_added_message'] = 'Student Succesfully Added!!';
-$lang['update_student_succesfully_added_message'] = 'Student Updated Added!!';
+$lang['update_student_succesfully_added_message'] = 'Student Succesfully Updated!!';
 
 //Table Header
 $lang['index_student_heading']              = 'Students';

@@ -29,6 +29,7 @@ class Create_curriculum extends CI_Capstone_Controller
                                 ))->insert();
                         if ($id)
                         {
+                                $this->session->set_flashdata('message', 'Curriculum Added!');
                                 redirect(site_url('curriculums'), 'refresh');
                         }
                 }
@@ -83,7 +84,7 @@ class Create_curriculum extends CI_Capstone_Controller
                 );
 
 
-                $this->data['curriculum_form'] = $this->form_boostrap('create-curriculum', $inputs, NULL, 'create_curriculum_label', 'curriculumn_create_button', 'info-sign', NULL, TRUE);
+                $this->data['curriculum_form'] = $this->form_boostrap('create-curriculum', $inputs, 'create_curriculum_label', 'curriculumn_create_button', 'info-sign', NULL, TRUE);
                 $this->data['bootstrap']       = $this->_bootstrap();
                 $this->_render('admin/create_curriculum', $this->data);
         }

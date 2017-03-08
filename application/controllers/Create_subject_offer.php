@@ -34,7 +34,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                                 ))->insert();
                         if ($id)
                         {
-                                $this->session->set_flashdata('message', $this->config->item('message_start_delimiter', 'ion_auth') . lang('create_subject_offer_succesfully_added_message') . $this->config->item('message_end_delimiter', 'ion_auth'));
+                                $this->session->set_flashdata('message', lang('create_subject_offer_succesfully_added_message'));
                                 redirect(site_url('create-subject-offer'), 'refresh');
                         }
                 }
@@ -89,7 +89,6 @@ class Create_subject_offer extends CI_Capstone_Controller
                 $this->load->model(array('User_model', 'Subject_model', 'Room_model'));
                 $this->load->helper(array('combobox', 'day'));
 
-                $this->data['message'] = ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message'));
 
                 $this->data['subject_offer_start'] = array(
                     'name'  => 'start',

@@ -4,7 +4,6 @@ echo form_open_multipart(site_url("edit-student?student-id=" . $this->student->i
     'class' => 'form-horizontal'
 ));
 ?>
-<?php echo (isset($message)) ? $message : ''; ?>
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span6">

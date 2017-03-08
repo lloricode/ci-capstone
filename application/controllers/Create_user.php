@@ -164,8 +164,7 @@ class Create_user extends CI_Capstone_Controller
 
                 // display the create user form
                 // set the flash data error message if there is one
-                $message                 = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-                $this->data['user_form'] = $this->form_boostrap('create-user/index', $inputs, $message, 'create_user_heading', 'create_user_submit_btn', 'info-sign', NULL, TRUE);
+                $this->data['user_form'] = $this->form_boostrap('create-user/index', $inputs, 'create_user_heading', 'create_user_submit_btn', 'info-sign', NULL, TRUE);
                 $this->data['bootstrap'] = $this->_bootstrap();
                 $this->_render('admin/create_user', $this->data);
         }

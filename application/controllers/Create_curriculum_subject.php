@@ -338,7 +338,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                     'lang'  => 'curriculum_subject_units_label'
                 );
 
-                $this->data['curriculum_subject_form'] = $this->form_boostrap('create-curriculum-subject', $inputs, NULL, 'create_curriculum_subject_label', 'create_curriculum_subject_label', 'info-sign', NULL, TRUE);
+                $this->data['curriculum_subject_form'] = $this->form_boostrap('create-curriculum-subject', $inputs, 'create_curriculum_subject_label', 'create_curriculum_subject_label', 'info-sign', NULL, TRUE);
                 $this->data['bootstrap']               = $this->_bootstrap();
                 $this->_render('admin/create_curriculum_subject', $this->data);
         }

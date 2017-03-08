@@ -67,10 +67,8 @@ class Create_group extends CI_Capstone_Controller
                     'lang'  => 'create_group_desc_label'
                 );
 
-                // set the flash data error message if there is one
-                $message                    = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-                $this->data['group_form'] = $this->form_boostrap('create-group/index', $inputs, $message, 'create_group_heading', 'create_group_submit_btn', 'info-sign', NULL, TRUE);
-                $this->data['bootstrap']    = $this->_bootstrap();
+                $this->data['group_form'] = $this->form_boostrap('create-group/index', $inputs, 'create_group_heading', 'create_group_submit_btn', 'info-sign', NULL, TRUE);
+                $this->data['bootstrap']  = $this->_bootstrap();
                 $this->_render('admin/create_group', $this->data);
         }
 
