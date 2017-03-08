@@ -3,7 +3,6 @@ echo form_open_multipart(site_url("create-student/index"), array(
     'class' => 'form-horizontal'
 )); //echo validation_errors();
 ?>
-<?php echo (isset($message)) ? $message : ''; ?>
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span6">

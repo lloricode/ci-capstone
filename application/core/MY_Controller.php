@@ -216,7 +216,6 @@ class CI_Capstone_Controller extends MY_Controller
          * 
          * @param string $_action
          * @param array $_inputs
-         * @param string $_messages
          * @param string $_lang_header
          * @param string $_lang_button
          * @param string $_icon
@@ -225,11 +224,10 @@ class CI_Capstone_Controller extends MY_Controller
          * @return string
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        public function form_boostrap($_action, $_inputs, $_messages, $_lang_header, $_lang_button, $_icon, $_hidden_inputs = NULL, $return_html = FALSE)
+        public function form_boostrap($_action, $_inputs, $_lang_header, $_lang_button, $_icon, $_hidden_inputs = NULL, $return_html = FALSE)
         {
                 $_data['inputs']        = $_inputs;
                 $_data['action']        = $_action;
-                $_data['message']       = $_messages;
                 $_data['lang_header']   = $_lang_header;
                 $_data['lang_button']   = $_lang_button;
                 $_data['icon']          = $_icon;

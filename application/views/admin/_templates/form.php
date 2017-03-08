@@ -9,10 +9,6 @@
                 <div class="widget-content nopadding">
                     <?php
                     // echo validation_errors();
-                    if (isset($message))
-                    {
-                            echo $message;
-                    }
 
 
                     echo form_open(site_url($action), array(

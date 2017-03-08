@@ -11,16 +11,15 @@ class Create_student_subject extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
-               // $this->load->model('Room_model');
-                $this->load->library('form_validation');
+                // $this->load->model('Room_model');
+                $this->load->library(array('form_validation', 'student'));
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span>');
                 $this->breadcrumbs->unshift(2, lang('index_student_heading'), 'students');
-                $this->breadcrumbs->unshift(3, lang('add_student_subject_label'), 'create-student-subject');
         }
 
         public function index()
         {
-                
+
                 if ($this->input->post('submit'))
                 {
 //                        $id = $this->Room_model->from_form(NULL, array(
@@ -37,16 +36,19 @@ class Create_student_subject extends CI_Capstone_Controller
 
         private function _form_view()
         {
+                $this->student->get($this->input->get('student-id'));
+                $this->breadcrumbs->unshift(3, lang('add_student_subject_label'), 'create-student-subject?student-id=' . $this->student->id);
 
-                $inputs['xx']      = array(
+
+                $inputs['xx'] = array(
                     'name'  => 'xx',
                     'value' => $this->form_validation->set_value('xx'),
                     'type'  => 'text',
                     'lang'  => 'xx'
                 );
 
-                $this->data['room_form'] = $this->form_boostrap('create-student-subject', $inputs, NULL, 'add_student_subject_label', 'add_student_subject_label', 'info-sign', NULL, TRUE);
-                $this->data['bootstrap']   = $this->_bootstrap();
+                $this->data['room_form'] = $this->form_boostrap('create-student-subject', $inputs, 'add_student_subject_label', 'add_student_subject_label', 'info-sign', NULL, TRUE);
+                $this->data['bootstrap'] = $this->_bootstrap();
                 $this->_render('admin/create_room', $this->data);
         }
 

@@ -11,8 +11,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                 </div>
                 <div class="widget-content nopadding">
                     <?php
-//echo validation_errors();
-                    echo '<div class="alert-success">'.$message.'</div>';                   
+//echo validation_errors();                 
                     
 
                     echo form_open(site_url('edit-user/?user-id=' . $user->id), array(

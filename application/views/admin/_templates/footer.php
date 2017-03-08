@@ -21,8 +21,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * echo generated link/script tags
  */
 echo $bootstrap['footer'];
-echo $bootstrap['footer_extra'];
 echo script_tag(base_url('assets/custom_js/flashdata_fade.js'));
+echo $bootstrap['footer_extra'];
 ?>
 
 

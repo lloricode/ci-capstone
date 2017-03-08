@@ -10,12 +10,9 @@ if (isset($create_user_button))
 if (isset($export_user_button))
 {
         echo $export_user_button;
-}if (isset($message))
-{
-        echo $message;
 }
+
 if (isset($table_users))
 {
-        // echo '<div class="alert-success">' . $message . '</div>';
         echo $table_users;
 }

@@ -158,7 +158,6 @@ class Permissions extends CI_Capstone_Controller
                     ),
                 ));
                 $this->load->library('permission');
-                $this->data['message'] = '';
                 if ($this->form_validation->run() && !$controller_obj->controller_admin_only)//double check maybe user use ctrl + u to edit html output
                 {
 
@@ -180,7 +179,7 @@ class Permissions extends CI_Capstone_Controller
                                         }
                                 }
                         }
-                        $this->data['message'] = ($done) ? 'Updated!' : 'Failed!';
+                        $this->session->set_flashdata('message', ($done) ? 'Updated!' : 'Failed!');
                 }
                 $this->main($controller_obj);
         }

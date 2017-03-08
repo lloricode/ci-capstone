@@ -37,16 +37,16 @@ class Edit_student extends CI_Capstone_Controller
                         /**
                          * preparing image
                          */
-                        $upload_return       = $this->upload->_preparing_image($_post_image_name, FALSE);
-                        $uploaded            = $upload_return['uploaded'];
-                        $image_error_message = $upload_return['error_message'];
+                        $upload_return = $this->upload->_preparing_image($_post_image_name, FALSE);
+                        $uploaded      = $upload_return['uploaded'];
+                        $this->session->set_flashdata('message', $upload_return['error_message']);
                         $this->_input_ready($this->student->id, $uploaded);
                 }
 
                 /**
                  * no need use else, because when submit success is redirecting to other controller,
                  */
-                $this->_form_view($image_error_message, $_post_image_name);
+                $this->_form_view($_post_image_name);
         }
 
         public function email_personal()
@@ -167,12 +167,13 @@ class Edit_student extends CI_Capstone_Controller
                                                 unlink($old_img);
                                         }
                                 }
+                                $this->session->set_flashdata('message', lang('update_student_succesfully_added_message'));
                                 redirect(site_url('students/view?student-id=' . $this->student->id), 'refresh');
                         }
                 }
         }
 
-        private function _form_view($image_error_message, $_post_image_name)
+        private function _form_view($_post_image_name)
         {
                 /**
                  * if reach here, load the model, etc...
@@ -181,7 +182,6 @@ class Edit_student extends CI_Capstone_Controller
                 $this->load->helper(array('combobox', 'school'));
 
 
-                $this->data['message'] = $image_error_message;
 
                 $this->data['student_image'] = array(
                     'name' => $_post_image_name,

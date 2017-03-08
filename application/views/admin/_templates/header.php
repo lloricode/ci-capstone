@@ -166,9 +166,36 @@ echo doctype();
         <div id="content">
 
             <div id="content-header">
-                <?php echo $this->breadcrumbs->show(); ?>
+                <?php
+                echo $this->breadcrumbs->show();
 
-                <?php echo(($sub_label != '') ? '<h1>' . $sub_label . '</h1>' : (MENU_ITEM_DEFAULT == $label) ? '<h1>' . $label . '</h1>' : '' ); ?>
+                echo(($sub_label != '') ? '<h1>' . $sub_label . '</h1>' : (MENU_ITEM_DEFAULT == $label) ? '<h1>' . $label . '</h1>' : '' );
+                /**
+                 * messages
+                 */
+                if ($this->ion_auth->errors())
+                {
+                        echo $this->ion_auth->errors();
+                }
+                elseif (!preg_match('!alert-block!', $this->session->flashdata('message')) && $this->session->flashdata('message') != '')
+                {
+                        echo '<div class="alert alert-success alert-block">' . $this->session->flashdata('message') . '</div>';
+                }
+                else if ($this->session->flashdata('message') != '')
+                {
+                        echo $this->session->flashdata('message');
+                }
+                else if (isset($message))
+                {
+                        echo $message;
+                }
+                /**
+                 * unset flash data
+                 * 
+                 * issue on permission, after set_flashdata, is ok, but go another controller will appear again
+                 */
+                $this->session->unset_userdata('message');
+                ?>
             </div>
 
 
