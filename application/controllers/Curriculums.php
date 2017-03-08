@@ -54,9 +54,9 @@ class Curriculums extends CI_Capstone_Controller
                         {
                                 $view = anchor(site_url('curriculums/view?curriculum-id=' . $curriculum->curriculum_id), '<span class="btn btn-warning btn-mini">' . lang('curriculumn_view') . '</span>');
                                 array_push($table_data, array(
+                                    my_htmlspecialchars($this->Course_model->get($curriculum->course_id)->course_code),
                                     my_htmlspecialchars($curriculum->curriculum_description),
                                     my_htmlspecialchars($curriculum->curriculum_effective_school_year),
-                                    my_htmlspecialchars($this->Course_model->get($curriculum->course_id)->course_code),
                                     my_htmlspecialchars($curriculum->curriculum_status),
                                     $view
                                 ));
@@ -67,9 +67,9 @@ class Curriculums extends CI_Capstone_Controller
                  * Table headers
                  */
                 $header     = array(
+                    lang('curriculumn_course'),
                     lang('curriculumn_description'),
                     lang('curriculumn_effective_year'),
-                    lang('curriculumn_course'),
                     lang('curriculumn_status'),
                     lang('curriculumn_option')
                 );

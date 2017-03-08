@@ -76,12 +76,12 @@ class Subject_offers extends CI_Capstone_Controller
                  */
                 $header = array(
                     //'id',
+                    lang('index_subject_id_th'),
                     lang('index_subject_offer_start_th'),
                     lang('index_subject_offer_end_th'),
                     lang('index_subject_offer_days_th'),
-                    lang('index_user_id_th'),
-                    lang('index_subject_id_th'),
                     lang('index_room_id_th'),
+                    lang('index_user_id_th'),
                 );
 
                 $pagination = $this->pagination->generate_bootstrap_link('subject-offers/index', $this->Subject_offer_model->count_rows() / $this->limit);

@@ -1,8 +1,8 @@
 <?php
 
 defined('BASEPATH') OR exit('No direct script access allowed');
-
-/**
+/*
+ * 
  * @Contributor: Jinkee Po <pojinkee1@gmail.com>
  *         
  */

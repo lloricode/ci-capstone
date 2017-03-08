@@ -103,12 +103,12 @@ if (!function_exists('navigations_main'))
                             ),
                             'subject-offers'       =>
                             array(
-                                'label' => lang('view_subject_offer_label'),
+                                'label' => lang('view_class_schedule_label'),
                                 'seen'  => TRUE,
                             ),
                             'create-subject-offer' =>
                             array(
-                                'label' => lang('create_subject_offer_heading'),
+                                'label' => lang('create_class_schedule_heading'),
                                 'seen'  => TRUE,
                             ),
                         ),
