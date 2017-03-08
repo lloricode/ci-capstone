@@ -53,13 +53,6 @@ class Create_curriculum extends CI_Capstone_Controller
                     'lang'  => 'curriculumn_effective_year'
                 );
 
-                $inputs['curriculum_effective_semester'] = array(
-                    'name'  => 'semester',
-                    'value' => semesters(),
-                    'type'  => 'dropdown',
-                    'lang'  => 'curriculumn_effective_semester'
-                );
-
                 $inputs['course_id'] = array(
                     'name'  => 'course',
                     'value' => $this->Course_model->
