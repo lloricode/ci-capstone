@@ -62,6 +62,7 @@ class Student extends CI_capstone
         public $school_year;
         public $semester;
         public $enrollment_id;
+        public $curriculum_id;
 
         public function __construct()
         {
@@ -129,6 +130,7 @@ class Student extends CI_capstone
                 $this->school_year           = $this->enrollment->enrollment_school_year;
                 $this->semester              = $this->enrollment->enrollment_semester;
                 $this->enrollment_id         = $this->enrollment->enrollment_id;
+                $this->curriculum_id         = $this->enrollment->curriculum_id;
         }
 
         /**
