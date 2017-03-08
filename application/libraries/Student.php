@@ -133,6 +133,37 @@ class Student extends CI_capstone
 
         /**
          * 
+         * @param type $image_file_name
+         * @return object
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        public function image_resize($image_file_name = FALSE)
+        {
+                $filename  = NULL;
+                $extension = NULL;
+                if ($image_file_name)
+                {
+                        list($filename, $extension) = explode('.', $image_file_name);
+                }
+                else
+                {
+                        if (!$this->student)
+                        {
+                                /**
+                                 * just to make sure student already loaded
+                                 */
+                                show_error('Student not set for getting image data.');
+                        }
+                        list($filename, $extension) = explode('.', $this->student->student_image);
+                }
+                return (object) array(
+                            'profile' => $this->CI->config->item('student_image_size_profile') . $filename . '_thumb.' . $extension,
+                            'table'   => $this->CI->config->item('student_image_size_table') . $filename . '_thumb.' . $extension
+                );
+        }
+
+        /**
+         * 
          * subject_offer_id
          * days  
          * start  

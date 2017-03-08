@@ -17,8 +17,6 @@ if (isset($table_corriculum_subjects))
                         <div class="widget-content"> 
                             <h5>Effective Year</h5>
                             <h2><?php echo $curriculum_obj->curriculum_effective_school_year; ?></h2> 
-                            <h5>Semester</h5>
-                            <h2><?php echo semesters($curriculum_obj->curriculum_effective_semester); ?></h2> 
                             <h5>Course</h5>
                             <h2><?php echo $this->Course_model->get($curriculum_obj->course_id)->course_code; ?></h2> 
                             <h5>Status</h5>

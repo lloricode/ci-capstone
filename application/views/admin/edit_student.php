@@ -15,15 +15,11 @@ echo form_open_multipart(site_url("edit-student?student-id=" . $this->student->i
                     <div class="form-horizontal">
                         <?php
                         // echo validation_errors();
-                        list($filename, $extension) = explode('.', $this->student->image);
+
                         image_view(array(
-                            'src'   => $this->config->item('student_image_dir') . $this->config->item('student_image_size_profile') . $filename . '_thumb.' . $extension,
+                            'src'   => $this->config->item('student_image_dir') . $this->student->image_resize()->profile,
                             'alt'   => 'no image for [ ' . $this->student->school_id . ' ]',
-                            //  'class'  => 'post_images',
-                            //'width' => '200',
-                            // 'height' => '200',
                             'title' => $this->student->school_id . ' - ' . $this->student->fullname,
-                                //'rel'    => 'lightbox'
                         ));
                         //student_image:
                         echo input_bootstrap($student_image);

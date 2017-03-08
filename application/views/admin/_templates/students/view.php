@@ -40,8 +40,8 @@
                         <div class="span6">
                             <table class="table table-bordered table-invoice">
                                 <tbody>
-                                    <tr><?php list($filename, $extension) = explode('.', $this->student->image); ?>
-                                        <td><img src="<?php echo base_url($this->config->item('student_image_dir') . $this->config->item('student_image_size_profile') . $filename . '_thumb.' . $extension); ?>" alt="no image" /></td>
+                                    <tr>
+                                        <td><img src="<?php echo base_url($this->config->item('student_image_dir') . $this->student->image_resize()->profile); ?>" alt="no image" /></td>
                                     </tr>
 
                                     <tr>

@@ -57,7 +57,6 @@ class Curriculums extends CI_Capstone_Controller
                                     my_htmlspecialchars($this->Course_model->get($curriculum->course_id)->course_code),
                                     my_htmlspecialchars($curriculum->curriculum_description),
                                     my_htmlspecialchars($curriculum->curriculum_effective_school_year),
-                                    my_htmlspecialchars(semesters($curriculum->curriculum_effective_semester)),
                                     my_htmlspecialchars($curriculum->curriculum_status),
                                     $view
                                 ));
@@ -71,7 +70,6 @@ class Curriculums extends CI_Capstone_Controller
                     lang('curriculumn_course'),
                     lang('curriculumn_description'),
                     lang('curriculumn_effective_year'),
-                    lang('curriculumn_effective_semester'),
                     lang('curriculumn_status'),
                     lang('curriculumn_option')
                 );

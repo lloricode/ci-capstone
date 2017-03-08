@@ -37,11 +37,6 @@ class Migration_Curriculum extends CI_Migration
                         'constraint' => '9',
                         'null'       => FALSE
                     ),
-                    'curriculum_effective_semester'    => array(
-                        'type'       => 'VARCHAR',
-                        'constraint' => '9',
-                        'null'       => FALSE
-                    ),
                     'curriculum_status'                => array(
                         'type'       => 'TINYINT',
                         'constraint' => '1',

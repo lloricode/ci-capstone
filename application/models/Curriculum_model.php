@@ -70,11 +70,6 @@ class Curriculum_model extends MY_Model
                         'field' => 'year',
                         'rules' => 'trim|required|exact_length[9]'
                     ),
-                    'curriculum_effective_semester'    => array(
-                        'label' => lang('curriculumn_effective_semester'),
-                        'field' => 'semester',
-                        'rules' => 'trim|required|min_length[2]|max_length[10]'
-                    ),
                     'curriculum_status'                => array(
                         'label' => lang('curriculumn_status'),
                         'field' => 'status',
