@@ -62,12 +62,12 @@ class Subject_offers extends CI_Capstone_Controller
                                 $user = $this->User_model->get($subject_offer->user_id);
                                 array_push($table_data, array(
                                     //$subject_offer->subject_offer_id,
+                                    my_htmlspecialchars($this->Subject_model->get($subject_offer->subject_id)->subject_code),
                                     my_htmlspecialchars(convert_24_to_12hrs($subject_offer->subject_offer_start)),
                                     my_htmlspecialchars(convert_24_to_12hrs($subject_offer->subject_offer_end)),
                                     my_htmlspecialchars(subject_offers_days($subject_offer)),
-                                    my_htmlspecialchars($user->last_name . ', ' . $user->first_name),
-                                    my_htmlspecialchars($this->Subject_model->get($subject_offer->subject_id)->subject_code),
                                     my_htmlspecialchars($this->Room_model->get($subject_offer->room_id)->room_number),
+                                    my_htmlspecialchars($user->last_name . ', ' . $user->first_name)
                                 ));
                         }
                 }
