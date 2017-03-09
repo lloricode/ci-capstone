@@ -5,9 +5,9 @@
  */
 defined('BASEPATH') or exit('Direct Script is not allowed');
 
-$lang['curriculum_label']        = 'Curriculums';
+$lang['curriculum_label']        = 'Curriculum';
 $lang['create_curriculum_label'] = 'Create Curriculum';
-$lang['view_curriculum_label']   = 'View Curriculum';
+$lang['view_curriculum_label']   = 'View Curriculums';
 
 
 
