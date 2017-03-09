@@ -132,16 +132,16 @@ class Student extends CI_capstone
                 $this->guardian_contact        = $this->__student->student_guardian_contact_number;
                 $this->guardian_email          = $this->__student->student_guardian_email;
                 #######
-                $this->__education_id          = $this->__education->education_id;
-                $this->__education_code        = $this->__education->education_code;
-                $this->__education_description = $this->__education->education_description;
-                $this->__course_id             = $this->__course->course_id;
-                $this->__course_code           = $this->__course->course_code;
-                $this->__course_description    = $this->__course->course_description;
+                $this->education_id          = $this->__education->education_id;
+                $this->education_code        = $this->__education->education_code;
+                $this->education_description = $this->__education->education_description;
+                $this->course_id             = $this->__course->course_id;
+                $this->course_code           = $this->__course->course_code;
+                $this->course_description    = $this->__course->course_description;
                 $this->level                   = (int) $this->__enrollment->enrollment_year_level;
                 $this->school_year             = $this->__enrollment->enrollment_school_year;
                 $this->semester                = $this->__enrollment->enrollment_semester;
-                $this->__enrollment_id         = $this->__enrollment->enrollment_id;
+                $this->enrollment_id         = $this->__enrollment->enrollment_id;
                 $this->curriculum_id           = $this->__enrollment->curriculum_id;
         }
 
