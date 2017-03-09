@@ -1,4 +1,5 @@
 <?php
+defined('BASEPATH') or exit('Direct Script is not allowed');
 echo form_open_multipart(site_url("create-student/index"), array(
     'class' => 'form-horizontal'
 )); //echo validation_errors();
@@ -123,7 +124,7 @@ echo form_open_multipart(site_url("create-student/index"), array(
                             <label class="control-label">Old</label>
                             <div class="controls">
                                 <label>
-                                    <?php echo form_checkbox('newsletter', 'accept', TRUE); ?>
+<?php echo form_checkbox('newsletter', 'accept', TRUE); ?>
                                     First One</label>
                                 <label>
                                     <input type="checkbox" name="radios" />
