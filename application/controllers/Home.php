@@ -28,7 +28,6 @@ class Home extends CI_Capstone_Controller
                         ))->count_rows();
                 $this->template['active_user_count']  = MY_Controller::_render('admin/_templates/home/user_count', $this->data, TRUE);
                 $this->template['dashboard_ctrl_var'] = MY_Controller::_render('admin/_templates/home/dashboard_ctrl', $this->data, TRUE);
-                $this->template['message']            = $this->session->flashdata('message');
                 $this->template['bootstrap']          = $this->_bootstrap();
                 $this->_render('admin/home', $this->template);
         }
