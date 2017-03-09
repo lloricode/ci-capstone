@@ -198,8 +198,9 @@ class Student extends CI_capstone
                                         with_faculty()->
                                         with_room()->
                                         with_subject()->
+                                        set_cache('student_library_subject_offers_' . $stud_sub->subject_offer_id)->
                                         get(array(
-                                    'student_library_subject_offers_' => $stud_sub->subject_offer_id
+                                    'subject_offer_id' => $stud_sub->subject_offer_id
                                 ));
                                 $subject_offers[] = (object) array(
                                             //local
