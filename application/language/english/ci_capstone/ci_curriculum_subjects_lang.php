@@ -7,7 +7,7 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
 
 
 $lang['curriculum_subject_label']        = 'Curriculum Subjects';
-$lang['create_curriculum_subject_label'] = 'Create Curriculum Subject';
+$lang['create_curriculum_subject_label'] = 'Create Curriculum Subjects';
 
 
 
@@ -22,3 +22,4 @@ $lang['curriculum_subject_pre_subject_label']      = 'Subject Code Pre-Requisite
 $lang['curriculum_subject_co_subject_label']       = 'Subject Code Co-Requisite';
 
 $lang['curriculum_subject_add_successfull'] = 'Curriculum Subject Add Successfully!!';
+
