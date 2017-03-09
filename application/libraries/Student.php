@@ -85,7 +85,7 @@ class Student extends CI_capstone
                  * check if exist student id
                  */
                 $this->student = $this->CI->Student_model->
-                        set_cache('students_id_' . $studen_id)->
+                        set_cache('student_library_get_' . $studen_id)->
                         get($studen_id);
                 if (!$this->student)
                 {
@@ -95,8 +95,8 @@ class Student extends CI_capstone
                 /**
                  * load enrollment, will also load course using with_course
                  */
-                $this->load_enrollment();
-                $this->_load_education();
+                $this->__load_enrollment();
+                $this->__load_education();
 
                 $this->id                    = $this->student->student_id;
                 $this->school_id             = $this->student->student_school_id;
@@ -188,7 +188,7 @@ class Student extends CI_capstone
         public function subject_offers($limit, $offset)
         {
                 $this->CI->load->helper('day');
-                $s_o_           = $this->suject_offers_($limit, $offset);
+                $s_o_           = $this->__students_subjects($limit, $offset);
                 $subject_offers = array();
                 if ($s_o_)
                 {
@@ -199,7 +199,7 @@ class Student extends CI_capstone
                                         with_room()->
                                         with_subject()->
                                         get(array(
-                                    'subject_offer_id' => $stud_sub->subject_offer_id
+                                    'student_library_subject_offers_' => $stud_sub->subject_offer_id
                                 ));
                                 $subject_offers[] = (object) array(
                                             //local
@@ -236,7 +236,6 @@ class Student extends CI_capstone
         public function subject_total()
         {
                 return (int) $this->CI->Students_subjects_model->
-                                set_cache('students_subject_total' . $this->enrollment->enrollment_id)->
                                 count_rows(array(
                                     'enrollment_id' => $this->enrollment->enrollment_id
                 ));
@@ -316,12 +315,12 @@ class CI_capstone
                 ));
         }
 
-        protected function load_enrollment()
+        protected function __load_enrollment()
         {
                 $this->enrollment = $this->CI->Enrollment_model->
                         with_course()->
                         with_education()->
-                        set_cache('students_load_enrollment' . $this->student->student_id)->
+                        set_cache('student_library_students_load_enrollment_' . $this->student->student_id)->
                         get(array(
                     'student_id' => $this->student->student_id
                 ));
@@ -333,23 +332,23 @@ class CI_capstone
                 $this->course = $this->enrollment->course;
         }
 
-        protected function _load_education()
+        protected function __load_education()
         {
                 $this->education = $this->CI->Education_model->
-                        set_cache('students_load_education' . $this->course->education_id)->
+                        set_cache('student_library_load_education_' . $this->course->education_id)->
                         get(array(
                     'education_id' => $this->course->education_id
                 ));
         }
 
-        protected function suject_offers_($limit, $offset)
+        protected function __students_subjects($limit, $offset)
         {
                 return $this->CI->Students_subjects_model->
                                 where(array(
                                     'enrollment_id' => $this->enrollment->enrollment_id
                                 ))->
                                 as_object()->
-                                set_cache('students_suject_offers_' . $this->enrollment->enrollment_id . '_limit_' . $limit . '_offset_' . $offset)->
+                                set_cache('student_library_students_subjects_' . $this->enrollment->enrollment_id . '_limit_' . $limit . '_offset_' . $offset)->
                                 limit($limit, $offset)->get_all();
         }
 
