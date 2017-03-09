@@ -302,6 +302,22 @@ class Id__
         }
 
         /**
+         * easy access CI super global
+         * 
+         * 
+         * @param type $name
+         * @return mixed
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        public function __get($name)
+        {
+                /**
+                 * CI reference
+                 */
+                return get_instance()->$name;
+        }
+
+        /**
          * check if generated id is exist in database
          * @return boolean
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
