@@ -47,9 +47,15 @@ class Create_student_subject extends CI_Capstone_Controller
                     'lang'  => 'xx'
                 );
 
-                $this->data['room_form'] = $this->form_boostrap('create-student-subject', $inputs, 'add_student_subject_label', 'add_student_subject_label', 'info-sign', NULL, TRUE);
-                $this->data['bootstrap'] = $this->_bootstrap();
-                $this->_render('admin/create_room', $this->data);
+                $this->student->get_all_subject_available_to_enroll();
+
+
+
+                $this->data['subject_from_course_curriculum_table'] = '';
+
+                $this->data['student_subject_form'] = $this->form_boostrap('create-student-subject', $inputs, 'add_student_subject_label', 'add_student_subject_label', 'info-sign', NULL, TRUE);
+                $this->data['bootstrap']            = $this->_bootstrap();
+                $this->_render('admin/create_student_subject', $this->data);
         }
 
         /**

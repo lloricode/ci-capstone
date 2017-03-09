@@ -6,7 +6,6 @@ class Subject_offer_validation
 {
 
 
-        private $CI;
         private $error_strat_delimeter;
         private $error_end_delimeter;
 
@@ -40,16 +39,43 @@ class Subject_offer_validation
         public function __construct()
         {
                 $this->enable_migrate        = FALSE;
-                $this->CI                    = &get_instance();
-                $this->CI->load->model(array(
+                $this->load->model(array(
                     'Subject_offer_model'
                 ));
-                $this->CI->load->helper(array(
+                $this->load->helper(array(
                     'day'
                 ));
-                $this->error_strat_delimeter = $this->CI->config->item('error_start_delimiter', 'ion_auth');
-                $this->error_end_delimeter   = $this->CI->config->item('error_end_delimiter', 'ion_auth');
+                $this->error_strat_delimeter = $this->config->item('error_start_delimiter', 'ion_auth');
+                $this->error_end_delimeter   = $this->config->item('error_end_delimiter', 'ion_auth');
                 $this->days                  = days_for_db();
+        }
+
+        /**
+         * prevent calling undefined functions
+         * 
+         * @param type $name
+         * @param type $arguments
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        public function __call($name, $arguments)
+        {
+                show_error('method <b>"$this->' . strtolower(get_class()) . '->' . $name . '()"</b> not found in ' . __FILE__ . '.');
+        }
+
+        /**
+         * easy access CI super global
+         * 
+         * 
+         * @param type $name
+         * @return mixed
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        public function __get($name)
+        {
+                /**
+                 * CI reference
+                 */
+                return get_instance()->$name;
         }
 
         public function init($method = NULL)
@@ -76,15 +102,15 @@ class Subject_offer_validation
                 /**
                  * set foreign ids
                  */
-                $this->user_id    = $this->CI->input->post('faculty', TRUE);
-                $this->room_id    = $this->CI->input->post('room', TRUE);
-                $this->subject_id = $this->CI->input->post('subject', TRUE);
-                $this->start      = $this->CI->input->post('start', TRUE);
-                $this->end        = $this->CI->input->post('end', TRUE);
+                $this->user_id    = $this->input->post('faculty', TRUE);
+                $this->room_id    = $this->input->post('room', TRUE);
+                $this->subject_id = $this->input->post('subject', TRUE);
+                $this->start      = $this->input->post('start', TRUE);
+                $this->end        = $this->input->post('end', TRUE);
 
                 foreach ($this->days as $v)
                 {
-                        $this->input_data_days['subject_offer_' . $v] = (is_null($this->CI->input->post($v, TRUE)) ? FALSE : TRUE);
+                        $this->input_data_days['subject_offer_' . $v] = (is_null($this->input->post($v, TRUE)) ? FALSE : TRUE);
                 }
         }
 
@@ -120,7 +146,7 @@ class Subject_offer_validation
                  * generate name for db cache, so i will use all post value to be using
                  */
                 $db_cache_name = '';
-                foreach ($this->CI->input->post() as $p)
+                foreach ($this->input->post() as $p)
                 {
                         $tmp           = str_replace(' ', '_', $p);
                         $db_cache_name .= $tmp . '_';
@@ -148,7 +174,7 @@ class Subject_offer_validation
                         if (!$this->enable_migrate)
                         {
 
-                                $this->CI->form_validation->set_message(
+                                $this->form_validation->set_message(
                                         'subject_offer_check_check_conflict', $this->error_strat_delimeter .
                                         'Days required.' .
                                         $this->error_end_delimeter);
@@ -163,7 +189,7 @@ class Subject_offer_validation
                  * generate a query
                  * then get result set, for the view of conflict subject offer
                  */
-                $this->subject_offer_conflict_result_object = $this->CI->Subject_offer_model->
+                $this->subject_offer_conflict_result_object = $this->Subject_offer_model->
                         //**********
                         group_start()->//big start
                         //::::::::::::::::::::::::::::::
@@ -278,19 +304,19 @@ class Subject_offer_validation
                 /**
                  * get affected row count
                  */
-                $this->affected_rows = $this->CI->db->affected_rows();
+                $this->affected_rows = $this->db->affected_rows();
 
                 /**
                  * set error/invalid message
                  */
                 if (!$this->enable_migrate)
                 {
-                        $this->CI->form_validation->set_message(
+                        $this->form_validation->set_message(
                                 'subject_offer_check_check_conflict', $this->error_strat_delimeter .
                                 'Conflict ' . $this->affected_rows .
 //                                ' schedules.' .
 //                                '<pre>' .
-//                                $this->CI->db->last_query() .
+//                                $this->db->last_query() .
 //                                '</pre>' .
                                 $this->error_end_delimeter);
                 }
@@ -306,12 +332,12 @@ class Subject_offer_validation
                 {
                         foreach ($this->subject_offer_conflict_result_object as $row)
                         {
-                                $sub_off[] = $this->CI->Subject_offer_model->get($row->subject_offer_id);
+                                $sub_off[] = $this->Subject_offer_model->get($row->subject_offer_id);
                         }
                         return $sub_off;
                 }
                 return FALSE;
-                // return 'test data confict [not implemented yet]<br />' . $this->CI->db->last_query();
+                // return 'test data confict [not implemented yet]<br />' . $this->db->last_query();
         }
 
 }

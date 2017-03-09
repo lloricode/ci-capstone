@@ -12,13 +12,6 @@ class School_id
 
 
         /**
-         * CI reference
-         *
-         * @var reference 
-         */
-        protected $CI;
-
-        /**
          * 
          */
         private $obj;
@@ -26,15 +19,13 @@ class School_id
 
         public function __construct()
         {
-                $this->CI  = &get_instance();
-                $this->CI->config->load('common/config');
-                $this->ver = $this->CI->config->item('version_id_generator');
+                $this->config->load('common/config');
+                $this->ver = $this->config->item('version_id_generator');
 
                 $arg = array(
                     'table'  => 'students',
                     'column' => 'student_school_id',
-                    'model'  => 'Student_model',
-                    'CI'     => $this->CI
+                    'model'  => 'Student_model'
                 );
                 if ($this->ver == 1)
                 {
@@ -45,6 +36,34 @@ class School_id
                         $this->obj = new Id_generator_v2($arg);
                 }
                 log_message('info', 'class ' . get_class() . ' initiallize.');
+        }
+
+        /**
+         * prevent calling undefined functions
+         * 
+         * @param type $name
+         * @param type $arguments
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        public function __call($name, $arguments)
+        {
+                show_error('method <b>"$this->' . strtolower(get_class()) . '->' . $name . '()"</b> not found in ' . __FILE__ . '.');
+        }
+
+        /**
+         * easy access CI super global
+         * 
+         * 
+         * @param type $name
+         * @return mixed
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        public function __get($name)
+        {
+                /**
+                 * CI reference
+                 */
+                return get_instance()->$name;
         }
 
         public function initialize($course_school_id_code = NULL)
@@ -87,7 +106,7 @@ class Id_generator_v2 extends Id__
         public function __construct($arg)
         {
                 parent::__construct($arg);
-                $this->start_id_generator = $this->CI->config->item('start_id_number_generator');
+                $this->start_id_generator = $this->config->item('start_id_number_generator');
         }
 
         public function set_course_school_id_code($course_school_id)
@@ -103,7 +122,7 @@ class Id_generator_v2 extends Id__
                         /**
                          * get total exist then plus one
                          */
-                        $this->total_student_plus_one = $this->CI->{$this->model}->
+                        $this->total_student_plus_one = $this->{$this->model}->
                                         //    where($this->db_table_school_id, 'LIKE', $this->year)->
                                         /*
                                          * not include in sat cache in MY_MODEL?
@@ -116,7 +135,7 @@ class Id_generator_v2 extends Id__
                 }
                 else
                 {
-                        $this->CI->{$this->model}->
+                        $this->{$this->model}->
                                         where($this->db_table_school_id, 'LIKE', $this->start_id_generator)->
                                         count_rows() + 1;
                         $this->total_student_plus_one = $this->start_id_generator;
@@ -175,11 +194,11 @@ class Id_generator_v1 extends Id__
         {
                 parent::__construct($arg);
 
-                $this->CI->load->helper('date');
+                $this->load->helper('date');
 
 
-                $this->month_start = (int) $this->CI->config->item('school_year_start');
-                $this->month_end   = (int) $this->CI->config->item('school_year_end');
+                $this->month_start = (int) $this->config->item('school_year_start');
+                $this->month_end   = (int) $this->config->item('school_year_end');
                 $this->year        = (int) date('Y');
                 $this->month       = (int) date('m');
 
@@ -204,7 +223,7 @@ class Id_generator_v1 extends Id__
                 /**
                  * get total exist then plus one
                  */
-                $total = $this->CI->{$this->model}->
+                $total = $this->{$this->model}->
                                 where($this->db_table_school_id, 'LIKE', $this->year)->
                                 set_cache('get_total_number_of_stundent_v1_')->
                                 count_rows() + 1;
@@ -256,13 +275,6 @@ class Id__
 
 
         /**
-         * CI reference
-         *
-         * @var reference 
-         */
-        protected $CI;
-
-        /**
          * check the table to generate number
          * 
          * database table 
@@ -282,12 +294,11 @@ class Id__
 
         public function __construct($arg)
         {
-                $this->CI                 = $arg['CI'];
                 $this->model              = $arg['model'];
                 $this->db_table           = $arg['table'];
                 $this->db_table_school_id = $arg['column'];
 
-                $this->CI->load->model($this->model);
+                $this->load->model($this->model);
         }
 
         /**
@@ -297,7 +308,7 @@ class Id__
          */
         protected function check_if_school_id_exist()
         {
-                $obj = $this->CI->{$this->model}->where(array(
+                $obj = $this->{$this->model}->where(array(
                             $this->db_table_school_id => $this
                         ))->get();
                 return (bool) $obj;

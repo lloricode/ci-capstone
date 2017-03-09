@@ -89,15 +89,13 @@ class Curriculums extends CI_Capstone_Controller
                 $curriculum_obj = check_id_from_url('curriculum_id', 'Curriculum_model', $this->input->get('curriculum-id'));
                 $this->breadcrumbs->unshift(3, lang('curriculum_subject_label'), 'curriculums/view?curriculum-id=' . $curriculum_obj->curriculum_id);
 
-
                 $this->load->model(array('Curriculum_subject_model', 'Subject_model'));
 
-                $cur_subj_obj = $this->Curriculum_subject_model->
-                        where(array('curriculum_id' => $curriculum_obj->curriculum_id))->
-                        order_by('curriculum_subject_year_level', 'ASC')->
-                        order_by('curriculum_subject_semester', 'ASC')->
-                        set_cache('curriculum_subject_' . $curriculum_obj->curriculum_id)->
-                        get_all();
+                $this->load->library('curriculum');
+                $this->curriculum->set_id($curriculum_obj->curriculum_id);
+
+
+                $cur_subj_obj = $this->curriculum->get_subjects();
 
                 $table_data = array();
 

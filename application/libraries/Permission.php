@@ -5,18 +5,37 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
 class Permission
 {
 
-
-        /**
-         * CI Reference
-         *
-         * @var reference
-         */
-        private $CI;
-
         public function __construct()
         {
-                $this->CI = &get_instance();
-                $this->CI->load->model('Permission_model');
+                $this->load->model('Permission_model');
+        }
+
+        /**
+         * prevent calling undefined functions
+         * 
+         * @param type $name
+         * @param type $arguments
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        public function __call($name, $arguments)
+        {
+                show_error('method <b>"$this->' . strtolower(get_class()) . '->' . $name . '()"</b> not found in ' . __FILE__ . '.');
+        }
+
+        /**
+         * easy access CI super global
+         * 
+         * 
+         * @param type $name
+         * @return mixed
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        public function __get($name)
+        {
+                /**
+                 * CI reference
+                 */
+                return get_instance()->$name;
         }
 
         /**
@@ -29,7 +48,7 @@ class Permission
         public function controller_groups($controller_id)
         {
                 $group_ids      = array();
-                $permission_obj = $this->CI->Permission_model->where(array(
+                $permission_obj = $this->Permission_model->where(array(
                             'controller_id' => $controller_id
                         ))->get_all();
                 if ($permission_obj)
@@ -51,7 +70,7 @@ class Permission
          */
         public function controller_remove_all_group($controller_id)
         {
-                return (bool) $this->CI->Permission_model->delete(array(
+                return (bool) $this->Permission_model->delete(array(
                             'controller_id' => $controller_id
                 ));
         }
@@ -66,12 +85,12 @@ class Permission
          */
         public function add_permision($controller_id, $group_id)
         {
-                $per_arr                  = array(
+                $per_arr = array(
                     'controller_id'   => $controller_id,
                     'group_id'        => $group_id,
-                    'updated_user_id' => $this->CI->ion_auth->user()->row()->id,
+                    'updated_user_id' => $this->session->userdata('user_id'),
                 );
-                return (bool) $this->CI->permission_ids = $this->CI->Permission_model->insert($per_arr);
+                return (bool) $this->Permission_model->insert($per_arr);
         }
 
 }

@@ -12,7 +12,7 @@ defined('BASEPATH') or exit('no direct script allowed');
  * $this->load->library('student');
  * 
  * ++++++++++++++++++++++++++++++++++++++++++++++++
- *  first MUST use $this->student->get($student_id);
+ *  first MUST use $this->__student->get($student_id);
  * +++++++++++++++++++++++++++++++++++++++++++++++
  * then you can now call all public functions
  * description of usage functions/attributes is on comment
@@ -70,6 +70,18 @@ class Student extends CI_capstone
         }
 
         /**
+         * prevent calling undefined functions
+         * 
+         * @param type $name
+         * @param type $arguments
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        public function __call($name, $arguments)
+        {
+                show_error('method <b>"$this->' . strtolower(get_class()) . '->' . $name . '()"</b> not found in ' . __FILE__ . '.');
+        }
+
+        /**
          * 
          * @param int $studen_id
          * @return object student row
@@ -84,53 +96,53 @@ class Student extends CI_capstone
                 /**
                  * check if exist student id
                  */
-                $this->student = $this->CI->Student_model->
+                $this->__student = $this->Student_model->
                         set_cache('student_library_get_' . $studen_id)->
                         get($studen_id);
-                if (!$this->student)
+                if (!$this->__student)
                 {
                         show_error('student id not found');
                 }
 
                 /**
-                 * load enrollment, will also load course using with_course
+                 * load enrollment, will also load course using with_course and set curriculum_id for curriculum library
                  */
-                $this->__load_enrollment();
+                $this->__load_enrollment_n_course_n_set_corriculum_id();
                 $this->__load_education();
 
-                $this->id                    = $this->student->student_id;
-                $this->school_id             = $this->student->student_school_id;
-                $this->fullname              = $this->student->student_lastname . ', ' . $this->student->student_firstname . ' ' . $this->student->student_middlename;
-                $this->firstname             = $this->student->student_firstname;
-                $this->middlename            = $this->student->student_middlename;
-                $this->lastname              = $this->student->student_lastname;
-                $this->image                 = $this->student->student_image;
-                $this->gender                = $this->student->student_gender;
-                $this->birthdate             = $this->student->student_birthdate;
-                $this->birthplace            = $this->student->student_birthplace;
-                $this->civil_status          = $this->student->student_civil_status;
-                $this->nationality           = $this->student->student_nationality;
-                $this->address               = $this->student->student_permanent_address;
-                $this->town                  = $this->student->student_address_town;
-                $this->region                = $this->student->student_address_region;
-                $this->contact               = $this->student->student_personal_contact_number;
-                $this->email                 = $this->student->student_personal_email;
-                $this->guardian_fullname     = $this->student->student_guardian_fullname;
-                $this->guardian_adrress      = $this->student->student_guardian_address;
-                $this->guardian_contact      = $this->student->student_guardian_contact_number;
-                $this->guardian_email        = $this->student->student_guardian_email;
+                $this->id                      = $this->__student->student_id;
+                $this->school_id               = $this->__student->student_school_id;
+                $this->fullname                = $this->__student->student_lastname . ', ' . $this->__student->student_firstname . ' ' . $this->__student->student_middlename;
+                $this->firstname               = $this->__student->student_firstname;
+                $this->middlename              = $this->__student->student_middlename;
+                $this->lastname                = $this->__student->student_lastname;
+                $this->image                   = $this->__student->student_image;
+                $this->gender                  = $this->__student->student_gender;
+                $this->birthdate               = $this->__student->student_birthdate;
+                $this->birthplace              = $this->__student->student_birthplace;
+                $this->civil_status            = $this->__student->student_civil_status;
+                $this->nationality             = $this->__student->student_nationality;
+                $this->address                 = $this->__student->student_permanent_address;
+                $this->town                    = $this->__student->student_address_town;
+                $this->region                  = $this->__student->student_address_region;
+                $this->contact                 = $this->__student->student_personal_contact_number;
+                $this->email                   = $this->__student->student_personal_email;
+                $this->guardian_fullname       = $this->__student->student_guardian_fullname;
+                $this->guardian_adrress        = $this->__student->student_guardian_address;
+                $this->guardian_contact        = $this->__student->student_guardian_contact_number;
+                $this->guardian_email          = $this->__student->student_guardian_email;
                 #######
-                $this->education_id          = $this->education->education_id;
-                $this->education_code        = $this->education->education_code;
-                $this->education_description = $this->education->education_description;
-                $this->course_id             = $this->course->course_id;
-                $this->course_code           = $this->course->course_code;
-                $this->course_description    = $this->course->course_description;
-                $this->level                 = (int) $this->enrollment->enrollment_year_level;
-                $this->school_year           = $this->enrollment->enrollment_school_year;
-                $this->semester              = $this->enrollment->enrollment_semester;
-                $this->enrollment_id         = $this->enrollment->enrollment_id;
-                $this->curriculum_id         = $this->enrollment->curriculum_id;
+                $this->__education_id          = $this->__education->education_id;
+                $this->__education_code        = $this->__education->education_code;
+                $this->__education_description = $this->__education->education_description;
+                $this->__course_id             = $this->__course->course_id;
+                $this->__course_code           = $this->__course->course_code;
+                $this->__course_description    = $this->__course->course_description;
+                $this->level                   = (int) $this->__enrollment->enrollment_year_level;
+                $this->school_year             = $this->__enrollment->enrollment_school_year;
+                $this->semester                = $this->__enrollment->enrollment_semester;
+                $this->__enrollment_id         = $this->__enrollment->enrollment_id;
+                $this->curriculum_id           = $this->__enrollment->curriculum_id;
         }
 
         /**
@@ -149,18 +161,18 @@ class Student extends CI_capstone
                 }
                 else
                 {
-                        if (!$this->student)
+                        if (!$this->__student)
                         {
                                 /**
                                  * just to make sure student already loaded
                                  */
                                 show_error('Student not set for getting image data.');
                         }
-                        list($filename, $extension) = explode('.', $this->student->student_image);
+                        list($filename, $extension) = explode('.', $this->__student->student_image);
                 }
                 return (object) array(
-                            'profile' => $this->CI->config->item('student_image_size_profile') . $filename . '_thumb.' . $extension,
-                            'table'   => $this->CI->config->item('student_image_size_table') . $filename . '_thumb.' . $extension
+                            'profile' => $this->config->item('student_image_size_profile') . $filename . '_thumb.' . $extension,
+                            'table'   => $this->config->item('student_image_size_table') . $filename . '_thumb.' . $extension
                 );
         }
 
@@ -187,14 +199,14 @@ class Student extends CI_capstone
          */
         public function subject_offers($limit, $offset)
         {
-                $this->CI->load->helper('day');
+                $this->load->helper('day');
                 $s_o_           = $this->__students_subjects($limit, $offset);
                 $subject_offers = array();
                 if ($s_o_)
                 {
                         foreach ($s_o_ as $stud_sub)
                         {
-                                $sub_of           = $this->CI->Subject_offer_model->
+                                $sub_of           = $this->Subject_offer_model->
                                         with_faculty()->
                                         with_room()->
                                         with_subject()->
@@ -236,9 +248,9 @@ class Student extends CI_capstone
          */
         public function subject_total()
         {
-                return (int) $this->CI->Students_subjects_model->
+                return (int) $this->Students_subjects_model->
                                 count_rows(array(
-                                    'enrollment_id' => $this->enrollment->enrollment_id
+                                    'enrollment_id' => $this->__enrollment->enrollment_id
                 ));
         }
 
@@ -252,9 +264,9 @@ class Student extends CI_capstone
         {
                 if ($msg)
                 {
-                        return (($this->enrollment->enrollment_status) ? 'Enrolled' : 'Not Enrolled');
+                        return (($this->__enrollment->enrollment_status) ? 'Enrolled' : 'Not Enrolled');
                 }
-                return (bool) $this->enrollment->enrollment_status;
+                return (bool) $this->__enrollment->enrollment_status;
         }
 
         /**
@@ -266,9 +278,19 @@ class Student extends CI_capstone
          */
         public function age($msg = FALSE)
         {
-                $this->CI->load->library('age');
-                $this->CI->age->initialize($this->student->student_birthdate);
-                return $this->CI->age->result() . (($msg) ? ' years old' : '');
+                $this->load->library('age');
+                $this->age->initialize($this->__student->student_birthdate);
+                return $this->age->result() . (($msg) ? ' years old' : '');
+        }
+
+        /**
+         * 
+         * @return type
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        public function get_all_subject_available_to_enroll()
+        {
+                return $this->__curriculum_subjects();
         }
 
 }
@@ -282,31 +304,21 @@ class CI_capstone
 
 
         /**
-         *
-         * @var reference CodeIgniter
-         */
-        protected $CI;
-
-        /**
          * all object var
          * @var objects
          */
-        protected $student;
-        protected $enrollment;
-        protected $course;
-        protected $education;
+        protected $__student;
+        protected $__enrollment;
+        protected $__course;
+        protected $__education;
 
         public function __construct()
         {
 
                 /**
-                 * get reference
-                 */
-                $this->CI = & get_instance();
-                /**
                  * loading models
                  */
-                $this->CI->load->model(array(
+                $this->load->model(array(
                     'Student_model',
                     'Enrollment_model',
                     'Course_model',
@@ -314,43 +326,75 @@ class CI_capstone
                     'Students_subjects_model',
                     'Subject_offer_model'
                 ));
+                $this->load->library('curriculum');
         }
 
-        protected function __load_enrollment()
+        /**
+         * easy access CI super global
+         * 
+         * 
+         * @param type $name
+         * @return mixed
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        public function __get($name)
         {
-                $this->enrollment = $this->CI->Enrollment_model->
+                /**
+                 * CI reference
+                 */
+                return get_instance()->$name;
+        }
+
+        /**
+         * load enrollment include course then set curriculum_id for curriculum library
+         */
+        protected function __load_enrollment_n_course_n_set_corriculum_id()
+        {
+                $this->__enrollment = $this->Enrollment_model->
                         with_course()->
                         with_education()->
-                        set_cache('student_library_students_load_enrollment_' . $this->student->student_id)->
+                        set_cache('student_library_students_load_enrollment_' . $this->__student->student_id)->
                         get(array(
-                    'student_id' => $this->student->student_id
+                    'student_id' => $this->__student->student_id
                 ));
 
-                if (!$this->enrollment)
+                if (!$this->__enrollment)
                 {
                         show_error('student has no enrollment result"');
                 }
-                $this->course = $this->enrollment->course;
+                /**
+                 * course
+                 */
+                $this->__course = $this->__enrollment->course;
+                /**
+                 * set curriculum_id
+                 */
+                $this->curriculum->set_id($this->__enrollment->curriculum_id);
         }
 
         protected function __load_education()
         {
-                $this->education = $this->CI->Education_model->
-                        set_cache('student_library_load_education_' . $this->course->education_id)->
+                $this->__education = $this->Education_model->
+                        set_cache('student_library_load_education_' . $this->__course->education_id)->
                         get(array(
-                    'education_id' => $this->course->education_id
+                    'education_id' => $this->__course->education_id
                 ));
         }
 
         protected function __students_subjects($limit, $offset)
         {
-                return $this->CI->Students_subjects_model->
+                return $this->Students_subjects_model->
                                 where(array(
-                                    'enrollment_id' => $this->enrollment->enrollment_id
+                                    'enrollment_id' => $this->__enrollment->enrollment_id
                                 ))->
                                 as_object()->
-                                set_cache('student_library_students_subjects_' . $this->enrollment->enrollment_id . '_limit_' . $limit . '_offset_' . $offset)->
+                                set_cache('student_library_students_subjects_' . $this->__enrollment->enrollment_id . '_limit_' . $limit . '_offset_' . $offset)->
                                 limit($limit, $offset)->get_all();
+        }
+
+        protected function __curriculum_subjects()
+        {
+                return $this->curriculum->get_subjects();
         }
 
 }
