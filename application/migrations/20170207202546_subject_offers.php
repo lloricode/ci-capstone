@@ -16,6 +16,17 @@ class Migration_Subject_offers extends CI_Migration
                 parent::__construct($config);
         }
 
+        private function _semesters()
+        {
+                $return = '';
+                $this->load->helper('school');
+                foreach (semesters() as $k => $v)
+                {
+                        $return .= '"' . $k . '",';
+                }
+                return trim($return, ',');
+        }
+
         public function up()
         {
                 $this->down();
@@ -34,6 +45,15 @@ class Migration_Subject_offers extends CI_Migration
                     'subject_offer_end'       => array(
                         'type' => 'TIME',
                         'null' => FALSE
+                    ),
+                    'subject_offer_semester'  => array(
+                        'type' => 'ENUM(' . $this->_semesters() . ')',
+                        'null' => FALSE
+                    ),
+                    'subject_offer_school_year' => array(
+                        'type'       => 'VARCHAR',
+                        'constraint' => '9',
+                        'null'       => FALSE
                     ),
                     /**
                      * true if with this day

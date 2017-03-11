@@ -16,6 +16,17 @@ class Migration_Enrollments extends CI_Migration
                 parent::__construct($config);
         }
 
+        private function _semesters()
+        {
+                $return = '';
+                $this->load->helper('school');
+                foreach (semesters() as $k => $v)
+                {
+                        $return .= '"' . $k . '",';
+                }
+                return trim($return, ',');
+        }
+
         public function up()
         {
                 $this->down();
@@ -49,7 +60,7 @@ class Migration_Enrollments extends CI_Migration
                         'null'       => FALSE
                     ),
                     'enrollment_semester'    => array(
-                        'type' => 'ENUM("first","second","summer")',
+                        'type' => 'ENUM(' . $this->_semesters() . ')',
                         'null' => FALSE
                     ),
                     'enrollment_year_level'  => array(
