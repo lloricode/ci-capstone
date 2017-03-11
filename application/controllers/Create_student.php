@@ -172,7 +172,7 @@ class Create_student extends CI_Capstone_Controller
                              * not recommended hidden inputs
                              * --Lloric
                              */
-                            'enrollment_semester'    => current_school_semester(),
+                            'enrollment_semester'    => current_school_semester(TRUE),
                             'enrollment_school_year' => current_school_year(),
                             /**
                              * get the active curriculum base on selected course_id
