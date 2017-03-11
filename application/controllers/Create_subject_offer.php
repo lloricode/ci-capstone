@@ -29,8 +29,11 @@ class Create_subject_offer extends CI_Capstone_Controller
         {
                 if ($this->input->post('submit'))
                 {
+                        $this->load->helper('school');
                         $id = $this->Subject_offer_model->from_form(NULL, array(
-                                    'created_user_id' => $this->session->userdata('user_id')
+                                    'subject_offer_semester'    => current_school_semester(TRUE),
+                                    'subject_offer_school_year' => current_school_year(),
+                                    'created_user_id'           => $this->session->userdata('user_id')
                                 ))->insert();
                         if ($id)
                         {
