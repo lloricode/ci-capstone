@@ -35,6 +35,7 @@ $lang['view_class_schedule_label'] = 'View Class schedule';
 
 
 $lang['subject_offer_conflict_data'] = 'Conflict Data';
+$lang['2subject_offer_conflict_data'] = 'Conflict Data 2';
 
 
 

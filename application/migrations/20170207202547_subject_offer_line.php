@@ -16,76 +16,76 @@ class Migration_Subject_offer_line extends CI_Migration
                 parent::__construct($config);
         }
 
-      
+        private function _semesters()
+        {
+                $return = '';
+                $this->load->helper('school');
+                foreach (semesters() as $k => $v)
+                {
+                        $return .= '"' . $k . '",';
+                }
+                return trim($return, ',');
+        }
 
         public function up()
         {
                 $this->down();
                 $fields = array(
-                    'subject_offer_line_id'        => array(
+                    'subject_offer_line_id'          => array(
                         'type'           => 'INT',
                         'constraint'     => 8,
                         'unsigned'       => TRUE,
                         'null'           => FALSE,
                         'auto_increment' => TRUE
                     ),
-                    'subject_offer_line_start'     => array(
+                    'subject_offer_line_start'       => array(
                         'type' => 'TIME',
                         'null' => FALSE
                     ),
-                    'subject_offer_line_end'       => array(
+                    'subject_offer_line_end'         => array(
                         'type' => 'TIME',
                         'null' => FALSE
                     ),
-//                    'subject_offer_semester'  => array(
-//                        'type' => 'ENUM(' . $this->_semesters() . ')',
-//                        'null' => FALSE
-//                    ),
-//                    'subject_offer_school_year' => array(
-//                        'type'       => 'VARCHAR',
-//                        'constraint' => '9',
-//                        'null'       => FALSE
-//                    ),
                     /**
                      * true if with this day
                      */
-                    'subject_offer_line_monday'    => array(
+                    'subject_offer_line_monday'      => array(
                         'type'       => 'TINYINT',
                         'constraint' => '1',
                         'default'    => '0',
                         'null'       => FALSE
                     ),
-                    'subject_offer_line_tuesday'   => array(
+                    'subject_offer_line_tuesday'     => array(
                         'type'       => 'TINYINT',
                         'constraint' => '1',
                         'default'    => '0',
                         'null'       => FALSE
                     ),
-                    'subject_offer_line_wednesday' => array(
+                    'subject_offer_line_wednesday'   => array(
                         'type'       => 'TINYINT',
                         'constraint' => '1',
                         'default'    => '0',
                         'null'       => FALSE
                     ),
-                    'subject_offer_line_thursday'  => array(
+                    'subject_offer_line_thursday'    => array(
                         'type'       => 'TINYINT',
                         'constraint' => '1',
                         'default'    => '0',
                         'null'       => FALSE
                     ),
-                    'subject_offer_line_friday'    => array(
+                    'subject_offer_line_friday'      => array(
                         'type'       => 'TINYINT',
                         'constraint' => '1',
                         'default'    => '0',
                         'null'       => FALSE
                     ),
-                    'subject_offer_line_saturday'  => array(
+                    'subject_offer_line_saturday'    => array(
                         'type'       => 'TINYINT',
                         'constraint' => '1',
                         'default'    => '0',
                         'null'       => FALSE
                     ),
-                    'subject_offer_line_sunday'    => array(
+                    'subject_offer_line_sunday'      => array(
                         'type'       => 'TINYINT',
                         'constraint' => '1',
                         'default'    => '0',
@@ -94,65 +94,75 @@ class Migration_Subject_offer_line extends CI_Migration
                     /**
                      * faculty (who instructor assigned to teach this subject_offer)
                      */
-//                    'user_id'                 => array(
-//                        'type'       => 'INT',
-//                        'constraint' => '11',
-//                        'unsigned'   => TRUE,
-//                        'null'       => FALSE
-//                    ),
                     /**
                      * other relations
                      */
-                    'subject_offer_id'              => array(
+                    'subject_offer_id'               => array(
                         'type'       => 'INT',
                         'constraint' => '11',
                         'unsigned'   => TRUE,
                         'null'       => FALSE
                     ),
-//                    'subject_id'              => array(
-//                        'type'       => 'INT',
-//                        'constraint' => '11',
-//                        'unsigned'   => TRUE,
-//                        'null'       => FALSE
-//                    ),
-                    'room_id'                 => array(
+                    //----------------------------------------------xxxxx
+                    'user_id'                        => array(
+                        'type'       => 'INT',
+                        'constraint' => '11',
+                        'unsigned'   => TRUE,
+                        'null'       => FALSE
+                    ),
+                    'subject_id'                     => array(
+                        'type'       => 'INT',
+                        'constraint' => '11',
+                        'unsigned'   => TRUE,
+                        'null'       => FALSE
+                    ),
+                    'room_id'                        => array(
                         'type'       => 'TINYINT',
                         'constraint' => '11',
                         'unsigned'   => TRUE,
+                        'null'       => FALSE
+                    ),
+                    'subject_offer_semester'    => array(
+                        'type' => 'ENUM(' . $this->_semesters() . ')',
+                        'null' => FALSE
+                    ),
+                    'subject_offer_school_year' => array(
+                        'type'       => 'VARCHAR',
+                        'constraint' => '9',
                         'null'       => FALSE
                     ),
                     /**
                      * dates
                      */
                     //------------------------------------
-                    'created_at'              => array(
+                    'created_at'                     => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
                         'null'       => FALSE
                     ),
-                    'created_user_id'         => array(
+                    'created_user_id'                => array(
                         'type'       => 'INT',
                         'constraint' => '11',
                         'unsigned'   => TRUE,
                         'null'       => FALSE
                     ),
-                    'deleted_at'              => array(
+                    'deleted_at'                     => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
                         'null'       => TRUE
                     ),
-                    'deleted_user_id'         => array(
+                    'deleted_user_id'                => array(
                         'type'       => 'INT',
                         'constraint' => '11',
                         'unsigned'   => TRUE,
                         'null'       => TRUE
                     ),
-                    'updated_at'              => array(
+                    'updated_at'                     => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
                         'null'       => TRUE
                     ),
-                    'updated_user_id'         => array(
+                    'updated_user_id'                => array(
                         'type'       => 'INT',
                         'constraint' => '11',
                         'unsigned'   => TRUE,

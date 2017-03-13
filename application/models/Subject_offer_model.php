@@ -12,7 +12,7 @@ class Subject_offer_model extends MY_Model
 
 
                 $this->_relations();
-                $this->_form();
+                // $this->_form();
                 $this->_config();
 
                 parent::__construct();
@@ -20,18 +20,18 @@ class Subject_offer_model extends MY_Model
 
         private function _config()
         {
-                $this->timestamps        = TRUE;//(bool) $this->config->item('my_model_timestamps');
-                $this->return_as         = 'object';//$this->config->item('my_model_return_as');
-                $this->timestamps_format = 'timestamp';//$this->config->item('my_model_timestamps_format');
+                $this->timestamps        = TRUE; //(bool) $this->config->item('my_model_timestamps');
+                $this->return_as         = 'object'; //$this->config->item('my_model_return_as');
+                $this->timestamps_format = 'timestamp'; //$this->config->item('my_model_timestamps_format');
 
 
-                $this->cache_driver              = 'file';//$this->config->item('my_model_cache_driver');
-                $this->cache_prefix              = 'cicapstone';//$this->config->item('my_model_cache_prefix');
+                $this->cache_driver              = 'file'; //$this->config->item('my_model_cache_driver');
+                $this->cache_prefix              = 'cicapstone'; //$this->config->item('my_model_cache_prefix');
                 /**
                  * some of field is not required, so remove it in array when no value, in inside the *->from_form()->insert() in core MY_Model,
                  */
-                $this->remove_empty_before_write = TRUE;//(bool) $this->config->item('my_model_remove_empty_before_write');
-                $this->delete_cache_on_save      = TRUE;//(bool) $this->config->item('my_model_delete_cache_on_save');
+                $this->remove_empty_before_write = TRUE; //(bool) $this->config->item('my_model_remove_empty_before_write');
+                $this->delete_cache_on_save      = TRUE; //(bool) $this->config->item('my_model_delete_cache_on_save');
         }
 
         private function _relations()
@@ -57,60 +57,61 @@ class Subject_offer_model extends MY_Model
                 );
         }
 
-        private function _form()
-        {
-                $this->load->helper('day');
+//
+//        private function _form()
+//        {
+//                //  $this->load->helper('day');
+////                $__insert__ = $this->_insert();
+////                foreach (days_for_db() as $d)
+////                {
+////
+////                        /**
+////                         * days
+////                         */
+////                        $__insert__['subject_offer_' . $d] = array(
+////                            'label' => ucfirst($d),
+////                            'field' => $d,
+////                            'rules' => '',
+////                        );
+////                }
+//                //   echo print_r($__insert__);
+//                $this->rules = array(
+//                    //'insert' => $__insert__,
+//                    'insert' => $this->_insert(),
+//                    'update' => $this->_update()
+//                );
+//        }
 
-                $__insert__ = $this->_insert();
-                foreach (days_for_db() as $d)
-                {
-
-                        /**
-                         * days
-                         */
-                        $__insert__['subject_offer_' . $d] = array(
-                            'label' => ucfirst($d),
-                            'field' => $d,
-                            'rules' => '',
-                        );
-                }
-                //   echo print_r($__insert__);
-                $this->rules = array(
-                    'insert' => $__insert__,
-                    'update' => $this->_update()
-                );
-        }
-
-        private function _insert()
+        public function insert_validations()
         {
                 return array(
-                    'subject_offer_start' => array(
-                        'label' => lang('create_subject_offer_start_label'),
-                        'field' => 'start',
-                        'rules' => 'required|trim|min_length[3]|max_length[5]|time_24hr|time_24hr|'
-                        . 'time_lessthan[' . $this->input->post('end', TRUE) . ']|'
-                        . 'callback_subject_offer_check_check_conflict',
-                    ),
-                    'subject_offer_end'   => array(
-                        'label' => lang('create_subject_offer_end_label'),
-                        'field' => 'end',
-                        'rules' => 'required|trim|min_length[3]|max_length[5]',
-                    ),
-                    'user_id'             => array(
+//                    'subject_offer_start' => array(
+//                        'label' => lang('create_subject_offer_start_label'),
+//                        'field' => 'start',
+//                        'rules' => 'required|trim|min_length[3]|max_length[5]|time_24hr|time_24hr|'
+//                        . 'time_lessthan[' . $this->input->post('end', TRUE) . ']|'
+//                        . 'callback_subject_offer_check_check_conflict',
+//                    ),
+//                    'subject_offer_end'   => array(
+//                        'label' => lang('create_subject_offer_end_label'),
+//                        'field' => 'end',
+//                        'rules' => 'required|trim|min_length[3]|max_length[5]',
+//                    ),
+                    array(
                         'label' => lang('create_user_id_label'),
                         'field' => 'faculty',
                         'rules' => 'trim|required|is_natural_no_zero',
                     ),
-                    'subject_id'          => array(
+                    array(
                         'label' => lang('create_subject_id_label'),
                         'field' => 'subject',
                         'rules' => 'trim|required|is_natural_no_zero',
                     ),
-                    'room_id'             => array(
-                        'label' => lang('create_room_id_label'),
-                        'field' => 'room',
-                        'rules' => 'trim|required|is_natural_no_zero',
-                    ),
+//                    'room_id'             => array(
+//                        'label' => lang('create_room_id_label'),
+//                        'field' => 'room',
+//                        'rules' => 'trim|required|is_natural_no_zero',
+//                    ),
 //                    array(
 //                        'label' => 'Subject Offer',
 //                        'field' => 'subject_offer_check_check_conflict',
@@ -119,10 +120,10 @@ class Subject_offer_model extends MY_Model
                 );
         }
 
-        private function _update()
-        {
-                return array(
-                );
-        }
-
+//
+//        private function _update()
+//        {
+//                return array(
+//                );
+//        }
 }

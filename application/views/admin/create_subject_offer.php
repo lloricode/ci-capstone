@@ -4,6 +4,14 @@ if (isset($conflict_data))
 {
         echo $conflict_data;
 }
+if (isset($conflict_data2))
+{
+        echo $conflict_data2;
+}
+if (isset($two_forms_conflict_message))
+{
+        echo $two_forms_conflict_message;
+}
 ?>
 <div class="container-fluid">
     <div class="row-fluid">
@@ -63,7 +71,7 @@ if (isset($conflict_data))
                     echo input_bootstrap($room_id);
                     ?>
 
-                    <h3>sched 2</h3>check to exclude<?php echo form_checkbox('exclude', TRUE); ?>
+                    <h3>sched 2</h3>check to exclude<?php echo form_checkbox('exclude', TRUE, set_checkbox('exclude', set_value('exclude'))); ?>
 
                     <?php
                     /**

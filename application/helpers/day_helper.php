@@ -106,7 +106,7 @@ if (!function_exists('subject_offers_days'))
                          * example:
                          * $ubject_off_obj->subject_offer_monday, etc...
                          */
-                        if ($sub_off_obj->{'subject_offer_' . $day})
+                        if ($sub_off_obj->{'subject_offer_line_' . $day})
                         {
                                 /**
                                  * append key

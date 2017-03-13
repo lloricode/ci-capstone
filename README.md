@@ -25,16 +25,6 @@ Platform|Framework
 ## Installation
 
 - Create first a databse named ``ci_capstone`` .
-- execute the code for saving session in databse. 
-```
-         CREATE TABLE IF NOT EXISTS `ci_capstone_session` (
-                 `id` varchar(128) NOT NULL,
-                 `ip_address` varchar(45) NOT NULL,
-                 `timestamp` int(10) unsigned DEFAULT 0 NOT NULL,
-                 `data` blob NOT NULL,
-                 KEY `ci_sessions_timestamp` (`timestamp`)
-         );
-```
 - then just run/execute the website, ``tables`` in ``database`` will automatically migrate.
 
 ## Default Login

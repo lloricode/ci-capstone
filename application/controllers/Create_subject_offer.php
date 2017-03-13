@@ -8,7 +8,6 @@ class Create_subject_offer extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
-                $this->load->model('Subject_offer_model');
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
                 $this->breadcrumbs->unshift(2, lang('index_subject_heading_th'), 'subjects');
@@ -29,32 +28,221 @@ class Create_subject_offer extends CI_Capstone_Controller
         {
                 if ($this->input->post('submit'))
                 {
+                        $validate_two_forms = TRUE;
+                        $this->load->model(array('Subject_offer_model', 'Subject_offer_line_model'));
+
+                        /**
+                         * for getting current year and semester
+                         */
                         $this->load->helper('school');
-                        $id = $this->Subject_offer_model->from_form(NULL, array(
+
+                        /**
+                         * start the DB transaction
+                         */
+                        $this->db->trans_start();
+
+                        /**
+                         * storing all validations
+                         */
+                        $all_validations = array_merge($this->Subject_offer_model->insert_validations(), $this->Subject_offer_line_model->insert_validations());
+
+
+                        /**
+                         * check if second schedule if excluded
+                         */
+                        $sched_id2 = TRUE;
+                        $exclude   = $this->input->post('exclude'); //see view for this code
+                        if (!($exclude && !empty($exclude)))
+                        {
+                                $validate_two_forms = $this->_validate_two_shedules();
+                                $all_validations    = array_merge($all_validations, $this->Subject_offer_line_model->insert_validations2());
+                        }
+                        $this->form_validation->set_rules($all_validations);
+
+
+
+                        if ($this->form_validation->run())
+                        {
+                                $subject_offer_insert = array(
+                                    'user_id'                   => $this->input->post('faculty', TRUE),
+                                    'subject_id'                => $this->input->post('subject', TRUE),
                                     'subject_offer_semester'    => current_school_semester(TRUE),
                                     'subject_offer_school_year' => current_school_year(),
                                     'created_user_id'           => $this->session->userdata('user_id')
-                                ))->insert();
-                        if ($id)
-                        {
-                                $this->session->set_flashdata('message', lang('create_subject_offer_succesfully_added_message'));
-                                redirect(site_url('create-subject-offer'), 'refresh');
+                                );
+                                $sub_offer_id         = $this->Subject_offer_model->insert($subject_offer_insert);
+
+
+                                $sched_1_insert = array(
+                                    'subject_offer_line_start'  => $this->input->post('start', TRUE),
+                                    'subject_offer_line_end'    => $this->input->post('end', TRUE),
+                                    'room_id'                   => $this->input->post('room', TRUE),
+                                    'subject_id'                => $this->input->post('faculty', TRUE),
+                                    'user_id'                   => $this->input->post('subject', TRUE),
+                                    'subject_offer_id'          => $sub_offer_id,
+                                    'subject_offer_semester'    => current_school_semester(TRUE),
+                                    'subject_offer_school_year' => current_school_year(),
+                                    'created_user_id'           => $this->session->userdata('user_id')
+                                );
+                                foreach (days_for_db() as $d)
+                                {
+                                        $sched_1_insert['subject_offer_line_' . $d] = $this->input->post($d, TRUE);
+                                }
+
+                                $sched_id  = $this->Subject_offer_line_model->insert($sched_1_insert);
+                                $sched_id2 = TRUE;
+                                if (!($exclude && !empty($exclude)))
+                                {
+                                        $sched_2_insert = array(
+                                            'subject_offer_line_start'  => $this->input->post('start2', TRUE),
+                                            'subject_offer_line_end'    => $this->input->post('end2', TRUE),
+                                            'room_id'                   => $this->input->post('room2', TRUE),
+                                            'subject_id'                => $this->input->post('faculty', TRUE),
+                                            'user_id'                   => $this->input->post('subject', TRUE),
+                                            'subject_offer_id'          => $sub_offer_id,
+                                            'subject_offer_semester'    => current_school_semester(TRUE),
+                                            'subject_offer_school_year' => current_school_year(),
+                                            'created_user_id'           => $this->session->userdata('user_id')
+                                        );
+                                        foreach (days_for_db() as $d)
+                                        {
+                                                $sched_2_insert['subject_offer_line_' . $d] = $this->input->post($d . '2', TRUE);
+                                        }
+                                        $sched_id2 = $this->Subject_offer_line_model->insert($sched_2_insert);
+                                }
+                                //   echo print_r($sched_12_insert);
+                                /**
+                                 * checking if one of the insert is failed, either in [form validation] or in [syntax error] or [upload]
+                                 */
+                                if (!$sub_offer_id || !$sched_id || !$sched_id2 || !$validate_two_forms)
+                                {
+                                        echo 'roolback__';
+                                        /**
+                                         * rollback database
+                                         */
+                                        $this->db->trans_rollback();
+                                        if (!$validate_two_forms)
+                                        {
+                                                $this->data['two_forms_conflict_message'] = '<h5 style="color:red">Conflict two forms.</h5>';
+                                        }
+                                }
+                                else
+                                {
+                                        if ($this->db->trans_commit())
+                                        {
+                                                echo 'done';
+                                                //$this->session->set_flashdata('message', lang('create_subject_offer_succesfully_added_message'));
+                                                // redirect(site_url('create-subject-offer'), 'refresh');
+                                        }
+                                }
                         }
                 }
                 $this->_form_view();
         }
 
-        public function subject_offer_check_check_conflict()
+        private function _validate_two_shedules()
+        {
+                $sched1 = array(
+                    'start' => $this->input->post('start', TRUE),
+                    'end'   => $this->input->post('end', TRUE),
+                    'room'  => $this->input->post('room', TRUE)
+                );
+                foreach (days_for_db() as $d)
+                {
+                        $sched1[$d] = (is_null($this->input->post($d, TRUE)) ? 0 : 1);
+                }
+                //------------------------
+                $sched2 = array(
+                    'start' => $this->input->post('start2', TRUE),
+                    'end'   => $this->input->post('end2', TRUE),
+                    'room'  => $this->input->post('room2', TRUE)
+                );
+                foreach (days_for_db() as $d)
+                {
+                        $sched2[$d] = (is_null($this->input->post($d . '2', TRUE)) ? 0 : 1);
+                }
+//                if (
+//                        ($sched1['monday'] == $sched2['monday'] && 1 == $sched2['monday'] ) ||
+//                        ($sched1['tuesday'] == $sched2['tuesday'] && 1 == $sched2['tuesday']) ||
+//                        ($sched1['wednesday'] == $sched2['wednesday'] && 1 == $sched2['wednesday']) ||
+//                        ($sched1['thursday'] == $sched2['thursday'] && 1 == $sched2['thursday']) ||
+//                        ($sched1['friday'] == $sched2['friday'] && 1 == $sched2['friday']) ||
+//                        ($sched1['saturday'] == $sched2['saturday'] && 1 == $sched2['saturday']) ||
+//                        ($sched1['sunday'] == $sched2['sunday'] && 1 == $sched2['sunday'])
+//                )
+//                {
+//                        echo 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
+//                }
+                if (
+                //--
+                        (//big start
+                        //1
+                        ($sched1['start'] <= $sched2['start'] &&
+                        $sched1['start'] <= $sched2['end'] &&
+                        $sched1['end'] > $sched2['start'] &&
+                        $sched1['end'] <= $sched2['end'])
+                        //--
+                        ||
+                        //2
+                        ($sched1['start'] >= $sched2['start'] &&
+                        $sched1['start'] < $sched2['end'] &&
+                        $sched1['end'] >= $sched2['start'] &&
+                        $sched1['end'] >= $sched2['end'])
+                        //--
+                        ||
+                        //3
+                        ($sched1['start'] <= $sched2['start'] &&
+                        $sched1['start'] < $sched2['end'] &&
+                        $sched1['end'] > $sched2['start'] &&
+                        $sched1['end'] >= $sched2['end'])
+                        //--
+                        ||
+                        //4
+                        ($sched1['start'] >= $sched2['start'] &&
+                        $sched1['start'] < $sched2['end'] &&
+                        $sched1['end'] > $sched2['start'] &&
+                        $sched1['end'] <= $sched2['end'])
+                        //--
+                        )//big end
+                        //--
+                        &&
+                        //days
+                        (
+                        ($sched1['monday'] == $sched2['monday'] && 1 == $sched2['monday'] ) ||
+                        ($sched1['tuesday'] == $sched2['tuesday'] && 1 == $sched2['tuesday']) ||
+                        ($sched1['wednesday'] == $sched2['wednesday'] && 1 == $sched2['wednesday']) ||
+                        ($sched1['thursday'] == $sched2['thursday'] && 1 == $sched2['thursday']) ||
+                        ($sched1['friday'] == $sched2['friday'] && 1 == $sched2['friday']) ||
+                        ($sched1['saturday'] == $sched2['saturday'] && 1 == $sched2['saturday']) ||
+                        ($sched1['sunday'] == $sched2['sunday'] && 1 == $sched2['sunday'])
+                        )
+                )
+                {
+                        return FALSE;
+                }
+                return TRUE;
+        }
+
+        public function subject_offer_check_check_conflict($val, $form_ = '')
         {
                 if (!$this->input->post('submit'))
                 {
                         show_404();
-                }
+                }//echo ' >' . $form_ . '< ';
                 $this->load->helper('day');
                 $this->load->model(array('User_model', 'Subject_model', 'Room_model'));
                 $this->load->library('subject_offer_validation');
+                $this->subject_offer_validation->form_($form_);
                 $this->subject_offer_validation->init('post');
                 $conflic = $this->subject_offer_validation->subject_offer_check_check_conflict();
+//                if ($conflic)
+//                {
+//                        echo 'tReu';
+//                }
+//                else
+//                {
+//                        echo 'flase';
+//                }
                 $data    = $this->subject_offer_validation->conflict();
                 if ($data)
                 {
@@ -70,20 +258,21 @@ class Create_subject_offer extends CI_Capstone_Controller
                         );
                         $table_data = array();
                         foreach ($data as $subject_offer)
-                        {
+                        {//echo print_r($subject_offer);
                                 $user = $this->User_model->get($subject_offer->user_id);
                                 array_push($table_data, array(
                                     $inc++,
-                                    my_htmlspecialchars(convert_24_to_12hrs($subject_offer->subject_offer_start)),
-                                    my_htmlspecialchars(convert_24_to_12hrs($subject_offer->subject_offer_end)),
+                                    my_htmlspecialchars(convert_24_to_12hrs($subject_offer->subject_offer_line_start)),
+                                    my_htmlspecialchars(convert_24_to_12hrs($subject_offer->subject_offer_line_end)),
                                     my_htmlspecialchars(subject_offers_days($subject_offer)),
                                     my_htmlspecialchars($user->last_name . ', ' . $user->first_name),
                                     my_htmlspecialchars($this->Subject_model->get($subject_offer->subject_id)->subject_code),
                                     my_htmlspecialchars($this->Room_model->get($subject_offer->room_id)->room_number),
                                 ));
                         }
-                        $this->data['conflict_data'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'subject_offer_conflict_data', FALSE, TRUE);
+                        $this->data['conflict_data' . $form_] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', $form_ . 'subject_offer_conflict_data', FALSE, TRUE);
                 }
+                $this->subject_offer_validation->reset__();
                 return $conflic;
         }
 
@@ -110,7 +299,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                 );
 
 
-                $this->data['room_id'] = array(
+                $this->data['room_id']              = array(
                     'name'  => 'room',
                     'value' => $this->Room_model->
                             as_dropdown('room_number')->
@@ -138,7 +327,7 @@ class Create_subject_offer extends CI_Capstone_Controller
 
 
                 $this->data['room_id2'] = array(
-                    'name'  => 'room',
+                    'name'  => 'room2',
                     'value' => $this->Room_model->
                             as_dropdown('room_number')->
                             set_cache('as_dropdown_room_number')->
