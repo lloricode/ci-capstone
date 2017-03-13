@@ -232,20 +232,18 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                 $return = array();
 
                 $cur_obj = $this->Curriculum_model->
-                        set_cache('as_dropdown_subject_code')->
+                        set_cache('curriculum_get_all')->
                         get_all();
 
                 if ($cur_obj)
                 {
                         foreach ($cur_obj as $v)
                         {
-                                $semester                  = semesters($v->curriculum_effective_semester);
                                 $course_code               = $this->Course_model->
                                                 set_cache('course_' . $v->course_id)->
                                                 get($v->course_id)->
                                         course_code;
                                 $return[$v->curriculum_id] = $v->curriculum_effective_school_year . ' | ' .
-                                        $semester . ' | ' .
                                         $course_code . ' | ' .
                                         $v->curriculum_description;
                         }

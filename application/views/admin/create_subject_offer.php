@@ -25,7 +25,19 @@ if (isset($conflict_data))
                         'id'         => 'basic_validate',
                         'novalidate' => 'novalidate',
                     ));
+                    /**
+                     * info
+                     */
+                    echo input_bootstrap($user_id);
+                    echo input_bootstrap($subject_id);
+                    ?>
 
+                    <h3>sched</h3>                    
+
+                    <?php
+                    /**
+                     * 1st
+                     *////////////////////////////////////////////////////////////////////////////////////////////
                     //subject_offer_start:
                     echo input_bootstrap($subject_offer_start);
 
@@ -48,9 +60,47 @@ if (isset($conflict_data))
                     </div>
 
                     <?php
-                    echo input_bootstrap($user_id);
-                    echo input_bootstrap($subject_id);
                     echo input_bootstrap($room_id);
+                    ?>
+
+                    <h3>sched 2</h3>check to exclude<?php echo form_checkbox('exclude', TRUE); ?>
+
+                    <?php
+                    /**
+                     * end
+                     *////////////////////////////////////////////////////////////////////////////////////////////
+                    //subject_offer_start:
+                    echo input_bootstrap($subject_offer_start2);
+
+
+                    //subject_offer_end:
+                    echo input_bootstrap($subject_offer_end2);
+                    ?>
+                    <div class="control-group">
+                        <div class="controls">
+                            <?php
+                            $this->table->set_template(array(
+                                'table_open' => '<table>',
+                            ));
+                            ?>
+                            <?php foreach ($days as $d): ?>
+                                    <?php
+                                    $this->table->add_row(
+                                            form_label(
+                                                    lang('cal_' . $d), $d . '2'), form_label(
+                                                    form_checkbox(
+                                                            $d . '2', TRUE/* i set this TRUE for directly insert, */, set_checkbox($d . '2', set_value($d . '2'))
+                                                    ), $d
+                                            )
+                                    );
+                                    ?>
+                            <?php endforeach; ?>
+                            <?php echo $this->table->generate(); ?>
+                        </div>
+                    </div>
+
+                    <?php
+                    echo input_bootstrap($room_id2);
 
                     echo ' <div class="form-actions">';
 

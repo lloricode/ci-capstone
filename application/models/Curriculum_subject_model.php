@@ -35,12 +35,45 @@ class Curriculum_subject_model extends MY_Model
 
         private function _relations()
         {
-//                $this->has_many['course'] = array(
-//                    'foreign_model' => 'Course_model',
-//                    'foreign_table' => 'courses',
-//                    'foreign_key'   => 'course_id',
-//                    'local_key'     => 'course_id'
-//                );
+                $this->has_one['curriculum']  = array(
+                    'foreign_model' => 'Curriculum_model',
+                    'foreign_table' => 'curriculums',
+                    'foreign_key'   => 'curriculum_id',
+                    'local_key'     => 'curriculum_id'
+                );
+                $this->has_one['subject']     = array(
+                    'foreign_model' => 'Subject_model',
+                    'foreign_table' => 'subjects',
+                    'foreign_key'   => 'subject_id',
+                    'local_key'     => 'subject_id'
+                );
+                $this->has_one['subject_pre'] = array(
+                    'foreign_model' => 'Subject_model',
+                    'foreign_table' => 'subjects',
+                    'foreign_key'   => 'subject_id',
+                    'local_key'     => 'subject_id_pre'
+                );
+                $this->has_one['subject_co']  = array(
+                    'foreign_model' => 'Subject_model',
+                    'foreign_table' => 'subjects',
+                    'foreign_key'   => 'subject_id',
+                    'local_key'     => 'subject_id_co'
+                );
+                $this->has_one['user']        = array(
+                    'foreign_model' => 'User_model',
+                    'foreign_table' => 'users',
+                    'foreign_key'   => 'id',
+                    'local_key'     => 'created_user_id'
+                );
+                /**
+                 * subject offer
+                 */
+                $this->has_many['subject_offers']        = array(
+                    'foreign_model' => 'Subject_offer_model',
+                    'foreign_table' => 'subject_offers',
+                    'foreign_key'   => 'subject_id',
+                    'local_key'     => 'subject_id'
+                );
         }
 
         private function _form()

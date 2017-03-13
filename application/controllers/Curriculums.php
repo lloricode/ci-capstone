@@ -89,7 +89,7 @@ class Curriculums extends CI_Capstone_Controller
                 $curriculum_obj = check_id_from_url('curriculum_id', 'Curriculum_model', $this->input->get('curriculum-id'));
                 $this->breadcrumbs->unshift(3, lang('curriculum_subject_label'), 'curriculums/view?curriculum-id=' . $curriculum_obj->curriculum_id);
 
-                $this->load->model(array('Curriculum_subject_model', 'Subject_model'));
+                $this->load->model('Curriculum_subject_model');
 
                 $this->load->library('curriculum');
                 $this->curriculum->set_id($curriculum_obj->curriculum_id);
@@ -100,38 +100,26 @@ class Curriculums extends CI_Capstone_Controller
                 $table_data = array();
 
                 if ($cur_subj_obj)
-                {
+                {//echo print_r($cur_subj_obj);
                         $year         = 1;
                         $table_data[] = array(array('data' => '<h4>Level ' . $year . '</h4>', 'colspan' => '7'));
-                        foreach ($cur_subj_obj as $cs)
+                        foreach ($cur_subj_obj as $cur_subj)
                         {
-                                if ($year != $cs->curriculum_subject_year_level)
+                                if ($year != $cur_subj->curriculum_subject_year_level)
                                 {
-                                        $table_data[] = array(array('data' => '<h4>Level ' . $cs->curriculum_subject_year_level . '</h4>', 'colspan' => '7'));
+                                        $table_data[] = array(array('data' => '<h4>Level ' . $cur_subj->curriculum_subject_year_level . '</h4>', 'colspan' => '7'));
 
                                         $year++;
                                 }
-                                //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::start
-                                $subj_pre = '';
-                                $subj_co  = '';
-                                if ($cs->subject_id_pre)
-                                {
-                                        $subj_pre = $this->Subject_model->get($cs->subject_id_pre)->subject_code;
-                                }
-                                if ($cs->subject_id_co)
-                                {
-                                        $subj_co = $this->Subject_model->get($cs->subject_id_co)->subject_code;
-                                }
-                                //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::end
                                 $table_data[] = array(
-                                    // my_htmlspecialchars($cs->curriculum_subject_year_level),
-                                    my_htmlspecialchars(semesters($cs->curriculum_subject_semester)),
-                                    my_htmlspecialchars($this->Subject_model->get($cs->subject_id)->subject_code),
-                                    my_htmlspecialchars($cs->curriculum_subject_units),
-                                    my_htmlspecialchars($cs->curriculum_subject_lecture_hours . ' Hours'),
-                                    my_htmlspecialchars($cs->curriculum_subject_laboratory_hours . ' Hours'),
-                                    my_htmlspecialchars($subj_pre),
-                                    my_htmlspecialchars($subj_co),
+                                    // my_htmlspecialchars($cur_subj->curriculum_subject_year_level),
+                                    my_htmlspecialchars(semesters($cur_subj->curriculum_subject_semester)),
+                                    my_htmlspecialchars($cur_subj->subject->subject_code),
+                                    my_htmlspecialchars($cur_subj->curriculum_subject_units),
+                                    my_htmlspecialchars($cur_subj->curriculum_subject_lecture_hours . ' Hours'),
+                                    my_htmlspecialchars($cur_subj->curriculum_subject_laboratory_hours . ' Hours'),
+                                    my_htmlspecialchars((isset($cur_subj->subject_pre->subject_code)) ? $cur_subj->subject_pre->subject_code : '--'),
+                                    my_htmlspecialchars((isset($cur_subj->subject_co->subject_code)) ? $cur_subj->subject_co->subject_code : '--')
                                 );
                         }
                 }

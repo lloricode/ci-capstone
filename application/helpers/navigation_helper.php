@@ -108,7 +108,7 @@ if (!function_exists('navigations_main'))
                             ),
                             'create-subject-offer' =>
                             array(
-                                'label' => lang('create_class_schedule_heading'),
+                                'label' => lang('create_subject_offer_heading'),
                                 'seen'  => TRUE,
                             ),
                         ),

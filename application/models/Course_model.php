@@ -35,12 +35,12 @@ class Course_model extends MY_Model
 
         private function _relations()
         {
-                $this->has_many['enrollment'] = array(
-                    'foreign_model' => 'Enrollment_model',
-                    'foreign_table' => 'enrollments',
-                    'foreign_key'   => 'enrollment_id',
-                    'local_key'     => 'enrollment_id'
-                );
+//                $this->has_many['enrollment'] = array(
+//                    'foreign_model' => 'Enrollment_model',
+//                    'foreign_table' => 'enrollments',
+//                    'foreign_key'   => 'enrollment_id',
+//                    'local_key'     => 'enrollment_id'
+//                );
                 $this->has_one['education']   = array(
                     'foreign_model' => 'Education_model',
                     'foreign_table' => 'educations',

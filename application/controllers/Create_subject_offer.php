@@ -92,7 +92,9 @@ class Create_subject_offer extends CI_Capstone_Controller
                 $this->load->model(array('User_model', 'Subject_model', 'Room_model'));
                 $this->load->helper(array('combobox', 'day'));
 
-
+                /**
+                 * 1st
+                 */
                 $this->data['subject_offer_start'] = array(
                     'name'  => 'start',
                     'value' => time_list(),
@@ -106,6 +108,45 @@ class Create_subject_offer extends CI_Capstone_Controller
                     'type'  => 'dropdown',
                     'lang'  => 'create_subject_offer_end_label'
                 );
+
+
+                $this->data['room_id'] = array(
+                    'name'  => 'room',
+                    'value' => $this->Room_model->
+                            as_dropdown('room_number')->
+                            set_cache('as_dropdown_room_number')->
+                            get_all(),
+                    'type'  => 'dropdown',
+                    'lang'  => 'create_room_id_label'
+                );
+                /**
+                 * 2nd
+                 */
+                $this->data['subject_offer_start2'] = array(
+                    'name'  => 'start2',
+                    'value' => time_list(),
+                    'type'  => 'dropdown',
+                    'lang'  => 'create_subject_offer_start_label2'
+                );
+
+                $this->data['subject_offer_end2'] = array(
+                    'name'  => 'end2',
+                    'value' => time_list(),
+                    'type'  => 'dropdown',
+                    'lang'  => 'create_subject_offer_end_label2'
+                );
+
+
+                $this->data['room_id2'] = array(
+                    'name'  => 'room',
+                    'value' => $this->Room_model->
+                            as_dropdown('room_number')->
+                            set_cache('as_dropdown_room_number')->
+                            get_all(),
+                    'type'  => 'dropdown',
+                    'lang'  => 'create_room_id_label2'
+                );
+
 
                 /**
                  * foreign
@@ -125,16 +166,6 @@ class Create_subject_offer extends CI_Capstone_Controller
                             get_all(),
                     'type'  => 'dropdown',
                     'lang'  => 'create_subject_id_label'
-                );
-
-                $this->data['room_id'] = array(
-                    'name'  => 'room',
-                    'value' => $this->Room_model->
-                            as_dropdown('room_number')->
-                            set_cache('as_dropdown_room_number')->
-                            get_all(),
-                    'type'  => 'dropdown',
-                    'lang'  => 'create_room_id_label'
                 );
 
                 /**

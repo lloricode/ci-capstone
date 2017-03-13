@@ -38,14 +38,14 @@ class Migration_Subject_offers extends CI_Migration
                         'null'           => FALSE,
                         'auto_increment' => TRUE
                     ),
-                    'subject_offer_start'     => array(
-                        'type' => 'TIME',
-                        'null' => FALSE
-                    ),
-                    'subject_offer_end'       => array(
-                        'type' => 'TIME',
-                        'null' => FALSE
-                    ),
+//                    'subject_offer_start'     => array(
+//                        'type' => 'TIME',
+//                        'null' => FALSE
+//                    ),
+//                    'subject_offer_end'       => array(
+//                        'type' => 'TIME',
+//                        'null' => FALSE
+//                    ),
                     'subject_offer_semester'  => array(
                         'type' => 'ENUM(' . $this->_semesters() . ')',
                         'null' => FALSE
@@ -58,48 +58,48 @@ class Migration_Subject_offers extends CI_Migration
                     /**
                      * true if with this day
                      */
-                    'subject_offer_monday'    => array(
-                        'type'       => 'TINYINT',
-                        'constraint' => '1',
-                        'default'    => '0',
-                        'null'       => FALSE
-                    ),
-                    'subject_offer_tuesday'   => array(
-                        'type'       => 'TINYINT',
-                        'constraint' => '1',
-                        'default'    => '0',
-                        'null'       => FALSE
-                    ),
-                    'subject_offer_wednesday' => array(
-                        'type'       => 'TINYINT',
-                        'constraint' => '1',
-                        'default'    => '0',
-                        'null'       => FALSE
-                    ),
-                    'subject_offer_thursday'  => array(
-                        'type'       => 'TINYINT',
-                        'constraint' => '1',
-                        'default'    => '0',
-                        'null'       => FALSE
-                    ),
-                    'subject_offer_friday'    => array(
-                        'type'       => 'TINYINT',
-                        'constraint' => '1',
-                        'default'    => '0',
-                        'null'       => FALSE
-                    ),
-                    'subject_offer_saturday'  => array(
-                        'type'       => 'TINYINT',
-                        'constraint' => '1',
-                        'default'    => '0',
-                        'null'       => FALSE
-                    ),
-                    'subject_offer_sunday'    => array(
-                        'type'       => 'TINYINT',
-                        'constraint' => '1',
-                        'default'    => '0',
-                        'null'       => FALSE
-                    ),
+//                    'subject_offer_monday'    => array(
+//                        'type'       => 'TINYINT',
+//                        'constraint' => '1',
+//                        'default'    => '0',
+//                        'null'       => FALSE
+//                    ),
+//                    'subject_offer_tuesday'   => array(
+//                        'type'       => 'TINYINT',
+//                        'constraint' => '1',
+//                        'default'    => '0',
+//                        'null'       => FALSE
+//                    ),
+//                    'subject_offer_wednesday' => array(
+//                        'type'       => 'TINYINT',
+//                        'constraint' => '1',
+//                        'default'    => '0',
+//                        'null'       => FALSE
+//                    ),
+//                    'subject_offer_thursday'  => array(
+//                        'type'       => 'TINYINT',
+//                        'constraint' => '1',
+//                        'default'    => '0',
+//                        'null'       => FALSE
+//                    ),
+//                    'subject_offer_friday'    => array(
+//                        'type'       => 'TINYINT',
+//                        'constraint' => '1',
+//                        'default'    => '0',
+//                        'null'       => FALSE
+//                    ),
+//                    'subject_offer_saturday'  => array(
+//                        'type'       => 'TINYINT',
+//                        'constraint' => '1',
+//                        'default'    => '0',
+//                        'null'       => FALSE
+//                    ),
+//                    'subject_offer_sunday'    => array(
+//                        'type'       => 'TINYINT',
+//                        'constraint' => '1',
+//                        'default'    => '0',
+//                        'null'       => FALSE
+//                    ),
                     /**
                      * faculty (who instructor assigned to teach this subject_offer)
                      */
@@ -118,12 +118,12 @@ class Migration_Subject_offers extends CI_Migration
                         'unsigned'   => TRUE,
                         'null'       => FALSE
                     ),
-                    'room_id'                 => array(
-                        'type'       => 'TINYINT',
-                        'constraint' => '11',
-                        'unsigned'   => TRUE,
-                        'null'       => FALSE
-                    ),
+//                    'room_id'                 => array(
+//                        'type'       => 'TINYINT',
+//                        'constraint' => '11',
+//                        'unsigned'   => TRUE,
+//                        'null'       => FALSE
+//                    ),
                     /**
                      * dates
                      */
