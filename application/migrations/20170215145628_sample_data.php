@@ -8,7 +8,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Migration_Sample_data extends CI_Migration
 {
 
-
         private $user_ids;
         private $education_ids;
         private $course_ids;
@@ -382,54 +381,72 @@ class Migration_Sample_data extends CI_Migration
                 $_data              = array(
                     array(
                         'code'    => 'BEED',
+                        'icon'    => 'book',
+                        'color'   => 'ly',
                         'desc'    => 'BEED description',
                         'educ'    => $educ_collge_id,
                         'code_id' => '20'
                     ),
                     array(
                         'code'    => 'HRM',
+                        'icon'    => 'fire',
+                        'color'   => 'ls',
                         'desc'    => 'HRM description',
                         'educ'    => $educ_collge_id,
                         'code_id' => '30'
                     ),
                     array(
                         'code'    => 'Paramedical',
+                        'icon'    => 'user-md',
+                        'color'   => 'lg',
                         'desc'    => 'Paramedical  description',
                         'educ'    => $educ_collge_id,
                         'code_id' => '40'
                     ),
                     array(
                         'code'    => 'ICT',
+                        'icon'    => 'tasks',
+                        'color'   => 'lo',
                         'desc'    => 'ICT description',
                         'educ'    => $educ_collge_id,
                         'code_id' => '50'
                     ),
                     array(
                         'code'    => 'High School',
+                        'icon'    => 'briefcase',
+                        'color'   => 'lb',
                         'desc'    => 'High School Department',
                         'educ'    => $educ_highschool_id,
                         'code_id' => '60'
                     ),
                     array(
                         'code'    => 'AMT',
+                        'icon'    => 'beaker',
+                        'color'   => 'lv',
                         'desc'    => 'AMT description',
                         'educ'    => $educ_collge_id,
                         'code_id' => '70'
                     ),
                     array(
                         'code'    => 'TESDA',
+                        'icon'    => 'group',
+                        'color'   => 'ly',
                         'desc'    => 'Tesda Courses',
                         'educ'    => $educ_collge_id,
                         'code_id' => '80'
                     ),
                     array(
                         'code'    => 'CME',
+                        'icon'    => 'tint',
+                        'color'   => 'ls',
                         'desc'    => 'CME description',
                         'educ'    => $educ_collge_id,
                         'code_id' => '90'
                     ),
                     array(
                         'code'    => 'Cross Enroll',
+                        'icon'    => 'move',
+                        'color'   => 'lg',
                         'desc'    => 'Cross Enroll description',
                         'educ'    => $educ_collge_id,
                         'code_id' => '01'
@@ -443,6 +460,8 @@ class Migration_Sample_data extends CI_Migration
                 {
                         $course_arr[] = array(
                             'course_code'        => $v ['code'],
+                            'course_icon'        => $v ['icon'],
+                            'course_color'       => $v ['color'],
                             'course_description' => $v ['desc'],
                             'education_id'       => $v ['educ'],
                             'course_code_id'     => $v ['code_id'],

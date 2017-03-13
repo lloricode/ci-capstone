@@ -8,7 +8,7 @@ class Home extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
-                $this->load->model(array('User_model', 'Enrollment_model'));
+                $this->load->model(array('User_model', 'Course_model', 'Enrollment_model'));
         }
 
         /**
@@ -20,14 +20,45 @@ class Home extends CI_Capstone_Controller
         {
 
 
-                $this->data['active_users_count']     = $this->User_model->where(array(
+                $this->data['active_users_count'] = $this->User_model->where(array(
                             'active' => TRUE
                         ))->count_rows();
+
                 $this->data['student_enrolled_count'] = $this->Enrollment_model->where(array(
                             'enrollment_status' => TRUE
                         ))->count_rows();
+
+                /*
+                 * get all course
+                 */
+
+                $courses_detale = array();
+                $course_obj     = $this->Course_model->set_cache('course_get_all')->get_all();
+
+                if ($course_obj)
+                {
+                        foreach ($course_obj as $course_row)
+                        {
+                                $ecount            = $enrollment_object = $this->Enrollment_model->where(array(
+                                            'course_id'         => $course_row->course_id,
+                                            'enrollment_status' => TRUE
+                                        ))->count_rows();
+
+                                //array push
+                                $courses_detale[] = array(
+                                    'course_id' => $course_row->course_id,
+                                    'counts'    => $ecount,
+                                    'icon'      => $course_row->course_icon,
+                                    'color'     => $course_row->course_color,
+                                    'code'      => $course_row->course_code
+                                );
+                        }
+                }
+                $this->data['courses_info'] = $courses_detale;
+
                 $this->template['active_user_count']  = MY_Controller::_render('admin/_templates/home/user_count', $this->data, TRUE);
                 $this->template['dashboard_ctrl_var'] = MY_Controller::_render('admin/_templates/home/dashboard_ctrl', $this->data, TRUE);
+                $this->template['stud_course_count']  = MY_Controller::_render('admin/_templates/home/student_course_count', $this->data, TRUE);
                 $this->template['bootstrap']          = $this->_bootstrap();
                 $this->_render('admin/home', $this->template);
         }

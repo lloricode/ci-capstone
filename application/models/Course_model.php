@@ -59,6 +59,16 @@ class Course_model extends MY_Model
                             'field' => 'code',
                             'rules' => 'trim|required|human_name|min_length[2]|max_length[50]',
                         ),
+                        'course_icon'        => array(
+                            'label' => lang('index_course_icon_th'),
+                            'field' => 'icon',
+                            'rules' => 'alpha_dash|trim|required|min_length[2]|max_length[20]',
+                        ),
+                        'course_color'       => array(
+                            'label' => lang('index_course_color_th'),
+                            'field' => 'color',
+                            'rules' => 'alpha_dash|trim|required|min_length[2]|max_length[20]',
+                        ),
                         'course_description' => array(
                             'label' => lang('index_course_desc_th'),
                             'field' => 'desc',

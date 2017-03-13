@@ -8,7 +8,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Migration_Course extends CI_Migration
 {
 
-
         const CI_DB_TABLE = 'courses';
 
         public function __construct($config = array())
@@ -31,6 +30,16 @@ class Migration_Course extends CI_Migration
                         'type'       => 'VARCHAR',
                         'constraint' => '50',
                         'unique'     => TRUE,
+                        'null'       => FALSE
+                    ),
+                    'course_icon'        => array(
+                        'type'       => 'VARCHAR',
+                        'constraint' => '20',
+                        'null'       => FALSE
+                    ),
+                    'course_color'       => array(
+                        'type'       => 'VARCHAR',
+                        'constraint' => '20',
                         'null'       => FALSE
                     ),
                     'course_description' => array(

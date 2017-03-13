@@ -205,8 +205,8 @@ class Student_model extends MY_Model
                     'upload_path'   => $this->config->item('student_image_dir'),
                     'allowed_types' => 'jpg|png|jpeg',
                     'max_size'      => "1000KB",
-                    'max_height'    => "768",
-                    'max_width'     => "1024"
+                    'max_height'    => "144",
+                    'max_width'     => "144"
                 );
         }
 

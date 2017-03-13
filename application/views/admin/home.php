@@ -13,3 +13,8 @@ if (isset($dashboard_ctrl_var))
 {
         echo $dashboard_ctrl_var;
 }
+
+if (isset($stud_course_count))
+{
+        echo $stud_course_count;
+}
