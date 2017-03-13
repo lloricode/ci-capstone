@@ -8,7 +8,7 @@ class Home extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
-                $this->load->model(array('User_model', 'Enrollment_model'));
+                $this->load->model(array('User_model', 'Course_model', 'Enrollment_model'));
         }
 
         /**
@@ -20,42 +20,45 @@ class Home extends CI_Capstone_Controller
         {
 
 
-                $this->data['active_users_count']     = $this->User_model->where(array(
+                $this->data['active_users_count'] = $this->User_model->where(array(
                             'active' => TRUE
                         ))->count_rows();
+
                 $this->data['student_enrolled_count'] = $this->Enrollment_model->where(array(
                             'enrollment_status' => TRUE
                         ))->count_rows();
-                $this->data['stud_beed']              = $this->Enrollment_model->where(array(
-                            'course_id' => 1
-                        ))->count_rows();               //counts all students in beed for dashboard
-                $this->data['stud_hrm']              = $this->Enrollment_model->where(array(
-                            'course_id' => 2
-                        ))->count_rows();               //counts all students in hrm for dashboard
-                $this->data['stud_paramedical']              = $this->Enrollment_model->where(array(
-                            'course_id' => 3
-                        ))->count_rows();               //counts all students in paramedical for dashboard
-                $this->data['stud_ict']              = $this->Enrollment_model->where(array(
-                            'course_id' => 4
-                        ))->count_rows();               //counts all students in ict for dashboard
-                $this->data['stud_highschool']              = $this->Enrollment_model->where(array(
-                            'course_id' => 5
-                        ))->count_rows();               //counts all students in highschool for dashboard
-                $this->data['stud_amt']              = $this->Enrollment_model->where(array(
-                            'course_id' => 6
-                        ))->count_rows();               //counts all students in amt for dashboard
-                $this->data['stud_tesda']              = $this->Enrollment_model->where(array(
-                            'course_id' => 7
-                        ))->count_rows();               //counts all students in tesda for dashboard
-                $this->data['stud_cme']              = $this->Enrollment_model->where(array(
-                            'course_id' => 8
-                        ))->count_rows();               //counts all students in cme for dashboard
-                $this->data['stud_cross_enroll']              = $this->Enrollment_model->where(array(
-                            'course_id' => 9
-                        ))->count_rows();               //counts all students in cross enroll for dashboard
+
+                /*
+                 * get all course
+                 */
+
+                $courses_detale = array();
+                $course_obj     = $this->Course_model->set_cache('course_get_all')->get_all();
+
+                if ($course_obj)
+                {
+                        foreach ($course_obj as $course_row)
+                        {
+                                $ecount            = $enrollment_object = $this->Enrollment_model->where(array(
+                                            'course_id'         => $course_row->course_id,
+                                            'enrollment_status' => TRUE
+                                        ))->count_rows();
+
+                                //array push
+                                $courses_detale[] = array(
+                                    'course_id' => $course_row->course_id,
+                                    'counts'    => $ecount,
+                                    'icon'      => $course_row->course_icon,
+                                    'color'     => $course_row->course_color,
+                                    'code'      => $course_row->course_code
+                                );
+                        }
+                }
+                $this->data['courses_info'] = $courses_detale;
+
                 $this->template['active_user_count']  = MY_Controller::_render('admin/_templates/home/user_count', $this->data, TRUE);
                 $this->template['dashboard_ctrl_var'] = MY_Controller::_render('admin/_templates/home/dashboard_ctrl', $this->data, TRUE);
-                $this->template['stud_course_count'] = MY_Controller::_render('admin/_templates/home/student_course_count', $this->data, TRUE);
+                $this->template['stud_course_count']  = MY_Controller::_render('admin/_templates/home/student_course_count', $this->data, TRUE);
                 $this->template['bootstrap']          = $this->_bootstrap();
                 $this->_render('admin/home', $this->template);
         }

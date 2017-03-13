@@ -39,11 +39,27 @@ class Create_course extends CI_Capstone_Controller
 
         private function _form_view()
         {
+                $this->load->helper('icon');
+
                 $inputs['course_code'] = array(
                     'name'  => 'code',
                     'value' => $this->form_validation->set_value('code'),
                     'type'  => 'text',
                     'lang'  => 'create_course_code_label'
+                );
+
+                $inputs['course_icon'] = array(
+                    'name'  => 'icon',
+                    'value' => bootstrap_icons(),
+                    'type'  => 'dropdown',
+                    'lang'  => 'create_course_icon_label'
+                );
+                
+                $inputs['course_color'] = array(
+                    'name'  => 'color',
+                    'value' => tile_color(),
+                    'type'  => 'dropdown',
+                    'lang'  => 'create_course_color_label'
                 );
 
                 $inputs['course_description'] = array(
