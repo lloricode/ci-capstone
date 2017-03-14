@@ -55,6 +55,13 @@ class Subject_offer_model extends MY_Model
                     'foreign_key'   => 'id',
                     'local_key'     => 'user_id'
                 );
+
+                $this->has_many['subject_line'] = array(
+                    'foreign_model' => 'Subject_offer_line_model',
+                    'foreign_table' => 'subject_offer_line',
+                    'foreign_key'   => 'subject_offer_id',
+                    'local_key'     => 'subject_offer_id'
+                );
         }
 
 //

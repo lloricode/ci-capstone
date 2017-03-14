@@ -5,7 +5,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Subject_offers extends CI_Capstone_Controller
 {
 
-
         private $page_;
         private $limit;
 
@@ -13,7 +12,7 @@ class Subject_offers extends CI_Capstone_Controller
         {
                 parent::__construct();
                 $this->lang->load('ci_capstone/ci_subject_offers');
-                $this->load->model(array('Subject_offer_model', 'User_model', 'Subject_model', 'Room_model'));
+                $this->load->model(array('Room_model', 'Subject_offer_model', 'Subject_offer_line_model', 'User_model', 'Subject_model', 'Room_model'));
                 $this->load->library('pagination');
                 /**
                  * pagination limit
@@ -21,7 +20,7 @@ class Subject_offers extends CI_Capstone_Controller
                 $this->limit = 10;
                 $this->breadcrumbs->unshift(2, lang('index_subject_heading_th'), 'subjects');
                 $this->breadcrumbs->unshift(3, lang('index_subject_offer_heading'), 'subject-offers');
-                $this->load->helper(array('day', 'time'));
+                $this->load->helper(array('day', 'time', 'school'));
 
 // echo print_r(time_list(FALSE,'10:30'));
         }
@@ -31,44 +30,53 @@ class Subject_offers extends CI_Capstone_Controller
          */
         public function index()
         {
+                $subl = $this->Subject_offer_model->where(array(
+                            'subject_offer_semester'    => current_school_semester(TRUE),
+                            'subject_offer_school_year' => current_school_year(),
+                        ))->
+                        // with_room()->
+                        with_subject()->
+                        with_faculty()->
+                        with_subject_line()->
+                        get_all();
+
+                //  echo print_r($subl);
                 /**
                  * get the page from url
                  * 
                  */
-                $this->page_       = get_page_in_url();
+                $this->page_ = get_page_in_url();
 //list students
-                $subject_offer_obj = $this->Subject_offer_model;
-                $subject_offer_obj = $subject_offer_obj->
-                        limit($this->limit, $this->limit * $this->page_ - $this->limit);
-
-
-                foreach (days_for_db() as $d)
-                {
-                        $subject_offer_obj = $subject_offer_obj->order_by('subject_offer_' . $d, 'ASC');
-                }
-                $subject_offer_obj = $subject_offer_obj->order_by('subject_offer_start', 'ASC');
-                $subject_offer_obj = $subject_offer_obj->
-                        order_by('updated_at', 'DESC')->
-                        order_by('created_at', 'DESC')->
-                        set_cache('subject-offers_page_' . $this->page_)->
-                        get_all();
 
                 $table_data = array();
-                if ($subject_offer_obj)
+                if ($subl)
                 {
 
-                        foreach ($subject_offer_obj as $subject_offer)
+                        foreach ($subl as $s)
                         {
-                                $user = $this->User_model->get($subject_offer->user_id);
-                                array_push($table_data, array(
-                                    //$subject_offer->subject_offer_id,
-                                    my_htmlspecialchars($this->Subject_model->get($subject_offer->subject_id)->subject_code),
-                                    my_htmlspecialchars(convert_24_to_12hrs($subject_offer->subject_offer_start)),
-                                    my_htmlspecialchars(convert_24_to_12hrs($subject_offer->subject_offer_end)),
-                                    my_htmlspecialchars(subject_offers_days($subject_offer)),
-                                    my_htmlspecialchars($this->Room_model->get($subject_offer->room_id)->room_number),
-                                    my_htmlspecialchars($user->last_name . ', ' . $user->first_name)
-                                ));
+                                $output = array(
+                                    $s->subject->subject_code,
+                                    $s->faculty->first_name
+                                );
+
+                                $line = array();
+                                $inc  = 0;
+                                foreach ($s->subject_line as $su_l)
+                                {
+                                        $inc++;
+                                        $schd = array(
+                                            subject_offers_days($su_l),
+                                            convert_24_to_12hrs($su_l->subject_offer_line_start),
+                                            convert_24_to_12hrs($su_l->subject_offer_line_end),
+                                            $this->Room_model->get($su_l->room_id)->room_number
+                                        );
+                                        $line = array_merge($line, $schd);
+                                }
+                                if ($inc === 1)
+                                {
+                                        $line = array_merge($line, array('--', '--', '--', '--'));
+                                }
+                                $table_data[] = array_merge($output, $line);
                         }
                 }
                 /*
@@ -76,12 +84,22 @@ class Subject_offers extends CI_Capstone_Controller
                  */
                 $header = array(
                     //'id',
-                    lang('index_subject_id_th'),
-                    lang('index_subject_offer_start_th'),
-                    lang('index_subject_offer_end_th'),
-                    lang('index_subject_offer_days_th'),
-                    lang('index_room_id_th'),
-                    lang('index_user_id_th'),
+//                    lang('index_subject_id_th'),
+//                    lang('index_subject_offer_start_th'),
+//                    lang('index_subject_offer_end_th'),
+//                    lang('index_subject_offer_days_th'),
+//                    lang('index_room_id_th'),
+//                    lang('index_user_id_th'),
+                    'Subject',
+                    'Faculty',
+                    'Days1',
+                    'Start1',
+                    'End1',
+                    'Room1',
+                    'Days2',
+                    'Start2',
+                    'End2',
+                    'Room2'
                 );
 
                 $pagination = $this->pagination->generate_bootstrap_link('subject-offers/index', $this->Subject_offer_model->count_rows() / $this->limit);
