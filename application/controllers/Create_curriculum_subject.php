@@ -55,177 +55,6 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                         ))->count_rows() == 0;
         }
 
-        /**
-         * check if adding Requisite is the same year level
-         * 
-         * @return bool
-         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
-         */
-        public function is_co_requisite_same_level()
-        {
-                if (!$this->input->post('submit'))
-                {
-                        show_404();
-                }
-
-
-                $input_year_level = $this->input->post('level', TRUE);
-                $co_requisite     = $this->input->post('co_requisite', TRUE);
-                $curriculum_id    = $this->input->post('curriculum', TRUE);
-                $semester         = $this->input->post('semester', TRUE);
-
-                /**
-                 * required first all the other field to be filled, it will validate first
-                 */
-                if ($input_year_level && $co_requisite && $semester)
-                {
-                        /**
-                         * get row in $co_requisite in current curriculum
-                         */
-                        $cur_sub_obj = $this->Curriculum_subject_model->where(array(
-                                    //main subject search by co-requisite , to get the year level of input co requsite using the exist subject in curiculum
-                                    'subject_id'    => $co_requisite,
-                                    'curriculum_id' => $curriculum_id // search in curiculum input
-                                ))->set_cache("curriculum_subject_validation_{$co_requisite}_{$curriculum_id}")->get();
-
-                        /**
-                         * if has, check the year level of $pre_requisite
-                         */
-                        if ($cur_sub_obj)
-                        {
-                                /**
-                                 * check if same year level, with input and the result OBJ->year level in model
-                                 */
-                                if ($cur_sub_obj->curriculum_subject_year_level == $input_year_level)
-                                {
-                                        /**
-                                         * validation pass, so lets also check semester
-                                         */
-                                        if ($cur_sub_obj->curriculum_subject_semester == $semester)
-                                        {
-                                                /**
-                                                 * accepted
-                                                 */
-                                                return TRUE;
-                                        }
-                                        /**
-                                         * return FALSE, because, because is not at same semester
-                                         */
-                                        $this->form_validation->set_message('is_co_requisite_same_level', 'Adding "{field}" must also in same semester.');
-                                        return FALSE;
-                                }
-                                /**
-                                 * return FALSE, because, it detect that has a subject BUT not same level
-                                 */
-                                $this->form_validation->set_message('is_co_requisite_same_level', 'Adding "{field}" must same in current year level.');
-                                return FALSE;
-                        }
-                        /**
-                         * no result so no conflict
-                         */
-                        return TRUE;
-                }
-                /**
-                 * not required, just pass the validation
-                 */
-                return TRUE;
-        }
-
-        /**
-         * check if adding Requisite is in low year level
-         * 
-         * @return bool
-         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
-         */
-        public function is_pre_requisite_low_level()
-        {
-                if (!$this->input->post('submit'))
-                {
-                        show_404();
-                }
-
-
-                $input_year_level = $this->input->post('level', TRUE);
-                $pre_requisite    = $this->input->post('pre_requisite', TRUE);
-                $curriculum_id    = $this->input->post('curriculum', TRUE);
-                $semester         = $this->input->post('semester', TRUE);
-
-                /**
-                 * required first all the other field to be filled, it will validate first
-                 */
-                if ($input_year_level && $pre_requisite && $semester)
-                {
-                        /**
-                         * check if  $pre_requisite exist in current curriculum
-                         */
-                        $cur_sub_obj = $this->Curriculum_subject_model->where(array(
-                                    //main subject search by $pre_requisite , to get the year level of input co requsite using the exist subject in curiculum
-                                    'subject_id'    => $pre_requisite,
-                                    'curriculum_id' => $curriculum_id
-                                ))->get();
-
-                        /**
-                         * if has, check the yeal level of $pre_requisite
-                         */
-                        if ($cur_sub_obj)
-                        {
-                                /**
-                                 * check lower year, i use <= to include semester, 
-                                 */
-                                if ($cur_sub_obj->curriculum_subject_year_level <= $input_year_level)
-                                {
-
-                                        $int_semester_db    = $this->_numeric_semester($cur_sub_obj->curriculum_subject_semester);
-                                        $int_semester_input = $this->_numeric_semester($semester);
-
-                                        if ($int_semester_db < $int_semester_input)
-                                        {
-                                                /**
-                                                 * accepted
-                                                 */
-                                                return TRUE;
-                                        }
-                                        /**
-                                         * return FALSE, because,not lower in semester
-                                         */
-                                        $this->form_validation->set_message('is_pre_requisite_low_level', 'Adding "{field}"\'s year must in lower in semester.');
-                                        return FALSE;
-                                }
-                                /**
-                                 * return FALSE, because, it detect that has a subject BUT not lower/equal level
-                                 */
-                                $this->form_validation->set_message('is_pre_requisite_low_level', 'Adding "{field}"\'s year must in lower/equal in current year level.');
-                                return FALSE;
-                        }
-                        /**
-                         * no result so no conflict
-                         */
-                        return TRUE;
-                }
-                /**
-                 * not required
-                 */
-                return TRUE;
-        }
-
-        private function _numeric_semester($tmp)
-        {
-                $int_semester = NULL;
-                switch ($tmp)
-                {
-                        case 'first':
-                                $int_semester = 1;
-                                break;
-                        case 'second':
-                                $int_semester = 2;
-                                break;
-                        case 'summer':
-                                $int_semester = 3;
-                                break;
-                        default: break;
-                }
-                return $int_semester;
-        }
 
         private function _dropdown_for_curriculumn()
         {
@@ -285,56 +114,101 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                     'name'  => 'subject',
                     'value' => $this->_dropdown_for_subjects(),
                     'type'  => 'dropdown',
-                    'lang'  => 'curriculum_subject_subject_label'
+                    'lang'  => 'curriculum_subject_subject_label',
+                    'note'  => 'Requisites is on the next form after submit this current form.'
                 );
 
-                $inputs['subject_id_pre'] = array(
-                    'name'  => 'pre_requisite',
-                    'value' => $this->_dropdown_for_subjects(),
-                    'type'  => 'dropdown',
-                    'lang'  => 'curriculum_subject_pre_subject_label'
+                //this will be moved in another controller form
+//                $inputs['subject_id_pre'] = array(
+//                    'name'  => 'pre_requisite',
+//                    'value' => $this->_dropdown_for_subjects(),
+//                    'type'  => 'dropdown',
+//                    'lang'  => 'curriculum_subject_pre_subject_label'
+//                );
+
+                /*
+                 * 
+                 */
+
+
+//                $inputs['subject_id_co'] = array(
+//                    'name'  => 'co_requisite',
+//                    'value' => $this->_dropdown_for_subjects(),
+//                    'type'  => 'dropdown',
+//                    'lang'  => 'curriculum_subject_co_subject_label'
+//                );
+//                $inputs['curriculum_subject_semester'] = array(
+//                    'name'  => 'semester',
+//                    'value' => semesters(),
+//                    'type'  => 'dropdown',
+//                    'lang'  => 'curriculum_subject_semester_label',
+//                );
+
+                $inputs['curriculum_subject_semester'] = array(
+                    'name'   => 'semester',
+                    'fields' => semesters(FALSE, TRUE),
+                    'value'  => $this->form_validation->set_value('semester'),
+                    'type'   => 'radio',
+                    'lang'   => 'curriculum_subject_semester_label'
                 );
 
-                $inputs['subject_id_co'] = array(
-                    'name'  => 'co_requisite',
-                    'value' => $this->_dropdown_for_subjects(),
-                    'type'  => 'dropdown',
-                    'lang'  => 'curriculum_subject_co_subject_label'
+                //88888888888888888888888888888
+                $inputs['curriculum_subject_year_level']       = array(
+                    'name'   => 'level',
+                    'fields' => _numbers_for_drop_down(1, 4),
+                    'value'  => $this->form_validation->set_value('level'),
+                    'type'   => 'radio',
+                    'lang'   => 'curriculum_subject_year_level_label',
                 );
-
-                $inputs['curriculum_subject_semester']   = array(
-                    'name'  => 'semester',
-                    'value' => semesters(),
-                    'type'  => 'dropdown',
-                    'lang'  => 'curriculum_subject_semester_label',
+                $inputs['curriculum_subject_lecture_hours']    = array(
+                    'name'   => 'lecture',
+                    'fields' => _numbers_for_drop_down(1, 5),
+                    'value'  => $this->form_validation->set_value('lecture'),
+                    'type'   => 'radio',
+                    'lang'   => 'curriculum_subject_lecture_hours_label'
                 );
-                $inputs['curriculum_subject_year_level'] = array(
-                    'name'  => 'level',
-                    'value' => _numbers_for_drop_down(1, $this->config->item('max_year_level')),
-                    'type'  => 'dropdown',
-                    'lang'  => 'curriculum_subject_year_level_label'
-                );
-
-                $inputs['curriculum_subject_lecture_hours'] = array(
-                    'name'  => 'lecture',
-                    'value' => _numbers_for_drop_down(1, 8),
-                    'type'  => 'dropdown',
-                    'lang'  => 'curriculum_subject_lecture_hours_label'
-                );
-
                 $inputs['curriculum_subject_laboratory_hours'] = array(
-                    'name'  => 'laboratory',
-                    'value' => _numbers_for_drop_down(1, 8),
-                    'type'  => 'dropdown',
-                    'lang'  => 'curriculum_subject_laboratory_hours_label'
+                    'name'   => 'laboratory',
+                    'fields' => _numbers_for_drop_down(1, 5),
+                    'value'  => $this->form_validation->set_value('laboratory'),
+                    'type'   => 'radio',
+                    'lang'   => 'curriculum_subject_laboratory_hours_label'
                 );
-
-                $inputs['curriculum_subject_units'] = array(
-                    'name'  => 'units',
-                    'value' => _numbers_for_drop_down(1, 8),
-                    'type'  => 'dropdown',
-                    'lang'  => 'curriculum_subject_units_label'
+                $inputs['curriculum_subject_units']            = array(
+                    'name'   => 'units',
+                    'fields' => _numbers_for_drop_down(1, 3),
+                    'value'  => $this->form_validation->set_value('units'),
+                    'type'   => 'radio',
+                    'lang'   => 'curriculum_subject_units_label'
                 );
+//-------------------------------------------------------------------------
+//                $inputs['curriculum_subject_year_level']       = array(
+//                    'name'  => 'level',
+//                    'value' => _numbers_for_drop_down(1, $this->config->item('max_year_level')),
+//                    'type'  => 'dropdown',
+//                    'lang'  => 'curriculum_subject_year_level_label'
+//                );
+//
+//                $inputs['curriculum_subject_lecture_hours'] = array(
+//                    'name'  => 'lecture',
+//                    'value' => _numbers_for_drop_down(1, 8),
+//                    'type'  => 'dropdown',
+//                    'lang'  => 'curriculum_subject_lecture_hours_label'
+//                );
+//
+//                $inputs['curriculum_subject_laboratory_hours'] = array(
+//                    'name'  => 'laboratory',
+//                    'value' => _numbers_for_drop_down(1, 8),
+//                    'type'  => 'dropdown',
+//                    'lang'  => 'curriculum_subject_laboratory_hours_label'
+//                );
+//
+//                $inputs['curriculum_subject_units'] = array(
+//                    'name'  => 'units',
+//                    'value' => _numbers_for_drop_down(1, 8),
+//                    'type'  => 'dropdown',
+//                    'lang'  => 'curriculum_subject_units_label'
+//                );
 
                 $this->data['curriculum_subject_form'] = $this->form_boostrap('create-curriculum-subject', $inputs, 'create_curriculum_subject_label', 'create_curriculum_subject_label', 'info-sign', NULL, TRUE);
                 $this->data['bootstrap']               = $this->_bootstrap();

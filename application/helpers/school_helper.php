@@ -11,15 +11,16 @@ if (!function_exists('semesters'))
          * 'summer' => 'Summer Semester',
          * 
          * @param string $index | default FALSE just return array (all data)]
+         * @param string $lang  | default FALSE
          * @return string|array
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        function semesters($index = FALSE)
+        function semesters($index = FALSE, $lang = FALSE)
         {
                 $_semesters = array(
-                    'first'  => '1st Semester',
-                    'second' => '2nd Semester',
-                    'summer' => 'Summer Semester',
+                    'first'  => (!$lang) ? '1st Semester' : 'semester_first_label',#this will be use in bootstrap form
+                    'second' => (!$lang) ? '2nd Semester' : 'semester_second_label',
+                    'summer' => (!$lang) ? 'Summer Semester' : 'semester_summer_label',
                 );
                 if ($index)
                 {

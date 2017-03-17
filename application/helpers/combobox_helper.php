@@ -15,7 +15,7 @@ if (!function_exists('_numbers_for_drop_down'))
         function _numbers_for_drop_down($s, $e)
         {
                 $array       = array();
-                $array[NULL] = 'select';
+             //   $array[NULL] = 'select';
                 for ($i = $s; $i <= $e; $i++)
                 {
                         $array[$i] = $i;

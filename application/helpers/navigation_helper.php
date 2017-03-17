@@ -47,6 +47,14 @@ if (!function_exists('navigations_main'))
                                 'label' => lang('create_curriculum_subject_label'),
                                 'seen'  => TRUE,
                             ),
+                            /**
+                             * hidden
+                             */
+                            'create-requisite'           =>
+                            array(
+                                'label' => 'Create Requisite',
+                                'seen'  => FALSE,
+                            )
                         ),
                     ),
                     //---------END curriculum-------

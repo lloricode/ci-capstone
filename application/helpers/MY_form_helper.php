@@ -85,8 +85,26 @@ if (!function_exists('input_bootstrap'))
                                 echo form_upload($field);
                                 break;
                         case 'dropdown':
+                        case 'multiselect':
                                 $default_value = (isset($field['default'])) ? $field['default'] : NULL;
-                                echo form_dropdown($field['name'], $field['value'], set_value($field['name'], $default_value));
+                                switch ($field['type'])
+                                {
+
+                                        case 'dropdown':
+                                                echo form_dropdown($field['name'], $field['value'], set_value($field['name'], $default_value));
+                                                break;
+                                        case 'multiselect':
+                                                echo form_multiselect($field['name'], $field['value'], set_value($field['name'], $default_value));
+                                                break;
+                                        default:
+                                                /**
+                                                 * not supposed to be here.
+                                                 * impossible
+                                                 * --Lloric
+                                                 */
+                                                show_error('No valid type of form input defined, either dropdown or multiselect.');
+                                                break;
+                                }
                                 break;
                         case 'radio':
                         case 'checkbox':
@@ -104,7 +122,21 @@ if (!function_exists('input_bootstrap'))
                                                         foreach ($labels as $k => $v)
                                                         {
                                                                 $defaut = ($field['value'] == $k);
-                                                                echo form_label(form_radio($field['name'], $k, $defaut) . ' ' . lang($v)) . PHP_EOL;
+                                                                $lang_  = NULL;
+
+                                                                if (is_numeric($v))
+                                                                {
+                                                                        /**
+                                                                         * no need lang if numeric
+                                                                         */
+                                                                        $lang_ = $v;
+                                                                }
+                                                                else
+                                                                {
+
+                                                                        $lang_ = lang($v);
+                                                                }
+                                                                echo form_label(form_radio($field['name'], $k, $defaut) . ' ' . $lang_) . PHP_EOL;
                                                         }
                                                         break;
                                                 case 'checkbox':
@@ -132,6 +164,10 @@ if (!function_exists('input_bootstrap'))
                 if ($prepend)
                 {
                         echo '</div>';
+                }
+                if (isset($field['note']))
+                {
+                        echo '<span class="help-block">' . $field['note'] . '</span>' . PHP_EOL;
                 }
                 echo form_error($field['name']) . PHP_EOL;
                 echo '</div>' . PHP_EOL;

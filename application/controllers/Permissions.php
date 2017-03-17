@@ -6,8 +6,8 @@ class Permissions extends CI_Capstone_Controller
 {
 
 
-        private $page_;
-        private $limit;
+//        private $page_;
+//        private $limit;
 
         function __construct()
         {
@@ -26,7 +26,7 @@ class Permissions extends CI_Capstone_Controller
                 /**
                  * pagination limit
                  */
-                $this->limit = 10;
+               // $this->limit = 10;
 
                 /**
                  * get the page from url
@@ -51,7 +51,7 @@ class Permissions extends CI_Capstone_Controller
         {
                 $controllers_obj = $this->Controller_model->
                         //  limit($this->limit, $this->limit * $this->page_ - $this->limit)->
-                        order_by('controller_name', 'ASC')->
+                        order_by('controller_description', 'ASC')->
                         set_cache('controllers_all'/* . $this->page_ */)->
                         get_all();
                 $table_data      = array();

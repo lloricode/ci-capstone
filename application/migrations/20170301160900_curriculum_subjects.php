@@ -81,18 +81,18 @@ class Migration_Curriculum_subjects extends CI_Migration
                         'unsigned'   => TRUE,
                         'null'       => FALSE
                     ),
-                    'subject_id_pre'                      => array(//pre-requisite
-                        'type'       => 'INT',
-                        'constraint' => '11',
-                        'unsigned'   => TRUE,
-                        'null'       => TRUE
-                    ),
-                    'subject_id_co'                       => array(//co-requisite
-                        'type'       => 'INT',
-                        'constraint' => '11',
-                        'unsigned'   => TRUE,
-                        'null'       => TRUE
-                    ),
+//                    'subject_id_pre'                      => array(//pre-requisite
+//                        'type'       => 'INT',
+//                        'constraint' => '11',
+//                        'unsigned'   => TRUE,
+//                        'null'       => TRUE
+//                    ),
+//                    'subject_id_co'                       => array(//co-requisite
+//                        'type'       => 'INT',
+//                        'constraint' => '11',
+//                        'unsigned'   => TRUE,
+//                        'null'       => TRUE
+//                    ),
                     //------------------------------------
                     'created_at'                          => array(
                         'type'       => 'VARCHAR',
