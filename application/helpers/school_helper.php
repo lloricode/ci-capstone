@@ -18,9 +18,9 @@ if (!function_exists('semesters'))
         function semesters($index = FALSE, $lang = FALSE)
         {
                 $_semesters = array(
-                    'first'  => (!$lang) ? '1st Semester' : 'semester_first_label',#this will be use in bootstrap form
-                    'second' => (!$lang) ? '2nd Semester' : 'semester_second_label',
-                    'summer' => (!$lang) ? 'Summer Semester' : 'semester_summer_label',
+                    'first'  => (!$lang) ? lang('semester_first_label') : 'semester_first_label', #this will be use in bootstrap form
+                    'second' => (!$lang) ? lang('semester_second_label') : 'semester_second_label',
+                    'summer' => (!$lang) ? lang('semester_summer_label') : 'semester_summer_label',
                 );
                 if ($index)
                 {
