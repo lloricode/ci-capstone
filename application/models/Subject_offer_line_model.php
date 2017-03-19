@@ -43,12 +43,12 @@ class Subject_offer_line_model extends MY_Model
 //                    'foreign_key'   => 'subject_id',
 //                    'local_key'     => 'subject_id'
 //                );
-//                $this->has_one['room']    = array(
-//                    'foreign_model' => 'Room_model',
-//                    'foreign_table' => 'rooms',
-//                    'foreign_key'   => 'room_id',
-//                    'local_key'     => 'room_id'
-//                );
+                $this->has_one['room']    = array(
+                    'foreign_model' => 'Room_model',
+                    'foreign_table' => 'rooms',
+                    'foreign_key'   => 'room_id',
+                    'local_key'     => 'room_id'
+                );
 //                $this->has_one['faculty'] = array(
 //                    'foreign_model' => 'User_model',
 //                    'foreign_table' => 'users',

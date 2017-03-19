@@ -5,6 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Subject_offers extends CI_Capstone_Controller
 {
 
+
         private $page_;
         private $limit;
 
@@ -30,14 +31,32 @@ class Subject_offers extends CI_Capstone_Controller
          */
         public function index()
         {
-                $subl = $this->Subject_offer_model->where(array(
+                $subl = $this->Subject_offer_model->
+                        fields('subject_offer_id')->
+                        with_subject('fields:subject_code')->
+                        with_faculty('fields:first_name,last_name')->
+                        with_subject_line(array(
+                            'fields' => // array(
+                            'subject_offer_line_start,' .
+                            'subject_offer_line_end,' .
+                            'subject_offer_line_monday,' .
+                            'subject_offer_line_tuesday,' .
+                            'subject_offer_line_wednesday,' .
+                            'subject_offer_line_thursday,' .
+                            'subject_offer_line_friday,' .
+                            'subject_offer_line_saturday,' .
+                            'subject_offer_line_sunday'
+                            , //),
+                            'with'   => array(//sub query of sub query
+                                'relation' => 'room',
+                                'fields'   => 'room_number'
+                            )
+                        ))->
+                        //set_cache()->
+                        where(array(
                             'subject_offer_semester'    => current_school_semester(TRUE),
                             'subject_offer_school_year' => current_school_year(),
                         ))->
-                        // with_room()->
-                        with_subject()->
-                        with_faculty()->
-                        with_subject_line()->
                         get_all();
 
                 //  echo print_r($subl);
@@ -68,7 +87,7 @@ class Subject_offers extends CI_Capstone_Controller
                                             subject_offers_days($su_l),
                                             convert_24_to_12hrs($su_l->subject_offer_line_start),
                                             convert_24_to_12hrs($su_l->subject_offer_line_end),
-                                            $this->Room_model->get($su_l->room_id)->room_number
+                                            $su_l->room->room_number
                                         );
                                         $line = array_merge($line, $schd);
                                 }
