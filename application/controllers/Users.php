@@ -39,6 +39,7 @@ class Users extends CI_Capstone_Controller
 
                 //list the users
                 $users_obj = $this->User_model->
+                        with_groups('fields:name,description')->
                         limit($this->limit, $this->limit * $this->page_ - $this->limit)->
                         order_by('created_on', 'DESC')->
                         order_by('updated_at', 'DESC')->
@@ -57,13 +58,6 @@ class Users extends CI_Capstone_Controller
                  */
                 if ($users_obj)
                 {
-
-                        foreach ($users_obj as $k => $user)
-                        {
-                                $users_obj[$k]->groups = $this->ion_auth->get_users_groups($user->id)->result();
-                        }
-
-
 
                         foreach ($users_obj as $user)
                         {
