@@ -38,6 +38,7 @@ class Curriculums extends CI_Capstone_Controller
 
 
                 $curriculum_obj = $this->Curriculum_model->
+                        with_course()->
                         limit($this->limit, $this->limit * $this->page_ - $this->limit)->
                         order_by('created_at', 'DESC')->
                         order_by('updated_at', 'DESC')->
@@ -54,7 +55,7 @@ class Curriculums extends CI_Capstone_Controller
                         {
                                 $view = anchor(site_url('curriculums/view?curriculum-id=' . $curriculum->curriculum_id), '<span class="btn btn-warning btn-mini">' . lang('curriculumn_view') . '</span>');
                                 array_push($table_data, array(
-                                    my_htmlspecialchars($this->Course_model->get($curriculum->course_id)->course_code),
+                                    my_htmlspecialchars($curriculum->course->course_code),
                                     my_htmlspecialchars($curriculum->curriculum_description),
                                     my_htmlspecialchars($curriculum->curriculum_effective_school_year),
                                     my_htmlspecialchars($curriculum->curriculum_status),
@@ -89,11 +90,11 @@ class Curriculums extends CI_Capstone_Controller
                 $curriculum_obj = check_id_from_url('curriculum_id', 'Curriculum_model', 'curriculum-id', 'course');
                 $this->breadcrumbs->unshift(3, lang('curriculum_subject_label'), 'curriculums/view?curriculum-id=' . $curriculum_obj->curriculum_id);
 
-                $this->load->model('Curriculum_subject_model');
+                $this->load->model(array('Curriculum_subject_model', 'Subject_model', 'Requisites_model'));
 
                 //$this->load->library('curriculum');
                 $cur_subj_obj = $this->Curriculum_subject_model->subjects($curriculum_obj->curriculum_id);
-
+              //  print_r($cur_subj_obj);
 
                 // $cur_subj_obj = $this->curriculum->get_subjects();
 
@@ -107,10 +108,11 @@ class Curriculums extends CI_Capstone_Controller
                         {
                                 if ($year != $cur_subj->curriculum_subject_year_level)
                                 {
-                                        $table_data[] = array(array('data' => '<h4>Level ' . $cur_subj->curriculum_subject_year_level . '</h4>', 'colspan' => '7'));
+                                        $table_data[] = array(array('data' => '<h4>Level ' . $cur_subj->curriculum_subject_year_level . '</h4>', 'colspan' => '8'));
 
                                         $year++;
                                 }
+                                $requisite    = $this->Requisites_model->subjects(isset($cur_subj->requisites) ? $cur_subj->requisites : NULL);
                                 $table_data[] = array(
                                     // my_htmlspecialchars($cur_subj->curriculum_subject_year_level),
                                     my_htmlspecialchars(semesters($cur_subj->curriculum_subject_semester)),
@@ -118,8 +120,8 @@ class Curriculums extends CI_Capstone_Controller
                                     my_htmlspecialchars($cur_subj->curriculum_subject_units),
                                     my_htmlspecialchars($cur_subj->curriculum_subject_lecture_hours . ' Hours'),
                                     my_htmlspecialchars($cur_subj->curriculum_subject_laboratory_hours . ' Hours'),
-                                    my_htmlspecialchars((isset($cur_subj->subject_pre->subject_code)) ? $cur_subj->subject_pre->subject_code : '--'),
-                                    my_htmlspecialchars((isset($cur_subj->subject_co->subject_code)) ? $cur_subj->subject_co->subject_code : '--'),
+                                    $requisite->pre,
+                                    $requisite->co,
                                     anchor('create-requisite?curriculum-id=' . $curriculum_obj->curriculum_id . '&curriculum-subject-id=' . $cur_subj->curriculum_subject_id, 'add')
                                 );
                         }
@@ -143,7 +145,7 @@ class Curriculums extends CI_Capstone_Controller
                             'button_label' => lang('create_curriculum_subject_label'),
                             'extra'        => array('class' => 'btn btn-success icon-edit'),
                                 ), TRUE);
-                $this->template['info']                             = MY_Controller::_render('admin/_templates/curriculums/info', array('curriculum_obj' => $curriculum_obj), TRUE);
+                $this->template['curriculum_information']           = MY_Controller::_render('admin/_templates/curriculums/curriculum_information', array('curriculum_obj' => $curriculum_obj), TRUE);
                 $this->template['curriculum_obj']                   = $curriculum_obj;
                 $this->template['table_corriculum_subjects']        = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'curriculum_subject_label', FALSE, TRUE);
                 $this->template['message']                          = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));

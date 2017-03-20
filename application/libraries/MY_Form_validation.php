@@ -298,4 +298,31 @@ class MY_Form_validation extends CI_Form_validation
                 return (bool) (convert_24hrs_to_seconds($value) < convert_24hrs_to_seconds($end_time));
         }
 
+        /**
+         * compare array field to another array field
+         * 
+         * @param type $value
+         * @param type $other_field
+         * @return boolean
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        public function differs_array_from_another_array($value, $other_field)
+        {
+                if (isset($this->_field_data[$other_field]))//accessing the protected attribute in CI_Validation
+                {
+                        if ($this->_field_data[$other_field]['postdata'])
+                        {
+                                foreach ($this->_field_data[$other_field]['postdata'] as $v)
+                                {
+                                        if (in_array($v, array($value)))
+                                        {
+                                                $this->CI->form_validation->set_message('differs_array_from_another_array', 'The {field} Must differ in another field.');
+                                                return FALSE; //there a similar value.
+                                        }
+                                }
+                        }
+                }
+                return TRUE;
+        }
+
 }

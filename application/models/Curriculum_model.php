@@ -41,6 +41,16 @@ class Curriculum_model extends MY_Model
                     'foreign_key'   => 'course_id',
                     'local_key'     => 'course_id'
                 );
+                    /**
+                 * seperated table
+                 */
+                $this->has_many['requisites'] = array(
+                    'foreign_model' => 'Requisites_model',
+                    'foreign_table' => 'requisites',
+                    'foreign_key'   => 'curriculum_subject_id',
+                    'local_key'     => 'curriculum_subject_id'
+                );
+
         }
 
         private function _form()

@@ -9,7 +9,6 @@ class Create_requisite extends CI_Capstone_Controller
         {
                 parent::__construct();
                 $this->load->library('form_validation');
-                $this->load->model('Requisites_model');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
                 $this->breadcrumbs->unshift(2, lang('curriculum_label'), 'curriculums');
         }
@@ -20,8 +19,9 @@ class Create_requisite extends CI_Capstone_Controller
                  * check either exist or has value given id in url
                  */
                 $curriculum_obj         = check_id_from_url('curriculum_id', 'Curriculum_model', 'curriculum-id', 'course');
-                $curriculum_subject_obj = check_id_from_url('curriculum_subject_id', 'Curriculum_subject_model', 'curriculum-subject-id');
-
+                $curriculum_subject_obj = check_id_from_url('curriculum_subject_id', 'Curriculum_subject_model', 'curriculum-subject-id', array('subject', 'requisite', 'curriculum'));
+                //  print_r($curriculum_obj);
+                // print_r($curriculum_subject_obj);
                 /**
                  * verify id relation
                  */
@@ -37,18 +37,173 @@ class Create_requisite extends CI_Capstone_Controller
 
                 if ($this->input->post('submit'))
                 {
-                        $id = $this->Requisites_model->from_form(NULL, array(
-                                    'created_user_id' => $this->session->userdata('user_id')
-                                ))->insert();
-                        if ($id)
-                        {
-                                echo 'done';
-                                // $this->session->set_flashdata('message', lang('create_room_succesfully_added_message'));
-                                //redirect(site_url('rooms'), 'refresh');
-                        }
+                        $this->_submit($curriculum_obj->curriculum_id, $curriculum_subject_obj->curriculum_subject_id);
                 }
 
-                $this->_form_view($curriculum_obj);
+                $this->_form_view($curriculum_obj, $curriculum_subject_obj);
+        }
+
+        private function _form_view($curriculum_obj, $curriculum_subject_obj)
+        {
+                //load here, to exclude in success run validation
+                $this->load->model('Curriculum_subject_model');
+
+                $sub_arr = $this->Curriculum_subject_model->
+                        subjects_dropdown_for_add_requisite($curriculum_obj->curriculum_id, $curriculum_subject_obj->subject_id); //array for dropdown
+
+                $inputs[] = array(
+                    'name'  => 'pre[]',
+                    //select subject that belong in current curriculum using curriculum_id
+                    'value' => $sub_arr,
+                    'type'  => 'multiselect',
+                    'lang'  => 'requisite_pre_type_label',
+                );
+
+                $inputs[] = array(
+                    'name'  => 'co[]',
+                    //select subject that belong in current curriculum using curriculum_id
+                    'value' => $sub_arr,
+                    'type'  => 'multiselect',
+                    'lang'  => 'requisite_co_type_label',
+                );
+
+
+                $this->template['curriculum_information']         = MY_Controller::_render('admin/_templates/curriculums/curriculum_information', array('curriculum_obj' => $curriculum_obj), TRUE);
+                $this->template['curriculum_subject_information'] = $this->_current_curriculum_subject($curriculum_subject_obj->curriculum_subject_id);
+                $this->template['requisite_form']                 = $this->form_boostrap('create-requisite?curriculum-id=' . $curriculum_obj->curriculum_id . '&curriculum-subject-id=' . $curriculum_subject_obj->curriculum_subject_id, $inputs, 'create_requisite_label', 'create_requisite_label', 'info-sign', NULL, TRUE, form_error('tmp_is_atleast_one')); //see requisite_model
+                $this->template['bootstrap']                      = $this->_bootstrap();
+                $this->_render('admin/create_requisite', $this->template);
+        }
+
+        private function _submit($curriculum_id, $curriculum_subject_id)
+        {
+                $this->load->model('Requisites_model');
+                $this->form_validation->set_rules($this->Requisites_model->validations());
+
+
+                if ($this->form_validation->run())
+                {
+                        $co_array  = $this->input->post('co', TRUE);
+                        $pre_array = $this->input->post('pre', TRUE);
+                        $data_     = array();
+                        /**
+                         * collect multiple selected
+                         */
+                        /**
+                         * use db transaction, just to make sure all data inserted
+                         */
+                        $this->db->trans_start();
+
+                        if ($co_array)
+                        {
+                                foreach ($co_array as $value)
+                                {
+                                        $data_[] = array(
+                                            'subject_id'            => $value,
+                                            'requisite_type'        => 'co',
+                                            'curriculum_subject_id' => $curriculum_subject_id,
+                                            'created_user_id'       => $this->session->userdata('user_id')
+                                        );
+                                }
+                        }
+                        if ($pre_array)
+                        {
+                                foreach ($pre_array as $value)
+                                {
+                                        $data_[] = array(
+                                            'subject_id'            => $value,
+                                            'requisite_type'        => 'pre',
+                                            'curriculum_subject_id' => $curriculum_subject_id,
+                                            'created_user_id'       => $this->session->userdata('user_id')
+                                        );
+                                }
+                        }
+                        // $ids = $this->Requisites_model->insert($data_);
+                        $all_inserted = TRUE;
+                        foreach ($data_ as $in)
+                        {
+                                /**
+                                 * just to make sure all inserted, else database will rollback
+                                 */
+                                $id = $this->Requisites_model->insert($in);
+                                if (!$id)
+                                {
+                                        $all_inserted = FALSE;
+                                        break;
+                                }
+                        }
+                        if (!$all_inserted)
+                        {
+                                /**
+                                 * rollback database
+                                 */
+                                $this->db->trans_rollback();
+                                echo 'ROLLBAKC!!';
+                        }
+                        else
+                        {
+                                if ($this->db->trans_commit())
+                                {
+                                        echo 'OOOOOOOOOOKKKKKKKKKKKKk';
+                                        $this->session->set_flashdata('message', lang('requisite_success_added'));
+                                        //  redirect(site_url('curriculums/view?curriculum-id=' . $curriculum_id), 'refresh');
+                                }
+                        }
+                }
+        }
+
+        public function is_atleast_one()
+        {
+                if (!$this->input->post('submit'))
+                {
+                        show_404();
+                }
+                $this->form_validation->set_message('is_atleast_one', 'Required atleat one {field} field.');
+                return ($this->input->post('co', TRUE) || $this->input->post('pre', TRUE) );
+        }
+
+        private function _current_curriculum_subject($curriculum_subject_id)
+        {
+
+                /*
+                 * Table headers
+                 */
+                $header     = array(
+                    'year level',
+                    lang('curriculum_subject_semester_label'),
+                    lang('curriculum_subject_subject_label'),
+                    lang('curriculum_subject_units_label'),
+                    lang('curriculum_subject_lecture_hours_label'),
+                    lang('curriculum_subject_laboratory_hours_label'),
+                    lang('curriculum_subject_pre_subject_label'),
+                    lang('curriculum_subject_co_subject_label')
+                );
+                $cur_subj   = $this->Curriculum_subject_model->subject($curriculum_subject_id);
+                $table_data = array();
+                if ($cur_subj)
+                {
+                        $this->load->model('Requisites_model');
+                        $requisite    = $this->Requisites_model->subjects(isset($cur_subj->requisites) ? $cur_subj->requisites : NULL);
+                        $table_data[] = array(
+                            my_htmlspecialchars($cur_subj->curriculum_subject_year_level),
+                            my_htmlspecialchars(semesters($cur_subj->curriculum_subject_semester)),
+                            my_htmlspecialchars($cur_subj->subject->subject_code),
+                            my_htmlspecialchars($cur_subj->curriculum_subject_units),
+                            my_htmlspecialchars($cur_subj->curriculum_subject_lecture_hours . ' Hours'),
+                            my_htmlspecialchars($cur_subj->curriculum_subject_laboratory_hours . ' Hours'),
+                            $requisite->pre,
+                            $requisite->co
+                        );
+                }
+                else
+                {
+                        /**
+                         * no reason to reach here, show_error just to make sure.
+                         */
+                        show_error('no current subject for curriculum: ' . get_class() . ' ' . __FILE__);
+                }
+
+                return $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'curriculum_subject_label', FALSE, TRUE);
         }
 
         /**
@@ -239,37 +394,6 @@ class Create_requisite extends CI_Capstone_Controller
                         default: break;
                 }
                 return $int_semester;
-        }
-
-        private function _form_view($curriculum_obj)
-        {
-                //load here, not needed in first run
-                $this->load->model('Curriculum_subject_model');
-
-                $inputs['requisite_curriculum_subject_id'] = array(
-                    'name'  => 'requisite_subject[]',
-                    //select subject that belong in current curriculum using curriculum_id
-                    'value' => $this->Curriculum_subject_model->subjects_dropdown($curriculum_obj->curriculum_id), //array for dropdown
-                    'type'  => 'multiselect',
-                    'lang'  => 'requisite_subject_label',
-                );
-
-                $inputs['requisite_type'] = array(
-                    'name'   => 'type',
-                    'fields' => array(
-                        'co'  => 'requisite_co_type_label',
-                        'pre' => 'requisite_pre_type_label'
-                    ),
-                    'value'  => $this->form_validation->set_value('type'),
-                    'type'   => 'radio',
-                    'lang'   => 'requisite_type_label'
-                );
-
-
-                $this->template['info']           = MY_Controller::_render('admin/_templates/curriculums/info', array('curriculum_obj' => $curriculum_obj), TRUE);
-                $this->template['requisite_form'] = $this->form_boostrap('create-requisite?curriculum-id=1&curriculum-subject-id=1', $inputs, 'create_requisite_label', 'create_requisite_label', 'info-sign', NULL, TRUE);
-                $this->template['bootstrap']      = $this->_bootstrap();
-                $this->_render('admin/create_requisite', $this->template);
         }
 
         /**

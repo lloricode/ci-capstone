@@ -12,9 +12,8 @@ class Students extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
-                $this->lang->load('ci_capstone/ci_students');
                 $this->load->model(array('Student_model'));
-                $this->load->library(array('pagination', 'student'));
+                $this->load->library(array('pagination'));
                 /**
                  * pagination limit
                  */
@@ -89,7 +88,7 @@ class Students extends CI_Capstone_Controller
                 list($filename, $extension) = explode('.', $student->student_image);
 
                 return '<div class="user-thumb">' . img(array(
-                            'src'   => $this->config->item('student_image_dir') . $this->student->image_resize($student->student_image)->table,
+                            'src'   => $this->Student_model->image_resize($student->student_image)->table,
                             'alt'   => 'no image',
                             'title' => $student->student_school_id . ' - ' . $student->student_lastname
                         )) . '</div>';
@@ -100,13 +99,11 @@ class Students extends CI_Capstone_Controller
          */
         public function view()
         {
-
-                $this->load->library('student');
                 $this->load->helper('time');
                 /*
                  * check url with id,tehn get studewnt row
                  */
-                $this->student->get($this->input->get('student-id'));
+                $this->Student_model->set_informations($this->input->get('student-id'));
                 $this->breadcrumbs->unshift(3, 'View Student [ ' . $this->student->school_id . ' ]', 'students/view?student-id=' . $this->student->id);
                 /**
                  * setting up page for pagination

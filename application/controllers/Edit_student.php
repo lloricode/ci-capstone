@@ -9,7 +9,7 @@ class Edit_student extends CI_Capstone_Controller
         {
                 parent::__construct();
                 $this->lang->load('ci_capstone/ci_students');
-                $this->load->library(array('form_validation', 'student'));
+                $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span>');
                 $this->breadcrumbs->unshift(2, lang('index_student_heading'), 'students');
                 $this->load->model(array('Student_model', 'Enrollment_model'));
@@ -23,7 +23,7 @@ class Edit_student extends CI_Capstone_Controller
 
         public function index()
         {
-                $this->student->get($this->input->get('student-id'));
+                $this->Student_model->set_informations($this->input->get('student-id'));
                 $this->breadcrumbs->unshift(3, lang('edit_student_submit_button_label') . ' [ ' . $this->student->school_id . ' ]', 'edit-student?student-id=' . $this->student->id);
 
 

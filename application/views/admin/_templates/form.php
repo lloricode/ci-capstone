@@ -10,6 +10,19 @@
                     <?php
                     // echo validation_errors();
 
+                    /**
+                     * error on specific fields
+                     */
+                    if (isset($error))
+                    {
+                            foreach (((is_array($error)) ? $error : array($error)) as $e)//convert to array if not,then iterate in loop
+                            {
+                                    if ($e != '')
+                                    {
+                                            echo ' <div class="alert alert-error alert-block"> <a class="close" data-dismiss="alert" href="#">×</a>' . $e . '</div>';
+                                    }
+                            }
+                    }
 
                     echo form_open(site_url($action), array(
                         'class'      => 'form-horizontal',

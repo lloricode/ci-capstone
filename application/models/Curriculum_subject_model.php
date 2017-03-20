@@ -47,18 +47,6 @@ class Curriculum_subject_model extends MY_Model
                     'foreign_key'   => 'subject_id',
                     'local_key'     => 'subject_id'
                 );
-//                $this->has_one['subject_pre']     = array(
-//                    'foreign_model' => 'Subject_model',
-//                    'foreign_table' => 'subjects',
-//                    'foreign_key'   => 'subject_id',
-//                    'local_key'     => 'subject_id_pre'
-//                );
-//                $this->has_one['subject_co']      = array(
-//                    'foreign_model' => 'Subject_model',
-//                    'foreign_table' => 'subjects',
-//                    'foreign_key'   => 'subject_id',
-//                    'local_key'     => 'subject_id_co'
-//                );
 
                 /**
                  * seperated table
@@ -154,17 +142,6 @@ class Curriculum_subject_model extends MY_Model
                         'field' => 'subject',
                         'rules' => 'trim|required|is_natural_no_zero|differs[pre_requisite]|differs[co_requisite]|callback_check_subject_in_curiculum'
                     ),
-                        //this will be moved in another controller form
-//                    'subject_id_pre'                      => array(
-//                        'label' => lang('curriculum_subject_pre_subject_label'),
-//                        'field' => 'pre_requisite',
-//                        'rules' => 'trim|is_natural_no_zero|differs[co_requisite]|differs[subject]|callback_is_pre_requisite_low_level'
-//                    ),
-//                    'subject_id_co'                       => array(
-//                        'label' => lang('curriculum_subject_co_subject_label'),
-//                        'field' => 'co_requisite',
-//                        'rules' => 'trim|is_natural_no_zero|differs[pre_requisite]|differs[subject]|callback_is_co_requisite_same_level'
-//                    ),
                 );
         }
 
@@ -173,9 +150,8 @@ class Curriculum_subject_model extends MY_Model
                 return array();
         }
 
-        public function subjects($curriculum_id, $subject_offer = FALSE)
+        private function _subject_query()
         {
-                $this->load->helper('school');
                 return $this->
                                 //specific fields in local table
                                 fields(array(
@@ -186,48 +162,89 @@ class Curriculum_subject_model extends MY_Model
                                     'curriculum_subject_laboratory_hours'
                                 ))->
                                 /**
-                                 * foreign table s with specific fields
+                                 * foreign table with specific fields
                                  */
-                                //    with_curriculum()->
                                 with_subject('fields:subject_code')->
-                                with_requisites()->
-                                //with_subject_pre()->
-                                //with_subject_co()->
-                                with_user('fields:first_name,last_name')->
-//                                with_subject_offers(
-//                                        //fields select
-//                                        'fields:subject_offer_semester,subject_offer_school_year',
-//                                        //WHERE | only current semester && year
-//                                        'where:`subject_offer_semester`=\'' . current_school_semester(TRUE) . '\' AND '
-//                                        . '`subject_offer_school_year`=\'' . current_school_year() . '\''
-//                                )->
                                 /**
-                                 * end foreign
+                                 * it has nested relation with subjects
                                  */
-                                //WHERE in local table
+                                with_requisites(array(
+                                    'with'   => array(
+                                        'relation' => 'subjects',
+                                        'fields'   => 'subject_code'
+                                    ),
+                                    'fields' => 'requisite_type'//specific fields
+                                ))->
+                                //specific fields
+                                with_user('fields:first_name,last_name');
+        }
+
+        public function subjects($curriculum_id, $subject_offer = FALSE)
+        {
+                return $this->
+                                _subject_query()->
                                 where(array('curriculum_id' => $curriculum_id))->
-                                //order_by('curriculum_subject_year_level', 'ASC')->
-                                //order_by('curriculum_subject_semester', 'ASC')->
-                                set_cache('curriculum_model_subjects_' . $curriculum_id)->
-                                //select * in local table
+                                order_by('curriculum_subject_year_level', 'ASC')->
+                                order_by('curriculum_subject_semester', 'ASC')->
+                                //set_cache()->
                                 get_all();
         }
 
-        public function subjects_dropdown($curriculum_id)
+        public function subject($curriculum_subject_id, $subject_offer = FALSE)
         {
-                $return           = array();
-                $subject_from_cur = $this->
-                        with_subject('fields:subject_code')->
-                        where(array('curriculum_subject_id' => $curriculum_id))->
-                        set_cache('Curriculum_subject_model_subjects_dropdown_' . $curriculum_id)->
-                        get_all();
+                return $this->
+                                _subject_query()->
+                                //set_cache()->
+                                get($curriculum_subject_id);
+        }
+
+        public function subjects_dropdown_for_add_requisite($curriculum_id, $subject_id)
+        {
+                $subject_from_cur = $this->subjects($curriculum_id);
+
+                $return     = array();
+                $requisites = array();
+
                 if ($subject_from_cur)
                 {
+                        /**
+                         * get requisite
+                         */
                         foreach ($subject_from_cur as $v)
                         {
-                                $return[$v->curriculum_subject_id] = $v->subject->subject_code;
+                                if ($subject_id == $v->subject_id)
+                                {
+                                        if (isset($v->requisites))
+                                        {
+                                                foreach ($v->requisites as $vv)
+                                                {
+                                                        //get all requisite of current subject
+                                                        $requisites[] = $vv->subjects->subject_id;
+                                                }
+                                        }
+                                        break;
+                                }
+                        }
+                        //set option for array
+
+                        foreach ($subject_from_cur as $v)
+                        {
+                                if (!in_array($v->subject_id, $requisites))//check if already added as requisite
+                                {
+                                        $return[$v->subject_id] = $v->subject->subject_code;
+                                }
+                        }
+
+                        if (isset($return[$subject_id]))
+                        {
+                                unset($return[$subject_id]); //unset current subject
                         }
                 }
+//
+//                return (object) array(
+//                            'pre' => $return,
+//                            'co'  => $return
+//                );
                 return $return;
         }
 

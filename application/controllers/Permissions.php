@@ -5,7 +5,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Permissions extends CI_Capstone_Controller
 {
 
-
 //        private $page_;
 //        private $limit;
 
@@ -26,7 +25,7 @@ class Permissions extends CI_Capstone_Controller
                 /**
                  * pagination limit
                  */
-               // $this->limit = 10;
+                // $this->limit = 10;
 
                 /**
                  * get the page from url
@@ -146,7 +145,7 @@ class Permissions extends CI_Capstone_Controller
 
         public function edit()
         {
-                $controller_obj = check_id_from_url('controller_id', 'Controller_model', $this->input->get('controller-id'));
+                $controller_obj = check_id_from_url('controller_id', 'Controller_model', 'controller-id');
 
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');

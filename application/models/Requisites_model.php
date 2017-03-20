@@ -11,7 +11,7 @@ class Requisites_model extends MY_Model
                 $this->primary_key = 'requisite_id';
 
                 $this->_relations();
-                $this->_form();
+                // $this->_form();
                 $this->_config();
 
                 parent::__construct();
@@ -41,32 +41,76 @@ class Requisites_model extends MY_Model
 //                    'foreign_key'   => 'user_id',
 //                    'local_key'     => 'id'
 //                );
-//                $this->has_one['subject_offers']    = array(
-//                    'foreign_model' => 'Subject_offer_model',
-//                    'foreign_table' => 'subject_offers',
-//                    'foreign_key'   => 'subject_offer_id',
-//                    'local_key'     => 'subject_offer_id'
+                $this->has_one['subjects'] = array(
+                    'foreign_model' => 'Subject_model',
+                    'foreign_table' => 'subjects',
+                    'foreign_key'   => 'subject_id',
+                    'local_key'     => 'subject_id'
+                );
+//                $this->has_one['type']     = array(
+//                    'foreign_model' => 'Requisite_typae_model',
+//                    'foreign_table' => 'requisite_types',
+//                    'foreign_key'   => 'requisite_id',
+//                    'local_key'     => 'requisite_id'
 //                );
         }
 
-        private function _form()
+        public function validations()
         {
 
-                $this->rules = array(
-                    'insert' => array(
-                        'requisite_curriculum_subject_id' => array(
-                            'label' => lang('requisite_subject_label'),
-                            'field' => 'requisite_subject[]',
-                            'rules' => 'trim|is_natural_no_zero|required'
-                        ),
-                        'requisite_type'                  => array(
-                            'label' => lang('requisite_type_label'),
-                            'field' => 'type',
-                            'rules' => 'trim|required'
-                        ),
+//                $this->rules = array(
+//                    'insert' =>
+                return array(
+                    array(
+                        'label'  => lang('requisite_co_type_label'),
+                        'field'  => 'co[]',
+                        'rules'  => 'trim|is_natural_no_zero|differs_array_from_another_array[pre[]]',
+                        'errors' => array(
+                            'differs_array_from_another_array' => 'Must differ from ' . lang('requisite_pre_type_label') . '.'
+                        )
                     ),
-                    'update' => array()
+                    array(
+                        'label'  => lang('requisite_pre_type_label'),
+                        'field'  => 'pre[]',
+                        'rules'  => 'trim|is_natural_no_zero|differs_array_from_another_array[co[]]',
+                        'errors' => array(
+                            'differs_array_from_another_array' => 'Must differ from ' . lang('requisite_co_type_label') . '.'
+                        )
+                    ),
+                    array(
+                        'label' => lang('requisite_label'),
+                        'field' => 'tmp_is_atleast_one', //will use to show error in ci_validation
+                        'rules' => 'callback_is_atleast_one'//just to callback this validator
+                    ),
                 );
+//                    'update' => array()
+//                );
+        }
+
+        /**
+         * 
+         * @param object $requisites
+         * @return object co|pre
+         */
+        public function subjects($requisites = NULL)
+        {
+                //print_r($requisites);
+                $pre = '';
+                $co  = '';
+                if (isset($requisites))
+                {
+                        if ($requisites)
+                        {
+                                foreach ($requisites as $r)
+                                {
+                                        ${$r->requisite_type} .= $r->subjects->subject_code . br();
+                                }
+                        }
+                }
+                return (object) (array(
+                    'pre' => ($pre == '') ? '--' : trim($pre, br()),
+                    'co'  => ($co == '') ? '--' : trim($co, br())
+                ));
         }
 
 }

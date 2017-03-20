@@ -205,8 +205,54 @@ class Student_model extends MY_Model
                     'upload_path'   => $this->config->item('student_image_dir'),
                     'allowed_types' => 'jpg|png|jpeg',
                     'max_size'      => "1000KB",
-                    'max_height'    => "144",
-                    'max_width'     => "144"
+                    'max_height'    => "344",
+                    'max_width'     => "344"
+                );
+        }
+
+        /**
+         * after set this, you can now use $this->student->{attributes|functions}
+         * 
+         * @param int $student_id
+         *  @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        public function set_informations($student_id = NULL)
+        {
+                if (!$student_id)
+                {
+                        show_error('missing parameter in set student information.');
+                }
+                $this->load->library('student', array($student_id));
+        }
+
+        /**
+         * 
+         * @param type $image_file_name
+         * @return object
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        public function image_resize($image_file_name = FALSE)
+        {
+                $filename  = NULL;
+                $extension = NULL;
+                if ($image_file_name)
+                {
+                        list($filename, $extension) = explode('.', $image_file_name);
+                }
+                else
+                {
+                        if (!$this->student)
+                        {
+                                /**
+                                 * just to make sure student already loaded
+                                 */
+                                show_error('Student library not set for getting image data.');
+                        }
+                        list($filename, $extension) = explode('.', $this->student->image);
+                }
+                return (object) array(
+                            'profile' => $this->config->item('student_image_dir') . $this->config->item('student_image_size_profile') . $filename . '_thumb.' . $extension,
+                            'table'   => $this->config->item('student_image_dir') . $this->config->item('student_image_size_table') . $filename . '_thumb.' . $extension
                 );
         }
 

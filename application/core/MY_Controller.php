@@ -224,7 +224,7 @@ class CI_Capstone_Controller extends MY_Controller
          * @return string
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        public function form_boostrap($_action, $_inputs, $_lang_header, $_lang_button, $_icon, $_hidden_inputs = NULL, $return_html = FALSE)
+        public function form_boostrap($_action, $_inputs, $_lang_header, $_lang_button, $_icon, $_hidden_inputs = NULL, $return_html = FALSE, $_error = FALSE)
         {
                 $_data['inputs']        = $_inputs;
                 $_data['action']        = $_action;
@@ -232,6 +232,7 @@ class CI_Capstone_Controller extends MY_Controller
                 $_data['lang_button']   = $_lang_button;
                 $_data['icon']          = $_icon;
                 $_data['hidden_inputs'] = $_hidden_inputs;
+                $_data['error']         = $_error;
 
                 $generated_html_form = parent::_render('admin/_templates/form', $_data, $return_html);
                 if ($return_html)

@@ -41,7 +41,7 @@
                             <table class="table table-bordered table-invoice">
                                 <tbody>
                                     <tr>
-                                        <td><img src="<?php echo base_url($this->config->item('student_image_dir') . $this->student->image_resize()->profile); ?>" alt="no image" /></td>
+                                        <td><img src="<?php echo base_url($this->Student_model->image_resize()->profile); ?>" alt="no image" /></td>
                                     </tr>
 
                                     <tr>
