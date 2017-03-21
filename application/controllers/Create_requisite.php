@@ -144,9 +144,9 @@ class Create_requisite extends CI_Capstone_Controller
                         {
                                 if ($this->db->trans_commit())
                                 {
-                                        echo 'OOOOOOOOOOKKKKKKKKKKKKk';
+                                        // echo 'OOOOOOOOOOKKKKKKKKKKKKk';
                                         $this->session->set_flashdata('message', lang('requisite_success_added'));
-                                        //  redirect(site_url('curriculums/view?curriculum-id=' . $curriculum_id), 'refresh');
+                                        redirect(site_url('curriculums/view?curriculum-id=' . $curriculum_id), 'refresh');
                                 }
                         }
                 }

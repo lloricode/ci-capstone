@@ -51,9 +51,19 @@ class Create_subject_offer extends CI_Capstone_Controller
                         $exclude   = $this->input->post('exclude'); //see view for this code
                         if (!($exclude && !empty($exclude)))
                         {
+                                /**
+                                 * will check if two form conflict, if included the second form
+                                 */
                                 $validate_two_forms = $this->_validate_two_shedules();
+                                /**
+                                 * merge validation rules
+                                 */
                                 $all_validations    = array_merge($all_validations, $this->Subject_offer_line_model->insert_validations2());
                         }
+
+                        /**
+                         * set validation rules
+                         */
                         $this->form_validation->set_rules($all_validations);
 
 
@@ -64,7 +74,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                                  * start the DB transaction
                                  */
                                 $this->db->trans_start();
-                                
+
                                 $subject_offer_insert = array(
                                     'user_id'                   => $this->input->post('faculty', TRUE),
                                     'subject_id'                => $this->input->post('subject', TRUE),
@@ -132,9 +142,9 @@ class Create_subject_offer extends CI_Capstone_Controller
                                 {
                                         if ($this->db->trans_commit())
                                         {
-                                                echo 'done';
-                                                //$this->session->set_flashdata('message', lang('create_subject_offer_succesfully_added_message'));
-                                                // redirect(site_url('create-subject-offer'), 'refresh');
+                                                //echo 'done';
+                                                $this->session->set_flashdata('message', lang('create_subject_offer_succesfully_added_message'));
+                                                redirect(site_url('create-subject-offer'), 'refresh');
                                         }
                                 }
                         }
@@ -142,6 +152,12 @@ class Create_subject_offer extends CI_Capstone_Controller
                 $this->_form_view();
         }
 
+        /**
+         * check conflict in two forms
+         * 
+         * @return boolean
+         * @author Lloric Garcia <emorickfighter@gmail.com>
+         */
         private function _validate_two_shedules()
         {
                 $sched1 = array(
@@ -225,6 +241,16 @@ class Create_subject_offer extends CI_Capstone_Controller
                 return TRUE;
         }
 
+        /**
+         * check conlict before add to database
+         * 
+         * will use this as callback
+         * 
+         * @param type $val
+         * @param type $form_
+         * @return type
+         * @author Lloric Garcia <emorickfighter@gmail.com>
+         */
         public function subject_offer_check_check_conflict($val, $form_ = '')
         {
                 if (!$this->input->post('submit'))
