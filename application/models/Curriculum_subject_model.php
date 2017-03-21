@@ -152,31 +152,33 @@ class Curriculum_subject_model extends MY_Model
 
         private function _subject_query()
         {
-                return $this->
-                                //specific fields in local table
-                                fields(array(
-                                    'curriculum_subject_year_level',
-                                    'curriculum_subject_semester',
-                                    'curriculum_subject_units',
-                                    'curriculum_subject_lecture_hours',
-                                    'curriculum_subject_laboratory_hours'
-                                ))->
-                                /**
-                                 * foreign table with specific fields
-                                 */
-                                with_subject('fields:subject_code')->
-                                /**
-                                 * it has nested relation with subjects
-                                 */
-                                with_requisites(array(
-                                    'with'   => array(
-                                        'relation' => 'subjects',
-                                        'fields'   => 'subject_code'
-                                    ),
-                                    'fields' => 'requisite_type'//specific fields
-                                ))->
-                                //specific fields
-                                with_user('fields:first_name,last_name');
+                $this->
+                        //specific fields in local table
+                        fields(array(
+                            'curriculum_subject_year_level',
+                            'curriculum_subject_semester',
+                            'curriculum_subject_units',
+                            'curriculum_subject_lecture_hours',
+                            'curriculum_subject_laboratory_hours'
+                        ))->
+                        /**
+                         * foreign table with specific fields
+                         */
+                        with_subject('fields:subject_code')->
+                        /**
+                         * it has nested relation with subjects
+                         */
+                        with_requisites(array(
+                            'with'   => array(
+                                'relation' => 'subjects',
+                                'fields'   => 'subject_code'
+                            ),
+                            'fields' => 'requisite_type'//specific fields
+                        ))->
+                        //specific fields
+                        with_user('fields:first_name,last_name');
+
+                return $this; //just cotinuation of a function chain
         }
 
         public function subjects($curriculum_id, $subject_offer = FALSE)
