@@ -6,7 +6,7 @@
 ## Frameworks used
 Platform|Framework
 --------------------- | ----------------------------
- PHP Framework        | [CodeIgniter 3.1.3](http://codeigniter.com).
+ PHP Framework        | [CodeIgniter 3.1.4](http://codeigniter.com).
  Admin UI Framework   | [matrix-admin Bootstrap](http://matrixadmin.themedesigner.in/).
 
 
