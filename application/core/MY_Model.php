@@ -154,7 +154,7 @@ class MY_Model extends CI_Model
     /* validation */
     private $validated = TRUE;
     private $row_fields_to_update = array();
-    
+
     public $remove_empty_before_write = FALSE;
 
     /**
@@ -270,14 +270,14 @@ class MY_Model extends CI_Model
             {
                 foreach ($row as $field => $value)
                 {
-                    if (in_array($field, $can_fill)) {  
+                    if (in_array($field, $can_fill)) {
                             if($this->remove_empty_before_write){
                                 if(trim($value)==''){
                                      continue;
                                 }
                              }
-                            $new_data[$key][$field] = $value;
-                        }
+                        $new_data[$key][$field] = $value;
+                    }
                     else
                     {
                         show_error('MY_Model: Unknown column '.$field.' in table: '.$this->table);
@@ -312,6 +312,7 @@ class MY_Model extends CI_Model
         // let's join the subqueries...
         $data = $this->join_temporary_results($data);
         $this->_database->reset_query();
+        $this->_requested = array();
         if(isset($this->return_as_dropdown) && $this->return_as_dropdown == 'dropdown')
         {
             foreach($data as $row)
@@ -381,7 +382,7 @@ class MY_Model extends CI_Model
                         $this->validated[$field] = $value;
                     }else{                        
                      show_error('MY_Model: Unknown column ('.$field.') in table: ('.$this->table.') in $additional_values.');
-                }
+                    }
                 }
             }
 
@@ -408,7 +409,7 @@ class MY_Model extends CI_Model
         }
 
     }
-    
+
     /**
      * public function insert($data)
      * Inserts data into table. Can receive an array or a multidimensional array depending on what kind of insert we're talking about.
@@ -427,7 +428,7 @@ class MY_Model extends CI_Model
             return FALSE;
         }
         $data = $this->_prep_before_write($data);
-    
+
         //now let's see if the array is a multidimensional one (multiple rows insert)
         $multi = $this->is_multidimensional($data);
 
@@ -503,7 +504,7 @@ class MY_Model extends CI_Model
      * @param array $data
      * @param array|int $column_name_where
      * @param bool $escape should the values be escaped or not - defaults to true
-     * @return int Returns affected rows
+     * @return str/array Returns id/ids of inserted rows
      */
     public function update($data = NULL, $column_name_where = NULL, $escape = TRUE)
     {
@@ -2003,8 +2004,8 @@ class MY_Model extends CI_Model
         $parent_class = get_parent_class($this);
         if ($parent_class !== FALSE && !method_exists($parent_class, $method) && !method_exists($this,$method))
         {
-            echo 'No method with that name ('.$method.') in '. get_class($this) .' or MY_Model or CI_Model.';
-            exit;
+            $msg = 'The method "'.$method.'" does not exist in '. get_class($this) .' or MY_Model or CI_Model.';
+            show_error($msg,EXIT_UNKNOWN_METHOD,'Method Not Found');
         }
     }
 
