@@ -10,9 +10,7 @@ class Subject_offer_model extends MY_Model
                 $this->table       = 'subject_offers';
                 $this->primary_key = 'subject_offer_id';
 
-
                 $this->_relations();
-                // $this->_form();
                 $this->_config();
 
                 parent::__construct();
@@ -64,46 +62,9 @@ class Subject_offer_model extends MY_Model
                 );
         }
 
-//
-//        private function _form()
-//        {
-//                //  $this->load->helper('day');
-////                $__insert__ = $this->_insert();
-////                foreach (days_for_db() as $d)
-////                {
-////
-////                        /**
-////                         * days
-////                         */
-////                        $__insert__['subject_offer_' . $d] = array(
-////                            'label' => ucfirst($d),
-////                            'field' => $d,
-////                            'rules' => '',
-////                        );
-////                }
-//                //   echo print_r($__insert__);
-//                $this->rules = array(
-//                    //'insert' => $__insert__,
-//                    'insert' => $this->_insert(),
-//                    'update' => $this->_update()
-//                );
-//        }
-
         public function insert_validations()
         {
                 return array(
-//                    'subject_offer_start' => array(
-//                        'label' => lang('create_subject_offer_start_label'),
-//                        'field' => 'start',
-//                        'rules' => 'required|trim|min_length[3]|max_length[5]|time_24hr|time_24hr|'
-//                        . 'time_lessthan[' . $this->input->post('end', TRUE) . ']|'
-//                        . 'callback_subject_offer_check_check_conflict',
-//                    ),
-//                    'subject_offer_end'   => array(
-//                        'label' => lang('create_subject_offer_end_label'),
-//                        'field' => 'end',
-//                        'rules' => 'required|trim|min_length[3]|max_length[5]',
-//                    ),
                     array(
                         'label' => lang('create_user_id_label'),
                         'field' => 'faculty',
@@ -113,24 +74,67 @@ class Subject_offer_model extends MY_Model
                         'label' => lang('create_subject_id_label'),
                         'field' => 'subject',
                         'rules' => 'trim|required|is_natural_no_zero',
-                    ),
-//                    'room_id'             => array(
-//                        'label' => lang('create_room_id_label'),
-//                        'field' => 'room',
-//                        'rules' => 'trim|required|is_natural_no_zero',
-//                    ),
-//                    array(
-//                        'label' => 'Subject Offer',
-//                        'field' => 'subject_offer_check_check_conflict',
-//                        'rules' => 'callback_subject_offer_check_check_conflict',
-//                    ),
+                    )
                 );
         }
 
-//
-//        private function _update()
-//        {
-//                return array(
-//                );
-//        }
+        private function _query()
+        {
+                $this->
+                        fields('subject_offer_id')->
+                        with_subject('fields:subject_code')->
+                        with_faculty('fields:first_name,last_name')->
+                        with_subject_line(array(
+                            'fields' => // array(
+                            'subject_offer_line_start,' .
+                            'subject_offer_line_end,' .
+                            'subject_offer_line_monday,' .
+                            'subject_offer_line_tuesday,' .
+                            'subject_offer_line_wednesday,' .
+                            'subject_offer_line_thursday,' .
+                            'subject_offer_line_friday,' .
+                            'subject_offer_line_saturday,' .
+                            'subject_offer_line_sunday'
+                            , //),
+                            'with'   => array(//sub query of sub query
+                                'relation' => 'room',
+                                'fields'   => 'room_number'
+                )));
+                return $this;
+        }
+
+        private function _where_current_sem_year()
+        {
+                $this->where(array(
+                    'subject_offer_semester'    => current_school_semester(TRUE),
+                    'subject_offer_school_year' => current_school_year(),
+                ));
+                return $this;
+        }
+
+        public function all($current_sem_year = FALSE)
+        {
+                $this->_query();
+                if ($current_sem_year)
+                {
+                        /**
+                         * only current semester and year, if set to TRUE
+                         */
+                        $this->_where_current_sem_year();
+                }
+                //set_cache()->
+                return $this->get_all();
+        }
+
+        public function all_on_curriculum($curriculum_id)
+        {
+                return $this->_query()->
+                                {$this->_where_current_semester_and_year()}->
+                                where(array(
+                                    'curriculum_id' => $curriculum_id
+                                ))->
+                                //set_cache()->
+                                get_all();
+        }
+
 }

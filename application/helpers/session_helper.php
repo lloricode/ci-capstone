@@ -17,7 +17,7 @@ if (!function_exists('set_userdata_array'))
         function set_userdata_array($data, $new_value)
         {
                 $CI = &get_instance();
-                if (isset($_SESSION[$data]))
+                if ($CI->session->has_userdata($data))//check session if exist.
                 {
                         /**
                          * to prevent same value
@@ -41,7 +41,52 @@ if (!function_exists('set_userdata_array'))
                 }
                 else
                 {
-                        $CI->session->set_userdata($data, array($new_value));  //just create new one the initialize the value.
+                        $CI->session->set_userdata($data, array($new_value));  //just create new one then initialize the first value.
+                }
+        }
+
+}
+
+if (!function_exists('unset_userdata_array'))
+{
+
+        /**
+         * remove one value/index in session array
+         * 
+         * @param type $data
+         * @param type $value_to_remove
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        function unset_userdata_array($data, $value_to_remove)
+        {
+                $CI = &get_instance();
+                if ($CI->session->has_userdata($data))//check session if exist.
+                {
+                        /**
+                         * same old values
+                         */
+                        $old_values = array();
+
+                        foreach ($CI->session->userdata($data) as $value)
+                        {
+                                if ($value == $value_to_remove)
+                                {
+                                        /**
+                                         * just skip the value want to unset
+                                         */
+                                        continue;
+                                }
+                                $old_values[] = $value;
+                        }
+                        
+                        if (count($old_values) == 0)
+                        {
+                                $CI->session->unset_userdata($data); //else unset userdata, because it has no value
+                        }
+                        else
+                        {
+                                $CI->session->set_userdata($data, $old_values); //replaca the value with removal if any.
+                        }
                 }
         }
 

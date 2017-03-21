@@ -22,8 +22,6 @@ class Subject_offers extends CI_Capstone_Controller
                 $this->breadcrumbs->unshift(2, lang('index_subject_heading_th'), 'subjects');
                 $this->breadcrumbs->unshift(3, lang('index_subject_offer_heading'), 'subject-offers');
                 $this->load->helper(array('day', 'time', 'school'));
-
-// echo print_r(time_list(FALSE,'10:30'));
         }
 
         /**
@@ -31,34 +29,7 @@ class Subject_offers extends CI_Capstone_Controller
          */
         public function index()
         {
-                $subl = $this->Subject_offer_model->
-                        fields('subject_offer_id')->
-                        with_subject('fields:subject_code')->
-                        with_faculty('fields:first_name,last_name')->
-                        with_subject_line(array(
-                            'fields' => // array(
-                            'subject_offer_line_start,' .
-                            'subject_offer_line_end,' .
-                            'subject_offer_line_monday,' .
-                            'subject_offer_line_tuesday,' .
-                            'subject_offer_line_wednesday,' .
-                            'subject_offer_line_thursday,' .
-                            'subject_offer_line_friday,' .
-                            'subject_offer_line_saturday,' .
-                            'subject_offer_line_sunday'
-                            , //),
-                            'with'   => array(//sub query of sub query
-                                'relation' => 'room',
-                                'fields'   => 'room_number'
-                            )
-                        ))->
-                        //set_cache()->
-                        where(array(
-                            'subject_offer_semester'    => current_school_semester(TRUE),
-                            'subject_offer_school_year' => current_school_year(),
-                        ))->
-                        get_all();
-
+                $subl = $this->Subject_offer_model->all(TRUE); //parameter is set to current semester and year
                 //  echo print_r($subl);
                 /**
                  * get the page from url
@@ -73,6 +44,10 @@ class Subject_offers extends CI_Capstone_Controller
 
                         foreach ($subl as $s)
                         {
+                                if (!isset($s->subject_line))
+                                {
+                                        continue;
+                                }
                                 $output = array(
                                     $s->subject->subject_code,
                                     $s->faculty->first_name

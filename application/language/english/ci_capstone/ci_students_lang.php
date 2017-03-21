@@ -80,3 +80,6 @@ $lang['add_student_subject_label'] = 'Add Enroll Subject';
 
 $lang['add_student_subject_label'] = 'Add Enroll Subject';
 
+$lang['available_subjects_to_enroll'] = 'Available subjects to enroll';
+$lang['added_subjects_to_enroll']     = 'Added subjects to enroll';
+$lang['remove_subjects_to_enroll']     = 'Remove';

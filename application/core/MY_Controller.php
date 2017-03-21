@@ -156,6 +156,23 @@ class CI_Capstone_Controller extends MY_Controller
                 }
 
                 $this->breadcrumbs->unshift(1, lang('home_label'), 'home');
+
+
+                /**
+                 * this is for /create-student-subject controller
+                 * use this if navigate to another controller, it will unset session for subject offer
+                 * to prevent passing session to another enrolling subjects in another students
+                 */
+                if ('create-student-subject' != str_replace('_', '-', $this->uri->segment(2)) &&
+                        $this->session->has_userdata('curriculum_subjects__subject_offer_ids'))
+                {
+                        /**
+                         * to modify the session name, make sure also modify in /create-student-subject controller
+                         * 
+                         *   $this->_session_name_  
+                         */
+                        $this->session->unset_userdata('curriculum_subjects__subject_offer_ids');
+                }
         }
 
         /**

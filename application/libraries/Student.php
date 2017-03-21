@@ -141,8 +141,6 @@ class Student extends School_informations
                 $this->curriculum_id         = $this->__enrollment->curriculum_id;
         }
 
-     
-
         /**
          * 
          * subject_offer_id
@@ -337,7 +335,7 @@ class School_informations
                 /**
                  * set curriculum_id
                  */
-                $this->_curriculum_subjects = $this->Curriculum_subject_model->subjects($this->__enrollment->curriculum_id);
+                $this->_curriculum_subjects = $this->Subject_offer_model->all(TRUE); //parameter is set to current semester and year
         }
 
         protected function __load_education()

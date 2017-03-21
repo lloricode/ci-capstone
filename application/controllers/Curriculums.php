@@ -94,8 +94,7 @@ class Curriculums extends CI_Capstone_Controller
 
                 //$this->load->library('curriculum');
                 $cur_subj_obj = $this->Curriculum_subject_model->subjects($curriculum_obj->curriculum_id);
-              //  print_r($cur_subj_obj);
-
+                //  print_r($cur_subj_obj);
                 // $cur_subj_obj = $this->curriculum->get_subjects();
 
                 $table_data = array();
