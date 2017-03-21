@@ -26,8 +26,8 @@ class MY_Lang extends CI_Lang
             'en' => 'english',
             'fi' => 'filipino',
             'ce' => 'cebuano',
-            'sp' => 'spanish',
-            'jp' => 'japanese',
+//            'sp' => 'spanish',
+//            'jp' => 'japanese',
         );
 
         /**

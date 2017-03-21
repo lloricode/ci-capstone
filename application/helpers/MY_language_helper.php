@@ -11,8 +11,8 @@ if (!function_exists('lang_array_'))
                     'en' => 'English',
                     'fi' => 'Filipino',
                     'ce' => 'Cebuano',
-                    'sp' => 'Spanish',
-                    'jp' => 'Japanese',
+//                    'sp' => 'Spanish',
+//                    'jp' => 'Japanese',
                 );
         }
 

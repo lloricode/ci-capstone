@@ -58,7 +58,5 @@ $route['translate_uri_dashes'] = TRUE;
 $route['^en/(.+)$'] = "$1";
 $route['^fi/(.+)$'] = "$1";
 $route['^ce/(.+)$'] = "$1";
-$route['^sp/(.+)$'] = "$1";
-$route['^jp/(.+)$'] = "$1";
 // '/en' and '/ar' -> use default controller
-$route['^(en|fi|ce|sp|jp)$'] = $route['default_controller'];
+$route['^(en|fi|ce)$'] = $route['default_controller'];
