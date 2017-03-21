@@ -36,10 +36,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                          */
                         $this->load->helper('school');
 
-                        /**
-                         * start the DB transaction
-                         */
-                        $this->db->trans_start();
+
 
                         /**
                          * storing all validations
@@ -63,6 +60,11 @@ class Create_subject_offer extends CI_Capstone_Controller
 
                         if ($this->form_validation->run())
                         {
+                                /**
+                                 * start the DB transaction
+                                 */
+                                $this->db->trans_start();
+                                
                                 $subject_offer_insert = array(
                                     'user_id'                   => $this->input->post('faculty', TRUE),
                                     'subject_id'                => $this->input->post('subject', TRUE),
