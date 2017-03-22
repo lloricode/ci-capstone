@@ -83,9 +83,9 @@ class Create_requisite extends CI_Capstone_Controller
 
                 if ($this->form_validation->run())
                 {
-                        $co_array  = $this->input->post('co', TRUE);
-                        $pre_array = $this->input->post('pre', TRUE);
-                        $data_     = array();
+                        $co_array        = $this->input->post('co', TRUE);
+                        $pre_array       = $this->input->post('pre', TRUE);
+                        $data_           = array();
                         /**
                          * collect multiple selected
                          */
@@ -93,7 +93,7 @@ class Create_requisite extends CI_Capstone_Controller
                          * use db transaction, just to make sure all data inserted
                          */
                         $this->db->trans_start();
-
+                        $co_all_inserted = TRUE;
                         if ($co_array)
                         {
                                 foreach ($co_array as $value)
@@ -105,6 +105,8 @@ class Create_requisite extends CI_Capstone_Controller
                                             'created_user_id'       => $this->session->userdata('user_id')
                                         );
                                 }
+                                //insert also in reverse subjects
+                                $co_all_inserted = $this->_insert_also_revesre_as_co_requisite($co_array, $curriculum_subject_id, $curriculum_id);
                         }
                         if ($pre_array)
                         {
@@ -126,25 +128,24 @@ class Create_requisite extends CI_Capstone_Controller
                                  * just to make sure all inserted, else database will rollback
                                  */
                                 $id = $this->Requisites_model->insert($in);
-                                if (!$id)
+                                if ( ! $id)
                                 {
                                         $all_inserted = FALSE;
                                         break;
                                 }
                         }
-                        if (!$all_inserted)
+
+                        if ( ! $all_inserted OR ! $co_all_inserted)
                         {
                                 /**
                                  * rollback database
                                  */
                                 $this->db->trans_rollback();
-                                echo 'ROLLBAKC!!';
                         }
                         else
                         {
                                 if ($this->db->trans_commit())
                                 {
-                                        // echo 'OOOOOOOOOOKKKKKKKKKKKKk';
                                         $this->session->set_flashdata('message', lang('requisite_success_added'));
                                         redirect(site_url('curriculums/view?curriculum-id=' . $curriculum_id), 'refresh');
                                 }
@@ -152,9 +153,56 @@ class Create_requisite extends CI_Capstone_Controller
                 }
         }
 
+        /**
+         * this will automatically insert also a reverse co of inserted current curriculum subject
+         * 
+         * @param int $co_subject_ids
+         * @param int $curriculum_subject_id
+         * @param int $curriculum_id
+         * @return boolean FALSE if one of insert is failed.
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>  
+         */
+        private function _insert_also_revesre_as_co_requisite($co_subject_ids, $curriculum_subject_id, $curriculum_id)
+        {
+                $all_ok             = TRUE;
+                /**
+                 * get subject_if from $curriculum_subject_id
+                 */
+                $current_subject_id = $this->Curriculum_subject_model->
+                                fields('subject_id')->
+                                // set_cache()->
+                                get($curriculum_subject_id)->subject_id;
+                foreach ($co_subject_ids as $subject_id)
+                {
+                        /**
+                         * get curriculum_subject_id of subject_id where $curriculum_id
+                         */
+                        $__curriculum_subject_id = $this->Curriculum_subject_model->
+                                        fields('curriculum_subject_id')->
+                                        where(array(
+                                            'subject_id'    => $subject_id,
+                                            'curriculum_id' => $curriculum_id,
+                                        ))->
+                                        // set_cache()->
+                                        get()->curriculum_subject_id;
+                        $id                      = $this->Requisites_model->insert(array(
+                            'subject_id'            => $current_subject_id,
+                            'requisite_type'        => 'co',
+                            'curriculum_subject_id' => $__curriculum_subject_id,
+                            'created_user_id'       => $this->session->userdata('user_id')
+                        ));
+                        if ( ! $id)
+                        {
+                                $all_ok = FALSE;
+                                break;
+                        }
+                }
+                return $all_ok;
+        }
+
         public function is_atleast_one()
         {
-                if (!$this->input->post('submit'))
+                if ( ! $this->input->post('submit'))
                 {
                         show_404();
                 }
@@ -178,7 +226,7 @@ class Create_requisite extends CI_Capstone_Controller
                     lang('curriculum_subject_pre_subject_label'),
                     lang('curriculum_subject_co_subject_label')
                 );
-                $cur_subj   = $this->Curriculum_subject_model->subject($curriculum_subject_id);
+                $cur_subj   = $this->Curriculum_subject_model->curriculum_subject($curriculum_subject_id);
                 $table_data = array();
                 if ($cur_subj)
                 {
@@ -215,7 +263,7 @@ class Create_requisite extends CI_Capstone_Controller
          */
         private function _is_ids_related($cur, $cur_subj)
         {
-                if (!((bool) ( $this->Curriculum_subject_model->where(array(
+                if ( ! ((bool) ( $this->Curriculum_subject_model->where(array(
                             'curriculum_id'         => $cur,
                             'curriculum_subject_id' => $cur_subj,
                         ))->count_rows() === 1)))
@@ -232,68 +280,59 @@ class Create_requisite extends CI_Capstone_Controller
          */
         public function is_co_requisite_same_level()
         {
-                if (!$this->input->post('submit'))
+                if ( ! $this->input->post('submit'))
                 {
                         show_404();
                 }
 
+                $cur_sub_obj = check_id_from_url('curriculum_subject_id', 'Curriculum_subject_model', 'curriculum-subject-id');
 
-                $input_year_level = $this->input->post('level', TRUE);
-                $co_requisite     = $this->input->post('co_requisite', TRUE);
-                $curriculum_id    = $this->input->post('curriculum', TRUE);
-                $semester         = $this->input->post('semester', TRUE);
+                $co = $this->input->post('co[]', TRUE);
 
-                /**
-                 * required first all the other field to be filled, it will validate first
-                 */
-                if ($input_year_level && $co_requisite && $semester)
+                $cur_sub_obj_inputs = array();
+
+                if ($co)
                 {
-                        /**
-                         * get row in $co_requisite in current curriculum
-                         */
-                        $cur_sub_obj = $this->Curriculum_subject_model->where(array(
-                                    //main subject search by co-requisite , to get the year level of input co requsite using the exist subject in curiculum
-                                    'subject_id'    => $co_requisite,
-                                    'curriculum_id' => $curriculum_id // search in curiculum input
-                                ))->set_cache("curriculum_subject_validation_{$co_requisite}_{$curriculum_id}")->get();
+
+                        foreach ($co as $subject_id)
+                        {
+                                $cur_sub_obj_inputs[] = $this->Curriculum_subject_model->
+                                        where(array(
+                                            'curriculum_id' => $cur_sub_obj->curriculum_id,
+                                            'subject_id'    => $subject_id
+                                        ))->
+                                        with_subject()->
+                                        //set_cache()->
+                                        get();
+                        }
 
                         /**
-                         * if has, check the year level of $pre_requisite
+                         * check semester and year
                          */
-                        if ($cur_sub_obj)
+                        $subject_codes = array(); //i used array, its countable
+                        foreach ($cur_sub_obj_inputs as $c)
                         {
-                                /**
-                                 * check if same year level, with input and the result OBJ->year level in model
-                                 */
-                                if ($cur_sub_obj->curriculum_subject_year_level == $input_year_level)
+                                if ( ! ($cur_sub_obj->curriculum_subject_semester == $c->curriculum_subject_semester &&
+                                        $cur_sub_obj->curriculum_subject_year_level == $c->curriculum_subject_year_level))
                                 {
-                                        /**
-                                         * validation pass, so lets also check semester
-                                         */
-                                        if ($cur_sub_obj->curriculum_subject_semester == $semester)
-                                        {
-                                                /**
-                                                 * accepted
-                                                 */
-                                                return TRUE;
-                                        }
-                                        /**
-                                         * return FALSE, because, because is not at same semester
-                                         */
-                                        $this->form_validation->set_message('is_co_requisite_same_level', 'Adding "{field}" must also in same semester.');
-                                        return FALSE;
+                                        $subject_codes[] = $c->subject->subject_code; //collect invalid subjects
                                 }
-                                /**
-                                 * return FALSE, because, it detect that has a subject BUT not same level
-                                 */
-                                $this->form_validation->set_message('is_co_requisite_same_level', 'Adding "{field}" must same in current year level.');
+                        }
+
+                        if (count($subject_codes) != 0)//there is a invalid?
+                        {
+                                $subjecs = '';
+                                foreach ($subject_codes as $s)
+                                {
+                                        $subjecs .= $s . ', ';
+                                }
+                                $msg = '(' . trim($subjecs, ', ') . ') is not in same level or semester in current subject.';
+                                $this->form_validation->set_message('is_co_requisite_same_level', $msg);
+
                                 return FALSE;
                         }
-                        /**
-                         * no result so no conflict
-                         */
-                        return TRUE;
                 }
+
                 /**
                  * not required, just pass the validation
                  */
@@ -308,7 +347,7 @@ class Create_requisite extends CI_Capstone_Controller
          */
         public function is_pre_requisite_low_level()
         {
-                if (!$this->input->post('submit'))
+                if ( ! $this->input->post('submit'))
                 {
                         show_404();
                 }

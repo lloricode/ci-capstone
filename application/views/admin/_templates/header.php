@@ -5,7 +5,7 @@
  * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+echo '<!-- ' . $this->benchmark->elapsed_time() . ' -->';
 /*
  *
  * MY CONSTANT
@@ -121,23 +121,23 @@ echo doctype();
                         <?php endforeach; ?>
                     </ul>
                 </li>
-                <li class="">
-                    <a title="">
-                        <i class="icon icon-bolt"></i> 
-                        <span class="text">
-                            {elapsed_time}
-                        </span>
-                        <i class="icon icon-leaf"></i> 
-                        <span class="text">
-                            {memory_usage}
-                        </span>
-                        <i class="icon icon-beaker"></i> 
-                        <span class="text">
-                            <?php echo CI_VERSION; ?>
-                        </span>
-                    </a>
-                </li>
                 <?php if (ENVIRONMENT === 'development' || ENVIRONMENT === 'testing'): ?>
+                        <li class="">
+                            <a title="">
+                                <i class="icon icon-bolt"></i> 
+                                <span class="text">
+                                    {elapsed_time}
+                                </span>
+                                <i class="icon icon-leaf"></i> 
+                                <span class="text">
+                                    {memory_usage}
+                                </span>
+                                <i class="icon icon-beaker"></i> 
+                                <span class="text">
+                                    <?php echo CI_VERSION; ?>
+                                </span>
+                            </a>
+                        </li>
                         <li class="">
                             <a title="">
                                 <i class="icon icon-magic"></i> 
@@ -146,6 +146,7 @@ echo doctype();
                                 </span>
                             </a>
                         </li>
+                <?php else: echo comment_tag('CI_VERSION: ' . CI_VERSION); ?>
                 <?php endif; ?>
             </ul>
         </div>

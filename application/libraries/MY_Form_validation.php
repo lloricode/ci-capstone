@@ -308,6 +308,8 @@ class MY_Form_validation extends CI_Form_validation
          */
         public function differs_array_from_another_array($value, $other_field)
         {
+                list($other_field, $model, $column) = explode('.', $other_field);
+
                 if (isset($this->_field_data[$other_field]))//accessing the protected attribute in CI_Validation
                 {
                         if ($this->_field_data[$other_field]['postdata'])
@@ -316,7 +318,12 @@ class MY_Form_validation extends CI_Form_validation
                                 {
                                         if (in_array($v, array($value)))
                                         {
-                                                $this->CI->form_validation->set_message('differs_array_from_another_array', 'The {field} Must differ in another field.');
+                                                $this->CI->load->model($model);
+                                                $column_value = $this->CI->$model->get((int) $value)->$column;
+                                                $msg          = '(' . $column_value . ') has already selected ' .
+                                                        $this->_field_data[$other_field]['label'] .
+                                                        ' field and must differ.';
+                                                $this->CI->form_validation->set_message('differs_array_from_another_array', $msg);
                                                 return FALSE; //there a similar value.
                                         }
                                 }

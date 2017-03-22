@@ -11,7 +11,6 @@ class Requisites_model extends MY_Model
                 $this->primary_key = 'requisite_id';
 
                 $this->_relations();
-                // $this->_form();
                 $this->_config();
 
                 parent::__construct();
@@ -35,47 +34,27 @@ class Requisites_model extends MY_Model
 
         private function _relations()
         {
-//                $this->has_one['students_subjects'] = array(
-//                    'foreign_model' => 'Students_subjects_model',
-//                    'foreign_table' => 'students_subjects',
-//                    'foreign_key'   => 'user_id',
-//                    'local_key'     => 'id'
-//                );
                 $this->has_one['subjects'] = array(
                     'foreign_model' => 'Subject_model',
                     'foreign_table' => 'subjects',
                     'foreign_key'   => 'subject_id',
                     'local_key'     => 'subject_id'
                 );
-//                $this->has_one['type']     = array(
-//                    'foreign_model' => 'Requisite_typae_model',
-//                    'foreign_table' => 'requisite_types',
-//                    'foreign_key'   => 'requisite_id',
-//                    'local_key'     => 'requisite_id'
-//                );
         }
 
         public function validations()
         {
-
-//                $this->rules = array(
-//                    'insert' =>
                 return array(
                     array(
-                        'label'  => lang('requisite_co_type_label'),
-                        'field'  => 'co[]',
-                        'rules'  => 'trim|is_natural_no_zero|differs_array_from_another_array[pre[]]',
-                        'errors' => array(
-                            'differs_array_from_another_array' => 'Must differ from ' . lang('requisite_pre_type_label') . '.'
-                        )
+                        'label' => lang('requisite_co_type_label'),
+                        'field' => 'co[]',
+                        'rules' => 'trim|is_natural_no_zero|differs_array_from_another_array[pre[].Subject_model.subject_code]|'
+                        . 'callback_is_co_requisite_same_level'
                     ),
                     array(
-                        'label'  => lang('requisite_pre_type_label'),
-                        'field'  => 'pre[]',
-                        'rules'  => 'trim|is_natural_no_zero|differs_array_from_another_array[co[]]',
-                        'errors' => array(
-                            'differs_array_from_another_array' => 'Must differ from ' . lang('requisite_co_type_label') . '.'
-                        )
+                        'label' => lang('requisite_pre_type_label'),
+                        'field' => 'pre[]',
+                        'rules' => 'trim|is_natural_no_zero|differs_array_from_another_array[co[].Subject_model.subject_code]'
                     ),
                     array(
                         'label' => lang('requisite_label'),
@@ -83,8 +62,6 @@ class Requisites_model extends MY_Model
                         'rules' => 'callback_is_atleast_one'//just to callback this validator
                     ),
                 );
-//                    'update' => array()
-//                );
         }
 
         /**

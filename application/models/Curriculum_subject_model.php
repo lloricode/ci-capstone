@@ -150,7 +150,7 @@ class Curriculum_subject_model extends MY_Model
                 return array();
         }
 
-        private function _subject_query()
+        private function _curriculum_subject_query()
         {
                 $this->
                         //specific fields in local table
@@ -181,10 +181,10 @@ class Curriculum_subject_model extends MY_Model
                 return $this; //just cotinuation of a function chain
         }
 
-        public function subjects($curriculum_id, $subject_offer = FALSE)
+        public function curriculum_subjects($curriculum_id, $subject_offer = FALSE)
         {
                 return $this->
-                                _subject_query()->
+                                _curriculum_subject_query()->
                                 where(array('curriculum_id' => $curriculum_id))->
                                 order_by('curriculum_subject_year_level', 'ASC')->
                                 order_by('curriculum_subject_semester', 'ASC')->
@@ -192,17 +192,17 @@ class Curriculum_subject_model extends MY_Model
                                 get_all();
         }
 
-        public function subject($curriculum_subject_id, $subject_offer = FALSE)
+        public function curriculum_subject($curriculum_subject_id, $subject_offer = FALSE)
         {
                 return $this->
-                                _subject_query()->
+                                _curriculum_subject_query()->
                                 //set_cache()->
                                 get($curriculum_subject_id);
         }
 
         public function subjects_dropdown_for_add_requisite($curriculum_id, $subject_id)
         {
-                $subject_from_cur = $this->subjects($curriculum_id);
+                $subject_from_cur = $this->curriculum_subjects($curriculum_id);
 
                 $return     = array();
                 $requisites = array();
