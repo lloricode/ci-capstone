@@ -121,7 +121,7 @@ echo doctype();
                         <?php endforeach; ?>
                     </ul>
                 </li>
-                <?php if (ENVIRONMENT === 'development' || ENVIRONMENT === 'testing'): ?>
+                <?php if (ENVIRONMENT === 'development' OR ENVIRONMENT === 'testing'): ?>
                         <li class="">
                             <a title="">
                                 <i class="icon icon-bolt"></i> 
@@ -178,7 +178,7 @@ echo doctype();
                 {
                         echo $this->ion_auth->errors();
                 }
-                elseif (!preg_match('!alert-block!', $this->session->flashdata('message')) && $this->session->flashdata('message') != '')
+                elseif ( ! preg_match('!alert-block!', $this->session->flashdata('message')) && $this->session->flashdata('message') != '')
                 {
                         echo '<div class="alert alert-success alert-block">' . $this->session->flashdata('message') . '</div>';
                 }

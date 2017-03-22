@@ -254,7 +254,7 @@ class Id_generator_v1 extends Id__
                         /**
                          * recursive plus increment attempp
                          */
-                        $this->generate_number($attemp++);
+                        $this->generate_number($attemp ++ );
                 }
         }
 

@@ -8,6 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Migration_Sample_data extends CI_Migration
 {
 
+
         private $user_ids;
         private $education_ids;
         private $course_ids;
@@ -84,7 +85,7 @@ class Migration_Sample_data extends CI_Migration
                         $this->subjects();
                         $this->rooms();
                         $this->subject_offer();
-                        for ($i = 1; $i <= $this->student_count; $i++)
+                        for ($i = 1; $i <= $this->student_count; $i ++ )
                         {
 
                                 $this->school_id->initialize();
@@ -145,7 +146,7 @@ class Migration_Sample_data extends CI_Migration
 
         private function users()
         {
-                for ($i = 1; $i <= $this->user_count; $i++)
+                for ($i = 1; $i <= $this->user_count; $i ++ )
                 {
                         $identity = 'username' . $i;
                         $password = 'password';
@@ -158,7 +159,7 @@ class Migration_Sample_data extends CI_Migration
                             'phone'      => '+639' . random_string('numeric', 2) . '-' . random_string('numeric', 3) . '-' . random_string('numeric', 4),
                         );
                         $u_id            = $this->ion_auth->register($identity, $password, $email, $additional_data);
-                        if (!$u_id)
+                        if ( ! $u_id)
                         {
                                 show_error('failed insert user in (' . $i . ') times error:' . $this->ion_auth->errors());
                         }
@@ -185,10 +186,10 @@ class Migration_Sample_data extends CI_Migration
                          * select subject offer first with how many
                          */
                         $subjects_ofr_ids = array();
-                        for ($i = 1; $i <= $how_many_subject; $i++)
+                        for ($i = 1; $i <= $how_many_subject; $i ++ )
                         {
                                 $s_offr = random_element($this->subject_offer_ids);
-                                if (!in_array($s_offr, $subjects_ofr_ids))
+                                if ( ! in_array($s_offr, $subjects_ofr_ids))
                                 {
                                         $subjects_ofr_ids[] = $s_offr;
                                 }
@@ -198,7 +199,7 @@ class Migration_Sample_data extends CI_Migration
                                          * repeat
                                          * then minus loop
                                          */
-                                        $i--;
+                                        $i --;
                                 }
                         }
                         /**
@@ -215,7 +216,7 @@ class Migration_Sample_data extends CI_Migration
                 }
                 if ($students_subjects_model_arr)
                 {
-                        if (!$this->Students_subjects_model->insert($students_subjects_model_arr))
+                        if ( ! $this->Students_subjects_model->insert($students_subjects_model_arr))
                         {
                                 show_error('failed add student subjects');
                         }
@@ -226,7 +227,7 @@ class Migration_Sample_data extends CI_Migration
         {
                 $subj_offr_arr = array();
 
-                for ($i = 1; $i <= $this->subject_offer_count; $i++)
+                for ($i = 1; $i <= $this->subject_offer_count; $i ++ )
                 {
                         $start  = random_element(time_list(FALSE));
                         $t_list = time_list(FALSE, convert_12_to_24hrs($start));
@@ -260,16 +261,16 @@ class Migration_Sample_data extends CI_Migration
                          */
                         if ($this->atleast_one_day($sub_ofrr))
                         {
-                                $i--;
+                                $i --;
                                 continue;
                         }
 
                         /**
                          * check conflict
                          */
-                        if (!$this->check_conflict($sub_ofrr))
+                        if ( ! $this->check_conflict($sub_ofrr))
                         {
-                                $i--;
+                                $i --;
                                 continue;
                         }
 
@@ -306,11 +307,11 @@ class Migration_Sample_data extends CI_Migration
 
                 $dplicate1 = 1;
                 $dplicate2 = 'A';
-                for ($i = 1; $i <= $this->room_count; $i++)
+                for ($i = 1; $i <= $this->room_count; $i ++ )
                 {
                         $room_arr[] = array(
-                            'room_number'      => 'Room' . $dplicate1++,
-                            'room_description' => 'Roomdesc' . $dplicate2++,
+                            'room_number'      => 'Room' . $dplicate1 ++,
+                            'room_description' => 'Roomdesc' . $dplicate2 ++,
                             'created_user_id'  => random_element($this->user_ids)
                         );
                 }
@@ -326,11 +327,11 @@ class Migration_Sample_data extends CI_Migration
 
                 $dplicate1 = 1;
                 $dplicate2 = 'A';
-                for ($i = 1; $i <= $this->subject_count; $i++)
+                for ($i = 1; $i <= $this->subject_count; $i ++ )
                 {
                         $subject_arr[] = array(
-                            'subject_code'        => 'Subjcode' . $dplicate1++,
-                            'subject_description' => 'Subdesc' . $dplicate2++,
+                            'subject_code'        => 'Subjcode' . $dplicate1 ++,
+                            'subject_description' => 'Subdesc' . $dplicate2 ++,
                             'subject_unit'        => random_element(array(1, 2, 3, 4)),
                             'course_id'           => random_element($this->course_ids),
                             'created_user_id'     => random_element($this->user_ids)
@@ -493,7 +494,7 @@ class Migration_Sample_data extends CI_Migration
                 $mm    = array();
                 $dd    = array();
                 $yyyy  = array();
-                for ($i = 1; $i <= 12; $i++)
+                for ($i = 1; $i <= 12; $i ++ )
                 {
 
                         if ($i < 10)
@@ -505,7 +506,7 @@ class Migration_Sample_data extends CI_Migration
                                 $mm[] = $i;
                         }
                 }
-                for ($i = 1; $i <= 31; $i++)
+                for ($i = 1; $i <= 31; $i ++ )
                 {
                         if ($i < 10)
                         {
@@ -516,7 +517,7 @@ class Migration_Sample_data extends CI_Migration
                                 $dd[] = $i;
                         }
                 }
-                for ($i = 1985; $i <= 1998; $i++)
+                for ($i = 1985; $i <= 1998; $i ++ )
                 {
                         $yyyy[] = $i;
                 }
@@ -585,7 +586,7 @@ class Migration_Sample_data extends CI_Migration
                          * exist student id will delete from student table to rollback data
                          */
                         $enrollment_id = $this->Enrollment_model->insert($enrollmet__);
-                        if (!$enrollment_id)
+                        if ( ! $enrollment_id)
                         {
                                 /**
                                  * deleting student

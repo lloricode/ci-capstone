@@ -11,7 +11,7 @@ class Create_user extends CI_Capstone_Controller
                 /**
                  * just to make sure
                  */
-                if (!$this->ion_auth->is_admin())
+                if ( ! $this->ion_auth->is_admin())
                 {
                         show_error(lang('access_denied_of_current_user_group'));
                 }

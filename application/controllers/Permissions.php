@@ -15,7 +15,7 @@ class Permissions extends CI_Capstone_Controller
                 /**
                  * just to make sure
                  */
-                if (!$this->ion_auth->is_admin())
+                if ( ! $this->ion_auth->is_admin())
                 {
                         show_error(lang('access_denied_of_current_user_group'));
                 }
@@ -82,7 +82,7 @@ class Permissions extends CI_Capstone_Controller
                                                 }
                                         }
                                 }
-                                if (!$gruops)
+                                if ( ! $gruops)
                                 {
                                         $gruops = 'no permission to all';
                                 }
@@ -157,14 +157,14 @@ class Permissions extends CI_Capstone_Controller
                     ),
                 ));
                 $this->load->library('permission');
-                if ($this->form_validation->run() && !$controller_obj->controller_admin_only)//double check maybe user use ctrl + u to edit html output
+                if ($this->form_validation->run() && ! $controller_obj->controller_admin_only)//double check maybe user use ctrl + u to edit html output
                 {
 
 
                         $groupData = $this->input->post('groups', TRUE);
                         $done      = FALSE;
                         $done      = $this->permission->controller_remove_all_group($controller_obj->controller_id);
-                        if (isset($groupData) && !empty($groupData))
+                        if (isset($groupData) && ! empty($groupData))
                         {
 
 
@@ -172,7 +172,7 @@ class Permissions extends CI_Capstone_Controller
                                 {
                                         $done = $this->permission->add_permision($controller_obj->controller_id, $g_id);
 
-                                        if (!$done)
+                                        if ( ! $done)
                                         {
                                                 break;
                                         }

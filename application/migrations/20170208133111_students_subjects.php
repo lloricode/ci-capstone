@@ -20,19 +20,19 @@ class Migration_Students_subjects extends CI_Migration
         {
                 $this->down();
                 $fields = array(
-                    'student_subject_id'     => array(
+                    'student_subject_id'            => array(
                         'type'           => 'INT',
                         'constraint'     => 8,
                         'unsigned'       => TRUE,
                         'null'           => FALSE,
                         'auto_increment' => TRUE
                     ),
-                    'enrollment_id'          => array(
+                    'enrollment_id'                 => array(
                         'type'       => 'INT',
                         'constraint' => '11',
                         'null'       => FALSE
                     ),
-                    'subject_offer_id'       => array(
+                    'subject_offer_id'              => array(
                         'type'       => 'INT',
                         'constraint' => '11',
                         'null'       => FALSE
@@ -45,34 +45,34 @@ class Migration_Students_subjects extends CI_Migration
                         'default'    => FALSE
                     ),
                     //------------------------------------
-                    'created_at'             => array(
+                    'created_at'                    => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
                         'null'       => FALSE
                     ),
-                    'created_user_id'        => array(
+                    'created_user_id'               => array(
                         'type'       => 'INT',
                         'constraint' => '11',
                         'unsigned'   => TRUE,
                         'null'       => FALSE
                     ),
-                    'deleted_at'             => array(
+                    'deleted_at'                    => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
                         'null'       => TRUE
                     ),
-                    'deleted_user_id'        => array(
+                    'deleted_user_id'               => array(
                         'type'       => 'INT',
                         'constraint' => '11',
                         'unsigned'   => TRUE,
                         'null'       => TRUE
                     ),
-                    'updated_at'             => array(
+                    'updated_at'                    => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
                         'null'       => TRUE
                     ),
-                    'updated_user_id'        => array(
+                    'updated_user_id'               => array(
                         'type'       => 'INT',
                         'constraint' => '11',
                         'unsigned'   => TRUE,

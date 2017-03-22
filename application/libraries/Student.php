@@ -95,7 +95,7 @@ class Student extends School_informations
                 $this->__student = $this->Student_model->
                         set_cache('student_library_get_' . $studen_id)->
                         get($studen_id);
-                if (!$this->__student)
+                if ( ! $this->__student)
                 {
                         show_error('student information not found');
                 }
@@ -324,7 +324,7 @@ class School_informations
                     'student_id' => $this->__student->student_id
                 ));
 
-                if (!$this->__enrollment)
+                if ( ! $this->__enrollment)
                 {
                         show_error('student has no enrollment result"');
                 }

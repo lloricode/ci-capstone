@@ -6,6 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @Contributor: Jinkee Po <pojinkee1@gmail.com>
  *         
  */
+
 class Create_curriculum extends CI_Capstone_Controller
 {
 

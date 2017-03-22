@@ -35,13 +35,13 @@ class Curriculum_model extends MY_Model
 
         private function _relations()
         {
-                $this->has_one['course'] = array(
+                $this->has_one['course']      = array(
                     'foreign_model' => 'Course_model',
                     'foreign_table' => 'courses',
                     'foreign_key'   => 'course_id',
                     'local_key'     => 'course_id'
                 );
-                    /**
+                /**
                  * seperated table
                  */
                 $this->has_many['requisites'] = array(
@@ -50,7 +50,6 @@ class Curriculum_model extends MY_Model
                     'foreign_key'   => 'curriculum_subject_id',
                     'local_key'     => 'curriculum_subject_id'
                 );
-
         }
 
         private function _form()

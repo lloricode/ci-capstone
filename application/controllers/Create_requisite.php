@@ -207,7 +207,7 @@ class Create_requisite extends CI_Capstone_Controller
                         show_404();
                 }
                 $this->form_validation->set_message('is_atleast_one', 'Required atleat one {field} field.');
-                return ($this->input->post('co', TRUE) || $this->input->post('pre', TRUE) );
+                return ($this->input->post('co', TRUE) OR $this->input->post('pre', TRUE) );
         }
 
         private function _current_curriculum_subject($curriculum_subject_id)

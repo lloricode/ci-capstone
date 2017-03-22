@@ -11,7 +11,7 @@ class Deactivate extends CI_Capstone_Controller
                 /**
                  * just to make sure
                  */
-                if (!$this->ion_auth->is_admin())
+                if ( ! $this->ion_auth->is_admin())
                 {
                         show_error(lang('access_denied_of_current_user_group'));
                 }
@@ -23,7 +23,7 @@ class Deactivate extends CI_Capstone_Controller
 
         public function index()
         {
-                if (!($id = (int) $this->input->get('user-id')))
+                if ( ! ($id = (int) $this->input->get('user-id')))
                 {
 
                         show_error('Invalid request.');
@@ -36,7 +36,7 @@ class Deactivate extends CI_Capstone_Controller
                 if ($this->form_validation->run() == FALSE)
                 {
                         $_user = $this->ion_auth->user($id)->row();
-                        if (!$_user)
+                        if ( ! $_user)
                         {
                                 show_error('Invalid request.');
                         }

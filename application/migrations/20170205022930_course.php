@@ -8,6 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Migration_Course extends CI_Migration
 {
 
+
         const CI_DB_TABLE = 'courses';
 
         public function __construct($config = array())

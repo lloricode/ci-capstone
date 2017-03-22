@@ -33,7 +33,6 @@ class Subject_offer_line_model extends MY_Model
                 $this->delete_cache_on_save      = TRUE; //(bool) $this->config->item('my_model_delete_cache_on_save');
         }
 
-     
         private function _relations()
         {
 //
@@ -43,7 +42,7 @@ class Subject_offer_line_model extends MY_Model
 //                    'foreign_key'   => 'subject_id',
 //                    'local_key'     => 'subject_id'
 //                );
-                $this->has_one['room']    = array(
+                $this->has_one['room'] = array(
                     'foreign_model' => 'Room_model',
                     'foreign_table' => 'rooms',
                     'foreign_key'   => 'room_id',
@@ -57,7 +56,6 @@ class Subject_offer_line_model extends MY_Model
 //                );
         }
 
- 
         public function insert_validations()
         {
                 $validation = array(

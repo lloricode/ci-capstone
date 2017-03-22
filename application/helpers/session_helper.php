@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-if (!function_exists('set_userdata_array'))
+if ( ! function_exists('set_userdata_array'))
 {
 
         /**
@@ -29,7 +29,7 @@ if (!function_exists('set_userdata_array'))
                         {
                                 if ($unique)
                                 {
-                                        if (!in_array($value, $new_set_values))//check if already one
+                                        if ( ! in_array($value, $new_set_values))//check if already one
                                         {
                                                 $new_set_values[] = $value; //get the unique value
                                         }
@@ -41,7 +41,7 @@ if (!function_exists('set_userdata_array'))
                         }
                         if ($unique)
                         {
-                                if (!in_array($new_value, $new_set_values))//check if already one
+                                if ( ! in_array($new_value, $new_set_values))//check if already one
                                 {
                                         $new_set_values[] = $new_value; //now append the new value
                                 }
@@ -60,7 +60,9 @@ if (!function_exists('set_userdata_array'))
 
 }
 
-if (!function_exists('unset_value_userdata_array'))
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('unset_value_userdata_array'))
 {
 
         /**

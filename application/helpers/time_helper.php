@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('no direct script allowed');
 
-if (!function_exists('time_list'))
+if ( ! function_exists('time_list'))
 {
 
         /**
@@ -83,7 +83,9 @@ if (!function_exists('time_list'))
 
 }
 
-if (!function_exists('convert_24_to_12hrs'))
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('convert_24_to_12hrs'))
 {
 
         /**
@@ -97,11 +99,11 @@ if (!function_exists('convert_24_to_12hrs'))
          */
         function convert_24_to_12hrs($hr24 = NULL)
         {
-                if (!strpos($hr24, ':'))
+                if ( ! strpos($hr24, ':'))
                 {
                         return 'invalid time format.';
                 }
-                if (empty($hr24) || is_null($hr24))
+                if (empty($hr24) OR is_null($hr24))
                 {
                         return;
                 }
@@ -118,12 +120,15 @@ if (!function_exists('convert_24_to_12hrs'))
         }
 
 }
-if (!function_exists('convert_12_to_24hrs'))
+
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('convert_12_to_24hrs'))
 {
 
         function convert_12_to_24hrs($hr12 = NULL)
         {
-//                if (!strpos($hr24, ':') || !strpos($hr24, ' ') || !strpos($hr24, 'M'))
+//                if (!strpos($hr24, ':') OR !strpos($hr24, ' ') OR !strpos($hr24, 'M'))
 //                {
 //                        return 'invalid time format.';
 //                }
@@ -137,7 +142,10 @@ if (!function_exists('convert_12_to_24hrs'))
         }
 
 }
-if (!function_usable('convert_24hrs_to_seconds'))
+
+// ------------------------------------------------------------------------
+
+if ( ! function_usable('convert_24hrs_to_seconds'))
 {
 
         function convert_24hrs_to_seconds($hr24)

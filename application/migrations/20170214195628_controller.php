@@ -59,7 +59,7 @@ class Migration_Controller extends CI_Migration
                         'constraint' => '50',
                         'null'       => FALSE
                     ),
-                    'controller_admin_only'       => array(
+                    'controller_admin_only'  => array(
                         'type'       => 'TINYINT',
                         'constraint' => '1',
                         'default'    => '0',

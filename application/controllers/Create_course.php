@@ -54,7 +54,7 @@ class Create_course extends CI_Capstone_Controller
                     'type'  => 'dropdown',
                     'lang'  => 'create_course_icon_label'
                 );
-                
+
                 $inputs['course_color'] = array(
                     'name'  => 'color',
                     'value' => tile_color(),

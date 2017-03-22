@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-if (!function_exists('lang_array_'))
+if ( ! function_exists('lang_array_'))
 {
 
         function lang_array_()

@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('no direct script allowed');
 
-if (!function_exists('my_day'))
+if ( ! function_exists('my_day'))
 {
 
         /**
@@ -18,7 +18,9 @@ if (!function_exists('my_day'))
 
 }
 
-if (!function_exists('days'))
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('days'))
 {
 
         /**
@@ -55,7 +57,10 @@ if (!function_exists('days'))
         }
 
 }
-if (!function_exists('days_for_db'))
+
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('days_for_db'))
 {
 
         /**
@@ -76,7 +81,10 @@ if (!function_exists('days_for_db'))
         }
 
 }
-if (!function_exists('subject_offers_days'))
+
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('subject_offers_days'))
 {
 
         /**

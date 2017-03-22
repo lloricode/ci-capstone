@@ -29,7 +29,7 @@ class Subject_offers extends CI_Capstone_Controller
          */
         public function index()
         {
-                $subl = $this->Subject_offer_model->all(TRUE); //parameter is set to current semester and year
+                $subl        = $this->Subject_offer_model->all(TRUE); //parameter is set to current semester and year
                 //  echo print_r($subl);
                 /**
                  * get the page from url
@@ -44,7 +44,7 @@ class Subject_offers extends CI_Capstone_Controller
 
                         foreach ($subl as $s)
                         {
-                                if (!isset($s->subject_line))
+                                if ( ! isset($s->subject_line))
                                 {
                                         continue;
                                 }
@@ -57,7 +57,7 @@ class Subject_offers extends CI_Capstone_Controller
                                 $inc  = 0;
                                 foreach ($s->subject_line as $su_l)
                                 {
-                                        $inc++;
+                                        $inc ++;
                                         $schd = array(
                                             subject_offers_days($su_l),
                                             convert_24_to_12hrs($su_l->subject_offer_line_start),

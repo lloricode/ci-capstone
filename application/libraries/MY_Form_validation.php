@@ -94,7 +94,7 @@ class MY_Form_validation extends CI_Form_validation
                 {
                         return TRUE;
                 }
-                else if ($value < 0 || $value > 9)
+                else if ($value < 0 OR $value > 9)
                 {
 
                         /**
@@ -184,27 +184,27 @@ class MY_Form_validation extends CI_Form_validation
                 # plus 1 score if has numeric
                 if (preg_match('!\d!', $value))
                 {
-                        $score++;
+                        $score ++;
                 }
                 # has capital letter
                 if (preg_match('![A-Z]!', $value))
                 {
-                        $score++;
+                        $score ++;
                 }
                 # has small letter
                 if (preg_match('![a-z]!', $value))
                 {
-                        $score++;
+                        $score ++;
                 }
                 # has special character
                 if (preg_match('!\W!', $value))
                 {
-                        $score++;
+                        $score ++;
                 }
                 # length greater than or equal 8
                 if (strlen($value) >= 8)
                 {
-                        $score++;
+                        $score ++;
                 }
 
                 return (bool) ($score >= $level);
@@ -239,7 +239,7 @@ class MY_Form_validation extends CI_Form_validation
 
                 # from start to end of a line must no have white space.
 
-                return (bool) (!strpos($value, " "));
+                return (bool) ( ! strpos($value, " "));
         }
 
         /**
@@ -289,7 +289,7 @@ class MY_Form_validation extends CI_Form_validation
          */
         public function time_lessthan($value, $end_time)
         {
-                if (is_null($end_time) || empty($end_time))
+                if (is_null($end_time) OR empty($end_time))
                 {
                         $this->CI->form_validation->set_message('time_lessthan', "second value required.");
                         return FALSE;

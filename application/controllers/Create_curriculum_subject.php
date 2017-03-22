@@ -44,7 +44,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
          */
         public function check_subject_in_curiculum()
         {
-                if (!$this->input->post('submit'))
+                if ( ! $this->input->post('submit'))
                 {
                         show_404();
                 }
@@ -54,7 +54,6 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                             'curriculum_id' => $this->input->post('curriculum')
                         ))->count_rows() == 0;
         }
-
 
         private function _dropdown_for_curriculumn()
         {

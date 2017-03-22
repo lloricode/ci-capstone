@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-if (!function_exists('bootstrap_icons'))
+if ( ! function_exists('bootstrap_icons'))
 {
 
         /**
@@ -105,7 +105,9 @@ if (!function_exists('bootstrap_icons'))
 
 }
 
-if (!function_exists('tile_color'))
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('tile_color'))
 {
 
         /**

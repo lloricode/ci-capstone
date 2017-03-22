@@ -143,14 +143,14 @@ class CI_Capstone_Controller extends MY_Controller
         function __construct()
         {
                 parent::__construct();
-                if (!$this->ion_auth->logged_in())
+                if ( ! $this->ion_auth->logged_in())
                 {
                         redirect(site_url('auth/login'), 'refresh');
                 }
                 /**
                  * check permission
                  */
-                if (!in_array($this->uri->segment($this->config->item('segment_controller')), permission_controllers()))
+                if ( ! in_array($this->uri->segment($this->config->item('segment_controller')), permission_controllers()))
                 {
                         show_404();
                 }
@@ -185,7 +185,7 @@ class CI_Capstone_Controller extends MY_Controller
          */
         public function _render($content, $data = NULL, $returnhtml = FALSE)
         {
-                if (!$content)
+                if ( ! $content)
                 {
                         return NULL;
                 }

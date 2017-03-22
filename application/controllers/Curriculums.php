@@ -109,7 +109,7 @@ class Curriculums extends CI_Capstone_Controller
                                 {
                                         $table_data[] = array(array('data' => '<h4>Level ' . $cur_subj->curriculum_subject_year_level . '</h4>', 'colspan' => '8'));
 
-                                        $year++;
+                                        $year ++;
                                 }
                                 $requisite    = $this->Requisites_model->subjects(isset($cur_subj->requisites) ? $cur_subj->requisites : NULL);
                                 $table_data[] = array(

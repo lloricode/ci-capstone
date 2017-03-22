@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-if (!function_exists('get_page_in_url'))
+if ( ! function_exists('get_page_in_url'))
 {
 
         /**
@@ -31,7 +31,10 @@ if (!function_exists('get_page_in_url'))
         }
 
 }
-if (!function_exists('check_id_form_url'))
+
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('check_id_form_url'))
 {
 
         /**
@@ -78,7 +81,7 @@ if (!function_exists('check_id_form_url'))
                 $cache_name = '';
                 if ($relation)
                 {
-                        if (!is_array($relation))
+                        if ( ! is_array($relation))
                         {
                                 /**
                                  * convert to array if not
@@ -112,7 +115,7 @@ if (!function_exists('check_id_form_url'))
                 /**
                  * no data so no object found
                  */
-                if (!$obj)
+                if ( ! $obj)
                 {
                         show_error('No result found in given id_name <b>' . $id_name . '</b>.');
                 }
@@ -188,7 +191,7 @@ if (!function_exists('check_id_form_url'))
 //                            'url_ip'       => $current_ip,
 //                        ));
 //                }
-//                else if ($usertype === 'client' || $usertype == NULL)
+//                else if ($usertype === 'client' OR $usertype == NULL)
 //                {
 //                        $rs = $CI->Url_Model->get(array(
 //                            'url_value'    => $current_url,

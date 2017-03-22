@@ -52,7 +52,7 @@ class Auth extends MY_Controller
                 // the user is not logging in so display the login page
                 // set the flash data error message if there is one
                 $this->data['message']  = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
-                $this->data['message']  = (!is_null($message)) ? $message : $this->data['message'];
+                $this->data['message']  = ( ! is_null($message)) ? $message : $this->data['message'];
                 $this->data['identity'] = array('name'        => 'identity',
                     'id'          => 'identity',
                     'type'        => 'text',
@@ -191,7 +191,7 @@ class Auth extends MY_Controller
          */
         public function reset_password($code = NULL)
         {
-                if (!$code)
+                if ( ! $code)
                 {
                         show_404();
                 }

@@ -40,7 +40,7 @@ class Migration_Requisite extends CI_Migration
                         'unsigned'   => TRUE,
                         'null'       => FALSE
                     ),
-                    'subject_id' => array(//requsite subject
+                    'subject_id'            => array(//requsite subject
                         'type'       => 'INT',
                         'constraint' => '11',
                         'unsigned'   => TRUE,

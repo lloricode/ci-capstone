@@ -51,7 +51,7 @@ class Edit_student extends CI_Capstone_Controller
 
         public function email_personal()
         {
-                if (!(bool) $this->input->post('submit'))
+                if ( ! (bool) $this->input->post('submit'))
                 {
                         show_404();
                 }
@@ -68,7 +68,7 @@ class Edit_student extends CI_Capstone_Controller
 
         public function email_guardian()
         {
-                if (!(bool) $this->input->post('submit'))
+                if ( ! (bool) $this->input->post('submit'))
                 {
                         show_404();
                 }
@@ -125,7 +125,7 @@ class Edit_student extends CI_Capstone_Controller
                 /**
                  * checking if one of the update is failed, either in [form validation] or in [syntax error] or [upload]
                  */
-                if (!$s_affected_rows || !$e_affected_rows || !$uploaded)
+                if ( ! $s_affected_rows OR ! $e_affected_rows OR ! $uploaded)
                 {
                         /**
                          * rollback database

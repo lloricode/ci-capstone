@@ -1,7 +1,7 @@
 <?php
 
 defined('BASEPATH') or exit('no direct script allowed');
-if (!function_exists('my_month_array'))
+if ( ! function_exists('my_month_array'))
 {
 
         /**
@@ -30,7 +30,10 @@ if (!function_exists('my_month_array'))
         }
 
 }
-if (!function_exists('get_months_in_between'))
+
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('get_months_in_between'))
 {
 
         /**
@@ -44,24 +47,24 @@ if (!function_exists('get_months_in_between'))
         function get_months_in_between($start, $end)
         {
                 $output = array();
-                if (($start < 1 || $start > 12) || ($end < 1 || $end > 12))
+                if (($start < 1 OR $start > 12) OR ( $end < 1 OR $end > 12))
                 {
                         show_error('invalid in ' . __FILE__ . ' at line:' . __LINE__);
                 }
                 if ($start < $end)
                 {
-                        for ($i = $start; $i < $end; $i++)
+                        for ($i = $start; $i < $end; $i ++ )
                         {
                                 $output[] = $i;
                         }
                 }
                 elseif ($start > $end)
                 {
-                        for ($i = $start; $i <= 12; $i++)
+                        for ($i = $start; $i <= 12; $i ++ )
                         {
                                 $output[] = $i;
                         }
-                        for ($i = 1; $i < $end; $i++)
+                        for ($i = 1; $i < $end; $i ++ )
                         {
                                 $output[] = $i;
                         }

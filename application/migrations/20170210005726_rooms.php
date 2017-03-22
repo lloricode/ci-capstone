@@ -20,48 +20,48 @@ class Migration_Rooms extends CI_Migration
         {
                 $this->down();
                 $fields = array(
-                    'room_id'          => array(
+                    'room_id'         => array(
                         'type'           => 'INT',
                         'constraint'     => 8,
                         'unsigned'       => TRUE,
                         'null'           => FALSE,
                         'auto_increment' => TRUE
                     ),
-                    'room_number'      => array(
+                    'room_number'     => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '50',
                         'unique'     => TRUE,
                         'null'       => FALSE
                     ),
                     //------------------------------------
-                    'created_at'       => array(
+                    'created_at'      => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
                         'null'       => FALSE
                     ),
-                    'created_user_id'  => array(
+                    'created_user_id' => array(
                         'type'       => 'INT',
                         'constraint' => '11',
                         'unsigned'   => TRUE,
                         'null'       => FALSE
                     ),
-                    'deleted_at'       => array(
+                    'deleted_at'      => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
                         'null'       => TRUE
                     ),
-                    'deleted_user_id'  => array(
+                    'deleted_user_id' => array(
                         'type'       => 'INT',
                         'constraint' => '11',
                         'unsigned'   => TRUE,
                         'null'       => TRUE
                     ),
-                    'updated_at'       => array(
+                    'updated_at'      => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
                         'null'       => TRUE
                     ),
-                    'updated_user_id'  => array(
+                    'updated_user_id' => array(
                         'type'       => 'INT',
                         'constraint' => '11',
                         'unsigned'   => TRUE,

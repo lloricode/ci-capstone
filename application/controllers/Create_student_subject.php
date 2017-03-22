@@ -117,7 +117,7 @@ class Create_student_subject extends CI_Capstone_Controller
                         //    print_r($cur_subj_obj);
                         foreach ($cur_subj_obj as $s)
                         {
-                                if (!isset($s->subject_line))
+                                if ( ! isset($s->subject_line))
                                 {
                                         continue;
                                 }
@@ -131,7 +131,7 @@ class Create_student_subject extends CI_Capstone_Controller
                                 $inc  = 0;
                                 foreach ($s->subject_line as $su_l)
                                 {
-                                        $inc++;
+                                        $inc ++;
                                         $schd = array(
                                             subject_offers_days($su_l),
                                             convert_24_to_12hrs($su_l->subject_offer_line_start),
@@ -196,7 +196,7 @@ class Create_student_subject extends CI_Capstone_Controller
                         //    print_r($cur_subj_obj);
                         foreach ($cur_subj_obj as $s)
                         {
-                                if (!isset($s->subject_line))
+                                if ( ! isset($s->subject_line))
                                 {
                                         continue;
                                 }
@@ -215,7 +215,7 @@ class Create_student_subject extends CI_Capstone_Controller
                                 $inc  = 0;
                                 foreach ($s->subject_line as $su_l)
                                 {
-                                        $inc++;
+                                        $inc ++;
                                         $schd = array(
                                             subject_offers_days($su_l),
                                             convert_24_to_12hrs($su_l->subject_offer_line_start),
@@ -272,7 +272,7 @@ class Create_student_subject extends CI_Capstone_Controller
          */
         private function _is_in_session($subject_offer_id)
         {
-                if (!$this->session->has_userdata($this->_session_name_))
+                if ( ! $this->session->has_userdata($this->_session_name_))
                 {
                         return FALSE;
                 }
@@ -284,7 +284,7 @@ class Create_student_subject extends CI_Capstone_Controller
                 /**
                  * skip is required id not found
                  */
-                if (!$this->input->get('subject-offer-id'))
+                if ( ! $this->input->get('subject-offer-id'))
                 {
                         return;
                 }

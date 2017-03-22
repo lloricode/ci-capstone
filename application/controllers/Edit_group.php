@@ -11,7 +11,7 @@ class Edit_group extends CI_Capstone_Controller
                 /**
                  * just to make sure
                  */
-                if (!$this->ion_auth->is_admin())
+                if ( ! $this->ion_auth->is_admin())
                 {
                         show_error(lang('access_denied_of_current_user_group'));
                 }
@@ -25,7 +25,7 @@ class Edit_group extends CI_Capstone_Controller
         {
 
 
-                if (!($id = $this->input->get('group-id')))
+                if ( ! ($id = $this->input->get('group-id')))
                 {
                         show_error('Invalid request.');
                 }
@@ -35,7 +35,7 @@ class Edit_group extends CI_Capstone_Controller
 
                 $group = $this->ion_auth->group($id)->row();
 
-                if (!$group)
+                if ( ! $group)
                 {
                         show_error('Invalid request.');
                 }

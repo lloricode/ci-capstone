@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('no direct script allowed');
 
-if (!function_exists('backup_database'))
+if ( ! function_exists('backup_database'))
 {
 
         /**

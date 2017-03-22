@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('no direct script allowed');
 
-if (!function_exists('my_datetime_format'))
+if ( ! function_exists('my_datetime_format'))
 {
 
         /**
@@ -19,7 +19,9 @@ if (!function_exists('my_datetime_format'))
 
 }
 
-if (!function_exists('my_converter_datetime_format'))
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('my_converter_datetime_format'))
 {
 
         /**
@@ -46,7 +48,9 @@ if (!function_exists('my_converter_datetime_format'))
 
 }
 
-if (!function_exists('my_current_datetime_information'))
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('my_current_datetime_information'))
 {
 
         /**

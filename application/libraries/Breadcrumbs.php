@@ -38,7 +38,7 @@ class Breadcrumbs
 
         function push($id, $page, $url)
         {
-                if (!$page OR ! $url)
+                if ( ! $page OR ! $url)
                         return;
 
                 $url = site_url($url);
@@ -48,7 +48,7 @@ class Breadcrumbs
 
         function unshift($id, $page, $url)
         {
-                if (!$page OR ! $url)
+                if ( ! $page OR ! $url)
                         return;
 
                 if ($url != '#')

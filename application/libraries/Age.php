@@ -35,7 +35,7 @@ class Age
          */
         public function initialize($date)
         {
-                if (!preg_match($this->pregmatch, $date))
+                if ( ! preg_match($this->pregmatch, $date))
                 {
                         show_error('Invalid date format for Age class. must mm-dd-yyyy');
                 }
@@ -52,11 +52,11 @@ class Age
                 {
                         show_error('not valid value in Age class.');
                 }
-                if (!(($this->mm <= $this->current_month) &&
+                if ( ! (($this->mm <= $this->current_month) &&
                         ($this->dd <= $this->current_day) &&
                         ($this->mm == $this->current_month)))
                 {
-                        $this->age--;
+                        $this->age --;
                 }
         }
 

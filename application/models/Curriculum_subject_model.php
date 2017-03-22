@@ -231,7 +231,7 @@ class Curriculum_subject_model extends MY_Model
 
                         foreach ($subject_from_cur as $v)
                         {
-                                if (!in_array($v->subject_id, $requisites))//check if already added as requisite
+                                if ( ! in_array($v->subject_id, $requisites))//check if already added as requisite
                                 {
                                         $return[$v->subject_id] = $v->subject->subject_code;
                                 }

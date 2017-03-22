@@ -218,7 +218,7 @@ class Student_model extends MY_Model
          */
         public function set_informations($student_id = NULL)
         {
-                if (!$student_id)
+                if ( ! $student_id)
                 {
                         show_error('missing parameter in set student information.');
                 }
@@ -241,7 +241,7 @@ class Student_model extends MY_Model
                 }
                 else
                 {
-                        if (!$this->student)
+                        if ( ! $this->student)
                         {
                                 /**
                                  * just to make sure student already loaded

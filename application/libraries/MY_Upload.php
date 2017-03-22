@@ -22,7 +22,7 @@ class MY_Upload extends CI_Upload
                 /**
                  * for image upload
                  */
-                $uploaded            = !$required;
+                $uploaded            = ! $required;
                 $image_error_message = '';
 
                 if (empty($_FILES[$_post_image_name]['name']) && $required)
@@ -56,7 +56,7 @@ class MY_Upload extends CI_Upload
                         /**
                          * if returned FALSE it means failed/error
                          */
-                        if (!$uploaded)
+                        if ( ! $uploaded)
                         {
                                 /**
                                  * get error upload message
@@ -99,7 +99,7 @@ class MY_Upload extends CI_Upload
 
                 $new_dir = $original_dir . $image_resize_dir;
 
-                if (!is_dir($new_dir))
+                if ( ! is_dir($new_dir))
                 {
                         mkdir($new_dir);
                 }

@@ -158,7 +158,7 @@ class Subject_offer_validation
 
         public function migrate_test($sub_offr)
         {
-                if (!$this->enable_migrate)
+                if ( ! $this->enable_migrate)
                 {
                         show_error('must enable migrate test in ' . get_class() . ' class.');
                 }
@@ -196,9 +196,9 @@ class Subject_offer_validation
                                 $days[$k]        = $v;
                         }
                 }//echo print_r($this->input_data_days );
-                if (!$atleast_one_day)
+                if ( ! $atleast_one_day)
                 {
-                        if (!$this->enable_migrate)
+                        if ( ! $this->enable_migrate)
                         {
 
                                 $this->form_validation->set_message(
@@ -360,13 +360,15 @@ class Subject_offer_validation
                 if ($tmp)
                 {
                         $this->affected_rows = $tmp->count_rows();
-                }else{
+                }
+                else
+                {
                         return FALSE;
                 }
                 /**
                  * set error/invalid message
                  */
-                if (!$this->enable_migrate)
+                if ( ! $this->enable_migrate)
                 {
                         $this->form_validation->set_message(
                                 'subject_offer_check_check_conflict', $this->error_strat_delimeter .
@@ -379,7 +381,7 @@ class Subject_offer_validation
                                 $this->error_end_delimeter);
                 }
 
-                return (bool) !$this->affected_rows; //0 is true/means no conflict
+                return (bool) ! $this->affected_rows; //0 is true/means no conflict
                 //return FALSE;
         }
 

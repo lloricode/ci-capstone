@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('no direct script allowed');
 
-if (!function_exists('_numbers_for_drop_down'))
+if ( ! function_exists('_numbers_for_drop_down'))
 {
 
         /**
@@ -14,9 +14,9 @@ if (!function_exists('_numbers_for_drop_down'))
          */
         function _numbers_for_drop_down($s, $e)
         {
-                $array       = array();
-             //   $array[NULL] = 'select';
-                for ($i = $s; $i <= $e; $i++)
+                $array = array();
+                //   $array[NULL] = 'select';
+                for ($i = $s; $i <= $e; $i ++ )
                 {
                         $array[$i] = $i;
                 }

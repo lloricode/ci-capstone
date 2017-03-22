@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('no direct script allowed');
 
-if (!function_exists('my_htmlspecialchars'))
+if ( ! function_exists('my_htmlspecialchars'))
 {
 
         /**
@@ -20,7 +20,10 @@ if (!function_exists('my_htmlspecialchars'))
 
 }
 
-if (!function_exists('script_tag'))
+
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('script_tag'))
 {
 
         /**
@@ -36,7 +39,7 @@ if (!function_exists('script_tag'))
         {
                 $link = '';
 
-                if (!preg_match('#^([a-z]+:)?//#i', $src))
+                if ( ! preg_match('#^([a-z]+:)?//#i', $src))
                 {
                         $CI   = & get_instance();
                         $link .= $CI->config->slash_item('base_url') . $src;
@@ -51,7 +54,9 @@ if (!function_exists('script_tag'))
 
 }
 
-if (!function_exists('comment_tag'))
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('comment_tag'))
 {
 
         /**
@@ -70,7 +75,9 @@ if (!function_exists('comment_tag'))
 
 }
 
-if (!function_exists('generate_link_script_tag'))
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('generate_link_script_tag'))
 {
 
         /**
@@ -99,7 +106,7 @@ if (!function_exists('generate_link_script_tag'))
                 {
                         foreach ($header['css'] as $v)
                         {
-                                if (!preg_match('#^([a-z]+:)?//#i', $v))
+                                if ( ! preg_match('#^([a-z]+:)?//#i', $v))
                                 {
                                         $v = $bootstarp_dir . $v;
                                 }
@@ -110,7 +117,7 @@ if (!function_exists('generate_link_script_tag'))
                 {
                         foreach ($header['js'] as $v)
                         {
-                                if (!preg_match('#^([a-z]+:)?//#i', $v))
+                                if ( ! preg_match('#^([a-z]+:)?//#i', $v))
                                 {
                                         $v = $bootstarp_dir . $v;
                                 }
@@ -124,7 +131,7 @@ if (!function_exists('generate_link_script_tag'))
                 {
                         foreach ($footer['css'] as $v)
                         {
-                                if (!preg_match('#^([a-z]+:)?//#i', $v))
+                                if ( ! preg_match('#^([a-z]+:)?//#i', $v))
                                 {
                                         $v = $bootstarp_dir . $v;
                                 }
@@ -135,7 +142,7 @@ if (!function_exists('generate_link_script_tag'))
                 {
                         foreach ($footer['js'] as $v)
                         {
-                                if (!preg_match('#^([a-z]+:)?//#i', $v))
+                                if ( ! preg_match('#^([a-z]+:)?//#i', $v))
                                 {
                                         $v = $bootstarp_dir . $v;
                                 }

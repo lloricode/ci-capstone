@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-if (!function_exists('navigations_main'))
+if ( ! function_exists('navigations_main'))
 {
 
         /**
@@ -50,7 +50,7 @@ if (!function_exists('navigations_main'))
                             /**
                              * hidden
                              */
-                            'create-requisite'           =>
+                            'create-requisite'          =>
                             array(
                                 'label' => 'Create Requisite',
                                 'seen'  => FALSE,
@@ -252,35 +252,9 @@ if (!function_exists('navigations_main'))
 
 }
 
+// ------------------------------------------------------------------------
 
-//if (!function_exists('navigations_setting'))
-//{
-//
-//        /**
-//         * 
-//         * @return type
-//         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
-//         */
-//        function navigations_setting()
-//        {
-//                return array(
-//                    'database' =>
-//                    array(
-//                        'label' => 'Database',
-//                        'desc'  => 'Database Description',
-//                        'icon'  => 'file',
-//                    ),
-//                    'log'      =>
-//                    array(
-//                        'label' => 'Error Logs',
-//                        'desc'  => 'Error Logsn Description',
-//                        'icon'  => 'exclamation-sign',
-//                    ),
-//                );
-//        }
-//
-//}
-if (!function_exists('controllers__'))
+if ( ! function_exists('controllers__'))
 {
 
         /**
@@ -304,13 +278,13 @@ if (!function_exists('controllers__'))
                                 {
 
                                         $return_arr[$kk] = $vv;
-                                        $return_str .= $kk . $delimeter;
+                                        $return_str      .= $kk . $delimeter;
                                 }
                         }
                         else
                         {
                                 $return_arr[$k] = $v;
-                                $return_str .= $k . $delimeter;
+                                $return_str     .= $k . $delimeter;
                         }
                 }
                 if ($delimeter == '')
@@ -325,7 +299,9 @@ if (!function_exists('controllers__'))
 
 }
 
-if (!function_exists('sidebar_menu_ci_capstone'))
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('sidebar_menu_ci_capstone'))
 {
 
         /**
@@ -383,7 +359,7 @@ if (!function_exists('sidebar_menu_ci_capstone'))
                                                          */
                                                         if (in_array($k_, permission_controllers()))
                                                         {
-                                                                $count++;
+                                                                $count ++;
                                                         }
                                                 }
                                         }

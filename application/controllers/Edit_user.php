@@ -11,7 +11,7 @@ class Edit_user extends CI_Capstone_Controller
                 /**
                  * just to make sure
                  */
-                if (!$this->ion_auth->is_admin())
+                if ( ! $this->ion_auth->is_admin())
                 {
                         show_error(lang('access_denied_of_current_user_group'));
                 }
@@ -34,7 +34,7 @@ class Edit_user extends CI_Capstone_Controller
         public function index()
         {
 
-                if (!($user_id = $this->input->get('user-id')))
+                if ( ! ($user_id = $this->input->get('user-id')))
                 {
                         show_error('Invalid request.');
                 }
@@ -46,7 +46,7 @@ class Edit_user extends CI_Capstone_Controller
                 $user = $this->ion_auth->user($user_id)->row();
 
                 $this->set_hook($user->id);
-                if (!$user)
+                if ( ! $user)
                 {
                         show_error('Invalid request.');
                 }
@@ -97,7 +97,7 @@ class Edit_user extends CI_Capstone_Controller
                                         //Update the groups user belongs to
                                         $groupData = $this->input->post('groups', TRUE);
 
-                                        if (isset($groupData) && !empty($groupData))
+                                        if (isset($groupData) && ! empty($groupData))
                                         {
 
                                                 $this->ion_auth->remove_from_group('', $user_id);
@@ -157,7 +157,7 @@ class Edit_user extends CI_Capstone_Controller
                 }
 
 
-              
+
                 // pass the user to the view
                 $this->data['user']          = $user;
                 $this->data['groups']        = $groups;

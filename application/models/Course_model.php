@@ -41,7 +41,7 @@ class Course_model extends MY_Model
 //                    'foreign_key'   => 'enrollment_id',
 //                    'local_key'     => 'enrollment_id'
 //                );
-                $this->has_one['education']   = array(
+                $this->has_one['education'] = array(
                     'foreign_model' => 'Education_model',
                     'foreign_table' => 'educations',
                     'foreign_key'   => 'education_id',

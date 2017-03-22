@@ -60,7 +60,7 @@ class Create_student extends CI_Capstone_Controller
 
         private function _get_school_id_code($course_id = NULL)
         {
-                if (!is_null($course_id))
+                if ( ! is_null($course_id))
                 {
                         if ($course_id > 0)
                         {
@@ -202,7 +202,7 @@ class Create_student extends CI_Capstone_Controller
                 /**
                  * checking if one of the insert is failed, either in [form validation] or in [syntax error] or [upload]
                  */
-                if (!$s_id || !$id || !$uploaded['uploaded'] || !$curriculum_id_from_active_course)
+                if ( ! $s_id OR ! $id OR ! $uploaded['uploaded'] OR ! $curriculum_id_from_active_course)
                 {
                         /**
                          * rollback database

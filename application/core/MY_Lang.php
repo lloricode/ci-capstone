@@ -65,7 +65,7 @@ class MY_Lang extends CI_Lang
                 global $RTR;
                 $segment = $URI->segment(1);
 
-                if (!strlen($this->default_uri))
+                if ( ! strlen($this->default_uri))
                 {
                         $this->default_uri = $URI->uri_string();
                 }
@@ -143,7 +143,7 @@ class MY_Lang extends CI_Lang
 
                 $uri      = $CI->uri->uri_string();
                 $exploded = explode('/', $uri);
-                if ($exploded[0] == $this->lang() || !strlen($exploded[0]))
+                if ($exploded[0] == $this->lang() OR ! strlen($exploded[0]))
                 {
                         $exploded[0] = $lang;
                 }
@@ -217,7 +217,7 @@ class MY_Lang extends CI_Lang
          */
         function localized($uri)
         {
-                if ($this->has_language($uri) || $this->is_special($uri) || preg_match('/(.+)\.[a-zA-Z0-9]{2,4}$/', $uri))
+                if ($this->has_language($uri) OR $this->is_special($uri) OR preg_match('/(.+)\.[a-zA-Z0-9]{2,4}$/', $uri))
                 {
                         // we don't need a language segment because:
                         // - there's already one or
@@ -397,7 +397,7 @@ class MY_Lang extends CI_Lang
 //                        require($file);
 //                }
 
-                if (!isset($lang) OR ! is_array($lang))
+                if ( ! isset($lang) OR ! is_array($lang))
                 {
                         log_message('error', 'Language file contains no data: language/' . $idiom . '/' . $langfile);
 

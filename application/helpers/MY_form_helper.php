@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('no direct script allowed');
 
-if (!function_exists('input_bootstrap'))
+if ( ! function_exists('input_bootstrap'))
 {
 
         /**
@@ -16,11 +16,11 @@ if (!function_exists('input_bootstrap'))
          */
         function input_bootstrap($field, $prepend = FALSE)
         {
-                if (!isset($field['type']))
+                if ( ! isset($field['type']))
                 {
                         $field['type'] = 'text';
                 }
-                if (!isset($field['lang']))
+                if ( ! isset($field['lang']))
                 {
                         $field['lang'] = 'test';
                 }
@@ -112,7 +112,7 @@ if (!function_exists('input_bootstrap'))
                                 {
                                         $labels = $field['fields'];
 
-                                        if (!is_array($labels))
+                                        if ( ! is_array($labels))
                                         {
                                                 $labels = array($labels);
                                         }
@@ -176,7 +176,10 @@ if (!function_exists('input_bootstrap'))
         }
 
 }
-if (!function_exists('image_view'))
+
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('image_view'))
 {
 
         /**

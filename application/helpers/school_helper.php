@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-if (!function_exists('semesters'))
+if ( ! function_exists('semesters'))
 {
 
         /**
@@ -18,9 +18,9 @@ if (!function_exists('semesters'))
         function semesters($index = FALSE, $lang = FALSE)
         {
                 $_semesters = array(
-                    'first'  => (!$lang) ? lang('semester_first_label') : 'semester_first_label', #this will be use in bootstrap form
-                    'second' => (!$lang) ? lang('semester_second_label') : 'semester_second_label',
-                    'summer' => (!$lang) ? lang('semester_summer_label') : 'semester_summer_label',
+                    'first'  => ( ! $lang) ? lang('semester_first_label') : 'semester_first_label', #this will be use in bootstrap form
+                    'second' => ( ! $lang) ? lang('semester_second_label') : 'semester_second_label',
+                    'summer' => ( ! $lang) ? lang('semester_summer_label') : 'semester_summer_label',
                 );
                 if ($index)
                 {
@@ -35,7 +35,9 @@ if (!function_exists('semesters'))
 
 }
 
-if (!function_exists('current_school_year'))
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('current_school_year'))
 {
 
         /**
@@ -74,7 +76,9 @@ if (!function_exists('current_school_year'))
 
 }
 
-if (!function_exists('current_school_semester'))
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('current_school_semester'))
 {
 
         /**
@@ -136,8 +140,9 @@ if (!function_exists('current_school_semester'))
 
 }
 
+// ------------------------------------------------------------------------
 
-if (!function_exists('school_years'))
+if ( ! function_exists('school_years'))
 {
 
         /**
@@ -153,7 +158,7 @@ if (!function_exists('school_years'))
 
                 $CI     = &get_instance();
                 $output = array();
-                if (!is_null($default))
+                if ( ! is_null($default))
                 {
                         /**
                          * add default value for none of generated years
@@ -182,7 +187,7 @@ if (!function_exists('school_years'))
                         $whre_to_start = ($current_year - 1);
                 }
 
-                for ($i = $whre_to_start; $i < $whre_to_start + $year_range; $i++)
+                for ($i = $whre_to_start; $i < $whre_to_start + $year_range; $i ++)
                 {
 
                         $tmp          = $i . '-' . ($i + 1);
