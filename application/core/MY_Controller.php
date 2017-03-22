@@ -83,7 +83,7 @@ class MY_Controller extends CI_Controller
 
                 $this->load->model('Users_last_login_model');
                 return (bool) $this->Users_last_login_model->insert(array(
-                            'user_id'    => $this->ion_auth->user()->row()->id,
+                            'user_id'    => $this->session->userdata('user_id'),
                             'ip_address' => $this->input->ip_address(),
                             'agent'      => $agent,
                             'platform'   => $this->agent->platform()
@@ -163,7 +163,7 @@ class CI_Capstone_Controller extends MY_Controller
                  * use this if navigate to another controller, it will unset session for subject offer
                  * to prevent passing session to another enrolling subjects in another students
                  */
-                if ('create-student-subject' != str_replace('_', '-', $this->uri->segment(2)) &&
+                if ('create-student-subject' != str_replace('_', '-', $this->uri->segment($this->config->item('segment_controller'))) &&
                         $this->session->has_userdata('curriculum_subjects__subject_offer_ids'))
                 {
                         /**
