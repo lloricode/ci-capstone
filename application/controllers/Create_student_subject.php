@@ -92,12 +92,12 @@ class Create_student_subject extends CI_Capstone_Controller
         /**
          * unset one index/value in session for subject offer 
          */
-        public function unset_subject_offer_session()
+        public function unset_value_subject_offer_session()
         {
                 if ($this->session->has_userdata($this->_session_name_))
                 {
                         $this->load->helper('session');
-                        unset_userdata_array($this->_session_name_, $this->input->get('subject-offer-id'));
+                        unset_value_userdata_array($this->_session_name_, $this->input->get('subject-offer-id'));
                         $this->session->set_flashdata('message', 'removed done!');
                 }
                 redirect('create-student-subject?student-id=' . $this->input->get('student-id'), 'refresh');
@@ -145,7 +145,7 @@ class Create_student_subject extends CI_Capstone_Controller
                                         $line = array_merge($line, array('--', '--', '--', '--'));
                                 }
                                 $btn_link     = anchor(
-                                        site_url('create-student-subject/unset-subject-offer-session?student-id=' . $this->student->id . '&subject-offer-id=' . $s->subject_offer_id), lang('remove_subjects_to_enroll')
+                                        site_url('create-student-subject/unset-value-subject-offer-session?student-id=' . $this->student->id . '&subject-offer-id=' . $s->subject_offer_id), lang('remove_subjects_to_enroll')
                                 );
                                 $line         = array_merge($line, array($btn_link));
                                 $table_data[] = array_merge($output, $line);
@@ -272,7 +272,7 @@ class Create_student_subject extends CI_Capstone_Controller
          */
         private function _is_in_session($subject_offer_id)
         {
-                if (!$this->session->userdata($this->_session_name_))
+                if (!$this->session->has_userdata($this->_session_name_))
                 {
                         return FALSE;
                 }
@@ -303,7 +303,7 @@ class Create_student_subject extends CI_Capstone_Controller
                          * load the helper
                          */
                         $this->load->helper('session');
-                        set_userdata_array($this->_session_name_, (string) $subject_offer_id);
+                        set_userdata_array($this->_session_name_, (string) $subject_offer_id, TRUE); //parameter TRUE to check unique valus on session array
                 }
 
 
