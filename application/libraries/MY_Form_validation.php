@@ -320,7 +320,7 @@ class MY_Form_validation extends CI_Form_validation
                                         {
                                                 $this->CI->load->model($model);
                                                 $column_value = $this->CI->$model->get((int) $value)->$column;
-                                                $msg          = '(' . $column_value . ') has already selected ' .
+                                                $msg          = '(' . $column_value . ') has already selected in ' .
                                                         $this->_field_data[$other_field]['label'] .
                                                         ' field and must differ.';
                                                 $this->CI->form_validation->set_message('differs_array_from_another_array', $msg);

@@ -273,26 +273,26 @@ class Create_requisite extends CI_Capstone_Controller
         }
 
         /**
-         * check if adding Requisite is the same year level
+         * check if adding Requisite is the same year level and semester
          * 
          * @return bool
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        public function is_co_requisite_same_level()
+        public function is_co_requisite_same_level_and_semester()
         {
                 if ( ! $this->input->post('submit'))
                 {
                         show_404();
                 }
 
-                $cur_sub_obj = check_id_from_url('curriculum_subject_id', 'Curriculum_subject_model', 'curriculum-subject-id');
 
                 $co = $this->input->post('co[]', TRUE);
 
-                $cur_sub_obj_inputs = array();
 
                 if ($co)
                 {
+                        $cur_sub_obj        = check_id_from_url('curriculum_subject_id', 'Curriculum_subject_model', 'curriculum-subject-id');
+                        $cur_sub_obj_inputs = array();
 
                         foreach ($co as $subject_id)
                         {
@@ -327,7 +327,7 @@ class Create_requisite extends CI_Capstone_Controller
                                         $subjecs .= $s . ', ';
                                 }
                                 $msg = '(' . trim($subjecs, ', ') . ') is not in same level or semester in current subject.';
-                                $this->form_validation->set_message('is_co_requisite_same_level', $msg);
+                                $this->form_validation->set_message('is_co_requisite_same_level_and_semester', $msg);
 
                                 return FALSE;
                         }
@@ -345,70 +345,75 @@ class Create_requisite extends CI_Capstone_Controller
          * @return bool
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        public function is_pre_requisite_low_level()
+        public function is_pre_requisite_low_level_and_semester()
         {
                 if ( ! $this->input->post('submit'))
                 {
                         show_404();
                 }
 
+                $pre = $this->input->post('pre[]', TRUE);
 
-                $input_year_level = $this->input->post('level', TRUE);
-                $pre_requisite    = $this->input->post('pre_requisite', TRUE);
-                $curriculum_id    = $this->input->post('curriculum', TRUE);
-                $semester         = $this->input->post('semester', TRUE);
-
-                /**
-                 * required first all the other field to be filled, it will validate first
-                 */
-                if ($input_year_level && $pre_requisite && $semester)
+                if ($pre)
                 {
-                        /**
-                         * check if  $pre_requisite exist in current curriculum
-                         */
-                        $cur_sub_obj = $this->Curriculum_subject_model->where(array(
-                                    //main subject search by $pre_requisite , to get the year level of input co requsite using the exist subject in curiculum
-                                    'subject_id'    => $pre_requisite,
-                                    'curriculum_id' => $curriculum_id
-                                ))->get();
+                        $cur_sub_obj        = check_id_from_url('curriculum_subject_id', 'Curriculum_subject_model', 'curriculum-subject-id');
+                        $cur_sub_obj_inputs = array();
 
-                        /**
-                         * if has, check the yeal level of $pre_requisite
-                         */
-                        if ($cur_sub_obj)
+                        foreach ($pre as $subject_id)
                         {
-                                /**
-                                 * check lower year, i use <= to include semester, 
-                                 */
-                                if ($cur_sub_obj->curriculum_subject_year_level <= $input_year_level)
+                                $cur_sub_obj_inputs[] = $this->Curriculum_subject_model->
+                                        where(array(
+                                            'curriculum_id' => $cur_sub_obj->curriculum_id,
+                                            'subject_id'    => $subject_id
+                                        ))->
+                                        with_subject()->
+                                        //set_cache()->
+                                        get();
+                        }
+
+                        /**
+                         * check semester and year
+                         */
+                        $subject_codes = array(); //i used array, its countable
+                        foreach ($cur_sub_obj_inputs as $c)
+                        {
+
+                                if ($c->curriculum_subject_year_level < $cur_sub_obj->curriculum_subject_year_level)
                                 {
-
-                                        $int_semester_db    = $this->_numeric_semester($cur_sub_obj->curriculum_subject_semester);
-                                        $int_semester_input = $this->_numeric_semester($semester);
-
-                                        if ($int_semester_db < $int_semester_input)
+                                        /**
+                                         * input is lower level with current subject
+                                         */
+                                        continue;
+                                }
+                                if ((int) $c->curriculum_subject_year_level === (int) $cur_sub_obj->curriculum_subject_year_level)
+                                {
+                                        /**
+                                         * same level, so check the semester
+                                         */
+                                        if ($this->_numeric_semester($c->curriculum_subject_semester) <
+                                                $this->_numeric_semester($cur_sub_obj->curriculum_subject_semester))
                                         {
                                                 /**
-                                                 * accepted
+                                                 * input is lower semester with current subject
                                                  */
-                                                return TRUE;
+                                                continue;
                                         }
-                                        /**
-                                         * return FALSE, because,not lower in semester
-                                         */
-                                        $this->form_validation->set_message('is_pre_requisite_low_level', 'Adding "{field}"\'s year must in lower in semester.');
-                                        return FALSE;
                                 }
-                                /**
-                                 * return FALSE, because, it detect that has a subject BUT not lower/equal level
-                                 */
-                                $this->form_validation->set_message('is_pre_requisite_low_level', 'Adding "{field}"\'s year must in lower/equal in current year level.');
+                                $subject_codes[] = $c->subject->subject_code; //collect invalid subjects
+                        }
+
+                        if (count($subject_codes) != 0)//there is a invalid?
+                        {
+                                $subjecs = '';
+                                foreach ($subject_codes as $s)
+                                {
+                                        $subjecs .= $s . ', ';
+                                }
+                                $msg = '(' . trim($subjecs, ', ') . ') is not in lower level or semester in current subject.';
+                                $this->form_validation->set_message('is_pre_requisite_low_level_and_semester', $msg);
+
                                 return FALSE;
                         }
-                        /**
-                         * no result so no conflict
-                         */
-                        return TRUE;
                 }
                 /**
                  * not required

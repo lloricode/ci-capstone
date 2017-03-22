@@ -49,18 +49,19 @@ class Requisites_model extends MY_Model
                         'label' => lang('requisite_co_type_label'),
                         'field' => 'co[]',
                         'rules' => 'trim|is_natural_no_zero|differs_array_from_another_array[pre[].Subject_model.subject_code]|'
-                        . 'callback_is_co_requisite_same_level'
+                        . 'callback_is_co_requisite_same_level_and_semester'
                     ),
                     array(
                         'label' => lang('requisite_pre_type_label'),
                         'field' => 'pre[]',
-                        'rules' => 'trim|is_natural_no_zero|differs_array_from_another_array[co[].Subject_model.subject_code]'
+                        'rules' => 'trim|is_natural_no_zero|differs_array_from_another_array[co[].Subject_model.subject_code]|'
+                        . 'callback_is_pre_requisite_low_level_and_semester'
                     ),
                     array(
                         'label' => lang('requisite_label'),
                         'field' => 'tmp_is_atleast_one', //will use to show error in ci_validation
                         'rules' => 'callback_is_atleast_one'//just to callback this validator
-                    ),
+                    )
                 );
         }
 
@@ -71,7 +72,6 @@ class Requisites_model extends MY_Model
          */
         public function subjects($requisites = NULL)
         {
-                //print_r($requisites);
                 $pre = '';
                 $co  = '';
                 if (isset($requisites))
