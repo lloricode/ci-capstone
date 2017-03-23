@@ -60,8 +60,24 @@ class Database extends CI_Capstone_Controller
          */
         public function backup_database()
         {
-                $this->load->helper('backup_database');
-                backup_database('ci_capstone');
+                $dbname = $this->config->item('project_title');
+                $this->load->helper(array('download', 'date', 'inflector'));
+
+                $zip_name = $dbname . ' ' .
+                        ' db backup ' .
+                        str_replace(',', '', my_current_datetime_information()) .
+                        '_' . mdate('%h%i%a', time()) . '.zip';
+                
+                force_download(underscore($zip_name), $this->dbutil->backup(array(
+                            'tables'             => array(),
+                            'ignore'             => array(),
+                            'filename'           => $dbname . '.sql', //modified
+                            'format'             => 'zip', //modified // gzip, zip, txt
+                            'add_drop'           => TRUE,
+                            'add_insert'         => TRUE,
+                            'newline'            => "\n",
+                            'foreign_key_checks' => TRUE
+                )));
         }
 
         /**

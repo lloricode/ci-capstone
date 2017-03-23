@@ -13,18 +13,18 @@ if ( ! function_exists('my_month_array'))
         function my_month_array($month_number)
         {
                 $month = array(
-                    '01' => 'January',
-                    '02' => 'February',
-                    '03' => 'March',
-                    '04' => 'April',
-                    '05' => 'May',
-                    '06' => 'June',
-                    '07' => 'July',
-                    '08' => 'Augost',
-                    '09' => 'September',
-                    '10' => 'October',
-                    '11' => 'November',
-                    '12' => 'December',
+                    '01' => lang('cal_january'),
+                    '02' => lang('cal_february'),
+                    '03' => lang('cal_march'),
+                    '04' => lang('cal_april'),
+                    '05' => lang('cal_mayl'), //bugs on CI
+                    '06' => lang('cal_june'),
+                    '07' => lang('cal_july'),
+                    '08' => lang('cal_august'),
+                    '09' => lang('cal_september'),
+                    '10' => lang('cal_october'),
+                    '11' => lang('cal_november'),
+                    '12' => lang('cal_december')
                 );
                 return $month[$month_number];
         }
