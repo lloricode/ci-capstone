@@ -17,7 +17,7 @@ if ( ! function_exists('my_month_array'))
                     '02' => lang('cal_february'),
                     '03' => lang('cal_march'),
                     '04' => lang('cal_april'),
-                    '05' => lang('cal_mayl'), //bugs on CI
+                    '05' => lang('cal_mayl'),
                     '06' => lang('cal_june'),
                     '07' => lang('cal_july'),
                     '08' => lang('cal_august'),
@@ -53,18 +53,18 @@ if ( ! function_exists('get_months_in_between'))
                 }
                 if ($start < $end)
                 {
-                        for ($i = $start; $i < $end; $i ++ )
+                        for ($i = $start; $i < $end; $i ++)
                         {
                                 $output[] = $i;
                         }
                 }
                 elseif ($start > $end)
                 {
-                        for ($i = $start; $i <= 12; $i ++ )
+                        for ($i = $start; $i <= 12; $i ++)
                         {
                                 $output[] = $i;
                         }
-                        for ($i = 1; $i < $end; $i ++ )
+                        for ($i = 1; $i < $end; $i ++)
                         {
                                 $output[] = $i;
                         }
