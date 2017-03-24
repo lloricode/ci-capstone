@@ -95,14 +95,43 @@ class Edit_user extends CI_Capstone_Controller
                                 if ($this->ion_auth->is_admin())
                                 {
                                         //Update the groups user belongs to
-                                        $groupData = $this->input->post('groups', TRUE);
+                                        $group_ids = $this->input->post('groups', TRUE);
 
-                                        if (isset($groupData) && ! empty($groupData))
+                                        /**
+                                         * if current user has admin group,then remove in edit,
+                                         * show error for do not remove admin if current user is admin
+                                         */
+                                        if ( ! $group_ids)
+                                        {
+                                                /**
+                                                 * make sure atleast one selected 
+                                                 */
+                                                show_error('empty user_group not allowed.');
+                                        }
+
+                                        /**
+                                         * if current user
+                                         */
+                                        if ($this->session->userdata('user_id') == $user->id)
+                                        {
+                                                //get id of admin from db
+                                                $this->load->model('Group_model');
+                                                $admin_id = $this->Group_model->where(array('name' => $this->config->item('admin_group', 'ion_auth')))->get()->id;
+                                                /**
+                                                 * check admin_id if has in post
+                                                 */
+                                                if ( ! in_array($admin_id, $group_ids))
+                                                {
+                                                        show_error('cannot remove from admin a current user');
+                                                }
+                                        }
+
+                                        if (isset($group_ids) && ! empty($group_ids))
                                         {
 
                                                 $this->ion_auth->remove_from_group('', $user_id);
 
-                                                foreach ($groupData as $grp)
+                                                foreach ($group_ids as $grp)
                                                 {
                                                         $this->ion_auth->add_to_group($grp, $user_id);
                                                 }
@@ -121,13 +150,12 @@ class Edit_user extends CI_Capstone_Controller
                                          * refresh session data
                                          * if edit from current user
                                          */
-                                        $user_obj = $this->ion_auth->user()->row();
-                                        if ($user_obj->id == $user->id)
+                                        if ($this->session->userdata('user_id') == $user->id)
                                         {
-                                                $this->session->set_userdata(array(
-                                                    'user_first_name' => $user_obj->first_name,
-                                                    'user_last_name'  => $user_obj->last_name
-                                                ));
+                                                /**
+                                                 * refreshing session data of current user
+                                                 */
+                                                $this->set_session_data_session(); //from my_controlerr
                                         }
                                         // redirect them back to the admin page if admin, or to the base url if non admin
                                         $this->session->set_flashdata('message', $this->ion_auth->messages());
