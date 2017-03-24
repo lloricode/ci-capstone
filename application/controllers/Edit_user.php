@@ -65,7 +65,10 @@ class Edit_user extends CI_Capstone_Controller
 
                 if ($this->form_validation->run())
                 {
-
+                        /**
+                         * start the DB transaction
+                         */
+                        $this->db->trans_start();
 
                         // update the password if it was posted
                         if ($this->input->post('password', TRUE))
@@ -139,7 +142,7 @@ class Edit_user extends CI_Capstone_Controller
                                 }
 
                                 // check to see if we are updating the user
-                                if ($this->ion_auth->update($user->id, $data))
+                                if ($this->ion_auth->update($user->id, $data) && $this->db->trans_commit())
                                 {
                                         /**
                                          * delete all query cache 
@@ -170,6 +173,11 @@ class Edit_user extends CI_Capstone_Controller
                                 }
                                 else
                                 {
+                                        /**
+                                         * rollback database
+                                         */
+                                        $this->db->trans_rollback();
+
                                         // redirect them back to the admin page if admin, or to the base url if non admin
                                         $this->session->set_flashdata('message', $this->ion_auth->errors());
                                         if ($this->ion_auth->is_admin())
