@@ -142,33 +142,36 @@ class Edit_user extends CI_Capstone_Controller
                                 }
 
                                 // check to see if we are updating the user
-                                if ($this->ion_auth->update($user->id, $data) && $this->db->trans_commit())
+                                if ($this->ion_auth->update($user->id, $data))
                                 {
-                                        /**
-                                         * delete all query cache 
-                                         */
-                                        $this->load->model('User_model');
-                                        $this->User_model->delete_cache();
-                                        /**
-                                         * refresh session data
-                                         * if edit from current user
-                                         */
-                                        if ($this->session->userdata('user_id') == $user->id)
+                                        if ($this->db->trans_commit())
                                         {
                                                 /**
-                                                 * refreshing session data of current user
+                                                 * delete all query cache 
                                                  */
-                                                $this->set_session_data_session(); //from my_controlerr
-                                        }
-                                        // redirect them back to the admin page if admin, or to the base url if non admin
-                                        $this->session->set_flashdata('message', $this->ion_auth->messages());
-                                        if ($this->ion_auth->is_admin())
-                                        {
-                                                redirect(site_url('users'), 'refresh');
-                                        }
-                                        else
-                                        {
-                                                redirect('/', 'refresh');
+                                                $this->load->model('User_model');
+                                                $this->User_model->delete_cache();
+                                                /**
+                                                 * refresh session data
+                                                 * if edit from current user
+                                                 */
+                                                if ($this->session->userdata('user_id') == $user->id)
+                                                {
+                                                        /**
+                                                         * refreshing session data of current user
+                                                         */
+                                                        $this->set_session_data_session(); //from my_controlerr
+                                                }
+                                                // redirect them back to the admin page if admin, or to the base url if non admin
+                                                $this->session->set_flashdata('message', $this->ion_auth->messages());
+                                                if ($this->ion_auth->is_admin())
+                                                {
+                                                        redirect(site_url('users'), 'refresh');
+                                                }
+                                                else
+                                                {
+                                                        redirect('/', 'refresh');
+                                                }
                                         }
                                 }
                                 else
