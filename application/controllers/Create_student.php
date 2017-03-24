@@ -530,7 +530,7 @@ class Create_student extends CI_Capstone_Controller
                         /*
                          * for frontend validation
                          */
-                        site_url('assets/framework/bootstrap/admin/matrixwizard.js'),
+                        base_url('assets/framework/bootstrap/admin/matrixwizard.js'),
                     /**
                      * addition for form
                      */
