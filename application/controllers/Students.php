@@ -50,7 +50,7 @@ class Students extends CI_Capstone_Controller
                                 $edit_ = anchor(site_url('edit-student?student-id=' . $student->student_id), '<span class="btn btn-primary btn-mini">Edit</span>');
 
                                 array_push($table_data, array(
-                                    $this->_image($student),
+                                    $this->_images_for_table($student),
                                     my_htmlspecialchars($student->student_school_id),
                                     my_htmlspecialchars($student->student_lastname),
                                     my_htmlspecialchars($student->student_firstname),
@@ -83,15 +83,24 @@ class Students extends CI_Capstone_Controller
                 $this->_render('admin/students', $this->template);
         }
 
-        private function _image($student)
+        private function _images_for_table($student)
         {
-                list($filename, $extension) = explode('.', $student->student_image);
-
+                $image_file = NULL;
+                if ($student->student_image)
+                {
+                        list($filename, $extension) = explode('.', $student->student_image);
+                        $image_file = $this->Student_model->image_resize($student->student_image)->table;
+                }
                 return '<div class="user-thumb">' . img(array(
-                            'src'   => $this->Student_model->image_resize($student->student_image)->table,
+                            'src'   => NULL,
                             'alt'   => 'no image',
                             'title' => $student->student_school_id . ' - ' . $student->student_lastname
                         )) . '</div>';
+        }
+
+        private function _image_for_view_single_data()
+        {
+                return base_url($this->Student_model->image_resize()->profile);
         }
 
         /**
@@ -161,14 +170,13 @@ class Students extends CI_Capstone_Controller
                  * generating html pagination
                  */
                 $this->data['table_subjects_pagination'] = $this->pagination->generate_bootstrap_link('students/view?student-id=' . $this->student->id, $this->student->subject_total() / $this->limit, TRUE);
-
-
+                $this->data['image_src']                 = $this->_image_for_view_single_data();
                 /**
                  * here we go!
                  * rendering page for view
                  */
-                $this->template['view']      = MY_Controller::_render('admin/_templates/students/view', $this->data, TRUE);
-                $this->template['bootstrap'] = $this->_bootstrap_for_view();
+                $this->template['view']                  = MY_Controller::_render('admin/_templates/students/view', $this->data, TRUE);
+                $this->template['bootstrap']             = $this->_bootstrap_for_view();
                 $this->_render('admin/students', $this->template);
         }
 

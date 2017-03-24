@@ -15,7 +15,7 @@ echo form_open_multipart(site_url("create-student/index"), array(
                     <div class="form-horizontal">
                         <?php
                         //student_image:
-                        echo input_bootstrap($student_image);
+                        //echo input_bootstrap($student_image);
 
                         //student_firstname:
                         echo input_bootstrap($student_firstname);

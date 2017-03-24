@@ -41,7 +41,7 @@
                             <table class="table table-bordered table-invoice">
                                 <tbody>
                                     <tr>
-                                        <td><img src="<?php echo base_url($this->Student_model->image_resize()->profile); ?>" alt="no image" /></td>
+                                        <td><img src="<?php $image_src; ?>" alt="no image" /></td>
                                     </tr>
 
                                     <tr>

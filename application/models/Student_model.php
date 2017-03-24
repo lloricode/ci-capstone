@@ -235,6 +235,7 @@ class Student_model extends MY_Model
         {
                 $filename  = NULL;
                 $extension = NULL;
+                $has_image = TRUE;
                 if ($image_file_name)
                 {
                         list($filename, $extension) = explode('.', $image_file_name);
@@ -248,12 +249,26 @@ class Student_model extends MY_Model
                                  */
                                 show_error('Student library not set for getting image data.');
                         }
-                        list($filename, $extension) = explode('.', $this->student->image);
+                        $has_image = (bool) $this->student->image;
+                        if ($has_image)
+                        {
+                                list($filename, $extension) = explode('.', $this->student->image);
+                        }
                 }
-                return (object) array(
-                            'profile' => $this->config->item('student_image_dir') . $this->config->item('student_image_size_profile') . $filename . '_thumb.' . $extension,
-                            'table'   => $this->config->item('student_image_dir') . $this->config->item('student_image_size_table') . $filename . '_thumb.' . $extension
-                );
+                if ($has_image)
+                {
+                        return (object) array(
+                                    'profile' => $this->config->item('student_image_dir') . $this->config->item('student_image_size_profile') . $filename . '_thumb.' . $extension,
+                                    'table'   => $this->config->item('student_image_dir') . $this->config->item('student_image_size_table') . $filename . '_thumb.' . $extension
+                        );
+                }
+                else
+                {
+                        return (object) array(
+                                    'profile' => NULL,
+                                    'table'   => NULL
+                        );
+                }
         }
 
 }

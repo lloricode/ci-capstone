@@ -25,16 +25,15 @@ class Create_student extends CI_Capstone_Controller
                  *
                  * load upload library including configuration for upload
                  */
-                $this->load->library('upload', $this->Student_model->image_config());
+//                $this->load->library('upload', $this->Student_model->image_config());
         }
 
         public function index()
         {
 
-                $__post_button    = (bool) $this->input->post('submit');
-                $_post_image_name = 'image';
-
-                $image_error_message = '';
+                $__post_button = (bool) $this->input->post('submit');
+//                $_post_image_name = 'image';
+//                $image_error_message = '';
 
                 /**
                  * check if the button in POST is triggered
@@ -44,18 +43,18 @@ class Create_student extends CI_Capstone_Controller
                         /**
                          * preparing image
                          */
-                        $upload_return = $this->upload->_preparing_image($_post_image_name);
+//                        $upload_return = $this->upload->_preparing_image($_post_image_name);
 
                         /**
                          * start the submittion
                          */
-                        $this->_input_ready($upload_return);
+                        $this->_input_ready(/* $upload_return */);
                 }
 
                 /**
                  * no need use else, because when submit success is redirecting to other controller,
                  */
-                $this->_form_view($_post_image_name);
+                $this->_form_view(/* $_post_image_name */);
         }
 
         private function _get_school_id_code($course_id = NULL)
@@ -118,12 +117,12 @@ class Create_student extends CI_Capstone_Controller
                 return FALSE;
         }
 
-        private function _input_ready($uploaded)
+        private function _input_ready(/* $uploaded */)
         {
                 /**
                  * preparing the image name from uploading image
                  */
-                $img_name                         = (string) $this->upload->data('file_name');
+//                $img_name                         = (string) $this->upload->data('file_name');
                 /**
                  * 
                  */
@@ -154,7 +153,7 @@ class Create_student extends CI_Capstone_Controller
                              */
                             'student_school_id' => (string) $this->school_id->generate(),
                             //--
-                            'student_image'     => $img_name,
+//                            'student_image'     => $img_name,
                             'created_user_id'   => $this->session->userdata('user_id')
                         ))->insert();
                 /**
@@ -202,24 +201,24 @@ class Create_student extends CI_Capstone_Controller
                 /**
                  * checking if one of the insert is failed, either in [form validation] or in [syntax error] or [upload]
                  */
-                if ( ! $s_id OR ! $id OR ! $uploaded['uploaded'] OR ! $curriculum_id_from_active_course)
+                if ( ! $s_id OR ! $id /* OR ! $uploaded['uploaded'] */ OR ! $curriculum_id_from_active_course)
                 {
                         /**
                          * rollback database
                          */
                         $this->db->trans_rollback();
-                        if ($uploaded['uploaded'])
-                        {
-                                /**
-                                 * remove the uploaded image
-                                 */
-                                unlink($this->config->item('student_image_dir') . $img_name);
-                        }
-                        else
-                        {
-
-                                $this->session->set_flashdata('message', $uploaded['error_message']);
-                        }
+//                        if ($uploaded['uploaded'])
+//                        {
+//                                /**
+//                                 * remove the uploaded image
+//                                 */
+//                                unlink($this->config->item('student_image_dir') . $img_name);
+//                        }
+//                        else
+//                        {
+//
+//                                $this->session->set_flashdata('message', $uploaded['error_message']);
+//                        }
                 }
                 else
                 {
@@ -228,14 +227,14 @@ class Create_student extends CI_Capstone_Controller
                                 /**
                                  * start resize image
                                  */
-                                $this->upload->image_resize($img_name);
+//                                $this->upload->image_resize($img_name);
                                 $this->session->set_flashdata('message', lang('create_student_succesfully_added_message'));
                                 redirect(site_url('students/view?student-id=' . $s_id), 'refresh');
                         }
                 }
         }
 
-        private function _form_view($_post_image_name)
+        private function _form_view(/* $_post_image_name */)
         {
                 /**
                  * if reach here, load the model, etc...
@@ -245,11 +244,11 @@ class Create_student extends CI_Capstone_Controller
 
 
 
-                $this->data['student_image'] = array(
-                    'name' => $_post_image_name,
-                    'type' => 'file',
-                    'lang' => 'create_student_image_label'
-                );
+//                $this->data['student_image'] = array(
+//                    'name' => $_post_image_name,
+//                    'type' => 'file',
+//                    'lang' => 'create_student_image_label'
+//                );
 
                 $this->data['student_firstname']  = array(
                     'name'  => 'firstname',
