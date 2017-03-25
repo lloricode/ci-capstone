@@ -71,7 +71,7 @@ class Database extends CI_Capstone_Controller
                 echo force_download(underscore($zip_name), $this->dbutil->backup(array(
                             'tables'             => array(),
                             'ignore'             => array(),
-                            'filename'           => $dbname . '.sql', //modified
+                            'filename'           => underscore($dbname) . '.sql', //modified
                             'format'             => 'zip', //modified // gzip, zip, txt
                             'add_drop'           => TRUE,
                             'add_insert'         => TRUE,
