@@ -125,12 +125,12 @@ class Curriculum_subject_model extends MY_Model
                     'curriculum_subject_lecture_hours'    => array(
                         'label' => lang('curriculum_subject_lecture_hours_label'),
                         'field' => 'lecture',
-                        'rules' => 'trim|required|is_natural_no_zero'
+                        'rules' => 'trim|required|is_natural'
                     ),
                     'curriculum_subject_laboratory_hours' => array(
                         'label' => lang('curriculum_subject_laboratory_hours_label'),
                         'field' => 'laboratory',
-                        'rules' => 'trim|required|is_natural_no_zero'
+                        'rules' => 'trim|required|is_natural'
                     ),
                     'curriculum_id'                       => array(
                         'label' => lang('curriculum_subject_curriculum_label'),
@@ -164,7 +164,7 @@ class Curriculum_subject_model extends MY_Model
                         /**
                          * foreign table with specific fields
                          */
-                        with_subject('fields:subject_code')->
+                        with_subject('fields:subject_code,subject_description')->
                         /**
                          * it has nested relation with subjects
                          */

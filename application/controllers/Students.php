@@ -14,6 +14,7 @@ class Students extends CI_Capstone_Controller
                 parent::__construct();
                 $this->load->model(array('Student_model'));
                 $this->load->library(array('pagination'));
+                $this->load->helper('number');
                 /**
                  * pagination limit
                  */
@@ -30,8 +31,38 @@ class Students extends CI_Capstone_Controller
                  */
                 $this->page_ = get_page_in_url();
 
+                $where_enrolment = array(
+                    'fields' => 'enrollment_status,enrollment_year_level',
+                    'with'   => array(
+                        'relation' => 'course',
+                        'fields'   => 'course_code'
+                    )
+                );
+
+                if ($this->input->get('course-id'))
+                {
+                        /**
+                         * just to make sure course id is exist
+                         */
+                        $course_obj = check_id_from_url('course_id', 'Course_model', 'course-id');
+
+                        $where_course          = array();
+                        $where_course['where'] = array(
+                            'course_id' => $course_obj->course_id
+                        );
+                        $where_enrolment       = array_merge($where_enrolment, $where_course);
+                }
+
                 //list students
                 $student_obj = $this->Student_model->
+                        fields(array(
+                            'student_school_id',
+                            'student_lastname',
+                            'student_firstname',
+                            'student_middlename',
+                            'student_image'
+                        ))->
+                        with_enrollment($where_enrolment)->
                         limit($this->limit, $this->limit * $this->page_ - $this->limit)->
                         order_by('updated_at', 'DESC')->
                         order_by('created_at', 'DESC')->
@@ -46,6 +77,13 @@ class Students extends CI_Capstone_Controller
 
                         foreach ($student_obj as $student)
                         {
+                                if ( ! isset($student->enrollment->course->course_code))
+                                {
+                                        // i mead an issue for this
+                                        //https://github.com/avenirer/CodeIgniter-MY_Model/issues/231
+                                        //this is temporary,(if fixed will refactor)
+                                        continue;
+                                }
                                 $view_ = anchor(site_url('students/view?student-id=' . $student->student_id), '<span class="btn btn-warning btn-mini">View</span>');
                                 $edit_ = anchor(site_url('edit-student?student-id=' . $student->student_id), '<span class="btn btn-primary btn-mini">Edit</span>');
 
@@ -55,6 +93,9 @@ class Students extends CI_Capstone_Controller
                                     my_htmlspecialchars($student->student_lastname),
                                     my_htmlspecialchars($student->student_firstname),
                                     my_htmlspecialchars($student->student_middlename),
+                                    my_htmlspecialchars($student->enrollment->course->course_code),
+                                    my_htmlspecialchars(number_place($student->enrollment->enrollment_year_level) . ' Year'),
+                                    my_htmlspecialchars(($student->enrollment->enrollment_status) ? 'yes' : 'no'),
                                     $view_ . ' | ' . $edit_
                                 ));
                         }
@@ -69,7 +110,10 @@ class Students extends CI_Capstone_Controller
                     lang('index_student_lastname_th'),
                     lang('index_student_firstname_th'),
                     lang('index_student_middlename_th'),
-                    'Options'
+                    'course',
+                    'level',
+                    'enrolled',
+                    'options'
                 );
 
                 $pagination = $this->pagination->generate_bootstrap_link('students/index', $this->Student_model->count_rows() / $this->limit);
@@ -92,7 +136,7 @@ class Students extends CI_Capstone_Controller
                         $image_file = $this->Student_model->image_resize($student->student_image)->table;
                 }
                 return '<div class="user-thumb">' . img(array(
-                            'src'   => NULL,
+                            'src'   => $image_file,
                             'alt'   => 'no image',
                             'title' => $student->student_school_id . ' - ' . $student->student_lastname
                         )) . '</div>';

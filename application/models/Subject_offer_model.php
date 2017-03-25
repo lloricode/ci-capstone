@@ -60,6 +60,13 @@ class Subject_offer_model extends MY_Model
                     'foreign_key'   => 'subject_offer_id',
                     'local_key'     => 'subject_offer_id'
                 );
+
+                $this->has_one['curriculum_subject'] = array(
+                    'foreign_model' => 'Curriculum_subject_model',
+                    'foreign_table' => 'curriculum_subjects',
+                    'foreign_key'   => 'subject_id',
+                    'local_key'     => 'subject_id'
+                );
         }
 
         public function insert_validations()
@@ -82,7 +89,7 @@ class Subject_offer_model extends MY_Model
         {
                 $this->
                         fields('subject_offer_id')->
-                        with_subject('fields:subject_code')->
+                        with_subject('fields:subject_code,subject_description')->
                         with_faculty('fields:first_name,last_name')->
                         with_subject_line(array(
                             'fields' => // array(
@@ -112,7 +119,7 @@ class Subject_offer_model extends MY_Model
                 return $this;
         }
 
-        public function all($current_sem_year = FALSE)
+        public function all($current_sem_year = FALSE, $curriculum_id = FALSE)
         {
                 $this->_query();
                 if ($current_sem_year)
@@ -122,14 +129,30 @@ class Subject_offer_model extends MY_Model
                          */
                         $this->_where_current_sem_year();
                 }
-                //set_cache()->
-                return $this->get_all();
+                $where__     = array(
+                    'with' => array(
+                        'relation' => 'curriculum',
+                        'field'    => 'curriculum_id'
+                ));
+                $change_name = '';
+                if ($curriculum_id)
+                {
+                        $nested_where['where'] = array(
+                            'curriculum_id' => $curriculum_id
+                        );
+                        $where__               = array_merge($where__, $nested_where);
+                        $change_name           = 'curriculum_id' . $curriculum_id;
+                }
+                return $this->
+                                with_curriculum_subject($where__)->
+                                //set_cache(' '.$change_name)->
+                                get_all();
         }
 
         public function all_on_curriculum($curriculum_id)
         {
                 return $this->_query()->
-                                {$this->_where_current_semester_and_year()}->
+                                {$this->_where_current_sem_year()}->
                                 where(array(
                                     'curriculum_id' => $curriculum_id
                                 ))->

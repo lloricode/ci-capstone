@@ -91,6 +91,13 @@ class Curriculums extends CI_Capstone_Controller
                 $this->breadcrumbs->unshift(3, lang('curriculum_subject_label'), 'curriculums/view?curriculum-id=' . $curriculum_obj->curriculum_id);
 
                 $this->load->model(array('Curriculum_subject_model', 'Subject_model', 'Requisites_model'));
+                $this->load->helper(array('number', 'text', 'inflector'));
+                $highlight_phrase = '';
+
+                if ($h = $this->input->get('highlight'))
+                {
+                        $highlight_phrase = $h;
+                }
 
                 //$this->load->library('curriculum');
                 $cur_subj_obj = $this->Curriculum_subject_model->curriculum_subjects($curriculum_obj->curriculum_id);
@@ -102,12 +109,12 @@ class Curriculums extends CI_Capstone_Controller
                 {
                         // print_r($cur_subj_obj);
                         $year         = 1;
-                        $table_data[] = array(array('data' => '<h4>Level ' . $year . '</h4>', 'colspan' => '7'));
+                        $table_data[] = array(array('data' => '<h4>' . number_place($year) . ' Year</h4>', 'colspan' => '7'));
                         foreach ($cur_subj_obj as $cur_subj)
                         {
                                 if ($year != $cur_subj->curriculum_subject_year_level)
                                 {
-                                        $table_data[] = array(array('data' => '<h4>Level ' . $cur_subj->curriculum_subject_year_level . '</h4>', 'colspan' => '8'));
+                                        $table_data[] = array(array('data' => '<h4>' . number_place($cur_subj->curriculum_subject_year_level) . ' Year</h4>', 'colspan' => '8'));
 
                                         $year ++;
                                 }
@@ -115,10 +122,11 @@ class Curriculums extends CI_Capstone_Controller
                                 $table_data[] = array(
                                     // my_htmlspecialchars($cur_subj->curriculum_subject_year_level),
                                     my_htmlspecialchars(semesters($cur_subj->curriculum_subject_semester)),
-                                    my_htmlspecialchars($cur_subj->subject->subject_code),
+                                    highlight_phrase($cur_subj->subject->subject_code, $highlight_phrase, '<span class="badge badge-info" id="' . dash($cur_subj->subject->subject_code) . '">', '</span>'),
+                                    my_htmlspecialchars($cur_subj->subject->subject_description),
                                     my_htmlspecialchars($cur_subj->curriculum_subject_units),
-                                    my_htmlspecialchars($cur_subj->curriculum_subject_lecture_hours . ' Hours'),
-                                    my_htmlspecialchars($cur_subj->curriculum_subject_laboratory_hours . ' Hours'),
+                                    my_htmlspecialchars(($cur_subj->curriculum_subject_lecture_hours != 0) ? $cur_subj->curriculum_subject_lecture_hours . ' Hours' : '--'),
+                                    my_htmlspecialchars(($cur_subj->curriculum_subject_laboratory_hours != 0) ? $cur_subj->curriculum_subject_laboratory_hours . ' Hours' : '--'),
                                     $requisite->pre,
                                     $requisite->co,
                                     anchor('create-requisite?curriculum-id=' . $curriculum_obj->curriculum_id . '&curriculum-subject-id=' . $cur_subj->curriculum_subject_id, 'add')
@@ -132,6 +140,7 @@ class Curriculums extends CI_Capstone_Controller
                     //  lang('curriculum_subject_year_level_label'),
                     lang('curriculum_subject_semester_label'),
                     lang('curriculum_subject_subject_label'),
+                    'desc',
                     lang('curriculum_subject_units_label'),
                     lang('curriculum_subject_lecture_hours_label'),
                     lang('curriculum_subject_laboratory_hours_label'),

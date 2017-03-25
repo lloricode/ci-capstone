@@ -41,8 +41,8 @@ class Users extends CI_Capstone_Controller
                 $users_obj = $this->User_model->
                         with_groups('fields:name,description')->
                         limit($this->limit, $this->limit * $this->page_ - $this->limit)->
-                        order_by('created_on', 'DESC')->
                         order_by('updated_at', 'DESC')->
+                        order_by('created_on', 'DESC')->
                         set_cache('users_page_' . $this->page_)->
                         get_all();
 

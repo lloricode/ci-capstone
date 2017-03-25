@@ -35,7 +35,7 @@ class Migration_Subjects extends CI_Migration
                     ),
                     'subject_description' => array(
                         'type'       => 'VARCHAR',
-                        'constraint' => '50',
+                        'constraint' => '100',
                         'unique'     => TRUE,
                         'null'       => FALSE
                     ),

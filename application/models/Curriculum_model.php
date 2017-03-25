@@ -72,7 +72,7 @@ class Curriculum_model extends MY_Model
                     'curriculum_description'           => array(
                         'label' => lang('curriculumn_description'),
                         'field' => 'desc',
-                        'rules' => 'trim|required|min_length[2]|max_length[20]'
+                        'rules' => 'trim|required|min_length[2]|max_length[100]'
                     ),
                     'curriculum_effective_school_year' => array(
                         'label' => lang('curriculumn_effective_year'),

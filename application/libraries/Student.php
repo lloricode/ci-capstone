@@ -335,7 +335,7 @@ class School_informations
                 /**
                  * set curriculum_id
                  */
-                $this->_curriculum_subjects = $this->Subject_offer_model->all(TRUE); //parameter is set to current semester and year
+                $this->_curriculum_subjects = $this->Subject_offer_model->all(TRUE, $this->__enrollment->curriculum_id); //parameter is set to current semester and year
         }
 
         protected function __load_education()
@@ -357,9 +357,27 @@ class School_informations
                                 limit($limit, $offset)->get_all();
         }
 
-        protected function __curriculum_subjects()
+        /**
+         * filter with level of current student
+         * 
+         * @return array
+         */
+        protected function __curriculum_subjects($add_level = 0)//parameter will use in recursive call
         {
-                return $this->_curriculum_subjects;
+                $level  = (int) $this->__enrollment->enrollment_year_level;
+                $level  += $add_level;
+                $return = array();
+                if ($this->_curriculum_subjects)
+                {
+                        foreach ($this->_curriculum_subjects as $s)
+                        {
+                                if ($level == $s->curriculum_subject->curriculum_subject_year_level)
+                                {
+                                        $return[] = $s;
+                                }
+                        }
+                }
+                return $return;
         }
 
 }

@@ -57,7 +57,7 @@ class Subject_model extends MY_Model
                         'subject_code'        => array(
                             'label'  => lang('create_subject_code_label'),
                             'field'  => 'code',
-                            'rules'  => 'trim|required|is_unique[subjects.subject_code]|min_length[3]|max_length[20]',
+                            'rules'  => 'trim|required|is_unique[subjects.subject_code]|min_length[2]|max_length[50]',
                             'errors' => array(
                                 'is_unique' => 'The {field} already exist.'
                             )
@@ -65,7 +65,7 @@ class Subject_model extends MY_Model
                         'subject_description' => array(
                             'label'  => lang('create_subject_description_label'),
                             'field'  => 'desc',
-                            'rules'  => 'trim|required|human_name|min_length[3]|max_length[50]',
+                            'rules'  => 'trim|required|min_length[2]|max_length[100]|is_unique[subjects.subject_description]',
                             'errors' => array(
                                 'is_unique' => 'The {field} already exist.'
                             )

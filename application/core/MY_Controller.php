@@ -113,7 +113,7 @@ class MY_Controller extends CI_Controller
          * @return string | all user_group of current logged user
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        private function current_group_string($type = 'description')
+        public function current_group_string($type = 'description')
         {
                 $return = '';
                 foreach ($this->ion_auth->get_users_groups()->result() as $g)

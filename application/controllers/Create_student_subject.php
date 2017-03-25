@@ -71,7 +71,7 @@ class Create_student_subject extends CI_Capstone_Controller
                                     'extra'        => array('class' => 'btn btn-success icon-edit'),
                                         ), TRUE);
                 }
-                $this->data['student_subject_form'] = $this->form_boostrap('create-student-subject', $inputs, 'add_student_subject_label', 'add_student_subject_label', 'info-sign', NULL, TRUE);
+                $this->data['student_subject_form'] = $this->form_boostrap('create-student-subject?student-id=' . $this->student->id, $inputs, 'add_student_subject_label', 'add_student_subject_label', 'info-sign', NULL, TRUE);
                 $this->data['bootstrap']            = $this->_bootstrap();
                 $this->_render('admin/create_student_subject', $this->data);
         }
@@ -192,10 +192,17 @@ class Create_student_subject extends CI_Capstone_Controller
                 $this->load->model(array('Curriculum_subject_model', 'Subject_model', 'Requisites_model'));
                 if ($cur_subj_obj)
                 {
-                        $this->load->helper(array('day', 'time'));
+                        $this->load->helper(array('day', 'time', 'number'));
                         //    print_r($cur_subj_obj);
                         foreach ($cur_subj_obj as $s)
                         {
+                                if ( ! isset($s->curriculum_subject->curriculum_subject_id))
+                                {
+                                        // i mead an issue for this
+                                        //https://github.com/avenirer/CodeIgniter-MY_Model/issues/231
+                                        //this is temporary,(if fixed will refactor)
+                                        continue;
+                                }
                                 if ( ! isset($s->subject_line))
                                 {
                                         continue;
@@ -207,7 +214,23 @@ class Create_student_subject extends CI_Capstone_Controller
                                 }
 
                                 $output = array(
-                                    $s->subject->subject_code,
+                                    number_place($s->curriculum_subject->curriculum_subject_year_level) . ' Year',
+                                    semesters($s->curriculum_subject->curriculum_subject_semester),
+                                    anchor(//just a subject code with redirection, directly to curriculum with highlighten phrase
+                                            //----------------------------------link
+                                            'curriculums/view?curriculum-id=' .
+                                            $s->curriculum_subject->curriculum_id .
+                                            '&highlight=' .
+                                            $s->subject->subject_code .
+                                            '#' .
+                                            dash($s->subject->subject_code),
+                                            //----------------------------------user link view
+                                                 $s->subject->subject_code,
+                                            //----------------------------------attributes
+                                                 array(
+                                        'title' => $s->subject->subject_description//pop up subject description when hover mouse
+                                            )
+                                    ),
                                     $s->faculty->first_name
                                 );
 
@@ -248,6 +271,8 @@ class Create_student_subject extends CI_Capstone_Controller
 //                    lang('index_room_id_th'),
 //                    lang('index_user_id_th'),
 
+                    'year',
+                    'semester',
                     'Subject',
                     'Faculty',
                     'Days1',

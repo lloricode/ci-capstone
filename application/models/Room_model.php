@@ -51,7 +51,7 @@ class Room_model extends MY_Model
                         'room_number' => array(
                             'label'  => lang('create_room_number_label'),
                             'field'  => 'number',
-                            'rules'  => 'trim|required|min_length[1]|max_length[50]',
+                            'rules'  => 'trim|required|min_length[1]|max_length[50]|is_unique[rooms.room_number]',
                             'errors' => array(
                                 'is_unique' => 'The {field} already exist.'
                             )

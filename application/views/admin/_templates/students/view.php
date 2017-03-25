@@ -41,7 +41,7 @@
                             <table class="table table-bordered table-invoice">
                                 <tbody>
                                     <tr>
-                                        <td><img src="<?php $image_src; ?>" alt="no image" /></td>
+                                        <td><img src="<?php echo $image_src; ?>" alt="no image" /></td>
                                     </tr>
 
                                     <tr>
@@ -54,7 +54,7 @@
                                     </tr>
                                     <tr>
                                         <td>Year Level</td>
-                                        <td><strong> <?php echo $this->student->level; ?></strong></td>
+                                        <td><strong> <?php echo number_place($this->student->level) . ' Year'; ?></strong></td>
                                     </tr>
                                     <tr>
                                         <td>Status</td>

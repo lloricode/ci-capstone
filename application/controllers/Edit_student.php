@@ -159,13 +159,14 @@ class Edit_student extends CI_Capstone_Controller
                                          */
                                         $old_img = $this->config->item('student_image_dir') . $this->student->image;
 
-                                        if (file_exists($old_img))
+                                        if (file_exists($old_img) && $this->student->image)
                                         {
                                                 /**
                                                  * remove the old image
                                                  */
                                                 unlink($old_img);
                                         }
+                                        $this->upload->image_resize($img_name);
                                 }
                                 $this->session->set_flashdata('message', lang('update_student_succesfully_added_message'));
                                 redirect(site_url('students/view?student-id=' . $this->student->id), 'refresh');

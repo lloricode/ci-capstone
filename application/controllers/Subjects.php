@@ -67,7 +67,16 @@ class Subjects extends CI_Capstone_Controller
                 );
 
                 $pagination = $this->pagination->generate_bootstrap_link('subjects/index', $this->Subject_model->count_rows() / $this->limit);
-
+               
+                if (in_array('create-subject', permission_controllers()))
+                {
+                        $this->template['create_subject_button'] = MY_Controller::_render('admin/_templates/button_view', array(
+                                    'href'         => 'create-subject',
+                                    'button_label' => lang('create_subject_heading'),
+                                    'extra'        => array('class' => 'btn btn-success icon-edit'),
+                                        ), TRUE);
+                }
+                
                 $this->template['table_subjects'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_subject_heading_th', $pagination, TRUE);
                 $this->template['message']        = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
                 $this->template['bootstrap']      = $this->_bootstrap();

@@ -42,6 +42,12 @@ class Student_model extends MY_Model
                     'foreign_key'   => 'student_id',
                     'local_key'     => 'student_id'
                 );
+                $this->has_one['enrollment']         = array(
+                    'foreign_model' => 'Enrollment_model',
+                    'foreign_table' => 'enrollments',
+                    'foreign_key'   => 'student_id',
+                    'local_key'     => 'student_id'
+                );               
         }
 
         private function _form()
@@ -205,8 +211,8 @@ class Student_model extends MY_Model
                     'upload_path'   => $this->config->item('student_image_dir'),
                     'allowed_types' => 'jpg|png|jpeg',
                     'max_size'      => "1000KB",
-                    'max_height'    => "344",
-                    'max_width'     => "344"
+                    'max_height'    => "1000",
+                    'max_width'     => "1000"
                 );
         }
 
@@ -242,7 +248,7 @@ class Student_model extends MY_Model
                 }
                 else
                 {
-                        if ( ! $this->student)
+                       if ( ! $this->student)
                         {
                                 /**
                                  * just to make sure student already loaded
