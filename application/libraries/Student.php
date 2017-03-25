@@ -126,6 +126,8 @@ class Student extends School_informations
                                 return $this->__course->course_description;
                         case 'level':
                                 return (int) $this->__enrollment->enrollment_year_level;
+                        case 'level_place':
+                                return number_place($this->__enrollment->enrollment_year_level) . ' Year';
                         case 'school_year':
                                 return $this->__enrollment->enrollment_school_year;
                         case 'semester':

@@ -54,7 +54,7 @@
                                     </tr>
                                     <tr>
                                         <td>Year Level</td>
-                                        <td><strong> <?php echo number_place($this->student->level) . ' Year'; ?></strong></td>
+                                        <td><strong> <?php echo $this->student->level_place; ?></strong></td>
                                     </tr>
                                     <tr>
                                         <td>Status</td>

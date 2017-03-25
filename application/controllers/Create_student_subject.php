@@ -7,7 +7,7 @@ class Create_student_subject extends CI_Capstone_Controller
 
 
         private $_session_name_;
-        private $_sub_off__added_obj;
+        private $_sub_off__added_obj_from_session;
 
         function __construct()
         {
@@ -24,8 +24,8 @@ class Create_student_subject extends CI_Capstone_Controller
                  * 
                  *   in constructor
                  */
-                $this->_session_name_      = 'curriculum_subjects__subject_offer_ids';
-                $this->_sub_off__added_obj = array();
+                $this->_session_name_                   = 'curriculum_subjects__subject_offer_ids';
+                $this->_sub_off__added_obj_from_session = array();
         }
 
         public function index()
@@ -45,18 +45,81 @@ class Create_student_subject extends CI_Capstone_Controller
                 $this->_form_view();
         }
 
+        /**
+         * this info will now include in submit form
+         * 
+         * 
+         * 
+         * @return array
+         */
+        private function _student_information()
+        {
+                $inputs['school_id'] = array(
+                    'name'     => 'xx',
+                    'value'    => $this->student->school_id,
+                    'type'     => 'text',
+                    'lang'     => 'index_student_school_id_th',
+                    'disabled' => ''
+                );
+
+                $inputs['firstname'] = array(
+                    'name'     => 'xx',
+                    'value'    => $this->student->firstname,
+                    'type'     => 'text',
+                    'lang'     => 'create_student_firstname_label',
+                    'disabled' => ''
+                );
+
+                $inputs['middlename'] = array(
+                    'name'     => 'xx',
+                    'value'    => $this->student->middlename,
+                    'type'     => 'text',
+                    'lang'     => 'create_student_middlename_label',
+                    'disabled' => ''
+                );
+
+                $inputs['lastname'] = array(
+                    'name'     => 'xx',
+                    'value'    => $this->student->lastname,
+                    'type'     => 'text',
+                    'lang'     => 'create_student_lastname_label',
+                    'disabled' => ''
+                );
+
+                $inputs['course'] = array(
+                    'name'     => 'xx',
+                    'value'    => $this->student->course_code,
+                    'type'     => 'text',
+                    'lang'     => 'student_course_code', //in student lang
+                    'disabled' => ''
+                );
+
+                $inputs['level'] = array(
+                    'name'     => 'xx',
+                    'value'    => $this->student->level_place,
+                    'type'     => 'text',
+                    'lang'     => 'index_student_year_level_th',
+                    'disabled' => ''
+                );
+
+                $inputs['enrollstatus'] = array(
+                    'name'     => 'xx',
+                    'value'    => $this->student->is_enrolled(TRUE),
+                    'type'     => 'text',
+                    'lang'     => 'student_enroll_statuse',
+                    'disabled' => ''
+                );
+
+                return $inputs;
+        }
+
         private function _form_view()
         {
                 $this->Student_model->set_informations($this->input->get('student-id'));
-                $this->breadcrumbs->unshift(3, lang('add_student_subject_label'), 'create-student-subject?student-id=' . $this->student->id);
+                $this->breadcrumbs->unshift(3, 'View Student [ ' . $this->student->school_id . ' ]', 'students/view?student-id=' . $this->student->id);
+                $this->breadcrumbs->unshift(4, lang('add_student_subject_label'), 'create-student-subject?student-id=' . $this->student->id);
 
 
-                $inputs['xx'] = array(
-                    'name'  => 'xx',
-                    'value' => $this->form_validation->set_value('xx'),
-                    'type'  => 'text',
-                    'lang'  => 'xx'
-                );
 
 
                 /**
@@ -67,16 +130,12 @@ class Create_student_subject extends CI_Capstone_Controller
                 /**
                  * view all subject available to add
                  */
-                $this->data['student_subject_curriculum_table'] = $this->_table_view(/* lang in in students_lang */
-                        $this->student->get_all_subject_available_to_enroll(), 'available_subjects_to_enroll', 'db'
-                );
+                $this->data['student_subject_curriculum_table'] = $this->_table_view('db');
 
                 /**
                  * subject added to session
                  */
-                $this->data['added_subject_table'] = $this->_table_view(/* lang in in students_lang */
-                        $this->_sub_off__added_obj, 'added_subjects_to_enroll', 'session'
-                );
+                $this->data['added_subject_table'] = $this->_table_view('session');
 
                 if ($this->session->has_userdata($this->_session_name_))
                 {
@@ -91,8 +150,14 @@ class Create_student_subject extends CI_Capstone_Controller
                                         ), TRUE);
                 }
 
-                $this->data['student_subject_form'] = $this->form_boostrap('create-student-subject?student-id=' . $this->student->id, $inputs, 'add_student_subject_label', 'add_student_subject_label', 'info-sign', NULL, TRUE);
-                $this->data['bootstrap']            = $this->_bootstrap();
+                /**
+                 * generate information for curretn student
+                 */
+                $this->data['student_subject_form'] = $this->form_boostrap(
+                        'create-student-subject?student-id=' . $this->student->id, $this->_student_information(), 'student_information', 'add_student_subject_label', 'user', NULL, TRUE
+                );
+
+                $this->data['bootstrap'] = $this->_bootstrap();
                 $this->_render('admin/create_student_subject', $this->data);
         }
 
@@ -123,9 +188,24 @@ class Create_student_subject extends CI_Capstone_Controller
                 redirect('create-student-subject?student-id=' . $this->input->get('student-id'), 'refresh');
         }
 
-        private function _table_view($cur_subj_obj, $lang_h, $type)
+        private function _table_view($type)
         {
-                $table_data = array();
+                $cur_subj_obj = NULL;
+                $table_data   = array();
+
+                switch ($type)
+                {
+                        case 'db':
+                                $cur_subj_obj = $this->student->get_all_subject_available_to_enroll();
+                                $lang_caption = 'available_subjects_to_enroll'; /* lang in in students_lang */
+                                $header_col   = lang('add_student_subject_label');
+                                break;
+                        case 'session':
+                                $cur_subj_obj = $this->_sub_off__added_obj_from_session;
+                                $lang_caption = 'added_subjects_to_enroll'; /* lang in in students_lang */
+                                $header_col   = lang('remove_subjects_to_enroll');
+                                break;
+                }
 
                 if ($cur_subj_obj)
                 {
@@ -149,7 +229,7 @@ class Create_student_subject extends CI_Capstone_Controller
                                 {
                                         if ($this->_is_in_session($s->subject_offer_id))
                                         {
-                                                $this->_sub_off__added_obj[] = $s; //add to added object
+                                                $this->_sub_off__added_obj_from_session[] = $s; //add to added object
                                                 continue; //skip, already in session
                                         }
                                 }
@@ -206,6 +286,7 @@ class Create_student_subject extends CI_Capstone_Controller
                                                 );
                                                 break;
                                 }
+                                $line[]       = $s->curriculum_subject->curriculum_subject_units . ' unit';
                                 $line         = array_merge($line, array($btn_link));
                                 $table_data[] = array_merge($output, $line);
                         }
@@ -213,7 +294,7 @@ class Create_student_subject extends CI_Capstone_Controller
                 /*
                  * Table headers
                  */
-                $header = array(
+                $header   = array(
 //                    'semester',
 //                    lang('index_subject_id_th'),
 //                    lang('index_subject_offer_start_th'),
@@ -233,19 +314,12 @@ class Create_student_subject extends CI_Capstone_Controller
                     'Days2',
                     'Start2',
                     'End2',
-                    'Room2'
+                    'Room2',
+                    'unit'
                 );
-                switch ($type)
-                {
-                        case 'db':
-                                $header[] = lang('add_student_subject_label');
-                                break;
-                        case 'session':
-                                $header[] = lang('remove_subjects_to_enroll');
-                                break;
-                }
+                $header[] = $header_col;
 
-                return $this->table_bootstrap($header, $table_data, 'table_open_bordered', $lang_h/* lang in in students_lang */, FALSE, TRUE);
+                return $this->table_bootstrap($header, $table_data, 'table_open_bordered', $lang_caption/* lang in in students_lang */, FALSE, TRUE);
         }
 
         /**
