@@ -277,12 +277,12 @@ class Create_student_subject extends CI_Capstone_Controller
                                 {
                                         case 'db': $btn_link = anchor(
                                                         site_url('create-student-subject?student-id=' . $this->student->id .
-                                                                '&subject-offer-id=' . $s->subject_offer_id), lang('add_student_subject_label')
+                                                                '&subject-offer-id=' . $s->subject_offer_id),'<span class="btn btn-info btn-mini">'. lang('add_student_subject_label'). '</span>'
                                                 );
                                                 break;
                                         case 'session':
                                                 $btn_link = anchor(
-                                                        site_url('create-student-subject/unset-value-subject-offer-session?student-id=' . $this->student->id . '&subject-offer-id=' . $s->subject_offer_id), lang('remove_subjects_to_enroll')
+                                                        site_url('create-student-subject/unset-value-subject-offer-session?student-id=' . $this->student->id . '&subject-offer-id=' . $s->subject_offer_id),'<span class="btn btn-inverse btn-mini">'. lang('remove_subjects_to_enroll').'</span>'
                                                 );
                                                 break;
                                 }
