@@ -35,7 +35,7 @@ administrator|mypasswordisadmin1
 
 ## Screencapture
 -Updated overview over the Admin Panel
-![untitled](https://cloud.githubusercontent.com/assets/24410101/22813114/06677688-ef84-11e6-9cd2-4fdd96529b05.jpg)
+![screenshot at 2017-03-25 10-53-25](https://cloud.githubusercontent.com/assets/8251344/24318920/75f18732-1149-11e7-9279-397a8405fa23.png)
 
 -Database Relation,(result after migration)
 ![screenshot at 2017-03-24 12-34-01](https://cloud.githubusercontent.com/assets/8251344/24280784/69ac07d8-108e-11e7-94e6-16b67cc3722f.png)
