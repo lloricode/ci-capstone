@@ -23,78 +23,16 @@ defined('BASEPATH') or exit('no direct script allowed');
 class Student extends School_informations
 {
 
-
-        /**
-         * public
-         */
-        #personael info
-        public $id;
-        public $school_id;
-        public $fullname;
-        public $firstname;
-        public $middlename;
-        public $lastname;
-        public $image;
-        public $gender;
-        public $birthdate;
-        public $birthplace;
-        public $civil_status;
-        public $nationality;
-        public $address;
-        public $town;
-        public $region;
-        public $contact;
-        public $email;
-        #guardian
-        public $guardian_fullname;
-        public $guardian_adrress;
-        public $guardian_contact;
-        public $guardian_email;
-
-        #school_info
-        public $education_id;
-        public $education_code;
-        public $education_description;
-        public $course_id;
-        public $course_code;
-        public $course_description;
-        public $level;
-        public $school_year;
-        public $semester;
-        public $enrollment_id;
-        public $curriculum_id;
-
         public function __construct($student_id)
         {
                 parent::__construct();
-                $this->_get($student_id[0]);
-        }
 
-        /**
-         * prevent calling undefined functions
-         * 
-         * @param type $name
-         * @param type $arguments
-         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
-         */
-        public function __call($name, $arguments)
-        {
-                show_error('method <b>"$this->' . strtolower(get_class()) . '->' . $name . '()"</b> not found in ' . __FILE__ . '.');
-        }
-
-        /**
-         * 
-         * @param int $studen_id
-         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
-         */
-        private function _get($studen_id)
-        {
                 /**
                  * check if exist student id
                  */
                 $this->__student = $this->Student_model->
-                        set_cache('student_library_get_' . $studen_id)->
-                        get($studen_id);
+                        set_cache('student_library_get_' . $student_id[0])->
+                        get($student_id[0]);
                 if ( ! $this->__student)
                 {
                         show_error('student information not found');
@@ -105,40 +43,111 @@ class Student extends School_informations
                  */
                 $this->__load_enrollment_n_course_n_set_corriculum_id();
                 $this->__load_education();
+        }
 
-                $this->id                    = $this->__student->student_id;
-                $this->school_id             = $this->__student->student_school_id;
-                $this->fullname              = $this->__student->student_lastname . ', ' . $this->__student->student_firstname . ' ' . $this->__student->student_middlename;
-                $this->firstname             = $this->__student->student_firstname;
-                $this->middlename            = $this->__student->student_middlename;
-                $this->lastname              = $this->__student->student_lastname;
-                $this->image                 = $this->__student->student_image;
-                $this->gender                = $this->__student->student_gender;
-                $this->birthdate             = $this->__student->student_birthdate;
-                $this->birthplace            = $this->__student->student_birthplace;
-                $this->civil_status          = $this->__student->student_civil_status;
-                $this->nationality           = $this->__student->student_nationality;
-                $this->address               = $this->__student->student_permanent_address;
-                $this->town                  = $this->__student->student_address_town;
-                $this->region                = $this->__student->student_address_region;
-                $this->contact               = $this->__student->student_personal_contact_number;
-                $this->email                 = $this->__student->student_personal_email;
-                $this->guardian_fullname     = $this->__student->student_guardian_fullname;
-                $this->guardian_adrress      = $this->__student->student_guardian_address;
-                $this->guardian_contact      = $this->__student->student_guardian_contact_number;
-                $this->guardian_email        = $this->__student->student_guardian_email;
-                #######
-                $this->education_id          = $this->__education->education_id;
-                $this->education_code        = $this->__education->education_code;
-                $this->education_description = $this->__education->education_description;
-                $this->course_id             = $this->__course->course_id;
-                $this->course_code           = $this->__course->course_code;
-                $this->course_description    = $this->__course->course_description;
-                $this->level                 = (int) $this->__enrollment->enrollment_year_level;
-                $this->school_year           = $this->__enrollment->enrollment_school_year;
-                $this->semester              = $this->__enrollment->enrollment_semester;
-                $this->enrollment_id         = $this->__enrollment->enrollment_id;
-                $this->curriculum_id         = $this->__enrollment->curriculum_id;
+        /**
+         * prevent calling undefined functions
+         * 
+         * @param type $name
+         * @param type $arguments
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        public function __call($method, $arguments)
+        {
+                show_error('method <b>"$this->' . strtolower(get_class()) . '->' . $method . '()"</b> not found in ' . __FILE__ . '.');
+        }
+
+        /**
+         * MAGIC __GET
+         * 
+         * @param type $property
+         * @return type
+         */
+        public function __get($property)
+        {
+                switch ($property)
+                {
+                        case 'id':
+                                return $this->__student->student_id;
+                        case 'school_id':
+                                return $this->__student->student_school_id;
+                        case 'fullname':
+                                return $this->__student->student_lastname . ', ' .
+                                        $this->__student->student_firstname . ' ' .
+                                        $this->__student->student_middlename;
+                        case 'firstname':
+                                return $this->__student->student_firstname;
+                        case 'middlename':
+                                return $this->__student->student_middlename;
+                        case 'lastname':
+                                return $this->__student->student_lastname;
+                        case 'image':
+                                return $this->__student->student_image;
+                        case 'gender':
+                                return $this->__student->student_gender;
+                        case 'birthdate':
+                                return $this->__student->student_birthdate;
+                        case 'birthplace':
+                                return $this->__student->student_birthplace;
+                        case 'civil_status':
+                                return $this->__student->student_civil_status;
+                        case 'nationality':
+                                return $this->__student->student_nationality;
+                        case 'address':
+                                return $this->__student->student_permanent_address;
+                        case 'town':
+                                return $this->__student->student_address_town;
+                        case 'region':
+                                return $this->__student->student_address_region;
+                        case 'contact':
+                                return $this->__student->student_personal_contact_number;
+                        case 'email':
+                                return $this->__student->student_personal_email;
+                        case 'guardian_fullname':
+                                return $this->__student->student_guardian_fullname;
+                        case 'guardian_adrress':
+                                return $this->__student->student_guardian_address;
+                        case 'guardian_contact':
+                                return $this->__student->student_guardian_contact_number;
+                        case 'guardian_email':
+                                return $this->__student->student_guardian_email;
+                        ####### 
+                        case 'education_id':
+                                return $this->__education->education_id;
+                        case 'education_code':
+                                return $this->__education->education_code;
+                        case 'education_description':
+                                return $this->__education->education_description;
+                        case 'course_id':
+                                return $this->__course->course_id;
+                        case 'course_code':
+                                return $this->__course->course_code;
+                        case 'course_description':
+                                return $this->__course->course_description;
+                        case 'level':
+                                return (int) $this->__enrollment->enrollment_year_level;
+                        case 'school_year':
+                                return $this->__enrollment->enrollment_school_year;
+                        case 'semester':
+                                return $this->__enrollment->enrollment_semester;
+                        case 'enrollment_id':
+                                return $this->__enrollment->enrollment_id;
+                        case 'curriculum_id':
+                                return $this->__enrollment->curriculum_id;
+                        default :
+
+                                /**
+                                 * check if property is exist on CI
+                                 */
+                                if (property_exists(get_instance(), $property))
+                                {
+                                        return get_instance()->$property;
+                                }
+                                else
+                                {
+                                        show_error('property <b>"$this->' . strtolower(get_class()) . '->' . $property . '"</b> not found in ' . __FILE__ . '.');
+                                }
+                }
         }
 
         /**
