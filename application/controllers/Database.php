@@ -68,7 +68,7 @@ class Database extends CI_Capstone_Controller
                         str_replace(',', '', my_current_datetime_information()) .
                         '_' . mdate('%h%i%a', time()) . '.zip';
 
-                force_download(underscore($zip_name), $this->dbutil->backup(array(
+                echo force_download(underscore($zip_name), $this->dbutil->backup(array(
                             'tables'             => array(),
                             'ignore'             => array(),
                             'filename'           => $dbname . '.sql', //modified
