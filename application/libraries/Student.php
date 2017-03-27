@@ -220,16 +220,26 @@ class Student extends School_informations
                                         get($stud_sub->subject_offer_id);
 
                                 $subject_line = array();
-                                $tmp          = 1;
+                                $tmp          = 0;
                                 foreach ($sub_of->subject_line as $line)
                                 {
+                                        $tmp ++;
                                         $subject_line = array_merge($subject_line, array(
                                             'day' . $tmp   => subject_offers_days($line),
                                             'start' . $tmp => convert_24_to_12hrs($line->subject_offer_line_start),
                                             'end' . $tmp   => convert_24_to_12hrs($line->subject_offer_line_end),
                                             'room' . $tmp  => $line->room->room_number,
                                         ));
+                                }
+                                if ($tmp === 1)
+                                {
                                         $tmp ++;
+                                        $subject_line = array_merge($subject_line, array(
+                                            'day' . $tmp   => '--',
+                                            'start' . $tmp => '--',
+                                            'end' . $tmp   => '--',
+                                            'room' . $tmp  => '--',
+                                        ));
                                 }
                                 $subject_offers[] = (object) array_merge(array(
                                             'id'       => $sub_of->subject_offer_id,
