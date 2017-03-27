@@ -182,20 +182,20 @@ class Students extends CI_Capstone_Controller
                 ));
                 $this->table->set_heading(array(
                     // 'id',
-                    'year',
-                    'semester',
-                    'subject',
-                    'faculty',
-                    'unit',
-                    'status',
-                    'day1',
-                    'start1',
-                    'end1',
-                    'room1',
-                    'day2',
-                    'start2',
-                    'end2',
-                    'room2'
+                    lang('student_subject_th'), 
+                    lang('student_year_th'),
+                    lang('student_semester_th'),
+                    lang('student_instructor_th'),
+                    lang('student_unit_th'),
+                    lang('student_status_th'),
+                    lang('student_day1_th'),
+                    lang('student_start_th'),
+                    lang('student_end_th'),
+                    lang('student_room_th'),
+                    lang('student_day2_th'),
+                    lang('student_start_th'),
+                    lang('student_end_th'),
+                    lang('student_room_th')
                 ));
 
 
@@ -210,7 +210,7 @@ class Students extends CI_Capstone_Controller
                         {
                                 $this->table->add_row(
                                         //'id',
-                                        $subject->year, $subject->semester, $subject->subject, $subject->faculty, $subject->unit, $subject->status, $subject->day1, $subject->start1, $subject->end1, $subject->room1, $subject->day2, $subject->start2, $subject->end2, $subject->room2);
+                                        $subject->subject,$subject->year, $subject->semester, $subject->faculty, $subject->unit, $subject->status, $subject->day1, $subject->start1, $subject->end1, $subject->room1, $subject->day2, $subject->start2, $subject->end2, $subject->room2);
                         }
                 }
                 else
