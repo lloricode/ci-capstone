@@ -180,7 +180,23 @@ class Students extends CI_Capstone_Controller
                 $this->table->set_template(array(
                     'table_open' => $this->config->item('table_open_invoice'),
                 ));
-                $this->table->set_heading(array('Code', 'Desciption', 'Start', 'End', 'Days', 'Room', 'Faculty'));
+                $this->table->set_heading(array(
+                    // 'id',
+                    'year',
+                    'semester',
+                    'subject',
+                    'faculty',
+                    'unit',
+                    'status',
+                    'day1',
+                    'start1',
+                    'end1',
+                    'room1',
+                    'day2',
+                    'start2',
+                    'end2',
+                    'room2'
+                ));
 
 
 
@@ -193,8 +209,8 @@ class Students extends CI_Capstone_Controller
                         foreach ($student_subjects_obj as $subject)
                         {
                                 $this->table->add_row(
-                                        $subject->subject_code, $subject->subject_description, convert_24_to_12hrs($subject->start), convert_24_to_12hrs($subject->end), $subject->days, $subject->room_number . ' - ' . $subject->room_description, $subject->faculty
-                                );
+                                        //'id',
+                                        $subject->year, $subject->semester, $subject->subject, $subject->faculty, $subject->unit, $subject->status, $subject->day1, $subject->start1, $subject->end1, $subject->room1, $subject->day2, $subject->start2, $subject->end2, $subject->room2);
                         }
                 }
                 else

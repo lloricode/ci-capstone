@@ -145,7 +145,7 @@ if ( ! function_exists('convert_12_to_24hrs'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_usable('convert_24hrs_to_seconds'))
+if ( ! function_exists('convert_24hrs_to_seconds'))
 {
 
         function convert_24hrs_to_seconds($hr24)

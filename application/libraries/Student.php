@@ -153,20 +153,29 @@ class Student extends School_informations
         }
 
         /**
-         * 
-         * subject_offer_id
-         * days  
-         * start  
-         * end
-         * subject_id       
-         * subject_code        
-         * subject_description            
-         * subject_unit               
-         * room_id    
-         * room_number    
-         * room_description   
-         * faculty_id
-         * faculty
+         * sample result with one row/result
+         * Array
+         *  (
+         *        [0] => Array
+         *        (
+         *                [id] => 4
+         *                [year] => 1
+         *                [semester] => 1st Semester
+         *                [subject] => Engl 111
+         *                [faculty] => Lastw, Firsty
+         *                [unit] => 3
+         *                [status] => 0
+         *                [day1] => TH
+         *                [start1] => 06:30 AM
+         *                [end1] => 07:00 AM
+         *                [room1] => 105
+         *                [day2] => T
+         *                [start2] => 07:00 AM
+         *                [end2] => 07:30 AM
+         *                [room2] => 105
+         *        )
+         *        
+         *  )
          * 
          * @param int $limit
          * @param int $offset
@@ -175,40 +184,63 @@ class Student extends School_informations
          */
         public function subject_offers($limit, $offset)
         {
-                $this->load->helper('day');
+                $this->load->helper(array('day', 'school', 'time'));
                 $s_o_           = $this->__students_subjects($limit, $offset);
                 $subject_offers = array();
                 if ($s_o_)
                 {
                         foreach ($s_o_ as $stud_sub)
                         {
-                                $sub_of           = $this->Subject_offer_model->
-                                        with_faculty()->
-                                        with_room()->
-                                        with_subject()->
+                                $sub_of = $this->Subject_offer_model->
+                                        fields('subject_offer_id')->
+                                        with_faculty('fields:last_name,first_name')->
+                                        with_subject('fields:subject_code,subject_description')->
+                                        with_curriculum_subject(
+                                                'fields:curriculum_subject_year_level,'
+                                                . 'curriculum_subject_semester,'
+                                                . 'curriculum_subject_units'
+                                        )->
+                                        with_subject_line(array(
+                                            'with'   => array(
+                                                'relation' => 'room',
+                                                'fields'   => 'room_number'
+                                            ),
+                                            'fields' =>
+                                            'subject_offer_line_start,' .
+                                            'subject_offer_line_end,' .
+                                            'subject_offer_line_monday,' .
+                                            'subject_offer_line_tuesday,' .
+                                            'subject_offer_line_wednesday,' .
+                                            'subject_offer_line_thursday,' .
+                                            'subject_offer_line_friday,' .
+                                            'subject_offer_line_saturday,' .
+                                            'subject_offer_line_sunday'
+                                        ))->
                                         set_cache('student_library_subject_offers_' . $stud_sub->subject_offer_id)->
-                                        get(array(
-                                    'subject_offer_id' => $stud_sub->subject_offer_id
-                                ));
-                                $subject_offers[] = (object) array(
-                                            //local
-                                            'subject_offer_id'    => $sub_of->subject_offer_id,
-                                            'days'                => subject_offers_days($sub_of),
-                                            'start'               => $sub_of->subject_offer_start,
-                                            'end'                 => $sub_of->subject_offer_end,
-                                            //subject
-                                            'subject_id'          => $sub_of->subject->subject_id,
-                                            'subject_code'        => $sub_of->subject->subject_code,
-                                            'subject_description' => $sub_of->subject->subject_description,
-                                            'subject_unit'        => $sub_of->subject->subject_unit,
-                                            //room
-                                            'room_id'             => $sub_of->room->room_id,
-                                            'room_number'         => $sub_of->room->room_number,
-                                            'room_description'    => $sub_of->room->room_description,
-                                            //user
-                                            'faculty_id'          => $sub_of->faculty->id,
-                                            'faculty'             => $sub_of->faculty->last_name . ', ' . $sub_of->faculty->first_name,
-                                );
+                                        get($stud_sub->subject_offer_id);
+
+                                $subject_line = array();
+                                $tmp          = 1;
+                                foreach ($sub_of->subject_line as $line)
+                                {
+                                        $subject_line = array_merge($subject_line, array(
+                                            'day' . $tmp   => subject_offers_days($line),
+                                            'start' . $tmp => convert_24_to_12hrs($line->subject_offer_line_start),
+                                            'end' . $tmp   => convert_24_to_12hrs($line->subject_offer_line_end),
+                                            'room' . $tmp  => $line->room->room_number,
+                                        ));
+                                        $tmp ++;
+                                }
+                                $subject_offers[] = (object) array_merge(array(
+                                            'id'       => $sub_of->subject_offer_id,
+                                            'year'     => $sub_of->curriculum_subject->curriculum_subject_year_level,
+                                            'semester' => semesters($sub_of->curriculum_subject->curriculum_subject_semester),
+                                            'subject'  => $sub_of->subject->subject_code,
+                                            'faculty'  => $sub_of->faculty->last_name . ', ' . $sub_of->faculty->first_name,
+                                            //--
+                                            'unit'     => $sub_of->curriculum_subject->curriculum_subject_units,
+                                            'status'   => $stud_sub->student_subject_enroll_status
+                                                ), $subject_line);
                         }
 
                         return (object) $subject_offers;
