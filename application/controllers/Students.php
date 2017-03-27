@@ -182,7 +182,7 @@ class Students extends CI_Capstone_Controller
                 ));
                 $this->table->set_heading(array(
                     // 'id',
-                    lang('student_subject_th'), 
+                    lang('student_subject_th'), /* lang in students_lang */
                     lang('student_year_th'),
                     lang('student_semester_th'),
                     lang('student_instructor_th'),

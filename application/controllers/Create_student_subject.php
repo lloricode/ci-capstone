@@ -302,8 +302,6 @@ class Create_student_subject extends CI_Capstone_Controller
                                 }
 
                                 $output = array(
-                                    number_place($s->curriculum_subject->curriculum_subject_year_level) . ' Year',
-                                    semesters($s->curriculum_subject->curriculum_subject_semester),
                                     anchor(//just a subject code with redirection, directly to curriculum with highlighten phrase
                                             //----------------------------------link
                                             'curriculums/view?curriculum-id=' .
@@ -319,6 +317,8 @@ class Create_student_subject extends CI_Capstone_Controller
                                         'title' => $s->subject->subject_description//pop up subject description when hover mouse
                                             )
                                     ),
+                                    number_place($s->curriculum_subject->curriculum_subject_year_level) . ' Year',
+                                    semesters($s->curriculum_subject->curriculum_subject_semester),
                                     $s->faculty->last_name . ', ' . $s->faculty->first_name
                                 );
 
@@ -374,20 +374,20 @@ class Create_student_subject extends CI_Capstone_Controller
 //                    lang('index_subject_offer_days_th'),
 //                    lang('index_room_id_th'),
 //                    lang('index_user_id_th'),
-
-                    'year',
-                    'semester',
-                    'Subject',
-                    'Faculty',
-                    'Days1',
-                    'Start1',
-                    'End1',
-                    'Room1',
-                    'Days2',
-                    'Start2',
-                    'End2',
-                    'Room2',
-                    'unit'
+                    
+                    lang('student_subject_th'), /* lang in students_lang */
+                    lang('student_year_th'),
+                    lang('student_semester_th'),
+                    lang('student_instructor_th'),
+                    lang('student_day1_th'),
+                    lang('student_start_th'),
+                    lang('student_end_th'),
+                    lang('student_room_th'),
+                    lang('student_day2_th'),
+                    lang('student_start_th'),
+                    lang('student_end_th'),
+                    lang('student_room_th'),
+                    lang('student_unit_th'),
                 );
                 $header[] = $header_col;
 
