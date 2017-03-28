@@ -182,10 +182,10 @@ class Student extends School_informations
          * @return object
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        public function subject_offers($limit, $offset)
+        public function subject_offers(/* $limit, $offset */)
         {
                 $this->load->helper(array('day', 'school', 'time'));
-                $s_o_           = $this->__students_subjects($limit, $offset);
+                $s_o_           = $this->__students_subjects(/* $limit, $offset */);
                 $subject_offers = array();
                 if ($s_o_)
                 {
@@ -243,13 +243,13 @@ class Student extends School_informations
                                 }
                                 $subject_offers[] = (object) array_merge(array(
                                             'id'       => $sub_of->subject_offer_id,
-                                            'year'     => $sub_of->curriculum_subject->curriculum_subject_year_level,
+                                            'year'     => number_place($sub_of->curriculum_subject->curriculum_subject_year_level) . ' Year',
                                             'semester' => semesters($sub_of->curriculum_subject->curriculum_subject_semester),
                                             'subject'  => $sub_of->subject->subject_code,
                                             'faculty'  => $sub_of->faculty->last_name . ', ' . $sub_of->faculty->first_name,
                                             //--
                                             'unit'     => $sub_of->curriculum_subject->curriculum_subject_units,
-                                            'status'   => $stud_sub->student_subject_enroll_status
+                                            'status'   => ($stud_sub->student_subject_enroll_status) ? 'Enrooled' : 'Pending'
                                                 ), $subject_line);
                         }
 
@@ -400,14 +400,16 @@ class School_informations
                 ));
         }
 
-        protected function __students_subjects($limit, $offset)
+        protected function __students_subjects(/* $limit, $offset */)
         {
                 return $this->Students_subjects_model->
                                 where(array(
                                     'enrollment_id' => $this->__enrollment->enrollment_id
                                 ))->
-                                set_cache('student_library_students_subjects_' . $this->__enrollment->enrollment_id . '_limit_' . $limit . '_offset_' . $offset)->
-                                limit($limit, $offset)->get_all();
+                                //set_cache('student_library_students_subjects_' . $this->__enrollment->enrollment_id . '_limit_' . $limit . '_offset_' . $offset)->
+                                set_cache('student_library_students_subjects_' . $this->__enrollment->enrollment_id)->
+                                // limit($limit, $offset)->
+                                get_all();
         }
 
         /**

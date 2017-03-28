@@ -182,12 +182,11 @@ class Students extends CI_Capstone_Controller
                 ));
                 $this->table->set_heading(array(
                     // 'id',
-                    lang('student_subject_th'), /* lang in students_lang */
                     lang('student_year_th'),
                     lang('student_semester_th'),
                     lang('student_instructor_th'),
+                    lang('student_subject_th'), /* lang in students_lang */
                     lang('student_unit_th'),
-                    lang('student_status_th'),
                     lang('student_day1_th'),
                     lang('student_start_th'),
                     lang('student_end_th'),
@@ -195,7 +194,8 @@ class Students extends CI_Capstone_Controller
                     lang('student_day2_th'),
                     lang('student_start_th'),
                     lang('student_end_th'),
-                    lang('student_room_th')
+                    lang('student_room_th'),
+                    lang('student_status_th')
                 ));
 
 
@@ -210,7 +210,7 @@ class Students extends CI_Capstone_Controller
                         {
                                 $this->table->add_row(
                                         //'id',
-                                        $subject->subject,$subject->year, $subject->semester, $subject->faculty, $subject->unit, $subject->status, $subject->day1, $subject->start1, $subject->end1, $subject->room1, $subject->day2, $subject->start2, $subject->end2, $subject->room2);
+                                        $subject->year, $subject->semester, $subject->faculty, $subject->subject, $subject->unit, $subject->day1, $subject->start1, $subject->end1, $subject->room1, $subject->day2, $subject->start2, $subject->end2, $subject->room2, $subject->status);
                         }
                 }
                 else
@@ -229,7 +229,7 @@ class Students extends CI_Capstone_Controller
                 /**
                  * generating html pagination
                  */
-                $this->data['table_subjects_pagination'] = $this->pagination->generate_bootstrap_link('students/view?student-id=' . $this->student->id, $this->student->subject_total() / $this->limit, TRUE);
+//                $this->data['table_subjects_pagination'] = $this->pagination->generate_bootstrap_link('students/view?student-id=' . $this->student->id, $this->student->subject_total() / $this->limit, TRUE);
                 $this->data['image_src']                 = $this->_image_for_view_single_data();
                 /**
                  * here we go!

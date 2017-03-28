@@ -98,9 +98,12 @@
                              * subjects table
                              */
                             echo $table_subjects;
-                            echo '<div class = "pagination alternate pull-right">';
-                            echo $table_subjects_pagination;
-                            echo '</div>';
+                            if (isset($table_subjects_pagination))
+                            {
+                                    echo '<div class = "pagination alternate pull-right">';
+                                    echo $table_subjects_pagination;
+                                    echo '</div>';
+                            }
                             ?>
 
 
