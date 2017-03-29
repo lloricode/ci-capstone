@@ -388,7 +388,7 @@ class School_informations
                 /**
                  * set curriculum_id
                  */
-                $this->_curriculum_subjects = $this->Subject_offer_model->all(TRUE, $this->__enrollment->curriculum_id); //parameter is set to current semester and year
+                $this->_curriculum_subjects = $this->Subject_offer_model->all(TRUE, $this->__enrollment->curriculum_id, $this->__enrollment->enrollment_id); //parameter is set to current semester and year
         }
 
         protected function __load_education()
@@ -426,6 +426,20 @@ class School_informations
                 {
                         foreach ($this->_curriculum_subjects as $s)
                         {
+
+                                if (isset($s->student_subjects->enrollment_id))
+                                {
+                                        // i made an issue for this
+                                        //https://github.com/avenirer/CodeIgniter-MY_Model/issues/231
+                                        //this is temporary,(if fixed will refactor)
+                                        if ($s->student_subjects->enrollment_id == $this->__enrollment->enrollment_id)//i set to not != so check if exist then skip
+                                        {
+
+                                                continue;
+                                        }
+                                }
+
+
                                 if ($level == $s->curriculum_subject->curriculum_subject_year_level)
                                 {
                                         $return[] = $s;

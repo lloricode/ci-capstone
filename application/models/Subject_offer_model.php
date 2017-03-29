@@ -67,6 +67,13 @@ class Subject_offer_model extends MY_Model
                     'foreign_key'   => 'subject_id',
                     'local_key'     => 'subject_id'
                 );
+
+                $this->has_one['student_subjects'] = array(
+                    'foreign_model' => 'Students_subjects_model',
+                    'foreign_table' => 'students_subjects',
+                    'foreign_key'   => 'subject_offer_id',
+                    'local_key'     => 'subject_offer_id'
+                );
         }
 
         public function insert_validations()
@@ -119,7 +126,7 @@ class Subject_offer_model extends MY_Model
                 return $this;
         }
 
-        public function all($current_sem_year = FALSE, $curriculum_id = FALSE)
+        public function all($current_sem_year = FALSE, $curriculum_id = FALSE, $enrollment_id = FALSE)
         {
                 $this->_query();
                 if ($current_sem_year)
@@ -128,6 +135,13 @@ class Subject_offer_model extends MY_Model
                          * only current semester and year, if set to TRUE
                          */
                         $this->_where_current_sem_year();
+                }
+                if ($enrollment_id)
+                {
+                        /**
+                         * for student profile
+                         */
+                        $this->with_student_subjects();//'where:`enrollment_id`!=' . $enrollment_id);
                 }
                 $where__     = array(
                     'with' => array(
