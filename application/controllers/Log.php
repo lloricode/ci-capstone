@@ -92,7 +92,7 @@ class Log extends CI_Capstone_Controller
                 $this->data['caption']   = lang('index_heading');
                 $this->data['bootstrap'] = $this->_bootstrap();
 
-                $this->_render('admin/log', $this->data);
+                $this->render('admin/log', $this->data);
         }
 
         /**

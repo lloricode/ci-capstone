@@ -69,7 +69,7 @@ class Rooms extends CI_Capstone_Controller
                 /**
                  * rendering users view
                  */
-                $this->_render('admin/rooms', $this->template);
+                $this->render('admin/rooms', $this->template);
         }
 
         /**

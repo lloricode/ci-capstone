@@ -124,7 +124,7 @@ class Students extends CI_Capstone_Controller
                 /**
                  * rendering users view
                  */
-                $this->_render('admin/students', $this->template);
+                $this->render('admin/students', $this->template);
         }
 
         private function _images_for_table($student)
@@ -235,9 +235,9 @@ class Students extends CI_Capstone_Controller
                  * here we go!
                  * rendering page for view
                  */
-                $this->template['view']                  = MY_Controller::_render('admin/_templates/students/view', $this->data, TRUE);
+                $this->template['view']                  = MY_Controller::render('admin/_templates/students/view', $this->data, TRUE);
                 $this->template['bootstrap']             = $this->_bootstrap_for_view();
-                $this->_render('admin/students', $this->template);
+                $this->render('admin/students', $this->template);
         }
 
         /**

@@ -204,7 +204,7 @@ class Create_student_subject extends CI_Capstone_Controller
                          * button for reset session
                          * will view this if has session on added subject
                          */
-                        $this->data['reset_subject_offer_session'] = MY_Controller::_render('admin/_templates/button_view', array(
+                        $this->data['reset_subject_offer_session'] = MY_Controller::render('admin/_templates/button_view', array(
                                     'href'         => 'create-student-subject/reset-subject-offer-session?student-id=' . $this->student->id,
                                     'button_label' => 'reset subject offer session',
                                     'extra'        => array('class' => 'btn btn-success icon-edit'),
@@ -219,7 +219,7 @@ class Create_student_subject extends CI_Capstone_Controller
                 );
 
                 $this->data['bootstrap'] = $this->_bootstrap();
-                $this->_render('admin/create_student_subject', $this->data);
+                $this->render('admin/create_student_subject', $this->data);
         }
 
         /**

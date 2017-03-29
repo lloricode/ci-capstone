@@ -80,7 +80,7 @@ class Create_curriculum extends CI_Capstone_Controller
 
                 $this->data['curriculum_form'] = $this->form_boostrap('create-curriculum', $inputs, 'create_curriculum_label', 'curriculumn_create_button', 'info-sign', NULL, TRUE);
                 $this->data['bootstrap']       = $this->_bootstrap();
-                $this->_render('admin/create_curriculum', $this->data);
+                $this->render('admin/create_curriculum', $this->data);
         }
 
         private function _bootstrap()

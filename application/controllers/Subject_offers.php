@@ -104,7 +104,7 @@ class Subject_offers extends CI_Capstone_Controller
                 /**
                  * rendering users view
                  */
-                $this->_render('admin/subject_offers', $this->template);
+                $this->render('admin/subject_offers', $this->template);
         }
 
         /**

@@ -385,7 +385,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                 $this->data['days'] = days_for_db();
 
                 $this->data['bootstrap'] = $this->_bootstrap();
-                $this->_render('admin/create_subject_offer', $this->data);
+                $this->render('admin/create_subject_offer', $this->data);
         }
 
         /**

@@ -112,7 +112,7 @@ class Users extends CI_Capstone_Controller
                 if (in_array('create-user', permission_controllers()))
                 {
 
-                        $this->template['create_user_button'] = MY_Controller::_render('admin/_templates/button_view', array(
+                        $this->template['create_user_button'] = MY_Controller::render('admin/_templates/button_view', array(
                                     'href'         => 'create-user',
                                     'button_label' => lang('create_user_heading'),
                                     'extra'        => array('class' => 'btn btn-success icon-edit'),
@@ -120,7 +120,7 @@ class Users extends CI_Capstone_Controller
                 }
                 if ($this->ion_auth->is_admin())
                 {
-                        $this->template['export_user_button'] = MY_Controller::_render('admin/_templates/button_view', array(
+                        $this->template['export_user_button'] = MY_Controller::render('admin/_templates/button_view', array(
                                     'href'         => 'users/export-excel',
                                     'button_label' => lang('excel_export'),
                                     'extra'        => array('class' => 'btn btn-info icon-download-alt')
@@ -140,7 +140,7 @@ class Users extends CI_Capstone_Controller
                 ;
 
 
-                $this->_render('admin/users', $this->template);
+                $this->render('admin/users', $this->template);
         }
 
         /**

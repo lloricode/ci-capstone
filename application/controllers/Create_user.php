@@ -166,7 +166,7 @@ class Create_user extends CI_Capstone_Controller
                 // set the flash data error message if there is one
                 $this->data['user_form'] = $this->form_boostrap('create-user/index', $inputs, 'create_user_heading', 'create_user_submit_btn', 'info-sign', NULL, TRUE);
                 $this->data['bootstrap'] = $this->_bootstrap();
-                $this->_render('admin/create_user', $this->data);
+                $this->render('admin/create_user', $this->data);
         }
 
         /**

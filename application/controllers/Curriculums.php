@@ -82,7 +82,7 @@ class Curriculums extends CI_Capstone_Controller
                 /**
                  * rendering users view
                  */
-                $this->_render('admin/curriculums', $this->template);
+                $this->render('admin/curriculums', $this->template);
         }
 
         public function view()
@@ -148,17 +148,17 @@ class Curriculums extends CI_Capstone_Controller
                     lang('curriculum_subject_co_subject_label'),
                     'add Requisite'
                 );
-                $this->template['create_curriculum_subject_button'] = MY_Controller::_render('admin/_templates/button_view', array(
+                $this->template['create_curriculum_subject_button'] = MY_Controller::render('admin/_templates/button_view', array(
                             'href'         => 'create-curriculum-subject?curriculum-id=' . $curriculum_obj->curriculum_id,
                             'button_label' => lang('create_curriculum_subject_label'),
                             'extra'        => array('class' => 'btn btn-success icon-edit'),
                                 ), TRUE);
-                $this->template['curriculum_information']           = MY_Controller::_render('admin/_templates/curriculums/curriculum_information', array('curriculum_obj' => $curriculum_obj), TRUE);
+                $this->template['curriculum_information']           = MY_Controller::render('admin/_templates/curriculums/curriculum_information', array('curriculum_obj' => $curriculum_obj), TRUE);
                 $this->template['curriculum_obj']                   = $curriculum_obj;
                 $this->template['table_corriculum_subjects']        = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'curriculum_subject_label', FALSE, TRUE);
                 $this->template['message']                          = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
                 $this->template['bootstrap']                        = $this->_bootstrap();
-                $this->_render('admin/curriculums', $this->template);
+                $this->render('admin/curriculums', $this->template);
         }
 
         /**

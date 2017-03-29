@@ -68,11 +68,11 @@ class Create_requisite extends CI_Capstone_Controller
                 );
 
 
-                $this->template['curriculum_information']         = MY_Controller::_render('admin/_templates/curriculums/curriculum_information', array('curriculum_obj' => $curriculum_obj), TRUE);
+                $this->template['curriculum_information']         = MY_Controller::render('admin/_templates/curriculums/curriculum_information', array('curriculum_obj' => $curriculum_obj), TRUE);
                 $this->template['curriculum_subject_information'] = $this->_current_curriculum_subject($curriculum_subject_obj->curriculum_subject_id);
                 $this->template['requisite_form']                 = $this->form_boostrap('create-requisite?curriculum-id=' . $curriculum_obj->curriculum_id . '&curriculum-subject-id=' . $curriculum_subject_obj->curriculum_subject_id, $inputs, 'create_requisite_label', 'create_requisite_label', 'info-sign', NULL, TRUE, form_error('tmp_is_atleast_one')); //see requisite_model
                 $this->template['bootstrap']                      = $this->_bootstrap();
-                $this->_render('admin/create_requisite', $this->template);
+                $this->render('admin/create_requisite', $this->template);
         }
 
         private function _submit($curriculum_id, $curriculum_subject_id)

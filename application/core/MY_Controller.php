@@ -37,7 +37,7 @@ class MY_Controller extends CI_Controller
          * @return type
          * @author ion_auth
          */
-        public function _render($view, $data = null, $returnhtml = false)
+        public function render($view, $data = null, $returnhtml = false)
         {//I think this makes more sense
                 $this->viewdata = (empty($data)) ? $this->data : $data;
 
@@ -183,7 +183,7 @@ class CI_Capstone_Controller extends MY_Controller
          * @return null if content is missing
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        public function _render($content, $data = NULL, $returnhtml = FALSE)
+        public function render($content, $data = NULL, $returnhtml = FALSE)
         {
                 if ( ! $content)
                 {
@@ -193,11 +193,11 @@ class CI_Capstone_Controller extends MY_Controller
                         ' [' . $this->session->userdata('user_groups_descriptions') . ']';
                 $data['navigations'] = navigations_main();
 
-                $this->template['header']  = parent::_render('admin/_templates/header', $data, TRUE);
-                $this->template['content'] = parent::_render($content, $data, TRUE);
-                $this->template['footer']  = parent::_render('admin/_templates/footer', $data, TRUE);
+                $this->template['header']  = parent::render('admin/_templates/header', $data, TRUE);
+                $this->template['content'] = parent::render($content, $data, TRUE);
+                $this->template['footer']  = parent::render('admin/_templates/footer', $data, TRUE);
 
-                parent::_render('template', $this->template, $returnhtml);
+                parent::render('template', $this->template, $returnhtml);
         }
 
         /**
@@ -222,7 +222,7 @@ class CI_Capstone_Controller extends MY_Controller
                 $_data['caption_lang'] = $caption_lang;
                 $_data['table_data']   = $this->table->generate($table_data_rows);
                 $_data['pagination']   = $pagination;
-                $generated_html_table  = parent::_render('admin/_templates/table', $_data, $return_html);
+                $generated_html_table  = parent::render('admin/_templates/table', $_data, $return_html);
                 if ($return_html)
                 {
                         return $generated_html_table;
@@ -251,7 +251,7 @@ class CI_Capstone_Controller extends MY_Controller
                 $_data['hidden_inputs'] = $_hidden_inputs;
                 $_data['error']         = $_error;
 
-                $generated_html_form = parent::_render('admin/_templates/form', $_data, $return_html);
+                $generated_html_form = parent::render('admin/_templates/form', $_data, $return_html);
                 if ($return_html)
                 {
                         return $generated_html_form;

@@ -82,7 +82,7 @@ class Last_logins extends CI_Capstone_Controller
                 /**
                  * rendering users view
                  */
-                $this->_render('admin/last_logins', $this->template);
+                $this->render('admin/last_logins', $this->template);
         }
 
         /**

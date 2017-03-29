@@ -94,7 +94,7 @@ class Edit_group extends CI_Capstone_Controller
                     'value' => $this->form_validation->set_value('group_description', $group->description),
                 );
                 $this->data['bootstrap']         = $this->_bootstrap();
-                $this->_render('admin/edit_group', $this->data);
+                $this->render('admin/edit_group', $this->data);
         }
 
         /**

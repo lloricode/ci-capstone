@@ -51,7 +51,7 @@ class Create_room extends CI_Capstone_Controller
 
                 $this->data['room_form'] = $this->form_boostrap('create-room', $inputs, 'create_room_heading', 'create_room_submit_button_label', 'info-sign', NULL, TRUE);
                 $this->data['bootstrap'] = $this->_bootstrap();
-                $this->_render('admin/create_room', $this->data);
+                $this->render('admin/create_room', $this->data);
         }
 
         /**

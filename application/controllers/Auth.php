@@ -116,7 +116,7 @@ class Auth extends MY_Controller
                 else
                 {
                         $this->_set_data($message);
-                        $this->_render('admin/login', $this->data);
+                        $this->render('admin/login', $this->data);
                 }
         }
 
@@ -143,7 +143,7 @@ class Auth extends MY_Controller
                 {
 
                         $this->_set_data();
-                        $this->_render('admin/login', $this->data);
+                        $this->render('admin/login', $this->data);
                 }
                 else
                 {
@@ -232,7 +232,7 @@ class Auth extends MY_Controller
                                 $this->data['code']                 = $code;
 
                                 // render
-                                $this->_render('reset_password', $this->data);
+                                $this->render('reset_password', $this->data);
                         }
                         else
                         {

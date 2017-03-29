@@ -58,7 +58,7 @@ class Create_subject extends CI_Capstone_Controller
 
                 $this->data['subject_form'] = $this->form_boostrap('create-subject', $inputs, 'create_subject_heading', 'create_subject_submit_button_label', 'info-sign', NULL, TRUE);
                 $this->data['bootstrap']    = $this->_bootstrap();
-                $this->_render('admin/create_subject', $this->data);
+                $this->render('admin/create_subject', $this->data);
         }
 
         private function _bootstrap()

@@ -384,7 +384,7 @@ class Edit_student extends CI_Capstone_Controller
                  * redering
                  */
                 $this->data['bootstrap']              = $this->_bootstrap();
-                $this->_render('admin/edit_student', $this->data);
+                $this->render('admin/edit_student', $this->data);
         }
 
         /**

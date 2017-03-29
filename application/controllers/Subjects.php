@@ -70,7 +70,7 @@ class Subjects extends CI_Capstone_Controller
                
                 if (in_array('create-subject', permission_controllers()))
                 {
-                        $this->template['create_subject_button'] = MY_Controller::_render('admin/_templates/button_view', array(
+                        $this->template['create_subject_button'] = MY_Controller::render('admin/_templates/button_view', array(
                                     'href'         => 'create-subject',
                                     'button_label' => lang('create_subject_heading'),
                                     'extra'        => array('class' => 'btn btn-success icon-edit'),
@@ -83,7 +83,7 @@ class Subjects extends CI_Capstone_Controller
                 /**
                  * rendering users view
                  */
-                $this->_render('admin/subjects', $this->template);
+                $this->render('admin/subjects', $this->template);
         }
 
         /**

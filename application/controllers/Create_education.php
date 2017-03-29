@@ -52,7 +52,7 @@ class Create_education extends CI_Capstone_Controller
 
                 $this->data['education_form'] = $this->form_boostrap('create-education', $inputs, 'create_education_heading', 'create_education_submit_button_label', 'info-sign', NULL, TRUE);
                 $this->data['bootstrap']      = $this->_bootstrap();
-                $this->_render('admin/create_education', $this->data);
+                $this->render('admin/create_education', $this->data);
         }
 
         private function _bootstrap()

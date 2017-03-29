@@ -88,7 +88,7 @@ class Create_course extends CI_Capstone_Controller
 
                 $this->data['course_form'] = $this->form_boostrap('create-course/index', $inputs, 'create_course_heading', 'create_course_submit_button_label', 'info-sign', NULL, TRUE);
                 $this->data['bootstrap']   = $this->_bootstrap();
-                $this->_render('admin/create_course', $this->data);
+                $this->render('admin/create_course', $this->data);
         }
 
         /**
