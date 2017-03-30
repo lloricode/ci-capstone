@@ -47,7 +47,7 @@ class Student_model extends MY_Model
                     'foreign_table' => 'enrollments',
                     'foreign_key'   => 'student_id',
                     'local_key'     => 'student_id'
-                );               
+                );
         }
 
         private function _form()
@@ -88,7 +88,7 @@ class Student_model extends MY_Model
                     'student_birthdate'               => array(
                         'label' => lang('index_student_birthdate_th'),
                         'field' => 'birthdate',
-                        'rules' => 'trim|required',
+                        'rules' => 'trim|required|regex_match[/^\d{2}[-]\d{2}[-]\d{4}$/]|_age_limit[5.90]',
                     ),
                     'student_permanent_address'       => array(
                         'label' => lang('index_student_permanent_address_th'),
@@ -248,7 +248,7 @@ class Student_model extends MY_Model
                 }
                 else
                 {
-                       if ( ! $this->student)
+                        if ( ! $this->student)
                         {
                                 /**
                                  * just to make sure student already loaded

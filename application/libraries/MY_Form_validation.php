@@ -332,4 +332,28 @@ class MY_Form_validation extends CI_Form_validation
                 return TRUE;
         }
 
+        /**
+         * 
+         * @param type $value
+         * @param type $limit
+         * @return boolean
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        public function _age_limit($value, $limit)
+        {
+                list($min, $max) = explode('.', $limit);
+
+                $this->CI->load->library('age');
+                $this->CI->age->initialize($value);
+                $age = $this->CI->age->result();
+
+                if ($age < $min OR $age > $max)
+                {
+                        $this->CI->form_validation->set_message('_age_limit', 'The {field} is not below ' . $min . ' or max at ' . $max . '. Result age: ' . $age . ' years old.');
+                        return FALSE;
+                }
+
+                return TRUE;
+        }
+
 }
