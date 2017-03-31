@@ -181,10 +181,8 @@ class Create_student_subject extends CI_Capstone_Controller
         private function _form_view($error_message)
         {
 
-
-
                 /**
-                 * view the available subject from curriculum
+                 * add session
                  */
                 $this->_add_session_subjects();
 
@@ -344,12 +342,12 @@ class Create_student_subject extends CI_Capstone_Controller
                                 {
                                         case 'db': $btn_link = anchor(
                                                         site_url('create-student-subject?student-id=' . $this->student->id .
-                                                                '&subject-offer-id=' . $s->subject_offer_id),'<span class="btn btn-info btn-mini">'. lang('add_student_subject_label'). '</span>'
+                                                                '&subject-offer-id=' . $s->subject_offer_id), '<span class="btn btn-info btn-mini">' . lang('add_student_subject_label') . '</span>'
                                                 );
                                                 break;
                                         case 'session':
                                                 $btn_link = anchor(
-                                                        site_url('create-student-subject/unset-value-subject-offer-session?student-id=' . $this->student->id . '&subject-offer-id=' . $s->subject_offer_id),'<span class="btn btn-inverse btn-mini">'. lang('remove_subjects_to_enroll').'</span>'
+                                                        site_url('create-student-subject/unset-value-subject-offer-session?student-id=' . $this->student->id . '&subject-offer-id=' . $s->subject_offer_id), '<span class="btn btn-inverse btn-mini">' . lang('remove_subjects_to_enroll') . '</span>'
                                                 );
                                                 break;
                                 }
@@ -374,7 +372,7 @@ class Create_student_subject extends CI_Capstone_Controller
 //                    lang('index_subject_offer_days_th'),
 //                    lang('index_room_id_th'),
 //                    lang('index_user_id_th'),
-                    
+
                     lang('student_subject_th'), /* lang in students_lang */
                     lang('student_year_th'),
                     lang('student_semester_th'),
