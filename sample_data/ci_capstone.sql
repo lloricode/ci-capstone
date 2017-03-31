@@ -1,87 +1,3 @@
-#
-# TABLE STRUCTURE FOR: controllers
-#
-
-DROP TABLE IF EXISTS `controllers`;
-
-CREATE TABLE `controllers` (
-  `controller_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `controller_name` enum('home','curriculums','create-curriculum','create-curriculum-subject','create-requisite','students','create-student','edit-student','create-student-subject','subjects','create-subject','subject-offers','create-subject-offer','educations','create-education','courses','create-course','rooms','create-room','users','create-user','groups','create-group','edit-group','deactivate','edit-user','database','log','permissions','last-logins','') NOT NULL,
-  `controller_description` varchar(50) NOT NULL,
-  `controller_admin_only` tinyint(1) NOT NULL DEFAULT '0',
-  `created_at` varchar(100) NOT NULL,
-  PRIMARY KEY (`controller_id`),
-  UNIQUE KEY `controller_name` (`controller_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
-
-INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_description`, `controller_admin_only`, `created_at`) VALUES ('1', 'home', 'Home Description', '0', '1490272231');
-INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_description`, `controller_admin_only`, `created_at`) VALUES ('2', 'curriculums', 'Curriculums Description', '0', '1490272231');
-INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_description`, `controller_admin_only`, `created_at`) VALUES ('3', 'create-curriculum', 'Create Curriculum Description', '0', '1490272231');
-INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_description`, `controller_admin_only`, `created_at`) VALUES ('4', 'create-curriculum-subject', 'Create Curriculum Subject Description', '0', '1490272231');
-INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_description`, `controller_admin_only`, `created_at`) VALUES ('5', 'create-requisite', 'Create Requisite Description', '0', '1490272231');
-INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_description`, `controller_admin_only`, `created_at`) VALUES ('6', 'students', 'Students Description', '0', '1490272231');
-INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_description`, `controller_admin_only`, `created_at`) VALUES ('7', 'create-student', 'Create Student Description', '0', '1490272232');
-INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_description`, `controller_admin_only`, `created_at`) VALUES ('8', 'edit-student', 'Edit Student Description', '0', '1490272232');
-INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_description`, `controller_admin_only`, `created_at`) VALUES ('9', 'create-student-subject', 'Create Student Subject Description', '0', '1490272232');
-INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_description`, `controller_admin_only`, `created_at`) VALUES ('10', 'subjects', 'Subjects Description', '0', '1490272232');
-INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_description`, `controller_admin_only`, `created_at`) VALUES ('11', 'create-subject', 'Create Subject Description', '0', '1490272232');
-INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_description`, `controller_admin_only`, `created_at`) VALUES ('12', 'subject-offers', 'Subject Offers Description', '0', '1490272232');
-INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_description`, `controller_admin_only`, `created_at`) VALUES ('13', 'create-subject-offer', 'Create Subject Offer Description', '0', '1490272232');
-INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_description`, `controller_admin_only`, `created_at`) VALUES ('14', 'educations', 'Educations Description', '0', '1490272232');
-INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_description`, `controller_admin_only`, `created_at`) VALUES ('15', 'create-education', 'Create Education Description', '0', '1490272232');
-INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_description`, `controller_admin_only`, `created_at`) VALUES ('16', 'courses', 'Courses Description', '0', '1490272232');
-INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_description`, `controller_admin_only`, `created_at`) VALUES ('17', 'create-course', 'Create Course Description', '0', '1490272232');
-INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_description`, `controller_admin_only`, `created_at`) VALUES ('18', 'rooms', 'Rooms Description', '0', '1490272232');
-INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_description`, `controller_admin_only`, `created_at`) VALUES ('19', 'create-room', 'Create Room Description', '0', '1490272232');
-INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_description`, `controller_admin_only`, `created_at`) VALUES ('20', 'users', 'Users Description', '0', '1490272232');
-INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_description`, `controller_admin_only`, `created_at`) VALUES ('21', 'create-user', 'Create User Description', '1', '1490272232');
-INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_description`, `controller_admin_only`, `created_at`) VALUES ('22', 'groups', 'Groups Description', '0', '1490272232');
-INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_description`, `controller_admin_only`, `created_at`) VALUES ('23', 'create-group', 'Create Group Description', '1', '1490272232');
-INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_description`, `controller_admin_only`, `created_at`) VALUES ('24', 'edit-group', 'Edit Group Description', '1', '1490272232');
-INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_description`, `controller_admin_only`, `created_at`) VALUES ('25', 'deactivate', 'Deactivate Description', '1', '1490272232');
-INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_description`, `controller_admin_only`, `created_at`) VALUES ('26', 'edit-user', 'Edit User Description', '1', '1490272232');
-INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_description`, `controller_admin_only`, `created_at`) VALUES ('27', 'database', 'Database Description', '1', '1490272232');
-INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_description`, `controller_admin_only`, `created_at`) VALUES ('28', 'log', 'Log Description', '1', '1490272232');
-INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_description`, `controller_admin_only`, `created_at`) VALUES ('29', 'permissions', 'Permissions Description', '1', '1490272232');
-INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_description`, `controller_admin_only`, `created_at`) VALUES ('30', 'last-logins', 'Last Logins Description', '1', '1490272232');
-INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_description`, `controller_admin_only`, `created_at`) VALUES ('31', '', 'Default Controller Description', '0', '1490272233');
-
-
-#
-# TABLE STRUCTURE FOR: courses
-#
-
-DROP TABLE IF EXISTS `courses`;
-
-CREATE TABLE `courses` (
-  `course_id` int(8) unsigned NOT NULL AUTO_INCREMENT,
-  `course_code` varchar(50) NOT NULL,
-  `course_icon` varchar(20) NOT NULL,
-  `course_color` varchar(20) NOT NULL,
-  `course_description` varchar(50) NOT NULL,
-  `course_code_id` varchar(5) NOT NULL,
-  `education_id` int(11) NOT NULL,
-  `created_at` varchar(100) NOT NULL,
-  `created_user_id` int(11) unsigned NOT NULL,
-  `deleted_at` varchar(100) DEFAULT NULL,
-  `deleted_user_id` int(11) unsigned DEFAULT NULL,
-  `updated_at` varchar(100) DEFAULT NULL,
-  `updated_user_id` int(11) unsigned DEFAULT NULL,
-  PRIMARY KEY (`course_id`),
-  UNIQUE KEY `course_code` (`course_code`),
-  UNIQUE KEY `course_description` (`course_description`),
-  UNIQUE KEY `course_code_id` (`course_code_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
-
-INSERT INTO `courses` (`course_id`, `course_code`, `course_icon`, `course_color`, `course_description`, `course_code_id`, `education_id`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES ('1', 'BEED', 'book', 'ly', 'BEED description', '20', '1', '1490272231', '3', NULL, NULL, NULL, NULL);
-INSERT INTO `courses` (`course_id`, `course_code`, `course_icon`, `course_color`, `course_description`, `course_code_id`, `education_id`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES ('2', 'HRM', 'fire', 'ls', 'HRM description', '30', '1', '1490272231', '2', NULL, NULL, NULL, NULL);
-INSERT INTO `courses` (`course_id`, `course_code`, `course_icon`, `course_color`, `course_description`, `course_code_id`, `education_id`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES ('3', 'Paramedical', 'user-md', 'lg', 'Paramedical  description', '40', '1', '1490272231', '6', NULL, NULL, NULL, NULL);
-INSERT INTO `courses` (`course_id`, `course_code`, `course_icon`, `course_color`, `course_description`, `course_code_id`, `education_id`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES ('4', 'ICT', 'tasks', 'lo', 'ICT description', '50', '1', '1490272231', '6', NULL, NULL, NULL, NULL);
-INSERT INTO `courses` (`course_id`, `course_code`, `course_icon`, `course_color`, `course_description`, `course_code_id`, `education_id`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES ('5', 'High School', 'briefcase', 'lb', 'High School Department', '60', '2', '1490272231', '4', NULL, NULL, NULL, NULL);
-INSERT INTO `courses` (`course_id`, `course_code`, `course_icon`, `course_color`, `course_description`, `course_code_id`, `education_id`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES ('6', 'AMT', 'beaker', 'lv', 'AMT description', '70', '1', '1490272231', '2', NULL, NULL, NULL, NULL);
-INSERT INTO `courses` (`course_id`, `course_code`, `course_icon`, `course_color`, `course_description`, `course_code_id`, `education_id`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES ('7', 'TESDA', 'group', 'ly', 'Tesda Courses', '80', '1', '1490272231', '4', NULL, NULL, NULL, NULL);
-INSERT INTO `courses` (`course_id`, `course_code`, `course_icon`, `course_color`, `course_description`, `course_code_id`, `education_id`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES ('8', 'CME', 'tint', 'ls', 'CME description', '90', '1', '1490272231', '2', NULL, NULL, NULL, NULL);
-INSERT INTO `courses` (`course_id`, `course_code`, `course_icon`, `course_color`, `course_description`, `course_code_id`, `education_id`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES ('9', 'Cross Enroll', 'move', 'lg', 'Cross Enroll description', '01', '1', '1490272231', '5', NULL, NULL, NULL, NULL);
 
 
 #
@@ -172,31 +88,6 @@ INSERT INTO `curriculums` (`curriculum_id`, `curriculum_description`, `curriculu
 
 
 #
-# TABLE STRUCTURE FOR: educations
-#
-
-DROP TABLE IF EXISTS `educations`;
-
-CREATE TABLE `educations` (
-  `education_id` int(8) unsigned NOT NULL AUTO_INCREMENT,
-  `education_code` varchar(50) NOT NULL,
-  `education_description` varchar(50) NOT NULL,
-  `created_at` varchar(100) NOT NULL,
-  `created_user_id` int(11) unsigned NOT NULL,
-  `deleted_at` varchar(100) DEFAULT NULL,
-  `deleted_user_id` int(11) unsigned DEFAULT NULL,
-  `updated_at` varchar(100) DEFAULT NULL,
-  `updated_user_id` int(11) unsigned DEFAULT NULL,
-  PRIMARY KEY (`education_id`),
-  UNIQUE KEY `education_code` (`education_code`),
-  UNIQUE KEY `education_description` (`education_description`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
-INSERT INTO `educations` (`education_id`, `education_code`, `education_description`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES ('1', 'collge', 'College', '1490272231', '4', NULL, NULL, NULL, NULL);
-INSERT INTO `educations` (`education_id`, `education_code`, `education_description`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES ('2', 'high school', 'High School', '1490272231', '4', NULL, NULL, NULL, NULL);
-
-
-#
 # TABLE STRUCTURE FOR: enrollments
 #
 
@@ -226,142 +117,6 @@ INSERT INTO `enrollments` (`enrollment_id`, `student_id`, `course_id`, `curricul
 INSERT INTO `enrollments` (`enrollment_id`, `student_id`, `course_id`, `curriculum_id`, `enrollment_school_year`, `enrollment_semester`, `enrollment_year_level`, `enrollment_status`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES ('11', '4', '2', '3', '2016-2017', 'second', '1', '0', '1490360620', '1', NULL, NULL, '1490381548', '1');
 INSERT INTO `enrollments` (`enrollment_id`, `student_id`, `course_id`, `curriculum_id`, `enrollment_school_year`, `enrollment_semester`, `enrollment_year_level`, `enrollment_status`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES ('12', '5', '6', '1', '2016-2017', 'second', '2', '0', '1490385680', '1', NULL, NULL, NULL, NULL);
 
-
-#
-# TABLE STRUCTURE FOR: groups
-#
-
-DROP TABLE IF EXISTS `groups`;
-
-CREATE TABLE `groups` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) NOT NULL,
-  `description` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
-INSERT INTO `groups` (`id`, `name`, `description`) VALUES ('1', 'admin', 'Administrator');
-INSERT INTO `groups` (`id`, `name`, `description`) VALUES ('2', 'faculty', 'General User');
-
-
-#
-# TABLE STRUCTURE FOR: login_attempts
-#
-
-DROP TABLE IF EXISTS `login_attempts`;
-
-CREATE TABLE `login_attempts` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `ip_address` varbinary(16) NOT NULL,
-  `login` varchar(100) NOT NULL,
-  `time` int(11) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `ip_address` (`ip_address`),
-  KEY `login` (`login`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-#
-# TABLE STRUCTURE FOR: logs
-#
-
-DROP TABLE IF EXISTS `logs`;
-
-CREATE TABLE `logs` (
-  `id` int(8) unsigned NOT NULL AUTO_INCREMENT,
-  `errno` int(2) NOT NULL,
-  `errtype` varchar(32) NOT NULL,
-  `errstr` text NOT NULL,
-  `errfile` varchar(255) NOT NULL,
-  `errline` int(4) NOT NULL,
-  `user_agent` varchar(120) NOT NULL,
-  `ip_address` varchar(45) NOT NULL,
-  `time` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `ip_address` (`ip_address`),
-  KEY `user_agent` (`user_agent`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-#
-# TABLE STRUCTURE FOR: migrations
-#
-
-DROP TABLE IF EXISTS `migrations`;
-
-CREATE TABLE `migrations` (
-  `version` bigint(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-INSERT INTO `migrations` (`version`) VALUES ('20170316191619');
-
-
-#
-# TABLE STRUCTURE FOR: permissions
-#
-
-DROP TABLE IF EXISTS `permissions`;
-
-CREATE TABLE `permissions` (
-  `permission_id` int(8) unsigned NOT NULL AUTO_INCREMENT,
-  `controller_id` int(11) NOT NULL,
-  `group_id` int(11) NOT NULL,
-  `created_at` varchar(100) NOT NULL,
-  `updated_at` varchar(100) DEFAULT NULL,
-  `updated_user_id` int(11) unsigned DEFAULT NULL,
-  PRIMARY KEY (`permission_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
-
-INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('1', '1', '1', '1490272233', NULL, NULL);
-INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('2', '2', '1', '1490272233', NULL, NULL);
-INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('3', '3', '1', '1490272233', NULL, NULL);
-INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('4', '4', '1', '1490272233', NULL, NULL);
-INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('5', '5', '1', '1490272233', NULL, NULL);
-INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('6', '6', '1', '1490272233', NULL, NULL);
-INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('7', '7', '1', '1490272233', NULL, NULL);
-INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('8', '8', '1', '1490272233', NULL, NULL);
-INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('9', '9', '1', '1490272233', NULL, NULL);
-INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('10', '10', '1', '1490272233', NULL, NULL);
-INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('11', '11', '1', '1490272233', NULL, NULL);
-INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('12', '12', '1', '1490272233', NULL, NULL);
-INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('13', '13', '1', '1490272233', NULL, NULL);
-INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('14', '14', '1', '1490272233', NULL, NULL);
-INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('15', '15', '1', '1490272233', NULL, NULL);
-INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('16', '16', '1', '1490272233', NULL, NULL);
-INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('17', '17', '1', '1490272233', NULL, NULL);
-INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('18', '18', '1', '1490272233', NULL, NULL);
-INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('19', '19', '1', '1490272233', NULL, NULL);
-INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('20', '20', '1', '1490272233', NULL, NULL);
-INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('21', '21', '1', '1490272233', NULL, NULL);
-INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('22', '22', '1', '1490272234', NULL, NULL);
-INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('23', '23', '1', '1490272234', NULL, NULL);
-INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('24', '24', '1', '1490272234', NULL, NULL);
-INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('25', '25', '1', '1490272234', NULL, NULL);
-INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('26', '26', '1', '1490272234', NULL, NULL);
-INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('27', '27', '1', '1490272234', NULL, NULL);
-INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('28', '28', '1', '1490272234', NULL, NULL);
-INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('29', '29', '1', '1490272234', NULL, NULL);
-INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('30', '30', '1', '1490272234', NULL, NULL);
-INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('31', '31', '1', '1490272234', NULL, NULL);
-
-
-#
-# TABLE STRUCTURE FOR: requisites
-#
-
-DROP TABLE IF EXISTS `requisites`;
-
-CREATE TABLE `requisites` (
-  `requisite_id` int(8) unsigned NOT NULL AUTO_INCREMENT,
-  `requisite_type` enum('co','pre') NOT NULL,
-  `curriculum_subject_id` int(11) unsigned NOT NULL,
-  `subject_id` int(11) unsigned NOT NULL,
-  `created_at` varchar(100) NOT NULL,
-  `created_user_id` int(11) unsigned NOT NULL,
-  `deleted_at` varchar(100) DEFAULT NULL,
-  `deleted_user_id` int(11) unsigned DEFAULT NULL,
-  `updated_at` varchar(100) DEFAULT NULL,
-  `updated_user_id` int(11) unsigned DEFAULT NULL,
-  PRIMARY KEY (`requisite_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 #
 # TABLE STRUCTURE FOR: rooms
@@ -568,7 +323,7 @@ INSERT INTO `subjects` (`subject_id`, `subject_code`, `subject_description`, `cr
 INSERT INTO `subjects` (`subject_id`, `subject_code`, `subject_description`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES ('21', 'AMT 213', 'A/C Powers Plants II (Turbo, Prop & Gas Turbine Engine)', '1490279900', '1', NULL, NULL, NULL, NULL);
 INSERT INTO `subjects` (`subject_id`, `subject_code`, `subject_description`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES ('22', 'AMT 214', 'Helicopter, Principle & Operations', '1490279970', '1', NULL, NULL, NULL, NULL);
 INSERT INTO `subjects` (`subject_id`, `subject_code`, `subject_description`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES ('23', 'AMT 215', 'Aircraft Instruments', '1490280172', '1', NULL, NULL, NULL, NULL);
-INSERT INTO `subjects` (`subject_id`, `subject_code`, `subject_description`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES ('24', 'Pol. Sci. 211', 'Phil. Gov\'t & New Constitution', '1490280244', '1', NULL, NULL, NULL, NULL);
+INSERT INTO `subjects` (`subject_id`, `subject_code`, `subject_description`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES ('24', 'Pol. Sci. 211', 'Phil. Gov\"t & New Constitution', '1490280244', '1', NULL, NULL, NULL, NULL);
 INSERT INTO `subjects` (`subject_id`, `subject_code`, `subject_description`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES ('25', 'P.E. 211', 'Physical Ecducation III', '1490280310', '1', NULL, NULL, NULL, NULL);
 INSERT INTO `subjects` (`subject_id`, `subject_code`, `subject_description`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES ('26', 'W.E. 211', 'Social Values', '1490280339', '1', NULL, NULL, NULL, NULL);
 INSERT INTO `subjects` (`subject_id`, `subject_code`, `subject_description`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES ('27', 'AMT 221', 'Basic Supervision & Shop Management', '1490280458', '1', NULL, NULL, NULL, NULL);
@@ -621,6 +376,130 @@ INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `updated_at`) VALUES ('6', '::1', 'username5', '$2y$08$LbKuE.UzqpsLKPtEjz94SOxZhrif7/EUQiEWK/dq/gaen.8NHUpaK', 'ld6OuPOowQBMtwqbC89XO.', 'emailbxx5@gmail.com', '74518a1c282f256322a7465a0b2a1f8572558ec7', NULL, NULL, NULL, '1490272231', NULL, '0', 'aaaaaaaa', 'sssssssssss', 'Companymytbz', '+63915-086-2075', '1490347675');
 
 
+
+
+
+
+#
+# TABLE STRUCTURE FOR: groups
+#
+
+DROP TABLE IF EXISTS `groups`;
+
+CREATE TABLE `groups` (
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL,
+  `description` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+
+INSERT INTO `groups` (`id`, `name`, `description`) VALUES ('1', 'admin', 'Administrator');
+INSERT INTO `groups` (`id`, `name`, `description`) VALUES ('2', 'faculty', 'General User');
+INSERT INTO `groups` (`id`, `name`, `description`) VALUES ('3', 'registrar', 'Registrar');
+INSERT INTO `groups` (`id`, `name`, `description`) VALUES ('4', 'dean', 'Dean');
+INSERT INTO `groups` (`id`, `name`, `description`) VALUES ('5', 'accounting', 'Accounting');
+INSERT INTO `groups` (`id`, `name`, `description`) VALUES ('6', 'sso', 'Support Service Office');
+
+
+
+#
+# TABLE STRUCTURE FOR: permissions
+#
+
+DROP TABLE IF EXISTS `permissions`;
+
+CREATE TABLE `permissions` (
+  `permission_id` int(8) unsigned NOT NULL AUTO_INCREMENT,
+  `controller_id` int(11) NOT NULL,
+  `group_id` int(11) NOT NULL,
+  `created_at` varchar(100) NOT NULL,
+  `updated_at` varchar(100) DEFAULT NULL,
+  `updated_user_id` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`permission_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=93 DEFAULT CHARSET=utf8;
+
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('10', '10', '1', '1489668863', NULL, NULL);
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('11', '11', '1', '1489668863', NULL, NULL);
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('14', '14', '1', '1489668863', NULL, NULL);
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('15', '15', '1', '1489668863', NULL, NULL);
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('18', '18', '1', '1489668864', NULL, NULL);
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('20', '20', '1', '1489668864', NULL, NULL);
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('21', '21', '1', '1489668864', NULL, NULL);
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('22', '22', '1', '1489668864', NULL, NULL);
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('23', '23', '1', '1489668864', NULL, NULL);
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('24', '24', '1', '1489668864', NULL, NULL);
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('25', '25', '1', '1489668864', NULL, NULL);
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('26', '26', '1', '1489668864', NULL, NULL);
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('27', '27', '1', '1489668864', NULL, NULL);
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('28', '28', '1', '1489668864', NULL, NULL);
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('29', '29', '1', '1489668864', NULL, NULL);
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('30', '30', '1', '1489668864', NULL, NULL);
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('39', '17', '1', '1490946782', NULL, '8');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('43', '19', '1', '1490947031', NULL, '8');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('48', '31', '1', '1490947123', NULL, '8');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('49', '31', '2', '1490947124', NULL, '8');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('50', '31', '3', '1490947124', NULL, '8');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('51', '31', '4', '1490947124', NULL, '8');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('52', '31', '5', '1490947124', NULL, '8');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('53', '31', '6', '1490947124', NULL, '8');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('55', '1', '1', '1490947147', NULL, '8');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('56', '1', '2', '1490947147', NULL, '8');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('57', '1', '3', '1490947147', NULL, '8');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('58', '1', '4', '1490947148', NULL, '8');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('59', '1', '5', '1490947148', NULL, '8');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('60', '1', '6', '1490947148', NULL, '8');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('61', '6', '1', '1490947171', NULL, '8');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('62', '6', '3', '1490947171', NULL, '8');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('63', '6', '4', '1490947171', NULL, '8');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('64', '6', '5', '1490947171', NULL, '8');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('68', '12', '1', '1490947463', NULL, '8');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('69', '12', '4', '1490947463', NULL, '8');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('70', '16', '1', '1490947522', NULL, '8');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('71', '16', '2', '1490947522', NULL, '8');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('72', '16', '3', '1490947522', NULL, '8');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('73', '16', '4', '1490947522', NULL, '8');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('74', '16', '6', '1490947522', NULL, '8');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('77', '3', '1', '1490947935', NULL, '1');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('78', '3', '4', '1490947935', NULL, '1');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('79', '4', '1', '1490953414', NULL, '1');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('80', '4', '4', '1490953414', NULL, '1');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('81', '5', '1', '1490953421', NULL, '1');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('82', '5', '4', '1490953421', NULL, '1');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('83', '7', '1', '1490953429', NULL, '1');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('84', '7', '3', '1490953429', NULL, '1');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('85', '9', '1', '1490953435', NULL, '1');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('86', '9', '4', '1490953435', NULL, '1');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('87', '13', '1', '1490953573', NULL, '1');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('88', '13', '4', '1490953573', NULL, '1');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('89', '2', '1', '1490953578', NULL, '1');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('90', '2', '4', '1490953578', NULL, '1');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('91', '8', '1', '1490953584', NULL, '1');
+INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `updated_at`, `updated_user_id`) VALUES ('92', '8', '4', '1490953584', NULL, '1');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `updated_at`) VALUES ('8', '192.168.100.2', 'lloricode', '$2y$08$jblxESQxQWtFZgerF..I9.xI5GILZXgtTAqVjOZZYLKiApiWtunLO', '5y8m2uGOmeS5ONX6lgXdJ.', 'aa@aa.aa', NULL, NULL, NULL, NULL, '1490945783', '1490945872', '1', 'Lloric', 'Garcia', '', '', '1490945856');
+INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `updated_at`) VALUES ('9', '192.168.100.3', 'faculty', '$2y$08$Z6dtQlxxrNp1IL.qo1w0TeRP/QW2MBVhItZW9HG2inrFp15Vuvewe', 'Ex0LgR2Fs.DL.gn.L1IIwO', 'aaa@ssa.adas', NULL, NULL, NULL, NULL, '1490946657', '1490947164', '1', 'faculty',  'im','', '', '1490946990');
+INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `updated_at`) VALUES ('11', '192.168.100.3', 'registrar', '$2y$08$i7BG9JYImhTJ95tFxpcnyOv1LiTTU/bmrhsUbRVnP2mE8J2whzXLe', '5/s5G0ZN7xQwxtRJo.HFuO', 'dsgsd@gmail.com', NULL, NULL, NULL, NULL, '1490946763', '1490947309', '1', 'registrar', 'im', '', '', '1490946979');
+INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `updated_at`) VALUES ('12', '192.168.100.3', 'dean', '$2y$08$/HBKfc.L3OPgSff5qE3lGu6bxRvyQO8ljLZlS0.TWZ6qfPVVWfov6', 'Xv7fQhfUonkVce625q4bXu', 'dean@gmail.com', NULL, NULL, NULL, NULL, '1490946789', '1490947192', '1',  'dean','im', '', '', '1490946969');
+INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `updated_at`) VALUES ('13', '192.168.100.3', 'accounting', '$2y$08$.Q4hxCil3CpQqjOFFkSY5efXVkENedfAZ0IdTWk5o5R6lwHlivXLC', 'Kb8gGKwuIcbwKcnU4XIL9e', 'accounting@gmail.com', NULL, NULL, NULL, NULL, '1490946814', '1490947500', '1',  'accounting','im', '', '', '1490946961');
+INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `updated_at`) VALUES ('14', '192.168.100.3', 'sso', '$2y$08$h70mYRZSedkaLTnA.f/76OSckG7tXu.dRRKCxvAYuWPLz9gNBDnb.', 'ZgjYnOjq0PIAYERV9Fjn1.', 'sso@gmail.com', NULL, NULL, NULL, NULL, '1490946854', '1490947002', '1',  'sso','im', '', '', '1490946951');
+
+
+
 #
 # TABLE STRUCTURE FOR: users_groups
 #
@@ -632,63 +511,21 @@ CREATE TABLE `users_groups` (
   `user_id` mediumint(8) unsigned NOT NULL,
   `group_id` mediumint(8) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
+INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES ('1', '1', '1');
+INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES ('2', '1', '2');
 INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES ('3', '2', '2');
 INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES ('4', '3', '2');
 INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES ('5', '4', '2');
 INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES ('6', '5', '2');
-INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES ('39', '6', '1');
-INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES ('40', '6', '2');
-INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES ('52', '1', '1');
-
-
-#
-# TABLE STRUCTURE FOR: users_last_logins
-#
-
-DROP TABLE IF EXISTS `users_last_logins`;
-
-CREATE TABLE `users_last_logins` (
-  `users_last_login_id` int(8) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `ip_address` varbinary(16) NOT NULL,
-  `agent` varchar(100) NOT NULL,
-  `platform` varchar(100) NOT NULL,
-  `created_at` varchar(100) NOT NULL,
-  PRIMARY KEY (`users_last_login_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
-
-INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES ('1', '1', '::1', 'Firefox 52.0', 'Linux', '1490272244');
-INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES ('2', '1', '::1', 'Firefox 52.0', 'Linux', '1490277637');
-INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES ('3', '1', '::1', 'Firefox 52.0', 'Linux', '1490329602');
-INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES ('4', '1', '::1', 'Firefox 52.0', 'Linux', '1490335493');
-INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES ('5', '1', '::1', 'Firefox 52.0', 'Linux', '1490341005');
-INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES ('6', '1', '::1', 'Firefox 52.0', 'Linux', '1490341283');
-INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES ('7', '1', '::1', 'Firefox 52.0', 'Linux', '1490341313');
-INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES ('8', '1', '::1', 'Firefox 52.0', 'Linux', '1490345165');
-INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES ('9', '1', '::1', 'Firefox 52.0', 'Linux', '1490345738');
-INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES ('10', '1', '::1', 'Firefox 52.0', 'Linux', '1490345749');
-INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES ('11', '1', '::1', 'Firefox 52.0', 'Linux', '1490356758');
-INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES ('12', '1', '::1', 'Firefox 52.0', 'Linux', '1490380650');
-INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES ('13', '1', '::1', 'Firefox 52.0', 'Linux', '1490405849');
-INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES ('14', '1', '::1', 'Firefox 52.0', 'Linux', '1490408684');
-INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES ('15', '1', '::1', 'Firefox 52.0', 'Linux', '1490413653');
-INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES ('16', '1', '::1', 'Firefox 52.0', 'Linux', '1490426598');
-INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES ('17', '1', '::1', 'Firefox 52.0', 'Linux', '1490437426');
-INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES ('18', '1', '::1', 'Firefox 52.0', 'Linux', '1490578875');
-INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES ('19', '1', '::1', 'Firefox 52.0', 'Linux', '1490594614');
-INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES ('20', '1', '::1', 'Firefox 52.0', 'Linux', '1490700958');
-INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES ('21', '1', '::1', 'Firefox 52.0', 'Linux', '1490701034');
-INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES ('22', '1', '::1', 'Firefox 52.0', 'Linux', '1490701768');
-INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES ('23', '1', '::1', 'Firefox 52.0', 'Linux', '1490701851');
-INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES ('24', '1', '::1', 'Firefox 52.0', 'Linux', '1490783510');
-INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES ('25', '1', '::1', 'Firefox 52.0', 'Linux', '1490784283');
-INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES ('26', '1', '::1', 'Firefox 52.0', 'Linux', '1490786405');
-INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES ('27', '1', '::1', 'Firefox 52.0', 'Linux', '1490790691');
-INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES ('28', '1', '::1', 'Firefox 52.0', 'Linux', '1490841855');
-INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES ('29', '1', '::1', 'Firefox 52.0', 'Linux', '1490858590');
-INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES ('30', '1', '::1', 'Firefox 52.0', 'Linux', '1490873962');
-INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES ('31', '1', '::1', 'Firefox 52.0', 'Linux', '1490952111');
-
+INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES ('7', '6', '2');
+INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES ('8', '7', '2');
+INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES ('12', '8', '1');
+INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES ('13', '8', '2');
+INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES ('19', '14', '6');
+INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES ('20', '13', '5');
+INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES ('21', '12', '4');
+INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES ('22', '11', '3');
+INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES ('23', '9', '2');
 

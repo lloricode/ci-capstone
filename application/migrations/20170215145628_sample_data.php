@@ -68,6 +68,10 @@ class Migration_Sample_data extends CI_Migration
                     'Permission_model',
                     'Controller_model'
                 ));
+                if ( ! $this->user_count)
+                {
+                        $this->user_ids = array(1);
+                }
         }
 
         public function up()
