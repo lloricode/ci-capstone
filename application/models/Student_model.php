@@ -88,7 +88,7 @@ class Student_model extends MY_Model
                     'student_birthdate'               => array(
                         'label' => lang('index_student_birthdate_th'),
                         'field' => 'birthdate',
-                        'rules' => 'trim|required|regex_match[/^\d{2}[-]\d{2}[-]\d{4}$/]|_age_limit[5.90]',
+                        'rules' => 'trim|required|regex_match[/^\d{2}[-]\d{2}[-]\d{4}$/]|age_limit[5.90]',
                     ),
                     'student_permanent_address'       => array(
                         'label' => lang('index_student_permanent_address_th'),

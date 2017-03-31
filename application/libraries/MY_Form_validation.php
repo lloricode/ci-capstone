@@ -339,7 +339,7 @@ class MY_Form_validation extends CI_Form_validation
          * @return boolean
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        public function _age_limit($value, $limit)
+        public function age_limit($value, $limit)
         {
                 list($min, $max) = explode('.', $limit);
 
