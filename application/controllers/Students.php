@@ -70,7 +70,8 @@ class Students extends CI_Capstone_Controller
                         get_all();
 
 
-                $table_data = array();
+                $table_data                  = array();
+                $result_count_for_pagination = $this->Student_model->count_rows();
 
                 if ($student_obj)
                 {
@@ -82,7 +83,8 @@ class Students extends CI_Capstone_Controller
                                         // i mead an issue for this
                                         //https://github.com/avenirer/CodeIgniter-MY_Model/issues/231
                                         //this is temporary,(if fixed will refactor)
-                                        continue;
+                                        $result_count_for_pagination = 0;
+                                        break; //expected no result
                                 }
                                 $view_ = anchor(site_url('students/view?student-id=' . $student->student_id), '<span class="btn btn-warning btn-mini">View</span>');
                                 $edit_ = anchor(site_url('edit-student?student-id=' . $student->student_id), '<span class="btn btn-primary btn-mini">Edit</span>');
@@ -116,7 +118,7 @@ class Students extends CI_Capstone_Controller
                     'options'
                 );
 
-                $pagination = $this->pagination->generate_bootstrap_link('students/index', $this->Student_model->count_rows() / $this->limit);
+                $pagination = $this->pagination->generate_bootstrap_link('students/index', $result_count_for_pagination / $this->limit);
 
                 $this->template['table_students'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_student_heading', $pagination, TRUE);
                 $this->template['message']        = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
@@ -230,13 +232,13 @@ class Students extends CI_Capstone_Controller
                  * generating html pagination
                  */
 //                $this->data['table_subjects_pagination'] = $this->pagination->generate_bootstrap_link('students/view?student-id=' . $this->student->id, $this->student->subject_total() / $this->limit, TRUE);
-                $this->data['image_src']                 = $this->_image_for_view_single_data();
+                $this->data['image_src']     = $this->_image_for_view_single_data();
                 /**
                  * here we go!
                  * rendering page for view
                  */
-                $this->template['view']                  = MY_Controller::render('admin/_templates/students/view', $this->data, TRUE);
-                $this->template['bootstrap']             = $this->_bootstrap_for_view();
+                $this->template['view']      = MY_Controller::render('admin/_templates/students/view', $this->data, TRUE);
+                $this->template['bootstrap'] = $this->_bootstrap_for_view();
                 $this->render('admin/students', $this->template);
         }
 
