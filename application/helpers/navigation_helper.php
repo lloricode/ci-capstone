@@ -455,3 +455,36 @@ if ( ! function_exists('sidebar_menu_ci_capstone'))
         }
 
 }
+if ( ! function_exists('get_all_controller_with_enrollment'))
+{
+
+        /**
+         * get all controller than affected when changing enrollment status
+         * 
+         * @return array
+         */
+        function get_all_controller_with_enrollment()
+        {
+                $return = array();
+
+                foreach (navigations_main() as $key => $item)
+                {
+                        if (isset($item['sub']))
+                        {
+                                foreach ($item['sub'] as $k_ => $value)
+                                {
+
+                                        if (isset($value['enrollment']))
+                                        {
+                                                if ($value['enrollment'])
+                                                {
+                                                        $return[] = $k_;
+                                                }
+                                        }
+                                }
+                        }
+                }
+                return $return;
+        }
+
+}

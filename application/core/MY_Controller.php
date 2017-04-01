@@ -155,6 +155,13 @@ class CI_Capstone_Controller extends MY_Controller
                         show_404();
                 }
 
+                if ( ! $this->Enrollment_status_model->status())
+                {
+                        if (in_array($this->uri->segment($this->config->item('segment_controller')), get_all_controller_with_enrollment()))
+                        {
+                                show_404();
+                        }
+                }
                 $this->breadcrumbs->unshift(1, lang('home_label'), 'home');
 
 
