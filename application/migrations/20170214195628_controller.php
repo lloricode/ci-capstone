@@ -65,6 +65,12 @@ class Migration_Controller extends CI_Migration
                         'default'    => '0',
                         'null'       => FALSE
                     ),
+                    'controller_enrollment_open'  => array(
+                        'type'       => 'TINYINT',
+                        'constraint' => '1',
+                        'default'    => '0',
+                        'null'       => FALSE
+                    ),
                     //------------------------------------
                     'created_at'             => array(
                         'type'       => 'VARCHAR',

@@ -99,6 +99,7 @@ class Permissions extends CI_Capstone_Controller
                                     my_htmlspecialchars($c->controller_description),
                                     trim($gruops, ' | '),
                                     my_htmlspecialchars(($c->controller_admin_only) ? 'admin only' : 'no'),
+                                    my_htmlspecialchars(($c->controller_enrollment_open) ? 'yes' : 'no'),
                                     $edit
                                 );
                         }
@@ -112,6 +113,7 @@ class Permissions extends CI_Capstone_Controller
                     array('data' => 'Controllers', 'colspan' => '2'),
                     'Users Group',
                     'admin only',
+                    'enrollment',
                     'Option'
                 );
                 /**

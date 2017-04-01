@@ -119,6 +119,13 @@ class Migration_Sample_data extends CI_Migration
                                         $tmp['controller_admin_only'] = TRUE;
                                 }
                         }
+                        if (isset($v['enrollment']))
+                        {
+                                if ((bool) $v['enrollment'])
+                                {
+                                        $tmp['controller_enrollment_open'] = TRUE;
+                                }
+                        }
 
                         $data_con_arr[] = $tmp;
                 }

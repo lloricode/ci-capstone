@@ -39,21 +39,24 @@ if ( ! function_exists('navigations_main'))
                              */
                             'create-curriculum'         =>
                             array(
-                                'label' => lang('create_curriculum_label'),
-                                'seen'  => TRUE,
+                                'label'      => lang('create_curriculum_label'),
+                                'seen'       => TRUE,
+                                'enrollment' => TRUE
                             ),
                             'create-curriculum-subject' =>
                             array(
-                                'label' => lang('create_curriculum_subject_label'),
-                                'seen'  => TRUE,
+                                'label'      => lang('create_curriculum_subject_label'),
+                                'seen'       => TRUE,
+                                'enrollment' => TRUE
                             ),
                             /**
                              * hidden
                              */
                             'create-requisite'          =>
                             array(
-                                'label' => 'Create Requisite',
-                                'seen'  => FALSE,
+                                'label'      => 'Create Requisite',
+                                'seen'       => FALSE,
+                                'enrollment' => TRUE
                             )
                         ),
                     ),
@@ -72,8 +75,9 @@ if ( ! function_exists('navigations_main'))
                             ),
                             'create-student'         =>
                             array(
-                                'label' => lang('create_student_heading'),
-                                'seen'  => TRUE,
+                                'label'      => lang('create_student_heading'),
+                                'seen'       => TRUE,
+                                'enrollment' => TRUE
                             ),
                             /**
                              * hidden
@@ -85,8 +89,9 @@ if ( ! function_exists('navigations_main'))
                             ),
                             'create-student-subject' =>
                             array(
-                                'label' => lang('add_student_subject_label'),
-                                'seen'  => FALSE,
+                                'label'      => lang('add_student_subject_label'),
+                                'seen'       => FALSE,
+                                'enrollment' => TRUE
                             ),
                         ),
                     ),
@@ -106,8 +111,9 @@ if ( ! function_exists('navigations_main'))
                             ),
                             'create-subject'       =>
                             array(
-                                'label' => lang('create_subject_heading'),
-                                'seen'  => TRUE,
+                                'label'      => lang('create_subject_heading'),
+                                'seen'       => TRUE,
+                                'enrollment' => TRUE
                             ),
                             'subject-offers'       =>
                             array(
@@ -116,8 +122,9 @@ if ( ! function_exists('navigations_main'))
                             ),
                             'create-subject-offer' =>
                             array(
-                                'label' => lang('create_subject_offer_heading'),
-                                'seen'  => TRUE,
+                                'label'      => lang('create_subject_offer_heading'),
+                                'seen'       => TRUE,
+                                'enrollment' => TRUE
                             ),
                         ),
                     ),
@@ -129,6 +136,12 @@ if ( ! function_exists('navigations_main'))
                         'icon'  => 'list',
                         'sub'   =>
                         array(
+                            'open-enrollment'  =>
+                            array(
+                                'label' => lang('enrollment_status_label'),
+                                'seen'  => TRUE,
+                                'admin' => TRUE
+                            ),
                             'educations'       =>
                             array(
                                 'label' => lang('view_education_label'),
@@ -136,8 +149,9 @@ if ( ! function_exists('navigations_main'))
                             ),
                             'create-education' =>
                             array(
-                                'label' => lang('create_education_heading'),
-                                'seen'  => TRUE,
+                                'label'      => lang('create_education_heading'),
+                                'seen'       => TRUE,
+                                'enrollment' => TRUE
                             ),
                             'courses'          =>
                             array(
@@ -146,8 +160,9 @@ if ( ! function_exists('navigations_main'))
                             ),
                             'create-course'    =>
                             array(
-                                'label' => lang('create_course_heading'),
-                                'seen'  => TRUE,
+                                'label'      => lang('create_course_heading'),
+                                'seen'       => TRUE,
+                                'enrollment' => TRUE
                             ),
                             'rooms'            =>
                             array(
@@ -156,8 +171,9 @@ if ( ! function_exists('navigations_main'))
                             ),
                             'create-room'      =>
                             array(
-                                'label' => lang('create_room_heading'),
-                                'seen'  => TRUE,
+                                'label'      => lang('create_room_heading'),
+                                'seen'       => TRUE,
+                                'enrollment' => TRUE
                             ),
                         ),
                     ),
@@ -312,6 +328,9 @@ if ( ! function_exists('sidebar_menu_ci_capstone'))
          */
         function sidebar_menu_ci_capstone($menu_current, $main_sub)
         {
+                $enrollment_open_status = get_instance()->Enrollment_status_model->status();
+                $permission_controllers = permission_controllers();
+
                 /**
                  * navigations
                  */
@@ -333,7 +352,7 @@ if ( ! function_exists('sidebar_menu_ci_capstone'))
                                  */
                                 foreach ($item['sub'] as $k => $sub)
                                 {
-                                        $permmission = in_array($k, permission_controllers());
+                                        $permmission = in_array($k, $permission_controllers);
                                         if ($permmission)
                                         {
                                                 //now we can stop here, because it has atleast one permission
@@ -349,17 +368,37 @@ if ( ! function_exists('sidebar_menu_ci_capstone'))
                                         //sub menu
                                         $active1 = ($key == $main_sub ? ' active' : '');
 
-                                        $count = 0;
+                                        $count                               = 0;
+                                        $skip_controller_for_enrollment_open = array();
                                         foreach ($item['sub'] as $k_ => $value)
                                         {
                                                 if ($value['seen'])
                                                 {
                                                         /**
+                                                         * check for enrollment-open 
+                                                         */
+                                                        $not_belong_to_enrollment_open = FALSE;
+                                                        if (isset($value['enrollment']))
+                                                        {
+                                                                if ($value['enrollment'])
+                                                                {
+                                                                        $not_belong_to_enrollment_open = ! $enrollment_open_status;
+                                                                        if ( ! $enrollment_open_status)
+                                                                        {
+                                                                                $skip_controller_for_enrollment_open[] = $k_;
+                                                                        }
+                                                                }
+                                                        }
+                                                        /**
                                                          * check permission
                                                          */
-                                                        if (in_array($k_, permission_controllers()))
+                                                        $permmission_resutl = in_array($k_, $permission_controllers);
+                                                        if ($permmission_resutl)
                                                         {
-                                                                $count ++;
+                                                                if ( ! $not_belong_to_enrollment_open)
+                                                                {
+                                                                        $count ++;
+                                                                }
                                                         }
                                                 }
                                         }
@@ -371,10 +410,14 @@ if ( ! function_exists('sidebar_menu_ci_capstone'))
                                                 . '<ul>' . PHP_EOL;
                                         foreach ($item['sub'] as $sub_key => $sub_item)
                                         {
+                                                if (in_array($sub_key, $skip_controller_for_enrollment_open))
+                                                {
+                                                        continue;
+                                                }
                                                 /**
                                                  * check permission
                                                  */
-                                                if (in_array($sub_key, permission_controllers()))
+                                                if (in_array($sub_key, $permission_controllers))
                                                 {
                                                         if ($sub_item['seen'])
                                                         {
@@ -391,7 +434,8 @@ if ( ! function_exists('sidebar_menu_ci_capstone'))
                                 /**
                                  * check permission
                                  */
-                                if (in_array($key, permission_controllers()))
+                                $permmission_resutl = in_array($key, $permission_controllers);
+                                if ($permmission_resutl)
                                 {
 
                                         $active = ($key == $menu_current ? ' class="active"' : '');
@@ -405,7 +449,9 @@ if ( ! function_exists('sidebar_menu_ci_capstone'))
                                 }
                         }
                 }
-                return $return .= '</ul>' . PHP_EOL . comment_tag('end-navigations');
+                $status__ = ($enrollment_open_status) ? 'Enabled' : 'Disabled';
+                $status__ = ' <li class="content"><span>Enrollment Status: ' . $status__ . '</span></li>';
+                return $return   .= $status__ . '</ul>' . PHP_EOL . comment_tag('end-navigations');
         }
 
 }
