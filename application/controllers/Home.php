@@ -56,9 +56,14 @@ class Home extends CI_Capstone_Controller
                 }
                 $this->data['courses_info'] = $courses_detale;
 
+                if (in_array('students', permission_controllers()))
+                {
+
+                        $this->template['stud_course_count']  = MY_Controller::render('admin/_templates/home/student_course_count', $this->data, TRUE);
+                
+                }
                 $this->template['active_user_count']  = MY_Controller::render('admin/_templates/home/user_count', $this->data, TRUE);
                 $this->template['dashboard_ctrl_var'] = MY_Controller::render('admin/_templates/home/dashboard_ctrl', $this->data, TRUE);
-                $this->template['stud_course_count']  = MY_Controller::render('admin/_templates/home/student_course_count', $this->data, TRUE);
                 $this->template['bootstrap']          = $this->_bootstrap();
                 $this->render('admin/home', $this->template);
         }
