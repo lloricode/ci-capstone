@@ -52,6 +52,8 @@ class Create_student_subject extends CI_Capstone_Controller
                                          */
                                         $this->db->trans_start();
 
+                                        $update_year_ok = $this->student->update_level((int) $this->input->post('level'));
+
                                         $all_inserted = TRUE;
                                         foreach ($from_session as $subj_offr_id)
                                         {
@@ -66,7 +68,7 @@ class Create_student_subject extends CI_Capstone_Controller
                                                         break;
                                                 }
                                         }
-                                        if ( ! $all_inserted)
+                                        if ( ! $all_inserted OR ! $update_year_ok)
                                         {
                                                 /**
                                                  * rollback database
@@ -79,7 +81,7 @@ class Create_student_subject extends CI_Capstone_Controller
                                                 {
                                                         $this->_reset_session();
                                                         $this->session->set_flashdata('message', 'all subjects added!');
-                                                        // redirect(site_url('students/view?student-id=' . $s_id), 'refresh');
+                                                        redirect(site_url('students/view?student-id=' . $this->student->id), 'refresh');
                                                 }
                                         }
                                 }
@@ -159,10 +161,12 @@ class Create_student_subject extends CI_Capstone_Controller
                     'disabled' => ''
                 );
 
+                $this->load->helper('combobox');
                 $inputs['level'] = array(
-                    'name'     => 'xx',
-                    'value'    => $this->student->level_place,
-                    'type'     => 'text',
+                    'name'     => 'level',
+                    // 'default'    => $this->student->level,
+                    'value'    => _numbers_for_drop_down($this->student->level, $this->config->item('max_year_level')),
+                    'type'     => 'dropdown',
                     'lang'     => 'index_student_year_level_th',
                     'disabled' => ''
                 );

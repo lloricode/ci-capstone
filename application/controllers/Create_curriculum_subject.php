@@ -114,7 +114,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                     'value' => $this->_dropdown_for_subjects(),
                     'type'  => 'dropdown',
                     'lang'  => 'curriculum_subject_subject_label',
-                    'note'  => 'Requisites is on the next form after submit this current form.'
+                   // 'note'  => 'Requisites is on the next form after submit this current form.'
                 );
 
                 $inputs['curriculum_subject_year_level'] = array(

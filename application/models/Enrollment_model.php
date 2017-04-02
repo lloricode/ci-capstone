@@ -13,6 +13,7 @@ class Enrollment_model extends MY_Model
                 $this->_relations();
                 $this->_form();
                 $this->_config();
+                $this->before_update[] = '_add_user_id';
 
                 parent::__construct();
         }
@@ -31,6 +32,12 @@ class Enrollment_model extends MY_Model
                  */
                 //   $this->remove_empty_before_write = TRUE;//(bool) $this->config->item('my_model_remove_empty_before_write');
                 $this->delete_cache_on_save = TRUE; //(bool) $this->config->item('my_model_delete_cache_on_save');
+        }
+
+        protected function _add_user_id($data)
+        {
+                $data['updated_user_id'] = $this->session->userdata('user_id');
+                return $data;
         }
 
         private function _relations()

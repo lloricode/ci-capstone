@@ -29,63 +29,24 @@ class Students extends CI_Capstone_Controller
                  * get the page from url
                  * 
                  */
-                $this->page_ = get_page_in_url();
-
-                $where_enrolment = array(
-                    'fields' => 'enrollment_status,enrollment_year_level',
-                    'with'   => array(
-                        'relation' => 'course',
-                        'fields'   => 'course_code'
-                    )
-                );
-
-                if ($this->input->get('course-id'))
+                $this->page_ = 1;
+                if ($this->input->get('per_page'))
                 {
-                        /**
-                         * just to make sure course id is exist
-                         */
-                        $course_obj = check_id_from_url('course_id', 'Course_model', 'course-id');
-
-                        $where_course          = array();
-                        $where_course['where'] = array(
-                            'course_id' => $course_obj->course_id
-                        );
-                        $where_enrolment       = array_merge($where_enrolment, $where_course);
+                        $this->page_ = $this->input->get('per_page');
                 }
 
-                //list students
-                $student_obj = $this->Student_model->
-                        fields(array(
-                            'student_school_id',
-                            'student_lastname',
-                            'student_firstname',
-                            'student_middlename',
-                            'student_image'
-                        ))->
-                        with_enrollment($where_enrolment)->
-                        limit($this->limit, $this->limit * $this->page_ - $this->limit)->
-                        order_by('updated_at', 'DESC')->
-                        order_by('created_at', 'DESC')->
-                        set_cache('students_page_' . $this->page_)->
-                        get_all();
+                $student_result = $this->Student_model->all($this->limit, $this->limit * $this->page_ - $this->limit, $this->input->get('course-id'));
 
+                $student_obj                 = $student_result->result;
+                $result_count_for_pagination = $student_result->count;
 
-                $table_data                  = array();
-                $result_count_for_pagination = $this->Student_model->count_rows();
+                $table_data = array();
 
                 if ($student_obj)
                 {
 
                         foreach ($student_obj as $student)
                         {
-                                if ( ! isset($student->enrollment->course->course_code))
-                                {
-                                        // i mead an issue for this
-                                        //https://github.com/avenirer/CodeIgniter-MY_Model/issues/231
-                                        //this is temporary,(if fixed will refactor)
-                                        $result_count_for_pagination = 0;
-                                        break; //expected no result
-                                }
                                 $view_ = anchor(site_url('students/view?student-id=' . $student->student_id), '<span class="btn btn-warning btn-mini">View</span>');
                                 $edit_ = anchor(site_url('edit-student?student-id=' . $student->student_id), '<span class="btn btn-primary btn-mini">Edit</span>');
 
@@ -95,9 +56,9 @@ class Students extends CI_Capstone_Controller
                                     my_htmlspecialchars($student->student_lastname),
                                     my_htmlspecialchars($student->student_firstname),
                                     my_htmlspecialchars($student->student_middlename),
-                                    my_htmlspecialchars($student->enrollment->course->course_code),
-                                    my_htmlspecialchars(number_place($student->enrollment->enrollment_year_level) . ' Year'),
-                                    my_htmlspecialchars(($student->enrollment->enrollment_status) ? 'yes' : 'no'),
+                                    my_htmlspecialchars($student->course_code),
+                                    my_htmlspecialchars(number_place($student->enrollment_year_level) . ' Year'),
+                                    my_htmlspecialchars(($student->enrollment_status) ? 'yes' : 'no'),
                                     $view_ . ' | ' . $edit_
                                 ));
                         }
@@ -106,7 +67,7 @@ class Students extends CI_Capstone_Controller
                 /*
                  * Table headers
                  */
-                $header = array(
+                $header           = array(
                     lang('index_student_image_th'),
                     lang('index_student_school_id_th'),
                     lang('index_student_lastname_th'),
@@ -117,8 +78,12 @@ class Students extends CI_Capstone_Controller
                     'enrolled',
                     'options'
                 );
-
-                $pagination = $this->pagination->generate_bootstrap_link('students/index', $result_count_for_pagination / $this->limit);
+                $pagination_index = 'students';
+                if ($this->input->get('course-id'))
+                {
+                        $pagination_index = 'students/?course-id=' . $this->input->get('course-id');
+                }
+                $pagination = $this->pagination->generate_bootstrap_link($pagination_index, $result_count_for_pagination / $this->limit, TRUE);
 
                 $this->template['table_students'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_student_heading', $pagination, TRUE);
                 $this->template['message']        = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
@@ -137,7 +102,7 @@ class Students extends CI_Capstone_Controller
                         list($filename, $extension) = explode('.', $student->student_image);
                         $image_file = $this->Student_model->image_resize($student->student_image)->table;
                 }
-                return '<div class="user-thumb">' . img(array(
+                return '<div class = "user-thumb">' . img(array(
                             'src'   => $image_file,
                             'alt'   => 'no image',
                             'title' => $student->student_school_id . ' - ' . $student->student_lastname
@@ -147,6 +112,13 @@ class Students extends CI_Capstone_Controller
         private function _image_for_view_single_data()
         {
                 return base_url($this->Student_model->image_resize()->profile);
+        }
+
+        public function set_enroll()
+        {
+                $this->Student_model->set_informations($this->input->get('student-id'));
+                $this->student->set_enroll();
+                redirect('students/view?student-id = ' . $this->student->id, 'refresh');
         }
 
         /**
@@ -159,7 +131,7 @@ class Students extends CI_Capstone_Controller
                  * check url with id,tehn get studewnt row
                  */
                 $this->Student_model->set_informations($this->input->get('student-id'));
-                $this->breadcrumbs->unshift(3, 'View Student [ ' . $this->student->school_id . ' ]', 'students/view?student-id=' . $this->student->id);
+                $this->breadcrumbs->unshift(3, 'View Student [' . $this->student->school_id . ']', 'students/view?student-id = ' . $this->student->id);
                 /**
                  * setting up page for pagination
                  */
@@ -231,7 +203,7 @@ class Students extends CI_Capstone_Controller
                 /**
                  * generating html pagination
                  */
-//                $this->data['table_subjects_pagination'] = $this->pagination->generate_bootstrap_link('students/view?student-id=' . $this->student->id, $this->student->subject_total() / $this->limit, TRUE);
+//                $this->data['table_subjects_pagination'] = $this->pagination->generate_bootstrap_link('students/view?student-id = ' . $this->student->id, $this->student->subject_total() / $this->limit, TRUE);
                 $this->data['image_src']     = $this->_image_for_view_single_data();
                 /**
                  * here we go!
@@ -262,8 +234,7 @@ class Students extends CI_Capstone_Controller
                         'font-awesome/css/font-awesome.css',
                         'http://fonts.googleapis.com/css?family=Open+Sans:400,700,800',
                     ),
-                    'js'  => array(
-                    ),
+                    'js'  => array(),
                 );
                 /**
                  * for footer

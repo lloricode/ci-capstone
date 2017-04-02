@@ -9,13 +9,42 @@ if ( ! function_exists('permission_controllers'))
          * 
          *  get all permission controllers in current user
          * 
+         * if current user has "admin" group, it will just return all controller names,
+         * 
+         * 
          * @param bool $bool_return TRUE if only bool return else an ARRAY of controllers of current user
          * @return mixed bool|array
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
         function permission_controllers($check_controller = '')
         {
-                $CI          = &get_instance();
+                $CI = &get_instance();
+
+                /**
+                 * check if admin, then just return all controller names
+                 */
+                if ($CI->ion_auth->is_admin())
+                {
+                        $obj   = $CI->Controller_model->
+                                fields('controller_name')->
+                                //set_cache()->
+                                get_all();
+                        $array = array();
+                        foreach ($obj as $v)
+                        {
+                                $array[] = $v->controller_name;
+                        }
+                        if ($check_controller != '')
+                        {
+                                return (bool) in_array($check_controller, $array);
+                        }
+                        else
+                        {
+                                return $array;
+                        }
+                }
+
+
                 /**
                  * get all groups of current user
                  */
@@ -63,6 +92,54 @@ if ( ! function_exists('permission_controllers'))
                 {
                         return $controllers;
                 }
+        }
+
+}
+
+if ( ! function_exists('specific_groups_permission'))
+{
+
+        /**
+         * check depend on parameter if current user is has user_group,
+         * 
+         * if current user is admin, it will just return TRU
+         * 
+         * @param string/array $current_groups post_fix of config in common/user_group.php
+         * @return boolean
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        function specific_groups_permission($current_groups)
+        {
+
+                $CI = &get_instance();
+                if ($CI->ion_auth->is_admin())//is admin?
+                {
+                        return TRUE;//just return TRUE
+                }
+
+
+                if ( ! is_array($current_groups))
+                {
+                        $current_groups = array($current_groups);
+                }
+                $user_groups = array();
+                foreach ($current_groups as $g)
+                {
+                        $user_groups[] = $CI->config->item('user_group_' . $g);
+                }
+                $user_groups_ion_auth = $CI->ion_auth->get_users_groups()->result();
+
+                foreach ($user_groups as $v)
+                {
+                        foreach ($user_groups_ion_auth as $vv)
+                        {
+                                if ($vv->name == $v)
+                                {
+                                        return TRUE;
+                                }
+                        }
+                }
+                return FALSE;
         }
 
 }

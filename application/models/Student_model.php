@@ -277,4 +277,63 @@ class Student_model extends MY_Model
                 }
         }
 
+        public function all($limit, $offset, $course_id = NULL)
+        {
+                $this->_query_all($course_id);
+                $this->db->limit($limit, $offset);
+                $rs     = $this->db->get($this->table);
+                $result = $rs->custom_result_object('Student_row');
+
+                $this->db->reset_query();
+                        
+                $this->_query_all($course_id);
+                $count = $this->db->count_all_results($this->table);
+
+                return (object) array(
+                            'result' => $result,
+                            'count'  => $count
+                );
+        }
+
+        private function _query_all($course_id = NULL)
+        {
+
+                $this->load->model(array('Enrollment_model', 'Course_model'));
+
+                $enrollment_table       = $this->Enrollment_model->table;
+                $enrollment_primary_key = $this->Enrollment_model->primary_key;
+
+                $course_table       = $this->Course_model->table;
+                $course_primary_key = $this->Course_model->primary_key;
+
+                $primary_key = $this->primary_key;
+                $table       = $this->table;
+
+                $this->db->select('*');
+                $this->db->join($enrollment_table, "$enrollment_table.$primary_key=$table.$primary_key");
+                $this->db->join($course_table, "$course_table.$course_primary_key=$enrollment_table.$course_primary_key");
+                if ($course_id)
+                {
+                        $this->db->where("$course_table.$course_primary_key=", $course_id);
+                }
+                return $this;
+        }
+
+}
+
+class Student_row
+{
+
+
+        public $student_id;
+        public $student_school_id;
+        public $student_lastname;
+        public $student_firstname;
+        public $student_middlename;
+        public $student_image;
+        public $enrollment_statu;
+        public $course_id;
+        public $enrollment_year_level;
+        public $course_code;
+
 }

@@ -152,6 +152,72 @@ class Student extends School_informations
                 }
         }
 
+        public function set_enroll()
+        {
+                if ( ! specific_groups_permission('accounting'))
+                {
+                        show_404();
+                }
+                /**
+                 * start the DB transaction
+                 */
+                $this->db->trans_start();
+
+
+                $subject_ok = $this->_set_enroll_all_subject_offers();
+
+                $leve_ok = $this->Enrollment_model->update(array(
+                    'enrollment_status' => TRUE
+                        ), $this->__enrollment->enrollment_id);
+
+                if ( ! $leve_ok OR ! $subject_ok)
+                {
+                        /**
+                         * rollback database
+                         */
+                        $this->db->trans_rollback();
+                        $this->session->set_flashdata('message', '<div class="alert alert-error alert-block">Failed to update enroll.</div>');
+                }
+                else
+                {
+                        if ($this->db->trans_commit())
+                        {
+                                $this->session->set_flashdata('message', 'Student Enrolled!');
+                        }
+                }
+        }
+
+        private function _set_enroll_all_subject_offers()
+        {
+                return $this->Students_subjects_model->update(array(
+                            'student_subject_enroll_status' => TRUE,
+                            'enrollment_id'                 => $this->__enrollment->enrollment_id
+                                ), 'enrollment_id');
+        }
+
+        public function update_level($new_level)
+        {
+                if ( ! is_int($new_level))
+                {
+                        $this->session->set_flashdata('message', '<div class="alert alert-error alert-block">Year level not to be Int.</div>');
+                        return FALSE;
+                }
+                if ($new_level > $this->config->item('max_year_level') OR $new_level < $this->__enrollment->enrollment_year_level)
+                {
+                        $this->session->set_flashdata('message', '<div class="alert alert-error alert-block">Invalid year level update.</div>');
+                        return FALSE;
+                }
+                $this->load->helper('school');
+                if ($this->Enrollment_model->update(array(
+                            'enrollment_semester'    => current_school_semester(TRUE),
+                            'enrollment_school_year' => current_school_year(),
+                            'enrollment_year_level'  => $new_level
+                                ), $this->__enrollment->enrollment_id))
+                {
+                        return TRUE;
+                }
+        }
+
         /**
          * sample result with one row/result
          * Array
@@ -249,7 +315,7 @@ class Student extends School_informations
                                             'faculty'  => $sub_of->faculty->last_name . ', ' . $sub_of->faculty->first_name,
                                             //--
                                             'unit'     => $sub_of->curriculum_subject->curriculum_subject_units,
-                                            'status'   => ($stud_sub->student_subject_enroll_status) ? 'Enrooled' : 'Pending'
+                                            'status'   => ($stud_sub->student_subject_enroll_status) ? 'Enrolled' : 'Pending'
                                                 ), $subject_line);
                         }
 
@@ -329,7 +395,7 @@ class School_informations
         protected $__enrollment;
         protected $__course;
         protected $__education;
-        private $_curriculum_subjects;
+        private $_curriculum_subjects__subject_offers;
 
         public function __construct()
         {
@@ -384,11 +450,11 @@ class School_informations
                 /**
                  * course
                  */
-                $this->__course             = $this->__enrollment->course;
+                $this->__course                             = $this->__enrollment->course;
                 /**
                  * set curriculum_id
                  */
-                $this->_curriculum_subjects = $this->Subject_offer_model->all(TRUE, $this->__enrollment->curriculum_id, $this->__enrollment->enrollment_id); //parameter is set to current semester and year
+                $this->_curriculum_subjects__subject_offers = $this->Subject_offer_model->all(TRUE, $this->__enrollment->curriculum_id, $this->__enrollment->enrollment_id); //parameter is set to current semester and year
         }
 
         protected function __load_education()
@@ -422,9 +488,9 @@ class School_informations
                 $level  = (int) $this->__enrollment->enrollment_year_level;
                 $level  += $add_level;
                 $return = array();
-                if ($this->_curriculum_subjects)
+                if ($this->_curriculum_subjects__subject_offers)
                 {
-                        foreach ($this->_curriculum_subjects as $s)
+                        foreach ($this->_curriculum_subjects__subject_offers as $s)
                         {
 
                                 if (isset($s->student_subjects->enrollment_id))
@@ -440,10 +506,10 @@ class School_informations
                                 }
 
 
-                                if ($level == $s->curriculum_subject->curriculum_subject_year_level)
-                                {
-                                        $return[] = $s;
-                                }
+                                // if ($level == $s->curriculum_subject->curriculum_subject_year_level)
+                                // {
+                                $return[] = $s;
+                                // }
                         }
                 }
                 return $return;
