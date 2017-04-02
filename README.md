@@ -38,7 +38,7 @@ administrator|mypasswordisadmin1
 ![screenshot at 2017-03-25 10-53-25](https://cloud.githubusercontent.com/assets/8251344/24318920/75f18732-1149-11e7-9279-397a8405fa23.png)
 
 -Database Relation,(result after migration)
-![screenshot at 2017-03-24 12-34-01](https://cloud.githubusercontent.com/assets/8251344/24280784/69ac07d8-108e-11e7-94e6-16b67cc3722f.png)
+![screenshot at 2017-04-02 13-04-48](https://cloud.githubusercontent.com/assets/8251344/24584608/3e2cb008-17a5-11e7-8e48-a1bdeadcd2b0.png)
 
 ## Note:
 ### production ENVIRONMENT 
