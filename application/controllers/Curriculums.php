@@ -15,7 +15,7 @@ class Curriculums extends CI_Capstone_Controller
                 $this->lang->load('ci_capstone/ci_educations');
                 $this->load->model(array('Curriculum_model', 'Course_model'));
                 $this->load->library('pagination');
-                $this->load->helper('school');
+                $this->load->helper(array('school', 'inflector'));
                 /**
                  * @Contributor: Jinkee Po <pojinkee1@gmail.com>
                  *         
@@ -85,6 +85,23 @@ class Curriculums extends CI_Capstone_Controller
                 $this->render('admin/curriculums', $this->template);
         }
 
+        private function _hour($hr)
+        {
+                $hr = (int) $hr;
+                if ($hr === 0)
+                {
+                        return '--';
+                }
+
+                $unit = 'Hour';
+                if ($hr > 1)
+                {
+                        $unit = plural($unit);
+                }
+
+                return $hr . ' ' . $unit;
+        }
+
         public function view()
         {
                 $curriculum_obj = check_id_from_url('curriculum_id', 'Curriculum_model', 'curriculum-id', 'course');
@@ -125,8 +142,8 @@ class Curriculums extends CI_Capstone_Controller
                                     highlight_phrase($cur_subj->subject->subject_code, $highlight_phrase, '<span class="badge badge-info" id="' . dash($cur_subj->subject->subject_code) . '">', '</span>'),
                                     my_htmlspecialchars($cur_subj->subject->subject_description),
                                     my_htmlspecialchars($cur_subj->curriculum_subject_units),
-                                    my_htmlspecialchars(($cur_subj->curriculum_subject_lecture_hours != 0) ? $cur_subj->curriculum_subject_lecture_hours . ' Hours' : '--'),
-                                    my_htmlspecialchars(($cur_subj->curriculum_subject_laboratory_hours != 0) ? $cur_subj->curriculum_subject_laboratory_hours . ' Hours' : '--'),
+                                    my_htmlspecialchars($this->_hour($cur_subj->curriculum_subject_lecture_hours)),
+                                    my_htmlspecialchars($this->_hour($cur_subj->curriculum_subject_laboratory_hours)),
                                     $requisite->pre,
                                     $requisite->co,
                                     anchor('create-requisite?curriculum-id=' . $curriculum_obj->curriculum_id . '&curriculum-subject-id=' . $cur_subj->curriculum_subject_id, 'add')
