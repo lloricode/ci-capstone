@@ -158,11 +158,11 @@ class Students extends CI_Capstone_Controller
                 /**
                  * setting up page for pagination
                  */
-                $page = 1;
-                if ($this->input->get('per_page'))
-                {
-                        $page = $this->input->get('per_page');
-                }
+//                $page = 1;
+//                if ($this->input->get('per_page'))
+//                {
+//                        $page = $this->input->get('per_page');
+//                }
 
 
                 /**
@@ -197,7 +197,7 @@ class Students extends CI_Capstone_Controller
 
 
 
-                $student_subjects_obj = $this->student->subject_offers($this->limit, $this->limit * $page - $this->limit);
+                $student_subjects_obj = $this->student->subject_offers(/*$this->limit, $this->limit * $page - $this->limit*/);
                 if ($student_subjects_obj)
                 {
                         /**
