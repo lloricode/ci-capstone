@@ -33,7 +33,7 @@ class Home extends CI_Capstone_Controller
                  */
 
                 $courses_detale = array();
-                $course_obj     = $this->Course_model->set_cache('course_get_all')->get_all();
+                $course_obj     = $this->Course_model->order_by('course_code')->set_cache('course_get_all')->get_all();
 
                 if ($course_obj)
                 {
@@ -59,8 +59,7 @@ class Home extends CI_Capstone_Controller
                 if (in_array('students', permission_controllers()))
                 {
 
-                        $this->template['stud_course_count']  = MY_Controller::render('admin/_templates/home/student_course_count', $this->data, TRUE);
-                
+                        $this->template['stud_course_count'] = MY_Controller::render('admin/_templates/home/student_course_count', $this->data, TRUE);
                 }
                 $this->template['active_user_count']  = MY_Controller::render('admin/_templates/home/user_count', $this->data, TRUE);
                 $this->template['dashboard_ctrl_var'] = MY_Controller::render('admin/_templates/home/dashboard_ctrl', $this->data, TRUE);

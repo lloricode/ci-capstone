@@ -70,7 +70,7 @@
                             <table class="table table-bordered table-invoice-full">
                                 <tbody>
                                     <tr>
-                                        <td class="msg-invoice" width="40%">
+<!--                                        <td class="msg-invoice" width="40%">
                                             <h4>Payment method: </h4>
                                             <a href="#" class="tip-bottom" title="Wire Transfer">Wire transfer</a> |
                                             <a href="#" class="tip-bottom" title="Bank account">Bank account #</a> | 
@@ -81,13 +81,22 @@
                                             <strong>Subtotal</strong> <br>
                                             <strong>Tax (5%)</strong> <br>
                                             <strong>Discount</strong>
-                                        </td>
+                                        </td>-->
                                         <?php if ($this->Enrollment_status_model->status()): ?>
                                                 <td >
                                                     <!--                                            <div class="pull-right">-->
                                                     <!--                                <h4><span>Amount Due:</span> $7,650.00</h4>-->
                                                     <!--<br>-->
                                                     <?php echo anchor(site_url('create-student-subject?student-id=' . $this->student->id), lang('add_student_subject_label'), array('class' => 'btn btn-primary btn-large pull')); ?>
+                                                    <!--                                            </div>-->
+                                                </td>
+                                        <?php endif; ?>
+                                        <?php if ($this->Enrollment_status_model->status()): ?>
+                                                <td >
+                                                    <!--                                            <div class="pull-right">-->
+                                                    <!--                                <h4><span>Amount Due:</span> $7,650.00</h4>-->
+                                                    <!--<br>-->
+                                                    <?php echo anchor_popup(site_url('students/print_data?action=prev&student-id=' . $this->student->id), lang('print_label'), array('class' => 'btn btn-primary btn-large pull')); ?>
                                                     <!--                                            </div>-->
                                                 </td>
                                         <?php endif; ?>

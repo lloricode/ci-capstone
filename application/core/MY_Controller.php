@@ -39,9 +39,9 @@ class MY_Controller extends CI_Controller
          */
         public function render($view, $data = null, $returnhtml = false)
         {//I think this makes more sense
-                $this->viewdata = (empty($data)) ? $this->data : $data;
+                //$this->viewdata = (empty($data)) ? $this->data : $data;
 
-                $view_html = $this->load->view($view, $this->viewdata, $returnhtml);
+                $view_html = $this->load->view($view,$data, $returnhtml);
 
                 if ($returnhtml)
                 {

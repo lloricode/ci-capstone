@@ -118,20 +118,43 @@ class Students extends CI_Capstone_Controller
         {
                 $this->Student_model->set_informations($this->input->get('student-id'));
                 $this->student->set_enroll();
-                redirect('students/view?student-id = ' . $this->student->id, 'refresh');
+                redirect('students/view?student-id=' . $this->student->id, 'refresh');
+        }
+
+        public function print_data()
+        {
+                if ($action = (string) $this->input->get('action'))
+                {
+                        $id = check_id_from_url('student_id', 'Student_model', 'student-id')->student_id;
+                        $this->Student_model->set_informations($id);
+
+                        if ($action === 'prev')
+                        {
+                                $this->load->helper('form_helper');
+                                $data['print_link'] = anchor(site_url('students/print_data?action=print&student-id=' . $this->student->id), lang('print_label'));
+                                $data['subjecs']      = $this->view(TRUE);
+                                MY_Controller::render('admin/_templates/students/print', $data);
+                        }
+                        elseif ($action === 'print')
+                        {
+                                $this->load->library('pdf');
+                                $data['subjecs'] = $this->view(TRUE);
+                                $this->pdf->print_now(MY_Controller::render('admin/_templates/students/print', $data, TRUE));
+                        }
+                }
         }
 
         /**
          *  @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        public function view()
+        public function view($return_html = FALSE)//parameter use for printing
         {
                 $this->load->helper('time');
                 /*
                  * check url with id,tehn get studewnt row
                  */
                 $this->Student_model->set_informations($this->input->get('student-id'));
-                $this->breadcrumbs->unshift(3, 'View Student [' . $this->student->school_id . ']', 'students/view?student-id = ' . $this->student->id);
+                $this->breadcrumbs->unshift(3, 'View Student [' . $this->student->school_id . ']', 'students/view?student-id=' . $this->student->id);
                 /**
                  * setting up page for pagination
                  */
@@ -194,7 +217,13 @@ class Students extends CI_Capstone_Controller
                          */
                         $this->table->add_row(array('data' => 'no data', 'colspan' => '7'));
                 }
-
+                if ($return_html)
+                {
+                        /**
+                         * use for printing
+                         */
+                        return $this->table->generate();
+                }
                 /**
                  * generating html table result
                  */
