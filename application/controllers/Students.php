@@ -47,10 +47,10 @@ class Students extends CI_Capstone_Controller
 
                         foreach ($student_obj as $student)
                         {
-                                $view_ = anchor(site_url('students/view?student-id=' . $student->student_id), '<span class="btn btn-warning btn-mini">View</span>');
-                                $edit_ = anchor(site_url('edit-student?student-id=' . $student->student_id), '<span class="btn btn-primary btn-mini">Edit</span>');
+                                $view_ = anchor(site_url('students/view?student-id=' . $student->student_id), '<button class="btn btn-mini pending">View</button>');
+                                $edit_ = anchor(site_url('edit-student?student-id=' . $student->student_id), '<button class="btn btn-mini pending">Edit</button>');
 
-                                array_push($table_data, array(
+                                $tmp = array(
                                     $this->_images_for_table($student),
                                     my_htmlspecialchars($student->student_school_id),
                                     my_htmlspecialchars($student->student_lastname),
@@ -59,15 +59,21 @@ class Students extends CI_Capstone_Controller
                                     my_htmlspecialchars($student->course_code),
                                     my_htmlspecialchars(number_place($student->enrollment_year_level) . ' Year'),
                                     my_htmlspecialchars(($student->enrollment_status) ? 'yes' : 'no'),
-                                    $view_ . ' | ' . $edit_
-                                ));
+                                    $view_ . $edit_
+                                );
+                                if ($this->ion_auth->is_admin())
+                                {
+                                        $tmp[] = $this->User_model->modidy(NULL, 'created', $student->created_user_id, $student->created_at);
+                                        $tmp[] = $this->User_model->modidy(NULL, 'updated', $student->updated_user_id, $student->updated_at);
+                                }
+                                $table_data[] = $tmp;
                         }
                 }
 
                 /*
                  * Table headers
                  */
-                $header           = array(
+                $header = array(
                     lang('index_student_image_th'),
                     lang('index_student_school_id_th'),
                     lang('index_student_lastname_th'),
@@ -78,6 +84,11 @@ class Students extends CI_Capstone_Controller
                     'enrolled',
                     'options'
                 );
+                if ($this->ion_auth->is_admin())
+                {
+                        $header[] = 'Created By';
+                        $header[] = 'Updated By';
+                }
                 $pagination_index = 'students';
                 if ($this->input->get('course-id'))
                 {
@@ -132,7 +143,7 @@ class Students extends CI_Capstone_Controller
                         {
                                 $this->load->helper('form_helper');
                                 $data['print_link'] = anchor(site_url('students/print_data?action=print&student-id=' . $this->student->id), lang('print_label'));
-                                $data['subjecs']      = $this->view(TRUE);
+                                $data['subjecs']    = $this->view(TRUE);
                                 MY_Controller::render('admin/_templates/students/print', $data);
                         }
                         elseif ($action === 'print')
@@ -197,7 +208,7 @@ class Students extends CI_Capstone_Controller
 
 
 
-                $student_subjects_obj = $this->student->subject_offers(/*$this->limit, $this->limit * $page - $this->limit*/);
+                $student_subjects_obj = $this->student->subject_offers(/* $this->limit, $this->limit * $page - $this->limit */);
                 if ($student_subjects_obj)
                 {
                         /**

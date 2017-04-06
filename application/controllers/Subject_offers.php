@@ -70,6 +70,12 @@ class Subject_offers extends CI_Capstone_Controller
                                 {
                                         $line = array_merge($line, array('--', '--', '--', '--'));
                                 }
+                                if ($this->ion_auth->is_admin())
+                                {
+
+                                        $line[] = $this->User_model->modidy($s, 'created');
+                                        $line[] = $this->User_model->modidy($s, 'updated');
+                                }
                                 $table_data[] = array_merge($output, $line);
                         }
                 }
@@ -96,6 +102,11 @@ class Subject_offers extends CI_Capstone_Controller
                     'Room2'
                 );
 
+                if ($this->ion_auth->is_admin())
+                {
+                        $header[] = 'Created By';
+                        $header[] = 'Updated By';
+                }
                 $pagination = $this->pagination->generate_bootstrap_link('subject-offers/index', $this->Subject_offer_model->count_rows() / $this->limit);
 
                 $this->template['table_subject_offers'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_subject_offer_heading', $pagination, TRUE);

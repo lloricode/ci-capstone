@@ -22,8 +22,35 @@ class Create_curriculum_subject extends CI_Capstone_Controller
 
         public function index()
         {
+                if ($this->input->get('curriculum-id'))
+                {
+                        $curriculum_obj = check_id_from_url('curriculum_id', 'Curriculum_model', 'curriculum-id', 'course');
+                        if ($curriculum_obj->curriculum_status)
+                        {
+                                show_error('Already Enabled');
+                        }
+                        if ($curriculum_obj->curriculum_already_used)
+                        {
+                                show_error('Edit is not allowed, Already been used by other data.');
+                        }
+                }
+
                 if ($this->input->post('submit'))
                 {
+                        /**
+                         * check curriculum_id
+                         */
+                        $curriculum_obj = $this->Curriculum_model->get($this->input->post('curriculum'));
+                        if ($curriculum_obj->curriculum_status)
+                        {
+                                show_error('Already Enabled');
+                        }
+                        if ($curriculum_obj->curriculum_already_used)
+                        {
+                                show_error('Edit is not allowed, Already been used by other data.');
+                        }
+                        
+                        
                         $id = $this->Curriculum_subject_model->from_form(NULL, array(
                                     'created_user_id' => $this->session->userdata('user_id')
                                 ))->insert();
@@ -60,6 +87,10 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                 $return = array();
 
                 $cur_obj = $this->Curriculum_model->
+                        where(array(
+                            'curriculum_status'       => FALSE,
+                            'curriculum_already_used' => FALSE
+                        ))->
                         set_cache('curriculum_get_all')->
                         get_all();
 
@@ -114,7 +145,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                     'value' => $this->_dropdown_for_subjects(),
                     'type'  => 'dropdown',
                     'lang'  => 'curriculum_subject_subject_label',
-                   // 'note'  => 'Requisites is on the next form after submit this current form.'
+                        // 'note'  => 'Requisites is on the next form after submit this current form.'
                 );
 
                 $inputs['curriculum_subject_year_level'] = array(

@@ -230,7 +230,7 @@ class Edit_student extends CI_Capstone_Controller
                 $this->data['student_birthdate'] = array(
                     'name'             => 'birthdate',
                     'data-date-format' => 'mm-dd-yyyy',
-                    'class'            => 'zpicker',
+                    'class'            => 'datepicker',
                     'value'            => $this->form_validation->set_value('birthdate', $this->student->birthdate),
                     'type'             => 'text',
                     'lang'             => 'create_student_birthdate_label'
@@ -241,7 +241,7 @@ class Edit_student extends CI_Capstone_Controller
                 $this->data['student_birthplace'] = array(
                     'name'  => 'birthplace',
                     'value' => $this->form_validation->set_value('birthplace', $this->student->birthplace),
-                    'type'  => 'text',
+                    'type'  => 'textarea',
                     'lang'  => 'create_student_birthplace_label'
                 );
 

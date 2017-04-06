@@ -69,4 +69,39 @@ class User_model extends MY_Model
                 // For example: considering that a post can have multiple authors, a pivot table that connects two tables (users and posts) must be named posts_users and must have post_id and user_id as identifying columns for the posts.id and users.id tables.
         }
 
+        public function modidy($obj = FALSE, $type, $user_id = FALSE, $__time = NULL)
+        {
+                // if ( ! isset($obj->{'user_' . $type}->id))
+                if ( ! isset($obj->{$type . '_at'}) && ! $user_id)
+                {
+                        return '--';
+                }
+                $id   = NULL;
+                $fn   = NULL;
+                $ln   = NULL;
+                $time = NULL;
+                if ($user_id)
+                {
+                        /**
+                         * for student
+                         */
+                        $user_obj = $this->get($user_id);
+                        $id       = $user_obj->id;
+                        $fn       = $user_obj->first_name;
+                        $ln       = $user_obj->last_name;
+                        $time     = $__time;
+                }
+                else
+                {
+                        $id   = $obj->{'user_' . $type}->id;
+                        $fn   = $obj->{'user_' . $type}->first_name;
+                        $ln   = $obj->{'user_' . $type}->last_name;
+                        $time = $obj->{$type . '_at'};
+                }
+                $url         = 'edit-user?user-id=' . $id;
+                $label       = $ln . ', ' . $fn;
+                $button_view = '<button class="btn btn-mini">' . $label . '</button>';
+                return anchor($url, $button_view) . br() . unix_to_human($time);
+        }
+
 }

@@ -34,20 +34,31 @@ class Subject_offer_model extends MY_Model
 
         private function _relations()
         {
-
-                $this->has_one['subject'] = array(
+                $this->has_one['user_created'] = array(
+                    'foreign_model' => 'User_model',
+                    'foreign_table' => 'users',
+                    'foreign_key'   => 'id',
+                    'local_key'     => 'created_user_id'
+                );
+                $this->has_one['user_updated'] = array(
+                    'foreign_model' => 'User_model',
+                    'foreign_table' => 'users',
+                    'foreign_key'   => 'id',
+                    'local_key'     => 'updated_user_id'
+                );
+                $this->has_one['subject']      = array(
                     'foreign_model' => 'Subject_model',
                     'foreign_table' => 'subjects',
                     'foreign_key'   => 'subject_id',
                     'local_key'     => 'subject_id'
                 );
-                $this->has_one['room']    = array(
+                $this->has_one['room']         = array(
                     'foreign_model' => 'Room_model',
                     'foreign_table' => 'rooms',
                     'foreign_key'   => 'room_id',
                     'local_key'     => 'room_id'
                 );
-                $this->has_one['faculty'] = array(
+                $this->has_one['faculty']      = array(
                     'foreign_model' => 'User_model',
                     'foreign_table' => 'users',
                     'foreign_key'   => 'id',
@@ -95,7 +106,9 @@ class Subject_offer_model extends MY_Model
         private function _query()
         {
                 $this->
-                        fields('subject_offer_id')->
+                        fields('subject_offer_id,created_at,updated_at')->
+                        with_user_created('fields:first_name,last_name')->
+                        with_user_updated('fields:first_name,last_name')->
                         with_subject('fields:subject_code,subject_description')->
                         with_faculty('fields:first_name,last_name')->
                         with_subject_line(array(
@@ -141,7 +154,7 @@ class Subject_offer_model extends MY_Model
                         /**
                          * for student profile
                          */
-                        $this->with_student_subjects();//'where:`enrollment_id`!=' . $enrollment_id);
+                        $this->with_student_subjects(); //'where:`enrollment_id`!=' . $enrollment_id);
                 }
                 $where__     = array(
                     'with' => array(

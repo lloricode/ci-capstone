@@ -18,7 +18,15 @@ class Create_requisite extends CI_Capstone_Controller
                 /**
                  * check either exist or has value given id in url
                  */
-                $curriculum_obj         = check_id_from_url('curriculum_id', 'Curriculum_model', 'curriculum-id', 'course');
+                $curriculum_obj = check_id_from_url('curriculum_id', 'Curriculum_model', 'curriculum-id', 'course');
+                if ($curriculum_obj->curriculum_status)
+                {
+                        show_error('Current Curriculum is "Enabled".');
+                }
+                if ($curriculum_obj->curriculum_already_used)
+                {
+                        show_error('Edit is not allowed, Already been used by other data.');
+                }
                 $curriculum_subject_obj = check_id_from_url('curriculum_subject_id', 'Curriculum_subject_model', 'curriculum-subject-id', array('subject', 'requisite', 'curriculum'));
                 //  print_r($curriculum_obj);
                 // print_r($curriculum_subject_obj);

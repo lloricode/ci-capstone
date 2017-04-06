@@ -36,6 +36,18 @@ class Student_model extends MY_Model
 
         private function _relations()
         {
+                $this->has_one['user_created']       = array(
+                    'foreign_model' => 'User_model',
+                    'foreign_table' => 'users',
+                    'foreign_key'   => 'id',
+                    'local_key'     => 'created_user_id'
+                );
+                $this->has_one['user_updated']       = array(
+                    'foreign_model' => 'User_model',
+                    'foreign_table' => 'users',
+                    'foreign_key'   => 'id',
+                    'local_key'     => 'updated_user_id'
+                );
                 $this->has_many['students_subjects'] = array(
                     'foreign_model' => 'Students_subjects_model',
                     'foreign_table' => 'students_subjects',
@@ -285,7 +297,7 @@ class Student_model extends MY_Model
                 $result = $rs->custom_result_object('Student_row');
 
                 $this->db->reset_query();
-                        
+
                 $this->_query_all($course_id);
                 $count = $this->db->count_all_results($this->table);
 
@@ -298,7 +310,7 @@ class Student_model extends MY_Model
         private function _query_all($course_id = NULL)
         {
 
-                $this->load->model(array('Enrollment_model', 'Course_model'));
+                $this->load->model(array('Enrollment_model', 'Course_model', 'User_model'));
 
                 $enrollment_table       = $this->Enrollment_model->table;
                 $enrollment_primary_key = $this->Enrollment_model->primary_key;
@@ -306,12 +318,24 @@ class Student_model extends MY_Model
                 $course_table       = $this->Course_model->table;
                 $course_primary_key = $this->Course_model->primary_key;
 
+                $user_table       = $this->User_model->table;
+                $user_primary_key = $this->User_model->primary_key;
+
                 $primary_key = $this->primary_key;
                 $table       = $this->table;
 
-                $this->db->select('*');
+                $str_select_student = '';
+                foreach (array('created_at', 'updated_at', 'created_user_id', 'updated_user_id', 'student_id', 'student_school_id', 'student_lastname', 'student_firstname', 'student_middlename', 'student_image') as $v)
+                {
+                        $str_select_student .= "$table.$v,";
+                }
+
+                $this->db->select("u_c.id,u_c.first_name,u_c.last_name,".$str_select_student . "$course_table.$course_primary_key,$course_table.course_code,$enrollment_table.enrollment_year_level,$enrollment_table.enrollment_status");
                 $this->db->join($enrollment_table, "$enrollment_table.$primary_key=$table.$primary_key");
                 $this->db->join($course_table, "$course_table.$course_primary_key=$enrollment_table.$course_primary_key");
+
+                $this->db->join($user_table . ' AS u_c', "u_c.$user_primary_key=$table.`created_user_id`");
+                //$this->db->join($user_table.' AS u_u', "u_u.$user_primary_key=$table.`updated_user_id`");
                 if ($course_id)
                 {
                         $this->db->where("$course_table.$course_primary_key=", $course_id);
@@ -335,5 +359,9 @@ class Student_row
         public $course_id;
         public $enrollment_year_level;
         public $course_code;
+        public $created_at;
+        public $updated_at;
+        public $created_user_id;
+        public $updated_user_id;
 
 }

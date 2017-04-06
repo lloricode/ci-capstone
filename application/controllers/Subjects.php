@@ -34,6 +34,8 @@ class Subjects extends CI_Capstone_Controller
 
 
                 $subject_obj = $this->Subject_model->
+                        with_user_created('fields:first_name,last_name')->
+                        with_user_updated('fields:first_name,last_name')->
                         limit($this->limit, $this->limit * $this->page_ - $this->limit)->
                         order_by('updated_at', 'DESC')->
                         order_by('created_at', 'DESC')->
@@ -49,11 +51,18 @@ class Subjects extends CI_Capstone_Controller
                         foreach ($subject_obj as $subject)
                         {
 
-                                array_push($table_data, array(
+                                $tmp = array(
                                     my_htmlspecialchars($subject->subject_code),
                                     my_htmlspecialchars($subject->subject_description),
                                         //my_htmlspecialchars($subject->subject_unit),
-                                ));
+                                );
+                                if ($this->ion_auth->is_admin())
+                                {
+
+                                        $tmp[] = $this->User_model->modidy($subject, 'created');
+                                        $tmp[] = $this->User_model->modidy($subject, 'updated');
+                                }
+                                $table_data[] = $tmp;
                         }
                 }
 
@@ -65,9 +74,13 @@ class Subjects extends CI_Capstone_Controller
                     lang('index_subject_description_th'),
                         //lang('index_subject_unit_th'),
                 );
-
+                if ($this->ion_auth->is_admin())
+                {
+                        $header[] = 'Created By';
+                        $header[] = 'Updated By';
+                }
                 $pagination = $this->pagination->generate_bootstrap_link('subjects/index', $this->Subject_model->count_rows() / $this->limit);
-               
+
                 if (in_array('create-subject', permission_controllers()))
                 {
                         $this->template['create_subject_button'] = MY_Controller::render('admin/_templates/button_view', array(
@@ -76,7 +89,7 @@ class Subjects extends CI_Capstone_Controller
                                     'extra'        => array('class' => 'btn btn-success icon-edit'),
                                         ), TRUE);
                 }
-                
+
                 $this->template['table_subjects'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_subject_heading_th', $pagination, TRUE);
                 $this->template['message']        = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
                 $this->template['bootstrap']      = $this->_bootstrap();

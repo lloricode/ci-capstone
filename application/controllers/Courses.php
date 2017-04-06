@@ -40,6 +40,8 @@ class Courses extends CI_Capstone_Controller
 
                 //list the Courses
                 $course_obj = $this->Course_model->
+                        with_user_created('fields:first_name,last_name')->
+                        with_user_updated('fields:first_name,last_name')->
                         limit($this->limit, $this->limit * $this->page_ - $this->limit)->
                         set_cache('courses_page_' . $this->page_)->
                         get_all();
@@ -52,12 +54,19 @@ class Courses extends CI_Capstone_Controller
                         foreach ($course_obj as $course)
                         {
 
-                                array_push($table_data, array(
+                                $tmp = array(
                                     my_htmlspecialchars($course->course_code),
                                     my_htmlspecialchars($course->course_description),
                                     my_htmlspecialchars($course->course_code_id),
                                     my_htmlspecialchars($this->Education_model->get($course->education_id)->education_code),
-                                ));
+                                );
+
+                                if ($this->ion_auth->is_admin())
+                                {
+                                        $tmp[] = $this->User_model->modidy($course, 'created');
+                                        $tmp[] = $this->User_model->modidy($course, 'updated');
+                                }
+                                $table_data[] = $tmp;
                         }
                 }
 
@@ -72,7 +81,11 @@ class Courses extends CI_Capstone_Controller
                     lang('index_course_code_id_th'),
                     lang('index_education_code_th')
                 );
-
+                if ($this->ion_auth->is_admin())
+                {
+                        $header[] = 'Created By';
+                        $header[] = 'Updated By';
+                }
                 $pagination = $this->pagination->generate_bootstrap_link('courses/index', $this->Course_model->count_rows() / $this->limit);
 
                 $this->template['table_courses'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_course_heading', $pagination, TRUE);

@@ -38,7 +38,18 @@ class Curriculums extends CI_Capstone_Controller
 
 
                 $curriculum_obj = $this->Curriculum_model->
-                        with_course()->
+                        fields(array(
+                            'curriculum_description',
+                            'curriculum_effective_school_year',
+                            'curriculum_status',
+                            'curriculum_already_used',
+                            'curriculum_id',
+                            'created_at',
+                            'updated_at'
+                        ))->
+                        with_course('fields:course_code')->
+                        with_user_created('fields:first_name,last_name')->
+                        with_user_updated('fields:first_name,last_name')->
                         limit($this->limit, $this->limit * $this->page_ - $this->limit)->
                         order_by('created_at', 'DESC')->
                         order_by('updated_at', 'DESC')->
@@ -50,30 +61,43 @@ class Curriculums extends CI_Capstone_Controller
 
                 if ($curriculum_obj)
                 {
-
                         foreach ($curriculum_obj as $curriculum)
                         {
-                                $view = anchor(site_url('curriculums/view?curriculum-id=' . $curriculum->curriculum_id), '<span class="btn btn-warning btn-mini">' . lang('curriculumn_view') . '</span>');
-                                array_push($table_data, array(
+                                $view = anchor(site_url('curriculums/view?curriculum-id=' . $curriculum->curriculum_id), '<button class="btn btn-mini">' . lang('curriculumn_view') . '</button>');
+
+                                $tmp = array(
                                     my_htmlspecialchars($curriculum->course->course_code),
                                     my_htmlspecialchars($curriculum->curriculum_description),
                                     my_htmlspecialchars($curriculum->curriculum_effective_school_year),
-                                    my_htmlspecialchars($curriculum->curriculum_status),
+                                    $this->_enable_button($curriculum->curriculum_status, $curriculum->curriculum_id, $curriculum->curriculum_already_used),
                                     $view
-                                ));
+                                );
+                                if ($this->ion_auth->is_admin())
+                                {
+
+                                        $tmp[] = $this->User_model->modidy($curriculum, 'created');
+                                        $tmp[] = $this->User_model->modidy($curriculum, 'updated');
+                                }
+                                array_push($table_data, $tmp);
                         }
                 }
 
                 /*
                  * Table headers
                  */
-                $header     = array(
+                $header = array(
                     lang('curriculumn_course'),
                     lang('curriculumn_description'),
                     lang('curriculumn_effective_year'),
                     lang('curriculumn_status'),
                     lang('curriculumn_option')
                 );
+
+                if ($this->ion_auth->is_admin())
+                {
+                        $header[] = 'Created By';
+                        $header[] = 'Updated By';
+                }
                 $pagination = $this->pagination->generate_bootstrap_link('curriculums/index', $this->Curriculum_model->count_rows() / $this->limit);
 
                 $this->template['table_curriculm'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'curriculum_label', $pagination, TRUE);
@@ -83,6 +107,34 @@ class Curriculums extends CI_Capstone_Controller
                  * rendering users view
                  */
                 $this->render('admin/curriculums', $this->template);
+        }
+
+        /**
+         * generate link for enabling curriculum,
+         * if curriculum is enabled already, it will just return a status "Enabled"
+         * 
+         * note: enabling curriculum will disable other with same course_id and also even disabled it cannot edit/add data (because it already used by enrollment),
+         * then a current curriculum cannot add/edit subjects
+         * 
+         * @param type $current_status
+         * @return string
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        private function _enable_button($current_status, $id, $already_used)
+        {
+                $addtional_data = array('class' => 'taskStatus');
+                if ($current_status)
+                {
+                        $addtional_data['data'] = '<span class="done">Enabled</span>';
+                        return $addtional_data;
+                }
+//                if ($already_used)
+//                {
+//                        $addtional_data['data'] = '<span class="pending">Disabled</span>';
+//                        return $addtional_data;
+//                }
+                $addtional_data['data'] = anchor(site_url('set-curriculum-enable?curriculum-id=' . $id), '<button class="btn btn-mini">' . lang('enable_curriculum_label') . '</button>');
+                return $addtional_data;
         }
 
         private function _hour($hr)
@@ -135,8 +187,8 @@ class Curriculums extends CI_Capstone_Controller
 
                                         $year ++;
                                 }
-                                $requisite    = $this->Requisites_model->subjects(isset($cur_subj->requisites) ? $cur_subj->requisites : NULL);
-                                $table_data[] = array(
+                                $requisite = $this->Requisites_model->subjects(isset($cur_subj->requisites) ? $cur_subj->requisites : NULL);
+                                $tmp       = array(
                                     // my_htmlspecialchars($cur_subj->curriculum_subject_year_level),
                                     my_htmlspecialchars(semesters($cur_subj->curriculum_subject_semester)),
                                     highlight_phrase($cur_subj->subject->subject_code, $highlight_phrase, '<span class="badge badge-info" id="' . dash($cur_subj->subject->subject_code) . '">', '</span>'),
@@ -145,15 +197,19 @@ class Curriculums extends CI_Capstone_Controller
                                     my_htmlspecialchars($this->_hour($cur_subj->curriculum_subject_lecture_hours)),
                                     my_htmlspecialchars($this->_hour($cur_subj->curriculum_subject_laboratory_hours)),
                                     $requisite->pre,
-                                    $requisite->co,
-                                    anchor('create-requisite?curriculum-id=' . $curriculum_obj->curriculum_id . '&curriculum-subject-id=' . $cur_subj->curriculum_subject_id, 'add')
+                                    $requisite->co
                                 );
+                                if ( ! $curriculum_obj->curriculum_status && ! $curriculum_obj->curriculum_already_used)
+                                {
+                                        $tmp[] = anchor('create-requisite?curriculum-id=' . $curriculum_obj->curriculum_id . '&curriculum-subject-id=' . $cur_subj->curriculum_subject_id, '<button class="btn btn-mini pending">' . lang('create_requisite_label') . '</button>');
+                                }
+                                $table_data[] = $tmp;
                         }
                 }
                 /*
                  * Table headers
                  */
-                $header                                             = array(
+                $header = array(
                     //  lang('curriculum_subject_year_level_label'),
                     lang('curriculum_subject_semester_label'),
                     lang('curriculum_subject_subject_label'),
@@ -162,19 +218,25 @@ class Curriculums extends CI_Capstone_Controller
                     lang('curriculum_subject_lecture_hours_label'),
                     lang('curriculum_subject_laboratory_hours_label'),
                     lang('curriculum_subject_pre_subject_label'),
-                    lang('curriculum_subject_co_subject_label'),
-                    'add Requisite'
+                    lang('curriculum_subject_co_subject_label')
                 );
-                $this->template['create_curriculum_subject_button'] = MY_Controller::render('admin/_templates/button_view', array(
-                            'href'         => 'create-curriculum-subject?curriculum-id=' . $curriculum_obj->curriculum_id,
-                            'button_label' => lang('create_curriculum_subject_label'),
-                            'extra'        => array('class' => 'btn btn-success icon-edit'),
-                                ), TRUE);
-                $this->template['curriculum_information']           = MY_Controller::render('admin/_templates/curriculums/curriculum_information', array('curriculum_obj' => $curriculum_obj), TRUE);
-                $this->template['curriculum_obj']                   = $curriculum_obj;
-                $this->template['table_corriculum_subjects']        = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'curriculum_subject_label', FALSE, TRUE);
-                $this->template['message']                          = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-                $this->template['bootstrap']                        = $this->_bootstrap();
+
+                if ( ! $curriculum_obj->curriculum_status && ! $curriculum_obj->curriculum_already_used)
+                {
+                        $header[] = 'add Requisite';
+
+                        $this->template['create_curriculum_subject_button'] = MY_Controller::render('admin/_templates/button_view', array(
+                                    'href'         => 'create-curriculum-subject?curriculum-id=' . $curriculum_obj->curriculum_id,
+                                    'button_label' => lang('create_curriculum_subject_label'),
+                                    'extra'        => array('class' => 'btn btn-success icon-edit'),
+                                        ), TRUE);
+                }
+
+                $this->template['curriculum_information']    = MY_Controller::render('admin/_templates/curriculums/curriculum_information', array('curriculum_obj' => $curriculum_obj), TRUE);
+                $this->template['curriculum_obj']            = $curriculum_obj;
+                $this->template['table_corriculum_subjects'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'curriculum_subject_label', FALSE, TRUE);
+                $this->template['message']                   = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                $this->template['bootstrap']                 = $this->_bootstrap();
                 $this->render('admin/curriculums', $this->template);
         }
 

@@ -64,18 +64,18 @@ class Create_curriculum extends CI_Capstone_Controller
                     'lang'  => 'curriculumn_course'
                 );
 
-                $inputs['curriculum_status'] = array(
-                    'name'   => 'status',
-                    'fields' => array(//we used checkbox here 
-                        'enable' => array(
-                            'label' => lang('curriculumn_status_enable'),
-                            'value' => TRUE
-                        ),
-                    ),
-                    'value'  => $this->form_validation->set_value('status'),
-                    'type'   => 'checkbox',
-                    'lang'   => 'curriculumn_status'
-                );
+//                $inputs['curriculum_status'] = array(
+//                    'name'   => 'status',
+//                    'fields' => array(//we used checkbox here 
+//                        'enable' => array(
+//                            'label' => lang('curriculumn_status_enable'),
+//                            'value' => TRUE
+//                        ),
+//                    ),
+//                    'value'  => $this->form_validation->set_value('status'),
+//                    'type'   => 'checkbox',
+//                    'lang'   => 'curriculumn_status'
+//                );
 
 
                 $this->data['curriculum_form'] = $this->form_boostrap('create-curriculum', $inputs, 'create_curriculum_label', 'curriculumn_create_button', 'info-sign', NULL, TRUE);

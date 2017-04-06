@@ -8,7 +8,10 @@ defined('BASEPATH') OR exit('No direct script allowed');
 if (isset($table_corriculum_subjects))
 {
         echo $curriculum_information;
-        echo $create_curriculum_subject_button;
+        if (isset($create_curriculum_subject_button))
+        {
+                echo $create_curriculum_subject_button;
+        }
         echo $table_corriculum_subjects;
 }
 

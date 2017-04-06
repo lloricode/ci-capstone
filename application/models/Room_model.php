@@ -35,6 +35,18 @@ class Room_model extends MY_Model
 
         private function _relations()
         {
+                $this->has_one['user_created']   = array(
+                    'foreign_model' => 'User_model',
+                    'foreign_table' => 'users',
+                    'foreign_key'   => 'id',
+                    'local_key'     => 'created_user_id'
+                );
+                $this->has_one['user_updated']   = array(
+                    'foreign_model' => 'User_model',
+                    'foreign_table' => 'users',
+                    'foreign_key'   => 'id',
+                    'local_key'     => 'updated_user_id'
+                );
                 $this->has_many['subject_offer'] = array(
                     'foreign_model' => 'Subject_offer_model',
                     'foreign_table' => 'subject_offers',

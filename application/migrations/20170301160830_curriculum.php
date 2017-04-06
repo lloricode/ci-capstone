@@ -44,6 +44,13 @@ class Migration_Curriculum extends CI_Migration
                         'null'       => FAlSE,
                         'default'    => FALSE
                     ),
+                    'curriculum_already_used'          => array(//only one time change
+                        'type'       => 'TINYINT',
+                        'constraint' => '1',
+                        'unsigned'   => TRUE,
+                        'null'       => FAlSE,
+                        'default'    => FALSE
+                    ),
                     /**
                      * foreign
                      */

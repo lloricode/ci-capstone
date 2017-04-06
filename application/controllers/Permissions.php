@@ -77,7 +77,7 @@ class Permissions extends CI_Capstone_Controller
                                                 {
                                                         foreach ($group_obj as $g)
                                                         {
-                                                                $gruops .= anchor("edit-group/?group-id=" . $g->id, my_htmlspecialchars($g->name)) . ' | ';
+                                                                $gruops .= anchor("edit-group/?group-id=" . $g->id, ('<button class="btn btn-mini pending">' . $g->name . '</button>'));
                                                         }
                                                 }
                                         }
@@ -92,12 +92,12 @@ class Permissions extends CI_Capstone_Controller
                                 }
                                 else
                                 {
-                                        $edit = anchor(site_url('permissions/edit?controller-id=' . $c->controller_id), '<button class="btn btn-info btn-mini">Edit</button>');
+                                        $edit = anchor(site_url('permissions/edit?controller-id=' . $c->controller_id), '<button class="btn btn-mini pending">Edit</button>');
                                 }
                                 $table_data[] = array(
                                     my_htmlspecialchars($c->controller_name),
                                     my_htmlspecialchars($c->controller_description),
-                                    trim($gruops, ' | '),
+                                    $gruops,
                                     my_htmlspecialchars(($c->controller_admin_only) ? 'admin only' : 'no'),
                                     my_htmlspecialchars(($c->controller_enrollment_open) ? 'yes' : 'no'),
                                     $edit

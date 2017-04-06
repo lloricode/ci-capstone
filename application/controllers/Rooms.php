@@ -35,6 +35,8 @@ class Rooms extends CI_Capstone_Controller
 
 
                 $room_obj = $this->Room_model->
+                        with_user_created('fields:first_name,last_name')->
+                        with_user_updated('fields:first_name,last_name')->
                         limit($this->limit, $this->limit * $this->page_ - $this->limit)->
                         order_by('updated_at', 'DESC')->
                         order_by('created_at', 'DESC')->
@@ -49,9 +51,16 @@ class Rooms extends CI_Capstone_Controller
 
                         foreach ($room_obj as $room)
                         {
-                                array_push($table_data, array(
+                                $tmp = array(
                                     my_htmlspecialchars($room->room_number)
-                                ));
+                                );
+                                if ($this->ion_auth->is_admin())
+                                {
+
+                                        $tmp[] = $this->User_model->modidy($room, 'created');
+                                        $tmp[] = $this->User_model->modidy($room, 'updated');
+                                }
+                                array_push($table_data, $tmp);
                         }
                 }
                 /*
@@ -60,7 +69,11 @@ class Rooms extends CI_Capstone_Controller
                 $header = array(
                     lang('index_room_number_th')
                 );
-
+                if ($this->ion_auth->is_admin())
+                {
+                        $header[] = 'Created By';
+                        $header[] = 'Updated By';
+                }
                 $pagination = $this->pagination->generate_bootstrap_link('rooms/index', $this->Room_model->count_rows() / $this->limit);
 
                 $this->template['table_rooms'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_room_heading', $pagination, TRUE);

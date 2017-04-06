@@ -295,7 +295,7 @@ class Create_student extends CI_Capstone_Controller
                     'name'  => 'birthplace',
                     'id'    => 'birthplace',
                     'value' => $this->form_validation->set_value('birthplace'),
-                    'type'  => 'text',
+                    'type'  => 'textarea',
                     'lang'  => 'create_student_birthplace_label'
                 );
 

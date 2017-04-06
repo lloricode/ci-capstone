@@ -76,7 +76,7 @@ class Migration_Create_ion_auth extends	CI_Migration {
 				'username' => array('type' => 'VARCHAR','unique'=> TRUE, 'constraint' => '100', 'null' => FALSE),
 				'password' => array('type' => 'VARCHAR', 'constraint' => '80', 'null' => FALSE),
 				'salt' => array('type' => 'VARCHAR', 'constraint' => '40', 'null' => TRUE),
-				'email' => array('type' => 'VARCHAR','unique' => TRUE, 'constraint' => '100', 'null' => FALSE),
+				'email' => array('type' => 'VARCHAR','unique' => TRUE, 'constraint' => '100', 'null' => TRUE),
 				'activation_code' => array('type' => 'VARCHAR', 'constraint' => '40', 'null' => TRUE),
 				'forgotten_password_code' => array('type' => 'VARCHAR', 'constraint' => '40', 'null' => TRUE),
 				'forgotten_password_time' => array('type' => 'int', 'constraint' => '11', 'unsigned' => TRUE, 'null' => TRUE),

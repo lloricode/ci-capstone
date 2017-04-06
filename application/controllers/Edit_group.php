@@ -18,7 +18,8 @@ class Edit_group extends CI_Capstone_Controller
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
                 $this->breadcrumbs->unshift(2, lang('administrators_label'), '#');
-                $this->breadcrumbs->unshift(3, lang('index_groups_th'), 'groups');
+                $this->breadcrumbs->unshift(3, lang('index_heading'), 'users');
+                $this->breadcrumbs->unshift(4, lang('index_groups_th'), 'groups');
         }
 
         public function index($id = NULL)
@@ -30,7 +31,7 @@ class Edit_group extends CI_Capstone_Controller
                         show_error('Invalid request.');
                 }
 
-                $this->breadcrumbs->unshift(3, 'Edit Groups', 'edit-group?group-id=' . $id);
+                $this->breadcrumbs->unshift(5, 'Edit Groups', 'edit-group?group-id=' . $id);
                 $this->data['title'] = $this->lang->line('edit_group_title');
 
                 $group = $this->ion_auth->group($id)->row();
@@ -41,7 +42,7 @@ class Edit_group extends CI_Capstone_Controller
                 }
                 // validate form input
                 $this->form_validation->set_rules(
-                        'group_name', $this->lang->line('edit_group_validation_name_label'), 'required|alpha_dash'
+                        'description', $this->lang->line('edit_group_desc_label'), 'required'
                 );
 
                 if ($this->form_validation->run())
@@ -49,7 +50,7 @@ class Edit_group extends CI_Capstone_Controller
                         if ($this->form_validation->run() === TRUE)
                         {
                                 $group_update = $this->ion_auth->update_group(
-                                        $id, $this->input->post('group_name', TRUE), $this->input->post('group_description', TRUE)
+                                        $id, FALSE, $this->input->post('description', TRUE)
                                 );
 
                                 if ($group_update)
@@ -70,30 +71,25 @@ class Edit_group extends CI_Capstone_Controller
                 }
 
                 // set the flash data error message if there is one
-                $this->data['message'] = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                $msg = (validation_errors() ? validation_errors() : ($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
 
-                // pass the user to the view
-                $this->data['group'] = $group;
-
-                $readonly = $this->config->item('admin_group', 'ion_auth') === $group->name ? 'readonly' : '';
-
-                $this->data['group_name'] = array(
-                    'name'  => 'group_name',
-                    'id'    => 'group_name',
-                    'type'  => 'text',
-                    'value' => $this->form_validation->set_value('group_name', $group->name),
+                $inputs['group_name'] = array(
+                    'name'     => 'name',
+                    'value'    => $this->form_validation->set_value('name', $group->name),
+                    'type'     => 'text',
+                    'lang'     => 'edit_group_name_label',
+                    'readonly' => ''
                 );
-                if ($readonly != '')
-                {
-                        $this->data['group_name'] [$readonly] = $readonly;
-                }
-                $this->data['group_description'] = array(
-                    'name'  => 'group_description',
-                    'id'    => 'group_description',
+
+                $inputs['group_description'] = array(
+                    'name'  => 'description',
+                    'value' => $this->form_validation->set_value('description', $group->description),
                     'type'  => 'text',
-                    'value' => $this->form_validation->set_value('group_description', $group->description),
+                    'lang'  => 'edit_group_desc_label'
                 );
-                $this->data['bootstrap']         = $this->_bootstrap();
+
+                $this->data['group_form'] = $this->form_boostrap('edit-group/?group-id=' . $group->id, $inputs, 'edit_group_title', 'edit_group_submit_btn', 'info-sign', NULL, TRUE, $msg);
+                $this->data['bootstrap']  = $this->_bootstrap();
                 $this->render('admin/edit_group', $this->data);
         }
 

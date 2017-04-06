@@ -38,6 +38,8 @@ class Educations extends CI_Capstone_Controller
 
 
                 $education_obj = $this->Education_model->
+                        with_user_created('fields:first_name,last_name')->
+                        with_user_updated('fields:first_name,last_name')->
                         limit($this->limit, $this->limit * $this->page_ - $this->limit)->
                         order_by('updated_at', 'DESC')->
                         order_by('created_at', 'DESC')->
@@ -53,10 +55,16 @@ class Educations extends CI_Capstone_Controller
                         foreach ($education_obj as $education)
                         {
 
-                                array_push($table_data, array(
+                                $tmp = array(
                                     my_htmlspecialchars($education->education_code),
                                     my_htmlspecialchars($education->education_description),
-                                ));
+                                );
+                                if ($this->ion_auth->is_admin())
+                                {
+                                        $tmp[] = $this->User_model->modidy($education, 'created');
+                                        $tmp[] = $this->User_model->modidy($education, 'updated');
+                                }
+                                $table_data[] = $tmp;
                         }
                 }
 
@@ -67,7 +75,11 @@ class Educations extends CI_Capstone_Controller
                     lang('index_education_code_th'),
                     lang('index_education_description_th'),
                 );
-
+                if ($this->ion_auth->is_admin())
+                {
+                        $header[] = 'Created By';
+                        $header[] = 'Updated By';
+                }
                 $pagination = $this->pagination->generate_bootstrap_link('educations/index', $this->Education_model->count_rows() / $this->limit);
 
                 $this->template['table_educations'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_education_heading', $pagination, TRUE);

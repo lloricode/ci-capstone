@@ -30,7 +30,11 @@ class Create_user extends CI_Capstone_Controller
 
                 if ($this->form_validation->run())
                 {
-                        $email    = strtolower($this->input->post('email', TRUE));
+                        $email = NULL;
+                        if ($this->input->post('email', TRUE))
+                        {
+                                $email = strtolower($this->input->post('email', TRUE));
+                        }
                         $identity = ($identity_column === 'email') ? $email : $this->input->post('identity', TRUE);
                         $password = $this->input->post('password', TRUE);
 
@@ -78,7 +82,7 @@ class Create_user extends CI_Capstone_Controller
                     array(
                         'label' => lang('create_user_validation_email_label'),
                         'field' => 'email',
-                        'rules' => 'trim|required|valid_email|min_length[3]|max_length[30]|is_unique[' . $tables['users'] . '.email]',
+                        'rules' => 'trim|valid_email|min_length[3]|max_length[30]|is_unique[' . $tables['users'] . '.email]',
                     ),
                     array(
                         'label' => lang('create_user_validation_phone_label'),

@@ -57,6 +57,12 @@ if ( ! function_exists('navigations_main'))
                                 'label'      => 'Create Requisite',
                                 'seen'       => FALSE,
                                 'enrollment' => TRUE
+                            ),
+                            'set-curriculum-enable'     =>
+                            array(
+                                'label'      => 'Set Curriculum Enable',
+                                'seen'       => FALSE,
+                                'enrollment' => TRUE
                             )
                         ),
                     ),
@@ -450,7 +456,7 @@ if ( ! function_exists('sidebar_menu_ci_capstone'))
                         }
                 }
                 $status__ = ($enrollment_open_status) ? 'Enabled' : 'Disabled';
-                $status__ = ' <li class="content"><span>Enrollment Status: ' . $status__ . '</span></li>';
+                $status__ = ' <li class="content">Enrollment Status: <span class="date badge badge-'.(($enrollment_open_status)?'success':'important').'">' . $status__ . '</span></li>';
                 return $return   .= $status__ . '</ul>' . PHP_EOL . comment_tag('end-navigations');
         }
 

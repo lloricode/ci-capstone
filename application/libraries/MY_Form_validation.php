@@ -349,7 +349,7 @@ class MY_Form_validation extends CI_Form_validation
 
                 if ($age < $min OR $age > $max)
                 {
-                        $this->CI->form_validation->set_message('_age_limit', 'The {field} is not below ' . $min . ' or max at ' . $max . '. Result age: ' . $age . ' years old.');
+                        $this->CI->form_validation->set_message('age_limit', 'The {field} is not below ' . $min . ' or max at ' . $max . '. Result age: ' . $age . ' years old.');
                         return FALSE;
                 }
 

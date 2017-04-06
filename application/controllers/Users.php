@@ -64,14 +64,14 @@ class Users extends CI_Capstone_Controller
                                 $groups = '';
                                 foreach ($user->groups as $group)
                                 {
-                                        $groups .= anchor(site_url("edit-group/?group-id=" . $group->id), my_htmlspecialchars($group->name)) . ' | ';
+                                        $groups .= anchor(site_url("edit-group/?group-id=" . $group->id), ('<button class="btn btn-mini pending">' . $group->name . '</button>'));
                                 }
                                 $tmp   = array();
                                 $tmp[] = my_htmlspecialchars($user->last_name);
                                 $tmp[] = my_htmlspecialchars($user->first_name);
                                 $tmp[] = my_htmlspecialchars($user->username);
                                 $tmp[] = my_htmlspecialchars($user->email);
-                                $tmp[] = trim($groups, ' | ');
+                                $tmp[] = $groups;
 
                                 if (in_array('deactivate', permission_controllers()))
                                 {
@@ -81,7 +81,7 @@ class Users extends CI_Capstone_Controller
                                 }
                                 if (in_array('edit-user', permission_controllers()))
                                 {
-                                        $tmp[] = anchor(site_url("edit-user/?user-id=" . $user->id), '<span class="btn btn-info btn-mini">Edit</span>');
+                                        $tmp[] = anchor(site_url("edit-user/?user-id=" . $user->id), '<button class="btn btn-mini pending">Edit</button>');
                                 }
                                 array_push($table_data, $tmp);
                         }

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.11
+-- version 4.5.2
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 03, 2017 at 06:21 AM
--- Server version: 5.6.21
--- PHP Version: 5.6.3
+-- Host: localhost
+-- Generation Time: Apr 06, 2017 at 10:34 AM
+-- Server version: 10.1.19-MariaDB
+-- PHP Version: 5.6.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `ci_capstone`
@@ -26,14 +26,14 @@ SET time_zone = "+00:00";
 -- Table structure for table `controllers`
 --
 
-CREATE TABLE IF NOT EXISTS `controllers` (
-`controller_id` mediumint(8) unsigned NOT NULL,
-  `controller_name` enum('home','curriculums','create-curriculum','create-curriculum-subject','create-requisite','students','create-student','edit-student','create-student-subject','subjects','create-subject','subject-offers','create-subject-offer','open-enrollment','educations','create-education','courses','create-course','rooms','create-room','users','create-user','groups','create-group','edit-group','deactivate','edit-user','database','log','permissions','last-logins','') NOT NULL,
+CREATE TABLE `controllers` (
+  `controller_id` mediumint(8) UNSIGNED NOT NULL,
+  `controller_name` enum('home','curriculums','create-curriculum','create-curriculum-subject','create-requisite','students','create-student','edit-student','create-student-subject','subjects','create-subject','subject-offers','create-subject-offer','open-enrollment','educations','create-education','courses','create-course','rooms','create-room','users','create-user','groups','create-group','edit-group','deactivate','edit-user','database','log','permissions','last-logins','','set-curriculum-enable') NOT NULL,
   `controller_description` varchar(50) NOT NULL,
   `controller_admin_only` tinyint(1) NOT NULL DEFAULT '0',
   `controller_enrollment_open` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` varchar(100) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `controllers`
@@ -71,7 +71,8 @@ INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_descr
 (29, 'log', 'Log Description', 1, 0, '1491052872'),
 (30, 'permissions', 'Permissions Description', 1, 0, '1491052872'),
 (31, 'last-logins', 'Last Logins Description', 1, 0, '1491052872'),
-(32, '', 'Default Controller Description', 0, 0, '1491052872');
+(32, '', 'Default Controller Description', 0, 0, '1491052872'),
+(33, 'set-curriculum-enable', 'set-curriculum-enable', 0, 1, '1491052886');
 
 -- --------------------------------------------------------
 
@@ -79,8 +80,8 @@ INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_descr
 -- Table structure for table `courses`
 --
 
-CREATE TABLE IF NOT EXISTS `courses` (
-`course_id` int(8) unsigned NOT NULL,
+CREATE TABLE `courses` (
+  `course_id` int(8) UNSIGNED NOT NULL,
   `course_code` varchar(50) NOT NULL,
   `course_icon` varchar(20) NOT NULL,
   `course_color` varchar(20) NOT NULL,
@@ -88,12 +89,12 @@ CREATE TABLE IF NOT EXISTS `courses` (
   `course_code_id` varchar(5) NOT NULL,
   `education_id` int(11) NOT NULL,
   `created_at` varchar(100) NOT NULL,
-  `created_user_id` int(11) unsigned NOT NULL,
+  `created_user_id` int(11) UNSIGNED NOT NULL,
   `deleted_at` varchar(100) DEFAULT NULL,
-  `deleted_user_id` int(11) unsigned DEFAULT NULL,
+  `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` varchar(100) DEFAULT NULL,
-  `updated_user_id` int(11) unsigned DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `courses`
@@ -117,35 +118,37 @@ INSERT INTO `courses` (`course_id`, `course_code`, `course_icon`, `course_color`
 -- Table structure for table `curriculums`
 --
 
-CREATE TABLE IF NOT EXISTS `curriculums` (
-`curriculum_id` int(8) unsigned NOT NULL,
+CREATE TABLE `curriculums` (
+  `curriculum_id` int(8) UNSIGNED NOT NULL,
   `curriculum_description` varchar(50) NOT NULL,
   `curriculum_effective_school_year` varchar(9) NOT NULL,
-  `curriculum_status` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `course_id` int(11) unsigned NOT NULL,
+  `curriculum_status` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
+  `curriculum_already_used` tinyint(1) NOT NULL DEFAULT '0',
+  `course_id` int(11) UNSIGNED NOT NULL,
   `created_at` varchar(100) NOT NULL,
-  `created_user_id` int(11) unsigned NOT NULL,
+  `created_user_id` int(11) UNSIGNED NOT NULL,
   `deleted_at` varchar(100) DEFAULT NULL,
-  `deleted_user_id` int(11) unsigned DEFAULT NULL,
+  `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` varchar(100) DEFAULT NULL,
-  `updated_user_id` int(11) unsigned DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `curriculums`
 --
 
-INSERT INTO `curriculums` (`curriculum_id`, `curriculum_description`, `curriculum_effective_school_year`, `curriculum_status`, `course_id`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES
-(1, 'Two Year Aircraft Maintenance & Technology', '2016-2017', 1, 6, '1490272433', 1, NULL, NULL, NULL, NULL),
-(2, 'Bachelor Science Elementary Education', '2015-2016', 1, 1, '1490272501', 1, NULL, NULL, NULL, NULL),
-(3, 'Bachelor of Science in Hotel Restaurant Management', '2016-2017', 1, 2, '1490272821', 1, NULL, NULL, NULL, NULL),
-(4, 'Bachelor of Science in Computer Science', '2015-2016', 1, 4, '1490273333', 1, NULL, NULL, NULL, NULL),
-(5, 'paramedical', '2016-2017', 1, 3, '1491115358', 1, NULL, NULL, NULL, NULL),
-(6, 'HS', '2016-2017', 1, 5, '1491115397', 1, NULL, NULL, NULL, NULL),
-(7, 'tesda', '2016-2017', 1, 7, '1491115417', 1, NULL, NULL, NULL, NULL),
-(8, 'cme', '2016-2017', 1, 8, '1491115432', 1, NULL, NULL, NULL, NULL),
-(9, 'cross enroll', '2016-2017', 1, 9, '1491115451', 1, NULL, NULL, NULL, NULL),
-(10, 'Curriculum for IT', '2016-2017', 1, 10, '1491191205', 1, NULL, NULL, NULL, NULL);
+INSERT INTO `curriculums` (`curriculum_id`, `curriculum_description`, `curriculum_effective_school_year`, `curriculum_status`, `curriculum_already_used`, `course_id`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES
+(1, 'Two Year Aircraft Maintenance & Technology', '2016-2017', 1, 0, 6, '1490272433', 1, NULL, NULL, NULL, NULL),
+(2, 'Bachelor Science Elementary Education', '2015-2016', 1, 0, 1, '1490272501', 1, NULL, NULL, NULL, NULL),
+(3, 'Bachelor of Science in Hotel Restaurant Management', '2016-2017', 1, 0, 2, '1490272821', 1, NULL, NULL, NULL, NULL),
+(4, 'Bachelor of Science in Computer Science', '2015-2016', 1, 0, 4, '1490273333', 1, NULL, NULL, NULL, NULL),
+(5, 'paramedical', '2016-2017', 1, 0, 3, '1491115358', 1, NULL, NULL, NULL, NULL),
+(6, 'HS', '2016-2017', 1, 0, 5, '1491115397', 1, NULL, NULL, NULL, NULL),
+(7, 'tesda', '2016-2017', 1, 0, 7, '1491115417', 1, NULL, NULL, NULL, NULL),
+(8, 'cme', '2016-2017', 1, 0, 8, '1491115432', 1, NULL, NULL, NULL, NULL),
+(9, 'cross enroll', '2016-2017', 1, 0, 9, '1491115451', 1, NULL, NULL, NULL, NULL),
+(10, 'Curriculum for IT', '2017-2018', 0, 1, 10, '1491191205', 1, NULL, NULL, '1491459120', 15),
+(11, 'aaaaaaaaaaaa', '2016-2017', 1, 1, 10, '1491440080', 1, NULL, NULL, '1491459120', 15);
 
 -- --------------------------------------------------------
 
@@ -153,22 +156,22 @@ INSERT INTO `curriculums` (`curriculum_id`, `curriculum_description`, `curriculu
 -- Table structure for table `curriculum_subjects`
 --
 
-CREATE TABLE IF NOT EXISTS `curriculum_subjects` (
-`curriculum_subject_id` int(8) unsigned NOT NULL,
-  `curriculum_subject_year_level` tinyint(11) unsigned NOT NULL,
+CREATE TABLE `curriculum_subjects` (
+  `curriculum_subject_id` int(8) UNSIGNED NOT NULL,
+  `curriculum_subject_year_level` tinyint(11) UNSIGNED NOT NULL,
   `curriculum_subject_semester` enum('first','second','summer') NOT NULL,
-  `curriculum_subject_units` tinyint(11) unsigned NOT NULL,
-  `curriculum_subject_lecture_hours` tinyint(11) unsigned NOT NULL,
-  `curriculum_subject_laboratory_hours` tinyint(11) unsigned NOT NULL,
-  `curriculum_id` int(11) unsigned NOT NULL,
-  `subject_id` int(11) unsigned NOT NULL,
+  `curriculum_subject_units` tinyint(11) UNSIGNED NOT NULL,
+  `curriculum_subject_lecture_hours` tinyint(11) UNSIGNED NOT NULL,
+  `curriculum_subject_laboratory_hours` tinyint(11) UNSIGNED NOT NULL,
+  `curriculum_id` int(11) UNSIGNED NOT NULL,
+  `subject_id` int(11) UNSIGNED NOT NULL,
   `created_at` varchar(100) NOT NULL,
-  `created_user_id` int(11) unsigned NOT NULL,
+  `created_user_id` int(11) UNSIGNED NOT NULL,
   `deleted_at` varchar(100) DEFAULT NULL,
-  `deleted_user_id` int(11) unsigned DEFAULT NULL,
+  `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` varchar(100) DEFAULT NULL,
-  `updated_user_id` int(11) unsigned DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `curriculum_subjects`
@@ -210,7 +213,9 @@ INSERT INTO `curriculum_subjects` (`curriculum_subject_id`, `curriculum_subject_
 (33, 2, 'second', 3, 0, 2, 1, 34, '1491185795', 12, NULL, NULL, NULL, NULL),
 (34, 2, 'second', 3, 5, 9, 1, 35, '1491185816', 12, NULL, NULL, NULL, NULL),
 (35, 1, 'first', 3, 3, 2, 10, 10, '1491191355', 1, NULL, NULL, NULL, NULL),
-(36, 1, 'first', 3, 3, 4, 10, 2, '1491191424', 1, NULL, NULL, NULL, NULL);
+(36, 1, 'first', 3, 3, 4, 10, 2, '1491191424', 1, NULL, NULL, NULL, NULL),
+(37, 1, 'first', 3, 0, 0, 11, 16, '1491441660', 1, NULL, NULL, NULL, NULL),
+(38, 1, 'first', 1, 4, 3, 11, 1, '1491451294', 1, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -218,17 +223,17 @@ INSERT INTO `curriculum_subjects` (`curriculum_subject_id`, `curriculum_subject_
 -- Table structure for table `educations`
 --
 
-CREATE TABLE IF NOT EXISTS `educations` (
-`education_id` int(8) unsigned NOT NULL,
+CREATE TABLE `educations` (
+  `education_id` int(8) UNSIGNED NOT NULL,
   `education_code` varchar(50) NOT NULL,
   `education_description` varchar(50) NOT NULL,
   `created_at` varchar(100) NOT NULL,
-  `created_user_id` int(11) unsigned NOT NULL,
+  `created_user_id` int(11) UNSIGNED NOT NULL,
   `deleted_at` varchar(100) DEFAULT NULL,
-  `deleted_user_id` int(11) unsigned DEFAULT NULL,
+  `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` varchar(100) DEFAULT NULL,
-  `updated_user_id` int(11) unsigned DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `educations`
@@ -244,8 +249,8 @@ INSERT INTO `educations` (`education_id`, `education_code`, `education_descripti
 -- Table structure for table `enrollments`
 --
 
-CREATE TABLE IF NOT EXISTS `enrollments` (
-`enrollment_id` int(8) unsigned NOT NULL,
+CREATE TABLE `enrollments` (
+  `enrollment_id` int(8) UNSIGNED NOT NULL,
   `student_id` tinyint(11) NOT NULL,
   `course_id` tinyint(11) NOT NULL,
   `curriculum_id` tinyint(11) NOT NULL,
@@ -254,20 +259,20 @@ CREATE TABLE IF NOT EXISTS `enrollments` (
   `enrollment_year_level` tinyint(11) NOT NULL,
   `enrollment_status` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` varchar(100) NOT NULL,
-  `created_user_id` int(11) unsigned NOT NULL,
+  `created_user_id` int(11) UNSIGNED NOT NULL,
   `deleted_at` varchar(100) DEFAULT NULL,
-  `deleted_user_id` int(11) unsigned DEFAULT NULL,
+  `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` varchar(100) DEFAULT NULL,
-  `updated_user_id` int(11) unsigned DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `enrollments`
 --
 
 INSERT INTO `enrollments` (`enrollment_id`, `student_id`, `course_id`, `curriculum_id`, `enrollment_school_year`, `enrollment_semester`, `enrollment_year_level`, `enrollment_status`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES
-(1, 1, 4, 4, '2013-2014', 'second', 1, 0, '1490342599', 1, NULL, NULL, '1491121166', 1),
-(2, 2, 2, 3, '2014-2015', 'summer', 4, 0, '1490342599', 1, NULL, NULL, NULL, NULL),
+(1, 1, 4, 4, '2013-2014', 'second', 1, 1, '1490342599', 1, NULL, NULL, '1491121166', 1),
+(2, 2, 2, 3, '2014-2015', 'summer', 4, 0, '1490342599', 1, NULL, NULL, '1491463781', 15),
 (3, 3, 2, 3, '2013-2014', 'summer', 2, 0, '1490342599', 1, NULL, NULL, NULL, NULL),
 (4, 4, 8, 8, '2013-2014', 'summer', 1, 0, '1490342599', 1, NULL, NULL, NULL, NULL),
 (5, 5, 4, 4, '2013-2014', 'first', 4, 0, '1490342599', 1, NULL, NULL, NULL, NULL),
@@ -367,7 +372,7 @@ INSERT INTO `enrollments` (`enrollment_id`, `student_id`, `course_id`, `curricul
 (99, 99, 7, 7, '2014-2015', 'second', 4, 0, '1490342599', 1, NULL, NULL, NULL, NULL),
 (100, 100, 1, 2, '2014-2015', 'first', 1, 0, '1490342599', 1, NULL, NULL, NULL, NULL),
 (104, 101, 6, 1, '2016-2017', 'summer', 1, 1, '1491186386', 15, NULL, NULL, '1491186481', 13),
-(106, 102, 6, 1, '2016-2017', 'summer', 1, 1, '1491190221', 1, NULL, NULL, '1491192398', 15);
+(106, 102, 6, 1, '2016-2017', 'summer', 1, 1, '1491190221', 1, NULL, NULL, '1491296149', 1);
 
 -- --------------------------------------------------------
 
@@ -375,10 +380,10 @@ INSERT INTO `enrollments` (`enrollment_id`, `student_id`, `course_id`, `curricul
 -- Table structure for table `enrollment_status`
 --
 
-CREATE TABLE IF NOT EXISTS `enrollment_status` (
-  `status` tinyint(1) unsigned NOT NULL,
+CREATE TABLE `enrollment_status` (
+  `status` tinyint(1) UNSIGNED NOT NULL,
   `created_at` varchar(100) NOT NULL,
-  `created_user_id` int(11) unsigned NOT NULL
+  `created_user_id` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -386,7 +391,7 @@ CREATE TABLE IF NOT EXISTS `enrollment_status` (
 --
 
 INSERT INTO `enrollment_status` (`status`, `created_at`, `created_user_id`) VALUES
-(1, '1491098498', 1);
+(1, '1491467538', 15);
 
 -- --------------------------------------------------------
 
@@ -394,11 +399,11 @@ INSERT INTO `enrollment_status` (`status`, `created_at`, `created_user_id`) VALU
 -- Table structure for table `groups`
 --
 
-CREATE TABLE IF NOT EXISTS `groups` (
-`id` mediumint(8) unsigned NOT NULL,
+CREATE TABLE `groups` (
+  `id` mediumint(8) UNSIGNED NOT NULL,
   `name` varchar(20) NOT NULL,
   `description` varchar(100) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `groups`
@@ -418,20 +423,12 @@ INSERT INTO `groups` (`id`, `name`, `description`) VALUES
 -- Table structure for table `login_attempts`
 --
 
-CREATE TABLE IF NOT EXISTS `login_attempts` (
-`id` mediumint(8) unsigned NOT NULL,
+CREATE TABLE `login_attempts` (
+  `id` mediumint(8) UNSIGNED NOT NULL,
   `ip_address` varbinary(16) NOT NULL,
   `login` varchar(100) NOT NULL,
-  `time` int(11) unsigned NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `login_attempts`
---
-
-INSERT INTO `login_attempts` (`id`, `ip_address`, `login`, `time`) VALUES
-(1, 0x3a3a31, 'administrator', 1491179365),
-(2, 0x3a3a31, 'administrator', 1491179365);
+  `time` int(11) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -439,8 +436,8 @@ INSERT INTO `login_attempts` (`id`, `ip_address`, `login`, `time`) VALUES
 -- Table structure for table `logs`
 --
 
-CREATE TABLE IF NOT EXISTS `logs` (
-`id` int(8) unsigned NOT NULL,
+CREATE TABLE `logs` (
+  `id` int(8) UNSIGNED NOT NULL,
   `errno` int(2) NOT NULL,
   `errtype` varchar(32) NOT NULL,
   `errstr` text NOT NULL,
@@ -449,7 +446,7 @@ CREATE TABLE IF NOT EXISTS `logs` (
   `user_agent` varchar(120) NOT NULL,
   `ip_address` varchar(45) NOT NULL,
   `time` datetime NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `logs`
@@ -465,7 +462,7 @@ INSERT INTO `logs` (`id`, `errno`, `errtype`, `errstr`, `errfile`, `errline`, `u
 -- Table structure for table `migrations`
 --
 
-CREATE TABLE IF NOT EXISTS `migrations` (
+CREATE TABLE `migrations` (
   `version` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -482,14 +479,14 @@ INSERT INTO `migrations` (`version`) VALUES
 -- Table structure for table `permissions`
 --
 
-CREATE TABLE IF NOT EXISTS `permissions` (
-`permission_id` int(8) unsigned NOT NULL,
+CREATE TABLE `permissions` (
+  `permission_id` int(8) UNSIGNED NOT NULL,
   `controller_id` int(11) NOT NULL,
   `group_id` int(11) NOT NULL,
   `created_at` varchar(100) NOT NULL,
   `updated_at` varchar(100) DEFAULT NULL,
-  `updated_user_id` int(11) unsigned DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=144 DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `permissions`
@@ -549,12 +546,13 @@ INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `create
 (121, 6, 4, '1491180432', NULL, 1),
 (122, 6, 5, '1491180433', NULL, 1),
 (123, 6, 6, '1491180433', NULL, 1),
-(138, 1, 1, '1491192208', NULL, 15),
-(139, 1, 2, '1491192208', NULL, 15),
-(140, 1, 3, '1491192208', NULL, 15),
-(141, 1, 4, '1491192208', NULL, 15),
-(142, 1, 5, '1491192208', NULL, 15),
-(143, 1, 6, '1491192208', NULL, 15);
+(166, 1, 1, '1491445965', NULL, 1),
+(167, 1, 2, '1491445965', NULL, 1),
+(168, 1, 3, '1491445965', NULL, 1),
+(169, 1, 4, '1491445965', NULL, 1),
+(170, 1, 5, '1491445965', NULL, 1),
+(171, 1, 6, '1491445965', NULL, 1),
+(172, 33, 1, '1491446049', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -562,18 +560,18 @@ INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `create
 -- Table structure for table `requisites`
 --
 
-CREATE TABLE IF NOT EXISTS `requisites` (
-`requisite_id` int(8) unsigned NOT NULL,
+CREATE TABLE `requisites` (
+  `requisite_id` int(8) UNSIGNED NOT NULL,
   `requisite_type` enum('co','pre') NOT NULL,
-  `curriculum_subject_id` int(11) unsigned NOT NULL,
-  `subject_id` int(11) unsigned NOT NULL,
+  `curriculum_subject_id` int(11) UNSIGNED NOT NULL,
+  `subject_id` int(11) UNSIGNED NOT NULL,
   `created_at` varchar(100) NOT NULL,
-  `created_user_id` int(11) unsigned NOT NULL,
+  `created_user_id` int(11) UNSIGNED NOT NULL,
   `deleted_at` varchar(100) DEFAULT NULL,
-  `deleted_user_id` int(11) unsigned DEFAULT NULL,
+  `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` varchar(100) DEFAULT NULL,
-  `updated_user_id` int(11) unsigned DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `requisites`
@@ -581,7 +579,9 @@ CREATE TABLE IF NOT EXISTS `requisites` (
 
 INSERT INTO `requisites` (`requisite_id`, `requisite_type`, `curriculum_subject_id`, `subject_id`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES
 (1, 'co', 35, 2, '1491191476', 1, NULL, NULL, NULL, NULL),
-(2, 'co', 36, 10, '1491191476', 1, NULL, NULL, NULL, NULL);
+(2, 'co', 36, 10, '1491191476', 1, NULL, NULL, NULL, NULL),
+(3, 'pre', 16, 8, '1491439723', 1, NULL, NULL, NULL, NULL),
+(4, 'pre', 24, 16, '1491439777', 1, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -589,16 +589,16 @@ INSERT INTO `requisites` (`requisite_id`, `requisite_type`, `curriculum_subject_
 -- Table structure for table `rooms`
 --
 
-CREATE TABLE IF NOT EXISTS `rooms` (
-`room_id` int(8) unsigned NOT NULL,
+CREATE TABLE `rooms` (
+  `room_id` int(8) UNSIGNED NOT NULL,
   `room_number` varchar(50) NOT NULL,
   `created_at` varchar(100) NOT NULL,
-  `created_user_id` int(11) unsigned NOT NULL,
+  `created_user_id` int(11) UNSIGNED NOT NULL,
   `deleted_at` varchar(100) DEFAULT NULL,
-  `deleted_user_id` int(11) unsigned DEFAULT NULL,
+  `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` varchar(100) DEFAULT NULL,
-  `updated_user_id` int(11) unsigned DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `rooms`
@@ -615,8 +615,8 @@ INSERT INTO `rooms` (`room_id`, `room_number`, `created_at`, `created_user_id`, 
 -- Table structure for table `students`
 --
 
-CREATE TABLE IF NOT EXISTS `students` (
-`student_id` int(8) unsigned NOT NULL,
+CREATE TABLE `students` (
+  `student_id` int(8) UNSIGNED NOT NULL,
   `student_firstname` varchar(100) NOT NULL,
   `student_image` varchar(50) DEFAULT NULL,
   `student_middlename` varchar(50) NOT NULL,
@@ -637,12 +637,12 @@ CREATE TABLE IF NOT EXISTS `students` (
   `student_guardian_email` varchar(50) DEFAULT NULL,
   `student_school_id` varchar(9) NOT NULL,
   `created_at` varchar(100) NOT NULL,
-  `created_user_id` int(11) unsigned NOT NULL,
+  `created_user_id` int(11) UNSIGNED NOT NULL,
   `deleted_at` varchar(100) DEFAULT NULL,
-  `deleted_user_id` int(11) unsigned DEFAULT NULL,
+  `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` varchar(100) DEFAULT NULL,
-  `updated_user_id` int(11) unsigned DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `students`
@@ -650,7 +650,7 @@ CREATE TABLE IF NOT EXISTS `students` (
 
 INSERT INTO `students` (`student_id`, `student_firstname`, `student_image`, `student_middlename`, `student_lastname`, `student_gender`, `student_birthdate`, `student_birthplace`, `student_civil_status`, `student_nationality`, `student_guardian_fullname`, `student_permanent_address`, `student_address_town`, `student_address_region`, `student_guardian_address`, `student_personal_contact_number`, `student_guardian_contact_number`, `student_personal_email`, `student_guardian_email`, `student_school_id`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES
 (1, 'Julianne', '764cd2000c437a9f4782315c883dc461.jpg', 'Mueller', 'Dibbert', 'female', '12-14-1972', '277 Corwin RoadsDouglasfort, WI 11979-6154', 'Marriage', 'Filipino', 'Lonnie Ankunding', '33310 Araceli Park Suite 503\r\nNorth Cordie, IL 75592', 'Lolahaven', 'region2______', '83688 Etha Locks', '+2466123850788', '(866) 548-4350', 'schmitt.beulah@yahoo.com', 'michale37@example.net', '50-1', '1491112002', 1, NULL, NULL, '1491121166', 1),
-(2, 'Tessie', NULL, 'Schulist', 'Macejkovic', 'female', '10-29-1952', '89949 Beahan Viaduct Apt. 084\r\nPort Graciela, WI 4', 'Single', 'Filipino', 'Emmie Ferry', '691 Rogers Avenue\r\nHirthefurt, CA 20617-8713', 'North Veronahaven', 'region2', '328 Jamir Walk Suite 906', '+6786417782053', '1-877-978-3429', 'rritchie@yahoo.com', 'dangelo.breitenberg@example.com', '30-2', '1491112002', 1, NULL, NULL, NULL, NULL),
+(2, 'Tessie', NULL, 'Schulist', 'Macejkovic', 'female', '10-29-1990', '89949 Beahan Viaduct Apt. 084Port Graciela, WI 4', 'Single', 'Filipino', 'Emmie Ferry', '691 Rogers Avenue\r\nHirthefurt, CA 20617-8713', 'North Veronahaven', 'region2______________', '328 Jamir Walk Suite 906', '+6786417782053', '1-877-978-3429', 'rritchie@yahoo.com', 'dangelo.breitenberg@example.com', '30-2', '1491112002', 1, NULL, NULL, '1491463781', 15),
 (3, 'Anabel', NULL, 'Tromp', 'Renner', 'female', '02-15-1975', '900 Pollich Parks\r\nHomenickstad, VT 62573', 'Marriage', 'Other', 'Miguel Cronin', '22869 Nader Courts Suite 601\r\nSkilesmouth, UT 41190-8160', 'North Hershelport', 'region3', '2267 Colin Hill', '+7230318762972', '877.951.9658', 'ruecker.archibald@medhurst.info', 'walter.brianne@example.net', '30-3', '1491112002', 1, NULL, NULL, NULL, NULL),
 (4, 'Raven', NULL, 'Pollich', 'Klocko', 'female', '12-12-1953', '738 Jefferey Estates\r\nSalvadorchester, DE 74284-58', 'Single', 'Other', 'Joshuah Satterfield', '9703 Ezra Ford Apt. 572\r\nMarquardtside, NE 36984-5708', 'East Geovanny', 'region4', '1173 Fay Alley Apt. 825', '+4317546824876', '888-506-0184', 'tanya65@hotmail.com', 'antwan.conroy@example.net', '90-4', '1491112002', 1, NULL, NULL, NULL, NULL),
 (5, 'Roslyn', NULL, 'Reynolds', 'Bayer', 'male', '05-08-1920', '3749 Harber Springs Suite 782\r\nLake Anika, KY 5943', 'Single', 'Filipino', 'Dr. Dalton O Hara MD', '6889 Carole Canyon Apt. 627\r\nAubreybury, AL 59341-1329', 'New Ernesto', 'rgion1', '841 Gerlach Path', '+5219857160801', '844-746-5054', 'cruickshank.edmund@prosacco.com', 'wiza.lurline@example.com', '50-5', '1491112002', 1, NULL, NULL, NULL, NULL),
@@ -758,18 +758,18 @@ INSERT INTO `students` (`student_id`, `student_firstname`, `student_image`, `stu
 -- Table structure for table `students_subjects`
 --
 
-CREATE TABLE IF NOT EXISTS `students_subjects` (
-`student_subject_id` int(8) unsigned NOT NULL,
+CREATE TABLE `students_subjects` (
+  `student_subject_id` int(8) UNSIGNED NOT NULL,
   `enrollment_id` int(11) NOT NULL,
   `subject_offer_id` int(11) NOT NULL,
-  `student_subject_enroll_status` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `student_subject_enroll_status` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
   `created_at` varchar(100) NOT NULL,
-  `created_user_id` int(11) unsigned NOT NULL,
+  `created_user_id` int(11) UNSIGNED NOT NULL,
   `deleted_at` varchar(100) DEFAULT NULL,
-  `deleted_user_id` int(11) unsigned DEFAULT NULL,
+  `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` varchar(100) DEFAULT NULL,
-  `updated_user_id` int(11) unsigned DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `students_subjects`
@@ -784,7 +784,9 @@ INSERT INTO `students_subjects` (`student_subject_id`, `enrollment_id`, `subject
 (32, 104, 10, 1, '1491186422', 15, NULL, NULL, '1491186481', NULL),
 (33, 104, 11, 1, '1491186422', 15, NULL, NULL, '1491186481', NULL),
 (34, 106, 6, 1, '1491192320', 15, NULL, NULL, '1491192398', NULL),
-(35, 106, 7, 1, '1491192320', 15, NULL, NULL, '1491192398', NULL);
+(35, 106, 7, 1, '1491192320', 15, NULL, NULL, '1491192398', NULL),
+(36, 106, 10, 0, '1491296149', 1, NULL, NULL, NULL, NULL),
+(37, 106, 12, 0, '1491296149', 1, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -792,17 +794,17 @@ INSERT INTO `students_subjects` (`student_subject_id`, `enrollment_id`, `subject
 -- Table structure for table `subjects`
 --
 
-CREATE TABLE IF NOT EXISTS `subjects` (
-`subject_id` int(8) unsigned NOT NULL,
+CREATE TABLE `subjects` (
+  `subject_id` int(8) UNSIGNED NOT NULL,
   `subject_code` varchar(50) NOT NULL,
   `subject_description` varchar(100) NOT NULL,
   `created_at` varchar(100) NOT NULL,
-  `created_user_id` int(11) unsigned NOT NULL,
+  `created_user_id` int(11) UNSIGNED NOT NULL,
   `deleted_at` varchar(100) DEFAULT NULL,
-  `deleted_user_id` int(11) unsigned DEFAULT NULL,
+  `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` varchar(100) DEFAULT NULL,
-  `updated_user_id` int(11) unsigned DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `subjects`
@@ -851,19 +853,19 @@ INSERT INTO `subjects` (`subject_id`, `subject_code`, `subject_description`, `cr
 -- Table structure for table `subject_offers`
 --
 
-CREATE TABLE IF NOT EXISTS `subject_offers` (
-`subject_offer_id` int(8) unsigned NOT NULL,
+CREATE TABLE `subject_offers` (
+  `subject_offer_id` int(8) UNSIGNED NOT NULL,
   `subject_offer_semester` enum('first','second','summer') NOT NULL,
   `subject_offer_school_year` varchar(9) NOT NULL,
-  `user_id` int(11) unsigned NOT NULL,
-  `subject_id` int(11) unsigned NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `subject_id` int(11) UNSIGNED NOT NULL,
   `created_at` varchar(100) NOT NULL,
-  `created_user_id` int(11) unsigned NOT NULL,
+  `created_user_id` int(11) UNSIGNED NOT NULL,
   `deleted_at` varchar(100) DEFAULT NULL,
-  `deleted_user_id` int(11) unsigned DEFAULT NULL,
+  `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` varchar(100) DEFAULT NULL,
-  `updated_user_id` int(11) unsigned DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `subject_offers`
@@ -889,8 +891,8 @@ INSERT INTO `subject_offers` (`subject_offer_id`, `subject_offer_semester`, `sub
 -- Table structure for table `subject_offer_line`
 --
 
-CREATE TABLE IF NOT EXISTS `subject_offer_line` (
-`subject_offer_line_id` int(8) unsigned NOT NULL,
+CREATE TABLE `subject_offer_line` (
+  `subject_offer_line_id` int(8) UNSIGNED NOT NULL,
   `subject_offer_line_start` time NOT NULL,
   `subject_offer_line_end` time NOT NULL,
   `subject_offer_line_monday` tinyint(1) NOT NULL DEFAULT '0',
@@ -900,19 +902,19 @@ CREATE TABLE IF NOT EXISTS `subject_offer_line` (
   `subject_offer_line_friday` tinyint(1) NOT NULL DEFAULT '0',
   `subject_offer_line_saturday` tinyint(1) NOT NULL DEFAULT '0',
   `subject_offer_line_sunday` tinyint(1) NOT NULL DEFAULT '0',
-  `subject_offer_id` int(11) unsigned NOT NULL,
-  `user_id` int(11) unsigned NOT NULL,
-  `subject_id` int(11) unsigned NOT NULL,
-  `room_id` tinyint(11) unsigned NOT NULL,
+  `subject_offer_id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) UNSIGNED NOT NULL,
+  `subject_id` int(11) UNSIGNED NOT NULL,
+  `room_id` tinyint(11) UNSIGNED NOT NULL,
   `subject_offer_semester` enum('first','second','summer') NOT NULL,
   `subject_offer_school_year` varchar(9) NOT NULL,
   `created_at` varchar(100) NOT NULL,
-  `created_user_id` int(11) unsigned NOT NULL,
+  `created_user_id` int(11) UNSIGNED NOT NULL,
   `deleted_at` varchar(100) DEFAULT NULL,
-  `deleted_user_id` int(11) unsigned DEFAULT NULL,
+  `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` varchar(100) DEFAULT NULL,
-  `updated_user_id` int(11) unsigned DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `subject_offer_line`
@@ -939,46 +941,48 @@ INSERT INTO `subject_offer_line` (`subject_offer_line_id`, `subject_offer_line_s
 -- Table structure for table `users`
 --
 
-CREATE TABLE IF NOT EXISTS `users` (
-`id` mediumint(8) unsigned NOT NULL,
+CREATE TABLE `users` (
+  `id` mediumint(8) UNSIGNED NOT NULL,
   `ip_address` varbinary(16) NOT NULL,
   `username` varchar(100) NOT NULL,
   `password` varchar(80) NOT NULL,
   `salt` varchar(40) DEFAULT NULL,
-  `email` varchar(100) NOT NULL,
+  `email` varchar(100) DEFAULT NULL,
   `activation_code` varchar(40) DEFAULT NULL,
   `forgotten_password_code` varchar(40) DEFAULT NULL,
-  `forgotten_password_time` int(11) unsigned DEFAULT NULL,
+  `forgotten_password_time` int(11) UNSIGNED DEFAULT NULL,
   `remember_code` varchar(40) DEFAULT NULL,
-  `created_on` int(11) unsigned NOT NULL,
-  `last_login` int(11) unsigned DEFAULT NULL,
-  `active` tinyint(1) unsigned DEFAULT NULL,
+  `created_on` int(11) UNSIGNED NOT NULL,
+  `last_login` int(11) UNSIGNED DEFAULT NULL,
+  `active` tinyint(1) UNSIGNED DEFAULT NULL,
   `first_name` varchar(50) DEFAULT NULL,
   `last_name` varchar(100) DEFAULT NULL,
   `company` varchar(100) DEFAULT NULL,
   `phone` varchar(50) DEFAULT NULL,
-  `updated_at` int(11) unsigned DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+  `updated_at` int(11) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `updated_at`) VALUES
-(1, 0x7f000001, 'administrator', '$2y$08$m8P3WHDASe.hDP4Jn6J9iut/YsshOKD3xuzuVpjiTKeFf146Mfgoi', '9462e8eee0', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1491190071, 1, 'super', 'user', '', '', 1490348530),
+(1, 0x7f000001, 'administrator', '$2y$08$m8P3WHDASe.hDP4Jn6J9iut/YsshOKD3xuzuVpjiTKeFf146Mfgoi', '9462e8eee0', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1491445863, 1, 'super', 'user', '', '', 1491455031),
 (2, 0x3a3a31, 'username1', '$2y$08$CurDtH07bZ2qI4MK/IKiwuHElRHbR8tnxG5cgH9mBxyj8Qojg5K9O', '4II4l4nDOhYK2twbd4bUdu', 'emailxnnt1@gmail.com', NULL, NULL, NULL, NULL, 1490272230, NULL, 1, 'Firstbk', 'Lastsg', 'Companymoqix', '+63968-835-8305', NULL),
 (3, 0x3a3a31, 'username2', '$2y$08$RZzWXUW494MR.4VBHg3GK.fWn6Q6Ngdo3bITGoQGU6MvLNYmiU.7O', 'ilTTwaOTekKQCZ2GYM01SO', 'emailuihu2@gmail.com', NULL, NULL, NULL, NULL, 1490272230, NULL, 1, 'Firstslb', 'Lastjn', 'Companyqve', '+63952-418-1097', NULL),
 (4, 0x3a3a31, 'username3', '$2y$08$TbpuTV7J9xn.iXKAHsJj4OJcVmo/eByKDcEwHYi29xQO5OPGPQO3W', 'Oikn6LKD2I5m9KZpqcKWse', 'emailwdwa3@gmail.com', NULL, NULL, NULL, NULL, 1490272230, NULL, 1, 'Firstspjf', 'Lastjm', 'Companyxh', '+63909-421-0432', NULL),
-(5, 0x3a3a31, 'username4', '$2y$08$sdieY.SDQcn8xQyFLWmWveTjXqKG5Gl7ShEsqWBHZd7XuXbmD/kiy', 'RYmEsaGEZMIakTFeS3U0SO', 'emailvzudc4@gmail.com', NULL, NULL, NULL, NULL, 1490272230, NULL, 1, 'Firsty', 'Lastw', 'Companyqujk', '+63907-812-8291', NULL),
+(5, 0x3a3a31, 'username4', '$2y$08$sdieY.SDQcn8xQyFLWmWveTjXqKG5Gl7ShEsqWBHZd7XuXbmD/kiy', 'RYmEsaGEZMIakTFeS3U0SO', 'emailvzudc4@gmail.com', 'c925c3a4fa5907b7b6b1cd74a561e4c3e558d8dd', NULL, NULL, NULL, 1490272230, NULL, 0, 'Firsty', 'Lastw', 'Companyqujk', '+63907-812-8291', NULL),
 (6, 0x3a3a31, 'username5', '$2y$08$LbKuE.UzqpsLKPtEjz94SOxZhrif7/EUQiEWK/dq/gaen.8NHUpaK', 'ld6OuPOowQBMtwqbC89XO.', 'emailbxx5@gmail.com', NULL, NULL, NULL, NULL, 1490272231, NULL, 1, 'aaaaaaaa', 'sssssssssss', 'Companymytbz', '+63915-086-2075', 1490347675),
-(8, 0x3139322e3136382e3130302e32, 'lloricode', '$2y$08$jblxESQxQWtFZgerF..I9.xI5GILZXgtTAqVjOZZYLKiApiWtunLO', '5y8m2uGOmeS5ONX6lgXdJ.', 'aa@aa.aa', NULL, NULL, NULL, NULL, 1490945783, 1490945872, 1, 'Lloric', 'Garcia', '', '', 1490945856),
+(8, 0x3139322e3136382e3130302e32, 'lloricode', '$2y$08$jblxESQxQWtFZgerF..I9.xI5GILZXgtTAqVjOZZYLKiApiWtunLO', '5y8m2uGOmeS5ONX6lgXdJ.', 'aa@aa.aa', '757bf7e7cdbbb49a2ce365f59b28082ada5e8e1d', NULL, NULL, NULL, 1490945783, 1490945872, 0, 'Lloric', 'Garcia', '', '', 1490945856),
 (9, 0x3139322e3136382e3130302e33, 'faculty', '$2y$08$Z6dtQlxxrNp1IL.qo1w0TeRP/QW2MBVhItZW9HG2inrFp15Vuvewe', 'Ex0LgR2Fs.DL.gn.L1IIwO', 'aaa@ssa.adas', NULL, NULL, NULL, NULL, 1490946657, 1491140036, 1, 'faculty', 'im', '', '', 1490946990),
 (11, 0x3139322e3136382e3130302e33, 'registrar', '$2y$08$i7BG9JYImhTJ95tFxpcnyOv1LiTTU/bmrhsUbRVnP2mE8J2whzXLe', '5/s5G0ZN7xQwxtRJo.HFuO', 'dsgsd@gmail.com', NULL, NULL, NULL, NULL, 1490946763, 1491183765, 1, 'registrar', 'im', '', '', 1490946979),
-(12, 0x3139322e3136382e3130302e33, 'dean', '$2y$08$/HBKfc.L3OPgSff5qE3lGu6bxRvyQO8ljLZlS0.TWZ6qfPVVWfov6', 'Xv7fQhfUonkVce625q4bXu', 'dean@gmail.com', NULL, NULL, NULL, NULL, 1490946789, 1491184884, 1, 'dean', 'im', '', '', 1490946969),
+(12, 0x3139322e3136382e3130302e33, 'dean', '$2y$08$/HBKfc.L3OPgSff5qE3lGu6bxRvyQO8ljLZlS0.TWZ6qfPVVWfov6', 'Xv7fQhfUonkVce625q4bXu', 'dean@gmail.com', NULL, NULL, NULL, NULL, 1490946789, 1491466451, 1, 'dean', 'im', '', '', 1490946969),
 (13, 0x3139322e3136382e3130302e33, 'accounting', '$2y$08$.Q4hxCil3CpQqjOFFkSY5efXVkENedfAZ0IdTWk5o5R6lwHlivXLC', 'Kb8gGKwuIcbwKcnU4XIL9e', 'accounting@gmail.com', NULL, NULL, NULL, NULL, 1490946814, 1491192769, 1, 'accounting', 'im', '', '', 1490946961),
 (14, 0x3139322e3136382e3130302e33, 'sso', '$2y$08$h70mYRZSedkaLTnA.f/76OSckG7tXu.dRRKCxvAYuWPLz9gNBDnb.', 'ZgjYnOjq0PIAYERV9Fjn1.', 'sso@gmail.com', NULL, NULL, NULL, NULL, 1490946854, 1491181840, 1, 'sso', 'im', '', '', 1490946951),
-(15, 0x3139322e3136382e3130302e34, 'admin', '$2y$08$T3vrOULMXLlIKylytubxZuYa80Esag8MirSMZoVd.Z8F/yGYcJcP2', '1yO0QQizDyCaqVKTdYX0yO', 'admin1@admin.com', NULL, NULL, NULL, NULL, 1491181392, 1491192534, 1, 'admin', 'im', '', 'dean', 1491181594),
-(16, 0x3139322e3136382e3130302e32, 'admin1', '$2y$08$HhSyj4NPQaG4V2OE/vHJ0uVb/s3yyVJPeOCWRPMFfhJgZNpZSscpu', 'KPurOpewXQDIR5NDq5QDG.', 'admin13@admin.com', NULL, NULL, NULL, NULL, 1491190205, NULL, 1, 'Bryne Angelo', 'Brillantes', '', '212-212', NULL);
+(15, 0x3139322e3136382e3130302e34, 'admin', '$2y$08$T3vrOULMXLlIKylytubxZuYa80Esag8MirSMZoVd.Z8F/yGYcJcP2', '1yO0QQizDyCaqVKTdYX0yO', 'admin1@admin.com', NULL, NULL, NULL, NULL, 1491181392, 1491454974, 1, 'admin', 'im', '', 'dean', 1491455008),
+(16, 0x3139322e3136382e3130302e32, 'admin1', '$2y$08$HhSyj4NPQaG4V2OE/vHJ0uVb/s3yyVJPeOCWRPMFfhJgZNpZSscpu', 'KPurOpewXQDIR5NDq5QDG.', 'admin13@admin.com', NULL, NULL, NULL, NULL, 1491190205, NULL, 1, 'Bryne Angelo', 'Brillantes', '', '212-212', NULL),
+(17, 0x3a3a31, 'test', '$2y$08$jhzskE4FqLoNn7Y4fBtMv.C1NKChmVF93S8DdA.S3WRBwYrAugtoO', 'ZkRsSmBCt5WwAS4eFzMwvu', NULL, NULL, NULL, NULL, NULL, 1491454882, 1491454924, 1, 'tesssname', 'testttlastname', '', '', NULL),
+(19, 0x3a3a31, 'sdfsdf', '$2y$08$WqIXEJxHJGYWgiiNc7PLkeZMm9aL5irXvZFDLjFJMMx2008Us.HhK', 'GsEY4duzHkjkAKnUZRIfgO', NULL, NULL, NULL, NULL, NULL, 1491455671, NULL, 1, 'sdfsdf', 'sdfsdf', '', '', NULL);
 
 -- --------------------------------------------------------
 
@@ -986,19 +990,17 @@ INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`
 -- Table structure for table `users_groups`
 --
 
-CREATE TABLE IF NOT EXISTS `users_groups` (
-`id` mediumint(8) unsigned NOT NULL,
-  `user_id` mediumint(8) unsigned NOT NULL,
-  `group_id` mediumint(8) unsigned NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+CREATE TABLE `users_groups` (
+  `id` mediumint(8) UNSIGNED NOT NULL,
+  `user_id` mediumint(8) UNSIGNED NOT NULL,
+  `group_id` mediumint(8) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users_groups`
 --
 
 INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
-(1, 1, 1),
-(2, 1, 2),
 (3, 2, 2),
 (4, 3, 2),
 (5, 4, 2),
@@ -1012,9 +1014,11 @@ INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
 (21, 12, 4),
 (22, 11, 3),
 (23, 9, 2),
-(25, 15, 1),
-(26, 15, 2),
-(27, 16, 2);
+(27, 16, 2),
+(28, 17, 2),
+(29, 15, 1),
+(30, 1, 1),
+(31, 19, 2);
 
 -- --------------------------------------------------------
 
@@ -1022,14 +1026,14 @@ INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
 -- Table structure for table `users_last_logins`
 --
 
-CREATE TABLE IF NOT EXISTS `users_last_logins` (
-`users_last_login_id` int(8) unsigned NOT NULL,
+CREATE TABLE `users_last_logins` (
+  `users_last_login_id` int(8) UNSIGNED NOT NULL,
   `user_id` int(11) NOT NULL,
   `ip_address` varbinary(16) NOT NULL,
   `agent` varchar(100) NOT NULL,
   `platform` varchar(100) NOT NULL,
   `created_at` varchar(100) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users_last_logins`
@@ -1089,7 +1093,17 @@ INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`,
 (51, 15, 0x3a3a31, 'Firefox 54.0', 'Windows 10', '1491191809'),
 (52, 15, 0x3a3a31, 'Firefox 54.0', 'Windows 10', '1491192071'),
 (53, 15, 0x3139322e3136382e3130302e36, 'Firefox 47.0', 'Windows 10', '1491192534'),
-(54, 13, 0x3a3a31, 'Firefox 54.0', 'Windows 10', '1491192769');
+(54, 13, 0x3a3a31, 'Firefox 54.0', 'Windows 10', '1491192769'),
+(55, 1, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491224239'),
+(56, 1, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491230429'),
+(57, 1, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491282674'),
+(58, 1, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491286436'),
+(59, 1, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491439304'),
+(60, 1, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491445864'),
+(61, 12, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491445903'),
+(62, 17, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491454924'),
+(63, 15, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491454975'),
+(64, 12, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491466451');
 
 --
 -- Indexes for dumped tables
@@ -1099,121 +1113,140 @@ INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`,
 -- Indexes for table `controllers`
 --
 ALTER TABLE `controllers`
- ADD PRIMARY KEY (`controller_id`), ADD UNIQUE KEY `controller_name` (`controller_name`);
+  ADD PRIMARY KEY (`controller_id`),
+  ADD UNIQUE KEY `controller_name` (`controller_name`);
 
 --
 -- Indexes for table `courses`
 --
 ALTER TABLE `courses`
- ADD PRIMARY KEY (`course_id`), ADD UNIQUE KEY `course_code` (`course_code`), ADD UNIQUE KEY `course_description` (`course_description`), ADD UNIQUE KEY `course_code_id` (`course_code_id`);
+  ADD PRIMARY KEY (`course_id`),
+  ADD UNIQUE KEY `course_code` (`course_code`),
+  ADD UNIQUE KEY `course_description` (`course_description`),
+  ADD UNIQUE KEY `course_code_id` (`course_code_id`);
 
 --
 -- Indexes for table `curriculums`
 --
 ALTER TABLE `curriculums`
- ADD PRIMARY KEY (`curriculum_id`);
+  ADD PRIMARY KEY (`curriculum_id`);
 
 --
 -- Indexes for table `curriculum_subjects`
 --
 ALTER TABLE `curriculum_subjects`
- ADD PRIMARY KEY (`curriculum_subject_id`);
+  ADD PRIMARY KEY (`curriculum_subject_id`);
 
 --
 -- Indexes for table `educations`
 --
 ALTER TABLE `educations`
- ADD PRIMARY KEY (`education_id`), ADD UNIQUE KEY `education_code` (`education_code`), ADD UNIQUE KEY `education_description` (`education_description`);
+  ADD PRIMARY KEY (`education_id`),
+  ADD UNIQUE KEY `education_code` (`education_code`),
+  ADD UNIQUE KEY `education_description` (`education_description`);
 
 --
 -- Indexes for table `enrollments`
 --
 ALTER TABLE `enrollments`
- ADD PRIMARY KEY (`enrollment_id`), ADD UNIQUE KEY `student_id` (`student_id`);
+  ADD PRIMARY KEY (`enrollment_id`),
+  ADD UNIQUE KEY `student_id` (`student_id`);
 
 --
 -- Indexes for table `groups`
 --
 ALTER TABLE `groups`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `login_attempts`
 --
 ALTER TABLE `login_attempts`
- ADD PRIMARY KEY (`id`), ADD KEY `ip_address` (`ip_address`), ADD KEY `login` (`login`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `ip_address` (`ip_address`),
+  ADD KEY `login` (`login`);
 
 --
 -- Indexes for table `logs`
 --
 ALTER TABLE `logs`
- ADD PRIMARY KEY (`id`), ADD KEY `ip_address` (`ip_address`), ADD KEY `user_agent` (`user_agent`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `ip_address` (`ip_address`),
+  ADD KEY `user_agent` (`user_agent`);
 
 --
 -- Indexes for table `permissions`
 --
 ALTER TABLE `permissions`
- ADD PRIMARY KEY (`permission_id`);
+  ADD PRIMARY KEY (`permission_id`);
 
 --
 -- Indexes for table `requisites`
 --
 ALTER TABLE `requisites`
- ADD PRIMARY KEY (`requisite_id`);
+  ADD PRIMARY KEY (`requisite_id`);
 
 --
 -- Indexes for table `rooms`
 --
 ALTER TABLE `rooms`
- ADD PRIMARY KEY (`room_id`), ADD UNIQUE KEY `room_number` (`room_number`);
+  ADD PRIMARY KEY (`room_id`),
+  ADD UNIQUE KEY `room_number` (`room_number`);
 
 --
 -- Indexes for table `students`
 --
 ALTER TABLE `students`
- ADD PRIMARY KEY (`student_id`), ADD UNIQUE KEY `student_school_id` (`student_school_id`), ADD UNIQUE KEY `student_personal_email` (`student_personal_email`), ADD UNIQUE KEY `student_guardian_email` (`student_guardian_email`);
+  ADD PRIMARY KEY (`student_id`),
+  ADD UNIQUE KEY `student_school_id` (`student_school_id`),
+  ADD UNIQUE KEY `student_personal_email` (`student_personal_email`),
+  ADD UNIQUE KEY `student_guardian_email` (`student_guardian_email`);
 
 --
 -- Indexes for table `students_subjects`
 --
 ALTER TABLE `students_subjects`
- ADD PRIMARY KEY (`student_subject_id`);
+  ADD PRIMARY KEY (`student_subject_id`);
 
 --
 -- Indexes for table `subjects`
 --
 ALTER TABLE `subjects`
- ADD PRIMARY KEY (`subject_id`), ADD UNIQUE KEY `subject_code` (`subject_code`), ADD UNIQUE KEY `subject_description` (`subject_description`);
+  ADD PRIMARY KEY (`subject_id`),
+  ADD UNIQUE KEY `subject_code` (`subject_code`),
+  ADD UNIQUE KEY `subject_description` (`subject_description`);
 
 --
 -- Indexes for table `subject_offers`
 --
 ALTER TABLE `subject_offers`
- ADD PRIMARY KEY (`subject_offer_id`);
+  ADD PRIMARY KEY (`subject_offer_id`);
 
 --
 -- Indexes for table `subject_offer_line`
 --
 ALTER TABLE `subject_offer_line`
- ADD PRIMARY KEY (`subject_offer_line_id`);
+  ADD PRIMARY KEY (`subject_offer_line_id`);
 
 --
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `username` (`username`), ADD UNIQUE KEY `email` (`email`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indexes for table `users_groups`
 --
 ALTER TABLE `users_groups`
- ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users_last_logins`
 --
 ALTER TABLE `users_last_logins`
- ADD PRIMARY KEY (`users_last_login_id`);
+  ADD PRIMARY KEY (`users_last_login_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -1223,102 +1256,102 @@ ALTER TABLE `users_last_logins`
 -- AUTO_INCREMENT for table `controllers`
 --
 ALTER TABLE `controllers`
-MODIFY `controller_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=33;
+  MODIFY `controller_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 --
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-MODIFY `course_id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+  MODIFY `course_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `curriculums`
 --
 ALTER TABLE `curriculums`
-MODIFY `curriculum_id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
+  MODIFY `curriculum_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `curriculum_subjects`
 --
 ALTER TABLE `curriculum_subjects`
-MODIFY `curriculum_subject_id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=37;
+  MODIFY `curriculum_subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 --
 -- AUTO_INCREMENT for table `educations`
 --
 ALTER TABLE `educations`
-MODIFY `education_id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `education_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `enrollments`
 --
 ALTER TABLE `enrollments`
-MODIFY `enrollment_id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=107;
+  MODIFY `enrollment_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
 --
 -- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
-MODIFY `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `login_attempts`
 --
 ALTER TABLE `login_attempts`
-MODIFY `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-MODIFY `id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-MODIFY `permission_id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=144;
+  MODIFY `permission_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=173;
 --
 -- AUTO_INCREMENT for table `requisites`
 --
 ALTER TABLE `requisites`
-MODIFY `requisite_id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `requisite_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `rooms`
 --
 ALTER TABLE `rooms`
-MODIFY `room_id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `room_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-MODIFY `student_id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=103;
+  MODIFY `student_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 --
 -- AUTO_INCREMENT for table `students_subjects`
 --
 ALTER TABLE `students_subjects`
-MODIFY `student_subject_id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=36;
+  MODIFY `student_subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 --
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-MODIFY `subject_id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=37;
+  MODIFY `subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 --
 -- AUTO_INCREMENT for table `subject_offers`
 --
 ALTER TABLE `subject_offers`
-MODIFY `subject_offer_id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+  MODIFY `subject_offer_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `subject_offer_line`
 --
 ALTER TABLE `subject_offer_line`
-MODIFY `subject_offer_line_id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
+  MODIFY `subject_offer_line_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-MODIFY `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT for table `users_groups`
 --
 ALTER TABLE `users_groups`
-MODIFY `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=28;
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 --
 -- AUTO_INCREMENT for table `users_last_logins`
 --
 ALTER TABLE `users_last_logins`
-MODIFY `users_last_login_id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=55;
+  MODIFY `users_last_login_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
