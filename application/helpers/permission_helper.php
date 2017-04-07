@@ -7,9 +7,9 @@ if ( ! function_exists('permission_controllers'))
 
         /**
          * 
-         *  get all permission controllers in current user
+         *  get all permission controllers in current user,except when enrollment is disabled
          * 
-         * if current user has "admin" group, it will just return all controller names,
+         * if current user has "admin" group, it will just return all controller names,except when enrollment is disabled
          * 
          * 
          * @param bool $bool_return TRUE if only bool return else an ARRAY of controllers of current user
@@ -18,20 +18,29 @@ if ( ! function_exists('permission_controllers'))
          */
         function permission_controllers($check_controller = '')
         {
-                $CI = &get_instance();
+                $CI                     = &get_instance();
+                $enrollment_open_status = $CI->Enrollment_status_model->status();
 
                 /**
                  * check if admin, then just return all controller names
+                 * except when enrollment is disabled
                  */
                 if ($CI->ion_auth->is_admin())
                 {
                         $obj   = $CI->Controller_model->
-                                fields('controller_name')->
+                                fields('controller_name,controller_enrollment_open')->
                                 //set_cache()->
                                 get_all();
                         $array = array();
                         foreach ($obj as $v)
                         {
+                                if ( ! $enrollment_open_status)
+                                {
+                                        if ($v->controller_enrollment_open)
+                                        {
+                                                continue; //skip
+                                        }
+                                }
                                 $array[] = $v->controller_name;
                         }
                         if ($check_controller != '')
@@ -71,10 +80,18 @@ if ( ! function_exists('permission_controllers'))
                                                  * get all controller where controller id
                                                  */
                                                 $c = $CI->Controller_model->
+                                                        fields('controller_name,controller_enrollment_open')->
                                                         set_cache('permission_controllers_' . $p->controller_id)->
                                                         get($p->controller_id);
                                                 if ($c)
                                                 {
+                                                        if ( ! $enrollment_open_status)
+                                                        {
+                                                                if ($c->controller_enrollment_open)
+                                                                {
+                                                                        continue; //skip
+                                                                }
+                                                        }
                                                         /**
                                                          * push array here
                                                          */
@@ -102,7 +119,7 @@ if ( ! function_exists('specific_groups_permission'))
         /**
          * check depend on parameter if current user is has user_group,
          * 
-         * if current user is admin, it will just return TRU
+         * if current user is admin, it will just return TRUE
          * 
          * @param string/array $current_groups post_fix of config in common/user_group.php
          * @return boolean
@@ -114,7 +131,7 @@ if ( ! function_exists('specific_groups_permission'))
                 $CI = &get_instance();
                 if ($CI->ion_auth->is_admin())//is admin?
                 {
-                        return TRUE;//just return TRUE
+                        return TRUE; //just return TRUE
                 }
 
 

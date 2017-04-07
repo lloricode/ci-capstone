@@ -29,28 +29,28 @@ class Subject_offers extends CI_Capstone_Controller
          */
         public function index()
         {
-                $subl        = $this->Subject_offer_model->all(TRUE); //parameter is set to current semester and year
-                //  echo print_r($subl);
                 /**
                  * get the page from url
                  * 
                  */
                 $this->page_ = get_page_in_url();
-//list students
+
+                //note: only current SEMESTER && SCHOOL_YEAR showed/result
+                $subl = $this->Subject_offer_model->all(TRUE, FALSE, FALSE, $this->limit, $this->limit * $this->page_ - $this->limit); //1st parameter is set to current semester and year
 
                 $table_data = array();
                 if ($subl)
                 {
-
+                        ;
                         foreach ($subl as $s)
                         {
                                 if ( ! isset($s->subject_line))
                                 {
-                                        continue;
+                                        // continue;
                                 }
                                 $output = array(
                                     $s->subject->subject_code,
-                                    $s->faculty->first_name
+                                    $this->User_model->button_link($s->faculty->id, $s->faculty->last_name, $s->faculty->first_name)
                                 );
 
                                 $line = array();
@@ -60,6 +60,7 @@ class Subject_offers extends CI_Capstone_Controller
                                         $inc ++;
                                         $schd = array(
                                             subject_offers_days($su_l),
+                                            $this->_type($su_l->subject_offer_line_lec, $su_l->subject_offer_line_lab),
                                             convert_24_to_12hrs($su_l->subject_offer_line_start),
                                             convert_24_to_12hrs($su_l->subject_offer_line_end),
                                             $su_l->room->room_number
@@ -68,7 +69,7 @@ class Subject_offers extends CI_Capstone_Controller
                                 }
                                 if ($inc === 1)
                                 {
-                                        $line = array_merge($line, array('--', '--', '--', '--'));
+                                        $line = array_merge($line, array('--', '--', '--', '--', '--'));
                                 }
                                 if ($this->ion_auth->is_admin())
                                 {
@@ -93,10 +94,12 @@ class Subject_offers extends CI_Capstone_Controller
                     'Subject',
                     'Faculty',
                     'Days1',
+                    'Type1',
                     'Start1',
                     'End1',
                     'Room1',
                     'Days2',
+                    'Type2',
                     'Start2',
                     'End2',
                     'Room2'
@@ -107,7 +110,10 @@ class Subject_offers extends CI_Capstone_Controller
                         $header[] = 'Created By';
                         $header[] = 'Updated By';
                 }
-                $pagination = $this->pagination->generate_bootstrap_link('subject-offers/index', $this->Subject_offer_model->count_rows() / $this->limit);
+
+                $count = $this->Subject_offer_model->where($this->Subject_offer_model->where_current_sem_year(TRUE))->count_rows();
+
+                $pagination = $this->pagination->generate_bootstrap_link('subject-offers/index', $count / $this->limit);
 
                 $this->template['table_subject_offers'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_subject_offer_heading', $pagination, TRUE);
                 $this->template['message']              = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
@@ -116,6 +122,20 @@ class Subject_offers extends CI_Capstone_Controller
                  * rendering users view
                  */
                 $this->render('admin/subject_offers', $this->template);
+        }
+
+        private function _type($lec, $lab)
+        {
+                $return = '';
+                if ($lec)
+                {
+                        $return .= 'LEC';
+                }
+                if ($lab)
+                {
+                        $return .= 'LAB';
+                }
+                return $return;
         }
 
         /**

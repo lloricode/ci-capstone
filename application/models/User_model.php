@@ -98,10 +98,17 @@ class User_model extends MY_Model
                         $ln   = $obj->{'user_' . $type}->last_name;
                         $time = $obj->{$type . '_at'};
                 }
-                $url         = 'edit-user?user-id=' . $id;
-                $label       = $ln . ', ' . $fn;
-                $button_view = '<button class="btn btn-mini">' . $label . '</button>';
-                return anchor($url, $button_view) . br() . unix_to_human($time);
+                return $this->button_link($id, $ln, $fn) . br() . unix_to_human($time);
+        }
+
+        public function button_link($id, $ln, $fn)
+        {
+                if (in_array('edit-user', permission_controllers()))
+                {
+                        $url = 'edit-user?user-id=' . $id;
+                        return table_row_button_link($url, $ln . ', ' . $fn);
+                }
+                return $label;
         }
 
 }

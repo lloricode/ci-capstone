@@ -14,7 +14,7 @@
         <?php
         if (isset($pagination))
         {
-                echo '<div class="pagination alternate">';
+                echo '<div class="pagination alternate pull-right">';
                 echo $pagination;
                 echo '</div>';
         }

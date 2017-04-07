@@ -92,6 +92,21 @@ class Migration_Subject_offer_line extends CI_Migration
                         'null'       => FALSE
                     ),
                     /**
+                     * TYPE
+                     */
+                    'subject_offer_line_lec'       => array(
+                        'type'       => 'TINYINT',
+                        'constraint' => '1',
+                        'default'    => '0',
+                        'null'       => FALSE
+                    ),
+                    'subject_offer_line_lab'       => array(
+                        'type'       => 'TINYINT',
+                        'constraint' => '1',
+                        'default'    => '0',
+                        'null'       => FALSE
+                    ),
+                    /**
                      * faculty (who instructor assigned to teach this subject_offer)
                      */
                     /**

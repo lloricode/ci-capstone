@@ -47,9 +47,12 @@ class Students extends CI_Capstone_Controller
 
                         foreach ($student_obj as $student)
                         {
-                                $view_ = anchor(site_url('students/view?student-id=' . $student->student_id), '<button class="btn btn-mini pending">View</button>');
-                                $edit_ = anchor(site_url('edit-student?student-id=' . $student->student_id), '<button class="btn btn-mini pending">Edit</button>');
-
+                                $view_ = table_row_button_link('students/view?student-id=' . $student->student_id, 'View');
+                                $edit_ = '';
+                                if (in_array('edit-student', permission_controllers()))
+                                {
+                                        $edit_ = table_row_button_link('edit-student?student-id=' . $student->student_id, 'Edit');
+                                }
                                 $tmp = array(
                                     $this->_images_for_table($student),
                                     my_htmlspecialchars($student->student_school_id),
@@ -113,7 +116,11 @@ class Students extends CI_Capstone_Controller
                         list($filename, $extension) = explode('.', $student->student_image);
                         $image_file = $this->Student_model->image_resize($student->student_image)->table;
                 }
-                return '<div class = "user-thumb">' . img(array(
+                else
+                {
+                        $image_file = $this->config->item('default_student_image_in_table');
+                }
+                return '<div class="user-thumb">' . img(array(
                             'src'   => $image_file,
                             'alt'   => 'no image',
                             'title' => $student->student_school_id . ' - ' . $student->student_lastname

@@ -18,53 +18,52 @@ class Home extends CI_Capstone_Controller
          */
         public function index()
         {
-
-
-                $this->data['active_users_count'] = $this->User_model->where(array(
-                            'active' => TRUE
-                        ))->count_rows();
-
-                $this->data['student_enrolled_count'] = $this->Enrollment_model->where(array(
-                            'enrollment_status' => TRUE
-                        ))->count_rows();
-
-                /*
-                 * get all course
-                 */
-
-                $courses_detale = array();
-                $course_obj     = $this->Course_model->order_by('course_code')->set_cache('course_get_all')->get_all();
-
-                if ($course_obj)
+                $data[''] = NULL; //just incase all not controllers not has permission in current user_group
+                
+                if (in_array('users', permission_controllers()))
                 {
-                        foreach ($course_obj as $course_row)
-                        {
-                                $ecount            = $enrollment_object = $this->Enrollment_model->where(array(
-                                            'course_id'         => $course_row->course_id,
-                                            'enrollment_status' => TRUE
-                                        ))->count_rows();
-
-                                //array push
-                                $courses_detale[] = array(
-                                    'course_id' => $course_row->course_id,
-                                    'counts'    => $ecount,
-                                    'icon'      => $course_row->course_icon,
-                                    'color'     => $course_row->course_color,
-                                    'code'      => $course_row->course_code
-                                );
-                        }
+                        $data['active_users_count'] = $this->User_model->where(array(
+                                    'active' => TRUE
+                                ))->count_rows();
                 }
-                $this->data['courses_info'] = $courses_detale;
-
                 if (in_array('students', permission_controllers()))
                 {
+                        $data['student_enrolled_count'] = $this->Enrollment_model->where(array(
+                                    'enrollment_status' => TRUE
+                                ))->count_rows();
+                        /*
+                         * get all course
+                         */
 
-                        $this->template['stud_course_count'] = MY_Controller::render('admin/_templates/home/student_course_count', $this->data, TRUE);
+                        $courses_detale = array();
+                        $course_obj     = $this->Course_model->order_by('course_code')->set_cache('course_get_all')->get_all();
+
+                        if ($course_obj)
+                        {
+                                foreach ($course_obj as $course_row)
+                                {
+                                        $ecount            = $enrollment_object = $this->Enrollment_model->where(array(
+                                                    'course_id'         => $course_row->course_id,
+                                                    'enrollment_status' => TRUE
+                                                ))->count_rows();
+
+                                        //array push
+                                        $courses_detale[] = array(
+                                            'course_id' => $course_row->course_id,
+                                            'counts'    => $ecount,
+                                            'icon'      => $course_row->course_icon,
+                                            'color'     => $course_row->course_color,
+                                            'code'      => $course_row->course_code
+                                        );
+                                }
+                        }
+                        $data['courses_info']          = $courses_detale;
+                        $template['stud_course_count'] = MY_Controller::render('admin/_templates/home/student_course_count', $data, TRUE);
                 }
-                $this->template['active_user_count']  = MY_Controller::render('admin/_templates/home/user_count', $this->data, TRUE);
-                $this->template['dashboard_ctrl_var'] = MY_Controller::render('admin/_templates/home/dashboard_ctrl', $this->data, TRUE);
-                $this->template['bootstrap']          = $this->_bootstrap();
-                $this->render('admin/home', $this->template);
+                $template['active_user_count']  = MY_Controller::render('admin/_templates/home/user_count', $data, TRUE);
+                $template['dashboard_ctrl_var'] = MY_Controller::render('admin/_templates/home/dashboard_ctrl', $data, TRUE);
+                $template['bootstrap']          = $this->_bootstrap();
+                $this->render('admin/home', $template);
         }
 
         /**

@@ -195,6 +195,7 @@ if ( ! function_exists('navigations_main'))
                             array(
                                 'label' => lang('index_heading'),
                                 'seen'  => TRUE,
+                                'admin' => TRUE
                             ),
                             'create-user'  =>
                             array(
@@ -455,9 +456,16 @@ if ( ! function_exists('sidebar_menu_ci_capstone'))
                                 }
                         }
                 }
-                $status__ = ($enrollment_open_status) ? 'Enabled' : 'Disabled';
-                $status__ = ' <li class="content">Enrollment Status: <span class="date badge badge-'.(($enrollment_open_status)?'success':'important').'">' . $status__ . '</span></li>';
-                return $return   .= $status__ . '</ul>' . PHP_EOL . comment_tag('end-navigations');
+                /**
+                 * enrollment status
+                 */
+                $status__     = ($enrollment_open_status) ? 'Enabled' : 'Disabled';
+                $status__     = ' <li class="content">Enrollment Status: <span class="date badge badge-' . (($enrollment_open_status) ? 'success' : 'important') . '">' . $status__ . '</span></li>';
+                /**
+                 * current semester && school_year
+                 */
+                $current_term = '<li class="content">' . current_school_year() . ', ' . current_school_semester() . '</li>';
+                return $return . $status__ . $current_term . '</ul>' . PHP_EOL . comment_tag('end-navigations');
         }
 
 }

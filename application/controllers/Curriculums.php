@@ -63,7 +63,7 @@ class Curriculums extends CI_Capstone_Controller
                 {
                         foreach ($curriculum_obj as $curriculum)
                         {
-                                $view = anchor(site_url('curriculums/view?curriculum-id=' . $curriculum->curriculum_id), '<button class="btn btn-mini">' . lang('curriculumn_view') . '</button>');
+                                $view = table_row_button_link('curriculums/view?curriculum-id=' . $curriculum->curriculum_id, lang('curriculumn_view'));
 
                                 $tmp = array(
                                     my_htmlspecialchars($curriculum->course->course_code),
@@ -133,7 +133,14 @@ class Curriculums extends CI_Capstone_Controller
 //                        $addtional_data['data'] = '<span class="pending">Disabled</span>';
 //                        return $addtional_data;
 //                }
-                $addtional_data['data'] = anchor(site_url('set-curriculum-enable?curriculum-id=' . $id), '<button class="btn btn-mini">' . lang('enable_curriculum_label') . '</button>');
+                if ( ! in_array('set-curriculum-enable', permission_controllers()))
+                {
+                        $addtional_data['data'] = '<span class="pending">Disabled</span>';
+                }
+                else
+                {
+                        $addtional_data['data'] = table_row_button_link('set-curriculum-enable?curriculum-id=' . $id, lang('enable_curriculum_label'));
+                }
                 return $addtional_data;
         }
 
@@ -201,7 +208,7 @@ class Curriculums extends CI_Capstone_Controller
                                 );
                                 if ( ! $curriculum_obj->curriculum_status && ! $curriculum_obj->curriculum_already_used)
                                 {
-                                        $tmp[] = anchor('create-requisite?curriculum-id=' . $curriculum_obj->curriculum_id . '&curriculum-subject-id=' . $cur_subj->curriculum_subject_id, '<button class="btn btn-mini pending">' . lang('create_requisite_label') . '</button>');
+                                        $tmp[] = table_row_button_link('create-requisite?curriculum-id=' . $curriculum_obj->curriculum_id . '&curriculum-subject-id=' . $cur_subj->curriculum_subject_id, lang('create_requisite_label'));
                                 }
                                 $table_data[] = $tmp;
                         }

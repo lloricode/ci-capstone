@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 06, 2017 at 10:34 AM
+-- Generation Time: Apr 07, 2017 at 10:43 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 5.6.24
 
@@ -60,7 +60,7 @@ INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_descr
 (18, 'create-course', 'Create Course Description', 0, 1, '1491052871'),
 (19, 'rooms', 'Rooms Description', 0, 0, '1491052871'),
 (20, 'create-room', 'Create Room Description', 0, 1, '1491052871'),
-(21, 'users', 'Users Description', 0, 0, '1491052871'),
+(21, 'users', 'Users Description', 1, 0, '1491052871'),
 (22, 'create-user', 'Create User Description', 1, 0, '1491052871'),
 (23, 'groups', 'Groups Description', 0, 0, '1491052871'),
 (24, 'create-group', 'Create Group Description', 1, 0, '1491052871'),
@@ -147,8 +147,8 @@ INSERT INTO `curriculums` (`curriculum_id`, `curriculum_description`, `curriculu
 (7, 'tesda', '2016-2017', 1, 0, 7, '1491115417', 1, NULL, NULL, NULL, NULL),
 (8, 'cme', '2016-2017', 1, 0, 8, '1491115432', 1, NULL, NULL, NULL, NULL),
 (9, 'cross enroll', '2016-2017', 1, 0, 9, '1491115451', 1, NULL, NULL, NULL, NULL),
-(10, 'Curriculum for IT', '2017-2018', 0, 1, 10, '1491191205', 1, NULL, NULL, '1491459120', 15),
-(11, 'aaaaaaaaaaaa', '2016-2017', 1, 1, 10, '1491440080', 1, NULL, NULL, '1491459120', 15);
+(10, 'Curriculum for IT', '2017-2018', 1, 1, 10, '1491191205', 1, NULL, NULL, '1491530522', 1),
+(11, 'aaaaaaaaaaaa', '2016-2017', 0, 0, 10, '1491440080', 1, NULL, NULL, '1491530522', 1);
 
 -- --------------------------------------------------------
 
@@ -272,11 +272,11 @@ CREATE TABLE `enrollments` (
 
 INSERT INTO `enrollments` (`enrollment_id`, `student_id`, `course_id`, `curriculum_id`, `enrollment_school_year`, `enrollment_semester`, `enrollment_year_level`, `enrollment_status`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES
 (1, 1, 4, 4, '2013-2014', 'second', 1, 1, '1490342599', 1, NULL, NULL, '1491121166', 1),
-(2, 2, 2, 3, '2014-2015', 'summer', 4, 0, '1490342599', 1, NULL, NULL, '1491463781', 15),
-(3, 3, 2, 3, '2013-2014', 'summer', 2, 0, '1490342599', 1, NULL, NULL, NULL, NULL),
+(2, 2, 2, 3, '2014-2015', 'summer', 4, 0, '1490342599', 1, NULL, NULL, '1491533247', 1),
+(3, 3, 2, 3, '2013-2014', 'summer', 2, 0, '1490342599', 1, NULL, NULL, '1491533891', 12),
 (4, 4, 8, 8, '2013-2014', 'summer', 1, 0, '1490342599', 1, NULL, NULL, NULL, NULL),
 (5, 5, 4, 4, '2013-2014', 'first', 4, 0, '1490342599', 1, NULL, NULL, NULL, NULL),
-(6, 6, 6, 1, '2013-2014', 'second', 3, 0, '1490342599', 1, NULL, NULL, NULL, NULL),
+(6, 6, 6, 1, '2016-2017', 'summer', 3, 1, '1490342599', 1, NULL, NULL, '1491533740', 1),
 (7, 7, 9, 9, '2014-2015', 'second', 3, 0, '1490342599', 1, NULL, NULL, NULL, NULL),
 (8, 8, 6, 1, '2013-2014', 'second', 4, 0, '1490342599', 1, NULL, NULL, NULL, NULL),
 (9, 9, 3, 5, '2014-2015', 'second', 2, 0, '1490342599', 1, NULL, NULL, NULL, NULL),
@@ -329,11 +329,11 @@ INSERT INTO `enrollments` (`enrollment_id`, `student_id`, `course_id`, `curricul
 (56, 56, 8, 8, '2014-2015', 'summer', 1, 0, '1490342599', 1, NULL, NULL, NULL, NULL),
 (57, 57, 3, 5, '2013-2014', 'summer', 3, 0, '1490342599', 1, NULL, NULL, NULL, NULL),
 (58, 58, 8, 8, '2013-2014', 'second', 1, 0, '1490342599', 1, NULL, NULL, NULL, NULL),
-(59, 59, 6, 1, '2013-2014', 'second', 1, 0, '1490342599', 1, NULL, NULL, NULL, NULL),
+(59, 59, 6, 1, '2016-2017', 'summer', 2, 0, '1490342599', 1, NULL, NULL, '1491534006', 1),
 (60, 60, 4, 4, '2013-2014', 'summer', 4, 0, '1490342599', 1, NULL, NULL, NULL, NULL),
 (61, 61, 5, 6, '2013-2014', 'first', 2, 0, '1490342599', 1, NULL, NULL, NULL, NULL),
 (62, 62, 8, 8, '2015-2016', 'second', 3, 0, '1490342599', 1, NULL, NULL, NULL, NULL),
-(63, 63, 6, 1, '2015-2016', 'summer', 3, 0, '1490342599', 1, NULL, NULL, NULL, NULL),
+(63, 63, 6, 1, '2016-2017', 'summer', 3, 1, '1490342599', 1, NULL, NULL, '1491534102', 13),
 (64, 64, 6, 1, '2014-2015', 'summer', 4, 0, '1490342599', 1, NULL, NULL, NULL, NULL),
 (65, 65, 4, 4, '2014-2015', 'first', 2, 0, '1490342599', 1, NULL, NULL, NULL, NULL),
 (66, 66, 5, 6, '2013-2014', 'summer', 1, 0, '1490342599', 1, NULL, NULL, NULL, NULL),
@@ -391,7 +391,7 @@ CREATE TABLE `enrollment_status` (
 --
 
 INSERT INTO `enrollment_status` (`status`, `created_at`, `created_user_id`) VALUES
-(1, '1491467538', 15);
+(1, '1491541516', 1);
 
 -- --------------------------------------------------------
 
@@ -448,14 +448,6 @@ CREATE TABLE `logs` (
   `time` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `logs`
---
-
-INSERT INTO `logs` (`id`, `errno`, `errtype`, `errstr`, `errfile`, `errline`, `user_agent`, `ip_address`, `time`) VALUES
-(1, 2, 'Warning', 'unlink(C:\\xampp\\tmp\\ci_capstone_cookies0ipqbmv1q2c21uf56gdsmn09mcj83e4l): Permission denied', 'C:\\xampp\\htdocs\\ci-capstone\\system\\libraries\\Session\\drivers\\Session_files_driver.php', 320, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0', '192.168.100.4', '2017-04-03 08:51:33'),
-(2, 2, 'Warning', 'session_destroy(): Session object destruction failed', 'C:\\xampp\\htdocs\\ci-capstone\\system\\libraries\\Session\\Session.php', 704, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0', '192.168.100.4', '2017-04-03 08:51:33');
-
 -- --------------------------------------------------------
 
 --
@@ -499,7 +491,6 @@ INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `create
 (15, 15, 1, '1489668863', NULL, NULL),
 (18, 18, 1, '1489668864', NULL, NULL),
 (20, 20, 1, '1489668864', NULL, NULL),
-(21, 21, 1, '1489668864', NULL, NULL),
 (22, 22, 1, '1489668864', NULL, NULL),
 (23, 23, 1, '1489668864', NULL, NULL),
 (24, 24, 1, '1489668864', NULL, NULL),
@@ -528,31 +519,32 @@ INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `create
 (90, 2, 4, '1490953578', NULL, 1),
 (91, 8, 1, '1490953584', NULL, 1),
 (92, 8, 4, '1490953584', NULL, 1),
-(102, 17, 1, '1491110314', NULL, 1),
-(103, 17, 2, '1491110314', NULL, 1),
-(104, 17, 3, '1491110314', NULL, 1),
-(105, 17, 4, '1491110314', NULL, 1),
-(106, 17, 6, '1491110314', NULL, 1),
-(107, 32, 1, '1491110372', NULL, 1),
-(108, 32, 2, '1491110372', NULL, 1),
-(109, 32, 3, '1491110372', NULL, 1),
-(110, 32, 4, '1491110372', NULL, 1),
-(111, 32, 5, '1491110372', NULL, 1),
-(112, 32, 6, '1491110372', NULL, 1),
 (117, 31, 1, '1491110799', NULL, 1),
 (118, 16, 1, '1491111142', NULL, 1),
-(119, 6, 1, '1491180432', NULL, 1),
-(120, 6, 3, '1491180432', NULL, 1),
-(121, 6, 4, '1491180432', NULL, 1),
-(122, 6, 5, '1491180433', NULL, 1),
-(123, 6, 6, '1491180433', NULL, 1),
-(166, 1, 1, '1491445965', NULL, 1),
-(167, 1, 2, '1491445965', NULL, 1),
-(168, 1, 3, '1491445965', NULL, 1),
-(169, 1, 4, '1491445965', NULL, 1),
-(170, 1, 5, '1491445965', NULL, 1),
-(171, 1, 6, '1491445965', NULL, 1),
-(172, 33, 1, '1491446049', NULL, 1);
+(173, 32, 1, '1491527750', NULL, 1),
+(174, 32, 2, '1491527750', NULL, 1),
+(175, 32, 3, '1491527750', NULL, 1),
+(176, 32, 4, '1491527750', NULL, 1),
+(177, 32, 5, '1491527750', NULL, 1),
+(178, 32, 6, '1491527750', NULL, 1),
+(179, 33, 1, '1491540747', NULL, 1),
+(180, 33, 4, '1491540747', NULL, 1),
+(192, 1, 1, '1491540926', NULL, 1),
+(193, 1, 2, '1491540926', NULL, 1),
+(194, 1, 3, '1491540926', NULL, 1),
+(195, 1, 4, '1491540926', NULL, 1),
+(196, 1, 5, '1491540926', NULL, 1),
+(197, 1, 6, '1491540926', NULL, 1),
+(198, 6, 1, '1491543077', NULL, 1),
+(199, 6, 2, '1491543078', NULL, 1),
+(200, 6, 3, '1491543078', NULL, 1),
+(201, 6, 4, '1491543078', NULL, 1),
+(202, 6, 5, '1491543078', NULL, 1),
+(203, 6, 6, '1491543078', NULL, 1),
+(260, 17, 1, '1491546598', NULL, 1),
+(261, 17, 2, '1491546598', NULL, 1),
+(262, 17, 4, '1491546598', NULL, 1),
+(265, 21, 1, '1491547350', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -650,11 +642,11 @@ CREATE TABLE `students` (
 
 INSERT INTO `students` (`student_id`, `student_firstname`, `student_image`, `student_middlename`, `student_lastname`, `student_gender`, `student_birthdate`, `student_birthplace`, `student_civil_status`, `student_nationality`, `student_guardian_fullname`, `student_permanent_address`, `student_address_town`, `student_address_region`, `student_guardian_address`, `student_personal_contact_number`, `student_guardian_contact_number`, `student_personal_email`, `student_guardian_email`, `student_school_id`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES
 (1, 'Julianne', '764cd2000c437a9f4782315c883dc461.jpg', 'Mueller', 'Dibbert', 'female', '12-14-1972', '277 Corwin RoadsDouglasfort, WI 11979-6154', 'Marriage', 'Filipino', 'Lonnie Ankunding', '33310 Araceli Park Suite 503\r\nNorth Cordie, IL 75592', 'Lolahaven', 'region2______', '83688 Etha Locks', '+2466123850788', '(866) 548-4350', 'schmitt.beulah@yahoo.com', 'michale37@example.net', '50-1', '1491112002', 1, NULL, NULL, '1491121166', 1),
-(2, 'Tessie', NULL, 'Schulist', 'Macejkovic', 'female', '10-29-1990', '89949 Beahan Viaduct Apt. 084Port Graciela, WI 4', 'Single', 'Filipino', 'Emmie Ferry', '691 Rogers Avenue\r\nHirthefurt, CA 20617-8713', 'North Veronahaven', 'region2______________', '328 Jamir Walk Suite 906', '+6786417782053', '1-877-978-3429', 'rritchie@yahoo.com', 'dangelo.breitenberg@example.com', '30-2', '1491112002', 1, NULL, NULL, '1491463781', 15),
-(3, 'Anabel', NULL, 'Tromp', 'Renner', 'female', '02-15-1975', '900 Pollich Parks\r\nHomenickstad, VT 62573', 'Marriage', 'Other', 'Miguel Cronin', '22869 Nader Courts Suite 601\r\nSkilesmouth, UT 41190-8160', 'North Hershelport', 'region3', '2267 Colin Hill', '+7230318762972', '877.951.9658', 'ruecker.archibald@medhurst.info', 'walter.brianne@example.net', '30-3', '1491112002', 1, NULL, NULL, NULL, NULL),
+(2, 'Tessie', 'a8249f085714190c6b2af6c61508b239.jpg', 'Schulist', 'Macejkovic', 'female', '10-29-1990', '89949 Beahan Viaduct Apt. 084Port Graciela, WI 4', 'Single', 'Filipino', 'Emmie Ferry', '691 Rogers Avenue\r\nHirthefurt, CA 20617-8713', 'North Veronahaven', 'region2______________', '328 Jamir Walk Suite 906', '+6786417782053', '1-877-978-3429', 'rritchie@yahoo.com', 'dangelo.breitenberg@example.com', '30-2', '1491112002', 1, NULL, NULL, '1491533247', 1),
+(3, 'Anabel', NULL, 'Tromp', 'Renner', 'female', '02-15-1975', '900 Pollich Parks\r\nHomenickstad, VT 62573', 'Marriage', 'Other', 'Miguel Cronin', '22869 Nader Courts Suite 601\r\nSkilesmouth, UT 41190-8160', 'North Hershelport', 'region3,,,,,,,,,,,,,,,,,,,,,,,', '2267 Colin Hill', '+7230318762972', '877.951.9658', 'ruecker.archibald@medhurst.info', 'walter.brianne@example.net', '30-3', '1491112002', 1, NULL, NULL, '1491533891', 12),
 (4, 'Raven', NULL, 'Pollich', 'Klocko', 'female', '12-12-1953', '738 Jefferey Estates\r\nSalvadorchester, DE 74284-58', 'Single', 'Other', 'Joshuah Satterfield', '9703 Ezra Ford Apt. 572\r\nMarquardtside, NE 36984-5708', 'East Geovanny', 'region4', '1173 Fay Alley Apt. 825', '+4317546824876', '888-506-0184', 'tanya65@hotmail.com', 'antwan.conroy@example.net', '90-4', '1491112002', 1, NULL, NULL, NULL, NULL),
 (5, 'Roslyn', NULL, 'Reynolds', 'Bayer', 'male', '05-08-1920', '3749 Harber Springs Suite 782\r\nLake Anika, KY 5943', 'Single', 'Filipino', 'Dr. Dalton O Hara MD', '6889 Carole Canyon Apt. 627\r\nAubreybury, AL 59341-1329', 'New Ernesto', 'rgion1', '841 Gerlach Path', '+5219857160801', '844-746-5054', 'cruickshank.edmund@prosacco.com', 'wiza.lurline@example.com', '50-5', '1491112002', 1, NULL, NULL, NULL, NULL),
-(6, 'Eunice', NULL, 'Kozey', 'Bechtelar', 'male', '09-11-1951', '512 Rosenbaum Rue Suite 867\r\nLemuelbury, VT 47362-', 'Marriage', 'Other', 'Dr. Valentina Wolff', '40593 Jovan Route\r\nRaumouth, AR 55502', 'Hectorfurt', 'rgion1', '38833 Lakin Fall', '+4512843718630', '1-888-614-1890', 'wyman.garth@johnson.com', 'walker.savanna@example.net', '70-6', '1491112002', 1, NULL, NULL, NULL, NULL),
+(6, 'Eunice', NULL, 'Kozey', 'Bechtelar', 'male', '09-11-1990', '512 Rosenbaum Rue Suite 867\r\nLemuelbury, VT 47362-', 'Marriage', 'Other', 'Dr. Valentina Wolff', '40593 Jovan Route\r\nRaumouth, AR 55502', 'Hectorfurt', 'rgion1____________', '38833 Lakin Fall', '+4512843718630', '1-888-614-1890', 'wyman.garth@johnson.com', 'walker.savanna@example.net', '70-6', '1491112002', 1, NULL, NULL, '1491533740', 1),
 (7, 'Davonte', NULL, 'Hilpert', 'Grimes', 'male', '09-22-1981', '7223 Anahi Fields Suite 714\r\nNorth Sadiebury, VA 3', 'Single', 'Other', 'Larissa Shields', '842 Uriel Spur Suite 577\r\nBrannonbury, OH 05839-1992', 'Hoegerside', 'rgion1', '785 Murazik Fords', '+9563275106480', '866-836-8144', 'jbecker@hotmail.com', 'leonard91@example.com', '01-7', '1491112002', 1, NULL, NULL, NULL, NULL),
 (8, 'Dennis', NULL, 'Bashirian', 'Eichmann', 'male', '04-27-1970', '73424 Kovacek Crest\r\nSouth Adriennefurt, NC 68360-', 'Single', 'Other', 'Alycia Wiza', '515 Marty Passage Suite 827\r\nLake Issac, SD 56540', 'Stefanview', 'region2', '2013 Adelle Corners', '+3724703562674', '877-308-9836', 'malcolm08@hyatt.net', 'carter.ludwig@example.net', '70-8', '1491112002', 1, NULL, NULL, NULL, NULL),
 (9, 'Monserrat', NULL, 'Schmitt', 'Adams', 'male', '07-19-1952', '5648 Donnelly Fields\r\nGradyport, WY 80422', 'Single', 'Other', 'Nicole Ratke', '5658 Hector Forks Apt. 757\r\nNorth Molly, NH 90289', 'Tremblayside', 'region2', '6959 Lucius Roads', '+1503434010548', '888.961.1200', 'adeline.stracke@lang.org', 'lazaro.jones@example.net', '40-9', '1491112002', 1, NULL, NULL, NULL, NULL),
@@ -711,7 +703,7 @@ INSERT INTO `students` (`student_id`, `student_firstname`, `student_image`, `stu
 (60, 'Mya', NULL, 'Homenick', 'Armstrong', 'male', '12-05-1999', '500 Niko Square\r\nWest Gretchen, PA 71592-9154', 'Marriage', 'Other', 'Miss Martina Sporer', '5743 Marks Dale Apt. 183\r\nEast Zellafurt, OR 08467', 'Ethylview', 'region4', '202 Kertzmann Glens', '+2025947638327', '844-883-1875', 'vivien90@gmail.com', 'maudie67@example.org', '50-60', '1491112002', 1, NULL, NULL, NULL, NULL),
 (61, 'Austen', NULL, 'Ward', 'Brekke', 'female', '09-11-1931', '858 Cassin Views Apt. 154\r\nMayertmouth, GA 61366-8', 'Marriage', 'Other', 'Augusta Gottlieb', '13845 Corwin Ville Suite 172\r\nKerlukechester, RI 67624', 'Lake Fidel', 'region2', '919 Howe Parkways Suite 543', '+3140853299687', '(844) 703-7463', 'hane.lonzo@gmail.com', 'osawayn@example.org', '60-61', '1491112002', 1, NULL, NULL, NULL, NULL),
 (62, 'Amely', NULL, 'Vandervort', 'Cruickshank', 'male', '02-24-1966', '91235 Grant Ridge Suite 232\r\nAuerburgh, MO 75225-6', 'Single', 'Filipino', 'Megane Kautzer DVM', '52268 Mohr Island Suite 634\r\nMaeberg, MT 32256-1658', 'South Jarrett', 'region2', '32189 McLaughlin Points Apt. 238', '+9243410647236', '1-877-703-0163', 'raoul.rolfson@gmail.com', 'colleen27@example.org', '90-62', '1491112002', 1, NULL, NULL, NULL, NULL),
-(63, 'Jackeline', NULL, 'Quitzon', 'Paucek', 'female', '02-12-1921', '20037 Kilback Isle Apt. 296\r\nAnkundingtown, MT 496', 'Marriage', 'Other', 'Chaya Monahan', '74692 Brody Grove Suite 667\r\nNew Bryana, VT 88317-3152', 'Dietrichfort', 'region2', '64378 Shana Locks', '+9228435092441', '844.708.0873', 'laurianne.kautzer@paucek.com', 'vivienne.turner@example.com', '70-63', '1491112002', 1, NULL, NULL, NULL, NULL),
+(63, 'Jackeline', NULL, 'Quitzon', 'Paucek', 'female', '02-12-1990', '20037 Kilback Isle Apt. 296\r\nAnkundingtown, MT 496', 'Marriage', 'Other', 'Chaya Monahan', '74692 Brody Grove Suite 667\r\nNew Bryana, VT 88317-3152', 'Dietrichfort', 'region2...................', '64378 Shana Locks', '+9228435092441', '844.708.0873', 'laurianne.kautzer@paucek.com', 'vivienne.turner@example.com', '70-63', '1491112002', 1, NULL, NULL, '1491533768', 1),
 (64, 'Newton', NULL, 'Gleason', 'Boyer', 'male', '03-09-1950', '266 Quigley Isle Apt. 475\r\nEast Kiel, OK 03944', 'Marriage', 'Filipino', 'Dr. Maverick Okuneva', '38767 Upton Forges\r\nNorth Helen, WV 30797-4451', 'Gusikowskiview', 'region3', '14358 Kilback Lane Apt. 666', '+7435281582838', '844-441-8049', 'filomena.romaguera@gmail.com', 'kassulke.winnifred@example.com', '70-64', '1491112002', 1, NULL, NULL, NULL, NULL),
 (65, 'Gonzalo', NULL, 'Paucek', 'Kuhlman', 'female', '09-04-1924', '46884 Rosa Loop\r\nWest Arlene, IL 26681', 'Single', 'Filipino', 'Dr. Damaris Treutel DVM', '3004 Altenwerth Plains Apt. 892\r\nO Connellport, MA 33917', 'Port Kaylie', 'region2', '69975 Quigley Flats', '+5920961197492', '(800) 919-1135', 'mcruickshank@heaney.com', 'houston06@example.org', '50-65', '1491112002', 1, NULL, NULL, NULL, NULL),
 (66, 'Roscoe', NULL, 'Farrell', 'Turner', 'male', '01-18-1970', '2876 Bashirian Run\r\nCecileville, ND 30286-1236', 'Marriage', 'Filipino', 'Nicolas Leuschke', '414 Hillary Forest Suite 983\r\nTorpburgh, NV 96418-4552', 'Majorside', 'region4', '9398 Donnelly Island', '+9290776135836', '1-888-354-8459', 'ashlee01@schmeler.info', 'padberg.amya@example.com', '60-66', '1491112002', 1, NULL, NULL, NULL, NULL),
@@ -786,7 +778,11 @@ INSERT INTO `students_subjects` (`student_subject_id`, `enrollment_id`, `subject
 (34, 106, 6, 1, '1491192320', 15, NULL, NULL, '1491192398', NULL),
 (35, 106, 7, 1, '1491192320', 15, NULL, NULL, '1491192398', NULL),
 (36, 106, 10, 0, '1491296149', 1, NULL, NULL, NULL, NULL),
-(37, 106, 12, 0, '1491296149', 1, NULL, NULL, NULL, NULL);
+(37, 106, 12, 0, '1491296149', 1, NULL, NULL, NULL, NULL),
+(38, 6, 13, 1, '1491532934', 1, NULL, NULL, '1491532936', NULL),
+(39, 59, 8, 0, '1491534006', 1, NULL, NULL, NULL, NULL),
+(40, 59, 11, 0, '1491534006', 1, NULL, NULL, NULL, NULL),
+(41, 63, 13, 1, '1491534074', 1, NULL, NULL, '1491534102', NULL);
 
 -- --------------------------------------------------------
 
@@ -883,7 +879,8 @@ INSERT INTO `subject_offers` (`subject_offer_id`, `subject_offer_semester`, `sub
 (9, 'summer', '2016-2017', 3, 8, '1491186092', 15, NULL, NULL, NULL, NULL),
 (10, 'summer', '2016-2017', 1, 7, '1491186180', 15, NULL, NULL, NULL, NULL),
 (11, 'summer', '2016-2017', 1, 6, '1491186209', 15, NULL, NULL, NULL, NULL),
-(12, 'summer', '2016-2017', 4, 2, '1491191912', 15, NULL, NULL, NULL, NULL);
+(12, 'summer', '2016-2017', 4, 2, '1491191912', 15, NULL, NULL, NULL, NULL),
+(13, 'summer', '2016-2017', 2, 3, '1491531209', 1, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -902,6 +899,8 @@ CREATE TABLE `subject_offer_line` (
   `subject_offer_line_friday` tinyint(1) NOT NULL DEFAULT '0',
   `subject_offer_line_saturday` tinyint(1) NOT NULL DEFAULT '0',
   `subject_offer_line_sunday` tinyint(1) NOT NULL DEFAULT '0',
+  `subject_offer_line_lec` tinyint(1) NOT NULL DEFAULT '0',
+  `subject_offer_line_lab` tinyint(1) NOT NULL DEFAULT '0',
   `subject_offer_id` int(11) UNSIGNED NOT NULL,
   `user_id` int(11) UNSIGNED NOT NULL,
   `subject_id` int(11) UNSIGNED NOT NULL,
@@ -920,20 +919,22 @@ CREATE TABLE `subject_offer_line` (
 -- Dumping data for table `subject_offer_line`
 --
 
-INSERT INTO `subject_offer_line` (`subject_offer_line_id`, `subject_offer_line_start`, `subject_offer_line_end`, `subject_offer_line_monday`, `subject_offer_line_tuesday`, `subject_offer_line_wednesday`, `subject_offer_line_thursday`, `subject_offer_line_friday`, `subject_offer_line_saturday`, `subject_offer_line_sunday`, `subject_offer_id`, `user_id`, `subject_id`, `room_id`, `subject_offer_semester`, `subject_offer_school_year`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES
-(1, '06:00:00', '07:00:00', 1, 1, 0, 0, 0, 0, 0, 1, 1, 5, 1, 'second', '2016-2017', '1490345025', 1, NULL, NULL, NULL, NULL),
-(2, '06:00:00', '06:30:00', 0, 0, 1, 0, 0, 0, 0, 2, 2, 36, 1, 'second', '2016-2017', '1490360370', 1, NULL, NULL, NULL, NULL),
-(3, '06:30:00', '08:00:00', 0, 0, 0, 0, 0, 0, 1, 3, 2, 5, 1, 'second', '2016-2017', '1490384892', 1, NULL, NULL, NULL, NULL),
-(4, '06:30:00', '07:00:00', 0, 0, 0, 1, 0, 0, 0, 4, 5, 1, 1, 'second', '2016-2017', '1490385078', 1, NULL, NULL, NULL, NULL),
-(5, '07:00:00', '07:30:00', 0, 1, 0, 0, 0, 0, 0, 4, 1, 5, 1, 'second', '2016-2017', '1490385078', 1, NULL, NULL, NULL, NULL),
-(6, '08:00:00', '08:30:00', 0, 0, 0, 0, 1, 0, 0, 5, 2, 32, 1, 'second', '2016-2017', '1490385155', 1, NULL, NULL, NULL, NULL),
-(7, '06:00:00', '07:30:00', 0, 0, 0, 0, 0, 0, 1, 6, 1, 3, 1, 'summer', '2016-2017', '1491100028', 1, NULL, NULL, NULL, NULL),
-(8, '06:00:00', '06:30:00', 1, 0, 0, 0, 0, 0, 0, 7, 1, 1, 1, 'summer', '2016-2017', '1491186031', 15, NULL, NULL, NULL, NULL),
-(9, '07:00:00', '07:30:00', 1, 0, 0, 0, 0, 0, 0, 8, 2, 9, 2, 'summer', '2016-2017', '1491186058', 15, NULL, NULL, NULL, NULL),
-(10, '08:00:00', '08:30:00', 1, 0, 0, 0, 0, 0, 0, 9, 3, 8, 1, 'summer', '2016-2017', '1491186092', 15, NULL, NULL, NULL, NULL),
-(11, '09:00:00', '09:30:00', 1, 0, 0, 0, 0, 0, 0, 10, 1, 7, 1, 'summer', '2016-2017', '1491186180', 15, NULL, NULL, NULL, NULL),
-(12, '10:00:00', '10:30:00', 1, 0, 0, 0, 0, 0, 0, 11, 1, 6, 3, 'summer', '2016-2017', '1491186209', 15, NULL, NULL, NULL, NULL),
-(13, '06:00:00', '11:30:00', 0, 0, 0, 1, 1, 0, 0, 12, 4, 2, 3, 'summer', '2016-2017', '1491191912', 15, NULL, NULL, NULL, NULL);
+INSERT INTO `subject_offer_line` (`subject_offer_line_id`, `subject_offer_line_start`, `subject_offer_line_end`, `subject_offer_line_monday`, `subject_offer_line_tuesday`, `subject_offer_line_wednesday`, `subject_offer_line_thursday`, `subject_offer_line_friday`, `subject_offer_line_saturday`, `subject_offer_line_sunday`, `subject_offer_line_lec`, `subject_offer_line_lab`, `subject_offer_id`, `user_id`, `subject_id`, `room_id`, `subject_offer_semester`, `subject_offer_school_year`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES
+(1, '06:00:00', '07:00:00', 1, 1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 5, 1, 'second', '2016-2017', '1490345025', 1, NULL, NULL, NULL, NULL),
+(2, '06:00:00', '06:30:00', 0, 0, 1, 0, 0, 0, 0, 1, 0, 2, 2, 36, 1, 'second', '2016-2017', '1490360370', 1, NULL, NULL, NULL, NULL),
+(3, '06:30:00', '08:00:00', 0, 0, 0, 0, 0, 0, 1, 0, 1, 3, 2, 5, 1, 'second', '2016-2017', '1490384892', 1, NULL, NULL, NULL, NULL),
+(4, '06:30:00', '07:00:00', 0, 0, 0, 1, 0, 0, 0, 0, 1, 4, 5, 1, 1, 'second', '2016-2017', '1490385078', 1, NULL, NULL, NULL, NULL),
+(5, '07:00:00', '07:30:00', 0, 1, 0, 0, 0, 0, 0, 1, 0, 4, 1, 5, 1, 'second', '2016-2017', '1490385078', 1, NULL, NULL, NULL, NULL),
+(6, '08:00:00', '08:30:00', 0, 0, 0, 0, 1, 0, 0, 0, 1, 5, 2, 32, 1, 'second', '2016-2017', '1490385155', 1, NULL, NULL, NULL, NULL),
+(7, '06:00:00', '07:30:00', 0, 0, 0, 0, 0, 0, 1, 1, 0, 6, 1, 3, 1, 'summer', '2016-2017', '1491100028', 1, NULL, NULL, NULL, NULL),
+(8, '06:00:00', '06:30:00', 1, 0, 0, 0, 0, 0, 0, 0, 1, 7, 1, 1, 1, 'summer', '2016-2017', '1491186031', 15, NULL, NULL, NULL, NULL),
+(9, '07:00:00', '07:30:00', 1, 0, 0, 0, 0, 0, 0, 0, 1, 8, 2, 9, 2, 'summer', '2016-2017', '1491186058', 15, NULL, NULL, NULL, NULL),
+(10, '08:00:00', '08:30:00', 1, 0, 0, 0, 0, 0, 0, 0, 1, 9, 3, 8, 1, 'summer', '2016-2017', '1491186092', 15, NULL, NULL, NULL, NULL),
+(11, '09:00:00', '09:30:00', 1, 0, 0, 0, 0, 0, 0, 1, 1, 10, 1, 7, 1, 'summer', '2016-2017', '1491186180', 15, NULL, NULL, NULL, NULL),
+(12, '10:00:00', '10:30:00', 1, 0, 0, 0, 0, 0, 0, 0, 1, 11, 1, 6, 3, 'summer', '2016-2017', '1491186209', 15, NULL, NULL, NULL, NULL),
+(13, '06:00:00', '11:30:00', 0, 0, 0, 1, 1, 0, 0, 1, 0, 12, 4, 2, 3, 'summer', '2016-2017', '1491191912', 15, NULL, NULL, NULL, NULL),
+(14, '06:30:00', '07:00:00', 0, 0, 1, 0, 0, 0, 0, 1, 0, 13, 2, 3, 3, 'summer', '2016-2017', '1491531209', 1, NULL, NULL, NULL, NULL),
+(15, '07:00:00', '07:30:00', 0, 0, 1, 0, 0, 0, 0, 0, 1, 13, 3, 2, 3, 'summer', '2016-2017', '1491531209', 1, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -967,18 +968,18 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `updated_at`) VALUES
-(1, 0x7f000001, 'administrator', '$2y$08$m8P3WHDASe.hDP4Jn6J9iut/YsshOKD3xuzuVpjiTKeFf146Mfgoi', '9462e8eee0', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1491445863, 1, 'super', 'user', '', '', 1491455031),
+(1, 0x7f000001, 'administrator', '$2y$08$m8P3WHDASe.hDP4Jn6J9iut/YsshOKD3xuzuVpjiTKeFf146Mfgoi', '9462e8eee0', 'admin@admin.com', '', NULL, NULL, NULL, 1268889823, 1491549635, 1, 'super', 'user', '', '', 1491455031),
 (2, 0x3a3a31, 'username1', '$2y$08$CurDtH07bZ2qI4MK/IKiwuHElRHbR8tnxG5cgH9mBxyj8Qojg5K9O', '4II4l4nDOhYK2twbd4bUdu', 'emailxnnt1@gmail.com', NULL, NULL, NULL, NULL, 1490272230, NULL, 1, 'Firstbk', 'Lastsg', 'Companymoqix', '+63968-835-8305', NULL),
 (3, 0x3a3a31, 'username2', '$2y$08$RZzWXUW494MR.4VBHg3GK.fWn6Q6Ngdo3bITGoQGU6MvLNYmiU.7O', 'ilTTwaOTekKQCZ2GYM01SO', 'emailuihu2@gmail.com', NULL, NULL, NULL, NULL, 1490272230, NULL, 1, 'Firstslb', 'Lastjn', 'Companyqve', '+63952-418-1097', NULL),
 (4, 0x3a3a31, 'username3', '$2y$08$TbpuTV7J9xn.iXKAHsJj4OJcVmo/eByKDcEwHYi29xQO5OPGPQO3W', 'Oikn6LKD2I5m9KZpqcKWse', 'emailwdwa3@gmail.com', NULL, NULL, NULL, NULL, 1490272230, NULL, 1, 'Firstspjf', 'Lastjm', 'Companyxh', '+63909-421-0432', NULL),
 (5, 0x3a3a31, 'username4', '$2y$08$sdieY.SDQcn8xQyFLWmWveTjXqKG5Gl7ShEsqWBHZd7XuXbmD/kiy', 'RYmEsaGEZMIakTFeS3U0SO', 'emailvzudc4@gmail.com', 'c925c3a4fa5907b7b6b1cd74a561e4c3e558d8dd', NULL, NULL, NULL, 1490272230, NULL, 0, 'Firsty', 'Lastw', 'Companyqujk', '+63907-812-8291', NULL),
 (6, 0x3a3a31, 'username5', '$2y$08$LbKuE.UzqpsLKPtEjz94SOxZhrif7/EUQiEWK/dq/gaen.8NHUpaK', 'ld6OuPOowQBMtwqbC89XO.', 'emailbxx5@gmail.com', NULL, NULL, NULL, NULL, 1490272231, NULL, 1, 'aaaaaaaa', 'sssssssssss', 'Companymytbz', '+63915-086-2075', 1490347675),
 (8, 0x3139322e3136382e3130302e32, 'lloricode', '$2y$08$jblxESQxQWtFZgerF..I9.xI5GILZXgtTAqVjOZZYLKiApiWtunLO', '5y8m2uGOmeS5ONX6lgXdJ.', 'aa@aa.aa', '757bf7e7cdbbb49a2ce365f59b28082ada5e8e1d', NULL, NULL, NULL, 1490945783, 1490945872, 0, 'Lloric', 'Garcia', '', '', 1490945856),
-(9, 0x3139322e3136382e3130302e33, 'faculty', '$2y$08$Z6dtQlxxrNp1IL.qo1w0TeRP/QW2MBVhItZW9HG2inrFp15Vuvewe', 'Ex0LgR2Fs.DL.gn.L1IIwO', 'aaa@ssa.adas', NULL, NULL, NULL, NULL, 1490946657, 1491140036, 1, 'faculty', 'im', '', '', 1490946990),
+(9, 0x3139322e3136382e3130302e33, 'faculty', '$2y$08$Z6dtQlxxrNp1IL.qo1w0TeRP/QW2MBVhItZW9HG2inrFp15Vuvewe', 'Ex0LgR2Fs.DL.gn.L1IIwO', 'aaa@ssa.adas', NULL, NULL, NULL, NULL, 1490946657, 1491542565, 1, 'faculty', 'im', '', '', 1490946990),
 (11, 0x3139322e3136382e3130302e33, 'registrar', '$2y$08$i7BG9JYImhTJ95tFxpcnyOv1LiTTU/bmrhsUbRVnP2mE8J2whzXLe', '5/s5G0ZN7xQwxtRJo.HFuO', 'dsgsd@gmail.com', NULL, NULL, NULL, NULL, 1490946763, 1491183765, 1, 'registrar', 'im', '', '', 1490946979),
-(12, 0x3139322e3136382e3130302e33, 'dean', '$2y$08$/HBKfc.L3OPgSff5qE3lGu6bxRvyQO8ljLZlS0.TWZ6qfPVVWfov6', 'Xv7fQhfUonkVce625q4bXu', 'dean@gmail.com', NULL, NULL, NULL, NULL, 1490946789, 1491466451, 1, 'dean', 'im', '', '', 1490946969),
-(13, 0x3139322e3136382e3130302e33, 'accounting', '$2y$08$.Q4hxCil3CpQqjOFFkSY5efXVkENedfAZ0IdTWk5o5R6lwHlivXLC', 'Kb8gGKwuIcbwKcnU4XIL9e', 'accounting@gmail.com', NULL, NULL, NULL, NULL, 1490946814, 1491192769, 1, 'accounting', 'im', '', '', 1490946961),
-(14, 0x3139322e3136382e3130302e33, 'sso', '$2y$08$h70mYRZSedkaLTnA.f/76OSckG7tXu.dRRKCxvAYuWPLz9gNBDnb.', 'ZgjYnOjq0PIAYERV9Fjn1.', 'sso@gmail.com', NULL, NULL, NULL, NULL, 1490946854, 1491181840, 1, 'sso', 'im', '', '', 1490946951),
+(12, 0x3139322e3136382e3130302e33, 'dean', '$2y$08$/HBKfc.L3OPgSff5qE3lGu6bxRvyQO8ljLZlS0.TWZ6qfPVVWfov6', 'Xv7fQhfUonkVce625q4bXu', 'dean@gmail.com', NULL, NULL, NULL, NULL, 1490946789, 1491543225, 1, 'dean', 'im', '', '', 1490946969),
+(13, 0x3139322e3136382e3130302e33, 'accounting', '$2y$08$.Q4hxCil3CpQqjOFFkSY5efXVkENedfAZ0IdTWk5o5R6lwHlivXLC', 'Kb8gGKwuIcbwKcnU4XIL9e', 'accounting@gmail.com', NULL, NULL, NULL, NULL, 1490946814, 1491542534, 1, 'accounting', 'im', '', '', 1490946961),
+(14, 0x3139322e3136382e3130302e33, 'sso', '$2y$08$h70mYRZSedkaLTnA.f/76OSckG7tXu.dRRKCxvAYuWPLz9gNBDnb.', 'ZgjYnOjq0PIAYERV9Fjn1.', 'sso@gmail.com', NULL, NULL, NULL, NULL, 1490946854, 1491544819, 1, 'sso', 'im', '', '', 1490946951),
 (15, 0x3139322e3136382e3130302e34, 'admin', '$2y$08$T3vrOULMXLlIKylytubxZuYa80Esag8MirSMZoVd.Z8F/yGYcJcP2', '1yO0QQizDyCaqVKTdYX0yO', 'admin1@admin.com', NULL, NULL, NULL, NULL, 1491181392, 1491454974, 1, 'admin', 'im', '', 'dean', 1491455008),
 (16, 0x3139322e3136382e3130302e32, 'admin1', '$2y$08$HhSyj4NPQaG4V2OE/vHJ0uVb/s3yyVJPeOCWRPMFfhJgZNpZSscpu', 'KPurOpewXQDIR5NDq5QDG.', 'admin13@admin.com', NULL, NULL, NULL, NULL, 1491190205, NULL, 1, 'Bryne Angelo', 'Brillantes', '', '212-212', NULL),
 (17, 0x3a3a31, 'test', '$2y$08$jhzskE4FqLoNn7Y4fBtMv.C1NKChmVF93S8DdA.S3WRBwYrAugtoO', 'ZkRsSmBCt5WwAS4eFzMwvu', NULL, NULL, NULL, NULL, NULL, 1491454882, 1491454924, 1, 'tesssname', 'testttlastname', '', '', NULL),
@@ -1040,70 +1041,18 @@ CREATE TABLE `users_last_logins` (
 --
 
 INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES
-(1, 1, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491052886'),
-(2, 1, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491054081'),
-(3, 1, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491096626'),
-(4, 12, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491103849'),
-(5, 13, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491104275'),
-(6, 12, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491105111'),
-(7, 12, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491105213'),
-(8, 1, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491105548'),
-(9, 14, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491106405'),
-(10, 1, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491110252'),
-(11, 1, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491115317'),
-(12, 12, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491115322'),
-(13, 1, 0x3a3a31, 'Chrome 56.0.2924.87', 'Windows 10', '1491139496'),
-(14, 9, 0x3a3a31, 'Chrome 56.0.2924.87', 'Windows 10', '1491140036'),
-(15, 12, 0x3a3a31, 'Chrome 56.0.2924.87', 'Windows 10', '1491140383'),
-(16, 11, 0x3a3a31, 'Chrome 56.0.2924.87', 'Windows 10', '1491140485'),
-(17, 13, 0x3a3a31, 'Chrome 56.0.2924.87', 'Windows 10', '1491140754'),
-(18, 12, 0x3a3a31, 'Chrome 56.0.2924.87', 'Windows 10', '1491140799'),
-(19, 12, 0x3a3a31, 'Chrome 56.0.2924.87', 'Windows 10', '1491179295'),
-(20, 1, 0x3139322e3136382e3130302e31, 'Firefox 54.0', 'Windows 10', '1491179574'),
-(21, 12, 0x3139322e3136382e3130302e33, 'Firefox 47.0', 'Windows 10', '1491180072'),
-(22, 1, 0x3139322e3136382e3130302e32, 'Firefox 47.0', 'Windows 10', '1491180236'),
-(23, 1, 0x3139322e3136382e3130302e33, 'Firefox 47.0', 'Windows 10', '1491180263'),
-(24, 12, 0x3139322e3136382e3130302e32, 'Firefox 47.0', 'Windows 10', '1491180267'),
-(25, 11, 0x3139322e3136382e3130302e32, 'Firefox 47.0', 'Windows 10', '1491180289'),
-(26, 12, 0x3139322e3136382e3130302e34, 'Firefox 47.0', 'Windows 10', '1491180297'),
-(27, 14, 0x3139322e3136382e3130302e35, 'Firefox 47.0', 'Windows 10', '1491180377'),
-(28, 12, 0x3139322e3136382e3130302e36, 'Firefox 47.0', 'Windows 10', '1491180440'),
-(29, 1, 0x3139322e3136382e3130302e33, 'Firefox 47.0', 'Windows 10', '1491180445'),
-(30, 1, 0x3139322e3136382e3130302e33, 'Firefox 47.0', 'Windows 10', '1491180464'),
-(31, 1, 0x3139322e3136382e3130302e33, 'Firefox 47.0', 'Windows 10', '1491180548'),
-(32, 12, 0x3139322e3136382e3130302e34, 'Firefox 47.0', 'Windows 10', '1491180748'),
-(33, 1, 0x3139322e3136382e3130302e34, 'Firefox 47.0', 'Windows 10', '1491181273'),
-(34, 15, 0x3139322e3136382e3130302e34, 'Firefox 47.0', 'Windows 10', '1491181411'),
-(35, 1, 0x3139322e3136382e3130302e34, 'Firefox 47.0', 'Windows 10', '1491181459'),
-(36, 15, 0x3139322e3136382e3130302e32, 'Firefox 47.0', 'Windows 10', '1491181501'),
-(37, 15, 0x3139322e3136382e3130302e34, 'Firefox 47.0', 'Windows 10', '1491181617'),
-(38, 15, 0x3139322e3136382e3130302e34, 'Firefox 47.0', 'Windows 10', '1491181654'),
-(39, 15, 0x3139322e3136382e3130302e32, 'Firefox 47.0', 'Windows 10', '1491181660'),
-(40, 15, 0x3139322e3136382e3130302e34, 'Firefox 47.0', 'Windows 10', '1491181825'),
-(41, 14, 0x3139322e3136382e3130302e32, 'Firefox 47.0', 'Windows 10', '1491181841'),
-(42, 15, 0x3139322e3136382e3130302e31, 'Firefox 54.0', 'Windows 10', '1491183648'),
-(43, 11, 0x3139322e3136382e3130302e31, 'Firefox 54.0', 'Windows 10', '1491183765'),
-(44, 15, 0x3139322e3136382e3130302e31, 'Firefox 54.0', 'Windows 10', '1491184873'),
-(45, 12, 0x3139322e3136382e3130302e31, 'Firefox 54.0', 'Windows 10', '1491184884'),
-(46, 15, 0x3a3a31, 'Firefox 54.0', 'Windows 10', '1491185986'),
-(47, 13, 0x3a3a31, 'Firefox 54.0', 'Windows 10', '1491186442'),
-(48, 1, 0x3139322e3136382e3130302e33, 'Firefox 47.0', 'Windows 10', '1491188859'),
-(49, 15, 0x3139322e3136382e3130302e32, 'Firefox 47.0', 'Windows 10', '1491188945'),
-(50, 1, 0x3139322e3136382e3130302e31, 'Firefox 54.0', 'Windows 10', '1491190072'),
-(51, 15, 0x3a3a31, 'Firefox 54.0', 'Windows 10', '1491191809'),
-(52, 15, 0x3a3a31, 'Firefox 54.0', 'Windows 10', '1491192071'),
-(53, 15, 0x3139322e3136382e3130302e36, 'Firefox 47.0', 'Windows 10', '1491192534'),
-(54, 13, 0x3a3a31, 'Firefox 54.0', 'Windows 10', '1491192769'),
-(55, 1, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491224239'),
-(56, 1, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491230429'),
-(57, 1, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491282674'),
-(58, 1, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491286436'),
-(59, 1, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491439304'),
-(60, 1, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491445864'),
-(61, 12, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491445903'),
-(62, 17, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491454924'),
-(63, 15, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491454975'),
-(64, 12, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491466451');
+(68, 1, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491530212'),
+(69, 12, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491533298'),
+(70, 13, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491533941'),
+(71, 12, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491539667'),
+(72, 13, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491541693'),
+(73, 12, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491541994'),
+(74, 14, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491542524'),
+(75, 13, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491542534'),
+(76, 9, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491542565'),
+(77, 12, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491543225'),
+(78, 14, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491544819'),
+(79, 1, 0x3a3a31, 'Firefox 52.0', 'Linux', '1491549635');
 
 --
 -- Indexes for dumped tables
@@ -1281,7 +1230,7 @@ ALTER TABLE `educations`
 -- AUTO_INCREMENT for table `enrollments`
 --
 ALTER TABLE `enrollments`
-  MODIFY `enrollment_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
+  MODIFY `enrollment_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 --
 -- AUTO_INCREMENT for table `groups`
 --
@@ -1296,12 +1245,12 @@ ALTER TABLE `login_attempts`
 -- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `permission_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=173;
+  MODIFY `permission_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=266;
 --
 -- AUTO_INCREMENT for table `requisites`
 --
@@ -1321,7 +1270,7 @@ ALTER TABLE `students`
 -- AUTO_INCREMENT for table `students_subjects`
 --
 ALTER TABLE `students_subjects`
-  MODIFY `student_subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `student_subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 --
 -- AUTO_INCREMENT for table `subjects`
 --
@@ -1331,12 +1280,12 @@ ALTER TABLE `subjects`
 -- AUTO_INCREMENT for table `subject_offers`
 --
 ALTER TABLE `subject_offers`
-  MODIFY `subject_offer_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `subject_offer_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `subject_offer_line`
 --
 ALTER TABLE `subject_offer_line`
-  MODIFY `subject_offer_line_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `subject_offer_line_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `users`
 --
@@ -1351,7 +1300,7 @@ ALTER TABLE `users_groups`
 -- AUTO_INCREMENT for table `users_last_logins`
 --
 ALTER TABLE `users_last_logins`
-  MODIFY `users_last_login_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `users_last_login_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

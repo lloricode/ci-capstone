@@ -35,19 +35,19 @@ class Curriculum_model extends MY_Model
 
         private function _relations()
         {
-                $this->has_one['user_created']      = array(
+                $this->has_one['user_created'] = array(
                     'foreign_model' => 'User_model',
                     'foreign_table' => 'users',
                     'foreign_key'   => 'id',
                     'local_key'     => 'created_user_id'
                 );
-                $this->has_one['user_updated']      = array(
+                $this->has_one['user_updated'] = array(
                     'foreign_model' => 'User_model',
                     'foreign_table' => 'users',
                     'foreign_key'   => 'id',
                     'local_key'     => 'updated_user_id'
                 );
-                $this->has_one['course']      = array(
+                $this->has_one['course']       = array(
                     'foreign_model' => 'Course_model',
                     'foreign_table' => 'courses',
                     'foreign_key'   => 'course_id',
@@ -56,7 +56,7 @@ class Curriculum_model extends MY_Model
                 /**
                  * seperated table
                  */
-                $this->has_many['requisites'] = array(
+                $this->has_many['requisites']  = array(
                     'foreign_model' => 'Requisites_model',
                     'foreign_table' => 'requisites',
                     'foreign_key'   => 'curriculum_subject_id',
@@ -107,6 +107,26 @@ class Curriculum_model extends MY_Model
         private function _update()
         {
                 return array();
+        }
+
+        public function button_link($curriculum_id, $subject_code, $subject_description)
+        {
+                $this->load->helper('inflector');
+                return anchor(//just a subject_code with redirection, directly to curriculum with highlighten phrase
+                        //----------------------------------link
+                        'curriculums/view?curriculum-id=' .
+                        $curriculum_id .
+                        '&highlight=' .
+                        $subject_code .
+                        '#' .
+                        dash($subject_code),
+                        //----------------------------------user link view
+                             '<button class="btn btn-mini">' . $subject_code . '</button>',
+                        //----------------------------------attributes
+                             array(
+                    'title' => $subject_description//pop up subject description when hover mouse
+                        )
+                );
         }
 
 }

@@ -58,12 +58,13 @@ class Permissions extends CI_Capstone_Controller
                 {
                         foreach ($controllers_obj as $c)
                         {
-                                $permission_obj = $this->Permission_model->
+                                $permission_obj          = $this->Permission_model->
                                         set_cache('permission_controllers_' . $c->controller_id)->
                                         get_all(array(
                                     'controller_id' => $c->controller_id
                                 ));
-                                $gruops         = NULL;
+                                $gruops                  = NULL;
+                                $all_current_group_count = 0;
                                 if ($permission_obj)
                                 {
                                         foreach ($permission_obj as $p)
@@ -77,10 +78,16 @@ class Permissions extends CI_Capstone_Controller
                                                 {
                                                         foreach ($group_obj as $g)
                                                         {
-                                                                $gruops .= anchor("edit-group/?group-id=" . $g->id, ('<button class="btn btn-mini pending">' . $g->name . '</button>'));
+                                                                $all_current_group_count ++;
+                                                                $gruops .= $this->Group_model->button_link($g->id, $g->name);
                                                         }
                                                 }
                                         }
+                                }
+                                $tmp = '';
+                                if ($all_current_group_count === $this->Group_model->count_rows())
+                                {
+                                        $tmp = ' [All]';
                                 }
                                 if ( ! $gruops)
                                 {
@@ -92,14 +99,14 @@ class Permissions extends CI_Capstone_Controller
                                 }
                                 else
                                 {
-                                        $edit = anchor(site_url('permissions/edit?controller-id=' . $c->controller_id), '<button class="btn btn-mini pending">Edit</button>');
+                                        $edit = table_row_button_link('permissions/edit?controller-id=' . $c->controller_id, 'Edit');
                                 }
                                 $table_data[] = array(
                                     my_htmlspecialchars($c->controller_name),
                                     my_htmlspecialchars($c->controller_description),
-                                    $gruops,
-                                    my_htmlspecialchars(($c->controller_admin_only) ? 'admin only' : 'no'),
-                                    my_htmlspecialchars(($c->controller_enrollment_open) ? 'yes' : 'no'),
+                                    $gruops . $tmp,
+                                    $this->_status($c->controller_admin_only),
+                                    $this->_status($c->controller_enrollment_open),
                                     $edit
                                 );
                         }
@@ -145,6 +152,20 @@ class Permissions extends CI_Capstone_Controller
                 $this->render('admin/permission', $this->template);
         }
 
+        private function _status($status)
+        {
+                $addtional_data = array('class' => 'taskStatus');
+                if ($status)
+                {
+                        $addtional_data['data'] = '<span class="pending">Yes</span>';
+                }
+                else
+                {
+                        $addtional_data['data'] = '<span class="done">No</span>';
+                }
+                return $addtional_data;
+        }
+
         public function edit()
         {
                 $controller_obj = check_id_from_url('controller_id', 'Controller_model', 'controller-id');
@@ -162,13 +183,29 @@ class Permissions extends CI_Capstone_Controller
                 if ($this->form_validation->run() && ! $controller_obj->controller_admin_only)//double check maybe user use ctrl + u to edit html output
                 {
 
+                        $ok       = TRUE;
+                        $admin_id = $this->Group_model->where(array(
+                                    'name' => $this->config->item('admin_group', 'ion_auth')
+                                ))->get()->id;
+
 
                         $groupData = $this->input->post('groups', TRUE);
-                        $done      = FALSE;
-                        $done      = $this->permission->controller_remove_all_group($controller_obj->controller_id);
-                        if (isset($groupData) && ! empty($groupData))
+
+                        if ( ! isset($groupData))
+                        {
+                                $this->session->set_flashdata('message', '<div class="alert alert-error alert-block">' . 'Select atleast one.' . '</div>');
+                        }
+                        elseif ( ! in_array($admin_id, $groupData))
+                        {
+                                $ok = FALSE;
+                                $this->session->set_flashdata('message', '<div class="alert alert-error alert-block">' . 'admin required' . '</div>');
+                        }
+
+                        if (isset($groupData) && ! empty($groupData) && $ok)
                         {
 
+                                $done = FALSE;
+                                $done = $this->permission->controller_remove_all_group($controller_obj->controller_id);
 
                                 foreach ($groupData as $g_id)
                                 {
@@ -179,8 +216,8 @@ class Permissions extends CI_Capstone_Controller
                                                 break;
                                         }
                                 }
+                                $this->session->set_flashdata('message', ($done) ? 'Updated!' : 'Failed!');
                         }
-                        $this->session->set_flashdata('message', ($done) ? 'Updated!' : 'Failed!');
                 }
                 $this->main($controller_obj);
         }

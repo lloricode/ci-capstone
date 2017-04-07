@@ -60,3 +60,8 @@ $config['segment_pagination'] = 4;
  */
 $config['student_image_size_profile'] = '200x200/';
 $config['student_image_size_table']   = '40x40/';
+
+/**
+ * 
+ */
+$config['default_student_image_in_table'] = 'assets/images/favicon.ico';

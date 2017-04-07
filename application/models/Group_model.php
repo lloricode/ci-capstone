@@ -43,4 +43,13 @@ class Group_model extends MY_Model
                 );
         }
 
+        public function button_link($id, $name)
+        {
+                if ( ! in_array('edit-group', permission_controllers()))
+                {
+                        return $name . ' ';
+                }
+                return table_row_button_link("edit-group?group-id=" . $id, $name);
+        }
+
 }

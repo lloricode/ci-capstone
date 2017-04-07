@@ -14,12 +14,10 @@ if ( ! function_exists('my_htmlspecialchars'))
          */
         function my_htmlspecialchars($string)
         {
-                $_ci = get_instance();
-                return htmlspecialchars($string, ENT_QUOTES, $_ci->config->item('charset'));
+                return htmlspecialchars($string, ENT_QUOTES, get_instance()->config->item('charset'));
         }
 
 }
-
 
 // ------------------------------------------------------------------------
 
@@ -41,8 +39,7 @@ if ( ! function_exists('script_tag'))
 
                 if ( ! preg_match('#^([a-z]+:)?//#i', $src))
                 {
-                        $CI   = & get_instance();
-                        $link .= $CI->config->slash_item('base_url') . $src;
+                        $link .= get_instance()->config->slash_item('base_url') . $src;
                 }
                 else
                 {
@@ -89,8 +86,7 @@ if ( ! function_exists('generate_link_script_tag'))
          */
         function generate_link_script_tag($header = array(), $footer = array(), $footer_extra = '')
         {
-                $CI            = & get_instance();
-                $bootstarp_dir = $CI->config->item('bootstarp_dir');
+                $bootstarp_dir = get_instance()->config->item('bootstarp_dir');
 
                 /**
                  * will stored value
@@ -157,6 +153,27 @@ if ( ! function_exists('generate_link_script_tag'))
                     'footer'       => $footer_bootstrap,
                     'footer_extra' => $footer_extra,
                 );
+        }
+
+}
+
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('boostrap_button_link'))
+{
+
+        /**
+         * generate button view for table column row
+         * 
+         * @param string $link
+         * @param string $label
+         * @param string $additional
+         * @return string html
+         * @author Lloric Garcia <emorickfighter@gmail.com>
+         */
+        function table_row_button_link($link, $label, $additional = NULL)
+        {
+                return anchor($link, '<button class="btn btn-mini' . (( ! is_null($additional) ? ' ' . $additional : '')) . '">' . $label . '</button>');
         }
 
 }

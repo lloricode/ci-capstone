@@ -154,7 +154,7 @@ class Student extends School_informations
 
         public function set_enroll()
         {
-                if ( ! specific_groups_permission('accounting'))
+                if ( ! specific_groups_permission($this->config->item('user_group_accounting')))
                 {
                         show_404();
                 }
@@ -166,17 +166,23 @@ class Student extends School_informations
 
                 $subject_ok = $this->_set_enroll_all_subject_offers();
 
-                $leve_ok = $this->Enrollment_model->update(array(
+                $enroll_ok = $this->Enrollment_model->update(array(
                     'enrollment_status' => TRUE
                         ), $this->__enrollment->enrollment_id);
 
-                if ( ! $leve_ok OR ! $subject_ok)
+                if ( ! $enroll_ok OR ! $subject_ok)
                 {
                         /**
                          * rollback database
                          */
                         $this->db->trans_rollback();
-                        $this->session->set_flashdata('message', '<div class="alert alert-error alert-block">Failed to update enroll.</div>');
+                        $msg = 'Failed to update Enroll.';
+                        if ( ! $subject_ok)
+                        {
+                                $msg = str_replace('.', ',', $msg);
+                                $msg .= ' No Subject to Enroll.';
+                        }
+                        $this->session->set_flashdata('message', '<div class="alert alert-error alert-block">' . $msg . '</div>');
                 }
                 else
                 {

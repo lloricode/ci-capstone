@@ -14,8 +14,8 @@ class Create_student_subject extends CI_Capstone_Controller
         {
                 parent::__construct();
                 $this->load->library('form_validation');
-                $this->load->helper(array('day', 'time', 'number', 'inflector'));
-                $this->load->model(array('Student_model', 'Curriculum_subject_model', 'Subject_model', 'Requisites_model'));
+                $this->load->helper(array('day', 'time', 'number'));
+                $this->load->model(array('Student_model', 'Curriculum_subject_model', 'Subject_model', 'Requisites_model', 'Curriculum_model'));
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span>');
                 $this->breadcrumbs->unshift(2, lang('index_student_heading'), 'students');
                 /**
@@ -304,24 +304,10 @@ class Create_student_subject extends CI_Capstone_Controller
                                 }
 
                                 $output = array(
-                                    anchor(//just a subject code with redirection, directly to curriculum with highlighten phrase
-                                            //----------------------------------link
-                                            'curriculums/view?curriculum-id=' .
-                                            $s->curriculum_subject->curriculum_id .
-                                            '&highlight=' .
-                                            $s->subject->subject_code .
-                                            '#' .
-                                            dash($s->subject->subject_code),
-                                            //----------------------------------user link view
-                                                 $s->subject->subject_code,
-                                            //----------------------------------attributes
-                                                 array(
-                                        'title' => $s->subject->subject_description//pop up subject description when hover mouse
-                                            )
-                                    ),
+                                    $this->Curriculum_model->button_link($s->curriculum_subject->curriculum_id, $s->subject->subject_code, $s->subject->subject_description),
                                     number_place($s->curriculum_subject->curriculum_subject_year_level) . ' Year',
                                     semesters($s->curriculum_subject->curriculum_subject_semester),
-                                    $s->faculty->last_name . ', ' . $s->faculty->first_name
+                                    $this->User_model->button_link($s->faculty->id, $s->faculty->last_name, $s->faculty->first_name)
                                 );
 
                                 $line = array();
@@ -346,12 +332,12 @@ class Create_student_subject extends CI_Capstone_Controller
                                 {
                                         case 'db': $btn_link = anchor(
                                                         site_url('create-student-subject?student-id=' . $this->student->id .
-                                                                '&subject-offer-id=' . $s->subject_offer_id), '<span class="btn btn-info btn-mini">' . lang('add_student_subject_label') . '</span>'
+                                                                '&subject-offer-id=' . $s->subject_offer_id), '<button class="btn btn-mini">' . lang('add_student_subject_label') . '</button>'
                                                 );
                                                 break;
                                         case 'session':
                                                 $btn_link = anchor(
-                                                        site_url('create-student-subject/unset-value-subject-offer-session?student-id=' . $this->student->id . '&subject-offer-id=' . $s->subject_offer_id), '<span class="btn btn-inverse btn-mini">' . lang('remove_subjects_to_enroll') . '</span>'
+                                                        site_url('create-student-subject/unset-value-subject-offer-session?student-id=' . $this->student->id . '&subject-offer-id=' . $s->subject_offer_id), '<button class="btn btn-mini">' . lang('remove_subjects_to_enroll') . '</button>'
                                                 );
                                                 break;
                                 }

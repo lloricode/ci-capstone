@@ -13,7 +13,7 @@ class Users extends CI_Capstone_Controller
         {
                 parent::__construct();
                 $this->lang->load('ci_capstone/ci_excel');
-                $this->load->model('User_model');
+                $this->load->model(array('User_model', 'Group_model'));
                 $this->load->library('pagination');
 
                 /**
@@ -64,7 +64,7 @@ class Users extends CI_Capstone_Controller
                                 $groups = '';
                                 foreach ($user->groups as $group)
                                 {
-                                        $groups .= anchor(site_url("edit-group/?group-id=" . $group->id), ('<button class="btn btn-mini pending">' . $group->name . '</button>'));
+                                        $groups .= $this->Group_model->button_link($group->id, $group->name);
                                 }
                                 $tmp   = array();
                                 $tmp[] = my_htmlspecialchars($user->last_name);
@@ -75,13 +75,13 @@ class Users extends CI_Capstone_Controller
 
                                 if (in_array('deactivate', permission_controllers()))
                                 {
-                                        $active_      = (($user->active) ? anchor(site_url("deactivate/?user-id=" . $user->id), '<button class="btn btn-mini pending">Set Deactive</button>') : anchor("users/activate/" . $user->id, '<button class="btn btn-mini done">Set Active</button>'));
+                                        $active_      = (($user->active) ? table_row_button_link("deactivate/?user-id=" . $user->id, 'Set Deactive', 'pending') : table_row_button_link("users/activate/" . $user->id, 'Set Active','done'));
                                         $active_label = (($user->active) ? '<span class="date badge badge-success">' . lang('index_active_link') : '<span class="date badge badge-important">' . lang('index_inactive_link')) . '</span>';
                                         $tmp[]        = array('data' => $active_label . nbs() . $active_, 'class' => 'taskStatus');
                                 }
                                 if (in_array('edit-user', permission_controllers()))
                                 {
-                                        $tmp[] = anchor(site_url("edit-user/?user-id=" . $user->id), '<button class="btn btn-mini pending">Edit</button>');
+                                        $tmp[] = table_row_button_link("edit-user/?user-id=" . $user->id, 'Edit');
                                 }
                                 array_push($table_data, $tmp);
                         }
