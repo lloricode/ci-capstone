@@ -198,7 +198,7 @@ class Curriculums extends CI_Capstone_Controller
                                 $tmp       = array(
                                     // my_htmlspecialchars($cur_subj->curriculum_subject_year_level),
                                     my_htmlspecialchars(semesters($cur_subj->curriculum_subject_semester)),
-                                    highlight_phrase($cur_subj->subject->subject_code, $highlight_phrase, '<span class="badge badge-info" id="' . dash($cur_subj->subject->subject_code) . '">', '</span>'),
+                                    highlight_phrase($cur_subj->subject->subject_code, $highlight_phrase, '<mark id="' . dash($cur_subj->subject->subject_code) . '">', '</mark>'),
                                     my_htmlspecialchars($cur_subj->subject->subject_description),
                                     my_htmlspecialchars($cur_subj->curriculum_subject_units),
                                     my_htmlspecialchars($this->_hour($cur_subj->curriculum_subject_lecture_hours)),

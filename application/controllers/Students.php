@@ -14,7 +14,7 @@ class Students extends CI_Capstone_Controller
                 parent::__construct();
                 $this->load->model(array('Student_model'));
                 $this->load->library(array('pagination'));
-                $this->load->helper('number');
+                $this->load->helper(array('number', 'text'));
                 /**
                  * pagination limit
                  */
@@ -35,7 +35,7 @@ class Students extends CI_Capstone_Controller
                         $this->page_ = $this->input->get('per_page');
                 }
 
-                $student_result = $this->Student_model->all($this->limit, $this->limit * $this->page_ - $this->limit, $this->input->get('course-id'));
+                $student_result = $this->Student_model->all($this->limit, $this->limit * $this->page_ - $this->limit, $this->input->get('course-id'), $this->input->get('search'));
 
                 $student_obj                 = $student_result->result;
                 $result_count_for_pagination = $student_result->count;
@@ -55,10 +55,10 @@ class Students extends CI_Capstone_Controller
                                 }
                                 $tmp = array(
                                     $this->_images_for_table($student),
-                                    my_htmlspecialchars($student->student_school_id),
-                                    my_htmlspecialchars($student->student_lastname),
-                                    my_htmlspecialchars($student->student_firstname),
-                                    my_htmlspecialchars($student->student_middlename),
+                                    $this->_highlight_phrase_if_search($student->student_school_id),
+                                    $this->_highlight_phrase_if_search($student->student_lastname),
+                                    $this->_highlight_phrase_if_search($student->student_firstname),
+                                    $this->_highlight_phrase_if_search($student->student_middlename),
                                     my_htmlspecialchars($student->course_code),
                                     my_htmlspecialchars(number_place($student->enrollment_year_level) . ' Year'),
                                     my_htmlspecialchars(($student->enrollment_status) ? 'yes' : 'no'),
@@ -95,7 +95,15 @@ class Students extends CI_Capstone_Controller
                 $pagination_index = 'students';
                 if ($this->input->get('course-id'))
                 {
-                        $pagination_index = 'students/?course-id=' . $this->input->get('course-id');
+                        $pagination_index = '?course-id=' . $this->input->get('course-id');
+                }
+                if ($key = $this->input->get('search'))
+                {
+                        if ( ! preg_match('![?]!', $pagination_index))
+                        {
+                                $pagination_index .= '?';
+                        }
+                        $pagination_index .= 'search=' . $key;
                 }
                 $pagination = $this->pagination->generate_bootstrap_link($pagination_index, $result_count_for_pagination / $this->limit, TRUE);
 
@@ -106,6 +114,15 @@ class Students extends CI_Capstone_Controller
                  * rendering users view
                  */
                 $this->render('admin/students', $template);
+        }
+
+        private function _highlight_phrase_if_search($data)
+        {
+                if ($key = $this->input->get('search'))
+                {
+                        return highlight_phrase($data, $key);
+                }
+                return $data;
         }
 
         private function _images_for_table($student)
@@ -148,7 +165,6 @@ class Students extends CI_Capstone_Controller
 
                         if ($action === 'prev')
                         {
-                                $this->load->helper('form_helper');
                                 $data['print_link'] = anchor(site_url('students/print_data?action=print&student-id=' . $this->student->id), lang('print_label'));
                                 $data['subjecs']    = $this->view(TRUE);
                                 MY_Controller::render('admin/_templates/students/print', $data);

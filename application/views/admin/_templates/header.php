@@ -153,8 +153,7 @@ echo doctype();
         <!--close-top-Header-menu-->
         <!--start-top-serch-->
         <div id="search">
-            <input type="text" placeholder="Search here..."/>
-            <button type="submit" class="tip-bottom" title="Search"><i class="icon-search icon-white"></i></button>
+            <?php echo $search_form; ?>
         </div>
         <!--close-top-serch-->
         <!--sidebar-menu-->

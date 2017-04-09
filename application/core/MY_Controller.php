@@ -197,6 +197,7 @@ class CI_Capstone_Controller extends MY_Controller
                 }
                 $data['user_info']   = $this->session->userdata('user_fullname') .
                         ' [' . $this->session->userdata('user_groups_descriptions') . ']';
+                $data['search_form'] = parent::render('admin/_templates/search', $data, TRUE);
                 $data['navigations'] = navigations_main();
 
                 $template['header']  = parent::render('admin/_templates/header', $data, TRUE);
