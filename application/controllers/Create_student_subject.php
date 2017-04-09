@@ -15,10 +15,17 @@ class Create_student_subject extends CI_Capstone_Controller
                 parent::__construct();
                 $this->load->library('form_validation');
                 $this->load->helper(array('day', 'time', 'number'));
-                $this->load->model(array('Student_model', 'Curriculum_subject_model', 'Subject_model', 'Requisites_model', 'Curriculum_model'));
+                $this->load->model(array(
+                    'Student_model',
+                    'Curriculum_subject_model',
+                    'Subject_model',
+                    'Requisites_model',
+                    'Curriculum_model',
+                    'Room_model'
+                ));
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span>');
                 $this->breadcrumbs->unshift(2, lang('index_student_heading'), 'students');
-                
+
                 /**
                  * session name for curriculum_subjects
                  *
@@ -305,6 +312,10 @@ class Create_student_subject extends CI_Capstone_Controller
 
                                 $line = array();
                                 $inc  = 0;
+
+                                //for db
+                                $full_room = FALSE;
+
                                 foreach ($s->subject_line as $su_l)
                                 {
                                         $inc ++;
@@ -316,6 +327,11 @@ class Create_student_subject extends CI_Capstone_Controller
                                             $this->_room_capacity($s->subject_offer_id, $su_l->room->room_capacity)
                                         );
                                         $line = array_merge($line, $schd);
+                                        if ($type == 'db' && ! $full_room)
+                                        {
+                                                list($ocupy, $max) = explode('/', $this->_room_capacity($s->subject_offer_id, $su_l->room->room_capacity));
+                                                $full_room = (bool) ( ! ($ocupy < $max));
+                                        }
                                 }
                                 if ($inc === 1)
                                 {
@@ -324,10 +340,18 @@ class Create_student_subject extends CI_Capstone_Controller
                                 $btn_link = '';
                                 switch ($type)
                                 {
-                                        case 'db': $btn_link = table_row_button_link(
-                                                        'create-student-subject?student-id=' . $this->student->id .
-                                                        '&subject-offer-id=' . $s->subject_offer_id, lang('add_student_subject_label')
-                                                );
+                                        case 'db':
+                                                if ($full_room)
+                                                {
+                                                        $btn_link = '<span class="pending">' . 'Full Capacity' . '</span>';
+                                                }
+                                                else
+                                                {
+                                                        $btn_link = table_row_button_link(
+                                                                'create-student-subject?student-id=' . $this->student->id .
+                                                                '&subject-offer-id=' . $s->subject_offer_id, lang('add_student_subject_label')
+                                                        );
+                                                }
                                                 break;
                                         case 'session':
                                                 $btn_link = table_row_button_link(
@@ -336,8 +360,8 @@ class Create_student_subject extends CI_Capstone_Controller
                                                 );
                                                 break;
                                 }
-                                $line[]       = $s->curriculum_subject->curriculum_subject_units . ' unit';
-                                $line         = array_merge($line, array($btn_link));
+                                $line[]       = $s->curriculum_subject->curriculum_subject_units . ' units';
+                                $line         = array_merge($line, array(array('data' => $btn_link, 'class' => 'taskStatus')));
                                 $table_data[] = array_merge($output, $line);
 
                                 /**
@@ -403,20 +427,20 @@ class Create_student_subject extends CI_Capstone_Controller
                         return;
                 }
                 /**
-                 * check the id
+                 * check the id from url
                  */
-                $subject_offer_id = check_id_from_url('subject_offer_id', 'Subject_offer_model', 'subject-offer-id')->subject_offer_id;
+                $subject_offer_obj = check_id_from_url('subject_offer_id', 'Subject_offer_model', 'subject-offer-id', array('subject_line', 'subject'));
 
                 /**
                  * validate the subject if conflict with one value in session
                  */
-                if ($this->_validate_subject($subject_offer_id))
+                if ($this->_validate_subject($subject_offer_obj))
                 {
                         /**
                          * load the helper
                          */
                         $this->load->helper('session');
-                        set_userdata_array($this->_session_name_, (string) $subject_offer_id, TRUE); //parameter TRUE to check unique valus on session array
+                        set_userdata_array($this->_session_name_, (string) $subject_offer_obj->subject_offer_id, TRUE); //parameter TRUE to check unique valus on session array
                 }
         }
 
@@ -427,13 +451,26 @@ class Create_student_subject extends CI_Capstone_Controller
          * @return boolean
          *  @author Lloric Garcia <emorickfighter@gmail.com>
          */
-        private function _validate_subject($subject_offer_id)
+        private function _validate_subject($subject_offer_obj)
         {
+                /**
+                 * check room capacity
+                 * 
+                 * just incase if user know how to use inspect element
+                 */
+                foreach ($subject_offer_obj->subject_line as $s)
+                {
+                        $capacity_max = $this->Room_model->get($s->room_id)->room_capacity;
 
-//                if()
-//                {
-//                        
-//                }
+                        $ocupy = $this->Students_subjects_model->where(array(
+                                    'subject_offer_id' => $subject_offer_obj->subject_offer_id
+                                ))->count_rows();
+                        if ( ! ($ocupy < $capacity_max))
+                        {
+                                $this->session->set_flashdata('message', '<div class="alert alert-error alert-block">Full Capacity: ' . $subject_offer_obj->subject->subject_code . ' </div>');
+                                return FALSE;
+                        }
+                }
 
                 /**
                  * get all subject_offer_ids by SUBJECT_ID && current_semester && current_school_year
@@ -482,15 +519,13 @@ class Create_student_subject extends CI_Capstone_Controller
 //                        'css/select2.css',
 //                        'css/bootstrap-wysihtml5.css',
                     ),
-                    'js'  => array(
-                    ),
+                    'js'  => array(),
                 );
                 /**
                  * for footer
                  */
                 $footer = array(
-                    'css' => array(
-                    ),
+                    'css' => array(),
                     'js'  => array(
                         'js/jquery.min.js',
                         'js/jquery.ui.custom.js',
