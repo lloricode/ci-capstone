@@ -115,7 +115,7 @@ class Edit_user extends CI_Capstone_Controller
                                         /**
                                          * if current user
                                          */
-                                        if ($this->session->userdata('user_id') == $user->id)
+                                        if ($this->ion_auth->get_user_id() == $user->id)
                                         {
                                                 //get id of admin from db
                                                 $this->load->model('Group_model');
@@ -155,7 +155,7 @@ class Edit_user extends CI_Capstone_Controller
                                                  * refresh session data
                                                  * if edit from current user
                                                  */
-                                                if ($this->session->userdata('user_id') == $user->id)
+                                                if ($this->ion_auth->get_user_id() == $user->id)
                                                 {
                                                         /**
                                                          * refreshing session data of current user

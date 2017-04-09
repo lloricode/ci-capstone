@@ -18,9 +18,10 @@ class Create_student_subject extends CI_Capstone_Controller
                 $this->load->model(array('Student_model', 'Curriculum_subject_model', 'Subject_model', 'Requisites_model', 'Curriculum_model'));
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span>');
                 $this->breadcrumbs->unshift(2, lang('index_student_heading'), 'students');
+                
                 /**
                  * session name for curriculum_subjects
-
+                 *
                  * to modify the session name, make sure also modify in MY_controller
                  * 
                  *   in constructor

@@ -94,9 +94,7 @@ class Edit_student extends CI_Capstone_Controller
                 /**
                  * include image if has (because it is not required in update)
                  */
-                $additional_values_in_student = array(
-                    'updated_user_id' => $this->session->userdata('user_id')
-                );
+                $additional_values_in_student = array();
                 if ($img_name)
                 {
                         $additional_values_in_student['student_image'] = $img_name;
@@ -115,9 +113,7 @@ class Edit_student extends CI_Capstone_Controller
                             'student_id' => $this->student->id
                         ))->update();
 
-                $e_affected_rows = $this->Enrollment_model->from_form(NULL, array(
-                            'updated_user_id' => $this->session->userdata('user_id')
-                                ), array(
+                $e_affected_rows = $this->Enrollment_model->from_form(NULL, NULL, array(
                             'enrollment_id' => $this->student->enrollment_id
                         ))->update();
                 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::end
