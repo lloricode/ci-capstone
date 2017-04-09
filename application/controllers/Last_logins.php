@@ -76,13 +76,13 @@ class Last_logins extends CI_Capstone_Controller
                 );
                 $pagination = $this->pagination->generate_bootstrap_link('last-logins/index', $this->Users_last_login_model->count_rows() / $this->limit);
 
-                $this->template['table_data_last_logins'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'user_last_login_capstion_table', $pagination, TRUE);
-                $this->template['message']                = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-                $this->template['bootstrap']              = $this->_bootstrap();
+                $template['table_data_last_logins'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'user_last_login_capstion_table', $pagination, TRUE);
+                $template['message']                = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                $template['bootstrap']              = $this->_bootstrap();
                 /**
                  * rendering users view
                  */
-                $this->render('admin/last_logins', $this->template);
+                $this->render('admin/last_logins', $template);
         }
 
         /**

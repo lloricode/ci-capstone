@@ -40,8 +40,7 @@ class MY_Controller extends CI_Controller
         public function render($view, $data = null, $returnhtml = false)
         {//I think this makes more sense
                 //$this->viewdata = (empty($data)) ? $this->data : $data;
-
-                $view_html = $this->load->view($view,$data, $returnhtml);
+                $view_html = $this->load->view($view, $data, $returnhtml);
 
                 if ($returnhtml)
                 {
@@ -83,7 +82,7 @@ class MY_Controller extends CI_Controller
 
                 $this->load->model('Users_last_login_model');
                 return (bool) $this->Users_last_login_model->insert(array(
-                            'user_id'    => $this->session->userdata('user_id'),
+                            'user_id'    => $this->ion_auth->get_user_id(),
                             'ip_address' => $this->input->ip_address(),
                             'agent'      => $agent,
                             'platform'   => $this->agent->platform()
@@ -200,11 +199,11 @@ class CI_Capstone_Controller extends MY_Controller
                         ' [' . $this->session->userdata('user_groups_descriptions') . ']';
                 $data['navigations'] = navigations_main();
 
-                $this->template['header']  = parent::render('admin/_templates/header', $data, TRUE);
-                $this->template['content'] = parent::render($content, $data, TRUE);
-                $this->template['footer']  = parent::render('admin/_templates/footer', $data, TRUE);
+                $template['header']  = parent::render('admin/_templates/header', $data, TRUE);
+                $template['content'] = parent::render($content, $data, TRUE);
+                $template['footer']  = parent::render('admin/_templates/footer', $data, TRUE);
 
-                parent::render('template', $this->template, $returnhtml);
+                parent::render('template', $template, $returnhtml);
         }
 
         /**

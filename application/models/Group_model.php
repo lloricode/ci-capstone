@@ -10,11 +10,25 @@ class Group_model extends MY_Model
                 $this->table       = 'groups';
                 $this->primary_key = 'id';
 
+                $this->before_create[] = '_add_created_by';
+                $this->before_update[] = '_add_updated_by';
 
                 $this->_relations();
                 $this->_config();
 
                 parent::__construct();
+        }
+
+        protected function _add_created_by($data)
+        {
+                $data['created_user_id'] = $this->ion_auth->get_user_id(); //add user_id
+                return $data;
+        }
+
+        protected function _add_updated_by($data)
+        {
+                $data['updated_user_id'] = $this->ion_auth->get_user_id(); //add user_id
+                return $data;
         }
 
         private function _config()
@@ -43,13 +57,31 @@ class Group_model extends MY_Model
                 );
         }
 
-        public function button_link($id, $name)
+        public function button_link($param)
         {
+                $id          = NULL;
+                $name        = NULL;
+                $description = NULL;
+
+                if (is_int($param))
+                {
+                        $obj         = $this->get($param);
+                        $id          = $obj->id;
+                        $name        = $obj->name;
+                        $description = $obj->description;
+                }
+                elseif (is_object($param))
+                {
+                        $id          = $param->id;
+                        $name        = $param->name;
+                        $description = $param->description;
+                }
+
                 if ( ! in_array('edit-group', permission_controllers()))
                 {
                         return $name . ' ';
                 }
-                return table_row_button_link("edit-group?group-id=" . $id, $name);
+                return table_row_button_link("edit-group?group-id=" . $id, $name, NULL, array('title' => $description));
         }
 
 }

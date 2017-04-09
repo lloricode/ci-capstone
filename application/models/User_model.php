@@ -10,10 +10,25 @@ class User_model extends MY_Model
                 $this->table       = 'users';
                 $this->primary_key = 'id';
 
+                $this->before_create[] = '_add_created_by';
+                $this->before_update[] = '_add_updated_by';
+
                 $this->_relations();
                 $this->_config();
 
                 parent::__construct();
+        }
+
+        protected function _add_created_by($data)
+        {
+                $data['created_user_id'] = $this->ion_auth->get_user_id(); //add user_id
+                return $data;
+        }
+
+        protected function _add_updated_by($data)
+        {
+                $data['updated_user_id'] = $this->ion_auth->get_user_id(); //add user_id
+                return $data;
         }
 
         private function _config()
@@ -103,10 +118,11 @@ class User_model extends MY_Model
 
         public function button_link($id, $ln, $fn)
         {
+                $label = $ln . ', ' . $fn;
                 if (in_array('edit-user', permission_controllers()))
                 {
                         $url = 'edit-user?user-id=' . $id;
-                        return table_row_button_link($url, $ln . ', ' . $fn);
+                        return table_row_button_link($url, $label);
                 }
                 return $label;
         }

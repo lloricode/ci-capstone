@@ -83,9 +83,9 @@ class Deactivate extends CI_Capstone_Controller
                     )
                 );
 
-                $this->data['deactivate_form'] = $this->form_boostrap('deactivate/?user-id=' . $_user->id, $inputs, 'deactivate_heading', 'deactivate_submit_btn', 'info-sign', array('id' => $_user->id), TRUE);
-                $this->data['bootstrap']       = $this->_bootstrap();
-                $this->render('admin/deactivate_user', $this->data);
+                $data['deactivate_form'] = $this->form_boostrap('deactivate/?user-id=' . $_user->id, $inputs, 'deactivate_heading', 'deactivate_submit_btn', 'info-sign', array('id' => $_user->id), TRUE);
+                $data['bootstrap']       = $this->_bootstrap();
+                $this->render('admin/deactivate_user', $data);
         }
 
         /**

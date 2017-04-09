@@ -49,11 +49,9 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                         {
                                 show_error('Edit is not allowed, Already been used by other data.');
                         }
-                        
-                        
-                        $id = $this->Curriculum_subject_model->from_form(NULL, array(
-                                    'created_user_id' => $this->session->userdata('user_id')
-                                ))->insert();
+
+
+                        $id = $this->Curriculum_subject_model->from_form()->insert();
                         if ($id)
                         {
                                 $this->session->set_flashdata('message', lang('curriculum_subject_add_successfull'));
@@ -186,9 +184,9 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                     'lang'   => 'curriculum_subject_units_label'
                 );
 
-                $this->data['curriculum_subject_form'] = $this->form_boostrap('create-curriculum-subject', $inputs, 'create_curriculum_subject_label', 'create_curriculum_subject_label', 'info-sign', NULL, TRUE);
-                $this->data['bootstrap']               = $this->_bootstrap();
-                $this->render('admin/create_curriculum_subject', $this->data);
+                $data['curriculum_subject_form'] = $this->form_boostrap('create-curriculum-subject', $inputs, 'create_curriculum_subject_label', 'create_curriculum_subject_label', 'info-sign', NULL, TRUE);
+                $data['bootstrap']               = $this->_bootstrap();
+                $this->render('admin/create_curriculum_subject', $data);
         }
 
         private function _bootstrap()

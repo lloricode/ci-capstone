@@ -38,7 +38,7 @@ class Groups extends CI_Capstone_Controller
         {
 
                 // set the flash data error message if there is one
-                // $this->data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
+                // $data['message'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
                 //list the users
                 $group_obj = $this->Group_model->
                         limit($this->limit, $this->limit * $this->page_ - $this->limit)->
@@ -80,13 +80,13 @@ class Groups extends CI_Capstone_Controller
 
                 $pagination = $this->pagination->generate_bootstrap_link('admin/groups/index', $this->Group_model->count_rows() / $this->limit);
 
-                $this->template['table_groups'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_groups_th', $pagination, TRUE);
-                $this->template['message']      = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-                $this->template['bootstrap']    = $this->_bootstrap();
+                $template['table_groups'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_groups_th', $pagination, TRUE);
+                $template['message']      = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                $template['bootstrap']    = $this->_bootstrap();
                 /**
                  * rendering users view
                  */
-                $this->render('admin/groups', $this->template);
+                $this->render('admin/groups', $template);
         }
 
         /**

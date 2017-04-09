@@ -67,9 +67,9 @@ class Create_group extends CI_Capstone_Controller
                     'lang'  => 'create_group_desc_label'
                 );
 
-                $this->data['group_form'] = $this->form_boostrap('create-group/index', $inputs, 'create_group_heading', 'create_group_submit_btn', 'info-sign', NULL, TRUE);
-                $this->data['bootstrap']  = $this->_bootstrap();
-                $this->render('admin/create_group', $this->data);
+                $data['group_form'] = $this->form_boostrap('create-group/index', $inputs, 'create_group_heading', 'create_group_submit_btn', 'info-sign', NULL, TRUE);
+                $data['bootstrap']  = $this->_bootstrap();
+                $this->render('admin/create_group', $data);
         }
 
         /**

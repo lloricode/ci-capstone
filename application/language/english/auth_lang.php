@@ -1,24 +1,22 @@
-<?php
-
-if (!defined('BASEPATH'))
-        exit('No direct script access allowed');
+<?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * Name:  Auth Lang - English
- *
- * Author: Ben Edmunds
- * 		  ben.edmunds@gmail.com
- *         @benedmunds
- *
- * Author: Daniel Davis
- *         @ourmaninjapan
- *
- * Location: http://github.com/benedmunds/ion_auth/
- *
- * Created:  03.09.2013
- *
- * Description:  English language file for Ion Auth example views
- *
- */
+* Name:  Auth Lang - English
+*
+* Author: Ben Edmunds
+* 		  ben.edmunds@gmail.com
+*         @benedmunds
+*
+* Author: Daniel Davis
+*         @ourmaninjapan
+*
+* Location: http://github.com/benedmunds/ion_auth/
+*
+* Created:  03.09.2013
+*
+* Description:  English language file for Ion Auth example views
+*
+*/
+
 // Errors
 $lang['error_csrf'] = 'This form post did not pass our security checks.';
 
@@ -38,7 +36,6 @@ $lang['index_fname_th']          = 'First Name';
 $lang['index_lname_th']          = 'Last Name';
 $lang['index_email_th']          = 'Email';
 $lang['index_groups_th']         = 'Groups';
-$lang['index_groups_th']         = 'Groups Description';
 $lang['index_status_th']         = 'Status';
 $lang['index_action_th']         = 'Action';
 $lang['index_active_link']       = 'Active';
@@ -97,27 +94,26 @@ $lang['edit_user_validation_groups_label']           = 'Groups';
 $lang['edit_user_validation_password_label']         = 'Password';
 $lang['edit_user_validation_password_confirm_label'] = 'Password Confirmation';
 
-
 // Create Group
-$lang['create_group_title']                 = 'Create Group';
-$lang['create_group_heading']               = 'Create Group';
-$lang['create_group_subheading']            = 'Please enter the group information below.';
-$lang['create_group_name_label']            = 'Group Name:';
-$lang['create_group_desc_label']            = 'Description:';
-$lang['create_group_submit_btn']            = 'Create Group';
-$lang['create_group_validation_name_label'] = 'Group Name';
-$lang['create_group_validation_desc_label'] = 'Description';
+$lang['create_group_title']                  = 'Create Group';
+$lang['create_group_heading']                = 'Create Group';
+$lang['create_group_subheading']             = 'Please enter the group information below.';
+$lang['create_group_name_label']             = 'Group Name:';
+$lang['create_group_desc_label']             = 'Description:';
+$lang['create_group_submit_btn']             = 'Create Group';
+$lang['create_group_validation_name_label']  = 'Group Name';
+$lang['create_group_validation_desc_label']  = 'Description';
 
 // Edit Group
-$lang['edit_group_title']                 = 'Edit Group';
-$lang['edit_group_saved']                 = 'Group Saved';
-$lang['edit_group_heading']               = 'Edit Group';
-$lang['edit_group_subheading']            = 'Please enter the group information below.';
-$lang['edit_group_name_label']            = 'Group Name:';
-$lang['edit_group_desc_label']            = 'Description:';
-$lang['edit_group_submit_btn']            = 'Save Group';
-$lang['edit_group_validation_name_label'] = 'Group Name';
-$lang['edit_group_validation_desc_label'] = 'Description';
+$lang['edit_group_title']                  = 'Edit Group';
+$lang['edit_group_saved']                  = 'Group Saved';
+$lang['edit_group_heading']                = 'Edit Group';
+$lang['edit_group_subheading']             = 'Please enter the group information below.';
+$lang['edit_group_name_label']             = 'Group Name:';
+$lang['edit_group_desc_label']             = 'Description:';
+$lang['edit_group_submit_btn']             = 'Save Group';
+$lang['edit_group_validation_name_label']  = 'Group Name';
+$lang['edit_group_validation_desc_label']  = 'Description';
 
 // Change Password
 $lang['change_password_heading']                               = 'Change Password';
@@ -130,14 +126,14 @@ $lang['change_password_validation_new_password_label']         = 'New Password';
 $lang['change_password_validation_new_password_confirm_label'] = 'Confirm New Password';
 
 // Forgot Password
-$lang['forgot_password_heading']                = 'Forgot Password';
-$lang['forgot_password_subheading']             = 'Please enter your %s so we can send you an email to reset your password.';
-$lang['forgot_password_email_label']            = '%s:';
-$lang['forgot_password_submit_btn']             = 'Submit';
-$lang['forgot_password_validation_email_label'] = 'Email Address';
-$lang['forgot_password_identity_label']         = 'Identity';
-$lang['forgot_password_email_identity_label']   = 'Email';
-$lang['forgot_password_email_not_found']        = 'No record of that email address.';
+$lang['forgot_password_heading']                 = 'Forgot Password';
+$lang['forgot_password_subheading']              = 'Please enter your %s so we can send you an email to reset your password.';
+$lang['forgot_password_email_label']             = '%s:';
+$lang['forgot_password_submit_btn']              = 'Submit';
+$lang['forgot_password_validation_email_label']  = 'Email Address';
+$lang['forgot_password_identity_label'] = 'Identity';
+$lang['forgot_password_email_identity_label']    = 'Email';
+$lang['forgot_password_email_not_found']         = 'No record of that email address.';
 
 // Reset Password
 $lang['reset_password_heading']                               = 'Change Password';

@@ -5,9 +5,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Create_room extends CI_Capstone_Controller
 {
 
-
-        private $data;
-
         function __construct()
         {
                 parent::__construct();
@@ -26,9 +23,7 @@ class Create_room extends CI_Capstone_Controller
                  */
                 if ($this->input->post('submit'))
                 {
-                        $id = $this->Room_model->from_form(NULL, array(
-                                    'created_user_id' => $this->session->userdata('user_id')
-                                ))->insert();
+                        $id = $this->Room_model->from_form()->insert();
                         if ($id)
                         {
                                 $this->session->set_flashdata('message', lang('create_room_succesfully_added_message'));
@@ -49,9 +44,16 @@ class Create_room extends CI_Capstone_Controller
                     'lang'  => 'create_room_number_label'
                 );
 
-                $this->data['room_form'] = $this->form_boostrap('create-room', $inputs, 'create_room_heading', 'create_room_submit_button_label', 'info-sign', NULL, TRUE);
-                $this->data['bootstrap'] = $this->_bootstrap();
-                $this->render('admin/create_room', $this->data);
+                $inputs['room_capacity'] = array(
+                    'name'  => 'capacity',
+                    'value' => $this->form_validation->set_value('capacity'),
+                    'type'  => 'text',
+                    'lang'  => 'index_room_capacity_th'
+                );
+
+                $data['room_form'] = $this->form_boostrap('create-room', $inputs, 'create_room_heading', 'create_room_submit_button_label', 'info-sign', NULL, TRUE);
+                $data['bootstrap'] = $this->_bootstrap();
+                $this->render('admin/create_room', $data);
         }
 
         /**

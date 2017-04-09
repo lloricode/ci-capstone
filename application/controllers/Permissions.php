@@ -79,7 +79,7 @@ class Permissions extends CI_Capstone_Controller
                                                         foreach ($group_obj as $g)
                                                         {
                                                                 $all_current_group_count ++;
-                                                                $gruops .= $this->Group_model->button_link($g->id, $g->name);
+                                                                $gruops .= $this->Group_model->button_link($g);
                                                         }
                                                 }
                                         }
@@ -132,24 +132,24 @@ class Permissions extends CI_Capstone_Controller
                  */
                 if ($controller_obj)
                 {
-                        $this->data['controller_obj'] = $controller_obj;
+                        $data['controller_obj'] = $controller_obj;
                         if ($controller_obj->controller_admin_only)
                         {
-                                $this->template['permission_form'] = MY_Controller::render('admin/_templates/permission/invalid', $this->data, TRUE);
+                                $template['permission_form'] = MY_Controller::render('admin/_templates/permission/invalid', $data, TRUE);
                         }
                         else
                         {
-                                $this->template['permission_form'] = MY_Controller::render('admin/_templates/permission/edit', $this->data, TRUE);
+                                $template['permission_form'] = MY_Controller::render('admin/_templates/permission/edit', $data, TRUE);
                         }
                 }
 
-                $this->template['table_permissions'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'permission_label', FALSE, TRUE);
-                $this->template['message']           = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-                $this->template['bootstrap']         = $this->_bootstrap();
+                $template['table_permissions'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'permission_label', FALSE, TRUE);
+                $template['message']           = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                $template['bootstrap']         = $this->_bootstrap();
                 /**
                  * rendering users view
                  */
-                $this->render('admin/permission', $this->template);
+                $this->render('admin/permission', $template);
         }
 
         private function _status($status)

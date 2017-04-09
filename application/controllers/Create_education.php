@@ -23,9 +23,7 @@ class Create_education extends CI_Capstone_Controller
         {
                 if ($this->input->post('submit'))
                 {
-                        $id = $this->Education_model->from_form(NULL, array(
-                                    'created_user_id' => $this->session->userdata('user_id')
-                                ))->insert();
+                        $id = $this->Education_model->from_form()->insert();
                         if ($id)
                         {
                                 $this->session->set_flashdata('message', 'Education added!');
@@ -50,9 +48,9 @@ class Create_education extends CI_Capstone_Controller
                     'lang'  => 'create_education_description_label'
                 );
 
-                $this->data['education_form'] = $this->form_boostrap('create-education', $inputs, 'create_education_heading', 'create_education_submit_button_label', 'info-sign', NULL, TRUE);
-                $this->data['bootstrap']      = $this->_bootstrap();
-                $this->render('admin/create_education', $this->data);
+                $data['education_form'] = $this->form_boostrap('create-education', $inputs, 'create_education_heading', 'create_education_submit_button_label', 'info-sign', NULL, TRUE);
+                $data['bootstrap']      = $this->_bootstrap();
+                $this->render('admin/create_education', $data);
         }
 
         private function _bootstrap()

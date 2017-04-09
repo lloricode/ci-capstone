@@ -10,12 +10,26 @@ class Student_model extends MY_Model
                 $this->table       = 'students';
                 $this->primary_key = 'student_id';
 
+                $this->before_create[] = '_add_created_by';
+                $this->before_update[] = '_add_updated_by';
 
                 $this->_relations();
                 $this->_form();
                 $this->_config();
 
                 parent::__construct();
+        }
+
+        protected function _add_created_by($data)
+        {
+                $data['created_user_id'] = $this->ion_auth->get_user_id(); //add user_id
+                return $data;
+        }
+
+        protected function _add_updated_by($data)
+        {
+                $data['updated_user_id'] = $this->ion_auth->get_user_id(); //add user_id
+                return $data;
         }
 
         private function _config()
@@ -330,7 +344,7 @@ class Student_model extends MY_Model
                         $str_select_student .= "$table.$v,";
                 }
 
-                $this->db->select("u_c.id,u_c.first_name,u_c.last_name,".$str_select_student . "$course_table.$course_primary_key,$course_table.course_code,$enrollment_table.enrollment_year_level,$enrollment_table.enrollment_status");
+                $this->db->select("u_c.id,u_c.first_name,u_c.last_name," . $str_select_student . "$course_table.$course_primary_key,$course_table.course_code,$enrollment_table.enrollment_year_level,$enrollment_table.enrollment_status");
                 $this->db->join($enrollment_table, "$enrollment_table.$primary_key=$table.$primary_key");
                 $this->db->join($course_table, "$course_table.$course_primary_key=$enrollment_table.$course_primary_key");
 

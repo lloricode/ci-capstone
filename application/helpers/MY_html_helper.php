@@ -159,7 +159,7 @@ if ( ! function_exists('generate_link_script_tag'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('boostrap_button_link'))
+if ( ! function_exists('table_row_button_link'))
 {
 
         /**
@@ -171,9 +171,17 @@ if ( ! function_exists('boostrap_button_link'))
          * @return string html
          * @author Lloric Garcia <emorickfighter@gmail.com>
          */
-        function table_row_button_link($link, $label, $additional = NULL)
+        function table_row_button_link($link, $label, $additional = NULL, $attibutes = NULL)
         {
-                return anchor($link, '<button class="btn btn-mini' . (( ! is_null($additional) ? ' ' . $additional : '')) . '">' . $label . '</button>');
+                return anchor(
+                        //url link
+                        $link,
+                        //label for user interface
+                        '<button class="btn btn-mini' . (( ! is_null($additional) ? ' ' . $additional : '')) . '">' . $label . '</button>',
+                        /**
+                         * attributes if not null
+                         */ $attibutes
+                );
         }
 
 }

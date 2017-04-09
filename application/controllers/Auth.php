@@ -29,7 +29,14 @@ class Auth extends MY_Controller
 
         public function index()
         {
-                redirect(site_url('home'), 'refresh');
+                if ($this->ion_auth->logged_in())
+                {
+                        redirect('', 'refresh');
+                }
+                else
+                {
+                        redirect('auth/login', 'refresh');
+                }
         }
 
         /**

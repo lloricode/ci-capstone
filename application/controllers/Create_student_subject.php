@@ -40,54 +40,46 @@ class Create_student_subject extends CI_Capstone_Controller
 
                 if ($this->input->post('submit'))
                 {
-                        if ($this->session->has_userdata($this->_session_name_))
+                        if ($from_session = $this->session->has_userdata($this->_session_name_))
                         {
-                                $from_session = $this->session->userdata($this->_session_name_);
-                                if ($from_session)
+
+                                $this->load->model('Students_subjects_model');
+
+                                /**
+                                 * start the DB transaction
+                                 */
+                                $this->db->trans_start();
+
+                                $update_year_ok = $this->student->update_level((int) $this->input->post('level'));
+
+                                $all_inserted = TRUE;
+                                foreach ($from_session as $subj_offr_id)
                                 {
-                                        $this->load->model('Students_subjects_model');
-
+                                        $gen_id = $this->Students_subjects_model->insert(array(
+                                            'enrollment_id'    => $this->student->enrollment_id,
+                                            'subject_offer_id' => $subj_offr_id
+                                        ));
+                                        if ( ! $gen_id)
+                                        {
+                                                $all_inserted = FALSE;
+                                                break;
+                                        }
+                                }
+                                if ( ! $all_inserted OR ! $update_year_ok)
+                                {
                                         /**
-                                         * start the DB transaction
+                                         * rollback database
                                          */
-                                        $this->db->trans_start();
-
-                                        $update_year_ok = $this->student->update_level((int) $this->input->post('level'));
-
-                                        $all_inserted = TRUE;
-                                        foreach ($from_session as $subj_offr_id)
-                                        {
-                                                $gen_id = $this->Students_subjects_model->insert(array(
-                                                    'enrollment_id'    => $this->student->enrollment_id,
-                                                    'subject_offer_id' => $subj_offr_id,
-                                                    'created_user_id'  => $this->session->userdata('user_id')
-                                                ));
-                                                if ( ! $gen_id)
-                                                {
-                                                        $all_inserted = FALSE;
-                                                        break;
-                                                }
-                                        }
-                                        if ( ! $all_inserted OR ! $update_year_ok)
-                                        {
-                                                /**
-                                                 * rollback database
-                                                 */
-                                                $this->db->trans_rollback();
-                                        }
-                                        else
-                                        {
-                                                if ($this->db->trans_commit())
-                                                {
-                                                        $this->_reset_session();
-                                                        $this->session->set_flashdata('message', 'all subjects added!');
-                                                        redirect(site_url('students/view?student-id=' . $this->student->id), 'refresh');
-                                                }
-                                        }
+                                        $this->db->trans_rollback();
                                 }
                                 else
                                 {
-                                        $error_message = 'invalid';
+                                        if ($this->db->trans_commit())
+                                        {
+                                                $this->_reset_session();
+                                                $this->session->set_flashdata('message', 'all subjects added!');
+                                                redirect(site_url('students/view?student-id=' . $this->student->id), 'refresh');
+                                        }
                                 }
                         }
                         else
@@ -193,12 +185,12 @@ class Create_student_subject extends CI_Capstone_Controller
                 /**
                  * view all subject available to add
                  */
-                $this->data['student_subject_curriculum_table'] = $this->_table_view('db');
+                $data['student_subject_curriculum_table'] = $this->_table_view('db');
 
                 /**
                  * subject added to session
                  */
-                $this->data['added_subject_table'] = $this->_table_view('session');
+                $data['added_subject_table'] = $this->_table_view('session');
 
                 if ($this->session->has_userdata($this->_session_name_))
                 {
@@ -206,7 +198,7 @@ class Create_student_subject extends CI_Capstone_Controller
                          * button for reset session
                          * will view this if has session on added subject
                          */
-                        $this->data['reset_subject_offer_session'] = MY_Controller::render('admin/_templates/button_view', array(
+                        $data['reset_subject_offer_session'] = MY_Controller::render('admin/_templates/button_view', array(
                                     'href'         => 'create-student-subject/reset-subject-offer-session?student-id=' . $this->student->id,
                                     'button_label' => 'reset subject offer session',
                                     'extra'        => array('class' => 'btn btn-success icon-edit'),
@@ -216,12 +208,12 @@ class Create_student_subject extends CI_Capstone_Controller
                 /**
                  * generate information for curretn student
                  */
-                $this->data['student_subject_form'] = $this->form_boostrap(
+                $data['student_subject_form'] = $this->form_boostrap(
                         'create-student-subject?student-id=' . $this->student->id, $this->_student_information(), 'student_information', 'add_student_subject_label', 'user', NULL, TRUE, $error_message
                 );
 
-                $this->data['bootstrap'] = $this->_bootstrap();
-                $this->render('admin/create_student_subject', $this->data);
+                $data['bootstrap'] = $this->_bootstrap();
+                $this->render('admin/create_student_subject', $data);
         }
 
         /**
@@ -319,25 +311,27 @@ class Create_student_subject extends CI_Capstone_Controller
                                             subject_offers_days($su_l),
                                             convert_24_to_12hrs($su_l->subject_offer_line_start),
                                             convert_24_to_12hrs($su_l->subject_offer_line_end),
-                                            $su_l->room->room_number
+                                            $su_l->room->room_number,
+                                            $this->_room_capacity($s->subject_offer_id, $su_l->room->room_capacity)
                                         );
                                         $line = array_merge($line, $schd);
                                 }
                                 if ($inc === 1)
                                 {
-                                        $line = array_merge($line, array('--', '--', '--', '--'));
+                                        $line = array_merge($line, array(array('data' => 'no data', 'colspan' => '5', 'class' => 'taskStatus')));
                                 }
                                 $btn_link = '';
                                 switch ($type)
                                 {
-                                        case 'db': $btn_link = anchor(
-                                                        site_url('create-student-subject?student-id=' . $this->student->id .
-                                                                '&subject-offer-id=' . $s->subject_offer_id), '<button class="btn btn-mini">' . lang('add_student_subject_label') . '</button>'
+                                        case 'db': $btn_link = table_row_button_link(
+                                                        'create-student-subject?student-id=' . $this->student->id .
+                                                        '&subject-offer-id=' . $s->subject_offer_id, lang('add_student_subject_label')
                                                 );
                                                 break;
                                         case 'session':
-                                                $btn_link = anchor(
-                                                        site_url('create-student-subject/unset-value-subject-offer-session?student-id=' . $this->student->id . '&subject-offer-id=' . $s->subject_offer_id), '<button class="btn btn-mini">' . lang('remove_subjects_to_enroll') . '</button>'
+                                                $btn_link = table_row_button_link(
+                                                        'create-student-subject/unset-value-subject-offer-session?student-id=' . $this->student->id .
+                                                        '&subject-offer-id=' . $s->subject_offer_id, lang('remove_subjects_to_enroll')
                                                 );
                                                 break;
                                 }
@@ -355,14 +349,6 @@ class Create_student_subject extends CI_Capstone_Controller
                  * Table headers
                  */
                 $header   = array(
-//                    'semester',
-//                    lang('index_subject_id_th'),
-//                    lang('index_subject_offer_start_th'),
-//                    lang('index_subject_offer_end_th'),
-//                    lang('index_subject_offer_days_th'),
-//                    lang('index_room_id_th'),
-//                    lang('index_user_id_th'),
-
                     lang('student_subject_th'), /* lang in students_lang */
                     lang('student_year_th'),
                     lang('student_semester_th'),
@@ -371,15 +357,24 @@ class Create_student_subject extends CI_Capstone_Controller
                     lang('student_start_th'),
                     lang('student_end_th'),
                     lang('student_room_th'),
+                    lang('index_room_capacity_th'),
                     lang('student_day2_th'),
                     lang('student_start_th'),
                     lang('student_end_th'),
                     lang('student_room_th'),
-                    lang('student_unit_th'),
+                    lang('index_room_capacity_th'),
+                    lang('student_unit_th')
                 );
                 $header[] = $header_col;
 
                 return $this->table_bootstrap($header, $table_data, 'table_open_bordered', $lang_caption/* lang in in students_lang */, FALSE, TRUE);
+        }
+
+        private function _room_capacity($subj_off_id, $capacity)
+        {
+                return $this->Students_subjects_model->where(array(
+                            'subject_offer_id' => $subj_off_id
+                        ))->count_rows() . '/' . $capacity;
         }
 
         /**
@@ -400,7 +395,7 @@ class Create_student_subject extends CI_Capstone_Controller
         private function _add_session_subjects()
         {
                 /**
-                 * skip is required id not found
+                 * skip if required id not found
                  */
                 if ( ! $this->input->get('subject-offer-id'))
                 {
@@ -427,12 +422,17 @@ class Create_student_subject extends CI_Capstone_Controller
         /**
          * this will check the comflict in adding schedule,
          * 
-         * @param type $subject_id
+         * @param type $subject_offer_id
          * @return boolean
          *  @author Lloric Garcia <emorickfighter@gmail.com>
          */
-        private function _validate_subject($subject_id)
+        private function _validate_subject($subject_offer_id)
         {
+
+//                if()
+//                {
+//                        
+//                }
 
                 /**
                  * get all subject_offer_ids by SUBJECT_ID && current_semester && current_school_year

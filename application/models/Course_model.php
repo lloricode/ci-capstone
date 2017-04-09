@@ -10,6 +10,9 @@ class Course_model extends MY_Model
                 $this->table       = 'courses';
                 $this->primary_key = 'course_id';
 
+                $this->before_create[] = '_add_created_by';
+                $this->before_update[] = '_add_updated_by';
+
                 $this->_relations();
                 $this->_form();
                 $this->_config();
@@ -31,6 +34,18 @@ class Course_model extends MY_Model
                  */
                 //   $this->remove_empty_before_write = TRUE;//(bool) $this->config->item('my_model_remove_empty_before_write');
                 $this->delete_cache_on_save = TRUE; //(bool) $this->config->item('my_model_delete_cache_on_save');
+        }
+
+        protected function _add_created_by($data)
+        {
+                $data['created_user_id'] = $this->ion_auth->get_user_id(); //add user_id
+                return $data;
+        }
+
+        protected function _add_updated_by($data)
+        {
+                $data['updated_user_id'] = $this->ion_auth->get_user_id(); //add user_id
+                return $data;
         }
 
         private function _relations()

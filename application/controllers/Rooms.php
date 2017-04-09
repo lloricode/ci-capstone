@@ -52,7 +52,8 @@ class Rooms extends CI_Capstone_Controller
                         foreach ($room_obj as $room)
                         {
                                 $tmp = array(
-                                    my_htmlspecialchars($room->room_number)
+                                    my_htmlspecialchars($room->room_number),
+                                    my_htmlspecialchars($room->room_capacity)
                                 );
                                 if ($this->ion_auth->is_admin())
                                 {
@@ -67,7 +68,8 @@ class Rooms extends CI_Capstone_Controller
                  * Table headers
                  */
                 $header = array(
-                    lang('index_room_number_th')
+                    lang('index_room_number_th'),
+                    lang('index_room_capacity_th')
                 );
                 if ($this->ion_auth->is_admin())
                 {
@@ -76,13 +78,13 @@ class Rooms extends CI_Capstone_Controller
                 }
                 $pagination = $this->pagination->generate_bootstrap_link('rooms/index', $this->Room_model->count_rows() / $this->limit);
 
-                $this->template['table_rooms'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_room_heading', $pagination, TRUE);
-                $this->template['message']     = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-                $this->template['bootstrap']   = $this->_bootstrap();
+                $template['table_rooms'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_room_heading', $pagination, TRUE);
+                $template['message']     = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                $template['bootstrap']   = $this->_bootstrap();
                 /**
                  * rendering users view
                  */
-                $this->render('admin/rooms', $this->template);
+                $this->render('admin/rooms', $template);
         }
 
         /**

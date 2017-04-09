@@ -32,7 +32,7 @@ class Edit_group extends CI_Capstone_Controller
                 }
 
                 $this->breadcrumbs->unshift(5, 'Edit Groups', 'edit-group?group-id=' . $id);
-                $this->data['title'] = $this->lang->line('edit_group_title');
+                $data['title'] = $this->lang->line('edit_group_title');
 
                 $group = $this->ion_auth->group($id)->row();
 
@@ -88,9 +88,9 @@ class Edit_group extends CI_Capstone_Controller
                     'lang'  => 'edit_group_desc_label'
                 );
 
-                $this->data['group_form'] = $this->form_boostrap('edit-group/?group-id=' . $group->id, $inputs, 'edit_group_title', 'edit_group_submit_btn', 'info-sign', NULL, TRUE, $msg);
-                $this->data['bootstrap']  = $this->_bootstrap();
-                $this->render('admin/edit_group', $this->data);
+                $data['group_form'] = $this->form_boostrap('edit-group/?group-id=' . $group->id, $inputs, 'edit_group_title', 'edit_group_submit_btn', 'info-sign', NULL, TRUE, $msg);
+                $data['bootstrap']  = $this->_bootstrap();
+                $this->render('admin/edit_group', $data);
         }
 
         /**

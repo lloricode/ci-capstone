@@ -36,7 +36,7 @@ class Enrollment_status_model extends MY_Model
         protected function _delete_all($data)
         {
                 $this->db->empty_table($this->table);
-                $data['created_user_id'] = $this->session->userdata('user_id'); //add user_id
+                $data['created_user_id'] = $this->ion_auth->get_user_id(); //add user_id
                 return $data;
         }
 

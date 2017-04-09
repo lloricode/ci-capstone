@@ -318,7 +318,7 @@ class Student extends School_informations
                                             'year'     => number_place($sub_of->curriculum_subject->curriculum_subject_year_level) . ' Year',
                                             'semester' => semesters($sub_of->curriculum_subject->curriculum_subject_semester),
                                             'subject'  => $sub_of->subject->subject_code,
-                                            'faculty'  => $sub_of->faculty->last_name . ', ' . $sub_of->faculty->first_name,
+                                            'faculty'  => $this->User_model->button_link($sub_of->faculty->id, $sub_of->faculty->last_name, $sub_of->faculty->first_name),
                                             //--
                                             'unit'     => $sub_of->curriculum_subject->curriculum_subject_units,
                                             'status'   => ($stud_sub->student_subject_enroll_status) ? 'Enrolled' : 'Pending'

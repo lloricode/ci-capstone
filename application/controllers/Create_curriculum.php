@@ -25,9 +25,7 @@ class Create_curriculum extends CI_Capstone_Controller
         {
                 if ($this->input->post('submit'))
                 {
-                        $id = $this->Curriculum_model->from_form(NULL, array(
-                                    'created_user_id' => $this->session->userdata('user_id')
-                                ))->insert();
+                        $id = $this->Curriculum_model->from_form()->insert();
                         if ($id)
                         {
                                 $this->session->set_flashdata('message', 'Curriculum Added!');
@@ -78,9 +76,9 @@ class Create_curriculum extends CI_Capstone_Controller
 //                );
 
 
-                $this->data['curriculum_form'] = $this->form_boostrap('create-curriculum', $inputs, 'create_curriculum_label', 'curriculumn_create_button', 'info-sign', NULL, TRUE);
-                $this->data['bootstrap']       = $this->_bootstrap();
-                $this->render('admin/create_curriculum', $this->data);
+                $data['curriculum_form'] = $this->form_boostrap('create-curriculum', $inputs, 'create_curriculum_label', 'curriculumn_create_button', 'info-sign', NULL, TRUE);
+                $data['bootstrap']       = $this->_bootstrap();
+                $this->render('admin/create_curriculum', $data);
         }
 
         private function _bootstrap()

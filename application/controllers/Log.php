@@ -77,22 +77,22 @@ class Log extends CI_Capstone_Controller
                                 $this->table->add_row($tmp);
                         }
                 }
-                $this->data['logs'] = $this->table->generate();
+                $data['logs'] = $this->table->generate();
 
 
 
                 /**
                  * pagination
                  */
-                $this->data['pagination'] = $this->pagination->generate_bootstrap_link('log/index', $this->Log_model->count_rows() / $this->limit);
+                $data['pagination'] = $this->pagination->generate_bootstrap_link('log/index', $this->Log_model->count_rows() / $this->limit);
 
                 /**
                  * caption of table
                  */
-                $this->data['caption']   = lang('index_heading');
-                $this->data['bootstrap'] = $this->_bootstrap();
+                $data['caption']   = lang('index_heading');
+                $data['bootstrap'] = $this->_bootstrap();
 
-                $this->render('admin/log', $this->data);
+                $this->render('admin/log', $data);
         }
 
         /**

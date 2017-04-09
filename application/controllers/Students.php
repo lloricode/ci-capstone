@@ -99,13 +99,13 @@ class Students extends CI_Capstone_Controller
                 }
                 $pagination = $this->pagination->generate_bootstrap_link($pagination_index, $result_count_for_pagination / $this->limit, TRUE);
 
-                $this->template['table_students'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_student_heading', $pagination, TRUE);
-                $this->template['message']        = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-                $this->template['bootstrap']      = $this->_bootstrap();
+                $template['table_students'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_student_heading', $pagination, TRUE);
+                $template['message']        = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                $template['bootstrap']      = $this->_bootstrap();
                 /**
                  * rendering users view
                  */
-                $this->render('admin/students', $this->template);
+                $this->render('admin/students', $template);
         }
 
         private function _images_for_table($student)
@@ -245,20 +245,20 @@ class Students extends CI_Capstone_Controller
                 /**
                  * generating html table result
                  */
-                $this->data['table_subjects'] = $this->table->generate();
+                $data['table_subjects'] = $this->table->generate();
 
                 /**
                  * generating html pagination
                  */
-//                $this->data['table_subjects_pagination'] = $this->pagination->generate_bootstrap_link('students/view?student-id = ' . $this->student->id, $this->student->subject_total() / $this->limit, TRUE);
-                $this->data['image_src']     = $this->_image_for_view_single_data();
+//                $data['table_subjects_pagination'] = $this->pagination->generate_bootstrap_link('students/view?student-id = ' . $this->student->id, $this->student->subject_total() / $this->limit, TRUE);
+                $data['image_src']     = $this->_image_for_view_single_data();
                 /**
                  * here we go!
                  * rendering page for view
                  */
-                $this->template['view']      = MY_Controller::render('admin/_templates/students/view', $this->data, TRUE);
-                $this->template['bootstrap'] = $this->_bootstrap_for_view();
-                $this->render('admin/students', $this->template);
+                $template['view']      = MY_Controller::render('admin/_templates/students/view', $data, TRUE);
+                $template['bootstrap'] = $this->_bootstrap_for_view();
+                $this->render('admin/students', $template);
         }
 
         /**

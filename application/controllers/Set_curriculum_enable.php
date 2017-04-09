@@ -45,7 +45,6 @@ class Set_curriculum_enable extends CI_Capstone_Controller
                                  */
                                 $data_disable = array(
                                     'curriculum_status' => '0', //FALSE
-                                    'updated_user_id'   => $this->session->userdata('user_id'),
                                     'course_id'         => $curriculum_obj->course->course_id
                                 );
                                 $updated2     = $this->Curriculum_model->update($data_disable, 'course_id');
@@ -53,8 +52,7 @@ class Set_curriculum_enable extends CI_Capstone_Controller
                                 $data    = array(
                                     'curriculum_id'           => $curriculum_obj->curriculum_id,
                                     'curriculum_status'       => TRUE,
-                                    'curriculum_already_used' => TRUE,
-                                    'updated_user_id'         => $this->session->userdata('user_id')
+                                    'curriculum_already_used' => TRUE
                                 );
                                 $updated = $this->Curriculum_model->update($data, 'curriculum_id');
 
@@ -94,9 +92,9 @@ class Set_curriculum_enable extends CI_Capstone_Controller
                     )
                 );
 
-                $this->data['deactivate_form'] = $this->form_boostrap('set-curriculum-enable?curriculum-id=' . $curriculum_obj->curriculum_id, $inputs, 'enable_curriculum_label', 'enable_curriculum_label', 'info-sign', NULL, TRUE);
-                $this->data['bootstrap']       = $this->_bootstrap();
-                $this->render('admin/deactivate_user', $this->data);
+                $data['deactivate_form'] = $this->form_boostrap('set-curriculum-enable?curriculum-id=' . $curriculum_obj->curriculum_id, $inputs, 'enable_curriculum_label', 'enable_curriculum_label', 'info-sign', NULL, TRUE);
+                $data['bootstrap']       = $this->_bootstrap();
+                $this->render('admin/deactivate_user', $data);
         }
 
         /**

@@ -10,11 +10,26 @@ class Room_model extends MY_Model
                 $this->table       = 'rooms';
                 $this->primary_key = 'room_id';
 
+                $this->before_create[] = '_add_created_by';
+                $this->before_update[] = '_add_updated_by';
+
                 $this->_relations();
                 $this->_form();
                 $this->_config();
 
                 parent::__construct();
+        }
+
+        protected function _add_created_by($data)
+        {
+                $data['created_user_id'] = $this->ion_auth->get_user_id(); //add user_id
+                return $data;
+        }
+
+        protected function _add_updated_by($data)
+        {
+                $data['updated_user_id'] = $this->ion_auth->get_user_id(); //add user_id
+                return $data;
         }
 
         private function _config()
@@ -60,13 +75,18 @@ class Room_model extends MY_Model
 
                 $this->rules = array(
                     'insert' => array(
-                        'room_number' => array(
+                        'room_number'   => array(
                             'label'  => lang('create_room_number_label'),
                             'field'  => 'number',
                             'rules'  => 'trim|required|min_length[1]|max_length[50]|is_unique[rooms.room_number]',
                             'errors' => array(
                                 'is_unique' => 'The {field} already exist.'
                             )
+                        ),
+                        'room_capacity' => array(
+                            'label' => lang('index_room_capacity_th'),
+                            'field' => 'capacity',
+                            'rules' => 'trim|required|min_length[1]|max_length[2]|is_natural_no_zero'
                         )
                     )
                 );

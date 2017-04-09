@@ -64,7 +64,7 @@ class Users extends CI_Capstone_Controller
                                 $groups = '';
                                 foreach ($user->groups as $group)
                                 {
-                                        $groups .= $this->Group_model->button_link($group->id, $group->name);
+                                        $groups .= $this->Group_model->button_link($group);
                                 }
                                 $tmp   = array();
                                 $tmp[] = my_htmlspecialchars($user->last_name);
@@ -75,7 +75,7 @@ class Users extends CI_Capstone_Controller
 
                                 if (in_array('deactivate', permission_controllers()))
                                 {
-                                        $active_      = (($user->active) ? table_row_button_link("deactivate/?user-id=" . $user->id, 'Set Deactive', 'pending') : table_row_button_link("users/activate/" . $user->id, 'Set Active','done'));
+                                        $active_      = (($user->active) ? table_row_button_link("deactivate/?user-id=" . $user->id, 'Set Deactive', 'pending') : table_row_button_link("users/activate/" . $user->id, 'Set Active', 'done'));
                                         $active_label = (($user->active) ? '<span class="date badge badge-success">' . lang('index_active_link') : '<span class="date badge badge-important">' . lang('index_inactive_link')) . '</span>';
                                         $tmp[]        = array('data' => $active_label . nbs() . $active_, 'class' => 'taskStatus');
                                 }
@@ -112,7 +112,7 @@ class Users extends CI_Capstone_Controller
                 if (in_array('create-user', permission_controllers()))
                 {
 
-                        $this->template['create_user_button'] = MY_Controller::render('admin/_templates/button_view', array(
+                        $template['create_user_button'] = MY_Controller::render('admin/_templates/button_view', array(
                                     'href'         => 'create-user',
                                     'button_label' => lang('create_user_heading'),
                                     'extra'        => array('class' => 'btn btn-success icon-edit'),
@@ -120,7 +120,7 @@ class Users extends CI_Capstone_Controller
                 }
                 if ($this->ion_auth->is_admin())
                 {
-                        $this->template['export_user_button'] = MY_Controller::render('admin/_templates/button_view', array(
+                        $template['export_user_button'] = MY_Controller::render('admin/_templates/button_view', array(
                                     'href'         => 'users/export-excel',
                                     'button_label' => lang('excel_export'),
                                     'extra'        => array('class' => 'btn btn-info icon-download-alt')
@@ -130,17 +130,11 @@ class Users extends CI_Capstone_Controller
 
                 $pagination = $this->pagination->generate_bootstrap_link('users/index', $this->User_model->count_rows() / $this->limit);
 
-                $this->template['table_users'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_heading', $pagination, TRUE);
-                $this->template['message']     = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-                $this->template['bootstrap']   = $this->_bootstrap();
+                $template['table_users'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_heading', $pagination, TRUE);
+                $template['message']     = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                $template['bootstrap']   = $this->_bootstrap();
 
-                /**
-                 * rendering users view
-                 */
-                ;
-
-
-                $this->render('admin/users', $this->template);
+                $this->render('admin/users', $template);
         }
 
         /**

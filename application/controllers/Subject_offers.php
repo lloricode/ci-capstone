@@ -12,8 +12,10 @@ class Subject_offers extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
-                $this->lang->load('ci_capstone/ci_subject_offers');
-                $this->load->model(array('Room_model', 'Subject_offer_model', 'Subject_offer_line_model', 'User_model', 'Subject_model', 'Room_model'));
+                $this->load->model(array(
+                    'Subject_offer_model',
+                    'Students_subjects_model'
+                ));
                 $this->load->library('pagination');
                 /**
                  * pagination limit
@@ -63,13 +65,14 @@ class Subject_offers extends CI_Capstone_Controller
                                             $this->_type($su_l->subject_offer_line_lec, $su_l->subject_offer_line_lab),
                                             convert_24_to_12hrs($su_l->subject_offer_line_start),
                                             convert_24_to_12hrs($su_l->subject_offer_line_end),
-                                            $su_l->room->room_number
+                                            $su_l->room->room_number,
+                                            $this->_room_capacity($s->subject_offer_id, $su_l->room->room_capacity)
                                         );
                                         $line = array_merge($line, $schd);
                                 }
                                 if ($inc === 1)
                                 {
-                                        $line = array_merge($line, array('--', '--', '--', '--', '--'));
+                                        $line = array_merge($line, array(array('data' => 'no data', 'colspan' => '6', 'class' => 'taskStatus'/* just to make center */)));
                                 }
                                 if ($this->ion_auth->is_admin())
                                 {
@@ -98,11 +101,13 @@ class Subject_offers extends CI_Capstone_Controller
                     'Start1',
                     'End1',
                     'Room1',
+                    'Capacity1',
                     'Days2',
                     'Type2',
                     'Start2',
                     'End2',
-                    'Room2'
+                    'Room2',
+                    'Capacity2',
                 );
 
                 if ($this->ion_auth->is_admin())
@@ -115,13 +120,20 @@ class Subject_offers extends CI_Capstone_Controller
 
                 $pagination = $this->pagination->generate_bootstrap_link('subject-offers/index', $count / $this->limit);
 
-                $this->template['table_subject_offers'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_subject_offer_heading', $pagination, TRUE);
-                $this->template['message']              = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-                $this->template['bootstrap']            = $this->_bootstrap();
+                $template['table_subject_offers'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_subject_offer_heading', $pagination, TRUE);
+                $template['message']              = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                $template['bootstrap']            = $this->_bootstrap();
                 /**
                  * rendering users view
                  */
-                $this->render('admin/subject_offers', $this->template);
+                $this->render('admin/subject_offers', $template);
+        }
+
+        private function _room_capacity($subj_off_id, $capacity)
+        {
+                return $this->Students_subjects_model->where(array(
+                            'subject_offer_id' => $subj_off_id
+                        ))->count_rows() . '/' . $capacity;
         }
 
         private function _type($lec, $lab)
@@ -134,6 +146,10 @@ class Subject_offers extends CI_Capstone_Controller
                 if ($lab)
                 {
                         $return .= 'LAB';
+                }
+                if ( ! $lec && ! $lab)
+                {
+                        $return = '--';
                 }
                 return $return;
         }

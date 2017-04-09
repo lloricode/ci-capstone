@@ -10,10 +10,25 @@ class Students_subjects_model extends MY_Model
                 $this->table       = 'students_subjects';
                 $this->primary_key = 'student_subject_id';
 
+                $this->before_create[] = '_add_created_by';
+                $this->before_update[] = '_add_updated_by';
+
                 $this->_relations();
                 $this->_config();
 
                 parent::__construct();
+        }
+
+        protected function _add_created_by($data)
+        {
+                $data['created_user_id'] = $this->ion_auth->get_user_id(); //add user_id
+                return $data;
+        }
+
+        protected function _add_updated_by($data)
+        {
+                $data['updated_user_id'] = $this->ion_auth->get_user_id(); //add user_id
+                return $data;
         }
 
         private function _config()

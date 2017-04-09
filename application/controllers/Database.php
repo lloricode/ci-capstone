@@ -35,24 +35,24 @@ class Database extends CI_Capstone_Controller
                         }
                 }
 
-                $this->template['platform'] = $this->db->platform();
-                $this->template['version']  = $this->db->version();
-                $this->template['table']    = $this->table->generate();
+                $template['platform'] = $this->db->platform();
+                $template['version']  = $this->db->version();
+                $template['table']    = $this->table->generate();
 
 
-                $this->template['backup_button']       = MY_Controller::render('admin/_templates/button_view', array(
+                $template['backup_button']       = MY_Controller::render('admin/_templates/button_view', array(
                             'href'         => 'database/backup-database',
                             'button_label' => lang('db_back_up'),
                             'extra'        => array('class' => 'btn btn-info icon-download-alt')
                                 ), TRUE);
-                $this->template['delete_cache_button'] = MY_Controller::render('admin/_templates/button_view', array(
+                $template['delete_cache_button'] = MY_Controller::render('admin/_templates/button_view', array(
                             'href'         => 'database/delete-cache',
                             'button_label' => 'Delete Query Cache',
                             'extra'        => array('class' => 'btn btn-danger icon-trash')
                                 ), TRUE);
-                $this->template['message']             = $this->session->flashdata('dbmessage');
-                $this->template['bootstrap']           = $this->_bootstrap();
-                $this->render('admin/database', $this->template);
+                $template['message']             = $this->session->flashdata('dbmessage');
+                $template['bootstrap']           = $this->_bootstrap();
+                $this->render('admin/database', $template);
         }
 
         /**

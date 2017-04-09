@@ -10,11 +10,26 @@ class Curriculum_model extends MY_Model
                 $this->table       = 'curriculums';
                 $this->primary_key = 'curriculum_id';
 
+                $this->before_create[] = '_add_created_by';
+                $this->before_update[] = '_add_updated_by';
+
                 $this->_relations();
                 $this->_form();
                 $this->_config();
 
                 parent::__construct();
+        }
+
+        protected function _add_created_by($data)
+        {
+                $data['created_user_id'] = $this->ion_auth->get_user_id(); //add user_id
+                return $data;
+        }
+
+        protected function _add_updated_by($data)
+        {
+                $data['updated_user_id'] = $this->ion_auth->get_user_id(); //add user_id
+                return $data;
         }
 
         private function _config()
@@ -112,7 +127,7 @@ class Curriculum_model extends MY_Model
         public function button_link($curriculum_id, $subject_code, $subject_description)
         {
                 $this->load->helper('inflector');
-                return anchor(//just a subject_code with redirection, directly to curriculum with highlighten phrase
+                return table_row_button_link(//just a subject_code with redirection, directly to curriculum with highlighten phrase
                         //----------------------------------link
                         'curriculums/view?curriculum-id=' .
                         $curriculum_id .
@@ -121,7 +136,9 @@ class Curriculum_model extends MY_Model
                         '#' .
                         dash($subject_code),
                         //----------------------------------user link view
-                             '<button class="btn btn-mini">' . $subject_code . '</button>',
+                             $subject_code,
+                        //additonal for table_row_button_link()
+                             NULL,
                         //----------------------------------attributes
                              array(
                     'title' => $subject_description//pop up subject description when hover mouse

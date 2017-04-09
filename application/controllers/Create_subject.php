@@ -23,9 +23,7 @@ class Create_subject extends CI_Capstone_Controller
                  */
                 if ($this->input->post('submit'))
                 {
-                        $id = $this->Subject_model->from_form(NULL, array(
-                                    'created_user_id' => $this->session->userdata('user_id')
-                                ))->insert();
+                        $id = $this->Subject_model->from_form()->insert();
                         if ($id)
                         {
                                 $this->session->set_flashdata('message', lang('create_subject_succesfully_added_message'));
@@ -56,9 +54,9 @@ class Create_subject extends CI_Capstone_Controller
                     'lang'  => 'create_subject_description_label'
                 );
 
-                $this->data['subject_form'] = $this->form_boostrap('create-subject', $inputs, 'create_subject_heading', 'create_subject_submit_button_label', 'info-sign', NULL, TRUE);
-                $this->data['bootstrap']    = $this->_bootstrap();
-                $this->render('admin/create_subject', $this->data);
+                $data['subject_form'] = $this->form_boostrap('create-subject', $inputs, 'create_subject_heading', 'create_subject_submit_button_label', 'info-sign', NULL, TRUE);
+                $data['bootstrap']    = $this->_bootstrap();
+                $this->render('admin/create_subject', $data);
         }
 
         private function _bootstrap()

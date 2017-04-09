@@ -25,9 +25,7 @@ class Create_course extends CI_Capstone_Controller
         {
                 if ($this->input->post('submit'))
                 {
-                        $id = $this->Course_model->from_form(NULL, array(
-                                    'created_user_id' => $this->session->userdata('user_id')
-                                ))->insert();
+                        $id = $this->Course_model->from_form()->insert();
                         if ($id)
                         {
                                 $this->session->set_flashdata('message', $this->config->item('message_start_delimiter', 'ion_auth') . lang('create_course_succesfully_added_message') . $this->config->item('message_end_delimiter', 'ion_auth'));
@@ -86,9 +84,9 @@ class Create_course extends CI_Capstone_Controller
                     'lang'  => 'create_course_education_label'
                 );
 
-                $this->data['course_form'] = $this->form_boostrap('create-course/index', $inputs, 'create_course_heading', 'create_course_submit_button_label', 'info-sign', NULL, TRUE);
-                $this->data['bootstrap']   = $this->_bootstrap();
-                $this->render('admin/create_course', $this->data);
+                $data['course_form'] = $this->form_boostrap('create-course/index', $inputs, 'create_course_heading', 'create_course_submit_button_label', 'info-sign', NULL, TRUE);
+                $data['bootstrap']   = $this->_bootstrap();
+                $this->render('admin/create_course', $data);
         }
 
         /**

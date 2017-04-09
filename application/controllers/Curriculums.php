@@ -100,13 +100,13 @@ class Curriculums extends CI_Capstone_Controller
                 }
                 $pagination = $this->pagination->generate_bootstrap_link('curriculums/index', $this->Curriculum_model->count_rows() / $this->limit);
 
-                $this->template['table_curriculm'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'curriculum_label', $pagination, TRUE);
-                $this->template['message']         = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-                $this->template['bootstrap']       = $this->_bootstrap();
+                $template['table_curriculm'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'curriculum_label', $pagination, TRUE);
+                $template['message']         = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                $template['bootstrap']       = $this->_bootstrap();
                 /**
                  * rendering users view
                  */
-                $this->render('admin/curriculums', $this->template);
+                $this->render('admin/curriculums', $template);
         }
 
         /**
@@ -232,19 +232,19 @@ class Curriculums extends CI_Capstone_Controller
                 {
                         $header[] = 'add Requisite';
 
-                        $this->template['create_curriculum_subject_button'] = MY_Controller::render('admin/_templates/button_view', array(
+                        $template['create_curriculum_subject_button'] = MY_Controller::render('admin/_templates/button_view', array(
                                     'href'         => 'create-curriculum-subject?curriculum-id=' . $curriculum_obj->curriculum_id,
                                     'button_label' => lang('create_curriculum_subject_label'),
                                     'extra'        => array('class' => 'btn btn-success icon-edit'),
                                         ), TRUE);
                 }
 
-                $this->template['curriculum_information']    = MY_Controller::render('admin/_templates/curriculums/curriculum_information', array('curriculum_obj' => $curriculum_obj), TRUE);
-                $this->template['curriculum_obj']            = $curriculum_obj;
-                $this->template['table_corriculum_subjects'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'curriculum_subject_label', FALSE, TRUE);
-                $this->template['message']                   = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-                $this->template['bootstrap']                 = $this->_bootstrap();
-                $this->render('admin/curriculums', $this->template);
+                $template['curriculum_information']    = MY_Controller::render('admin/_templates/curriculums/curriculum_information', array('curriculum_obj' => $curriculum_obj), TRUE);
+                $template['curriculum_obj']            = $curriculum_obj;
+                $template['table_corriculum_subjects'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'curriculum_subject_label', FALSE, TRUE);
+                $template['message']                   = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
+                $template['bootstrap']                 = $this->_bootstrap();
+                $this->render('admin/curriculums', $template);
         }
 
         /**

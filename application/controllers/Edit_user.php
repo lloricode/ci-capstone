@@ -39,7 +39,7 @@ class Edit_user extends CI_Capstone_Controller
                         show_error('Invalid request.');
                 }
 
-                $this->data['title'] = $this->lang->line('edit_user_heading');
+                $data['title'] = $this->lang->line('edit_user_heading');
 
 
 
@@ -198,46 +198,46 @@ class Edit_user extends CI_Capstone_Controller
 
 
                 // pass the user to the view
-                $this->data['user']          = $user;
-                $this->data['groups']        = $groups;
-                $this->data['currentGroups'] = $currentGroups;
+                $data['user']          = $user;
+                $data['groups']        = $groups;
+                $data['currentGroups'] = $currentGroups;
 
-                $this->data['first_name']       = array(
+                $data['first_name']       = array(
                     'name'  => 'first_name',
                     'id'    => 'first_name',
                     'type'  => 'text',
                     'value' => $this->form_validation->set_value('first_name', $user->first_name),
                 );
-                $this->data['last_name']        = array(
+                $data['last_name']        = array(
                     'name'  => 'last_name',
                     'id'    => 'last_name',
                     'type'  => 'text',
                     'value' => $this->form_validation->set_value('last_name', $user->last_name),
                 );
-                $this->data['company']          = array(
+                $data['company']          = array(
                     'name'  => 'company',
                     'id'    => 'company',
                     'type'  => 'text',
                     'value' => $this->form_validation->set_value('company', $user->company),
                 );
-                $this->data['phone']            = array(
+                $data['phone']            = array(
                     'name'  => 'phone',
                     'id'    => 'phone',
                     'type'  => 'text',
                     'value' => $this->form_validation->set_value('phone', $user->phone),
                 );
-                $this->data['password']         = array(
+                $data['password']         = array(
                     'name' => 'password',
                     'id'   => 'password',
                     'type' => 'password'
                 );
-                $this->data['password_confirm'] = array(
+                $data['password_confirm'] = array(
                     'name' => 'password_confirm',
                     'id'   => 'password_confirm',
                     'type' => 'password'
                 );
-                $this->data['bootstrap']        = $this->_bootstrap();
-                $this->render('admin/edit_user', $this->data);
+                $data['bootstrap']        = $this->_bootstrap();
+                $this->render('admin/edit_user', $data);
         }
 
         /**
