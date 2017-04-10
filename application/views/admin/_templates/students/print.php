@@ -35,7 +35,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <tbody>
         <tr>
             <td class="width30">School ID:</td>
-            <td class="width70"><strong><?php echo $this->student->school_id; ?></strong></td>
+            <td class="width70"><strong><?php echo $this->student->school_id(); ?></strong></td>
         </tr>
         <tr>
             <td>Course</td>

@@ -146,7 +146,7 @@ class Migration_Students extends CI_Migration
                         'type'       => 'VARCHAR',
                         'constraint' => '9',
                         'unique'     => TRUE,
-                        'null'       => FALSE
+                        'null'       => TRUE
                     ),
                     //------------------------------------
                     'created_at'                                      => array(

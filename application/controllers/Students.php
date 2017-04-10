@@ -55,7 +55,7 @@ class Students extends CI_Capstone_Controller
                                 }
                                 $tmp = array(
                                     $this->_images_for_table($student),
-                                    $this->_highlight_phrase_if_search($student->student_school_id),
+                                    $this->_highlight_phrase_if_search(($student->student_school_id == '') ? '--' : $student->student_school_id),
                                     $this->_highlight_phrase_if_search($student->student_lastname),
                                     $this->_highlight_phrase_if_search($student->student_firstname),
                                     $this->_highlight_phrase_if_search($student->student_middlename),
@@ -188,7 +188,7 @@ class Students extends CI_Capstone_Controller
                  * check url with id,tehn get studewnt row
                  */
                 $this->Student_model->set_informations($this->input->get('student-id'));
-                $this->breadcrumbs->unshift(3, 'View Student [' . $this->student->school_id . ']', 'students/view?student-id=' . $this->student->id);
+                $this->breadcrumbs->unshift(3, 'View Student [' . $this->student->school_id(TRUE) . ']', 'students/view?student-id=' . $this->student->id);
                 /**
                  * setting up page for pagination
                  */
@@ -230,8 +230,8 @@ class Students extends CI_Capstone_Controller
                 ));
 
 
-
-                $student_subjects_obj = $this->student->subject_offers(/* $this->limit, $this->limit * $page - $this->limit */);
+                //parameter is for remove button link in faculty
+                $student_subjects_obj = $this->student->subject_offers($return_html/* $this->limit, $this->limit * $page - $this->limit */);
                 if ($student_subjects_obj)
                 {
                         /**

@@ -306,6 +306,8 @@ class Student_model extends MY_Model
         public function all($limit, $offset, $course_id = NULL, $search = NULL)
         {
                 $this->_query_all($course_id, $search);
+                $this->db->order_by('created_at', 'DESC');
+                $this->db->order_by('updated_at', 'DESC');
                 $this->db->limit($limit, $offset);
                 $rs     = $this->db->get($this->table);
                 $result = $rs->custom_result_object('Student_row');
