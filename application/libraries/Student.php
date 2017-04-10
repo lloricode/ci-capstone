@@ -199,7 +199,9 @@ class Student extends School_informations
                 $subject_ok = $this->_set_enroll_all_subject_offers();
 
                 $enroll_ok = $this->Enrollment_model->update(array(
-                    'enrollment_status' => TRUE
+                    'enrollment_status'      => TRUE,
+                    'enrollment_semester'    => current_school_semester(TRUE),
+                    'enrollment_school_year' => current_school_year()
                         ), $this->__enrollment->enrollment_id);
 
                 if ( ! $enroll_ok OR ! $subject_ok OR ! $student_schoo_id_inserted)

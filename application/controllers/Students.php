@@ -95,7 +95,7 @@ class Students extends CI_Capstone_Controller
                 $pagination_index = 'students';
                 if ($this->input->get('course-id'))
                 {
-                        $pagination_index = '?course-id=' . $this->input->get('course-id');
+                        $pagination_index .= '?course-id=' . $this->input->get('course-id');
                 }
                 if ($key = $this->input->get('search'))
                 {

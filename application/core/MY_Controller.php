@@ -27,6 +27,11 @@ class MY_Controller extends CI_Controller
                 $this->ion_auth->set_hook(
                         'logged_in', 'check_log_multiple_user', $this/* $this because the class already extended */, 'check_if_multiple_logged_in_one_user', array()
                 );
+
+                /**
+                 * update enrollment status to FALSE in ALL not current semester and school_year
+                 */
+                $this->Enrollment_model->unenroll_all_past_term();
         }
 
         /**
