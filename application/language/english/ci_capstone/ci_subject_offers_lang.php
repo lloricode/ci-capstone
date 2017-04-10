@@ -19,6 +19,7 @@ $lang['create_user_id_label']                           = 'Instructor:';
 $lang['create_subject_id_label']                        = 'Subject:';
 $lang['create_room_id_label']                           = 'Room:';
 $lang['create_room_id_label2']                          = '2Room:';
+$lang['create_type_label']                              = 'Type';
 $lang['create_subject_offer_submit_button_label']       = 'Add Subject Offer';
 $lang['create_subject_offer_succesfully_added_message'] = 'Subject Offer Succesfully Added!!';
 
@@ -34,9 +35,12 @@ $lang['index_room_id_th']             = 'Room';
 $lang['view_class_schedule_label'] = 'View Class schedule';
 
 
-$lang['subject_offer_conflict_data'] = 'Conflict Data';
+$lang['subject_offer_conflict_data']  = 'Conflict Data';
 $lang['2subject_offer_conflict_data'] = 'Conflict Data 2';
 
 
+
+$lang['create_type_lec_label'] = 'LEC';
+$lang['create_type_lab_label'] = 'LAB';
 
 

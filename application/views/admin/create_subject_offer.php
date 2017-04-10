@@ -69,6 +69,7 @@ if (isset($two_forms_conflict_message))
 
                     <?php
                     echo input_bootstrap($room_id);
+                    echo input_bootstrap($leclab);
                     ?>
 
                     <h3>sched 2</h3>check to exclude<?php echo form_checkbox('exclude', TRUE, set_checkbox('exclude', set_value('exclude'))); ?>
@@ -109,6 +110,7 @@ if (isset($two_forms_conflict_message))
 
                     <?php
                     echo input_bootstrap($room_id2);
+                    echo input_bootstrap($leclab2);
 
                     echo ' <div class="form-actions">';
 

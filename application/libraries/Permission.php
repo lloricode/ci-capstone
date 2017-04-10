@@ -87,8 +87,7 @@ class Permission
         {
                 $per_arr = array(
                     'controller_id'   => $controller_id,
-                    'group_id'        => $group_id,
-                    'updated_user_id' => $this->session->userdata('user_id'),
+                    'group_id'        => $group_id
                 );
                 return (bool) $this->Permission_model->insert($per_arr);
         }

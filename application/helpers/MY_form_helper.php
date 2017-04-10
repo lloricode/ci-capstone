@@ -118,11 +118,21 @@ if ( ! function_exists('input_bootstrap'))
                                         }
                                         switch ($field['type'])
                                         {
+                                                case 'checkbox':
                                                 case 'radio':
                                                         foreach ($labels as $k => $v)
                                                         {
-                                                                $defaut = ($field['value'] == $k);
-                                                                $lang_  = NULL;
+                                                                $defaut = NULL;
+                                                                switch ($field['type'])
+                                                                {
+                                                                        case 'checkbox':
+                                                                                $defaut = (bool) in_array($k, (array) $CI->input->post($field['name'], TRUE));
+                                                                                break;
+                                                                        case 'radio':
+                                                                                $defaut = ($field['value'] == $k);
+                                                                                break;
+                                                                }
+                                                                $lang_ = NULL;
 
                                                                 if (is_numeric($v))
                                                                 {
@@ -136,16 +146,17 @@ if ( ! function_exists('input_bootstrap'))
 
                                                                         $lang_ = lang($v);
                                                                 }
-                                                                echo form_label(form_radio($field['name'], $k, $defaut) . ' ' . $lang_) . PHP_EOL;
+                                                                $form_ = 'form_' . $field['type'];
+                                                                echo form_label($form_($field['name'], $k, $defaut) . ' ' . $lang_) . PHP_EOL;
                                                         }
                                                         break;
-                                                case 'checkbox':
-                                                        foreach ($labels as $v)
-                                                        {
-                                                                $defaut = ($field['value'] == $v['value']);
-                                                                echo form_label(form_checkbox($field['name'], $v['value'], $defaut) . ' ' . $v['label']) . PHP_EOL;
-                                                        }
-                                                        break;
+//                                                case 'checkbox':
+//                                                        foreach ($labels as $v)
+//                                                        {
+//                                                                $defaut = ($field['value'] == $v['value']);
+//                                                                echo form_label(form_checkbox($field['name'], $v['value'], $defaut) . ' ' . $v['label']) . PHP_EOL;
+//                                                        }
+//                                                        break;
                                                 default:
                                                         /**
                                                          * not supposed to be here.

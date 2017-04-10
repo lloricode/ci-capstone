@@ -17,6 +17,17 @@ class Migration_Students extends CI_Migration
                 parent::__construct($config);
         }
 
+        private function _civil_status()
+        {
+                $return = '';
+                $this->load->helper('student');
+                foreach (civil_status() as $k => $v)
+                {
+                        $return .= '"' . $k . '",';
+                }
+                return trim($return, ',');
+        }
+
         public function up()
         {
                 $this->down();
@@ -66,9 +77,8 @@ class Migration_Students extends CI_Migration
                         'null'       => FALSE
                     ),
                     self::CI_DB_TABLE_COL . 'civil_status'            => array(
-                        'type'       => 'VARCHAR',
-                        'constraint' => '50',
-                        'null'       => FALSE
+                        'type' => 'ENUM(' . $this->_civil_status() . ')',
+                        'null' => FALSE
                     ),
                     self::CI_DB_TABLE_COL . 'nationality'             => array(
                         'type'       => 'VARCHAR',

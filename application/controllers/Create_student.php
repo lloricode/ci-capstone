@@ -297,10 +297,11 @@ class Create_student extends CI_Capstone_Controller
                     'lang'  => 'create_student_birthplace_label'
                 );
 
-                $data['student_civil_status'] = array(
+                $this->load->helper('student');
+                $data['student_civil_status']  = array(
                     'name'  => 'status',
-                    'value' => $this->form_validation->set_value('status'),
-                    'type'  => 'text',
+                    'value' => civil_status(),
+                    'type'  => 'dropdown',
                     'lang'  => 'create_student_civil_status_label'
                 );
 

@@ -43,12 +43,7 @@ class Migration_Permission extends CI_Migration
                         'constraint' => '100',
                         'null'       => FALSE
                     ),
-                    'updated_at'      => array(
-                        'type'       => 'VARCHAR',
-                        'constraint' => '100',
-                        'null'       => TRUE
-                    ),
-                    'updated_user_id' => array(
+                    'created_user_id' => array(
                         'type'       => 'INT',
                         'constraint' => '11',
                         'unsigned'   => TRUE,

@@ -24,12 +24,6 @@ class Permission_model extends MY_Model
                 return $data;
         }
 
-        protected function _add_updated_by($data)
-        {
-                $data['updated_user_id'] = $this->ion_auth->get_user_id(); //add user_id
-                return $data;
-        }
-
         private function _config()
         {
                 $this->timestamps        = TRUE; //(bool) $this->config->item('my_model_timestamps');

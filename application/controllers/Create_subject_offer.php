@@ -5,6 +5,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Create_subject_offer extends CI_Capstone_Controller
 {
 
+
+        private $data;
+
         function __construct()
         {
                 parent::__construct();
@@ -83,6 +86,19 @@ class Create_subject_offer extends CI_Capstone_Controller
                                 );
                                 $sub_offer_id         = $this->Subject_offer_model->insert($subject_offer_insert);
 
+                                $lec = FALSE;
+                                $lab = FALSE;
+                                foreach ($this->input->post('leclab', TRUE) as $v)
+                                {
+                                        if ($v == 'lec')
+                                        {
+                                                $lec = TRUE;
+                                        }
+                                        if ($v == 'lab')
+                                        {
+                                                $lab = TRUE;
+                                        }
+                                }
 
                                 $sched_1_insert = array(
                                     'subject_offer_line_start'  => $this->input->post('start', TRUE),
@@ -92,7 +108,9 @@ class Create_subject_offer extends CI_Capstone_Controller
                                     'user_id'                   => $this->input->post('faculty', TRUE),
                                     'subject_offer_id'          => $sub_offer_id,
                                     'subject_offer_semester'    => current_school_semester(TRUE),
-                                    'subject_offer_school_year' => current_school_year()
+                                    'subject_offer_school_year' => current_school_year(),
+                                    'subject_offer_line_lec'    => $lec,
+                                    'subject_offer_line_lab'    => $lab
                                 );
                                 foreach (days_for_db() as $d)
                                 {
@@ -103,6 +121,20 @@ class Create_subject_offer extends CI_Capstone_Controller
                                 $sched_id2 = TRUE;
                                 if ( ! ($exclude && ! empty($exclude)))
                                 {
+                                        $lec = FALSE;
+                                        $lab = FALSE;
+                                        foreach ($this->input->post('leclab2', TRUE) as $v)
+                                        {
+                                                if ($v == 'lec')
+                                                {
+                                                        $lec = TRUE;
+                                                }
+                                                if ($v == 'lab')
+                                                {
+                                                        $lab = TRUE;
+                                                }
+                                        }
+
                                         $sched_2_insert = array(
                                             'subject_offer_line_start'  => $this->input->post('start2', TRUE),
                                             'subject_offer_line_end'    => $this->input->post('end2', TRUE),
@@ -111,7 +143,9 @@ class Create_subject_offer extends CI_Capstone_Controller
                                             'user_id'                   => $this->input->post('subject', TRUE),
                                             'subject_offer_id'          => $sub_offer_id,
                                             'subject_offer_semester'    => current_school_semester(TRUE),
-                                            'subject_offer_school_year' => current_school_year()
+                                            'subject_offer_school_year' => current_school_year(),
+                                            'subject_offer_line_lec'    => $lec,
+                                            'subject_offer_line_lab'    => $lab
                                         );
                                         foreach (days_for_db() as $d)
                                         {
@@ -132,7 +166,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                                         $this->db->trans_rollback();
                                         if ( ! $validate_two_forms)
                                         {
-                                                $data['two_forms_conflict_message'] = '<h5 style="color:red">Conflict two forms.</h5>';
+                                                $this->data['two_forms_conflict_message'] = '<h5 style="color:red">Conflict two forms.</h5>';
                                         }
                                 }
                                 else
@@ -253,7 +287,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                 $this->load->library('subject_offer_validation');
                 $this->subject_offer_validation->form_($form_);
                 $this->subject_offer_validation->init('post');
-                $conflic = $this->subject_offer_validation->subject_offer_check_check_conflict();
+                $conflic             = $this->subject_offer_validation->subject_offer_check_check_conflict();
 //                if ($conflic)
 //                {
 //                        echo 'tReu';
@@ -262,8 +296,8 @@ class Create_subject_offer extends CI_Capstone_Controller
 //                {
 //                        echo 'flase';
 //                }
-                $data    = $this->subject_offer_validation->conflict();
-                if ($data)
+                $this->data_conflict = $this->subject_offer_validation->conflict();
+                if ($this->data_conflict)
                 {
                         $inc        = 1;
                         $header     = array(
@@ -276,7 +310,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                             lang('index_room_id_th'),
                         );
                         $table_data = array();
-                        foreach ($data as $subject_offer)
+                        foreach ($this->data_conflict as $subject_offer)
                         {//echo print_r($subject_offer);
                                 $user = $this->User_model->get($subject_offer->user_id);
                                 array_push($table_data, array(
@@ -289,7 +323,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                                     my_htmlspecialchars($this->Room_model->get($subject_offer->room_id)->room_number),
                                 ));
                         }
-                        $data['conflict_data' . $form_] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', $form_ . 'subject_offer_conflict_data', FALSE, TRUE);
+                        $this->data['conflict_data' . $form_] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', $form_ . 'subject_offer_conflict_data', FALSE, TRUE);
                 }
                 $this->subject_offer_validation->reset__();
                 return $conflic;
@@ -303,14 +337,14 @@ class Create_subject_offer extends CI_Capstone_Controller
                 /**
                  * 1st
                  */
-                $data['subject_offer_start'] = array(
+                $this->data['subject_offer_start'] = array(
                     'name'  => 'start',
                     'value' => time_list(),
                     'type'  => 'dropdown',
                     'lang'  => 'create_subject_offer_start_label'
                 );
 
-                $data['subject_offer_end'] = array(
+                $this->data['subject_offer_end'] = array(
                     'name'  => 'end',
                     'value' => time_list(),
                     'type'  => 'dropdown',
@@ -318,7 +352,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                 );
 
 
-                $data['room_id']              = array(
+                $this->data['room_id'] = array(
                     'name'  => 'room',
                     'value' => $this->Room_model->
                             as_dropdown('room_number')->
@@ -327,17 +361,29 @@ class Create_subject_offer extends CI_Capstone_Controller
                     'type'  => 'dropdown',
                     'lang'  => 'create_room_id_label'
                 );
+
+                $this->data['leclab'] = array(
+                    'name'   => 'leclab[]',
+                    'fields' => array(//we used radio here 
+                        'lec' => 'create_type_lec_label',
+                        'lab' => 'create_type_lab_label'
+                    ),
+                    'value'  => $this->form_validation->set_value('leclab[]'),
+                    'type'   => 'checkbox',
+                    'lang'   => 'create_type_label'
+                );
+
                 /**
                  * 2nd
                  */
-                $data['subject_offer_start2'] = array(
+                $this->data['subject_offer_start2'] = array(
                     'name'  => 'start2',
                     'value' => time_list(),
                     'type'  => 'dropdown',
                     'lang'  => 'create_subject_offer_start_label2'
                 );
 
-                $data['subject_offer_end2'] = array(
+                $this->data['subject_offer_end2'] = array(
                     'name'  => 'end2',
                     'value' => time_list(),
                     'type'  => 'dropdown',
@@ -345,7 +391,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                 );
 
 
-                $data['room_id2'] = array(
+                $this->data['room_id2'] = array(
                     'name'  => 'room2',
                     'value' => $this->Room_model->
                             as_dropdown('room_number')->
@@ -356,17 +402,28 @@ class Create_subject_offer extends CI_Capstone_Controller
                 );
 
 
+                $this->data['leclab2'] = array(
+                    'name'   => 'leclab2[]',
+                    'fields' => array(//we used radio here 
+                        'lec' => 'create_type_lec_label',
+                        'lab' => 'create_type_lab_label'
+                    ),
+                    'value'  => $this->form_validation->set_value('leclab2[]'),
+                    'type'   => 'checkbox',
+                    'lang'   => 'create_type_label'
+                );
+
                 /**
                  * foreign
                  */
-                $data['user_id'] = array(
+                $this->data['user_id'] = array(
                     'name'  => 'faculty',
                     'value' => $this->_faculties(),
                     'type'  => 'dropdown',
                     'lang'  => 'create_user_id_label'
                 );
 
-                $data['subject_id'] = array(
+                $this->data['subject_id'] = array(
                     'name'  => 'subject',
                     'value' => $this->Subject_model->
                             as_dropdown('subject_code')->
@@ -379,10 +436,10 @@ class Create_subject_offer extends CI_Capstone_Controller
                 /**
                  * for check box
                  */
-                $data['days'] = days_for_db();
+                $this->data['days'] = days_for_db();
 
-                $data['bootstrap'] = $this->_bootstrap();
-                $this->render('admin/create_subject_offer', $data);
+                $this->data['bootstrap'] = $this->_bootstrap();
+                $this->render('admin/create_subject_offer', $this->data);
         }
 
         /**
