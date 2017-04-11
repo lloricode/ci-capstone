@@ -24,7 +24,7 @@ class Edit_student extends CI_Capstone_Controller
         public function index()
         {
                 $this->Student_model->set_informations($this->input->get('student-id'));
-                $this->breadcrumbs->unshift(3, lang('edit_student_submit_button_label') . ' [ ' . $this->student->school_id . ' ]', 'edit-student?student-id=' . $this->student->id);
+                $this->breadcrumbs->unshift(3, lang('edit_student_submit_button_label') . ' [ ' . $this->student->school_id(TRUE) . ' ]', 'edit-student?student-id=' . $this->student->id);
 
 
                 $__post_button    = (bool) $this->input->post('submit');
@@ -268,7 +268,7 @@ class Edit_student extends CI_Capstone_Controller
                 $data['student_school_id_temp']    = array(
                     'name'     => 'id_temp',
                     'disabled' => '',
-                    'value'    => $this->student->school_id,
+                    'value'    => $this->student->school_id(),
                     'type'     => 'text',
                     'lang'     => 'create_student_school_id_label'
                 );

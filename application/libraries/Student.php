@@ -70,7 +70,8 @@ class Student extends School_informations
                         case 'id':
                                 return $this->__student->student_id;
                         case 'school_id':
-                                return $this->__student->student_school_id;
+                                $s_id = (string) $this->__student->student_school_id;
+                                return ($s_id === '') ? NULL : $s_id;
                         case 'fullname':
                                 return $this->__student->student_lastname . ', ' .
                                         $this->__student->student_firstname . ' ' .
@@ -152,11 +153,42 @@ class Student extends School_informations
                 }
         }
 
+        public function school_id($alter = FALSE)
+        {
+                $s_id = (string) $this->__student->student_school_id;
+                if ($alter)
+                {
+                        if ($s_id === '')
+                        {
+                                return $this->__student->student_lastname . ', ' .
+                                        $this->__student->student_firstname . ' ' .
+                                        $this->__student->student_middlename;
+                        }
+                }
+                if ($s_id === '')
+                {
+                        return 'Not Enrolled yet.';
+                }
+                return $s_id;
+        }
+
         public function set_enroll()
         {
                 if ( ! specific_groups_permission($this->config->item('user_group_accounting')))
                 {
                         show_404();
+                }
+
+                $student_schoo_id_inserted = TRUE;
+
+                if ((string) $this->__student->student_school_id === '')
+                {
+                        $this->load->library('school_id', NULL, 'school_id_generator');
+                        $this->school_id_generator->initialize($this->__course->course_code_id);
+                        $generated_school_id       = (string) $this->school_id_generator->generate();
+                        $student_schoo_id_inserted = $this->Student_model->update(array(
+                            'student_school_id' => $generated_school_id
+                                ), $this->__student->student_id);
                 }
                 /**
                  * start the DB transaction
@@ -167,10 +199,12 @@ class Student extends School_informations
                 $subject_ok = $this->_set_enroll_all_subject_offers();
 
                 $enroll_ok = $this->Enrollment_model->update(array(
-                    'enrollment_status' => TRUE
+                    'enrollment_status'      => TRUE,
+                    'enrollment_semester'    => current_school_semester(TRUE),
+                    'enrollment_school_year' => current_school_year()
                         ), $this->__enrollment->enrollment_id);
 
-                if ( ! $enroll_ok OR ! $subject_ok)
+                if ( ! $enroll_ok OR ! $subject_ok OR ! $student_schoo_id_inserted)
                 {
                         /**
                          * rollback database
@@ -181,6 +215,11 @@ class Student extends School_informations
                         {
                                 $msg = str_replace('.', ',', $msg);
                                 $msg .= ' No Subject to Enroll.';
+                        }
+                        if ( ! $student_schoo_id_inserted)
+                        {
+                                $msg = str_replace('.', ',', $msg);
+                                $msg .= ' School ID Failed to generate.';
                         }
                         $this->session->set_flashdata('message', '<div class="alert alert-error alert-block">' . $msg . '</div>');
                 }
@@ -254,7 +293,7 @@ class Student extends School_informations
          * @return object
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        public function subject_offers(/* $limit, $offset */)
+        public function subject_offers($button_link = FALSE/* $limit, $offset */)
         {
                 $this->load->helper(array('day', 'school', 'time'));
                 $s_o_           = $this->__students_subjects(/* $limit, $offset */);
@@ -318,7 +357,7 @@ class Student extends School_informations
                                             'year'     => number_place($sub_of->curriculum_subject->curriculum_subject_year_level) . ' Year',
                                             'semester' => semesters($sub_of->curriculum_subject->curriculum_subject_semester),
                                             'subject'  => $sub_of->subject->subject_code,
-                                            'faculty'  => $this->User_model->button_link($sub_of->faculty->id, $sub_of->faculty->last_name, $sub_of->faculty->first_name),
+                                            'faculty'  => ($button_link) ? ($sub_of->faculty->last_name . ', ' . $sub_of->faculty->first_name) : $this->User_model->button_link($sub_of->faculty->id, $sub_of->faculty->last_name, $sub_of->faculty->first_name),
                                             //--
                                             'unit'     => $sub_of->curriculum_subject->curriculum_subject_units,
                                             'status'   => ($stud_sub->student_subject_enroll_status) ? 'Enrolled' : 'Pending'

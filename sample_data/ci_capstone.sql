@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 10, 2017 at 07:37 AM
+-- Generation Time: Apr 10, 2017 at 09:09 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 5.6.24
 
@@ -271,8 +271,8 @@ CREATE TABLE `enrollments` (
 --
 
 INSERT INTO `enrollments` (`enrollment_id`, `student_id`, `course_id`, `curriculum_id`, `enrollment_school_year`, `enrollment_semester`, `enrollment_year_level`, `enrollment_status`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES
-(1, 1, 4, 4, '2013-2014', 'second', 1, 1, '1490342599', 1, NULL, NULL, '1491802496', 1),
-(2, 2, 2, 3, '2014-2015', 'summer', 4, 0, '1490342599', 1, NULL, NULL, '1491533247', 1),
+(1, 1, 4, 4, '2013-2014', 'second', 1, 1, '1490342599', 1, NULL, NULL, '1491804128', 1),
+(2, 2, 2, 3, '2014-2015', 'summer', 4, 0, '1490342599', 1, NULL, NULL, '1491804069', 1),
 (3, 3, 2, 3, '2013-2014', 'summer', 2, 0, '1490342599', 1, NULL, NULL, '1491533891', 12),
 (4, 4, 8, 8, '2013-2014', 'summer', 1, 0, '1490342599', 1, NULL, NULL, NULL, NULL),
 (5, 5, 4, 4, '2013-2014', 'first', 4, 0, '1490342599', 1, NULL, NULL, NULL, NULL),
@@ -372,7 +372,9 @@ INSERT INTO `enrollments` (`enrollment_id`, `student_id`, `course_id`, `curricul
 (99, 99, 7, 7, '2014-2015', 'second', 4, 0, '1490342599', 1, NULL, NULL, NULL, NULL),
 (100, 100, 1, 2, '2014-2015', 'first', 1, 0, '1490342599', 1, NULL, NULL, NULL, NULL),
 (104, 101, 6, 1, '2016-2017', 'summer', 1, 1, '1491186386', 15, NULL, NULL, '1491186481', 13),
-(106, 102, 6, 1, '2016-2017', 'summer', 1, 1, '1491190221', 1, NULL, NULL, '1491752362', 1);
+(106, 102, 6, 1, '2016-2017', 'summer', 1, 1, '1491190221', 1, NULL, NULL, '1491804058', 1),
+(112, 103, 10, 10, '2016-2017', 'summer', 1, 1, '1491803354', 1, NULL, NULL, '1491807735', 1),
+(113, 104, 2, 3, '2016-2017', 'summer', 1, 0, '1491804101', 1, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -630,7 +632,7 @@ CREATE TABLE `students` (
   `student_guardian_contact_number` varchar(50) DEFAULT NULL,
   `student_personal_email` varchar(50) DEFAULT NULL,
   `student_guardian_email` varchar(50) DEFAULT NULL,
-  `student_school_id` varchar(9) NOT NULL,
+  `student_school_id` varchar(9) DEFAULT NULL,
   `created_at` varchar(100) NOT NULL,
   `created_user_id` int(11) UNSIGNED NOT NULL,
   `deleted_at` varchar(100) DEFAULT NULL,
@@ -644,8 +646,8 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`student_id`, `student_firstname`, `student_image`, `student_middlename`, `student_lastname`, `student_gender`, `student_birthdate`, `student_birthplace`, `student_civil_status`, `student_nationality`, `student_guardian_fullname`, `student_permanent_address`, `student_address_town`, `student_address_region`, `student_guardian_address`, `student_personal_contact_number`, `student_guardian_contact_number`, `student_personal_email`, `student_guardian_email`, `student_school_id`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES
-(1, 'Julianne', '764cd2000c437a9f4782315c883dc461.jpg', 'Mueller', 'Dibberts', 'female', '12-14-1972', '277 Corwin RoadsDouglasfort, WI 11979-6154', 'seperated', 'Filipino', 'Lonnie Ankunding', '33310 Araceli Park Suite 503''s\r\nNorth Cordie, IL 75592', 'Lolahaven', 'region2______', '83688 Etha Locks', '+2466123850788', '(866) 548-4350', 'schmitt.beulah@yahoo.com', 'michale37@example.net', '50-1', '1491112002', 1, NULL, NULL, '1491802496', 1),
-(2, 'Tessie', 'a8249f085714190c6b2af6c61508b239.jpg', 'Schulist', 'Macejkovic', 'female', '10-29-1990', '89949 Beahan Viaduct Apt. 084Port Graciela, WI 4', 'single', 'Filipino', 'Emmie Ferry', '691 Rogers Avenue\r\nHirthefurt, CA 20617-8713', 'North Veronahaven', 'region2______________', '328 Jamir Walk Suite 906', '+6786417782053', '1-877-978-3429', 'rritchie@yahoo.com', 'dangelo.breitenberg@example.com', '30-2', '1491112002', 1, NULL, NULL, '1491533247', 1),
+(1, 'Julianne', '764cd2000c437a9f4782315c883dc461.jpg', 'Mueller', 'Dibberts', 'female', '12-14-1972', '277 Corwin RoadsDouglasfort, WI 11979-6154', 'seperated', 'Filipino', 'Lonnie Ankunding', '33310 Araceli Park Suite 503''s\r\nNorth Cordie, IL 75592', 'Lolahaven', 'region2______', '83688 Etha Locks', '+2466123850788', '(866) 548-4350', 'schmitt.beulah@yahoo.com', 'michale37@example.net', '50-1', '1491112002', 1, NULL, NULL, '1491804128', 1),
+(2, 'Tessie', 'a8249f085714190c6b2af6c61508b239.jpg', 'Schulist', 'Macejkovic', 'female', '10-29-1990', '89949 Beahan Viaduct Apt. 084Port Graciela, WI 4', 'single', 'Filipino', 'Emmie Ferry', '691 Rogers Avenue\r\nHirthefurt, CA 20617-8713', 'North Veronahaven', 'region2______________', '328 Jamir Walk Suite 906', '+6786417782053', '1-877-978-3429', 'rritchie@yahoo.com', 'dangelo.breitenberg@example.com', '30-2', '1491112002', 1, NULL, NULL, '1491804069', 1),
 (3, 'Anabel', NULL, 'Tromp', 'Renner', 'female', '02-15-1975', '900 Pollich Parks\r\nHomenickstad, VT 62573', '', 'Other', 'Miguel Cronin', '22869 Nader Courts Suite 601\r\nSkilesmouth, UT 41190-8160', 'North Hershelport', 'region3,,,,,,,,,,,,,,,,,,,,,,,', '2267 Colin Hill', '+7230318762972', '877.951.9658', 'ruecker.archibald@medhurst.info', 'walter.brianne@example.net', '30-3', '1491112002', 1, NULL, NULL, '1491533891', 12),
 (4, 'Raven', NULL, 'Pollich', 'Klocko', 'female', '12-12-1953', '738 Jefferey Estates\r\nSalvadorchester, DE 74284-58', 'single', 'Other', 'Joshuah Satterfield', '9703 Ezra Ford Apt. 572\r\nMarquardtside, NE 36984-5708', 'East Geovanny', 'region4', '1173 Fay Alley Apt. 825', '+4317546824876', '888-506-0184', 'tanya65@hotmail.com', 'antwan.conroy@example.net', '90-4', '1491112002', 1, NULL, NULL, NULL, NULL),
 (5, 'Roslyn', NULL, 'Reynolds', 'Bayer', 'male', '05-08-1920', '3749 Harber Springs Suite 782\r\nLake Anika, KY 5943', 'single', 'Filipino', 'Dr. Dalton O Hara MD', '6889 Carole Canyon Apt. 627\r\nAubreybury, AL 59341-1329', 'New Ernesto', 'rgion1', '841 Gerlach Path', '+5219857160801', '844-746-5054', 'cruickshank.edmund@prosacco.com', 'wiza.lurline@example.com', '50-5', '1491112002', 1, NULL, NULL, NULL, NULL),
@@ -745,7 +747,9 @@ INSERT INTO `students` (`student_id`, `student_firstname`, `student_image`, `stu
 (99, 'Beau', NULL, 'Berge', 'Dach', 'male', '06-21-2011', '21498 Edwardo Falls\r\nStammland, VT 93026-5842', 'single', 'Other', 'Prof. William Powlowski MD', '878 Jon Lights\r\nNew Brenna, LA 27206-1236', 'Briaville', 'region3', '7105 Zoie Rapid Apt. 734', '+7884392282999', '877.743.0554', 'hartmann.garnett@kassulke.com', 'genevieve.rolfson@example.net', '80-99', '1491112002', 1, NULL, NULL, NULL, NULL),
 (100, 'Maynard', NULL, 'Schowalter', 'Huel', 'male', '08-28-1996', '19398 Jammie Park Apt. 011\r\nRudolphville, MO 97978', 'single', 'Other', 'Simone Blick', '1163 Landen Mill\r\nMillsborough, AR 22180', 'Port Suzanne', 'region2', '49942 Frami Union Apt. 948', '+3234532164336', '877.947.1721', 'htoy@hegmann.info', 'moses02@example.net', '20-100', '1491112002', 1, NULL, NULL, NULL, NULL),
 (101, 'Myname', NULL, 'is', 'Student', 'male', '08-09-1990', 'Dapitanaaaa', 'single', 'Filipino', 'asdasdasdasdasd', 'asdasdasdasdasd', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '70-101', '1491186386', 15, NULL, NULL, NULL, NULL),
-(102, 'Lloric', NULL, 'Mayuga', 'Garcia', 'male', '03-15-1990', 'Caloocan City', '', 'Filipino', 'Mary Grace Rodas', 'Permanent Address', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '70-102', '1491190221', 1, NULL, NULL, NULL, NULL);
+(102, 'Lloric', NULL, 'Mayuga', 'Garcia', 'male', '03-15-1990', 'Caloocan City', 'single', 'Filipino', 'Mary Grace Rodas', 'Permanent Address', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '70-102', '1491190221', 1, NULL, NULL, '1491804058', 1),
+(103, 'Im', NULL, 'IT', 'Studetn', 'male', '03-07-1991', 'place of bdtae', 'widower', 'filipino', 'tita neneg', 'permanetn adrrr', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '23-105', '1491803354', 1, NULL, NULL, '1491807735', 1),
+(104, 'lkjlkj', NULL, 'lkjlkjljl', 'jlkjlkj', 'male', '03-03-2011', 'jklkjljlkjlkjlk', 'single', 'gdgdfgdfgdf', 'dfgdfgdfgdfg', 'sdfsdgfsdg', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1491804101', 1, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -787,7 +791,8 @@ INSERT INTO `students_subjects` (`student_subject_id`, `enrollment_id`, `subject
 (40, 59, 11, 0, '1491534006', 1, NULL, NULL, NULL, NULL),
 (41, 63, 13, 1, '1491534074', 1, NULL, NULL, '1491534102', NULL),
 (42, 37, 6, 1, '1491728124', 1, NULL, NULL, '1491728129', NULL),
-(43, 8, 6, 1, '1491728157', 1, NULL, NULL, '1491728161', NULL);
+(43, 8, 6, 1, '1491728157', 1, NULL, NULL, '1491728161', NULL),
+(44, 112, 14, 1, '1491807238', 1, NULL, NULL, '1491807735', 1);
 
 -- --------------------------------------------------------
 
@@ -1257,7 +1262,7 @@ ALTER TABLE `educations`
 -- AUTO_INCREMENT for table `enrollments`
 --
 ALTER TABLE `enrollments`
-  MODIFY `enrollment_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
+  MODIFY `enrollment_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
 --
 -- AUTO_INCREMENT for table `groups`
 --
@@ -1292,12 +1297,12 @@ ALTER TABLE `rooms`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `student_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `student_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 --
 -- AUTO_INCREMENT for table `students_subjects`
 --
 ALTER TABLE `students_subjects`
-  MODIFY `student_subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `student_subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 --
 -- AUTO_INCREMENT for table `subjects`
 --

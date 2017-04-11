@@ -9,12 +9,12 @@ class Create_student extends CI_Capstone_Controller
         {
                 parent::__construct();
 
-                $this->load->library(array('form_validation', 'school_id'));
+                $this->load->library(array('form_validation'/*, 'school_id'*/));
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span>');
                 $this->lang->load('ci_capstone/ci_students');
                 $this->load->helper('school');
                 $this->load->model(array('Student_model', 'Enrollment_model', 'Curriculum_model'));
-                $this->_get_school_id_code();
+//                $this->_get_school_id_code();
 
                 $this->breadcrumbs->unshift(2, lang('index_student_heading'), 'students');
                 $this->breadcrumbs->unshift(3, lang('create_student_heading'), 'create-student');
@@ -57,23 +57,23 @@ class Create_student extends CI_Capstone_Controller
                 $this->_form_view(/* $_post_image_name */);
         }
 
-        private function _get_school_id_code($course_id = NULL)
-        {
-                if ( ! is_null($course_id))
-                {
-                        if ($course_id > 0)
-                        {
-                                $this->load->model('Course_model');
-                                $tmp = $this->Course_model->get($course_id)->course_code_id;
-
-                                $this->school_id->initialize($tmp);
-                        }
-                }
-                else
-                {
-                        $this->school_id->initialize();
-                }
-        }
+//        private function _get_school_id_code($course_id = NULL)
+//        {
+//                if ( ! is_null($course_id))
+//                {
+//                        if ($course_id > 0)
+//                        {
+//                                $this->load->model('Course_model');
+//                                $tmp = $this->Course_model->get($course_id)->course_code_id;
+//
+//                                $this->school_id->initialize($tmp);
+//                        }
+//                }
+//                else
+//                {
+//                        $this->school_id->initialize();
+//                }
+//        }
 
         /**
          * this will be use in
@@ -130,7 +130,7 @@ class Create_student extends CI_Capstone_Controller
                  * generating id including code from course
                  */
                 $_course_id_                      = $this->input->post('courseid', TRUE);
-                $this->_get_school_id_code($_course_id_);
+//                $this->_get_school_id_code($_course_id_);
                 /**
                  * get the active curriculum base on course_id
                  */
@@ -151,7 +151,7 @@ class Create_student extends CI_Capstone_Controller
                              * not recommended hidden inputs
                              * --Lloric
                              */
-                            'student_school_id' => (string) $this->school_id->generate(),
+                           // 'student_school_id' => (string) $this->school_id->generate(),
                                 //--
 //                            'student_image'     => $img_name
                         ))->insert();
@@ -327,13 +327,13 @@ class Create_student extends CI_Capstone_Controller
                  *  i will use freshly from helper, just to make sure client cant override value
                  * --Lloric
                  */
-                $data['student_school_id_temp'] = array(
-                    'name'     => 'id_temp',
-                    'disabled' => '',
-                    'value'    => $this->school_id->temporary_id(),
-                    'type'     => 'text',
-                    'lang'     => 'create_student_school_id_label'
-                );
+//                $data['student_school_id_temp'] = array(
+//                    'name'     => 'id_temp',
+//                    'disabled' => '',
+//                    'value'    => $this->school_id->temporary_id(),
+//                    'type'     => 'text',
+//                    'lang'     => 'create_student_school_id_label'
+//                );
 
 
 
