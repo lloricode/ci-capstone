@@ -11,6 +11,7 @@ class Report_info extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
+                $this->load->model('Report_info_model');
                 $this->load->library('form_validation');
                 $this->breadcrumbs->unshift(2, 'Settings', '#');
                 $this->breadcrumbs->unshift(3, lang('report_info_label'), 'report-info');
@@ -23,45 +24,37 @@ class Report_info extends CI_Capstone_Controller
         {
                 if ($this->input->post('submit'))
                 {
-                        $this->load->model('Report_info_model');
-                        $id = $this->Report_info_model->from_form()->insert();
-                        if ($id)
+                        $this->Report_info_model->from_form()->insert();
+                        if ($this->db->affected_rows() === 1)//no primary key used
                         {
-                                /**
-                                 * message wont show even if success.
-                                 */
                                 $this->session->set_flashdata('message', lang('report_info_success'));
                                 redirect(site_url('report-info'), 'refresh');
                         }
                 }
-
-
-
-
                 $this->_form_view();
         }
 
         private function _form_view()
         {
-
+                $rows                  = $this->Report_info_model->get();
                 $inputs['school_name'] = array(
                     'name'  => 'name',
-                    'value' => $this->form_validation->set_value('name'),
-                    'type'  => 'text',
-                    'lang'  => 'report_info_name'
+                    'value' => $this->form_validation->set_value('name', $rows->school_name),
+                    'type'  => 'textarea',
+                    'lang'  => 'report_info_name',
                 );
 
                 $inputs['school_address'] = array(
                     'name'  => 'address',
-                    'value' => $this->form_validation->set_value('address'),
+                    'value' => $this->form_validation->set_value('address', $rows->school_address),
                     'type'  => 'textarea',
                     'lang'  => 'report_info_address'
                 );
 
                 $inputs['school_contact'] = array(
                     'name'  => 'contact',
-                    'value' => $this->form_validation->set_value('contact'),
-                    'type'  => 'text',
+                    'value' => $this->form_validation->set_value('contact', $rows->school_contact),
+                    'type'  => 'textarea',
                     'lang'  => 'report_info_contact'
                 );
 

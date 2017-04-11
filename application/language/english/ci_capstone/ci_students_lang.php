@@ -91,7 +91,7 @@ $lang['student_course_code']    = 'Course:';
 $lang['student_enroll_statuse'] = 'Enroll Status:';
 $lang['student_information']    = 'Student Information:';
 
-$lang['added_subjects_total_unitsl_units'] = 'Total Units:';
+$lang['added_subjects_total_units'] = 'Total Units:';
 
 /* * Units
  * for students subject table
