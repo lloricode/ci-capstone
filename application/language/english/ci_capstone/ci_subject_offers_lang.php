@@ -11,10 +11,10 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
  */
 //Subject Offer Form
 $lang['create_subject_offer_heading']                   = 'Create Class Schedule';
-$lang['create_subject_offer_start_label']               = 'Subject Offer Start:';
-$lang['create_subject_offer_end_label']                 = 'Subject Offer End:';
-$lang['create_subject_offer_start_label2']              = '2Subject Offer Start:';
-$lang['create_subject_offer_end_label2']                = '2Subject Offer End:';
+$lang['create_subject_offer_start_label']               = 'Time Start:';
+$lang['create_subject_offer_end_label']                 = 'Time End:';
+$lang['create_subject_offer_start_label2']              = '2Time Start:';
+$lang['create_subject_offer_end_label2']                = '2Time End:';
 $lang['create_user_id_label']                           = 'Instructor:';
 $lang['create_subject_id_label']                        = 'Subject:';
 $lang['create_room_id_label']                           = 'Room:';

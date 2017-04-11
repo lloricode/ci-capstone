@@ -14,7 +14,7 @@ $lang['view_curriculum_label']   = 'View Curriculums';
 $lang['curriculumn_description']        = 'Description';
 $lang['curriculumn_effective_year']     = 'Academic Year';
 $lang['curriculumn_effective_semester'] = 'Effective Semester';
-$lang['curriculumn_course']             = 'Course Code';
+$lang['curriculumn_course']             = 'Program Code';
 $lang['curriculumn_status']             = 'Status';
 //other
 
@@ -32,7 +32,7 @@ $lang['enable_curriculum_label']           = 'Enable Curriculum';
 $lang['enabling_curriculum_subheading']    = 'Enable "%s" ?';
 $lang['enable_curriculum_confirm_y_label'] = 'Yes';
 $lang['enable_curriculum_confirm_n_label'] = 'No';
-$lang['enable_curriculum_confirm_success'] = 'Enable Successfull!';
+$lang['enable_curriculum_confirm_success'] = 'Enabled Successfully!';
 
 
 

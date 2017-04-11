@@ -72,19 +72,19 @@ $lang['index_student_image_th']       = 'Image';
 $lang['view_student_label'] = 'View Student';
 
 
-$lang['student_image_required'] = 'Image Reqired!';
+$lang['student_image_required'] = 'Image Required!';
 
 $lang['edit_student_submit_button_label'] = 'Edit Student';
 
-$lang['add_student_subject_label'] = 'Add Enroll Subject';
+//$lang['add_student_subject_label'] = 'Enroll Subject';
 
-$lang['add_student_subject_label'] = 'Add Enroll Subject';
+$lang['add_student_subject_label'] = 'Enroll Subject/s';
 
 /**
  * for create student subject
  */
 $lang['available_subjects_to_enroll'] = 'Available subjects to enroll';
-$lang['added_subjects_to_enroll']     = 'Added subjects to enroll';
+$lang['added_subjects_to_enroll']     = 'Subjects Added to enroll';
 $lang['remove_subjects_to_enroll']    = 'Remove';
 
 $lang['student_course_code']    = 'Course:';
