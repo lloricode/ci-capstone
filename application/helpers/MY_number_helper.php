@@ -30,4 +30,35 @@ if ( ! function_exists('number_places'))
         }
 
 }
+if ( ! function_exists('number_roman'))
+{
+
+        /**
+         * 
+         * @param int $num it will convert to int
+         * @return string
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        function number_roman($num)
+        {
+                $num   = (int) $num;
+                /**
+                 * soon to improve dynamically
+                 */
+                $roman = array(
+                    1 => 'I',
+                    2 => 'II',
+                    3 => 'III',
+                    4 => 'IV',
+                    5 => 'V',
+                    6 => 'VI'
+                );
+                if (isset($roman[$num]))
+                {
+                        return $roman[$num];
+                }
+                return NULL;
+        }
+
+}
 

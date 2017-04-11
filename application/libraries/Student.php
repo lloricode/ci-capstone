@@ -26,7 +26,7 @@ class Student extends School_informations
         public function __construct($student_id)
         {
                 parent::__construct();
-
+                $this->load->helper('student');
                 /**
                  * check if exist student id
                  */
@@ -91,7 +91,7 @@ class Student extends School_informations
                         case 'birthplace':
                                 return $this->__student->student_birthplace;
                         case 'civil_status':
-                                return $this->__student->student_civil_status;
+                                return civil_status($this->__student->student_civil_status);
                         case 'nationality':
                                 return $this->__student->student_nationality;
                         case 'address':
@@ -129,10 +129,12 @@ class Student extends School_informations
                                 return (int) $this->__enrollment->enrollment_year_level;
                         case 'level_place':
                                 return number_place($this->__enrollment->enrollment_year_level) . ' Year';
+                        case 'level_roman':
+                                return number_roman($this->__enrollment->enrollment_year_level);
                         case 'school_year':
                                 return $this->__enrollment->enrollment_school_year;
                         case 'semester':
-                                return $this->__enrollment->enrollment_semester;
+                                return semesters($this->__enrollment->enrollment_semester);
                         case 'enrollment_id':
                                 return $this->__enrollment->enrollment_id;
                         case 'curriculum_id':
