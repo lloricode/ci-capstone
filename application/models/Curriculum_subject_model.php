@@ -22,12 +22,16 @@ class Curriculum_subject_model extends MY_Model
 
         protected function _add_created_by($data)
         {
+                $this->load->helper('mymodel');
+                $data                    = remove_empty_before_write($data);
                 $data['created_user_id'] = $this->ion_auth->get_user_id(); //add user_id
                 return $data;
         }
 
         protected function _add_updated_by($data)
         {
+                $this->load->helper('mymodel');
+                $data                    = remove_empty_before_write($data);
                 $data['updated_user_id'] = $this->ion_auth->get_user_id(); //add user_id
                 return $data;
         }

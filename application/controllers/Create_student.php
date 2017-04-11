@@ -9,7 +9,7 @@ class Create_student extends CI_Capstone_Controller
         {
                 parent::__construct();
 
-                $this->load->library(array('form_validation'/*, 'school_id'*/));
+                $this->load->library(array('form_validation'/* , 'school_id' */));
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span>');
                 $this->lang->load('ci_capstone/ci_students');
                 $this->load->helper('school');
@@ -146,12 +146,12 @@ class Create_student extends CI_Capstone_Controller
                  */
                 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::start
                 $s_id                      = $this->Student_model->from_form(NULL, array(
-                            /**
-                             * so users cant override the valid value
-                             * not recommended hidden inputs
-                             * --Lloric
-                             */
-                           // 'student_school_id' => (string) $this->school_id->generate(),
+                                /**
+                                 * so users cant override the valid value
+                                 * not recommended hidden inputs
+                                 * --Lloric
+                                 */
+                                // 'student_school_id' => (string) $this->school_id->generate(),
                                 //--
 //                            'student_image'     => $img_name
                         ))->insert();
@@ -205,6 +205,23 @@ class Create_student extends CI_Capstone_Controller
                          * rollback database
                          */
                         $this->db->trans_rollback();
+                        $msg = 'Failed to add student .';
+                        if ( ! $s_id)
+                        {
+                                $msg = str_replace('.', ',', $msg);
+                                $msg .= ' $s_id.';
+                        }
+                        if ( ! $id)
+                        {
+                                $msg = str_replace('.', ',', $msg);
+                                $msg .= ' $id.';
+                        }
+                        if ( ! $curriculum_id_from_active_course)
+                        {
+                                $msg = str_replace('.', ',', $msg);
+                                $msg .= ' $curriculum_id_from_active_course.';
+                        }
+                        $this->session->set_flashdata('message', '<div class="alert alert-error alert-block">' . $msg . '</div>');
 //                        if ($uploaded['uploaded'])
 //                        {
 //                                /**
@@ -227,7 +244,7 @@ class Create_student extends CI_Capstone_Controller
                                  */
 //                                $this->upload->image_resize($img_name);
                                 $this->session->set_flashdata('message', lang('create_student_succesfully_added_message'));
-                                redirect(site_url('students/view?student-id=' . $s_id), 'refresh');
+                                echo 'okkkkk';  //  redirect(site_url('students/view?student-id=' . $s_id), 'refresh');
                         }
                 }
         }
@@ -298,7 +315,7 @@ class Create_student extends CI_Capstone_Controller
                 );
 
                 $this->load->helper('student');
-                $data['student_civil_status']  = array(
+                $data['student_civil_status'] = array(
                     'name'  => 'status',
                     'value' => civil_status(),
                     'type'  => 'dropdown',
@@ -334,9 +351,6 @@ class Create_student extends CI_Capstone_Controller
 //                    'type'     => 'text',
 //                    'lang'     => 'create_student_school_id_label'
 //                );
-
-
-
                 //++++++++++++++++++++++++++++++++++++++=
                 $data['student_guardian_fullname'] = array(
                     'name'  => 'guardian_fullname',
