@@ -244,7 +244,7 @@ class Create_student extends CI_Capstone_Controller
                                  */
 //                                $this->upload->image_resize($img_name);
                                 $this->session->set_flashdata('message', lang('create_student_succesfully_added_message'));
-                                echo 'okkkkk';  //  redirect(site_url('students/view?student-id=' . $s_id), 'refresh');
+                                redirect(site_url('students/view?student-id=' . $s_id), 'refresh');
                         }
                 }
         }
