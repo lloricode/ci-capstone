@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-if ( ! function_exists('navigations_main'))
+if (!function_exists('navigations_main'))
 {
 
         /**
@@ -250,6 +250,12 @@ if ( ! function_exists('navigations_main'))
                                 'seen'  => TRUE,
                                 'admin' => TRUE
                             ),
+                            'report-info'    =>
+                            array(
+                                'label' => lang('report_info_label'),
+                                'seen'  => TRUE,
+                                'admin' => TRUE
+                            ),
                             'log'         =>
                             array(
                                 'label' => lang('error_label'),
@@ -277,7 +283,7 @@ if ( ! function_exists('navigations_main'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('controllers__'))
+if (!function_exists('controllers__'))
 {
 
         /**
@@ -301,13 +307,13 @@ if ( ! function_exists('controllers__'))
                                 {
 
                                         $return_arr[$kk] = $vv;
-                                        $return_str      .= $kk . $delimeter;
+                                        $return_str .= $kk . $delimeter;
                                 }
                         }
                         else
                         {
                                 $return_arr[$k] = $v;
-                                $return_str     .= $k . $delimeter;
+                                $return_str .= $k . $delimeter;
                         }
                 }
                 if ($delimeter == '')
@@ -324,7 +330,7 @@ if ( ! function_exists('controllers__'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('sidebar_menu_ci_capstone'))
+if (!function_exists('sidebar_menu_ci_capstone'))
 {
 
         /**
@@ -389,8 +395,8 @@ if ( ! function_exists('sidebar_menu_ci_capstone'))
                                                         {
                                                                 if ($value['enrollment'])
                                                                 {
-                                                                        $not_belong_to_enrollment_open = ! $enrollment_open_status;
-                                                                        if ( ! $enrollment_open_status)
+                                                                        $not_belong_to_enrollment_open = !$enrollment_open_status;
+                                                                        if (!$enrollment_open_status)
                                                                         {
                                                                                 $skip_controller_for_enrollment_open[] = $k_;
                                                                         }
@@ -402,7 +408,7 @@ if ( ! function_exists('sidebar_menu_ci_capstone'))
                                                         $permmission_resutl = in_array($k_, $permission_controllers);
                                                         if ($permmission_resutl)
                                                         {
-                                                                if ( ! $not_belong_to_enrollment_open)
+                                                                if (!$not_belong_to_enrollment_open)
                                                                 {
                                                                         $count ++;
                                                                 }
@@ -469,7 +475,7 @@ if ( ! function_exists('sidebar_menu_ci_capstone'))
         }
 
 }
-if ( ! function_exists('get_all_controller_with_enrollment'))
+if (!function_exists('get_all_controller_with_enrollment'))
 {
 
         /**
