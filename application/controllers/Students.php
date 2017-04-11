@@ -5,7 +5,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Students extends CI_Capstone_Controller
 {
 
-
         private $page_;
         private $limit;
 
@@ -99,7 +98,7 @@ class Students extends CI_Capstone_Controller
                 }
                 if ($key = $this->input->get('search'))
                 {
-                        if ( ! preg_match('![?]!', $pagination_index))
+                        if (!preg_match('![?]!', $pagination_index))
                         {
                                 $pagination_index .= '?';
                         }
@@ -158,21 +157,23 @@ class Students extends CI_Capstone_Controller
 
         public function print_data()
         {
-                if ($action = (string) $this->input->get('action'))
+                $this->load->model('Report_info_model');
+                $report_obj = $this->Report_info_model->get();
+                if ($action     = (string) $this->input->get('action'))
                 {
-                        $id = check_id_from_url('student_id', 'Student_model', 'student-id')->student_id;
+                        $id                  = check_id_from_url('student_id', 'Student_model', 'student-id')->student_id;
                         $this->Student_model->set_informations($id);
-
+                        $data['subjecs']     = $this->view(TRUE);
+                        $data['report_info'] = $report_obj;
+                        
                         if ($action === 'prev')
                         {
                                 $data['print_link'] = anchor(site_url('students/print_data?action=print&student-id=' . $this->student->id), lang('print_label'));
-                                $data['subjecs']    = $this->view(TRUE);
                                 MY_Controller::render('admin/_templates/students/print', $data);
                         }
                         elseif ($action === 'print')
                         {
                                 $this->load->library('pdf');
-                                $data['subjecs'] = $this->view(TRUE);
                                 $this->pdf->print_now(MY_Controller::render('admin/_templates/students/print', $data, TRUE));
                         }
                 }
