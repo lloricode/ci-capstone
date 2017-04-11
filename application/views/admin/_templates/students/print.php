@@ -117,7 +117,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div class="isNew">
     <input type="checkbox"> New Student<br>
     <input type="checkbox"> Old Student
-    <p class="marginTop_10"> S.Y: <u><?php echo $this->student->semester ?></u></p>
+    <p class="marginTop_10"> Term: <u><?php echo semesters($this->student->semester); ?></u></p>
+    <p class="marginTop_10"> S.Y: <u><?php echo $this->student->school_year; ?></u></p>
 </div>
 <?php //-------------HEADER2------------ ?>
 <div class="darkblue">
@@ -126,7 +127,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <p class="stud_tertiary_info Info-Margin"><?php echo $this->student->school_id(); ?></p>
 </div>
 
-<?php echo br(2);?>
+<?php echo br(2); ?>
 
 <table border="1">
     <tbody>
