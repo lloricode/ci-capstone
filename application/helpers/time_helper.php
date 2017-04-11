@@ -110,9 +110,9 @@ if ( ! function_exists('convert_24_to_12hrs'))
                 $ap = 'AM';
                 list($hh, $mm) = explode(':', $hr24);
 
-                if ($hh > 12)
+                if ($hh >= 12)
                 {
-                        $hh -= 12;
+                        $hh -= ($hh == 12) ? 0 : 12;
                         $ap = 'PM';
                 }
 

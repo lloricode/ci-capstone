@@ -18,7 +18,7 @@ echo form_open_multipart(site_url("edit-student?student-id=" . $this->student->i
 
                         image_view(array(
                             'src'   => $this->Student_model->image_resize()->profile,
-                            'alt'   => 'no image for [ ' . $this->student->school_id . ' ]',
+                            'alt'   => 'no image for [ ' . $this->student->school_id(TRUE) . ' ]',
                             'title' => $this->student->school_id . ' - ' . $this->student->fullname,
                         ));
                         //student_image:

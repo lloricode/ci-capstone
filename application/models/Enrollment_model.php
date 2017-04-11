@@ -16,7 +16,6 @@ class Enrollment_model extends MY_Model
                 $this->_relations();
                 $this->_form();
                 $this->_config();
-                $this->before_update[] = '_add_user_id';
 
                 parent::__construct();
         }
@@ -29,6 +28,13 @@ class Enrollment_model extends MY_Model
 
         protected function _add_updated_by($data)
         {
+                if (isset($data['enrollment_status']))
+                {
+                        if ($data['enrollment_status'] === '0')
+                        {
+                                return $data; //skip. no need to add user_id,
+                        }
+                }
                 $data['updated_user_id'] = $this->ion_auth->get_user_id(); //add user_id
                 return $data;
         }
@@ -47,12 +53,6 @@ class Enrollment_model extends MY_Model
                  */
                 //   $this->remove_empty_before_write = TRUE;//(bool) $this->config->item('my_model_remove_empty_before_write');
                 $this->delete_cache_on_save = TRUE; //(bool) $this->config->item('my_model_delete_cache_on_save');
-        }
-
-        protected function _add_user_id($data)
-        {
-                $data['updated_user_id'] = $this->session->userdata('user_id');
-                return $data;
         }
 
         private function _relations()
@@ -113,6 +113,18 @@ class Enrollment_model extends MY_Model
                         'rules' => 'trim|required',
                     )
                 );
+        }
+
+        public function unenroll_all_past_term()
+        {
+                $this->where(
+                                '`enrollment_semester` != \'' . current_school_semester(TRUE) . '\'' .
+                                ' OR `enrollment_school_year` != \'' . current_school_year() . '\''
+                                , NULL, NULL, FALSE, FALSE, TRUE
+                        )->
+                        update(array(
+                            'enrollment_status' => '0'
+                ));
         }
 
 }

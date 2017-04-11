@@ -16,7 +16,6 @@ echo form_open_multipart(site_url("create-student/index"), array(
                         <?php
                         //student_image:
                         //echo input_bootstrap($student_image);
-
                         //student_firstname:
                         echo input_bootstrap($student_firstname);
 
@@ -58,7 +57,7 @@ echo form_open_multipart(site_url("create-student/index"), array(
                     <div  class="form-horizontal">
                         <?php
                         //student_school_id:
-                        echo input_bootstrap($student_school_id_temp, 'Course Code');
+//                        echo input_bootstrap($student_school_id_temp, 'Course Code');
 
                         //course_id:                      
                         echo input_bootstrap($course_id);
@@ -124,7 +123,7 @@ echo form_open_multipart(site_url("create-student/index"), array(
                             <label class="control-label">Old</label>
                             <div class="controls">
                                 <label>
-<?php echo form_checkbox('newsletter', 'accept', TRUE); ?>
+                                    <?php echo form_checkbox('newsletter', 'accept', TRUE); ?>
                                     First One</label>
                                 <label>
                                     <input type="checkbox" name="radios" />

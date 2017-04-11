@@ -48,9 +48,9 @@ class Create_student_subject extends CI_Capstone_Controller
 
                 if ($this->input->post('submit'))
                 {
-                        if ($from_session = $this->session->has_userdata($this->_session_name_))
+                        if ($this->session->has_userdata($this->_session_name_))
                         {
-
+                                $from_session = $this->session->userdata($this->_session_name_);
                                 $this->load->model('Students_subjects_model');
 
                                 /**
