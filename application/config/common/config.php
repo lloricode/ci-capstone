@@ -65,3 +65,5 @@ $config['student_image_size_table']   = '40x40/';
  * 
  */
 $config['default_student_image_in_table'] = 'assets/images/favicon.ico';
+$config['print_student_copy_logo']        = $config['default_student_image_in_table']; //temporary
+$config['tab_icon_logo']                  = $config['default_student_image_in_table']; //temporary

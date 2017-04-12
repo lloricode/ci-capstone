@@ -69,7 +69,7 @@ echo doctype();
         <meta charset="<?php echo $this->config->item('charset'); ?>" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <?php echo link_tag('assets/images/favicon.ico', 'shortcut icon', 'image/ico'); ?>
+        <?php echo link_tag($this->config->item('tab_icon_logo'), 'shortcut icon', 'image/ico'); ?>
         <?php
         /**
          * echo generated link/script tags

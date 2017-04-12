@@ -141,6 +141,13 @@ class Students extends CI_Capstone_Controller
                 {
                         $image_file = $this->config->item('default_student_image_in_table');
                 }
+                if ( ! file_exists($image_file))
+                {
+                        /**
+                         * if there's a data from db but none of server file
+                         */
+                        $image_file = $this->config->item('default_student_image_in_table');
+                }
                 return '<div class="user-thumb">' . img(array(
                             'src'   => $image_file,
                             'alt'   => 'no image',
@@ -173,14 +180,14 @@ class Students extends CI_Capstone_Controller
 
                         if ($action === 'prev')
                         {
-                                $data['print_link'] = anchor('students/print_data?action=print&student-id=' . $this->student->id, lang('print_label'));
+                                //$data['print_link'] = anchor('students/print_data?action=print&student-id=' . $this->student->id, lang('print_label'));
                                 MY_Controller::render('admin/_templates/students/print', $data);
                         }
-                        elseif ($action === 'print')
-                        {
-                                $this->load->library('pdf');
-                                $this->pdf->print_now(MY_Controller::render('admin/_templates/students/print', $data, TRUE));
-                        }
+//                        elseif ($action === 'print')
+//                        {
+//                                $this->load->library('pdf');
+//                                $this->pdf->print_now(MY_Controller::render('admin/_templates/students/print', $data, TRUE));
+//                        }
                 }
         }
 
@@ -189,52 +196,75 @@ class Students extends CI_Capstone_Controller
          */
         public function view($return_html = FALSE)//parameter use for printing
         {
-                $this->load->helper('time');
                 /*
                  * check url with id,tehn get studewnt row
                  */
                 $this->Student_model->set_informations($this->input->get('student-id'));
                 $this->breadcrumbs->unshift(3, 'View Student [' . $this->student->school_id(TRUE) . ']', 'students/view?student-id=' . $this->student->id);
-                /**
-                 * setting up page for pagination
-                 */
-//                $page = 1;
-//                if ($this->input->get('per_page'))
-//                {
-//                        $page = $this->input->get('per_page');
-//                }
+
 
 
                 /**
-                 * config for table, getting bootstrap header table
+                 * sorting the rows of subject result 
                  */
-                $this->config->load('admin/table');
+                $sort_result_as = array(
+                    'year',
+                    'semester',
+                    'faculty',
+                    'subject',
+                    'unit',
+                    'day1',
+                    'start1',
+                    'end1',
+                    'room1',
+                    'day2',
+                    'start2',
+                    'end2',
+                    'room2',
+                    'status',
+                );
+
                 /**
-                 * loading table library
-                 * then setting up html table configuration
+                 * get subject from db
                  */
-                $this->load->library('table');
+                //parameter is for remove button link in faculty
+                $student_subjects_result = $this->student->subject_offers($return_html, 'array', $sort_result_as);
+
                 $table_open         = NULL;
-                $heading_cell_start = NULL; //do nothinng
+                $heading_cell_start = NULL;
                 $caption            = NULL;
+
                 if ($return_html)
                 {
+                        /**
+                         * design for printing preview
+                         */
                         $table_open         = '<table border="1">';
                         $heading_cell_start = '<td>'; //replace <th> to <td>
                         $caption            = 'Subjects';
                 }
                 else
                 {
+                        /*
+                         * for web view design template table bootstrap
+                         */
+                        $this->config->load('admin/table');
                         $caption    = 'Subjects';
                         $table_open = $this->config->item('table_open_invoice');
                 }
-                $this->table->set_caption($caption);
-                $this->table->set_template(array(
+
+                /**
+                 *  preparing table template, depend on $return_html
+                 */
+                $tbale_template = array(
                     'table_open'         => $table_open,
                     'heading_cell_start' => $heading_cell_start
-                ));
-                $this->table->set_heading(array(
-                    // 'id',
+                );
+
+                /**
+                 * table header
+                 */
+                $header = array(
                     lang('student_year_th'),
                     lang('student_semester_th'),
                     lang('student_instructor_th'),
@@ -249,53 +279,35 @@ class Students extends CI_Capstone_Controller
                     lang('student_end_th'),
                     lang('student_room_th'),
                     lang('student_status_th')
-                ));
+                );
 
 
-                //parameter is for remove button link in faculty
-                $student_subjects_obj = $this->student->subject_offers($return_html/* $this->limit, $this->limit * $page - $this->limit */);
-                if ($student_subjects_obj)
-                {
-                        /**
-                         * distribute data to html table rows
-                         */
-                        foreach ($student_subjects_obj as $subject)
-                        {
-                                $this->table->add_row(
-                                        //'id',
-                                        $subject->year, $subject->semester, $subject->faculty, $subject->subject, $subject->unit, $subject->day1, $subject->start1, $subject->end1, $subject->room1, $subject->day2, $subject->start2, $subject->end2, $subject->room2, $subject->status);
-                        }
-                }
-                else
-                {
-                        /**
-                         * no data so, i colspan the row in 14 with data "no data"
-                         */
-                        $this->table->add_row(array('data' => 'no data', 'colspan' => '14', 'class' => 'taskStatus'));
-                }
+                /**
+                 * start generating htnml table with data rows
+                 */
+                $result_html_with_subjects = $this->table_bootstrap($header, $student_subjects_result, $tbale_template, 'index_room_heading', FALSE, TRUE, $caption, FALSE/* FALSE to ignore bootsrap */);
+
                 if ($return_html)
                 {
                         /**
                          * use for printing
                          */
-                        return $this->table->generate();
+                        return $result_html_with_subjects;
                 }
-                /**
-                 * generating html table result
-                 */
-                $data['table_subjects'] = $this->table->generate();
 
-                /**
-                 * generating html pagination
+
+                /*
+                 * for web view vars
                  */
-//                $data['table_subjects_pagination'] = $this->pagination->generate_bootstrap_link('students/view?student-id = ' . $this->student->id, $this->student->subject_total() / $this->limit, TRUE);
-                $data['image_src']     = $this->_image_for_view_single_data();
+                $data['table_subjects'] = $result_html_with_subjects;
+                $data['image_src']      = $this->_image_for_view_single_data();
+                ;
                 /**
                  * here we go!
                  * rendering page for view
                  */
-                $template['view']      = MY_Controller::render('admin/_templates/students/view', $data, TRUE);
-                $template['bootstrap'] = $this->_bootstrap_for_view();
+                $template['view']       = MY_Controller::render('admin/_templates/students/view', $data, TRUE);
+                $template['bootstrap']  = $this->_bootstrap_for_view();
                 $this->render('admin/students', $template);
         }
 

@@ -295,7 +295,7 @@ class Student extends School_informations
          * @return object
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        public function subject_offers($button_link = FALSE/* $limit, $offset */)
+        public function subject_offers($button_link = FALSE, $return_type = 'object', $sort_ = FALSE)
         {
                 $this->load->helper(array('day', 'school', 'time'));
                 $s_o_           = $this->__students_subjects(/* $limit, $offset */);
@@ -354,21 +354,62 @@ class Student extends School_informations
                                             'room' . $tmp  => '--',
                                         ));
                                 }
-                                $subject_offers[] = (object) array_merge(array(
-                                            'id'       => $sub_of->subject_offer_id,
-                                            'year'     => number_place($sub_of->curriculum_subject->curriculum_subject_year_level) . ' Year',
-                                            'semester' => semesters($sub_of->curriculum_subject->curriculum_subject_semester),
-                                            'subject'  => $sub_of->subject->subject_code,
-                                            'faculty'  => ($button_link) ? ($sub_of->faculty->last_name . ', ' . $sub_of->faculty->first_name) : $this->User_model->button_link($sub_of->faculty->id, $sub_of->faculty->last_name, $sub_of->faculty->first_name),
-                                            //--
-                                            'unit'     => $sub_of->curriculum_subject->curriculum_subject_units,
-                                            'status'   => ($stud_sub->student_subject_enroll_status) ? 'Enrolled' : 'Pending'
-                                                ), $subject_line);
+                                $tmp__  = array_merge(array(
+                                    // 'id'       => $sub_of->subject_offer_id,
+                                    'year'     => number_place($sub_of->curriculum_subject->curriculum_subject_year_level) . ' Year',
+                                    'semester' => semesters($sub_of->curriculum_subject->curriculum_subject_semester),
+                                    'subject'  => $sub_of->subject->subject_code,
+                                    'faculty'  => ($button_link) ? ($sub_of->faculty->last_name . ', ' . $sub_of->faculty->first_name) : $this->User_model->button_link($sub_of->faculty->id, $sub_of->faculty->last_name, $sub_of->faculty->first_name),
+                                    //--
+                                    'unit'     => $sub_of->curriculum_subject->curriculum_subject_units,
+                                    'status'   => ($stud_sub->student_subject_enroll_status) ? 'Enrolled' : 'Pending'
+                                        ), $subject_line);
+                                /**
+                                 * sorting
+                                 */
+                                $sorted = array();
+                                if ($sort_)
+                                {
+                                        foreach ($sort_ as $sortk)
+                                        {
+                                                if (array_key_exists($sortk, $tmp__))//check the key if really exist
+                                                {
+                                                        $sorted[] = $tmp__[$sortk];
+                                                }
+                                                else
+                                                {
+                                                        show_error('key ' . strong($sortk) . ' not found.');
+                                                }
+                                        }
+                                }
+                                else
+                                {
+                                        $sorted = $tmp__;
+                                }
+                                if ($return_type === 'object')
+                                {
+                                        $subject_offers[] = (object) $sorted;
+                                }
+                                if ($return_type === 'array')
+                                {
+                                        $subject_offers[] = $sorted;
+                                }
                         }
-
-                        return (object) $subject_offers;
+                        if ($return_type === 'object')
+                        {
+                                return (object) $subject_offers;
+                        }
+                        if ($return_type === 'array')
+                        {
+                                return $subject_offers;
+                        }
                 }
-                return NULL;
+//                $col_count = 14;
+//                if ($sort_)
+//                {
+//                        $col_count = count($sort_);
+//                }
+                return array(array(array('data' => 'no data', 'colspan' => '14', 'class' => 'taskStatus')));
         }
 
         /**

@@ -105,7 +105,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <div class="blue">
     <?php
     echo img(array(
-        'src'   => $this->config->item('default_student_image_in_table'),
+        'src'   => $this->config->item('print_student_copy_logo'),
         'class' => 'imageSize'
     ));
     ?>

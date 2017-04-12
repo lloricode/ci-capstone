@@ -229,18 +229,37 @@ class CI_Capstone_Controller extends MY_Controller
          * @return string | generated html table with header/data/table-type/pagination depend on parameters
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        public function table_bootstrap($header, $table_data_rows, $table_config, $caption_lang, $pagination = FALSE, $return_html = FALSE)
+        public function table_bootstrap($header, $table_data_rows, $table_config_or_template, $header_lang, $pagination = FALSE, $return_html = FALSE, $caption = NULL, $bootsrap = TRUE)
         {
+
                 $this->config->load('admin/table');
                 $this->load->library('table');
+
+                $temp_template = NULL;
+                if (is_array($table_config_or_template))
+                {
+                        /**
+                         * if array so its template
+                         */
+                        $temp_template = $table_config_or_template;
+                }
+                else
+                {
+                        /**
+                         * just table open
+                         */
+                        $temp_template['table_open'] = $this->config->item($table_config_or_template);
+                }
+                $this->table->set_template($temp_template);
+
                 $this->table->set_heading($header);
-                $this->table->set_template(array(
-                    'table_open' => $this->config->item($table_config),
-                ));
-                $_data['caption_lang'] = $caption_lang;
-                $_data['table_data']   = $this->table->generate($table_data_rows);
-                $_data['pagination']   = $pagination;
-                $generated_html_table  = parent::render('admin/_templates/table', $_data, $return_html);
+                $this->table->set_caption($caption);
+
+                $_data['header_lang']      = $header_lang;
+                $_data['table_data']       = $this->table->generate($table_data_rows);
+                $_data['pagination']       = $pagination;
+                $_data['bootstrap_output'] = $bootsrap;
+                $generated_html_table      = parent::render('admin/_templates/table', $_data, $return_html);
                 if ($return_html)
                 {
                         return $generated_html_table;
