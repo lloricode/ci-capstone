@@ -24,7 +24,7 @@ if ( ! function_exists('civil_status'))
                         }
                         return NULL;
                 }
-                if (trim($index) == '')
+                if (trim($index) == '' && ! is_bool($index))
                 {
 
                         return NULL;

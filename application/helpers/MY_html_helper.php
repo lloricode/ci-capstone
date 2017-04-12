@@ -21,6 +21,82 @@ if ( ! function_exists('my_htmlspecialchars'))
 
 // ------------------------------------------------------------------------
 
+if ( ! function_exists('paragraph'))
+{
+
+        /**
+         * Paragraph
+         *
+         * Generates an HTML paragraph tag.
+         *
+         * @param	string	content
+         * @param	string
+         * @return	string
+         */
+        function paragraph($data = '', $attributes = '')
+        {
+                return '<p' . _stringify_attributes($attributes) . '>' . $data . '</p>';
+        }
+
+}
+
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('strong'))
+{
+
+        /**
+         * Paragraph
+         *
+         * Generates an HTML paragraph tag.
+         *
+         * @param	string	content
+         * @param	string
+         * @return	string
+         */
+        function strong($data = '', $attributes = '')
+        {
+                return '<strong' . _stringify_attributes($attributes) . '>' . $data . '</strong>';
+        }
+
+}
+
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('image_view'))
+{
+
+        /**
+         * 
+         * @param string $field field
+         * @param string $lang lang
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        function image_view($image_properties)//, $lang, $input = 'input')
+        {
+                $CI = &get_instance();
+                $CI->load->helper('html');
+                echo PHP_EOL . comment_tag('image');
+                //  $tmp = (form_error($field['name']) == '') ? '' : ' error';
+                echo '<div class="control-group' . /* $tmp . */ '">' . PHP_EOL;
+//                echo lang($lang, $field['name'], array(
+//                    'class' => 'control-label',
+//                )) . PHP_EOL;
+                echo '<div class="controls">' . PHP_EOL;
+
+
+                echo img($image_properties);
+
+
+                echo '</div>' . PHP_EOL;
+                echo '</div>' . PHP_EOL;
+                echo comment_tag('end-imgae') . PHP_EOL;
+        }
+
+}
+
+// ------------------------------------------------------------------------
+
 if ( ! function_exists('script_tag'))
 {
 

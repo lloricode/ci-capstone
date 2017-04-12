@@ -5,6 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Students extends CI_Capstone_Controller
 {
 
+
         private $page_;
         private $limit;
 
@@ -94,15 +95,19 @@ class Students extends CI_Capstone_Controller
                 $pagination_index = 'students';
                 if ($this->input->get('course-id'))
                 {
-                        $pagination_index .= '?course-id=' . $this->input->get('course-id');
+                        $pagination_index                .= '?course-id=' . $this->input->get('course-id');
+                        $course_code                     = check_id_from_url('course_id', 'Course_model', 'course-id')->course_code;
+                        $template['search_result_label'] = paragraph(sprintf(lang('search_result_course_label'/* ci_students_lang */), strong($result_count_for_pagination), strong($course_code)));
                 }
                 if ($key = $this->input->get('search'))
                 {
-                        if (!preg_match('![?]!', $pagination_index))
+                        if ( ! preg_match('![?]!', $pagination_index))
                         {
                                 $pagination_index .= '?';
                         }
                         $pagination_index .= 'search=' . $key;
+
+                        $template['search_result_label'] = paragraph(sprintf(lang('search_result_label'/* ci_students_lang */), strong($result_count_for_pagination), strong($key)));
                 }
                 $pagination = $this->pagination->generate_bootstrap_link($pagination_index, $result_count_for_pagination / $this->limit, TRUE);
 
@@ -165,10 +170,10 @@ class Students extends CI_Capstone_Controller
                         $this->Student_model->set_informations($id);
                         $data['subjecs']     = $this->view(TRUE);
                         $data['report_info'] = $report_obj;
-                        
+
                         if ($action === 'prev')
                         {
-                                $data['print_link'] = anchor(site_url('students/print_data?action=print&student-id=' . $this->student->id), lang('print_label'));
+                                $data['print_link'] = anchor('students/print_data?action=print&student-id=' . $this->student->id, lang('print_label'));
                                 MY_Controller::render('admin/_templates/students/print', $data);
                         }
                         elseif ($action === 'print')
@@ -209,8 +214,24 @@ class Students extends CI_Capstone_Controller
                  * then setting up html table configuration
                  */
                 $this->load->library('table');
+                $table_open         = NULL;
+                $heading_cell_start = NULL; //do nothinng
+                $caption            = NULL;
+                if ($return_html)
+                {
+                        $table_open         = '<table border="1">';
+                        $heading_cell_start = '<td>'; //replace <th> to <td>
+                        $caption            = 'Subjects';
+                }
+                else
+                {
+                        $caption    = 'Subjects';
+                        $table_open = $this->config->item('table_open_invoice');
+                }
+                $this->table->set_caption($caption);
                 $this->table->set_template(array(
-                    'table_open' => $this->config->item('table_open_invoice'),
+                    'table_open'         => $table_open,
+                    'heading_cell_start' => $heading_cell_start
                 ));
                 $this->table->set_heading(array(
                     // 'id',
@@ -248,9 +269,9 @@ class Students extends CI_Capstone_Controller
                 else
                 {
                         /**
-                         * no data so, i colspan the row in 4 with data "no data"
+                         * no data so, i colspan the row in 14 with data "no data"
                          */
-                        $this->table->add_row(array('data' => 'no data', 'colspan' => '7'));
+                        $this->table->add_row(array('data' => 'no data', 'colspan' => '14', 'class' => 'taskStatus'));
                 }
                 if ($return_html)
                 {

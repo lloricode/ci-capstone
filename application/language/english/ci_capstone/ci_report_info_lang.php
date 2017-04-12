@@ -19,4 +19,4 @@ $lang['report_info_contact_validation'] = 'Contact Number';
 $lang['report_info_update_label'] = 'Update Info';
 $lang['report_info_button']       = 'Update Info';
 
-$lang['report_info_success'] = 'Information Added Successfully!';
+$lang['report_info_success'] = 'Information Updated Successfully!';

@@ -117,3 +117,8 @@ $lang['student_civil_status_married']   = 'Married';
 $lang['student_civil_status_seperated'] = 'Separated';
 $lang['student_civil_status_widower']   = 'Widow/er';
 
+/**
+ * 
+ */
+$lang['search_result_label']        = '%s result for search key \'%s\'.';
+$lang['search_result_course_label'] = '%s result of Program \'%s\'.';

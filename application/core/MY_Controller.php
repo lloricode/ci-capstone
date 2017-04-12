@@ -22,12 +22,18 @@ class MY_Controller extends CI_Controller
                 }
 
                 /**
-                 * we set here , must before check login or before calling a trigger for a name of event
+                 * there is a back button, 
+                 * still reach this, so ignore this
                  */
-                $this->ion_auth->set_hook(
-                        'logged_in', 'check_log_multiple_user', $this/* $this because the class already extended */, 'check_if_multiple_logged_in_one_user', array()
-                );
-
+                if ($this->session->has_userdata('user_id'))
+                {
+                        /**
+                         * we set here , must before check login or before calling a trigger for a name of event
+                         */
+                        $this->ion_auth->set_hook(
+                                'logged_in', 'check_log_multiple_user', $this/* $this because the class already extended */, 'check_if_multiple_logged_in_one_user', array()
+                        );
+                }
                 /**
                  * update enrollment status to FALSE in ALL not current semester and school_year
                  */
@@ -154,7 +160,7 @@ class CI_Capstone_Controller extends MY_Controller
                 /**
                  * check permission
                  */
-                if ( ! in_array($this->uri->segment($this->config->item('segment_controller')), permission_controllers()))
+                if ( ! in_array(str_replace('_', '-', $this->uri->segment($this->config->item('segment_controller'))), permission_controllers()))
                 {
                         show_404();
                 }
@@ -308,28 +314,20 @@ class CI_Capstone_Controller extends MY_Controller
          */
         public function check_if_multiple_logged_in_one_user()
         {
-                /**
-                 * there is a back button, and i don't know why even logged out, 
-                 * still reach this, so error occurred where get last_login,
-                 *  because session not exit
-                 */
-                if ($this->session->userdata('identity'))#hmmm
+                $last_logged_in_session = $this->session->userdata('user_current_logged_time');
+                $last_logged_in_db      = $this->ion_auth->user()->row()->last_login;
+
+                if ($last_logged_in_session != $last_logged_in_db)
                 {
-                        $last_logged_in_session = $this->session->userdata('user_current_logged_time');
-                        $last_logged_in_db      = $this->ion_auth->user()->row()->last_login;
+                        $message = lang('another_logged_in_user_in_this_account');
 
-                        if ($last_logged_in_session != $last_logged_in_db)
-                        {
-                                $message = lang('another_logged_in_user_in_this_account');
+                        /**
+                         * replace 'space' to 'undescore
+                         * because, it will appear in url
+                         */
+                        $message = str_replace(' ', '_', $message);
 
-                                /**
-                                 * replace 'space' to 'undescore
-                                 * because, it will appear in url
-                                 */
-                                $message = str_replace(' ', '_', $message);
-
-                                redirect(site_url('auth/logout/' . $message), 'refresh');
-                        }
+                        redirect(site_url('auth/logout/' . $message), 'refresh');
                 }
         }
 
