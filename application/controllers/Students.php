@@ -253,18 +253,35 @@ class Students extends CI_Capstone_Controller
                 //parameter is for remove button link in faculty
                 $student_subjects_result = $this->student->subject_offers($return_html, 'array', $sort_result_as);
 
-                $table_open         = NULL;
-                $heading_cell_start = NULL;
-                $caption            = NULL;
+                $tbale_template = NULL;
 
                 if ($return_html)
                 {
                         /**
                          * design for printing preview
                          */
-                        $table_open         = '<table border="1">';
-                        $heading_cell_start = '<td>'; //replace <th> to <td>
-                        $caption            = 'Subjects';
+                        $caption = 'Subjects';
+
+                        $tbale_template = array(
+                            'table_open'         => '<table border="1">', //modified
+                            'thead_open'         => '<thead>',
+                            'thead_close'        => '</thead>',
+                            'heading_row_start'  => '<tr>',
+                            'heading_row_end'    => '</tr>',
+                            'heading_cell_start' => '<td>', //modified   //replace <th> to <td>
+                            'heading_cell_end'   => '</th>',
+                            'tbody_open'         => '<tbody>',
+                            'tbody_close'        => '</tbody>',
+                            'row_start'          => '<tr>',
+                            'row_end'            => '</tr>',
+                            'cell_start'         => '<td>',
+                            'cell_end'           => '</td>',
+                            'row_alt_start'      => '<tr>',
+                            'row_alt_end'        => '</tr>',
+                            'cell_alt_start'     => '<td>',
+                            'cell_alt_end'       => '</td>',
+                            'table_close'        => '</table>'
+                        );
                 }
                 else
                 {
@@ -272,17 +289,28 @@ class Students extends CI_Capstone_Controller
                          * for web view design template table bootstrap
                          */
                         $this->config->load('admin/table');
-                        $caption    = 'Subjects';
-                        $table_open = $this->config->item('table_open_invoice');
+                        $caption        = 'Subjects';
+                        $tbale_template = array(
+                            'table_open'         => $this->config->item('table_open_invoice'), //modified
+                            'thead_open'         => '<thead>',
+                            'thead_close'        => '</thead>',
+                            'heading_row_start'  => '<tr>',
+                            'heading_row_end'    => '</tr>',
+                            'heading_cell_start' => '<th>',
+                            'heading_cell_end'   => '</th>',
+                            'tbody_open'         => '<tbody>',
+                            'tbody_close'        => '</tbody>',
+                            'row_start'          => '<tr>',
+                            'row_end'            => '</tr>',
+                            'cell_start'         => '<td>',
+                            'cell_end'           => '</td>',
+                            'row_alt_start'      => '<tr>',
+                            'row_alt_end'        => '</tr>',
+                            'cell_alt_start'     => '<td>',
+                            'cell_alt_end'       => '</td>',
+                            'table_close'        => '</table>'
+                        );
                 }
-
-                /**
-                 *  preparing table template, depend on $return_html
-                 */
-                $tbale_template = array(
-                    'table_open'         => $table_open,
-                    'heading_cell_start' => $heading_cell_start
-                );
 
                 /**
                  * table header
