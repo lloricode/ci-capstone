@@ -39,10 +39,6 @@ class Edit_user extends CI_Capstone_Controller
                         show_error('Invalid request.');
                 }
 
-                $data['title'] = $this->lang->line('edit_user_heading');
-
-
-
                 $user = $this->ion_auth->user($user_id)->row();
 
                 $this->set_hook($user->id);
@@ -53,9 +49,6 @@ class Edit_user extends CI_Capstone_Controller
 
                 $this->breadcrumbs->unshift(3, 'Edit User [ ' . $user->last_name . ', ' . $user->first_name . ' ]', 'edit-user?user-id=' . $user->id);
 
-                $groups        = $this->ion_auth->groups()->result_array();
-                $currentGroups = $this->ion_auth->get_users_groups($user->id)->result();
-
                 //just 
                 // validate form input
                 $this->form_validation->set_rules('first_name', $this->lang->line('edit_user_validation_fname_label'), 'trim|required|human_name');
@@ -65,10 +58,7 @@ class Edit_user extends CI_Capstone_Controller
 
                 if ($this->form_validation->run())
                 {
-                        /**
-                         * start the DB transaction
-                         */
-                        $this->db->trans_start();
+
 
                         // update the password if it was posted
                         if ($this->input->post('password', TRUE))
@@ -79,70 +69,102 @@ class Edit_user extends CI_Capstone_Controller
 
                         if ($this->form_validation->run() === TRUE)
                         {
-                                $data = array(
+                                /**
+                                 * start the DB transaction
+                                 */
+                                $this->db->trans_start();
+                                $ion_auth_updated  = FALSE;
+                                $removed_all_group = FALSE;
+                                $group_updated     = FALSE;
+
+                                $empty_user_group                = FALSE;
+                                $remove_as_admin_a_current_admin = FALSE;
+
+                                //Update the groups user belongs to
+                                $group_ids = $this->input->post('groups', TRUE);
+
+                                /**
+                                 * if current user has admin group,then remove in edit,
+                                 * show error for do not remove admin if current user is admin
+                                 */
+                                if ( ! $group_ids)
+                                {
+                                        /**
+                                         * make sure atleast one selected 
+                                         */
+                                        // show_error('empty user_group not allowed.');
+                                        $this->session->set_flashdata('message', '<div class="alert alert-error alert-block"> ' . 'empty user_group not allowed.' . ' </div>');
+                                        $empty_user_group = TRUE;
+                                }
+
+                                /**
+                                 * if current user
+                                 */
+                                if ($this->ion_auth->get_user_id() == $user->id && ! $empty_user_group)
+                                {
+                                        //get id of admin from db
+                                        $this->load->model('Group_model');
+                                        $admin_id = $this->Group_model->where(array('name' => $this->config->item('admin_group', 'ion_auth')))->get()->id;
+                                        /**
+                                         * check admin_id if has in post
+                                         */
+                                        if ( ! in_array($admin_id, $group_ids))
+                                        {
+                                                //  show_error('cannot remove from admin a current user');
+                                                $this->session->set_flashdata('message', '<div class="alert alert-error alert-block"> ' . 'cannot remove from admin a current user' . ' </div>');
+
+                                                $remove_as_admin_a_current_admin = TRUE;
+                                        }
+                                }
+
+                                if ( ! $empty_user_group)
+                                {
+
+                                        $removed_all_group = $this->ion_auth->remove_from_group('', $user_id);
+                                        if ($removed_all_group)
+                                        {
+                                                foreach ($group_ids as $grp)
+                                                {
+                                                        $group_updated = $this->ion_auth->add_to_group($grp, $user_id);
+                                                        if ( ! $group_updated)
+                                                        {
+                                                                break;
+                                                        }
+                                                }
+                                        }
+                                }
+
+
+                                $new_user_data = array(
                                     'first_name' => $this->input->post('first_name', TRUE),
                                     'last_name'  => $this->input->post('last_name', TRUE),
                                     'company'    => $this->input->post('company', TRUE),
                                     'phone'      => $this->input->post('phone', TRUE),
                                 );
-
                                 // update the password if it was posted
                                 if ($this->input->post('password', TRUE))
                                 {
-                                        $data['password'] = $this->input->post('password', TRUE);
-                                }
-
-
-
-                                // Only allow updating groups if user is admin
-                                if ($this->ion_auth->is_admin())
-                                {
-                                        //Update the groups user belongs to
-                                        $group_ids = $this->input->post('groups', TRUE);
-
-                                        /**
-                                         * if current user has admin group,then remove in edit,
-                                         * show error for do not remove admin if current user is admin
-                                         */
-                                        if ( ! $group_ids)
-                                        {
-                                                /**
-                                                 * make sure atleast one selected 
-                                                 */
-                                                show_error('empty user_group not allowed.');
-                                        }
-
-                                        /**
-                                         * if current user
-                                         */
-                                        if ($this->ion_auth->get_user_id() == $user->id)
-                                        {
-                                                //get id of admin from db
-                                                $this->load->model('Group_model');
-                                                $admin_id = $this->Group_model->where(array('name' => $this->config->item('admin_group', 'ion_auth')))->get()->id;
-                                                /**
-                                                 * check admin_id if has in post
-                                                 */
-                                                if ( ! in_array($admin_id, $group_ids))
-                                                {
-                                                        show_error('cannot remove from admin a current user');
-                                                }
-                                        }
-
-                                        if (isset($group_ids) && ! empty($group_ids))
-                                        {
-
-                                                $this->ion_auth->remove_from_group('', $user_id);
-
-                                                foreach ($group_ids as $grp)
-                                                {
-                                                        $this->ion_auth->add_to_group($grp, $user_id);
-                                                }
-                                        }
+                                        $new_user_data['password'] = $this->input->post('password', TRUE);
                                 }
 
                                 // check to see if we are updating the user
-                                if ($this->ion_auth->update($user->id, $data))
+                                $ion_auth_updated = $this->ion_auth->update($user->id, $new_user_data);
+
+
+                                if ( ! $ion_auth_updated OR ! $removed_all_group OR ! $group_updated OR $remove_as_admin_a_current_admin OR $empty_user_group)
+                                {
+                                        /**
+                                         * rollback database
+                                         */
+                                        $this->db->trans_rollback();
+
+                                        if ( ! $ion_auth_updated)
+                                        {
+                                                $this->session->set_flashdata('message', $this->ion_auth->errors());
+                                        }
+                                        // redirect(site_url('users'), 'refresh'); 
+                                }
+                                else
                                 {
                                         if ($this->db->trans_commit())
                                         {
@@ -164,79 +186,84 @@ class Edit_user extends CI_Capstone_Controller
                                                 }
                                                 // redirect them back to the admin page if admin, or to the base url if non admin
                                                 $this->session->set_flashdata('message', $this->ion_auth->messages());
-                                                if ($this->ion_auth->is_admin())
-                                                {
-                                                        redirect(site_url('users'), 'refresh');
-                                                }
-                                                else
-                                                {
-                                                        redirect('/', 'refresh');
-                                                }
-                                        }
-                                }
-                                else
-                                {
-                                        /**
-                                         * rollback database
-                                         */
-                                        $this->db->trans_rollback();
-
-                                        // redirect them back to the admin page if admin, or to the base url if non admin
-                                        $this->session->set_flashdata('message', $this->ion_auth->errors());
-                                        if ($this->ion_auth->is_admin())
-                                        {
-                                                redirect('auth', 'refresh');
-                                        }
-                                        else
-                                        {
-                                                redirect('/', 'refresh');
+                                                //redirect(site_url('users'), 'refresh');
                                         }
                                 }
                         }
                 }
+                $this->_form_view($user);
+        }
 
+        private function _form_view($user)
+        {
+                $groups        = $this->ion_auth->groups()->result_array();
+                $currentGroups = $this->ion_auth->get_users_groups($user->id)->result();
 
+                $all_group_id_name = array();
+                $current_group_id  = array();
 
-                // pass the user to the view
-                $data['user']          = $user;
-                $data['groups']        = $groups;
-                $data['currentGroups'] = $currentGroups;
+                foreach ($groups as $ag)
+                {
+                        $all_group_id_name[$ag['id']] = $ag['name'];
+                }
 
-                $data['first_name']       = array(
+                foreach ($currentGroups as $cg)
+                {
+                        $current_group_id[] = $cg->id;
+                }
+
+                $inputs['first_name'] = array(
                     'name'  => 'first_name',
-                    'id'    => 'first_name',
-                    'type'  => 'text',
                     'value' => $this->form_validation->set_value('first_name', $user->first_name),
+                    'type'  => 'text',
+                    'lang'  => 'create_user_fname_label'
                 );
-                $data['last_name']        = array(
+
+                $inputs['last_name'] = array(
                     'name'  => 'last_name',
-                    'id'    => 'last_name',
-                    'type'  => 'text',
                     'value' => $this->form_validation->set_value('last_name', $user->last_name),
+                    'type'  => 'text',
+                    'lang'  => 'create_user_lname_label'
                 );
-                $data['company']          = array(
+
+                $inputs['company'] = array(
                     'name'  => 'company',
-                    'id'    => 'company',
-                    'type'  => 'text',
                     'value' => $this->form_validation->set_value('company', $user->company),
-                );
-                $data['phone']            = array(
-                    'name'  => 'phone',
-                    'id'    => 'phone',
                     'type'  => 'text',
+                    'lang'  => 'create_user_company_label'
+                );
+
+                $inputs['phone'] = array(
+                    'name'  => 'phone',
                     'value' => $this->form_validation->set_value('phone', $user->phone),
+                    'type'  => 'text',
+                    'lang'  => 'create_user_phone_label'
                 );
-                $data['password']         = array(
+
+                $inputs['password'] = array(
                     'name' => 'password',
-                    'id'   => 'password',
-                    'type' => 'password'
+                    'type' => 'password',
+                    'lang' => 'edit_user_password_label'
                 );
-                $data['password_confirm'] = array(
+
+                $inputs['password_confirm'] = array(
                     'name' => 'password_confirm',
-                    'id'   => 'password_confirm',
-                    'type' => 'password'
+                    'type' => 'password',
+                    'lang' => 'edit_user_password_confirm_label'
                 );
-                $data['bootstrap']        = $this->_bootstrap();
+
+                $inputs['groups'] = array(
+                    'name'       => 'groups[]',
+                    'fields'     => $all_group_id_name,
+                    'field_lang' => FALSE,
+                    'default'    => $current_group_id,
+                    'value'      => $this->form_validation->set_value('groups[]'),
+                    'type'       => 'checkbox',
+                    'lang'       => 'edit_user_groups_heading'
+                );
+
+                $data['edit_user_form'] = $this->form_boostrap('edit-user?user-id=' . $user->id, $inputs, 'edit_user_heading', 'edit_user_submit_btn', 'info-sign', array('id', $user->id), TRUE);
+                $data['bootstrap']      = $this->_bootstrap();
                 $this->render('admin/edit_user', $data);
         }
 

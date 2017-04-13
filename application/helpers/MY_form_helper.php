@@ -126,7 +126,19 @@ if ( ! function_exists('input_bootstrap'))
                                                                 switch ($field['type'])
                                                                 {
                                                                         case 'checkbox':
-                                                                                $defaut = (bool) in_array($k, (array) $CI->input->post($field['name'], TRUE));
+                                                                                if (isset($field['default']) && ((int) count((array) $CI->input->post($field['name'], TRUE)) === 0))
+                                                                                {
+                                                                                        $field_default = $field['default'];
+                                                                                        if ( ! is_array($field_default))
+                                                                                        {
+                                                                                                $field_default = array($default_value);
+                                                                                        }
+                                                                                        $defaut = (bool) in_array($k, $field_default);
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                        $defaut = (bool) in_array($k, (array) $CI->input->post($field['name'], TRUE));
+                                                                                }
                                                                                 break;
                                                                         case 'radio':
                                                                                 $defaut = ($field['value'] == $k);
@@ -134,17 +146,33 @@ if ( ! function_exists('input_bootstrap'))
                                                                 }
                                                                 $lang_ = NULL;
 
-                                                                if (is_numeric($v))
-                                                                {
-                                                                        /**
-                                                                         * no need lang if numeric
-                                                                         */
-                                                                        $lang_ = $v;
-                                                                }
-                                                                else
-                                                                {
 
-                                                                        $lang_ = lang($v);
+                                                                $ignore = FALSE;
+                                                                if (isset($field['field_lang']))
+                                                                {
+                                                                        if ( ! $field['field_lang'])
+                                                                        {
+                                                                                /**
+                                                                                 * no need lang
+                                                                                 */
+                                                                                $lang_  = $v;
+                                                                                $ignore = TRUE;
+                                                                        }
+                                                                }
+                                                                if ( ! $ignore)
+                                                                {
+                                                                        if (is_numeric($v))
+                                                                        {
+                                                                                /**
+                                                                                 * no need lang if numeric
+                                                                                 */
+                                                                                $lang_ = $v;
+                                                                        }
+                                                                        else
+                                                                        {
+
+                                                                                $lang_ = lang($v);
+                                                                        }
                                                                 }
                                                                 $form_ = 'form_' . $field['type'];
                                                                 echo form_label($form_($field['name'], $k, $defaut) . ' ' . $lang_) . PHP_EOL;
