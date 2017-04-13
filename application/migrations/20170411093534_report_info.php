@@ -8,6 +8,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Migration_Report_info extends CI_Migration
 {
 
+
         const CI_DB_TABLE = 'report_info';
 
         public function __construct($config = array())
@@ -36,8 +37,8 @@ class Migration_Report_info extends CI_Migration
                     ),
                     //------------------------------------
                     'created_at'      => array(
-                        'type'       => 'VARCHAR',
-                        'constraint' => '100',
+                        'type'       => 'INT',
+                        'constraint' => '11',
                         'null'       => FALSE
                     ),
                     'created_user_id' => array(

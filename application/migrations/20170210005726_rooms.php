@@ -33,15 +33,15 @@ class Migration_Rooms extends CI_Migration
                         'unique'     => TRUE,
                         'null'       => FALSE
                     ),
-                    'room_capacity'     => array(
+                    'room_capacity'   => array(
                         'type'       => 'INT',
                         'constraint' => '2',
                         'null'       => FALSE
                     ),
                     //------------------------------------
                     'created_at'      => array(
-                        'type'       => 'VARCHAR',
-                        'constraint' => '100',
+                        'type'       => 'INT',
+                        'constraint' => '11',
                         'null'       => FALSE
                     ),
                     'created_user_id' => array(
@@ -51,8 +51,8 @@ class Migration_Rooms extends CI_Migration
                         'null'       => FALSE
                     ),
                     'deleted_at'      => array(
-                        'type'       => 'VARCHAR',
-                        'constraint' => '100',
+                        'type'       => 'INT',
+                        'constraint' => '11',
                         'null'       => TRUE
                     ),
                     'deleted_user_id' => array(
@@ -62,8 +62,8 @@ class Migration_Rooms extends CI_Migration
                         'null'       => TRUE
                     ),
                     'updated_at'      => array(
-                        'type'       => 'VARCHAR',
-                        'constraint' => '100',
+                        'type'       => 'INT',
+                        'constraint' => '11',
                         'null'       => TRUE
                     ),
                     'updated_user_id' => array(
@@ -71,7 +71,7 @@ class Migration_Rooms extends CI_Migration
                         'constraint' => '11',
                         'unsigned'   => TRUE,
                         'null'       => TRUE
-                    ),
+                    )
                 );
 
 

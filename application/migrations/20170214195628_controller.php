@@ -41,40 +41,40 @@ class Migration_Controller extends CI_Migration
         {
                 $this->down();
                 $fields = array(
-                    'controller_id'          => array(
+                    'controller_id'              => array(
                         'type'           => 'MEDIUMINT',
                         'constraint'     => 8,
                         'unsigned'       => TRUE,
                         'null'           => FALSE,
                         'auto_increment' => TRUE
                     ),
-                    'controller_name'        => array(
+                    'controller_name'            => array(
                         'type'   => 'ENUM(' . $this->enum() . ')',
                         //let make it unique while data type in enum, so good so secure
                         'unique' => TRUE,
                         'null'   => FALSE
                     ),
-                    'controller_description' => array(
+                    'controller_description'     => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '50',
                         'null'       => FALSE
                     ),
-                    'controller_admin_only'  => array(
+                    'controller_admin_only'      => array(
                         'type'       => 'TINYINT',
                         'constraint' => '1',
                         'default'    => '0',
                         'null'       => FALSE
                     ),
-                    'controller_enrollment_open'  => array(
+                    'controller_enrollment_open' => array(
                         'type'       => 'TINYINT',
                         'constraint' => '1',
                         'default'    => '0',
                         'null'       => FALSE
                     ),
                     //------------------------------------
-                    'created_at'             => array(
-                        'type'       => 'VARCHAR',
-                        'constraint' => '100',
+                    'created_at'                 => array(
+                        'type'       => 'INT',
+                        'constraint' => '11',
                         'null'       => FALSE
                     ),
                 );

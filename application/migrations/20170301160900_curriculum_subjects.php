@@ -95,8 +95,8 @@ class Migration_Curriculum_subjects extends CI_Migration
 //                    ),
                     //------------------------------------
                     'created_at'                          => array(
-                        'type'       => 'VARCHAR',
-                        'constraint' => '100',
+                        'type'       => 'INT',
+                        'constraint' => '11',
                         'null'       => FALSE
                     ),
                     'created_user_id'                     => array(
@@ -106,8 +106,8 @@ class Migration_Curriculum_subjects extends CI_Migration
                         'null'       => FALSE
                     ),
                     'deleted_at'                          => array(
-                        'type'       => 'VARCHAR',
-                        'constraint' => '100',
+                        'type'       => 'INT',
+                        'constraint' => '11',
                         'null'       => TRUE
                     ),
                     'deleted_user_id'                     => array(
@@ -117,8 +117,8 @@ class Migration_Curriculum_subjects extends CI_Migration
                         'null'       => TRUE
                     ),
                     'updated_at'                          => array(
-                        'type'       => 'VARCHAR',
-                        'constraint' => '100',
+                        'type'       => 'INT',
+                        'constraint' => '11',
                         'null'       => TRUE
                     ),
                     'updated_user_id'                     => array(
@@ -126,7 +126,7 @@ class Migration_Curriculum_subjects extends CI_Migration
                         'constraint' => '11',
                         'unsigned'   => TRUE,
                         'null'       => TRUE
-                    ),
+                    )
                 );
 
 

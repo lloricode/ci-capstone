@@ -39,8 +39,8 @@ class Migration_Permission extends CI_Migration
                     ),
                     //------------------------------------
                     'created_at'      => array(
-                        'type'       => 'VARCHAR',
-                        'constraint' => '100',
+                        'type'       => 'INT',
+                        'constraint' => '11',
                         'null'       => FALSE
                     ),
                     'created_user_id' => array(
