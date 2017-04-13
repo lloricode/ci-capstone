@@ -82,12 +82,13 @@ class Create_student_subject extends CI_Capstone_Controller
                                 }
                                 else
                                 {
-                                        if ($this->db->trans_commit())
-                                        {
-                                                $this->_reset_session();
-                                                $this->session->set_flashdata('message', 'all subjects added!');
-                                                redirect(site_url('students/view?student-id=' . $this->student->id), 'refresh');
-                                        }
+                                        $this->db->trans_rollback();
+//                                        if ($this->db->trans_commit())
+//                                        {
+                                        $this->_reset_session();
+                                        $this->session->set_flashdata('message', 'all subjects added!');
+                                        redirect(site_url('students/view?student-id=' . $this->student->id), 'refresh');
+//                                        }
                                 }
                         }
                         else
@@ -214,7 +215,7 @@ class Create_student_subject extends CI_Capstone_Controller
                 }
 
                 /**
-                 * generate information for curretn student
+                 * generate information for current student
                  */
                 $data['student_subject_form'] = $this->form_boostrap(
                         'create-student-subject?student-id=' . $this->student->id, $this->_student_information(), 'student_information', 'add_student_subject_label', 'user', NULL, TRUE, $error_message
@@ -469,6 +470,62 @@ class Create_student_subject extends CI_Capstone_Controller
                         {
                                 $this->session->set_flashdata('message', '<div class="alert alert-error alert-block">Full Capacity: ' . $subject_offer_obj->subject->subject_code . ' </div>');
                                 return FALSE;
+                        }
+                }
+                /**
+                 * check selected subject to all session
+                 */
+                if ($this->session->has_userdata($this->_session_name_))
+                {
+                        $this->load->helper('validator');
+                        $count = 0;
+                        foreach ($subject_offer_obj->subject_line as $line)
+                        {
+                                $count ++;
+                                ${'selected' . $count} = array(
+                                    'start'   => $line->subject_offer_line_start,
+                                    'end'     => $line->subject_offer_line_end,
+                                    'room'    => $line->room_id,
+                                    'faculty' => $subject_offer_obj->user_id,
+                                    'subject' => $subject_offer_obj->subject_id
+                                );
+                                foreach (days_for_db() as $d)
+                                {
+                                        ${'selected' . $count} [$d] = $line->{'subject_offer_line_' . $d};
+                                }
+                        }
+                        foreach ($this->session->userdata($this->_session_name_) as $subj_offr_id)
+                        {
+                                $row_   = $this->Subject_offer_model->with_subject_line()->get($subj_offr_id);
+                                $count2 = 0;
+                                foreach ($row_->subject_line as $_line)
+                                {
+                                        $count2 ++;
+                                        ${'session' . $count2} = array(
+                                            'start'   => $_line->subject_offer_line_start,
+                                            'end'     => $_line->subject_offer_line_end,
+                                            'room'    => $_line->room_id,
+                                            'faculty' => $row_->user_id,
+                                            'subject' => $row_->subject_id
+                                        );
+                                        foreach (days_for_db() as $d)
+                                        {
+                                                ${'session' . $count2} [$d] = $_line->{'subject_offer_line_' . $d};
+                                        }
+                                }
+                                for ($i = 1; $i <= $count; $i ++ )
+                                {
+                                        for ($ii = 1; $ii <= $count2; $ii ++ )
+                                        {
+                                                $tmp = is_not_conflict_subject_offer(${'selected' . $i}, ${'session' . $ii});
+                                                if ( ! $tmp)
+                                                {
+                                                        $subject_code = $this->subject_model->get(${'session' . $ii}['subject'])->subject_code;
+                                                        $this->session->set_flashdata('message', '<div class="alert alert-error alert-block"> ' . 'Conflict: ' . $subject_code . ' </div>');
+                                                        return FALSE;
+                                                }
+                                        }
+                                }
                         }
                 }
 

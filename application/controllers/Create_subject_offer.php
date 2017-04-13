@@ -159,14 +159,13 @@ class Create_subject_offer extends CI_Capstone_Controller
                                  */
                                 if ( ! $sub_offer_id OR ! $sched_id OR ! $sched_id2 OR ! $validate_two_forms)
                                 {
-                                        echo 'roolback__';
                                         /**
                                          * rollback database
                                          */
                                         $this->db->trans_rollback();
                                         if ( ! $validate_two_forms)
                                         {
-                                                $this->data['two_forms_conflict_message'] = '<h5 style="color:red">Conflict two forms.</h5>';
+                                                $this->session->set_flashdata('message', '<div class="alert alert-error alert-block"> ' . 'Conflict two forms.' . ' </div>');
                                         }
                                 }
                                 else
@@ -191,79 +190,21 @@ class Create_subject_offer extends CI_Capstone_Controller
          */
         private function _validate_two_shedules()
         {
-                $sched1 = array(
-                    'start' => $this->input->post('start', TRUE),
-                    'end'   => $this->input->post('end', TRUE),
-                    'room'  => $this->input->post('room', TRUE)
-                );
-                foreach (days_for_db() as $d)
+                for ($i = 1; $i <= 2; $i ++)
                 {
-                        $sched1[$d] = (is_null($this->input->post($d, TRUE)) ? 0 : 1);
+                        $tmp            = ($i === 1) ? '' : '2';
+                        ${'sched' . $i} = array(
+                            'start' => $this->input->post('start' . $tmp, TRUE),
+                            'end'   => $this->input->post('end' . $tmp, TRUE),
+                            'room'  => $this->input->post('room' . $tmp, TRUE)
+                        );
+                        foreach (days_for_db() as $d)
+                        {
+                                ${'sched' . $i}[$d] = (is_null($this->input->post($d . $tmp, TRUE)) ? 0 : 1);
+                        }
                 }
-                //------------------------
-                $sched2 = array(
-                    'start' => $this->input->post('start2', TRUE),
-                    'end'   => $this->input->post('end2', TRUE),
-                    'room'  => $this->input->post('room2', TRUE)
-                );
-                foreach (days_for_db() as $d)
-                {
-                        $sched2[$d] = (is_null($this->input->post($d . '2', TRUE)) ? 0 : 1);
-                }
-//                if (
-//                        ($sched1['monday'] == $sched2['monday'] && 1 == $sched2['monday'] ) OR
-//                        ($sched1['tuesday'] == $sched2['tuesday'] && 1 == $sched2['tuesday']) OR
-//                        ($sched1['wednesday'] == $sched2['wednesday'] && 1 == $sched2['wednesday']) OR
-//                        ($sched1['thursday'] == $sched2['thursday'] && 1 == $sched2['thursday']) OR
-//                        ($sched1['friday'] == $sched2['friday'] && 1 == $sched2['friday']) OR
-//                        ($sched1['saturday'] == $sched2['saturday'] && 1 == $sched2['saturday']) OR
-//                        ($sched1['sunday'] == $sched2['sunday'] && 1 == $sched2['sunday'])
-//                )
-//                {
-//                        echo 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
-//                }
-                if (
-                //--
-                        (//big start
-                        //1
-                        ($sched1['start'] <= $sched2['start'] &&
-                        $sched1['start'] <= $sched2['end'] &&
-                        $sched1['end'] > $sched2['start'] &&
-                        $sched1['end'] <= $sched2['end'])
-                        //--
-                        OR
-                        //2
-                        ( $sched1['start'] >= $sched2['start'] &&
-                        $sched1['start'] < $sched2['end'] &&
-                        $sched1['end'] >= $sched2['start'] &&
-                        $sched1['end'] >= $sched2['end'])
-                        //--
-                        OR
-                        //3
-                        ( $sched1['start'] <= $sched2['start'] &&
-                        $sched1['start'] < $sched2['end'] &&
-                        $sched1['end'] > $sched2['start'] &&
-                        $sched1['end'] >= $sched2['end'])
-                        //--
-                        OR
-                        //4
-                        ( $sched1['start'] >= $sched2['start'] &&
-                        $sched1['start'] < $sched2['end'] &&
-                        $sched1['end'] > $sched2['start'] &&
-                        $sched1['end'] <= $sched2['end'])
-                        //--
-                        )//big end
-                        //--
-                        &&
-                        //days
-                        (
-                        ($sched1['monday'] == $sched2['monday'] && 1 == $sched2['monday'] ) OR ( $sched1['tuesday'] == $sched2['tuesday'] && 1 == $sched2['tuesday']) OR ( $sched1['wednesday'] == $sched2['wednesday'] && 1 == $sched2['wednesday']) OR ( $sched1['thursday'] == $sched2['thursday'] && 1 == $sched2['thursday']) OR ( $sched1['friday'] == $sched2['friday'] && 1 == $sched2['friday']) OR ( $sched1['saturday'] == $sched2['saturday'] && 1 == $sched2['saturday']) OR ( $sched1['sunday'] == $sched2['sunday'] && 1 == $sched2['sunday'])
-                        )
-                )
-                {
-                        return FALSE;
-                }
-                return TRUE;
+                $this->load->helper('validator');
+                return is_not_conflict_subject_offer($sched1, $sched2);
         }
 
         /**
@@ -287,16 +228,10 @@ class Create_subject_offer extends CI_Capstone_Controller
                 $this->load->library('subject_offer_validation');
                 $this->subject_offer_validation->form_($form_);
                 $this->subject_offer_validation->init('post');
+
                 $conflic             = $this->subject_offer_validation->subject_offer_check_check_conflict();
-//                if ($conflic)
-//                {
-//                        echo 'tReu';
-//                }
-//                else
-//                {
-//                        echo 'flase';
-//                }
                 $this->data_conflict = $this->subject_offer_validation->conflict();
+
                 if ($this->data_conflict)
                 {
                         $inc        = 1;
@@ -311,7 +246,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                         );
                         $table_data = array();
                         foreach ($this->data_conflict as $subject_offer)
-                        {//echo print_r($subject_offer);
+                        {
                                 $user = $this->User_model->get($subject_offer->user_id);
                                 array_push($table_data, array(
                                     $inc ++,
