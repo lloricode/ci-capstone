@@ -106,6 +106,23 @@ class MY_Controller extends CI_Controller
          */
         public function set_session_data_session()
         {
+                $is_dean          = FALSE;
+                $dean_course_id   = NULL;
+                $dean_course_code = NULL;
+                if ($this->ion_auth->in_group($this->config->item('user_group_dean')))
+                {
+                        $is_dean = TRUE;
+                        $this->load->model('Dean_course_model');
+                        $obj     = $this->Dean_course_model->where(array(
+                                    'user_id' => $this->ion_auth->get_user_id()
+                                ))->get();
+                        if ($obj)
+                        {
+                                $this->load->model('Course_model');
+                                $dean_course_id      = $obj->course_id;
+                                $dean_course_code = $this->Course_model->get($obj->course_id)->course_code;
+                        }
+                }
                 //set the user name/last name in session
                 $user_obj = $this->ion_auth->user()->row();
                 $this->session->set_userdata(array(
@@ -115,6 +132,9 @@ class MY_Controller extends CI_Controller
                     'user_current_logged_time' => $user_obj->last_login, //this will be use for checking multiple logged machines in one account
                     'user_groups_descriptions' => $this->current_group_string(),
                     'user_groups_names'        => $this->current_group_string('name'),
+                    'user_is_dean'             => $is_dean,
+                    'user_dean_course_id'      => $dean_course_id,
+                    'user_dean_course_code'    => $dean_course_code,
                 ));
         }
 

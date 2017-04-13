@@ -13,7 +13,7 @@ class Users extends CI_Capstone_Controller
         {
                 parent::__construct();
                 $this->lang->load('ci_capstone/ci_excel');
-                $this->load->model(array('User_model', 'Group_model'));
+                $this->load->model(array('User_model', 'Group_model', 'Dean_course_model', 'Course_model'));
                 $this->load->library('pagination');
 
                 /**
@@ -66,16 +66,17 @@ class Users extends CI_Capstone_Controller
                                 {
                                         $groups .= $this->Group_model->button_link($group);
                                 }
-                                $tmp   = array();
-                                $tmp[] = my_htmlspecialchars($user->last_name);
-                                $tmp[] = my_htmlspecialchars($user->first_name);
-                                $tmp[] = my_htmlspecialchars($user->username);
-                                $tmp[] = my_htmlspecialchars($user->email);
-                                $tmp[] = $groups;
-
+                                $tmp = array(
+                                    my_htmlspecialchars($user->last_name),
+                                    my_htmlspecialchars($user->first_name),
+                                    my_htmlspecialchars($user->username),
+                                    my_htmlspecialchars($user->email),
+                                    $groups,
+                                    $this->_dean_course($user->id)
+                                );
                                 if (in_array('deactivate', permission_controllers()))
                                 {
-                                        $active_      = (($user->active) ? table_row_button_link("deactivate/?user-id=" . $user->id, 'Set Deactive', 'pending') : table_row_button_link("users/activate/" . $user->id, 'Set Active', 'done'));
+                                        $active_      = (($user->active) ? table_row_button_link("deactivate?user-id=" . $user->id, 'Set Deactive', 'pending') : table_row_button_link("users/activate/" . $user->id, 'Set Active', 'done'));
                                         $active_label = (($user->active) ? '<span class="date badge badge-success">' . lang('index_active_link') : '<span class="date badge badge-important">' . lang('index_inactive_link')) . '</span>';
                                         $tmp[]        = array('data' => $active_label . nbs() . $active_, 'class' => 'taskStatus');
                                 }
@@ -93,13 +94,14 @@ class Users extends CI_Capstone_Controller
                 /*
                  * header
                  */
-                $header   = array();
-                $header[] = lang('index_lname_th');
-                $header[] = lang('index_fname_th');
-                $header[] = lang('login_identity_label');
-                $header[] = lang('index_email_th');
-                $header[] = lang('index_groups_th');
-
+                $header = array(
+                    lang('index_lname_th'),
+                    lang('index_fname_th'),
+                    lang('index_email_th'),
+                    lang('login_identity_label'),
+                    lang('index_groups_th'),
+                    lang('dean_course_lebal')
+                );
                 if (in_array('deactivate', permission_controllers()))
                 {
                         $header[] = lang('index_status_th');
@@ -135,6 +137,18 @@ class Users extends CI_Capstone_Controller
                 $template['bootstrap']   = $this->_bootstrap();
 
                 $this->render('admin/users', $template);
+        }
+
+        private function _dean_course($id)
+        {
+                $obj = $this->Dean_course_model->where(array(
+                            'user_id' => $id
+                        ))->get();
+                if ( ! $obj)
+                {
+                        return '--';
+                }
+                return $this->Course_model->get($obj->course_id)->course_code;
         }
 
         /**

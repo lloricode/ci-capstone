@@ -43,7 +43,19 @@ class Create_student_subject extends CI_Capstone_Controller
                 $this->breadcrumbs->unshift(3, 'View Student [ ' . $this->student->school_id . ' ]', 'students/view?student-id=' . $this->student->id);
                 $this->breadcrumbs->unshift(4, lang('add_student_subject_label'), 'create-student-subject?student-id=' . $this->student->id);
 
-
+                if ($this->session->userdata('user_is_dean'))
+                {
+                        if (is_null($this->session->userdata('user_dean_course_id')))
+                        {
+                                show_error('Current user_group is DEAN, but no course_id related.');
+                        }
+                        if ($this->student->course_id != $this->session->userdata('user_dean_course_id'))
+                        {
+                                show_error('Current DEAN is not same course of current student.');
+                        }
+                }
+                
+                
                 $error_message = '';
 
                 if ($this->input->post('submit'))
@@ -513,9 +525,9 @@ class Create_student_subject extends CI_Capstone_Controller
                                                 ${'session' . $count2} [$d] = $_line->{'subject_offer_line_' . $d};
                                         }
                                 }
-                                for ($i = 1; $i <= $count; $i ++)
+                                for ($i = 1; $i <= $count; $i ++ )
                                 {
-                                        for ($ii = 1; $ii <= $count2; $ii ++)
+                                        for ($ii = 1; $ii <= $count2; $ii ++ )
                                         {
                                                 $tmp = is_not_conflict_subject_offer(${'selected' . $i}, ${'session' . $ii});
                                                 if ( ! $tmp)

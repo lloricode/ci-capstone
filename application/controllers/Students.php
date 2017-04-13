@@ -34,8 +34,19 @@ class Students extends CI_Capstone_Controller
                 {
                         $this->page_ = $this->input->get('per_page');
                 }
-
-                $student_result = $this->Student_model->all($this->limit, $this->limit * $this->page_ - $this->limit, $this->input->get('course-id'), $this->input->get('search'));
+                $course_id = $this->input->get('course-id');
+                /**
+                 * check if user has a "dean" user_group
+                 */
+                if ($this->session->userdata('user_is_dean'))
+                {
+                        if (is_null($this->session->userdata('user_dean_course_id')))
+                        {
+                                show_error('Current user_group is DEAN, but no course_id related.');
+                        }
+                        $course_id = $this->session->userdata('user_dean_course_id');
+                }
+                $student_result = $this->Student_model->all($this->limit, $this->limit * $this->page_ - $this->limit, $course_id, $this->input->get('search'));
 
                 $student_obj                 = $student_result->result;
                 $result_count_for_pagination = $student_result->count;
@@ -201,8 +212,20 @@ class Students extends CI_Capstone_Controller
                  */
                 $this->Student_model->set_informations($this->input->get('student-id'));
                 $this->breadcrumbs->unshift(3, 'View Student [' . $this->student->school_id(TRUE) . ']', 'students/view?student-id=' . $this->student->id);
-
-
+                /**
+                 * check if user is "dean" then check the courseId of student
+                 */
+                if ($this->session->userdata('user_is_dean'))
+                {
+                        if (is_null($this->session->userdata('user_dean_course_id')))
+                        {
+                                show_error('Current user_group is DEAN, but no course_id related.');
+                        }
+                        if ($this->student->course_id != $this->session->userdata('user_dean_course_id'))
+                        {
+                                show_error('Current DEAN is not same course of current student.');
+                        }
+                }
 
                 /**
                  * sorting the rows of subject result 

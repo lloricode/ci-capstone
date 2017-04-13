@@ -80,6 +80,8 @@ class Edit_user extends CI_Capstone_Controller
                                 $empty_user_group                = FALSE;
                                 $remove_as_admin_a_current_admin = FALSE;
 
+                                $updated_dean_course = TRUE;
+
                                 //Update the groups user belongs to
                                 $group_ids = $this->input->post('groups', TRUE);
 
@@ -132,6 +134,8 @@ class Edit_user extends CI_Capstone_Controller
                                                         }
                                                 }
                                         }
+
+                                        $updated_dean_course = $this->_dean_course_update($group_ids, $user->id);
                                 }
 
 
@@ -150,8 +154,7 @@ class Edit_user extends CI_Capstone_Controller
                                 // check to see if we are updating the user
                                 $ion_auth_updated = $this->ion_auth->update($user->id, $new_user_data);
 
-
-                                if ( ! $ion_auth_updated OR ! $removed_all_group OR ! $group_updated OR $remove_as_admin_a_current_admin OR $empty_user_group)
+                                if ( ! $updated_dean_course OR ! $ion_auth_updated OR ! $removed_all_group OR ! $group_updated OR $remove_as_admin_a_current_admin OR $empty_user_group)
                                 {
                                         /**
                                          * rollback database
@@ -192,6 +195,50 @@ class Edit_user extends CI_Capstone_Controller
                         }
                 }
                 $this->_form_view($user);
+        }
+
+        private function _dean_course_update($selected_group_ids, $user_id)
+        {
+                /**
+                 * delete all first, no dean_id mean also remove all
+                 */
+                $this->load->model('Dean_course_model');
+                $deleted = $this->Dean_course_model->where(array(
+                            'user_id' => $user_id
+                        ))->delete();
+                if ( ! $deleted)
+                {
+                        $count = $this->Dean_course_model->where(array(
+                                    'user_id' => $user_id
+                                ))->count_rows();
+                        if ($count != 0)
+                        {
+                                $this->session->set_flashdata('message', '<div class="alert alert-error alert-block"> ' . 'failed delete all dean_course on current editing user.' . ' </div>');
+                                return FALSE;
+                        }
+                }
+
+                $this->load->model('Group_model');
+                $dean_id = $this->Group_model->where(array('name' => $this->config->item('user_group_dean')))->get()->id;
+                if (in_array($dean_id, $selected_group_ids) && count($this->input->post('dean_course[]', TRUE)) != 0)
+                {
+
+                        $gen_id = $this->Dean_course_model->insert(array(
+                            'user_id'   => $user_id,
+                            'course_id' => $this->input->post('dean_course', TRUE)
+                        ));
+                        if ( ! $gen_id)
+                        {
+                                $this->session->set_flashdata('message', '<div class="alert alert-error alert-block"> ' . 'failed insert dean_course on current editing user.' . ' </div>');
+                                return FALSE;
+                        }
+
+                        return TRUE;
+                }
+                else
+                {
+                        return TRUE; //dean not selected
+                }
         }
 
         private function _form_view($user)
@@ -261,6 +308,56 @@ class Edit_user extends CI_Capstone_Controller
                     'type'       => 'checkbox',
                     'lang'       => 'edit_user_groups_heading'
                 );
+
+
+                /**
+                 * check if selected group has a dean
+                 */
+                $this->load->model('Group_model');
+                $dean_id = $this->Group_model->where(array('name' => $this->config->item('user_group_dean')))->get()->id;
+
+                $has_dean = FALSE;
+                if ( ! $dean_id)
+                {
+                        show_error('$dean_id not found.');
+                }
+
+                if ( ! $this->input->post('groups[]'))
+                {
+                        $has_dean = in_array($dean_id, $current_group_id);
+                }
+                else
+                {
+                        $has_dean = in_array($dean_id, $this->input->post('groups[]'));
+                }
+
+                if ($has_dean)
+                {
+                        $this->load->model(array('Course_model', 'Dean_course_model'));
+                        $dean_course_obj = $this->Dean_course_model->where(array(
+                                    'user_id' => $user->id
+                                ))->get();
+                        $course_id       = NULL;
+                        if ($dean_course_obj)
+                        {
+                                $course_id = $dean_course_obj->course_id;
+                        }
+                        $course_bj      = $this->Course_model->get_all();
+                        $course_id_code = array();
+                        foreach ($course_bj as $c)
+                        {
+                                $course_id_code[$c->course_id] = $c->course_code;
+                        }
+
+                        $inputs['deancourse'] = array(
+                            'name'       => 'dean_course',
+                            'fields'     => $course_id_code,
+                            'field_lang' => FALSE,
+                            'value'      => $this->form_validation->set_value('dean_course', $course_id),
+                            'type'       => 'radio',
+                            'lang'       => 'dean_course_lebal'
+                        );
+                }
 
                 $data['edit_user_form'] = $this->form_boostrap('edit-user?user-id=' . $user->id, $inputs, 'edit_user_heading', 'edit_user_submit_btn', 'info-sign', array('id', $user->id), TRUE);
                 $data['bootstrap']      = $this->_bootstrap();
