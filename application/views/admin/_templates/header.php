@@ -82,7 +82,7 @@ echo doctype();
 
         <!--Header-part-->
         <div id="header">
-            <h1><a href="<?php echo site_url(HOME_REDIRECT); ?>"><?php echo $this->config->item('project_title'); ?></a></h1>
+            <?php echo heading(anchor(HOME_REDIRECT, $this->config->item('project_title'))); ?>
         </div>
         <!--close-Header-part--> 
 
@@ -91,27 +91,34 @@ echo doctype();
         <div id="user-nav" class="navbar navbar-inverse">
             <ul class="nav">
                 <li  class="dropdown" id="profile-messages" >
-                    <a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle">
-                        <i class="icon icon-user"></i>  
-                        <span class="text"><?php echo $user_info; ?></span>
-                        <b class="caret"></b>
-                    </a>
+                    <?php
+                    echo anchor('#', '<i class="icon icon-user"></i><span class="text">' . $user_info . '</span><b class="caret"></b>', array(
+                        'title'       => '',
+                        'data-toggle' => 'dropdown',
+                        'data-target' => '#profile-messages',
+                        'class'       => 'dropdown-toggle'
+                    ));
+                    ?>
                     <ul class="dropdown-menu">
-                        <li><a href="<?php echo site_url('edit-user/?user-id=' . $this->session->userdata('user_id')); ?>">
-                                <i class="icon-user"></i> Profile</a>
-                        </li>
-                        <li><a href="<?php echo site_url('auth/logout'); ?>">
-                                <i class="icon-key"></i> Log Out</a>
+                        <?php if (in_array('edit-user', permission_controllers())): ?>
+                                <li>
+                                    <?php echo anchor('edit-user?user-id=' . $this->ion_auth->get_user_id(), '<i class="icon-user"></i> Profile</a>'); ?>
+                                </li>
+                        <?php endif; ?>
+                        <li>
+                            <?php echo anchor('auth/logout', ' <i class="icon-key"></i> Log Out</a>'); ?>
                         </li>
                     </ul>
                 </li>
                 <li class="dropdown" id="menu-messages">
-                    <a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle">
-                        <i class="icon icon-flag"></i> 
-                        <span class="text"><?php echo lang('lang_label'); ?></span> 
-<!--                        <span class="label label-important">5</span> -->
-                        <b class="caret"></b>
-                    </a>
+                    <?php
+                    echo anchor('#', ' <i class="icon icon-flag"></i><span class="text">' . lang('lang_label') . '</span><b class="caret"></b>', array(
+                        'title'       => '',
+                        'data-toggle' => 'dropdown',
+                        'data-target' => '#menu-messages',
+                        'class'       => 'dropdown-toggle'
+                    ));
+                    ?>
                     <ul class="dropdown-menu">
                         <?php foreach (lang_array_() as $k => $v): ?>  
                                 <li class="divider"></li>
@@ -138,7 +145,7 @@ echo doctype();
                                 </span>
                             </a>
                         </li>
-                        <li class="">
+                        <li>
                             <a title="">
                                 <i class="icon icon-magic"></i> 
                                 <span class="text">
@@ -169,7 +176,7 @@ echo doctype();
                 <?php
                 echo $this->breadcrumbs->show();
 
-                echo(($sub_label != '') ? '<h1>' . $sub_label . '</h1>' : (MENU_ITEM_DEFAULT == $label) ? '<h1>' . $label . '</h1>' : '' );
+                echo(($sub_label != '') ? heading($sub_label) : (MENU_ITEM_DEFAULT == $label) ? heading($label) : '' );
                 /**
                  * messages
                  */

@@ -19,7 +19,7 @@ class Home extends CI_Capstone_Controller
         public function index()
         {
                 $data[''] = NULL; //just incase all not controllers not has permission in current user_group
-                
+
                 if (in_array('users', permission_controllers()))
                 {
                         $data['active_users_count'] = $this->User_model->where(array(
@@ -31,23 +31,18 @@ class Home extends CI_Capstone_Controller
                         $data['student_enrolled_count'] = $this->Enrollment_model->where(array(
                                     'enrollment_status' => TRUE
                                 ))->count_rows();
-                        /*
-                         * get all course
-                         */
 
                         $courses_detale = array();
-                        $course_obj     = $this->Course_model->order_by('course_code')->set_cache('course_get_all')->get_all();
-
-                        if ($course_obj)
+                        if ($this->session->userdata('user_is_dean'))
                         {
-                                foreach ($course_obj as $course_row)
+                                if ($id = $this->session->userdata('user_dean_course_id'))
                                 {
+                                        $course_row        = $this->Course_model->get($id);
                                         $ecount            = $enrollment_object = $this->Enrollment_model->where(array(
-                                                    'course_id'         => $course_row->course_id,
+                                                    'course_id'         => $id,
                                                     'enrollment_status' => TRUE
                                                 ))->count_rows();
 
-                                        //array push
                                         $courses_detale[] = array(
                                             'course_id' => $course_row->course_id,
                                             'counts'    => $ecount,
@@ -55,6 +50,34 @@ class Home extends CI_Capstone_Controller
                                             'color'     => $course_row->course_color,
                                             'code'      => $course_row->course_code
                                         );
+                                }
+                        }
+                        else
+                        {
+                                /*
+                                 * get all course
+                                 */
+
+                                $course_obj = $this->Course_model->order_by('course_code')->set_cache('course_get_all')->get_all();
+
+                                if ($course_obj)
+                                {
+                                        foreach ($course_obj as $course_row)
+                                        {
+                                                $ecount            = $enrollment_object = $this->Enrollment_model->where(array(
+                                                            'course_id'         => $course_row->course_id,
+                                                            'enrollment_status' => TRUE
+                                                        ))->count_rows();
+
+                                                //array push
+                                                $courses_detale[] = array(
+                                                    'course_id' => $course_row->course_id,
+                                                    'counts'    => $ecount,
+                                                    'icon'      => $course_row->course_icon,
+                                                    'color'     => $course_row->course_color,
+                                                    'code'      => $course_row->course_code
+                                                );
+                                        }
                                 }
                         }
                         $data['courses_info']          = $courses_detale;
