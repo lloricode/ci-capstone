@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 13, 2017 at 04:36 AM
+-- Generation Time: Apr 13, 2017 at 05:20 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 5.6.24
 
@@ -249,9 +249,9 @@ INSERT INTO `educations` (`education_id`, `education_code`, `education_descripti
 
 CREATE TABLE `enrollments` (
   `enrollment_id` int(8) UNSIGNED NOT NULL,
-  `student_id` tinyint(11) NOT NULL,
-  `course_id` tinyint(11) NOT NULL,
-  `curriculum_id` tinyint(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `course_id` int(11) NOT NULL,
+  `curriculum_id` int(11) NOT NULL,
   `enrollment_school_year` varchar(10) NOT NULL,
   `enrollment_semester` enum('first','second','summer') NOT NULL,
   `enrollment_year_level` tinyint(11) NOT NULL,
@@ -904,7 +904,7 @@ CREATE TABLE `subject_offer_line` (
   `subject_offer_id` int(11) UNSIGNED NOT NULL,
   `user_id` int(11) UNSIGNED NOT NULL,
   `subject_id` int(11) UNSIGNED NOT NULL,
-  `room_id` tinyint(11) UNSIGNED NOT NULL,
+  `room_id` int(11) UNSIGNED NOT NULL,
   `subject_offer_semester` enum('first','second','summer') NOT NULL,
   `subject_offer_school_year` varchar(9) NOT NULL,
   `created_at` int(11) NOT NULL,

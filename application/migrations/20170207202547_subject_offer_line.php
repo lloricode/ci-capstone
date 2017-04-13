@@ -132,7 +132,7 @@ class Migration_Subject_offer_line extends CI_Migration
                         'null'       => FALSE
                     ),
                     'room_id'                      => array(
-                        'type'       => 'TINYINT',
+                        'type'       => 'INT',
                         'constraint' => '11',
                         'unsigned'   => TRUE,
                         'null'       => FALSE

@@ -39,18 +39,18 @@ class Migration_Enrollments extends CI_Migration
                         'auto_increment' => TRUE
                     ),
                     'student_id'             => array(
-                        'type'       => 'TINYINT',
+                        'type'       => 'INT',
                         'constraint' => '11',
                         'null'       => FALSE,
                         'unique'     => TRUE,
                     ),
                     'course_id'              => array(
-                        'type'       => 'TINYINT',
+                        'type'       => 'INT',
                         'constraint' => '11',
                         'null'       => FALSE
                     ),
                     'curriculum_id'          => array(
-                        'type'       => 'TINYINT',
+                        'type'       => 'INT',
                         'constraint' => '11',
                         'null'       => FALSE
                     ),
