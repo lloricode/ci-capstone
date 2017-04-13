@@ -82,13 +82,13 @@ class Create_student_subject extends CI_Capstone_Controller
                                 }
                                 else
                                 {
-                                        $this->db->trans_rollback();
-//                                        if ($this->db->trans_commit())
-//                                        {
-                                        $this->_reset_session();
-                                        $this->session->set_flashdata('message', 'all subjects added!');
-                                        redirect(site_url('students/view?student-id=' . $this->student->id), 'refresh');
-//                                        }
+
+                                        if ($this->db->trans_commit())
+                                        {
+                                                $this->_reset_session();
+                                                $this->session->set_flashdata('message', 'all subjects added!');
+                                                redirect(site_url('students/view?student-id=' . $this->student->id), 'refresh');
+                                        }
                                 }
                         }
                         else
@@ -513,9 +513,9 @@ class Create_student_subject extends CI_Capstone_Controller
                                                 ${'session' . $count2} [$d] = $_line->{'subject_offer_line_' . $d};
                                         }
                                 }
-                                for ($i = 1; $i <= $count; $i ++ )
+                                for ($i = 1; $i <= $count; $i ++)
                                 {
-                                        for ($ii = 1; $ii <= $count2; $ii ++ )
+                                        for ($ii = 1; $ii <= $count2; $ii ++)
                                         {
                                                 $tmp = is_not_conflict_subject_offer(${'selected' . $i}, ${'session' . $ii});
                                                 if ( ! $tmp)
