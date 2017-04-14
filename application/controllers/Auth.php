@@ -92,8 +92,7 @@ class Auth extends MY_Controller
                                 redirect('/', 'refresh');
                         }
                 }
-                $this->data['title'] = $this->lang->line('login_heading');
-
+                //  $this->data['title'] = $this->lang->line('login_heading');
                 //validate form input
                 $this->form_validation->set_rules('identity', str_replace(':', '', $this->lang->line('login_identity_label')), 'required');
                 $this->form_validation->set_rules('password', str_replace(':', '', $this->lang->line('login_password_label')), 'required');
@@ -290,6 +289,10 @@ class Auth extends MY_Controller
          */
         public function logout($message = NULL)
         {
+                if ( ! $this->ion_auth->logged_in())
+                {
+                        redirect('auth/login', 'refresh');
+                }
                 // log the user out
                 $this->ion_auth->logout();
                 // redirect them to the login page
