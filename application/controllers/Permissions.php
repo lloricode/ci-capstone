@@ -191,7 +191,7 @@ class Permissions extends CI_Capstone_Controller
 
                         $groupData = $this->input->post('groups', TRUE);
 
-                        if ( ! isset($groupData))
+                        if ( ! isset($groupData) OR empty($groupData))
                         {
                                 $this->session->set_flashdata('message', '<div class="alert alert-error alert-block">' . 'Select atleast one.' . '</div>');
                         }
