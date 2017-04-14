@@ -165,7 +165,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                                         $this->db->trans_rollback();
                                         if ( ! $validate_two_forms)
                                         {
-                                                $this->session->set_flashdata('message', '<div class="alert alert-error alert-block"> ' . 'Conflict two forms.' . ' </div>');
+                                                $this->session->set_flashdata('message', bootstrap_error('Conflict two forms.'));
                                         }
                                 }
                                 else
@@ -173,7 +173,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                                         if ($this->db->trans_commit())
                                         {
                                                 //echo 'done';
-                                                $this->session->set_flashdata('message', lang('create_subject_offer_succesfully_added_message'));
+                                                $this->session->set_flashdata('message', bootstrap_success('create_subject_offer_succesfully_added_message'));
                                                 redirect(site_url('create-subject-offer'), 'refresh');
                                         }
                                 }

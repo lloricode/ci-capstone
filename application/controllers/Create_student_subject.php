@@ -54,8 +54,8 @@ class Create_student_subject extends CI_Capstone_Controller
                                 show_error('Current DEAN is not same course of current student.');
                         }
                 }
-                
-                
+
+
                 $error_message = '';
 
                 if ($this->input->post('submit'))
@@ -98,7 +98,7 @@ class Create_student_subject extends CI_Capstone_Controller
                                         if ($this->db->trans_commit())
                                         {
                                                 $this->_reset_session();
-                                                $this->session->set_flashdata('message', 'all subjects added!');
+                                                $this->session->set_flashdata('message', bootstrap_success('All subjects added!'));
                                                 redirect(site_url('students/view?student-id=' . $this->student->id), 'refresh');
                                         }
                                 }
@@ -251,7 +251,7 @@ class Create_student_subject extends CI_Capstone_Controller
                 if ($this->session->has_userdata($this->_session_name_))
                 {
                         $this->session->unset_userdata($this->_session_name_);
-                        $this->session->set_flashdata('message', 'reset done!');
+                        $this->session->set_flashdata('message', bootstrap_success('Reset done!'));
                 }
         }
 
@@ -264,7 +264,7 @@ class Create_student_subject extends CI_Capstone_Controller
                 {
                         $this->load->helper('session');
                         unset_value_userdata_array($this->_session_name_, $this->input->get('subject-offer-id'));
-                        $this->session->set_flashdata('message', 'removed done!');
+                        $this->session->set_flashdata('message', bootstrap_success('Removed done!'));
                 }
                 redirect('create-student-subject?student-id=' . $this->input->get('student-id'), 'refresh');
         }
@@ -480,7 +480,7 @@ class Create_student_subject extends CI_Capstone_Controller
                                 ))->count_rows();
                         if ( ! ($ocupy < $capacity_max))
                         {
-                                $this->session->set_flashdata('message', '<div class="alert alert-error alert-block">Full Capacity: ' . $subject_offer_obj->subject->subject_code . ' </div>');
+                                $this->session->set_flashdata('message', bootstrap_error($subject_offer_obj->subject->subject_code));
                                 return FALSE;
                         }
                 }
@@ -533,7 +533,7 @@ class Create_student_subject extends CI_Capstone_Controller
                                                 if ( ! $tmp)
                                                 {
                                                         $subject_code = $this->subject_model->get(${'session' . $ii}['subject'])->subject_code;
-                                                        $this->session->set_flashdata('message', '<div class="alert alert-error alert-block"> ' . 'Conflict: ' . $subject_code . ' </div>');
+                                                        $this->session->set_flashdata('message', bootstrap_error('Conflict: ' . $subject_code));
                                                         return FALSE;
                                                 }
                                         }

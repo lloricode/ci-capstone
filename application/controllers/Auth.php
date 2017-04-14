@@ -314,7 +314,7 @@ class Auth extends MY_Controller
                          * set erro delimeter
                          * using ion_auth
                          */
-                        $m       = $this->config->item('error_start_delimiter', 'ion_auth') . $message . $this->config->item('error_end_delimiter', 'ion_auth');
+                        $m       = bootstrap_error($message);
                 }
                 $this->login($m);
         }

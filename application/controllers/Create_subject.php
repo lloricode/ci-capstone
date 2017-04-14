@@ -26,7 +26,7 @@ class Create_subject extends CI_Capstone_Controller
                         $id = $this->Subject_model->from_form()->insert();
                         if ($id)
                         {
-                                $this->session->set_flashdata('message', lang('create_subject_succesfully_added_message'));
+                                $this->session->set_flashdata('message', bootstrap_success('create_subject_succesfully_added_message'));
                                 redirect(site_url('subjects'), 'refresh');
                         }
                 }

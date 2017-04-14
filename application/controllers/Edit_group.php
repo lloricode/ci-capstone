@@ -60,7 +60,7 @@ class Edit_group extends CI_Capstone_Controller
                                          */
                                         $this->delete_all_query_cache();
 
-                                        $this->session->set_flashdata('message', $this->lang->line('edit_group_saved'));
+                                        $this->session->set_flashdata('message', bootstrap_success('edit_group_saved'));
                                 }
                                 else
                                 {

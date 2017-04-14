@@ -26,7 +26,7 @@ class Create_education extends CI_Capstone_Controller
                         $id = $this->Education_model->from_form()->insert();
                         if ($id)
                         {
-                                $this->session->set_flashdata('message', 'Education added!');
+                                $this->session->set_flashdata('message', bootstrap_success('Education added!'));
                                 redirect(site_url('educations'), 'refresh');
                         }
                 }

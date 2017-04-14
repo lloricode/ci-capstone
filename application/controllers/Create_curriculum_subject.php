@@ -54,7 +54,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                         $id = $this->Curriculum_subject_model->from_form()->insert();
                         if ($id)
                         {
-                                $this->session->set_flashdata('message', lang('curriculum_subject_add_successfull'));
+                                $this->session->set_flashdata('message', bootstrap_success('curriculum_subject_add_successfull'));
                                 redirect(site_url('curriculums/view?curriculum-id=' . $this->input->post('curriculum')), 'refresh');
                         }
                 }

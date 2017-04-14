@@ -193,12 +193,12 @@ class Permissions extends CI_Capstone_Controller
 
                         if ( ! isset($groupData) OR empty($groupData))
                         {
-                                $this->session->set_flashdata('message', '<div class="alert alert-error alert-block">' . 'Select atleast one.' . '</div>');
+                                $this->session->set_flashdata('message', bootstrap_error('Select atleast one.'));
                         }
                         elseif ( ! in_array($admin_id, $groupData))
                         {
                                 $ok = FALSE;
-                                $this->session->set_flashdata('message', '<div class="alert alert-error alert-block">' . 'admin required' . '</div>');
+                                $this->session->set_flashdata('message', bootstrap_error('admin required'));
                         }
 
                         if (isset($groupData) && ! empty($groupData) && $ok)
@@ -216,7 +216,7 @@ class Permissions extends CI_Capstone_Controller
                                                 break;
                                         }
                                 }
-                                $this->session->set_flashdata('message', ($done) ? 'Updated!' : 'Failed!');
+                                $this->session->set_flashdata('message', ($done) ? bootstrap_success('Updated!') : bootstrap_error('Failed!'));
                         }
                 }
                 $this->main($controller_obj);

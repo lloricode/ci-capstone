@@ -223,13 +223,13 @@ class Student extends School_informations
                                 $msg = str_replace('.', ',', $msg);
                                 $msg .= ' School ID Failed to generate.';
                         }
-                        $this->session->set_flashdata('message', '<div class="alert alert-error alert-block">' . $msg . '</div>');
+                        $this->session->set_flashdata('message', bootstrap_error($msg));
                 }
                 else
                 {
                         if ($this->db->trans_commit())
                         {
-                                $this->session->set_flashdata('message', 'Student Enrolled!');
+                                $this->session->set_flashdata('message', bootstrap_success('Student Enrolled!'));
                         }
                 }
         }
@@ -246,12 +246,12 @@ class Student extends School_informations
         {
                 if ( ! is_int($new_level))
                 {
-                        $this->session->set_flashdata('message', '<div class="alert alert-error alert-block">Year level not to be Int.</div>');
+                        $this->session->set_flashdata('message', bootstrap_error('Year level not to be Int.'));
                         return FALSE;
                 }
                 if ($new_level > $this->config->item('max_year_level') OR $new_level < $this->__enrollment->enrollment_year_level)
                 {
-                        $this->session->set_flashdata('message', '<div class="alert alert-error alert-block">Invalid year level update.</div>');
+                        $this->session->set_flashdata('message', bootstrap_error('Invalid year level update.'));
                         return FALSE;
                 }
                 $this->load->helper('school');

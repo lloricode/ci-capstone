@@ -27,7 +27,7 @@ class Report_info extends CI_Capstone_Controller
                         $this->Report_info_model->from_form()->insert();
                         if ($this->db->affected_rows() === 1)//no primary key used
                         {
-                                $this->session->set_flashdata('message', lang('report_info_success'));
+                                $this->session->set_flashdata('message', bootstrap_success('report_info_success'));
                                 redirect(site_url('report-info'), 'refresh');
                         }
                 }

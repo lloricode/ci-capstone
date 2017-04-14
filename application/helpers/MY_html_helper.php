@@ -261,3 +261,61 @@ if ( ! function_exists('table_row_button_link'))
         }
 
 }
+
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('bootstrap_error'))
+{
+
+        /**
+         * set error with bootstrap
+         * 
+         * @return string $message_lang
+         * @return string $dismiss_btn
+         * @author Lloric Garcia <emorickfighter@gmail.com>
+         */
+        function bootstrap_error($message_lang, $dismiss_btn = FALSE)
+        {
+                /**
+                 * need button x?
+                 */
+                $btn_x = ($dismiss_btn) ? anchor('#', 'x', array('class' => 'close', 'data-dismiss' => 'alert')) : '';
+
+                /**
+                 * check if lang exist,else use this as message
+                 */
+                $message = (lang($message_lang)) ? lang($message_lang) : '##' . $message_lang . '##';
+
+                return '<div class="alert alert-error alert-block">' . $btn_x . '[ ' . $message . ' ]</div>';
+        }
+
+}
+
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('bootstrap_success'))
+{
+
+        /**
+         * set success with bootstrap
+         * 
+         * @return string $message_lang 
+         * @return string $dismiss_btn
+         * @author Lloric Garcia <emorickfighter@gmail.com>
+         */
+        function bootstrap_success($message_lang, $dismiss_btn = FALSE)
+        {
+                /**
+                 * need button x?
+                 */
+                $btn_x = ($dismiss_btn) ? anchor('#', 'x', array('class' => 'close', 'data-dismiss' => 'alert')) : '';
+
+                /**
+                 * check if lang exist,else use this as message
+                 */
+                $message = (lang($message_lang)) ? lang($message_lang) : '##' . $message_lang . '##';
+
+                return '<div class="alert alert-success alert-block">' . $btn_x . '[ ' . $message . ' ]</div>';
+        }
+
+}

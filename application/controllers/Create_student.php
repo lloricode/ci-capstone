@@ -100,7 +100,7 @@ class Create_student extends CI_Capstone_Controller
                                 /**
                                  * the result is more than one, 
                                  */
-                                $this->session->set_flashdata('message', '<div class="alert alert-error alert-block">curriculum is more than 1 active. </div>');
+                                $this->session->set_flashdata('message', bootstrap_error('Curriculum is more than 1 active.'));
                                 return FALSE;
                         }
                         /**
@@ -113,7 +113,7 @@ class Create_student extends CI_Capstone_Controller
                 /**
                  * no curriculum found
                  */
-                $this->session->set_flashdata('message', '<div class="alert alert-error alert-block">no curriculumn found </div>');
+                $this->session->set_flashdata('message', bootstrap_error('No curriculumn found'));
                 return FALSE;
         }
 
@@ -221,7 +221,7 @@ class Create_student extends CI_Capstone_Controller
                                 $msg = str_replace('.', ',', $msg);
                                 $msg .= ' $curriculum_id_from_active_course.';
                         }
-                        $this->session->set_flashdata('message', '<div class="alert alert-error alert-block">' . $msg . '</div>');
+                        $this->session->set_flashdata('message', bootstrap_error($msg));
 //                        if ($uploaded['uploaded'])
 //                        {
 //                                /**
@@ -243,7 +243,7 @@ class Create_student extends CI_Capstone_Controller
                                  * start resize image
                                  */
 //                                $this->upload->image_resize($img_name);
-                                $this->session->set_flashdata('message', lang('create_student_succesfully_added_message'));
+                                $this->session->set_flashdata('message', bootstrap_success('create_student_succesfully_added_message'));
                                 redirect(site_url('students/view?student-id=' . $s_id), 'refresh');
                         }
                 }

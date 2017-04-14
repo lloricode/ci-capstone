@@ -152,7 +152,7 @@ class Create_requisite extends CI_Capstone_Controller
                         {
                                 if ($this->db->trans_commit())
                                 {
-                                        $this->session->set_flashdata('message', lang('requisite_success_added'));
+                                        $this->session->set_flashdata('message', bootstrap_success('requisite_success_added'));
                                         redirect(site_url('curriculums/view?curriculum-id=' . $curriculum_id), 'refresh');
                                 }
                         }

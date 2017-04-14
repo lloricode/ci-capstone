@@ -39,7 +39,7 @@ class Edit_student extends CI_Capstone_Controller
                          */
                         $upload_return = $this->upload->_preparing_image($_post_image_name, FALSE);
                         $uploaded      = $upload_return['uploaded'];
-                        $this->session->set_flashdata('message', $upload_return['error_message']);
+                        $this->session->set_flashdata('message', bootstrap_error($upload_return['error_message']));
                         $this->_input_ready($this->student->id, $uploaded);
                 }
 
@@ -164,7 +164,7 @@ class Edit_student extends CI_Capstone_Controller
                                         }
                                         $this->upload->image_resize($img_name);
                                 }
-                                $this->session->set_flashdata('message', lang('update_student_succesfully_added_message'));
+                                $this->session->set_flashdata('message', bootstrap_success('update_student_succesfully_added_message'));
                                 redirect(site_url('students/view?student-id=' . $this->student->id), 'refresh');
                         }
                 }

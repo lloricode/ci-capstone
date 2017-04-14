@@ -89,7 +89,7 @@ class Database extends CI_Capstone_Controller
                  * delete all query cache 
                  */
                 $this->delete_all_query_cache();
-                $this->session->set_flashdata('dbmessage', 'query cache deleted!!');
+                $this->session->set_flashdata('dbmessage', bootstrap_success('Query cache deleted!!'));
                 $this->index();
         }
 

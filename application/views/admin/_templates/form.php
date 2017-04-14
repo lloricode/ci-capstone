@@ -19,7 +19,7 @@
                             {
                                     if ($e != '')
                                     {
-                                            echo ' <div class="alert alert-error alert-block"> <a class="close" data-dismiss="alert" href="#">×</a>' . $e . '</div>';
+                                            echo bootstrap_error($e, TRUE);
                                     }
                             }
                     }

@@ -28,7 +28,7 @@ class Create_course extends CI_Capstone_Controller
                         $id = $this->Course_model->from_form()->insert();
                         if ($id)
                         {
-                                $this->session->set_flashdata('message', $this->config->item('message_start_delimiter', 'ion_auth') . lang('create_course_succesfully_added_message') . $this->config->item('message_end_delimiter', 'ion_auth'));
+                                $this->session->set_flashdata('message', bootstrap_success('create_course_succesfully_added_message'));
                                 redirect(site_url('courses'), 'refresh');
                         }
                 }

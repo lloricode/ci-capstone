@@ -95,7 +95,7 @@ class Edit_user extends CI_Capstone_Controller
                                          * make sure atleast one selected 
                                          */
                                         // show_error('empty user_group not allowed.');
-                                        $this->session->set_flashdata('message', '<div class="alert alert-error alert-block"> ' . 'empty user_group not allowed.' . ' </div>');
+                                        $this->session->set_flashdata('message', bootstrap_error('Empty user_group not allowed.'));
                                         $empty_user_group = TRUE;
                                 }
 
@@ -113,7 +113,7 @@ class Edit_user extends CI_Capstone_Controller
                                         if ( ! in_array($admin_id, $group_ids))
                                         {
                                                 //  show_error('cannot remove from admin a current user');
-                                                $this->session->set_flashdata('message', '<div class="alert alert-error alert-block"> ' . 'cannot remove from admin a current user' . ' </div>');
+                                                $this->session->set_flashdata('message', bootstrap_error('Cannot remove from admin a current user'));
 
                                                 $remove_as_admin_a_current_admin = TRUE;
                                         }
@@ -213,7 +213,7 @@ class Edit_user extends CI_Capstone_Controller
                                 ))->count_rows();
                         if ($count != 0)
                         {
-                                $this->session->set_flashdata('message', '<div class="alert alert-error alert-block"> ' . 'failed delete all dean_course on current editing user.' . ' </div>');
+                                $this->session->set_flashdata('message', bootstrap_error('Failed delete all dean_course on current editing user.'));
                                 return FALSE;
                         }
                 }
@@ -229,7 +229,7 @@ class Edit_user extends CI_Capstone_Controller
                         ));
                         if ( ! $gen_id)
                         {
-                                $this->session->set_flashdata('message', '<div class="alert alert-error alert-block"> ' . 'failed insert dean_course on current editing user.' . ' </div>');
+                                $this->session->set_flashdata('message', bootstrap_error('Failed insert dean_course on current editing user.'));
                                 return FALSE;
                         }
 

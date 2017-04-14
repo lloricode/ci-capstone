@@ -67,7 +67,7 @@ class Set_curriculum_enable extends CI_Capstone_Controller
                                 {
                                         if ($this->db->trans_commit())
                                         {
-                                                $this->session->set_flashdata('message', lang('enable_curriculum_confirm_success'));
+                                                $this->session->set_flashdata('message', bootstrap_success('enable_curriculum_confirm_success'));
                                         }
                                 }
                         }

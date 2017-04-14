@@ -184,10 +184,6 @@ echo doctype();
                 {
                         echo $this->ion_auth->errors();
                 }
-                elseif ( ! preg_match('!alert-block!', $this->session->flashdata('message')) && $this->session->flashdata('message') != '')
-                {
-                        echo '<div class="alert alert-success alert-block">' . $this->session->flashdata('message') . '</div>';
-                }
                 else if ($this->session->flashdata('message') != '')
                 {
                         echo $this->session->flashdata('message');
