@@ -6,7 +6,6 @@ class Students extends CI_Capstone_Controller
 {
 
 
-        private $page_;
         private $limit;
 
         function __construct()
@@ -25,15 +24,6 @@ class Students extends CI_Capstone_Controller
         public function index()
         {
 
-                /**
-                 * get the page from url
-                 * 
-                 */
-                $this->page_ = 1;
-                if ($this->input->get('per_page'))
-                {
-                        $this->page_ = $this->input->get('per_page');
-                }
                 $course_id = $this->input->get('course-id');
                 /**
                  * check if user has a "dean" user_group
@@ -46,7 +36,7 @@ class Students extends CI_Capstone_Controller
                         }
                         $course_id = $this->session->userdata('user_dean_course_id');
                 }
-                $student_result = $this->Student_model->all($this->limit, $this->limit * $this->page_ - $this->limit, $course_id, $this->input->get('search'));
+                $student_result = $this->Student_model->all($this->limit, $this->limit * get_page_in_url('page') - $this->limit, $course_id, $this->input->get('search'));
 
                 $student_obj                 = $student_result->result;
                 $result_count_for_pagination = $student_result->count;

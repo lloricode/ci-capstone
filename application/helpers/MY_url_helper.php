@@ -7,27 +7,35 @@ if ( ! function_exists('get_page_in_url'))
 
         /**
          * 
-         * @return int - value from 4rth segment in url if not exist vale 1,
-         *  then if not integer show error will occured
+         * @return int - value from $CI->config->item('segment_pagination')'th segment OR assigned index in url if not exist value 1,
+         *  then if not integer show error will occurred
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        function get_page_in_url()
+        function get_page_in_url($index = NULL)
         {
                 $CI = & get_instance();
 
-                if ($int_value = $CI->uri->segment($CI->config->item('segment_pagination')))
+                $page_number = NULL;
+
+                if ( ! is_null($index))
                 {
-                        if (is_numeric($int_value))
+                        $page_number = $CI->input->get($index, TRUE);
+                        if (is_null($page_number))
                         {
-                                return $int_value;
+                                $page_number = 1;
                         }
+                }
+                else
+                {
+                        $page_number = $CI->uri->segment($CI->config->item('segment_pagination'), 1); //if not exits, return is 1
+                }
+
+                if ( ! is_numeric($page_number) OR $page_number < 1 OR is_null($page_number))
+                {
                         show_error('Invalid request.');
                 }
 
-                /**
-                 * else return 1 as default
-                 */
-                return 1;
+                return $page_number;
         }
 
 }
