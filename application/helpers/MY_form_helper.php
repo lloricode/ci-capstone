@@ -94,7 +94,7 @@ if ( ! function_exists('input_bootstrap'))
                                                 echo form_dropdown($field['name'], $field['value'], set_value($field['name'], $default_value));
                                                 break;
                                         case 'multiselect':
-                                                echo form_multiselect($field['name'], $field['value'], get_instance()->input->post($field['name']));
+                                                echo form_multiselect($field['name'], $field['value'], get_instance()->input->post($field['name'], TRUE));
                                                 break;
                                         default:
                                                 /**
