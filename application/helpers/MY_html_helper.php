@@ -276,17 +276,7 @@ if ( ! function_exists('bootstrap_error'))
          */
         function bootstrap_error($message_lang, $dismiss_btn = FALSE)
         {
-                /**
-                 * need button x?
-                 */
-                $btn_x = ($dismiss_btn) ? anchor('#', 'x', array('class' => 'close', 'data-dismiss' => 'alert')) : '';
-
-                /**
-                 * check if lang exist,else use this as message
-                 */
-                $message = (lang($message_lang)) ? lang($message_lang) : '##' . $message_lang . '##';
-
-                return '<div class="alert alert-error alert-block">' . $btn_x . '[ ' . $message . ' ]</div>';
+                return _bootstrap_message('error', $message_lang, $dismiss_btn);
         }
 
 }
@@ -305,6 +295,18 @@ if ( ! function_exists('bootstrap_success'))
          */
         function bootstrap_success($message_lang, $dismiss_btn = FALSE)
         {
+                return _bootstrap_message('success', $message_lang, $dismiss_btn);
+        }
+
+}
+
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('_bootstrap_message'))
+{
+
+        function _bootstrap_message($_type, $message_lang, $dismiss_btn = FALSE)
+        {
                 /**
                  * need button x?
                  */
@@ -315,7 +317,7 @@ if ( ! function_exists('bootstrap_success'))
                  */
                 $message = (lang($message_lang)) ? lang($message_lang) : '##' . $message_lang . '##';
 
-                return '<div class="alert alert-success alert-block">' . $btn_x . '[ ' . $message . ' ]</div>';
+                return '<div class="alert alert-' . $_type . ' alert-block">' . $btn_x . '[ ' . $message . ' ]</div>';
         }
 
-}
+}        
