@@ -42,7 +42,7 @@ administrator|mypasswordisadmin1
 
 ## Note:
 ### production ENVIRONMENT 
-- compress html, for fast renderring page in live server 
+- compress html, for fast renderring page in live server .
 - csrf_protection is enabled (set to TRUE), for prevent malicious/unnecessary behavior in submitting forms
 - errors log save to database,then not directly seen in browsers,
 
