@@ -42,7 +42,4 @@ matrix:
 
 branches:
   only:
-    - develop
-    - 3.0-stable
-    - 3.1-stable
-    - /^feature\/.+$/
+    - testing
