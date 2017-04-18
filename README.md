@@ -27,6 +27,8 @@ Platform|Framework
 - Create first a databse named ``ci_capstone`` .
 - then just run/execute the website, ``tables`` in ``database`` will automatically migrate.
 
+- OR you import in databse a sample data in ``sample_data/ci_capstone.sql``.
+
 ## Default Login
 
 Username | Password
