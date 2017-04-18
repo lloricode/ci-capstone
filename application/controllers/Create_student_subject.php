@@ -27,13 +27,11 @@ class Create_student_subject extends CI_Capstone_Controller
                 $this->breadcrumbs->unshift(2, lang('index_student_heading'), 'students');
 
                 /**
-                 * session name for curriculum_subjects
-                 *
-                 * to modify the session name, make sure also modify in MY_controller
+                 *   this will always check in hook `Check_access`
                  * 
-                 *   in constructor
+                 * if another controller request it will reset
                  */
-                $this->_session_name_                   = 'curriculum_subjects__subject_offer_ids';
+                $this->_session_name_                   = $this->config->item('create_student_subject__session_name');
                 $this->_sub_off__added_obj_from_session = array();
         }
 

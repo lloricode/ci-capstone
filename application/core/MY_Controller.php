@@ -119,7 +119,7 @@ class MY_Controller extends CI_Controller
                         if ($obj)
                         {
                                 $this->load->model('Course_model');
-                                $dean_course_id      = $obj->course_id;
+                                $dean_course_id   = $obj->course_id;
                                 $dean_course_code = $this->Course_model->get($obj->course_id)->course_code;
                         }
                 }
@@ -173,43 +173,6 @@ class CI_Capstone_Controller extends MY_Controller
         function __construct()
         {
                 parent::__construct();
-                if ( ! $this->ion_auth->logged_in())
-                {
-                        redirect(site_url('auth/login'), 'refresh');
-                }
-                /**
-                 * check permission
-                 */
-                if ( ! in_array(str_replace('_', '-', $this->uri->segment($this->config->item('segment_controller'))), permission_controllers()))
-                {
-                        show_404();
-                }
-
-                if ( ! $this->Enrollment_status_model->status())
-                {
-                        if (in_array($this->uri->segment($this->config->item('segment_controller')), get_all_controller_with_enrollment()))
-                        {
-                                show_404();
-                        }
-                }
-                $this->breadcrumbs->unshift(1, lang('home_label'), 'home');
-
-
-                /**
-                 * this is for /create-student-subject controller
-                 * use this if navigate to another controller, it will unset session for subject offer
-                 * to prevent passing session to another enrolling subjects in another students
-                 */
-                if ('create-student-subject' != str_replace('_', '-', $this->uri->segment($this->config->item('segment_controller'))) &&
-                        $this->session->has_userdata('curriculum_subjects__subject_offer_ids'))
-                {
-                        /**
-                         * to modify the session name, make sure also modify in /create-student-subject controller
-                         * 
-                         *   $this->_session_name_  
-                         */
-                        $this->session->unset_userdata('curriculum_subjects__subject_offer_ids');
-                }
         }
 
         /**
