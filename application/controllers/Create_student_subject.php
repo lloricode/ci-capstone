@@ -66,7 +66,7 @@ class Create_student_subject extends CI_Capstone_Controller
                                 /**
                                  * start the DB transaction
                                  */
-                                $this->db->trans_start();
+                                $this->db->trans_begin();
 
                                 $update_year_ok = $this->student->update_level((int) $this->input->post('level'));
 

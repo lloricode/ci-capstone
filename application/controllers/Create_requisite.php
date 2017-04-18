@@ -100,7 +100,7 @@ class Create_requisite extends CI_Capstone_Controller
                         /**
                          * use db transaction, just to make sure all data inserted
                          */
-                        $this->db->trans_start();
+                        $this->db->trans_begin();
                         $co_all_inserted = TRUE;
                         if ($co_array)
                         {

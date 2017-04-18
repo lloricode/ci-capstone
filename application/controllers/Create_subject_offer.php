@@ -76,7 +76,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                                 /**
                                  * start the DB transaction
                                  */
-                                $this->db->trans_start();
+                                $this->db->trans_begin();
 
                                 $subject_offer_insert = array(
                                     'user_id'                   => $this->input->post('faculty', TRUE),

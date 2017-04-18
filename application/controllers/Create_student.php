@@ -139,7 +139,7 @@ class Create_student extends CI_Capstone_Controller
                 /**
                  * start the DB transaction
                  */
-                $this->db->trans_start();
+                $this->db->trans_begin();
 
                 /**
                  * insert directly from forms

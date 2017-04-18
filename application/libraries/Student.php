@@ -195,7 +195,7 @@ class Student extends School_informations
                 /**
                  * start the DB transaction
                  */
-                $this->db->trans_start();
+                $this->db->trans_begin();
 
 
                 $subject_ok = $this->_set_enroll_all_subject_offers();

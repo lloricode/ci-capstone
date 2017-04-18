@@ -102,7 +102,7 @@ class Edit_student extends CI_Capstone_Controller
                 /**
                  * start the DB transaction
                  */
-                $this->db->trans_start();
+                $this->db->trans_begin();
 
                 /**
                  * update directly from forms

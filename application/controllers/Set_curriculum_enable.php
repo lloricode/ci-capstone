@@ -37,7 +37,7 @@ class Set_curriculum_enable extends CI_Capstone_Controller
                                 /**
                                  * start the DB transaction
                                  */
-                                $this->db->trans_start();
+                                $this->db->trans_begin();
 
 
                                 /**

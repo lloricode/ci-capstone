@@ -72,7 +72,7 @@ class Edit_user extends CI_Capstone_Controller
                                 /**
                                  * start the DB transaction
                                  */
-                                $this->db->trans_start();
+                                $this->db->trans_begin();
                                 $ion_auth_updated  = FALSE;
                                 $removed_all_group = FALSE;
                                 $group_updated     = FALSE;
