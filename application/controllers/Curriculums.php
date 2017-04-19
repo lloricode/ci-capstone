@@ -15,7 +15,7 @@ class Curriculums extends CI_Capstone_Controller
                 $this->lang->load('ci_capstone/ci_educations');
                 $this->load->model(array('Curriculum_model', 'Course_model'));
                 $this->load->library('pagination');
-                $this->load->helper(array('school', 'inflector'));
+                $this->load->helper('school');
                 /**
                  * @Contributor: Jinkee Po <pojinkee1@gmail.com>
                  *         
@@ -150,7 +150,7 @@ class Curriculums extends CI_Capstone_Controller
                 $this->breadcrumbs->unshift(3, lang('curriculum_subject_label'), 'curriculums/view?curriculum-id=' . $curriculum_obj->curriculum_id);
 
                 $this->load->model(array('Curriculum_subject_model', 'Subject_model', 'Requisites_model'));
-                $this->load->helper(array('number', 'text', 'inflector'));
+                $this->load->helper(array('number', 'text'));
                 $highlight_phrase = '';
 
                 if ($h = $this->input->get('highlight'))
@@ -180,12 +180,12 @@ class Curriculums extends CI_Capstone_Controller
                                 $requisite = $this->Requisites_model->subjects(isset($cur_subj->requisites) ? $cur_subj->requisites : NULL);
                                 $tmp       = array(
                                     // my_htmlspecialchars($cur_subj->curriculum_subject_year_level),
-                                    my_htmlspecialchars(semesters($cur_subj->curriculum_subject_semester)),
+                                    my_htmlspecialchars(semesters($cur_subj->curriculum_subject_semester, FALSE, 'short')),
                                     highlight_phrase($cur_subj->subject->subject_code, $highlight_phrase, '<mark id="' . dash($cur_subj->subject->subject_code) . '">', '</mark>'),
                                     my_htmlspecialchars($cur_subj->subject->subject_description),
-                                    my_htmlspecialchars(inflector_int_unit($cur_subj->curriculum_subject_units, 'Unit')),
-                                    my_htmlspecialchars(inflector_int_unit($cur_subj->curriculum_subject_lecture_hours, 'Hour')),
-                                    my_htmlspecialchars(inflector_int_unit($cur_subj->curriculum_subject_laboratory_hours, 'Hour')),
+                                    my_htmlspecialchars($cur_subj->curriculum_subject_units),
+                                    my_htmlspecialchars($cur_subj->curriculum_subject_lecture_hours),
+                                    my_htmlspecialchars($cur_subj->curriculum_subject_laboratory_hours),
                                     $requisite->pre,
                                     $requisite->co
                                 );

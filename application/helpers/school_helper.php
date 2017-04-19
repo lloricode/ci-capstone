@@ -12,15 +12,20 @@ if ( ! function_exists('semesters'))
          * 
          * @param string $index | default FALSE just return array (all data)]
          * @param string $lang  | default FALSE
+         * @param string $shorten  | default ''  params: short
          * @return string|array
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        function semesters($index = FALSE, $lang = FALSE)
+        function semesters($index = FALSE, $lang = FALSE, $shorten = '')
         {
+                if ($shorten != '')
+                {
+                        $shorten .= '_';
+                }
                 $_semesters = array(
-                    'first'  => ( ! $lang) ? lang('semester_first_label') : 'semester_first_label', #this will be use in bootstrap form
-                    'second' => ( ! $lang) ? lang('semester_second_label') : 'semester_second_label',
-                    'summer' => ( ! $lang) ? lang('semester_summer_label') : 'semester_summer_label',
+                    'first'  => ( ! $lang) ? lang("semester_first_{$shorten}label") : "semester_first_{$shorten}label", #this will be use in bootstrap form
+                    'second' => ( ! $lang) ? lang("semester_second_{$shorten}label") : "semester_second_{$shorten}label",
+                    'summer' => ( ! $lang) ? lang("semester_summer_{$shorten}label") : "semester_summer_{$shorten}label"
                 );
                 if ($index)
                 {
