@@ -65,9 +65,9 @@ if ( ! function_exists('check_id_form_url'))
                 /**
                  * check if id is set
                  */
-                if (is_null($CI->input->get($id_name)))
+                if ( ! $CI->input->get($id_name))
                 {
-                        show_error('id <b>' . $id_name . '</b> required.');
+                        show_error('id ' . strong($id_name) . ' required.');
                 }
 
                 $id = $CI->input->get($id_name);
@@ -125,7 +125,7 @@ if ( ! function_exists('check_id_form_url'))
                  */
                 if ( ! $obj)
                 {
-                        show_error('No result found in given id_name <b>' . $id_name . '</b>.');
+                        show_error('No result found in given id_name ' . strong($id_name) . '.');
                 }
                 return $obj;
         }
