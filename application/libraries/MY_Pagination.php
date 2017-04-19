@@ -149,7 +149,7 @@ class MY_Pagination extends CI_Pagination
         private function generate_last_link()
         {
                 $output = '';
-                if ($this->prefix == '')
+                if ($this->prefix == '' && $this->page_query_string === FALSE)
                 {
                         $this->prefix = '/';
                 }
