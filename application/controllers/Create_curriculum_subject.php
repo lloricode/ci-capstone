@@ -147,41 +147,38 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                 );
 
                 $inputs['curriculum_subject_year_level'] = array(
-                    'name'   => 'level',
-                    'fields' => _numbers_for_drop_down(1, 4),
-                    'value'  => $this->form_validation->set_value('level'),
-                    'type'   => 'radio',
-                    'lang'   => 'curriculum_subject_year_level_label',
+                    'name'  => 'level',
+                    'value' => _numbers_for_drop_down(1, 4),
+                    'type'  => 'dropdown',
+                    'lang'  => 'curriculum_subject_year_level_label',
                 );
 
                 $inputs['curriculum_subject_semester'] = array(
-                    'name'   => 'semester',
-                    'fields' => semesters(FALSE, TRUE),
-                    'value'  => $this->form_validation->set_value('semester'),
-                    'type'   => 'radio',
-                    'lang'   => 'curriculum_subject_semester_label'
+                    'name'  => 'semester',
+                    'value' => semesters(FALSE),
+                    'type'  => 'dropdown',
+                    'lang'  => 'curriculum_subject_semester_label'
                 );
 
                 $inputs['curriculum_subject_lecture_hours']    = array(
-                    'name'   => 'lecture',
-                    'fields' => _numbers_for_drop_down(0, 5),
-                    'value'  => $this->form_validation->set_value('lecture'),
-                    'type'   => 'radio',
-                    'lang'   => 'curriculum_subject_lecture_hours_label'
+                    'name'  => 'lecture',
+                    'value' => _numbers_for_drop_down(0, 5),
+                    'type'  => 'dropdown',
+                    'lang'  => 'curriculum_subject_lecture_hours_label'
                 );
+                
                 $inputs['curriculum_subject_laboratory_hours'] = array(
-                    'name'   => 'laboratory',
-                    'fields' => _numbers_for_drop_down(0, 9),
-                    'value'  => $this->form_validation->set_value('laboratory'),
-                    'type'   => 'radio',
-                    'lang'   => 'curriculum_subject_laboratory_hours_label'
+                    'name'  => 'laboratory',
+                    'value' => _numbers_for_drop_down(0, 9),
+                    'type'  => 'dropdown',
+                    'lang'  => 'curriculum_subject_laboratory_hours_label'
                 );
+                
                 $inputs['curriculum_subject_units']            = array(
-                    'name'   => 'units',
-                    'fields' => _numbers_for_drop_down(1, 3),
-                    'value'  => $this->form_validation->set_value('units'),
-                    'type'   => 'radio',
-                    'lang'   => 'curriculum_subject_units_label'
+                    'name'  => 'units',
+                    'value' => _numbers_for_drop_down(1, 3),
+                    'type'  => 'dropdown',
+                    'lang'  => 'curriculum_subject_units_label'
                 );
 
                 $data['curriculum_subject_form'] = $this->form_boostrap('create-curriculum-subject', $inputs, 'create_curriculum_subject_label', 'create_curriculum_subject_label', 'info-sign', NULL, TRUE);
