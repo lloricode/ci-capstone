@@ -13,9 +13,13 @@ class Check_access
                 
         }
 
-        public function __get($var)
+        public function __get($property)
         {
-                return get_instance()->$var;
+                if ( ! property_exists(get_instance(), $property))
+                {
+                        show_error('property: ' . strong($property) . ' not exist.');
+                }
+                return get_instance()->$property;
         }
 
         public function validate()
