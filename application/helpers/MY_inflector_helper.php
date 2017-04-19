@@ -19,3 +19,26 @@ if ( ! function_exists('dash'))
         }
 
 }
+
+// --------------------------------------------------------------------
+
+if ( ! function_exists('inflector_int_unit'))
+{
+
+        function inflector_int_unit($int_value, $unit)
+        {
+                $int_value = (int) $int_value;
+                if ($int_value === 0)
+                {
+                        return '--';
+                }
+
+                if ($int_value > 1)
+                {
+                        $unit = plural($unit);
+                }
+
+                return $int_value . ' ' . $unit;
+        }
+
+}

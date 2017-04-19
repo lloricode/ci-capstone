@@ -14,7 +14,7 @@ class Create_student_subject extends CI_Capstone_Controller
         {
                 parent::__construct();
                 $this->load->library('form_validation');
-                $this->load->helper(array('day', 'time', 'number'));
+                $this->load->helper(array('day', 'time', 'number', 'inflector'));
                 $this->load->model(array(
                     'Student_model',
                     'Curriculum_subject_model',
@@ -371,7 +371,7 @@ class Create_student_subject extends CI_Capstone_Controller
                                                 );
                                                 break;
                                 }
-                                $line[]       = $s->curriculum_subject->curriculum_subject_units . ' units';
+                                $line[]       = inflector_int_unit($s->curriculum_subject->curriculum_subject_units, 'Unit');
                                 $line         = array_merge($line, array(array('data' => $btn_link, 'class' => 'taskStatus')));
                                 $table_data[] = array_merge($output, $line);
 

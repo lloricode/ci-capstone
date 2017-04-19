@@ -144,23 +144,6 @@ class Curriculums extends CI_Capstone_Controller
                 return $addtional_data;
         }
 
-        private function _hour($hr)
-        {
-                $hr = (int) $hr;
-                if ($hr === 0)
-                {
-                        return '--';
-                }
-
-                $unit = 'Hour';
-                if ($hr > 1)
-                {
-                        $unit = plural($unit);
-                }
-
-                return $hr . ' ' . $unit;
-        }
-
         public function view()
         {
                 $curriculum_obj = check_id_from_url('curriculum_id', 'Curriculum_model', 'curriculum-id', 'course');
@@ -200,9 +183,9 @@ class Curriculums extends CI_Capstone_Controller
                                     my_htmlspecialchars(semesters($cur_subj->curriculum_subject_semester)),
                                     highlight_phrase($cur_subj->subject->subject_code, $highlight_phrase, '<mark id="' . dash($cur_subj->subject->subject_code) . '">', '</mark>'),
                                     my_htmlspecialchars($cur_subj->subject->subject_description),
-                                    my_htmlspecialchars($cur_subj->curriculum_subject_units),
-                                    my_htmlspecialchars($this->_hour($cur_subj->curriculum_subject_lecture_hours)),
-                                    my_htmlspecialchars($this->_hour($cur_subj->curriculum_subject_laboratory_hours)),
+                                    my_htmlspecialchars(inflector_int_unit($cur_subj->curriculum_subject_units, 'Unit')),
+                                    my_htmlspecialchars(inflector_int_unit($cur_subj->curriculum_subject_lecture_hours, 'Hour')),
+                                    my_htmlspecialchars(inflector_int_unit($cur_subj->curriculum_subject_laboratory_hours, 'Hour')),
                                     $requisite->pre,
                                     $requisite->co
                                 );
