@@ -16,6 +16,7 @@ if ( ! function_exists('input_bootstrap'))
          */
         function input_bootstrap($field, $prepend = FALSE)
         {
+                $output = '';
                 if ( ! isset($field['type']))
                 {
                         $field['type'] = 'text';
@@ -24,29 +25,29 @@ if ( ! function_exists('input_bootstrap'))
                 {
                         $field['lang'] = 'test';
                 }
-                $CI  = &get_instance();
+                $CI     = &get_instance();
                 $CI->load->helper('html');
-                echo PHP_EOL . comment_tag($field['name'] . ' [' . $field['type'] . ']');
-                $tmp = (form_error($field['name']) == '') ? '' : ' error';
-                echo '<div class="control-group' . $tmp . '">' . PHP_EOL;
+                $output .= PHP_EOL . comment_tag($field['name'] . ' [' . $field['type'] . ']');
+                $tmp    = (form_error($field['name']) == '') ? '' : ' error';
+                $output .= '<div class="control-group' . $tmp . '">' . PHP_EOL;
 
                 if (isset($field['lang']['main_lang']))
                 {
-                        echo sprintf(lang($field['lang']['main_lang'], $field['name'], array(
-                            'class' => 'control-label',
-                                )), $field['lang']['sprintf']) . PHP_EOL;
+                        $output .= sprintf(lang($field['lang']['main_lang'], $field['name'], array(
+                                    'class' => 'control-label',
+                                        )), $field['lang']['sprintf']) . PHP_EOL;
                 }
                 else
                 {
-                        echo lang($field['lang'], $field['name'], array(
-                            'class' => 'control-label',
-                        )) . PHP_EOL;
+                        $output .= lang($field['lang'], $field['name'], array(
+                                    'class' => 'control-label',
+                                )) . PHP_EOL;
                 }
-                echo '<div class="controls">' . PHP_EOL;
+                $output .= '<div class="controls">' . PHP_EOL;
 
                 if ($prepend)
                 {
-                        echo '<div class="input-prepend"> <span class="add-on">' . $prepend . '</span>';
+                        $output .= '<div class="input-prepend"> <span class="add-on">' . $prepend . '</span>';
                 }
                 if (isset($field['lang']))
                 {
@@ -63,10 +64,10 @@ if ( ! function_exists('input_bootstrap'))
                                 switch ($field['type'])
                                 {
                                         case 'text':
-                                                echo form_input($field);
+                                                $output .= form_input($field);
                                                 break;
                                         case 'password':
-                                                echo form_password($field);
+                                                $output .= form_password($field);
                                                 break;
                                         default:
                                                 /**
@@ -79,10 +80,10 @@ if ( ! function_exists('input_bootstrap'))
                                 }
                                 break;
                         case 'textarea':
-                                echo form_textarea($field);
+                                $output        .= form_textarea($field);
                                 break;
                         case 'file':
-                                echo form_upload($field);
+                                $output        .= form_upload($field);
                                 break;
                         case 'dropdown':
                         case 'multiselect':
@@ -91,10 +92,10 @@ if ( ! function_exists('input_bootstrap'))
                                 {
 
                                         case 'dropdown':
-                                                echo form_dropdown($field['name'], $field['value'], set_value($field['name'], $default_value));
+                                                $output .= form_dropdown($field['name'], $field['value'], set_value($field['name'], $default_value));
                                                 break;
                                         case 'multiselect':
-                                                echo form_multiselect($field['name'], $field['value'], get_instance()->input->post($field['name'], TRUE));
+                                                $output .= form_multiselect($field['name'], $field['value'], get_instance()->input->post($field['name'], TRUE));
                                                 break;
                                         default:
                                                 /**
@@ -174,15 +175,15 @@ if ( ! function_exists('input_bootstrap'))
                                                                                 $lang_ = lang($v);
                                                                         }
                                                                 }
-                                                                $form_ = 'form_' . $field['type'];
-                                                                echo form_label($form_($field['name'], $k, $defaut) . ' ' . $lang_) . PHP_EOL;
+                                                                $form_  = 'form_' . $field['type'];
+                                                                $output .= form_label($form_($field['name'], $k, $defaut) . ' ' . $lang_) . PHP_EOL;
                                                         }
                                                         break;
 //                                                case 'checkbox':
 //                                                        foreach ($labels as $v)
 //                                                        {
 //                                                                $defaut = ($field['value'] == $v['value']);
-//                                                                echo form_label(form_checkbox($field['name'], $v['value'], $defaut) . ' ' . $v['label']) . PHP_EOL;
+//                                                                 $output .= form_label(form_checkbox($field['name'], $v['value'], $defaut) . ' ' . $v['label']) . PHP_EOL;
 //                                                        }
 //                                                        break;
                                                 default:
@@ -202,16 +203,18 @@ if ( ! function_exists('input_bootstrap'))
                 }
                 if ($prepend)
                 {
-                        echo '</div>';
+                        $output .= '</div>';
                 }
                 if (isset($field['note']))
                 {
-                        echo '<span class="help-block">' . $field['note'] . '</span>' . PHP_EOL;
+                        $output .= '<span class="help-block">' . $field['note'] . '</span>' . PHP_EOL;
                 }
-                echo form_error($field['name']) . PHP_EOL;
-                echo '</div>' . PHP_EOL;
-                echo '</div>' . PHP_EOL;
-                echo comment_tag('end-' . $field['name'] . ' [' . $field['type'] . ']') . PHP_EOL;
+                $output .= form_error($field['name']) . PHP_EOL;
+                $output .= '</div>' . PHP_EOL;
+                $output .= '</div>' . PHP_EOL;
+                $output .= comment_tag('end-' . $field['name'] . ' [' . $field['type'] . ']') . PHP_EOL;
+
+                return $output;
         }
 
 }

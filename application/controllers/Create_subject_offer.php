@@ -190,7 +190,7 @@ class Create_subject_offer extends CI_Capstone_Controller
          */
         private function _validate_two_shedules()
         {
-                for ($i = 1; $i <= 2; $i ++)
+                for ($i = 1; $i <= 2; $i ++ )
                 {
                         $tmp            = ($i === 1) ? '' : '2';
                         ${'sched' . $i} = array(
@@ -359,13 +359,14 @@ class Create_subject_offer extends CI_Capstone_Controller
                 );
 
                 $this->data['subject_id'] = array(
-                    'name'  => 'subject',
-                    'value' => $this->Subject_model->
+                    'name'    => 'subject',
+                    'value'   => $this->Subject_model->
                             as_dropdown('subject_code')->
                             set_cache('as_dropdown_subject_code')->
                             get_all(),
-                    'type'  => 'dropdown',
-                    'lang'  => 'create_subject_id_label'
+                    'type'    => 'dropdown',
+                    'lang'    => 'create_subject_id_label',
+                    'default' => $this->input->get('subject-id')
                 );
 
                 /**

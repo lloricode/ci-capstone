@@ -76,21 +76,24 @@ if ( ! function_exists('image_view'))
         {
                 $CI = &get_instance();
                 $CI->load->helper('html');
-                echo PHP_EOL . comment_tag('image');
+
+                $output = '';
+                $output .= PHP_EOL . comment_tag('image');
                 //  $tmp = (form_error($field['name']) == '') ? '' : ' error';
-                echo '<div class="control-group' . /* $tmp . */ '">' . PHP_EOL;
-//                echo lang($lang, $field['name'], array(
+                $output .= '<div class="control-group' . /* $tmp . */ '">' . PHP_EOL;
+//                 $output .= lang($lang, $field['name'], array(
 //                    'class' => 'control-label',
 //                )) . PHP_EOL;
-                echo '<div class="controls">' . PHP_EOL;
+                $output .= '<div class="controls">' . PHP_EOL;
 
 
-                echo img($image_properties);
+                $output .= img($image_properties);
 
 
-                echo '</div>' . PHP_EOL;
-                echo '</div>' . PHP_EOL;
-                echo comment_tag('end-imgae') . PHP_EOL;
+                $output .= '</div>' . PHP_EOL;
+                $output .= '</div>' . PHP_EOL;
+                $output .= comment_tag('end-imgae') . PHP_EOL;
+                return $output;
         }
 
 }

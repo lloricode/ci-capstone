@@ -354,7 +354,11 @@ class Create_student_subject extends CI_Capstone_Controller
                                         case 'db':
                                                 if ($full_room)
                                                 {
-                                                        $btn_link = '<span class="pending">' . 'Full Capacity' . '</span>';
+                                                        $btn_link    = '<span class="pending">' . 'Full Capacity' . '</span>';
+                                                        $link_create = 'create-subject-offer?subject-id=' . $s->subject->subject_id;
+                                                        $btn_link    .= br() . table_row_button_link(
+                                                                        $link_create, lang('create_subject_offer_heading')
+                                                        );
                                                 }
                                                 else
                                                 {
