@@ -23,3 +23,4 @@ $lang['curriculum_subject_co_subject_label']       = 'Subject Code Co-Requisite'
 
 $lang['curriculum_subject_add_successfull'] = 'Curriculum Subject Addded Successfully!!';
 
+$lang['validation_unit_relate_types_failed'] = 'Unit/s is not equal as sum of LEC and LAB.';

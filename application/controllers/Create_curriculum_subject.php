@@ -62,6 +62,25 @@ class Create_curriculum_subject extends CI_Capstone_Controller
         }
 
         /**
+         * check if LEC plus LAB is equal to UNIT
+         * 
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         * @param type $value
+         */
+        public function unit_relate_types($value)
+        {
+                if ( ! $this->input->post('submit'))
+                {
+                        show_404();
+                }
+                $value = (int) $value;
+                $lec   = (int) $this->input->post('lecture', TRUE);
+                $lab   = (int) $this->input->post('laboratory', TRUE);
+                $this->form_validation->set_message('unit_relate_types', lang('validation_unit_relate_types_failed'));
+                return (bool) (($lec + $lab) === $value);
+        }
+
+        /**
          * check if subject is exist in curriculum
          * 
          * @return bool
@@ -160,21 +179,21 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                     'lang'  => 'curriculum_subject_semester_label'
                 );
 
-                $inputs['curriculum_subject_lecture_hours']    = array(
+                $inputs['curriculum_subject_lecture_hours'] = array(
                     'name'  => 'lecture',
                     'value' => _numbers_for_drop_down(0, 5),
                     'type'  => 'dropdown',
                     'lang'  => 'curriculum_subject_lecture_hours_label'
                 );
-                
+
                 $inputs['curriculum_subject_laboratory_hours'] = array(
                     'name'  => 'laboratory',
                     'value' => _numbers_for_drop_down(0, 9),
                     'type'  => 'dropdown',
                     'lang'  => 'curriculum_subject_laboratory_hours_label'
                 );
-                
-                $inputs['curriculum_subject_units']            = array(
+
+                $inputs['curriculum_subject_units'] = array(
                     'name'  => 'units',
                     'value' => _numbers_for_drop_down(1, 3),
                     'type'  => 'dropdown',

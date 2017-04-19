@@ -139,7 +139,7 @@ class Curriculum_subject_model extends MY_Model
                     'curriculum_subject_units'            => array(
                         'label' => lang('curriculum_subject_units_label'),
                         'field' => 'units',
-                        'rules' => 'trim|required|is_natural_no_zero'
+                        'rules' => 'trim|required|is_natural_no_zero|callback_unit_relate_types'
                     ),
                     'curriculum_subject_lecture_hours'    => array(
                         'label' => lang('curriculum_subject_lecture_hours_label'),
