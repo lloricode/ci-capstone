@@ -12,7 +12,6 @@ class Rooms extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
-                $this->lang->load('ci_capstone/ci_rooms');
                 $this->load->model('Room_model');
                 $this->load->library('pagination');
                 /**
@@ -55,6 +54,10 @@ class Rooms extends CI_Capstone_Controller
                                     my_htmlspecialchars($room->room_number),
                                     my_htmlspecialchars($room->room_capacity)
                                 );
+                                if (in_array('edit-room', permission_controllers()))
+                                {
+                                        $tmp[] = table_row_button_link('edit-room?room-id=' . $room->room_id, lang('edit_room_label'));
+                                }
                                 if ($this->ion_auth->is_admin())
                                 {
 
@@ -71,6 +74,10 @@ class Rooms extends CI_Capstone_Controller
                     lang('index_room_number_th'),
                     lang('index_room_capacity_th')
                 );
+                if (in_array('edit-room', permission_controllers()))
+                {
+                        $header[] = lang('index_action_th');
+                }
                 if ($this->ion_auth->is_admin())
                 {
                         $header[] = 'Created By';

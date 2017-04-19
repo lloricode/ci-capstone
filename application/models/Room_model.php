@@ -74,20 +74,26 @@ class Room_model extends MY_Model
         {
 
                 $this->rules = array(
-                    'insert' => array(
-                        'room_number'   => array(
-                            'label'  => lang('create_room_number_label'),
-                            'field'  => 'number',
-                            'rules'  => 'trim|required|min_length[1]|max_length[50]|is_unique[rooms.room_number]',
-                            'errors' => array(
-                                'is_unique' => 'The {field} already exist.'
-                            )
-                        ),
-                        'room_capacity' => array(
-                            'label' => lang('index_room_capacity_th'),
-                            'field' => 'capacity',
-                            'rules' => 'trim|required|min_length[1]|max_length[2]|is_natural_no_zero'
+                    'insert' => $this->_common('is_unique[rooms.room_number]'),
+                    'update' => $this->_common('callback_check_unique')
+                );
+        }
+
+        private function _common($unique)
+        {
+                return array(
+                    'room_number'   => array(
+                        'label'  => lang('create_room_number_label'),
+                        'field'  => 'number',
+                        'rules'  => 'trim|required|min_length[1]|max_length[50]|' . $unique,
+                        'errors' => array(
+                            'is_unique' => 'The {field} already exist.'
                         )
+                    ),
+                    'room_capacity' => array(
+                        'label' => lang('index_room_capacity_th'),
+                        'field' => 'capacity',
+                        'rules' => 'trim|required|min_length[1]|max_length[2]|is_natural_no_zero'
                     )
                 );
         }
