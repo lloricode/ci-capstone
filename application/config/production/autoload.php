@@ -145,4 +145,4 @@ foreach($languages as $language)
 |
 |	$autoload['model'] = array('first_model' => 'first');
 */
-$autoload['model'] = array('Permission_model','Controller_model','Enrollment_status_model','Enrollment_model');
+$autoload['model'] = array('Permission_model','Controller_model','Enrollment_status_model','Enrollment_model','User_model');

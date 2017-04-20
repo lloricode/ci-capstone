@@ -7,7 +7,10 @@ class User_model extends MY_Model
 
         public function __construct()
         {
-                $this->table       = 'users';
+                $this->config->load('ion_auth', TRUE);
+                $tables = $this->config->item('tables', 'ion_auth');
+
+                $this->table       = $tables['users'];
                 $this->primary_key = 'id';
 
 

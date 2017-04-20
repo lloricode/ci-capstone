@@ -16,16 +16,6 @@ class Auth extends MY_Controller
                 $this->form_validation->set_error_delimiters(
                         $this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth')
                 );
-
-                /**
-                 * set hook for insert user last login data after success login,
-                 */
-                $this->ion_auth->set_hook(
-                        'post_login_successful', 'insert_last_login', $this/* $this because the class already extended */, 'insert_last_login', array()
-                );
-                $this->ion_auth->set_hook(
-                        'post_login_successful', 'add_another_session', $this/* $this because the class already extended */, 'set_session_data_session', array()
-                );
         }
 
         public function index()
@@ -75,10 +65,75 @@ class Auth extends MY_Controller
                     'value'   => TRUE,
                     'checked' => FALSE
                 );
+        }
 
+        private function _insert_session_id()
+        {
+                $gen_sess_id = (string) time();
+                $this->User_model->update(array('session_id' => $gen_sess_id), $this->ion_auth->get_user_id());
+        }
 
+        private function _set_session_data_session()
+        {
+                $is_dean          = FALSE;
+                $dean_course_id   = NULL;
+                $dean_course_code = NULL;
+                if ($this->ion_auth->in_group($this->config->item('user_group_dean')))
+                {
+                        $is_dean = TRUE;
+                        $this->load->model('Dean_course_model');
+                        $obj     = $this->Dean_course_model->where(array(
+                                    'user_id' => $this->ion_auth->get_user_id()
+                                ))->get();
+                        if ($obj)
+                        {
+                                $this->load->model('Course_model');
+                                $dean_course_id   = $obj->course_id;
+                                $dean_course_code = $this->Course_model->get($obj->course_id)->course_code;
+                        }
+                }
+                //set the user name/last name in session
+                $user_obj = $this->ion_auth->user()->row();
+                $this->session->set_userdata(array(
+                    'user_first_name'          => $user_obj->first_name,
+                    'user_last_name'           => $user_obj->last_name,
+                    'user_fullname'            => $user_obj->last_name . ', ' . $user_obj->first_name,
+                    'user_current_session_id'  => $user_obj->session_id, //this will be use for checking multiple logged machines in one account
+                    'user_groups_descriptions' => $this->current_group_string(),
+                    'user_groups_names'        => $this->current_group_string('name'),
+                    'user_is_dean'             => $is_dean,
+                    'user_dean_course_id'      => $dean_course_id,
+                    'user_dean_course_code'    => $dean_course_code,
+                ));
+        }
 
-                //  $this->data['type'] = $this->config->item('identity', 'ion_auth');
+        private function _insert_last_login()
+        {
+                $this->load->library('user_agent');
+                if ($this->agent->is_browser())
+                {
+                        $agent = $this->agent->browser() . ' ' . $this->agent->version();
+                }
+                elseif ($this->agent->is_robot())
+                {
+                        $agent = $this->agent->robot();
+                }
+                elseif ($this->agent->is_mobile())
+                {
+                        $agent = $this->agent->mobile();
+                }
+                else
+                {
+                        $agent = 'Unidentified User Agent';
+                }
+
+                $this->load->model('Users_last_login_model');
+                return (bool) $this->Users_last_login_model->insert(array(
+                            'user_id'    => $this->ion_auth->get_user_id(),
+                            'ip_address' => $this->input->ip_address(),
+                            'agent'      => $agent,
+                            'platform'   => $this->agent->platform()
+                ));
         }
 
         /**
@@ -96,23 +151,20 @@ class Auth extends MY_Controller
                                 redirect('home', 'refresh');
                         }
                 }
-                //  $this->data['title'] = $this->lang->line('login_heading');
-                //validate form input
+
                 $this->form_validation->set_rules('identity', $this->lang->line('username_label', 'ci_ion_auth'), 'required');
                 $this->form_validation->set_rules('password', str_replace(':', '', $this->lang->line('login_password_label')), 'required');
 
                 if ($this->form_validation->run())
                 {
-                        // check to see if the user is logging in
-                        // check for "remember me"
                         $remember = (bool) $this->input->post('remember', TRUE);
 
                         if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember))
                         {
-                                //if the login is successful
-                                //      $this->session->set_flashdata('message', $this->ion_auth->messages());
-                                //redirect them back to the home page
                                 $this->session->set_flashdata('message', $this->ion_auth->messages());
+                                $this->_insert_session_id();
+                                $this->_set_session_data_session();
+                                $this->_insert_last_login();
                                 redirect(site_url('home'), 'refresh');
                         }
                         else
@@ -298,17 +350,7 @@ class Auth extends MY_Controller
                         redirect('auth/login', 'refresh');
                 }
 
-                /**
-                 * function in on  MY_COntroller
-                 */
-                $this->ion_auth->set_hook(
-                        'logout', 'delete_remember_code_event', $this/* $this because the class already extended */, 'delete_remember_code', array()
-                );
-                // log the user out
                 $this->ion_auth->logout();
-                // redirect them to the login page
-                //   $this->session->set_flashdata('message', $this->ion_auth->messages());
-                // redirect('auth/login', 'refresh');
 
                 /*
                  * i set this because all session destroyed also even done logout,
@@ -320,12 +362,7 @@ class Auth extends MY_Controller
                 }
                 else
                 {
-                        $message = str_replace('_', ' ', $message);
-                        /**
-                         * set erro delimeter
-                         * using ion_auth
-                         */
-                        $m       = bootstrap_error($message);
+                        $m = bootstrap_error($message);
                 }
                 $this->login($m);
         }
