@@ -92,8 +92,8 @@ $config['max_password_length']        = 20;                  // Maximum Allowed 
 $config['email_activation']           = FALSE;               // Email Activation for registration
 $config['manual_activation']          = FALSE;               // Manual Activation for registration
 $config['remember_users']             = TRUE;                // Allow users to be remembered and enable auto-login
-$config['user_expire']                = 86400;   //1day            // How long to remember the user (seconds). Set to zero for no expiration
-$config['user_extend_on_login']       = FALSE;               // Extend the users cookies every time they auto-login
+$config['user_expire']                = 0;               // How long to remember the user (seconds). Set to zero for no expiration
+$config['user_extend_on_login']       = TRUE;               // Extend the users cookies every time they auto-login
 $config['track_login_attempts']       = TRUE;               // Track the number of failed login attempts for each user or ip.
 $config['track_login_ip_address']     = TRUE;                // Track login attempts by IP Address, if FALSE will track based on identity. (Default: TRUE)
 $config['maximum_login_attempts']     = 3;                   // The maximum number of failed login attempts.
@@ -109,8 +109,8 @@ $config['recheck_timer']              = 0;        /* 1800 30mins           /* Th
  | remember_cookie_name Default: remember_code
  | identity_cookie_name Default: identity
  */
-$config['remember_cookie_name'] = 'remember_code';
-$config['identity_cookie_name'] = 'identity';
+$config['remember_cookie_name'] = 'ci_remember_code';
+$config['identity_cookie_name'] = 'ci_identity';
 
 /*
  | -------------------------------------------------------------------------

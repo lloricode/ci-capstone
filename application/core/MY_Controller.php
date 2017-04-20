@@ -33,11 +33,32 @@ class MY_Controller extends CI_Controller
                         $this->ion_auth->set_hook(
                                 'logged_in', 'check_log_multiple_user', $this/* $this because the class already extended */, 'check_if_multiple_logged_in_one_user', array()
                         );
+
+                        $this->ion_auth->set_hook(
+                                'remember_user_successful', 'just_notigy_user_remember_event', $this/* $this because the class already extended */, 'just_notigy_user_remember', array()
+                        );
                 }
                 /**
                  * update enrollment status to FALSE in ALL not current semester and school_year
                  */
                 $this->Enrollment_model->unenroll_all_past_term();
+        }
+
+        /**
+         * calling this by setting hook in log out
+         */
+        public function delete_remember_code()
+        {
+                $this->load->model('User_model');
+                $this->User_model->update(array('remember_code' => NULL), $this->ion_auth->get_user_id());
+        }
+
+        public function just_notigy_user_remember()
+        {
+                /**
+                 * just a temporary
+                 */
+                $this->session->set_flashdata('message', bootstrap_success('User Exntended Login!!'));
         }
 
         /**

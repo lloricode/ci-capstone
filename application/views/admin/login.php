@@ -47,6 +47,16 @@ $link = base_url($this->config->item('bootstarp_dir'));
                     </div>
                 </div>
             </div>
+            <div class="control-group">
+                <div class="controls">
+                    <div class="main_input_box">
+                        <?php
+                        echo form_label('Remember me', 'remember', array('style' => 'color:white'));
+                        echo form_checkbox($remember);
+                        ?>
+                    </div>
+                </div>
+            </div>
             <div class="form-actions">
                 <span class="pull-left"><a href="#" class="flip-link btn btn-info" id="to-recover"><?php echo lang('login_forgot_password'); ?></a></span>
                 <span class="pull-right">
@@ -58,7 +68,7 @@ $link = base_url($this->config->item('bootstarp_dir'));
                 </span>
             </div>
             <?php echo form_close(); ?>
-            <?php echo form_open('auth/forgot_password', array('class' => 'form-vertical', 'id' => 'recoverform')) ?>
+            <?php echo form_open('auth/forgot-password', array('class' => 'form-vertical', 'id' => 'recoverform')) ?>
             <p class="normal_text">Enter your Username below and we will send you instructions how to recover a password.</p>
 
             <div class="controls">

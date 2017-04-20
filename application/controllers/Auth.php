@@ -62,15 +62,18 @@ class Auth extends MY_Controller
                 $this->data['message']  = (validation_errors()) ? validation_errors() : $this->session->flashdata('message');
                 $this->data['message']  = ( ! is_null($message)) ? $message : $this->data['message'];
                 $this->data['identity'] = array('name'        => 'identity',
-                    'id'          => 'identity',
                     'type'        => 'text',
                     'value'       => $this->form_validation->set_value('identity'),
                     'placeholder' => $label
                 );
                 $this->data['password'] = array('name'        => 'password',
-                    'id'          => 'password',
                     'type'        => 'password',
                     'placeholder' => 'Password'
+                );
+                $this->data['remember'] = array(
+                    'name'    => 'remember',
+                    'value'   => TRUE,
+                    'checked' => FALSE
                 );
 
 
@@ -95,14 +98,14 @@ class Auth extends MY_Controller
                 }
                 //  $this->data['title'] = $this->lang->line('login_heading');
                 //validate form input
-                $this->form_validation->set_rules('identity',$this->lang->line('username_label', 'ci_ion_auth'), 'required');
+                $this->form_validation->set_rules('identity', $this->lang->line('username_label', 'ci_ion_auth'), 'required');
                 $this->form_validation->set_rules('password', str_replace(':', '', $this->lang->line('login_password_label')), 'required');
 
                 if ($this->form_validation->run())
                 {
                         // check to see if the user is logging in
                         // check for "remember me"
-                        $remember = (bool) $this->input->post('remember');
+                        $remember = (bool) $this->input->post('remember', TRUE);
 
                         if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember))
                         {
@@ -294,6 +297,13 @@ class Auth extends MY_Controller
                 {
                         redirect('auth/login', 'refresh');
                 }
+
+                /**
+                 * function in on  MY_COntroller
+                 */
+                $this->ion_auth->set_hook(
+                        'logout', 'delete_remember_code_event', $this/* $this because the class already extended */, 'delete_remember_code', array()
+                );
                 // log the user out
                 $this->ion_auth->logout();
                 // redirect them to the login page
