@@ -158,28 +158,26 @@ class Curriculums extends CI_Capstone_Controller
                         $highlight_phrase = $h;
                 }
 
-                //$this->load->library('curriculum');
                 $cur_subj_obj = $this->Curriculum_subject_model->curriculum_subjects($curriculum_obj->curriculum_id);
-                //  print_r($cur_subj_obj);
-                // $cur_subj_obj = $this->curriculum->get_subjects();
 
                 $table_data = array();
                 if ($cur_subj_obj)
                 {
-                        // print_r($cur_subj_obj);
-                        $year         = 1;
-                        $table_data[] = array(array('data' => '<h4>' . number_place($year) . ' Year</h4>', 'colspan' => '7'));
+                        $year = 0;
                         foreach ($cur_subj_obj as $cur_subj)
                         {
                                 if ($year != $cur_subj->curriculum_subject_year_level)
                                 {
-                                        $table_data[] = array(array('data' => '<h4>' . number_place($cur_subj->curriculum_subject_year_level) . ' Year</h4>', 'colspan' => '8'));
-
-                                        $year ++;
+                                        ++ $year;
+                                        $table_data[] = array(
+                                            array(
+                                                'data'    => heading(number_place($cur_subj->curriculum_subject_year_level) . ' Year', 4),
+                                                'colspan' => '9'
+                                            )
+                                        );
                                 }
                                 $requisite = $this->Requisites_model->subjects(isset($cur_subj->requisites) ? $cur_subj->requisites : NULL);
                                 $tmp       = array(
-                                    // my_htmlspecialchars($cur_subj->curriculum_subject_year_level),
                                     my_htmlspecialchars(semesters($cur_subj->curriculum_subject_semester, FALSE, 'short')),
                                     highlight_phrase($cur_subj->subject->subject_code, $highlight_phrase, '<mark id="' . dash($cur_subj->subject->subject_code) . '">', '</mark>'),
                                     my_htmlspecialchars($cur_subj->subject->subject_description),

@@ -61,13 +61,13 @@ class MY_Controller extends CI_Controller
 
         /**
          * this will call using 
-         * $this->trigger_events(array(_____ , 'post_login_successful')); line 1012 :Ion_auth_model.php
+         * $this->trigger_events(array(_____ , 'post_login_successful')); line 1019 :Ion_auth_model.php
          * in success login
          * 
          * ,this is set hook in constructor in auth controller
          * 
          * 
-         * i put here htis method to controller, to prevent acces via url, because private is cannot in ion auth hook
+         * i put here this method to controller, to prevent access via url, because private is cannot in ion auth hook
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          * 
          */
