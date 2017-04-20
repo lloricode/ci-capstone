@@ -32,7 +32,10 @@ class MY_Controller extends CI_Controller
                          * we set here , must before check login or before calling a trigger for a name of event
                          */
                         $this->ion_auth->set_hook(
-                                'logged_in', 'check_log_multiple_user', $this/* $this because the class already extended */, 'check_if_multiple_logged_in_one_user', array()
+                                'logged_in', 'check_log_multiple_user_event', $this/* $this because the class already extended */, 'check_if_multiple_logged_in_one_user', array()
+                        );
+                        $this->ion_auth->set_hook(
+                                'post_login_remembered_user_successful', 'just_notify_user_remember_event', $this/* $this because the class already extended */, 'just_notify_user_remember', array()
                         );
                 }
                 /**
@@ -41,7 +44,7 @@ class MY_Controller extends CI_Controller
                 $this->Enrollment_model->unenroll_all_past_term();
         }
 
-        public function just_notigy_user_remember()
+        public function just_notify_user_remember()
         {
                 /**
                  * just a temporary
@@ -67,7 +70,6 @@ class MY_Controller extends CI_Controller
                         return $view_html; //This will return html on 3rd argument being true
                 }
         }
-
 
         /**
          * @return string | all user_group of current logged user
@@ -246,8 +248,8 @@ class CI_Capstone_Controller extends MY_Controller
          */
         public function check_if_multiple_logged_in_one_user()
         {
-                $user_current_session_id = $this->session->userdata('user_current_session_id');
-                $session_id              = $this->User_model->get($this->ion_auth->get_user_id())->session_id;
+                $user_current_session_id = $this->session->userdata('gen_code');
+                $session_id              = $this->User_model->get($this->ion_auth->get_user_id())->gen_code;
 
                 if ($session_id != $user_current_session_id)
                 {

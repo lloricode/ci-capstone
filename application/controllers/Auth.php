@@ -69,8 +69,7 @@ class Auth extends MY_Controller
 
         private function _insert_session_id()
         {
-                $gen_sess_id = (string) time();
-                $this->User_model->update(array('session_id' => $gen_sess_id), $this->ion_auth->get_user_id());
+                $this->User_model->update(array('gen_code' => $this->ion_auth->salt()), $this->ion_auth->get_user_id());
         }
 
         private function _set_session_data_session()
@@ -98,7 +97,7 @@ class Auth extends MY_Controller
                     'user_first_name'          => $user_obj->first_name,
                     'user_last_name'           => $user_obj->last_name,
                     'user_fullname'            => $user_obj->last_name . ', ' . $user_obj->first_name,
-                    'user_current_session_id'  => $user_obj->session_id, //this will be use for checking multiple logged machines in one account
+                    'gen_code'                 => $user_obj->gen_code, //this will be use for checking multiple logged machines in one account
                     'user_groups_descriptions' => $this->current_group_string(),
                     'user_groups_names'        => $this->current_group_string('name'),
                     'user_is_dean'             => $is_dean,

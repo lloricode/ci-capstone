@@ -68,9 +68,10 @@ class Migration_Sample_data extends CI_Migration
                     'Permission_model',
                     'Controller_model'
                 ));
+                $this->user_ids = array();
                 if ( ! $this->user_count)
                 {
-                        $this->user_ids = array(1);
+                        $this->user_ids[] = 1;
                 }
         }
 
@@ -170,7 +171,7 @@ class Migration_Sample_data extends CI_Migration
                             'phone'      => '+639' . random_string('numeric', 2) . '-' . random_string('numeric', 3) . '-' . random_string('numeric', 4),
                         );
                         $u_id            = $this->ion_auth->register($identity, $password, $email, $additional_data);
-                        if ( ! $u_id)
+                        if ( ! $u_id OR $u_id < 1)
                         {
                                 show_error('failed insert user in (' . $i . ') times error:' . $this->ion_auth->errors());
                         }
@@ -367,22 +368,25 @@ class Migration_Sample_data extends CI_Migration
                     )
                 );
 
-                $education_arr = array();
-
+                // $education_arr = array();
 //                $dplicate1 = 1;
 //                $dplicate2 = 'A';
                 // for ($i = 1; $i <= $this->educaton_count; $i++)
+                $idss = array();
                 foreach ($_data as $v)
                 {
-                        $education_arr[] = array(
+                        $education_arr = array(
                             'education_code'        => $v ['code'],
                             'education_description' => $v ['desc'],
                             'created_user_id'       => random_element($this->user_ids)
                         );
+
+                        $this->db->insert($this->Education_model->table, $education_arr);
+                        $idss[] = $this->db->insert_id();
                 }
                 if ($_data)
                 {
-                        $this->education_ids = $this->Education_model->insert($education_arr);
+                        $this->education_ids = $idss;
                 }
         }
 
@@ -464,13 +468,14 @@ class Migration_Sample_data extends CI_Migration
                         'code_id' => '01'
                     )
                 );
-                $course_arr         = array();
+                //   $course_arr         = array();
 //                $dplicate1  = 1;
 //                $dplicate2  = 'A';
                 //for ($i = 1; $i <= $this->courses_count; $i++)
+                $idss               = array();
                 foreach ($_data AS $v)
                 {
-                        $course_arr[] = array(
+                        $course_arr = array(
                             'course_code'        => $v ['code'],
                             'course_icon'        => $v ['icon'],
                             'course_color'       => $v ['color'],
@@ -479,10 +484,15 @@ class Migration_Sample_data extends CI_Migration
                             'course_code_id'     => $v ['code_id'],
                             'created_user_id'    => random_element($this->user_ids)
                         );
+
+
+
+                        $this->db->insert($this->Course_model->table, $course_arr);
+                        $idss[] = $this->db->insert_id();
                 }
                 if ($_data)
                 {
-                        $this->course_ids = $this->Course_model->insert($course_arr);
+                        $this->course_ids = $idss;
                 }
         }
 

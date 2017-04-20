@@ -61,7 +61,7 @@ class Migration_Create_ion_auth extends	CI_Migration {
 			
 			// default data
 			$this->db->insert($this->groups, array('id'=>null,'name'=>'admin','description'=>'Administrator'));
-			$this->db->insert($this->groups, array('id'=>null,'name'=>'faculty','description'=>'General User'));
+			$this->db->insert($this->groups, array('id'=>null,'name'=>'members','description'=>'General User'));
 		}
 
 		// users
@@ -73,10 +73,10 @@ class Migration_Create_ion_auth extends	CI_Migration {
 			$this->dbforge->add_field(array(
 				'id' => array('type' => 'MEDIUMINT', 'constraint' => 8, 'unsigned' => TRUE, 'null' => FALSE, 'auto_increment' => TRUE),
 				'ip_address' => array('type' => 'VARBINARY', 'constraint' => '16', 'null' => FALSE),
-				'username' => array('type' => 'VARCHAR','unique'=> TRUE, 'constraint' => '100', 'null' => FALSE),
+				'username' => array('type' => 'VARCHAR', 'constraint' => '100', 'null' => FALSE),
 				'password' => array('type' => 'VARCHAR', 'constraint' => '80', 'null' => FALSE),
 				'salt' => array('type' => 'VARCHAR', 'constraint' => '40', 'null' => TRUE),
-				'email' => array('type' => 'VARCHAR','unique' => TRUE, 'constraint' => '100', 'null' => TRUE),
+				'email' => array('type' => 'VARCHAR', 'constraint' => '100', 'null' => FALSE),
 				'activation_code' => array('type' => 'VARCHAR', 'constraint' => '40', 'null' => TRUE),
 				'forgotten_password_code' => array('type' => 'VARCHAR', 'constraint' => '40', 'null' => TRUE),
 				'forgotten_password_time' => array('type' => 'int', 'constraint' => '11', 'unsigned' => TRUE, 'null' => TRUE),
@@ -87,8 +87,7 @@ class Migration_Create_ion_auth extends	CI_Migration {
 				'first_name' => array('type' => 'VARCHAR', 'constraint' => '50', 'null' => TRUE),
 				'last_name' => array('type' => 'VARCHAR', 'constraint' => '100', 'null' => TRUE),
 				'company' => array('type' => 'VARCHAR', 'constraint' => '100', 'null' => TRUE),
-				'phone' => array('type' => 'VARCHAR', 'constraint' => '50', 'null' => TRUE),
-				'updated_at' => array('type' => 'int', 'constraint' => '11', 'unsigned' => TRUE, 'null' => TRUE),
+				'phone' => array('type' => 'VARCHAR', 'constraint' => '50', 'null' => TRUE)
 			));
 			// create table
 			$this->dbforge->create_table($this->users, TRUE);
@@ -97,7 +96,7 @@ class Migration_Create_ion_auth extends	CI_Migration {
 			$data = array(
 				'ip_address'=> inet_pton('127.0.0.1'),
 				'username'=>'administrator',
-				'password'=>'$2y$08$m8P3WHDASe.hDP4Jn6J9iut/YsshOKD3xuzuVpjiTKeFf146Mfgoi',
+				'password'=>'59beecdf7fc966e2f17fd8f65a4a9aeb09d4a3d4',
 				'salt'=>'9462e8eee0',
 				'email'=>'admin@admin.com',
 				'activation_code'=>'',
