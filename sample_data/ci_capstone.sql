@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 20, 2017 at 05:49 AM
+-- Generation Time: Apr 20, 2017 at 05:54 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 5.6.24
 
@@ -26,14 +26,16 @@ SET time_zone = "+00:00";
 -- Table structure for table `controllers`
 --
 
-CREATE TABLE `controllers` (
-  `controller_id` mediumint(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `controllers` (
+  `controller_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `controller_name` enum('home','curriculums','create-curriculum','create-curriculum-subject','create-requisite','set-curriculum-enable','students','create-student','edit-student','create-student-subject','subjects','create-subject','subject-offers','create-subject-offer','open-enrollment','educations','create-education','courses','create-course','rooms','create-room','users','create-user','groups','create-group','edit-group','deactivate','edit-user','database','report-info','log','permissions','last-logins','','edit-room') NOT NULL,
   `controller_description` varchar(50) NOT NULL,
   `controller_admin_only` tinyint(1) NOT NULL DEFAULT '0',
   `controller_enrollment_open` tinyint(1) NOT NULL DEFAULT '0',
-  `created_at` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` int(11) NOT NULL,
+  PRIMARY KEY (`controller_id`),
+  UNIQUE KEY `controller_name` (`controller_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `controllers`
@@ -87,8 +89,8 @@ INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_descr
 -- Table structure for table `courses`
 --
 
-CREATE TABLE `courses` (
-  `course_id` int(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `courses` (
+  `course_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `course_code` varchar(50) NOT NULL,
   `course_icon` varchar(20) NOT NULL,
   `course_color` varchar(20) NOT NULL,
@@ -100,8 +102,12 @@ CREATE TABLE `courses` (
   `deleted_at` int(11) DEFAULT NULL,
   `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (`course_id`),
+  UNIQUE KEY `course_code` (`course_code`),
+  UNIQUE KEY `course_description` (`course_description`),
+  UNIQUE KEY `course_code_id` (`course_code_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `courses`
@@ -129,8 +135,8 @@ INSERT INTO `courses` (`course_id`, `course_code`, `course_icon`, `course_color`
 -- Table structure for table `curriculums`
 --
 
-CREATE TABLE `curriculums` (
-  `curriculum_id` int(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `curriculums` (
+  `curriculum_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `curriculum_description` varchar(50) NOT NULL,
   `curriculum_effective_school_year` varchar(9) NOT NULL,
   `curriculum_status` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
@@ -141,8 +147,9 @@ CREATE TABLE `curriculums` (
   `deleted_at` int(11) DEFAULT NULL,
   `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (`curriculum_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `curriculums`
@@ -174,8 +181,8 @@ INSERT INTO `curriculums` (`curriculum_id`, `curriculum_description`, `curriculu
 -- Table structure for table `curriculum_subjects`
 --
 
-CREATE TABLE `curriculum_subjects` (
-  `curriculum_subject_id` int(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `curriculum_subjects` (
+  `curriculum_subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `curriculum_subject_year_level` tinyint(11) UNSIGNED NOT NULL,
   `curriculum_subject_semester` enum('first','second','summer') NOT NULL,
   `curriculum_subject_units` tinyint(11) UNSIGNED NOT NULL,
@@ -188,8 +195,9 @@ CREATE TABLE `curriculum_subjects` (
   `deleted_at` int(11) DEFAULT NULL,
   `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (`curriculum_subject_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `curriculum_subjects`
@@ -251,8 +259,8 @@ INSERT INTO `curriculum_subjects` (`curriculum_subject_id`, `curriculum_subject_
 -- Table structure for table `dean_course`
 --
 
-CREATE TABLE `dean_course` (
-  `dean_course_id` int(11) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `dean_course` (
+  `dean_course_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `course_id` int(11) NOT NULL,
   `created_at` int(11) NOT NULL,
@@ -260,8 +268,9 @@ CREATE TABLE `dean_course` (
   `deleted_at` int(11) NOT NULL,
   `deleted_user_id` int(11) NOT NULL,
   `updated_at` int(11) NOT NULL,
-  `updated_user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `updated_user_id` int(11) NOT NULL,
+  PRIMARY KEY (`dean_course_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Truncate table before insert `dean_course`
@@ -281,8 +290,8 @@ INSERT INTO `dean_course` (`dean_course_id`, `user_id`, `course_id`, `created_at
 -- Table structure for table `educations`
 --
 
-CREATE TABLE `educations` (
-  `education_id` int(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `educations` (
+  `education_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `education_code` varchar(50) NOT NULL,
   `education_description` varchar(50) NOT NULL,
   `created_at` int(11) NOT NULL,
@@ -290,8 +299,11 @@ CREATE TABLE `educations` (
   `deleted_at` int(11) DEFAULT NULL,
   `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (`education_id`),
+  UNIQUE KEY `education_code` (`education_code`),
+  UNIQUE KEY `education_description` (`education_description`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `educations`
@@ -312,8 +324,8 @@ INSERT INTO `educations` (`education_id`, `education_code`, `education_descripti
 -- Table structure for table `enrollments`
 --
 
-CREATE TABLE `enrollments` (
-  `enrollment_id` int(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `enrollments` (
+  `enrollment_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `student_id` int(11) NOT NULL,
   `course_id` int(11) NOT NULL,
   `curriculum_id` int(11) NOT NULL,
@@ -326,8 +338,10 @@ CREATE TABLE `enrollments` (
   `deleted_at` int(11) DEFAULT NULL,
   `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (`enrollment_id`),
+  UNIQUE KEY `student_id` (`student_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `enrollments`
@@ -448,7 +462,7 @@ INSERT INTO `enrollments` (`enrollment_id`, `student_id`, `course_id`, `curricul
 -- Table structure for table `enrollment_status`
 --
 
-CREATE TABLE `enrollment_status` (
+CREATE TABLE IF NOT EXISTS `enrollment_status` (
   `status` tinyint(1) UNSIGNED NOT NULL,
   `created_at` varchar(100) NOT NULL,
   `created_user_id` int(11) UNSIGNED NOT NULL
@@ -472,11 +486,12 @@ INSERT INTO `enrollment_status` (`status`, `created_at`, `created_user_id`) VALU
 -- Table structure for table `groups`
 --
 
-CREATE TABLE `groups` (
-  `id` mediumint(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `groups` (
+  `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
-  `description` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `description` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `groups`
@@ -501,12 +516,15 @@ INSERT INTO `groups` (`id`, `name`, `description`) VALUES
 -- Table structure for table `login_attempts`
 --
 
-CREATE TABLE `login_attempts` (
-  `id` mediumint(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `login_attempts` (
+  `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `ip_address` varbinary(16) NOT NULL,
   `login` varchar(100) NOT NULL,
-  `time` int(11) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `time` int(11) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ip_address` (`ip_address`),
+  KEY `login` (`login`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `login_attempts`
@@ -526,8 +544,8 @@ INSERT INTO `login_attempts` (`id`, `ip_address`, `login`, `time`) VALUES
 -- Table structure for table `logs`
 --
 
-CREATE TABLE `logs` (
-  `id` int(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `logs` (
+  `id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `errno` int(2) NOT NULL,
   `errtype` varchar(32) NOT NULL,
   `errstr` text NOT NULL,
@@ -535,7 +553,10 @@ CREATE TABLE `logs` (
   `errline` int(4) NOT NULL,
   `user_agent` varchar(120) NOT NULL,
   `ip_address` varchar(45) NOT NULL,
-  `time` datetime NOT NULL
+  `time` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `ip_address` (`ip_address`),
+  KEY `user_agent` (`user_agent`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -549,7 +570,7 @@ TRUNCATE TABLE `logs`;
 -- Table structure for table `migrations`
 --
 
-CREATE TABLE `migrations` (
+CREATE TABLE IF NOT EXISTS `migrations` (
   `version` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -571,13 +592,14 @@ INSERT INTO `migrations` (`version`) VALUES
 -- Table structure for table `permissions`
 --
 
-CREATE TABLE `permissions` (
-  `permission_id` int(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `permissions` (
+  `permission_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `controller_id` int(11) NOT NULL,
   `group_id` int(11) NOT NULL,
   `created_at` int(11) NOT NULL,
-  `created_user_id` int(11) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_user_id` int(11) UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (`permission_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `permissions`
@@ -657,7 +679,7 @@ INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `create
 -- Table structure for table `report_info`
 --
 
-CREATE TABLE `report_info` (
+CREATE TABLE IF NOT EXISTS `report_info` (
   `school_name` varchar(100) NOT NULL,
   `school_address` varchar(100) NOT NULL,
   `school_contact` varchar(100) NOT NULL,
@@ -683,8 +705,8 @@ INSERT INTO `report_info` (`school_name`, `school_address`, `school_contact`, `c
 -- Table structure for table `requisites`
 --
 
-CREATE TABLE `requisites` (
-  `requisite_id` int(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `requisites` (
+  `requisite_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `requisite_type` enum('co','pre') NOT NULL,
   `curriculum_subject_id` int(11) UNSIGNED NOT NULL,
   `subject_id` int(11) UNSIGNED NOT NULL,
@@ -693,7 +715,8 @@ CREATE TABLE `requisites` (
   `deleted_at` int(11) DEFAULT NULL,
   `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (`requisite_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -707,8 +730,8 @@ TRUNCATE TABLE `requisites`;
 -- Table structure for table `rooms`
 --
 
-CREATE TABLE `rooms` (
-  `room_id` int(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `rooms` (
+  `room_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `room_number` varchar(50) NOT NULL,
   `room_capacity` int(2) NOT NULL,
   `created_at` int(11) NOT NULL,
@@ -716,8 +739,10 @@ CREATE TABLE `rooms` (
   `deleted_at` int(11) DEFAULT NULL,
   `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (`room_id`),
+  UNIQUE KEY `room_number` (`room_number`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `rooms`
@@ -744,8 +769,8 @@ INSERT INTO `rooms` (`room_id`, `room_number`, `room_capacity`, `created_at`, `c
 -- Table structure for table `students`
 --
 
-CREATE TABLE `students` (
-  `student_id` int(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `students` (
+  `student_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `student_firstname` varchar(100) NOT NULL,
   `student_image` varchar(50) DEFAULT NULL,
   `student_middlename` varchar(50) NOT NULL,
@@ -770,8 +795,12 @@ CREATE TABLE `students` (
   `deleted_at` int(11) DEFAULT NULL,
   `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (`student_id`),
+  UNIQUE KEY `student_personal_email` (`student_personal_email`),
+  UNIQUE KEY `student_guardian_email` (`student_guardian_email`),
+  UNIQUE KEY `student_school_id` (`student_school_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `students`
@@ -892,8 +921,8 @@ INSERT INTO `students` (`student_id`, `student_firstname`, `student_image`, `stu
 -- Table structure for table `students_subjects`
 --
 
-CREATE TABLE `students_subjects` (
-  `student_subject_id` int(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `students_subjects` (
+  `student_subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `enrollment_id` int(11) NOT NULL,
   `subject_offer_id` int(11) NOT NULL,
   `student_subject_enroll_status` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
@@ -902,8 +931,9 @@ CREATE TABLE `students_subjects` (
   `deleted_at` int(11) DEFAULT NULL,
   `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (`student_subject_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `students_subjects`
@@ -928,8 +958,8 @@ INSERT INTO `students_subjects` (`student_subject_id`, `enrollment_id`, `subject
 -- Table structure for table `subjects`
 --
 
-CREATE TABLE `subjects` (
-  `subject_id` int(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `subjects` (
+  `subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `subject_code` varchar(50) NOT NULL,
   `subject_description` varchar(100) NOT NULL,
   `created_at` bigint(11) NOT NULL,
@@ -937,8 +967,11 @@ CREATE TABLE `subjects` (
   `deleted_at` int(11) DEFAULT NULL,
   `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (`subject_id`),
+  UNIQUE KEY `subject_code` (`subject_code`),
+  UNIQUE KEY `subject_description` (`subject_description`)
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `subjects`
@@ -993,8 +1026,8 @@ INSERT INTO `subjects` (`subject_id`, `subject_code`, `subject_description`, `cr
 -- Table structure for table `subject_offers`
 --
 
-CREATE TABLE `subject_offers` (
-  `subject_offer_id` int(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `subject_offers` (
+  `subject_offer_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `subject_offer_semester` enum('first','second','summer') NOT NULL,
   `subject_offer_school_year` varchar(9) NOT NULL,
   `user_id` int(11) UNSIGNED NOT NULL,
@@ -1004,8 +1037,9 @@ CREATE TABLE `subject_offers` (
   `deleted_at` int(11) DEFAULT NULL,
   `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (`subject_offer_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `subject_offers`
@@ -1041,8 +1075,8 @@ INSERT INTO `subject_offers` (`subject_offer_id`, `subject_offer_semester`, `sub
 -- Table structure for table `subject_offer_line`
 --
 
-CREATE TABLE `subject_offer_line` (
-  `subject_offer_line_id` int(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `subject_offer_line` (
+  `subject_offer_line_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `subject_offer_line_start` time NOT NULL,
   `subject_offer_line_end` time NOT NULL,
   `subject_offer_line_monday` tinyint(1) NOT NULL DEFAULT '0',
@@ -1065,8 +1099,9 @@ CREATE TABLE `subject_offer_line` (
   `deleted_at` int(11) DEFAULT NULL,
   `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (`subject_offer_line_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `subject_offer_line`
@@ -1106,8 +1141,8 @@ INSERT INTO `subject_offer_line` (`subject_offer_line_id`, `subject_offer_line_s
 -- Table structure for table `users`
 --
 
-CREATE TABLE `users` (
-  `id` mediumint(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `ip_address` varbinary(16) NOT NULL,
   `username` varchar(100) NOT NULL,
   `password` varchar(80) NOT NULL,
@@ -1124,8 +1159,11 @@ CREATE TABLE `users` (
   `last_name` varchar(100) DEFAULT NULL,
   `company` varchar(100) DEFAULT NULL,
   `phone` varchar(50) DEFAULT NULL,
-  `updated_at` int(11) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `updated_at` int(11) UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `users`
@@ -1156,11 +1194,12 @@ INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`
 -- Table structure for table `users_groups`
 --
 
-CREATE TABLE `users_groups` (
-  `id` mediumint(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `users_groups` (
+  `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_id` mediumint(8) UNSIGNED NOT NULL,
-  `group_id` mediumint(8) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `group_id` mediumint(8) UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=183 DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `users_groups`
@@ -1192,14 +1231,15 @@ INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
 -- Table structure for table `users_last_logins`
 --
 
-CREATE TABLE `users_last_logins` (
-  `users_last_login_id` int(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `users_last_logins` (
+  `users_last_login_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `ip_address` varbinary(16) NOT NULL,
   `agent` varchar(100) NOT NULL,
   `platform` varchar(100) NOT NULL,
-  `created_at` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_at` int(11) NOT NULL,
+  PRIMARY KEY (`users_last_login_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `users_last_logins`
@@ -1242,264 +1282,6 @@ INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`,
 (29, 1, 0x3a3a31, 'Firefox 52.0', 'Linux', 1492658773),
 (30, 1, 0x3a3a31, 'Firefox 52.0', 'Linux', 1492659151);
 
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `controllers`
---
-ALTER TABLE `controllers`
-  ADD PRIMARY KEY (`controller_id`),
-  ADD UNIQUE KEY `controller_name` (`controller_name`);
-
---
--- Indexes for table `courses`
---
-ALTER TABLE `courses`
-  ADD PRIMARY KEY (`course_id`),
-  ADD UNIQUE KEY `course_code` (`course_code`),
-  ADD UNIQUE KEY `course_description` (`course_description`),
-  ADD UNIQUE KEY `course_code_id` (`course_code_id`);
-
---
--- Indexes for table `curriculums`
---
-ALTER TABLE `curriculums`
-  ADD PRIMARY KEY (`curriculum_id`);
-
---
--- Indexes for table `curriculum_subjects`
---
-ALTER TABLE `curriculum_subjects`
-  ADD PRIMARY KEY (`curriculum_subject_id`);
-
---
--- Indexes for table `dean_course`
---
-ALTER TABLE `dean_course`
-  ADD PRIMARY KEY (`dean_course_id`);
-
---
--- Indexes for table `educations`
---
-ALTER TABLE `educations`
-  ADD PRIMARY KEY (`education_id`),
-  ADD UNIQUE KEY `education_code` (`education_code`),
-  ADD UNIQUE KEY `education_description` (`education_description`);
-
---
--- Indexes for table `enrollments`
---
-ALTER TABLE `enrollments`
-  ADD PRIMARY KEY (`enrollment_id`),
-  ADD UNIQUE KEY `student_id` (`student_id`);
-
---
--- Indexes for table `groups`
---
-ALTER TABLE `groups`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `login_attempts`
---
-ALTER TABLE `login_attempts`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `ip_address` (`ip_address`),
-  ADD KEY `login` (`login`);
-
---
--- Indexes for table `logs`
---
-ALTER TABLE `logs`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `ip_address` (`ip_address`),
-  ADD KEY `user_agent` (`user_agent`);
-
---
--- Indexes for table `permissions`
---
-ALTER TABLE `permissions`
-  ADD PRIMARY KEY (`permission_id`);
-
---
--- Indexes for table `requisites`
---
-ALTER TABLE `requisites`
-  ADD PRIMARY KEY (`requisite_id`);
-
---
--- Indexes for table `rooms`
---
-ALTER TABLE `rooms`
-  ADD PRIMARY KEY (`room_id`),
-  ADD UNIQUE KEY `room_number` (`room_number`);
-
---
--- Indexes for table `students`
---
-ALTER TABLE `students`
-  ADD PRIMARY KEY (`student_id`),
-  ADD UNIQUE KEY `student_personal_email` (`student_personal_email`),
-  ADD UNIQUE KEY `student_guardian_email` (`student_guardian_email`),
-  ADD UNIQUE KEY `student_school_id` (`student_school_id`);
-
---
--- Indexes for table `students_subjects`
---
-ALTER TABLE `students_subjects`
-  ADD PRIMARY KEY (`student_subject_id`);
-
---
--- Indexes for table `subjects`
---
-ALTER TABLE `subjects`
-  ADD PRIMARY KEY (`subject_id`),
-  ADD UNIQUE KEY `subject_code` (`subject_code`),
-  ADD UNIQUE KEY `subject_description` (`subject_description`);
-
---
--- Indexes for table `subject_offers`
---
-ALTER TABLE `subject_offers`
-  ADD PRIMARY KEY (`subject_offer_id`);
-
---
--- Indexes for table `subject_offer_line`
---
-ALTER TABLE `subject_offer_line`
-  ADD PRIMARY KEY (`subject_offer_line_id`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `username` (`username`),
-  ADD UNIQUE KEY `email` (`email`);
-
---
--- Indexes for table `users_groups`
---
-ALTER TABLE `users_groups`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `users_last_logins`
---
-ALTER TABLE `users_last_logins`
-  ADD PRIMARY KEY (`users_last_login_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `controllers`
---
-ALTER TABLE `controllers`
-  MODIFY `controller_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
---
--- AUTO_INCREMENT for table `courses`
---
-ALTER TABLE `courses`
-  MODIFY `course_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
---
--- AUTO_INCREMENT for table `curriculums`
---
-ALTER TABLE `curriculums`
-  MODIFY `curriculum_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
---
--- AUTO_INCREMENT for table `curriculum_subjects`
---
-ALTER TABLE `curriculum_subjects`
-  MODIFY `curriculum_subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
---
--- AUTO_INCREMENT for table `dean_course`
---
-ALTER TABLE `dean_course`
-  MODIFY `dean_course_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
---
--- AUTO_INCREMENT for table `educations`
---
-ALTER TABLE `educations`
-  MODIFY `education_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `enrollments`
---
-ALTER TABLE `enrollments`
-  MODIFY `enrollment_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
---
--- AUTO_INCREMENT for table `groups`
---
-ALTER TABLE `groups`
-  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
---
--- AUTO_INCREMENT for table `login_attempts`
---
-ALTER TABLE `login_attempts`
-  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `logs`
---
-ALTER TABLE `logs`
-  MODIFY `id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `permissions`
---
-ALTER TABLE `permissions`
-  MODIFY `permission_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
---
--- AUTO_INCREMENT for table `requisites`
---
-ALTER TABLE `requisites`
-  MODIFY `requisite_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `rooms`
---
-ALTER TABLE `rooms`
-  MODIFY `room_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
---
--- AUTO_INCREMENT for table `students`
---
-ALTER TABLE `students`
-  MODIFY `student_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
---
--- AUTO_INCREMENT for table `students_subjects`
---
-ALTER TABLE `students_subjects`
-  MODIFY `student_subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
---
--- AUTO_INCREMENT for table `subjects`
---
-ALTER TABLE `subjects`
-  MODIFY `subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
---
--- AUTO_INCREMENT for table `subject_offers`
---
-ALTER TABLE `subject_offers`
-  MODIFY `subject_offer_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
---
--- AUTO_INCREMENT for table `subject_offer_line`
---
-ALTER TABLE `subject_offer_line`
-  MODIFY `subject_offer_line_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
---
--- AUTO_INCREMENT for table `users_groups`
---
-ALTER TABLE `users_groups`
-  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=183;
---
--- AUTO_INCREMENT for table `users_last_logins`
---
-ALTER TABLE `users_last_logins`
-  MODIFY `users_last_login_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
