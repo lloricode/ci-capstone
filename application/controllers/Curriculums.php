@@ -12,7 +12,6 @@ class Curriculums extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
-                $this->lang->load('ci_capstone/ci_educations');
                 $this->load->model(array('Curriculum_model', 'Course_model'));
                 $this->load->library('pagination');
                 $this->load->helper('school');
@@ -163,22 +162,26 @@ class Curriculums extends CI_Capstone_Controller
                 $table_data = array();
                 if ($cur_subj_obj)
                 {
-                        $year = 0;
+                        $tmp_compare = '';
                         foreach ($cur_subj_obj as $cur_subj)
                         {
-                                if ($year != $cur_subj->curriculum_subject_year_level)
+                                $tmp_sem_year = $cur_subj->curriculum_subject_year_level . $cur_subj->curriculum_subject_semester;
+                                if ($tmp_compare != $tmp_sem_year)
                                 {
-                                        ++ $year;
+                                        $tmp_compare  = $tmp_sem_year;
+                                        $total_units  = $this->Curriculum_subject_model->total_units_per_term($cur_subj->curriculum_id, $cur_subj->curriculum_subject_semester, $cur_subj->curriculum_subject_year_level);
                                         $table_data[] = array(
                                             array(
-                                                'data'    => heading(number_place($cur_subj->curriculum_subject_year_level) . ' Year', 4),
+                                                'data'    => heading(number_place($cur_subj->curriculum_subject_year_level) . ' Year - ' .
+                                                        semesters($cur_subj->curriculum_subject_semester)
+                                                        , 4) . ' Total units: ' . bold($total_units),
                                                 'colspan' => '9'
                                             )
                                         );
                                 }
                                 $requisite = $this->Requisites_model->subjects(isset($cur_subj->requisites) ? $cur_subj->requisites : NULL);
                                 $tmp       = array(
-                                    my_htmlspecialchars(semesters($cur_subj->curriculum_subject_semester, FALSE, 'short')),
+                                    //  my_htmlspecialchars(semesters($cur_subj->curriculum_subject_semester, FALSE, 'short')),
                                     highlight_phrase($cur_subj->subject->subject_code, $highlight_phrase, '<mark id="' . dash($cur_subj->subject->subject_code) . '">', '</mark>'),
                                     my_htmlspecialchars($cur_subj->subject->subject_description),
                                     my_htmlspecialchars($cur_subj->curriculum_subject_units),
@@ -198,8 +201,6 @@ class Curriculums extends CI_Capstone_Controller
                  * Table headers
                  */
                 $header = array(
-                    //  lang('curriculum_subject_year_level_label'),
-                    lang('curriculum_subject_semester_label'),
                     lang('curriculum_subject_subject_label'),
                     'desc',
                     lang('curriculum_subject_units_label'),

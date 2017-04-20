@@ -174,6 +174,7 @@ class Curriculum_subject_model extends MY_Model
                 $this->
                         //specific fields in local table
                         fields(array(
+                            'curriculum_id',
                             'curriculum_subject_year_level',
                             'curriculum_subject_semester',
                             'curriculum_subject_units',
@@ -267,6 +268,17 @@ class Curriculum_subject_model extends MY_Model
 //                            'co'  => $return
 //                );
                 return $return;
+        }
+
+        public function total_units_per_term($cur_id, $sem, $yr_lvl)
+        {
+                return $this->db->select_sum('curriculum_subject_units')->
+                                where(array(
+                                    'curriculum_id'                 => $cur_id,
+                                    'curriculum_subject_semester'   => $sem,
+                                    'curriculum_subject_year_level' => $yr_lvl
+                                ))->
+                                get($this->table)->row()->curriculum_subject_units;
         }
 
 }

@@ -98,7 +98,7 @@ class Students extends CI_Capstone_Controller
                 {
                         $pagination_index                .= '?course-id=' . $this->input->get('course-id');
                         $course_code                     = check_id_from_url('course_id', 'Course_model', 'course-id')->course_code;
-                        $template['search_result_label'] = paragraph(sprintf(lang('search_result_course_label'/* ci_students_lang */), strong($result_count_for_pagination), strong($course_code)));
+                        $template['search_result_label'] = paragraph(sprintf(lang('search_result_course_label'/* ci_students_lang */), bold($result_count_for_pagination), bold($course_code)));
                 }
                 if ($key = $this->input->get('search'))
                 {
@@ -108,7 +108,7 @@ class Students extends CI_Capstone_Controller
                         }
                         $pagination_index .= 'search=' . $key;
 
-                        $template['search_result_label'] = paragraph(sprintf(lang('search_result_label'/* ci_students_lang */), strong($result_count_for_pagination), strong($key)));
+                        $template['search_result_label'] = paragraph(sprintf(lang('search_result_label'/* ci_students_lang */), bold($result_count_for_pagination), bold($key)));
                 }
                 $pagination = $this->pagination->generate_bootstrap_link($pagination_index, $result_count_for_pagination / $this->limit, TRUE);
 

@@ -378,7 +378,7 @@ class Student extends School_informations
                                                 }
                                                 else
                                                 {
-                                                        show_error('key ' . strong($sortk) . ' not found.');
+                                                        show_error('key ' . bold($sortk) . ' not found.');
                                                 }
                                         }
                                 }

@@ -63,6 +63,27 @@ if ( ! function_exists('strong'))
 
 // ------------------------------------------------------------------------
 
+if ( ! function_exists('bold'))
+{
+
+        /**
+         * Bold
+         *
+         * Generates an HTML Bold tag.
+         *
+         * @param	string	content
+         * @param	string
+         * @return	string
+         */
+        function bold($data = '')
+        {
+                return '<b>' . $data . '</b>';
+        }
+
+}
+
+// ------------------------------------------------------------------------
+
 if ( ! function_exists('image_view'))
 {
 

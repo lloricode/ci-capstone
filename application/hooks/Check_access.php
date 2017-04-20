@@ -17,7 +17,7 @@ class Check_access
         {
                 if ( ! property_exists(get_instance(), $property))
                 {
-                        show_error('property: ' . strong($property) . ' not exist.');
+                        show_error('property: ' . bold($property) . ' not exist.');
                 }
                 return get_instance()->$property;
         }
