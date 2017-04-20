@@ -16,6 +16,7 @@ class Create_user extends CI_Capstone_Controller
                         show_error(lang('access_denied_of_current_user_group'));
                 }
                 $this->load->library('form_validation');
+                $this->lang->load('ci_ion_auth', TRUE);
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
                 $this->breadcrumbs->unshift(2, lang('administrators_label'), '#');
                 $this->breadcrumbs->unshift(3, lang('index_heading'), 'users');
@@ -75,7 +76,7 @@ class Create_user extends CI_Capstone_Controller
                         'rules' => 'trim|required|human_name|min_length[1]|max_length[30]',
                     ),
                     array(
-                        'label' => lang('create_user_validation_identity_label'),
+                        'label' => $this->lang->line('username_label', 'ci_ion_auth'),
                         'field' => 'identity',
                         'rules' => 'trim|required|is_unique[' . $tables['users'] . '.' . $identity_column . ']|min_length[3]|max_length[30]',
                     ),
@@ -142,7 +143,7 @@ class Create_user extends CI_Capstone_Controller
                     'name'  => 'identity',
                     'value' => $this->form_validation->set_value('identity'),
                     'type'  => 'text',
-                    'lang'  => 'create_user_validation_identity_label',
+                    'lang'  => 'username_label',//from $this->lang->load('ci_ion_auth', TRUE);
                 );
 
                 $inputs['phone'] = array(

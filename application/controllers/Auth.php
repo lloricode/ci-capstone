@@ -12,6 +12,7 @@ class Auth extends MY_Controller
         {
                 parent::__construct();
                 $this->load->library('form_validation');
+                $this->lang->load('ci_ion_auth', TRUE); //some additional language value for library
                 $this->form_validation->set_error_delimiters(
                         $this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth')
                 );
@@ -40,7 +41,7 @@ class Auth extends MY_Controller
         }
 
         /**
-         * Function to display the error/specifi error upon log in
+         * Function to display the error/specific error upon log in
          * 
          * @author Lloric Garcia
          * @version 2017-2-1
@@ -50,7 +51,7 @@ class Auth extends MY_Controller
                 $label = '';
                 if ($this->config->item('identity', 'ion_auth') != 'email')
                 {
-                        $label = $this->lang->line('forgot_password_identity_label');
+                        $label = $this->lang->line('username_label', 'ci_ion_auth');
                 }
                 else
                 {
@@ -89,12 +90,12 @@ class Auth extends MY_Controller
                 {
                         if ($this->ion_auth->logged_in())
                         {
-                                redirect('/', 'refresh');
+                                redirect('home', 'refresh');
                         }
                 }
                 //  $this->data['title'] = $this->lang->line('login_heading');
                 //validate form input
-                $this->form_validation->set_rules('identity', str_replace(':', '', $this->lang->line('login_identity_label')), 'required');
+                $this->form_validation->set_rules('identity',$this->lang->line('username_label', 'ci_ion_auth'), 'required');
                 $this->form_validation->set_rules('password', str_replace(':', '', $this->lang->line('login_password_label')), 'required');
 
                 if ($this->form_validation->run())
@@ -137,7 +138,7 @@ class Auth extends MY_Controller
                 // setting validation rules by checking whether identity is username or email
                 if ($this->config->item('identity', 'ion_auth') != 'email')
                 {
-                        $this->form_validation->set_rules('identity', $this->lang->line('forgot_password_identity_label'), 'required');
+                        $this->form_validation->set_rules('identity', $this->lang->line('username_label', 'ci_ion_auth'), 'required');
                 }
                 else
                 {

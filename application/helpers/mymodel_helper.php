@@ -9,6 +9,7 @@ if ( ! function_exists('remove_empty_before_write'))
          * 
          * @param string|array $data
          * @return array
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
         function remove_empty_before_write($data)
         {

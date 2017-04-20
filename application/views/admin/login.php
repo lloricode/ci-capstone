@@ -9,7 +9,7 @@ $link = base_url($this->config->item('bootstarp_dir'));
         <title>Log in | <?php echo $this->config->item('project_title'); ?></title>
         <meta charset="<?php echo $this->config->item('charset'); ?>" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link href="<?php echo base_url('assets/images/favicon.ico'); ?>" rel="shortcut icon" type="image/x-icon" />
+        <?php echo link_tag($this->config->item('tab_icon_logo'), 'shortcut icon', 'image/ico'); ?>
         <link rel="stylesheet" href="<?php echo $link; ?>css/bootstrap.min.css" />
         <link rel="stylesheet" href="<?php echo $link; ?>css/bootstrap-responsive.min.css" />
         <link rel="stylesheet" href="<?php echo $link; ?>css/matrix-login.css" />
@@ -19,12 +19,12 @@ $link = base_url($this->config->item('bootstarp_dir'));
     </head>
     <body>
         <div id="loginbox">            
-            <?php echo form_open(site_url('auth/login'), array('class' => 'form-vertical', 'id' => 'loginform')) ?>
+            <?php echo form_open('auth/login', array('class' => 'form-vertical', 'id' => 'loginform')) ?>
             <div class="control-group normal_text"> <h3><img src="<?php echo $link; ?>img/logo.png" alt="Logo" /></h3></div>
             <div class="control-group">
                 <div class="controls">
                     <div class="main_input_box">
-                        <?php echo (!is_null($message)) ? '<div class="form-group">' . $message . '</div>' : ''; ?>       
+                        <?php echo ( ! is_null($message)) ? '<div class="form-group">' . $message . '</div>' : ''; ?>       
                     </div>
                 </div>
             </div><div class="control-group">
@@ -58,7 +58,7 @@ $link = base_url($this->config->item('bootstarp_dir'));
                 </span>
             </div>
             <?php echo form_close(); ?>
-            <?php echo form_open(site_url('auth/forgot_password'), array('class' => 'form-vertical', 'id' => 'recoverform')) ?>
+            <?php echo form_open('auth/forgot_password', array('class' => 'form-vertical', 'id' => 'recoverform')) ?>
             <p class="normal_text">Enter your Username below and we will send you instructions how to recover a password.</p>
 
             <div class="controls">

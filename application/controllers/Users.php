@@ -12,7 +12,7 @@ class Users extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
-                $this->lang->load('ci_capstone/ci_excel');
+                $this->lang->load('ci_ion_auth', TRUE);
                 $this->load->model(array('User_model', 'Group_model', 'Dean_course_model', 'Course_model'));
                 $this->load->library('pagination');
 
@@ -97,8 +97,8 @@ class Users extends CI_Capstone_Controller
                 $header = array(
                     lang('index_lname_th'),
                     lang('index_fname_th'),
-                    lang('index_email_th'),
-                    lang('login_identity_label'),
+                    $this->lang->line('username_label', 'ci_ion_auth'),
+                    $this->lang->line('email_label', 'ci_ion_auth'),
                     lang('index_groups_th'),
                     lang('dean_course_lebal')
                 );
