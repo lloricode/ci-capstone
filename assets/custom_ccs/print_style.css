@@ -1,0 +1,102 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Apr 21, 2017, 10:44:51 PM
+    Author     : Edzar Calibod
+*/
+
+html
+{
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    font-size: 14px;
+}      
+
+table, td, th {    
+    border: 2px solid #ddd;
+    text-align: left;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 10px;
+}
+
+.White{
+    color:white;
+}
+
+.MaterialAColorFont{
+    color:#5f6468;
+}
+
+/*---------- Margins---------*/
+.Title-Margin{
+    margin-top: -80px;
+    text-align: center;
+}
+
+.Title-address{
+    margin-top: -15px;
+    text-align: center;
+}
+.Info-Margin{
+    margin-left: 20px;
+}
+.MarginTop{
+    margin-top: 10px;
+}
+
+.isNew{
+    position: absolute; /*or fixed*/
+    right: 65px;
+    margin-top: -70px;
+}
+
+.marginTop_10{
+    margin-top: 10px;
+}
+
+.stud_name{
+    margin-top: 30px;
+    font-size: 20px;
+}
+
+.stud_secondary_info{
+    margin-top: -35px;
+}
+
+.stud_tertiary_info{
+    margin-top: -15px;
+}
+/*---------- End of margin---------*/
+
+/*-----------Colors----------*/
+.blue{        
+    width:auto; 
+    height:100px;
+}
+.darkblue{
+    width:auto; 
+    height:60px;
+    margin-top: -10px;
+}
+/*-----------End of the colors----------*/
+
+.imageSize{
+    margin-left: 5px;
+    margin-top: 15px;
+    width:70px;
+}   
+
+#header, #nav, .noprint
+{
+    display: none;
+}
