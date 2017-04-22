@@ -57,11 +57,11 @@ class Migration_Enrollments extends CI_Migration
                     'enrollment_school_year' => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '10',
-                        'null'       => FALSE
+                        'null'       => TRUE
                     ),
                     'enrollment_semester'    => array(
                         'type' => 'ENUM(' . $this->_semesters() . ')',
-                        'null' => FALSE
+                        'null' => TRUE
                     ),
                     'enrollment_year_level'  => array(
                         'type'       => 'TINYINT',

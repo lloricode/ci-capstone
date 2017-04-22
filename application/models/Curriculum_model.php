@@ -145,7 +145,8 @@ class Curriculum_model extends MY_Model
                              NULL,
                         //----------------------------------attributes
                              array(
-                    'title' => $subject_description//pop up subject description when hover mouse
+                    'title' => $subject_description, //pop up subject description when hover mouse
+                    'class' => "tip-bottom"
                         )
                 );
         }

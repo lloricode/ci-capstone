@@ -1,4 +1,20 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed'); ?>
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+function info_row($str)
+{
+        if ($str == '')
+        {
+                return;
+        }
+        return '<tr><td>' . $str . '</td></tr>';
+}
+
+function function_row_td($link, $label, $popup = FALSE)
+{
+        return table_row_button_link($link, $label, NULL, array('title' => $label, 'class' => "tip-bottom"), $popup);
+}
+?>
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span12">
@@ -17,18 +33,11 @@
                                     <tr>
                                         <td ><?php echo $this->student->address; ?></td>
                                     </tr>
-                                    <tr>
-                                        <td><?php echo $this->student->town; ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td><?php echo $this->student->region; ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td><?php echo $this->student->contact; ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td ><?php echo $this->student->email; ?></td>
-                                    </tr> 
+                                    <?php echo info_row($this->student->town); ?>
+                                    <?php echo info_row($this->student->region); ?>
+                                    <?php echo info_row($this->student->contact); ?>
+                                    <?php echo info_row($this->student->email); ?>
+
                                     <tr>
                                         <td ><?php echo $this->student->birthdate; ?></td>
                                     </tr> 
@@ -60,6 +69,10 @@
                                         <td>Status</td>
                                         <td><strong> <?php echo $this->student->is_enrolled(TRUE); ?></strong></td>
                                     </tr>
+                                    <tr>
+                                        <td>Enrolled Term</td>
+                                        <td><strong> <?php echo $this->student->enrolled_term_year(); ?></strong></td>
+                                    </tr>
                                 </tbody>
 
                             </table>
@@ -70,49 +83,33 @@
                             <table class="table table-bordered table-invoice-full">
                                 <tbody>
                                     <tr>
-<!--                                        <td class="msg-invoice" width="40%">
-                                            <h4>Payment method: </h4>
-                                            <a href="#" class="tip-bottom" title="Wire Transfer">Wire transfer</a> |
-                                            <a href="#" class="tip-bottom" title="Bank account">Bank account #</a> | 
-                                            <a href="#" class="tip-bottom" title="SWIFT code">SWIFT code </a>|  
-                                            <a href="#" class="tip-bottom" title="IBAN Billing address">IBAN Billing address </a>
+                                        <td class="msg-invoice pull-right">
+                                            <?php
+                                            if ($this->Enrollment_status_model->status())
+                                            {
+                                                    /**
+                                                     * add subject
+                                                     */
+                                                    echo function_row_td('create-student-subject?student-id=' . $this->student->id, lang('add_student_subject_label'));
+                                            }
+                                            if ($this->student->is_enrolled())
+                                            {
+                                                    /**
+                                                     * print
+                                                     */
+                                                    echo function_row_td('students/print_data?action=prev&student-id=' . $this->student->id, lang('print_label'), TRUE);
+                                            }
+                                            if (( ! $this->student->is_enrolled()) &&
+                                                    $this->Enrollment_status_model->status() &&
+                                                    specific_groups_permission('accounting'))
+                                            {
+                                                    /**
+                                                     * set enroll
+                                                     */
+                                                    echo function_row_td('students/set-enroll?student-id=' . $this->student->id, 'Set Enroll');
+                                            }
+                                            ?>
                                         </td>
-                                        <td class="right">
-                                            <strong>Subtotal</strong> <br>
-                                            <strong>Tax (5%)</strong> <br>
-                                            <strong>Discount</strong>
-                                        </td>-->
-                                        <?php if ($this->Enrollment_status_model->status()): ?>
-                                                <td >
-                                                    <!--                                            <div class="pull-right">-->
-                                                    <!--                                <h4><span>Amount Due:</span> $7,650.00</h4>-->
-                                                    <!--<br>-->
-                                                    <?php echo anchor(site_url('create-student-subject?student-id=' . $this->student->id), lang('add_student_subject_label'), array('class' => 'btn btn-primary btn-large pull')); ?>
-                                                    <!--                                            </div>-->
-                                                </td>
-                                        <?php endif; ?>
-                                        <?php if ($this->student->is_enrolled()): ?>
-                                                <td >
-                                                    <!--                                            <div class="pull-right">-->
-                                                    <!--                                <h4><span>Amount Due:</span> $7,650.00</h4>-->
-                                                    <!--<br>-->
-                                                    <?php echo anchor_popup(site_url('students/print_data?action=prev&student-id=' . $this->student->id), lang('print_label'), array('class' => 'btn btn-primary btn-large pull')); ?>
-                                                    <!--                                            </div>-->
-                                                </td>
-                                        <?php endif; ?>
-                                        <?php
-                                        if (( ! $this->student->is_enrolled()) &&
-                                                $this->Enrollment_status_model->status() &&
-                                                specific_groups_permission('accounting')):
-                                                ?>
-                                                <td >
-                                                    <!--                                            <div class="pull-right">-->
-                                                    <!--                                <h4><span>Amount Due:</span> $7,650.00</h4>-->
-                                                    <!--<br>-->
-                                                    <?php echo anchor(site_url('students/set-enroll?student-id=' . $this->student->id), 'Set Enroll', array('class' => 'btn btn-primary btn-large pull')); ?>
-                                                    <!--                                            </div>-->
-                                                </td>
-                                        <?php endif; ?>
                                     </tr>
                                 </tbody>
                             </table>

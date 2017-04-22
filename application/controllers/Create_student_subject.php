@@ -134,7 +134,7 @@ class Create_student_subject extends CI_Capstone_Controller
 
                 $inputs['school_id'] = array(
                     'name'     => 'xx',
-                    'value'    => $this->student->school_id,
+                    'value'    => $this->student->school_id(),
                     'type'     => 'text',
                     'lang'     => 'index_student_school_id_th',
                     'disabled' => ''

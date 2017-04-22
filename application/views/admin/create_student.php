@@ -58,7 +58,6 @@ echo form_open_multipart(site_url("create-student/index"), array(
                         <?php
                         //student_school_id:
 //                        echo input_bootstrap($student_school_id_temp, 'Course Code');
-
                         //course_id:                      
                         echo input_bootstrap($course_id);
 
@@ -66,10 +65,10 @@ echo form_open_multipart(site_url("create-student/index"), array(
                         echo input_bootstrap($enrollment_year_level);
 
                         //student_school_year: 
-                        echo input_bootstrap($enrollment_school_year);
+                        //echo input_bootstrap($enrollment_school_year);
 
                         //student_semesterl:
-                        echo input_bootstrap($enrollment_semester);
+                        //echo input_bootstrap($enrollment_semester);
                         ?>
                     </div>
                 </div>
@@ -185,4 +184,5 @@ echo form_open_multipart(site_url("create-student/index"), array(
         </div>
     </div>
 </div>
-<?php echo form_close(); ?>
+<?php
+echo form_close();

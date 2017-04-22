@@ -23,6 +23,9 @@ defined('BASEPATH') or exit('no direct script allowed');
 class Student extends School_informations
 {
 
+
+        private $_not_enrolled_msg = 'Not Enrolled yet.';
+
         public function __construct($student_id)
         {
                 parent::__construct();
@@ -155,6 +158,15 @@ class Student extends School_informations
                 }
         }
 
+        public function enrolled_term_year()
+        {
+                if (is_null($this->__enrollment->enrollment_school_year) OR is_null($this->__enrollment->enrollment_semester))
+                {
+                        return $this->_not_enrolled_msg;
+                }
+                return $this->__enrollment->enrollment_school_year . ', ' . semesters($this->__enrollment->enrollment_semester);
+        }
+
         public function school_id($alter = FALSE)
         {
                 $s_id = (string) $this->__student->student_school_id;
@@ -169,7 +181,7 @@ class Student extends School_informations
                 }
                 if ($s_id === '')
                 {
-                        return 'Not Enrolled yet.';
+                        return $this->_not_enrolled_msg;
                 }
                 return $s_id;
         }
@@ -255,8 +267,8 @@ class Student extends School_informations
                 }
                 $this->load->helper('school');
                 if ($this->Enrollment_model->update(array(
-                            'enrollment_semester'    => current_school_semester(TRUE),
-                            'enrollment_school_year' => current_school_year(),
+                           // 'enrollment_semester'    => current_school_semester(TRUE),
+                           // 'enrollment_school_year' => current_school_year(),
                             'enrollment_year_level'  => $new_level
                                 ), $this->__enrollment->enrollment_id))
                 {
