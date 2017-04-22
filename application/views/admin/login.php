@@ -24,7 +24,7 @@ $link = base_url($this->config->item('bootstarp_dir'));
             <div class="control-group">
                 <div class="controls">
                     <div class="main_input_box">
-                        <?php echo ( ! is_null($message)) ? '<div class="form-group">' . $message . '</div>' : ''; ?>       
+                        <?php echo (!is_null($message)) ? '<div class="form-group">' . $message . '</div>' : ''; ?>       
                     </div>
                 </div>
             </div><div class="control-group">
@@ -92,6 +92,7 @@ $link = base_url($this->config->item('bootstarp_dir'));
 
         <script src="<?php echo $link; ?>js/jquery.min.js"></script>  
         <script src="<?php echo $link; ?>js/matrix.login.js"></script> 
+        <script src= "<?php echo base_url('assets/custom_js/flashdata_fade.js'); ?>"></script> 
     </body>
 
 </html>

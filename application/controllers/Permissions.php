@@ -216,7 +216,7 @@ class Permissions extends CI_Capstone_Controller
                                                 break;
                                         }
                                 }
-                                $this->session->set_flashdata('message', ($done) ? bootstrap_success('Updated!') : bootstrap_error('Failed!'));
+                                $this->session->set_flashdata('message', ($done) ? bootstrap_success('Permission successfully updated!') : bootstrap_error('Failed!'));
                         }
                 }
                 $this->main($controller_obj);

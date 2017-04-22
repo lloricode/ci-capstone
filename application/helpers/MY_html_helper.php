@@ -1,4 +1,4 @@
-<?php
+        <?php
 
 defined('BASEPATH') or exit('no direct script allowed');
 
@@ -341,7 +341,7 @@ if ( ! function_exists('_bootstrap_message'))
                  */
                 $message = (lang($message_lang)) ? lang($message_lang) : '##' . $message_lang . '##';
 
-                return '<div class="alert alert-' . $_type . ' alert-block">' . $btn_x . '[ ' . $message . ' ]</div>';
+                return '<div class="alert cifade alert-' . $_type . ' alert-block">' . $btn_x . '[ ' . $message . ' ]</div>';
         }
 
 }        
