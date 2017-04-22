@@ -180,6 +180,10 @@ class Student extends School_informations
                 {
                         show_404();
                 }
+                /**
+                 * start the DB transaction
+                 */
+                $this->db->trans_begin();
 
                 $student_schoo_id_inserted = TRUE;
 
@@ -192,11 +196,6 @@ class Student extends School_informations
                             'student_school_id' => $generated_school_id
                                 ), $this->__student->student_id);
                 }
-                /**
-                 * start the DB transaction
-                 */
-                $this->db->trans_begin();
-
 
                 $subject_ok = $this->_set_enroll_all_subject_offers();
 

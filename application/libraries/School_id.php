@@ -249,12 +249,12 @@ class Id_generator_v1 extends Id__
                         $string = $total;
                 }
                 $this->_number = (string) $string;
-                if ($this->check_if_school_id_exist())
+                if ($this->check_if_school_id_exist($this))
                 {
                         /**
                          * recursive plus increment attempp
                          */
-                        $this->generate_number($attemp ++ );
+                        $this->generate_number( ++ $attemp);
                 }
         }
 
@@ -308,12 +308,11 @@ class Id__
          * @return boolean
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        protected function check_if_school_id_exist()
+        protected function check_if_school_id_exist($new_gen_id)
         {
-                $obj = $this->{$this->__model}->where(array(
-                            $this->__db_table_school_id => $this
-                        ))->get();
-                return (bool) $obj;
+                return (bool) $this->{$this->__model}->where(array(
+                            $this->__db_table_school_id => $new_gen_id
+                        ))->count_rows() > 0;
         }
 
 }

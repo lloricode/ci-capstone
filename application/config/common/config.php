@@ -39,7 +39,7 @@ $config['summer_semester_start'] = 4;
  * version 1 | YYYY-1234 - sample 2017-0312
  * version 2 | course-1234 - sample: 06-3456
  */
-$config['version_id_generator']      = 2;
+$config['version_id_generator']      = 1;
 $config['start_id_number_generator'] = 0;
 
 
