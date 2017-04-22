@@ -91,7 +91,7 @@
                                                     <!--                                            </div>-->
                                                 </td>
                                         <?php endif; ?>
-                                        <?php if ($this->Enrollment_status_model->status()): ?>
+                                        <?php if ($this->student->is_enrolled()): ?>
                                                 <td >
                                                     <!--                                            <div class="pull-right">-->
                                                     <!--                                <h4><span>Amount Due:</span> $7,650.00</h4>-->
