@@ -38,7 +38,7 @@ class Create_student_subject extends CI_Capstone_Controller
         public function index()
         {
                 $this->Student_model->set_informations($this->input->get('student-id'));
-                $this->breadcrumbs->unshift(3, 'View Student [ ' . $this->student->school_id . ' ]', 'students/view?student-id=' . $this->student->id);
+                $this->breadcrumbs->unshift(3, 'View Student [ ' . $this->student->school_id(TRUE) . ' ]', 'students/view?student-id=' . $this->student->id);
                 $this->breadcrumbs->unshift(4, lang('add_student_subject_label'), 'create-student-subject?student-id=' . $this->student->id);
 
                 if ($this->session->userdata('user_is_dean'))
@@ -527,9 +527,9 @@ class Create_student_subject extends CI_Capstone_Controller
                                                 ${'session' . $count2} [$d] = $_line->{'subject_offer_line_' . $d};
                                         }
                                 }
-                                for ($i = 1; $i <= $count; $i ++ )
+                                for ($i = 1; $i <= $count; $i ++)
                                 {
-                                        for ($ii = 1; $ii <= $count2; $ii ++ )
+                                        for ($ii = 1; $ii <= $count2; $ii ++)
                                         {
                                                 $tmp = is_not_conflict_subject_offer(${'selected' . $i}, ${'session' . $ii});
                                                 if ( ! $tmp)
