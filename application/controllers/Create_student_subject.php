@@ -315,17 +315,17 @@ class Create_student_subject extends CI_Capstone_Controller
                                         }
                                 }
                                 $tmp_sem_year = $s->curriculum_subject->curriculum_subject_year_level . $s->curriculum_subject->curriculum_subject_semester;
-                           
+
                                 if ($tmp_compare != $tmp_sem_year)
                                 {
-                                        $tmp_compare = $tmp_sem_year;
-                                        $total_units = $this->Curriculum_subject_model->total_units_per_term($s->curriculum_subject->curriculum_id, $s->curriculum_subject->curriculum_subject_semester, $s->curriculum_subject->curriculum_subject_year_level);
-                                        $table_data[]    = array(
+                                        $tmp_compare  = $tmp_sem_year;
+                                        $total_units  = $this->Curriculum_subject_model->total_units_per_term($s->curriculum_subject->curriculum_id, $s->curriculum_subject->curriculum_subject_semester, $s->curriculum_subject->curriculum_subject_year_level);
+                                        $table_data[] = array(
                                             array(
                                                 'data'    => heading(number_place($s->curriculum_subject->curriculum_subject_year_level) . ' Year - ' .
                                                         semesters($s->curriculum_subject->curriculum_subject_semester)
                                                         , 4) . ' Total units: ' . bold($total_units),
-                                                'colspan' => '9'
+                                                'colspan' => '16'
                                             )
                                         );
                                 }
