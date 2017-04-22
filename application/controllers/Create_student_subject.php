@@ -289,6 +289,7 @@ class Create_student_subject extends CI_Capstone_Controller
 
                 if ($cur_subj_obj)
                 {
+                        $tmp_compare = '';
                         foreach ($cur_subj_obj as $s)
                         {
 
@@ -312,6 +313,21 @@ class Create_student_subject extends CI_Capstone_Controller
                                                 $this->_sub_off__added_obj_from_session[] = $s; //add to added object
                                                 continue; //skip, already in session
                                         }
+                                }
+                                $tmp_sem_year = $s->curriculum_subject->curriculum_subject_year_level . $s->curriculum_subject->curriculum_subject_semester;
+                           
+                                if ($tmp_compare != $tmp_sem_year)
+                                {
+                                        $tmp_compare = $tmp_sem_year;
+                                        $total_units = $this->Curriculum_subject_model->total_units_per_term($s->curriculum_subject->curriculum_id, $s->curriculum_subject->curriculum_subject_semester, $s->curriculum_subject->curriculum_subject_year_level);
+                                        $table_data[]    = array(
+                                            array(
+                                                'data'    => heading(number_place($s->curriculum_subject->curriculum_subject_year_level) . ' Year - ' .
+                                                        semesters($s->curriculum_subject->curriculum_subject_semester)
+                                                        , 4) . ' Total units: ' . bold($total_units),
+                                                'colspan' => '9'
+                                            )
+                                        );
                                 }
 
                                 $output = array(
@@ -527,9 +543,9 @@ class Create_student_subject extends CI_Capstone_Controller
                                                 ${'session' . $count2} [$d] = $_line->{'subject_offer_line_' . $d};
                                         }
                                 }
-                                for ($i = 1; $i <= $count; $i ++)
+                                for ($i = 1; $i <= $count; $i ++ )
                                 {
-                                        for ($ii = 1; $ii <= $count2; $ii ++)
+                                        for ($ii = 1; $ii <= $count2; $ii ++ )
                                         {
                                                 $tmp = is_not_conflict_subject_offer(${'selected' . $i}, ${'session' . $ii});
                                                 if ( ! $tmp)
