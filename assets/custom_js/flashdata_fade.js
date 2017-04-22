@@ -1,6 +1,6 @@
-$(function () {
-    $("div.alert-success").fadeIn(300).delay(1500).fadeOut(900);
-});
-$(function () {
-    $("div.alert-warning").fadeIn(300).delay(1500).fadeOut(900);
+
+$(function() {
+   $('div.cifade').delay(500).fadeIn('normal', function() {
+      $(this).delay(2500).fadeOut();
+   });
 });
