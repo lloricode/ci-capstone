@@ -205,16 +205,16 @@ class Create_student extends CI_Capstone_Controller
                          * rollback database
                          */
                         $this->db->trans_rollback();
-                        $msg = 'Failed to add student .';
+                        $msg = 'Failed to add student.';
                         if ( ! $s_id)
                         {
                                 $msg = str_replace('.', ',', $msg);
-                                $msg .= ' $s_id.';
+                                $msg .= ' '.lang('create_student_fail_message');
                         }
                         if ( ! $id)
                         {
                                 $msg = str_replace('.', ',', $msg);
-                                $msg .= ' $id.';
+                                $msg .= ' '.lang('enrol_student_fail_message');
                         }
                         if ( ! $curriculum_id_from_active_course)
                         {

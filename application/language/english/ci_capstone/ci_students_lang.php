@@ -37,6 +37,8 @@ $lang['create_student_guardian_email_label']    = 'Guardian Email:';
 
 $lang['create_student_succesfully_added_message'] = 'Student Succesfully Added!!';
 $lang['update_student_succesfully_added_message'] = 'Student Succesfully Updated!!';
+$lang['create_student_fail_message'] = 'please check inputs supplied.';
+$lang['update_student_fail_message'] = 'Fail to Update Student!';
 
 //Table Header
 $lang['index_student_heading']              = 'Students';
@@ -122,3 +124,22 @@ $lang['student_civil_status_widower']   = 'Widow/er';
  */
 $lang['search_result_label']        = '%s result for search key \'%s\'.';
 $lang['search_result_course_label'] = '%s result of Program \'%s\'.';
+
+
+/**
+ * 
+ * requirements or credentials presented
+ */
+$lang['student_requirements_New']   = 'New Student:';
+$lang['student_requirements_Transferee']   = 'Transferee:';
+$lang['student_requirements_ALS']   = 'ALS Graduate/Passer:';
+
+$lang['student_requirements_HS_card']   = 'High School Card';
+$lang['student_requirements_good_moral']   = 'Good Moral Character';
+$lang['student_requirements_birth_certificate']   = 'NSO Birth Certificate';
+$lang['student_requirements_2x2']   = '2X2 pictures';
+
+$lang['student_requirements_honorable_dismissal']   = 'Honorable Dismissal';
+$lang['student_requirements_transcript']   = 'Transcript of Records';
+
+$lang['student_requirements_certificate_of_rating']   = 'Certificate of Rating';
