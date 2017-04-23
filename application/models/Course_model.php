@@ -104,7 +104,7 @@ class Course_model extends MY_Model
                         'course_code_id'     => array(
                             'label'  => lang('index_course_code_id_th'),
                             'field'  => 'id',
-                            'rules'  => 'trim|required|min_length[2]|max_length[5]|is_natural_no_zero|is_unique[courses.course_code_id]',
+                            'rules'  => 'trim|min_length[2]|max_length[5]|is_natural_no_zero|is_unique[courses.course_code_id]',
                             'errors' => array(
                                 'is_unique' => 'The {field} Already Exist.'
                             )

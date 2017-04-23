@@ -53,7 +53,7 @@ class Migration_Course extends CI_Migration
                         'type'       => 'VARCHAR',
                         'constraint' => '5',
                         'unique'     => TRUE,
-                        'null'       => FALSE
+                        'null'       => TRUE
                     ),
                     'education_id'       => array(
                         'type'       => 'INT',

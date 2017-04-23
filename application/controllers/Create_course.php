@@ -67,12 +67,15 @@ class Create_course extends CI_Capstone_Controller
                     'lang'  => 'create_course_description_label'
                 );
 
-                $inputs['course_code_id'] = array(
-                    'name'  => 'id',
-                    'value' => $this->form_validation->set_value('id'),
-                    'type'  => 'text',
-                    'lang'  => 'create_course_code_id_label'
-                );
+                if ($this->config->item('version_id_generator') == 2)
+                {
+                        $inputs['course_code_id'] = array(
+                            'name'  => 'id',
+                            'value' => $this->form_validation->set_value('id'),
+                            'type'  => 'text',
+                            'lang'  => 'create_course_code_id_label'
+                        );
+                }
 
                 $inputs['education_id'] = array(
                     'name'  => 'educ',
