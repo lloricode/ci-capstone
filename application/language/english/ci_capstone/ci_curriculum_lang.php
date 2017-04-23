@@ -34,5 +34,4 @@ $lang['enable_curriculum_confirm_y_label'] = 'Yes';
 $lang['enable_curriculum_confirm_n_label'] = 'No';
 $lang['enable_curriculum_confirm_success'] = 'Enabled Successfully!';
 
-
-
+$lang['curriculum_add_success'] = 'Curriculum Added Successfully!';

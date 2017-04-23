@@ -117,17 +117,11 @@ class Report_info extends CI_Capstone_Controller
                         'js/jquery.min.js',
                         'js/jquery.ui.custom.js',
                         'js/bootstrap.min.js',
-                        'js/bootstrap-colorpicker.js',
-                        'js/bootstrap-datepicker.js',
-                        'js/jquery.toggle.buttons.js',
-                        'js/masked.js',
                         'js/jquery.uniform.js',
                         'js/select2.min.js',
+                        'js/jquery.dataTables.min.js',
                         'js/matrix.js',
-                        'js/matrix.form_common.js',
-                        'js/wysihtml5-0.3.0.js',
-                        'js/jquery.peity.min.js',
-                        'js/bootstrap-wysihtml5.js',
+                        'js/matrix.tables.js',
                         /**
                          * wizard
                          * 

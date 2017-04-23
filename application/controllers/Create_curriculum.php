@@ -28,7 +28,7 @@ class Create_curriculum extends CI_Capstone_Controller
                         $id = $this->Curriculum_model->from_form()->insert();
                         if ($id)
                         {
-                                $this->session->set_flashdata('message', bootstrap_success('Curriculum Added!'));
+                                $this->session->set_flashdata('message', bootstrap_success('curriculum_add_success'));
                                 redirect(site_url('curriculums'), 'refresh');
                         }
                 }
