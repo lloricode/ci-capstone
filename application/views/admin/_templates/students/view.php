@@ -20,7 +20,7 @@ function function_row_td($link, $label, $popup = FALSE)
         <div class="span12">
             <div class="widget-box">
                 <div class="widget-title"> <span class="icon"> <i class="icon-user"></i> </span>
-                    <h5><?php echo $this->config->item('project_title'); ?></h5>
+                    <?php echo heading($this->config->item('project_title'), 5); ?>
                 </div>
                 <div class="widget-content">
                     <div class="row-fluid">
@@ -28,53 +28,55 @@ function function_row_td($link, $label, $popup = FALSE)
                             <table class="table table-bordered table-invoice">
                                 <tbody>
                                     <tr>
-                                        <td><h4><?php echo $this->student->fullname; ?></h4></td>
+                                        <td><?php echo heading($this->student->fullname, 4); ?></td>
                                     </tr>
                                     <tr>
-                                        <td ><?php echo $this->student->address; ?></td>
+                                        <td><?php echo $this->student->address; ?></td>
                                     </tr>
                                     <?php echo info_row($this->student->town); ?>
                                     <?php echo info_row($this->student->region); ?>
                                     <?php echo info_row($this->student->contact); ?>
                                     <?php echo info_row($this->student->email); ?>
-
                                     <tr>
-                                        <td ><?php echo $this->student->birthdate; ?></td>
+                                        <td><?php echo $this->student->birthdate; ?></td>
                                     </tr> 
                                     <tr>
-                                        <td ><?php echo $this->student->age(TRUE); ?></td>
+                                        <td><?php echo $this->student->age(TRUE); ?></td>
                                     </tr> 
                                 </tbody>
-                            </table>                        </div>
+                            </table>                        
+                        </div>
                         <div class="span6">
                             <table class="table table-bordered table-invoice">
                                 <tbody>
                                     <tr>
                                         <td><img src="<?php echo $image_src; ?>" alt="no image" /></td>
                                     </tr>
-
                                     <tr>
                                         <td class="width30">School ID:</td>
-                                        <td class="width70"><strong><?php echo $this->student->school_id(); ?></strong></td>
+                                        <td class="width70"><?php echo bold($this->student->school_id()); ?></td>
                                     </tr>
                                     <tr>
                                         <td>Course</td>
-                                        <td><strong><?php echo $this->student->course_code . ' - ' . $this->student->course_description; ?></strong></td>
+                                        <td><?php echo bold($this->student->course_code . ' - ' . $this->student->course_description); ?></td>
                                     </tr>
                                     <tr>
                                         <td>Year Level</td>
-                                        <td><strong> <?php echo $this->student->level_place; ?></strong></td>
+                                        <td> <?php echo bold($this->student->level_place); ?></td>
                                     </tr>
                                     <tr>
                                         <td>Status</td>
-                                        <td><strong> <?php echo $this->student->is_enrolled(TRUE); ?></strong></td>
+                                        <td> <?php echo bold($this->student->is_enrolled(TRUE)); ?></td>
                                     </tr>
                                     <tr>
                                         <td>Enrolled Term</td>
-                                        <td><strong> <?php echo $this->student->enrolled_term_year(); ?></strong></td>
+                                        <td> <?php echo bold($this->student->enrolled_term_year()); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Enrolled Curriculum</td>
+                                        <td> <?php echo $this->student->curriculum(TRUE); ?></td>
                                     </tr>
                                 </tbody>
-
                             </table>
                         </div>
                     </div>
@@ -113,21 +115,12 @@ function function_row_td($link, $label, $popup = FALSE)
                                     </tr>
                                 </tbody>
                             </table>
-
                             <?php
                             /*
                              * subjects table
                              */
                             echo $table_subjects;
-                            if (isset($table_subjects_pagination))
-                            {
-                                    echo '<div class = "pagination alternate pull-right">';
-                                    echo $table_subjects_pagination;
-                                    echo '</div>';
-                            }
                             ?>
-
-
                         </div>
                     </div>
                 </div>

@@ -332,8 +332,8 @@ class Create_student_subject extends CI_Capstone_Controller
 
                                 $output = array(
                                     $this->Curriculum_model->button_link($s->curriculum_subject->curriculum_id, $s->subject->subject_code, $s->subject->subject_description),
-                                    number_place($s->curriculum_subject->curriculum_subject_year_level) . ' Year',
-                                    semesters($s->curriculum_subject->curriculum_subject_semester),
+                                    // number_place($s->curriculum_subject->curriculum_subject_year_level) . ' Year',
+                                    // semesters($s->curriculum_subject->curriculum_subject_semester),
                                     $this->User_model->button_link($s->faculty->id, $s->faculty->last_name, $s->faculty->first_name)
                                 );
 
@@ -391,7 +391,7 @@ class Create_student_subject extends CI_Capstone_Controller
                                                 );
                                                 break;
                                 }
-                                $line[]       = inflector_int_unit($s->curriculum_subject->curriculum_subject_units, 'Unit');
+                                $line[]       = $s->curriculum_subject->curriculum_subject_units;
                                 $line         = array_merge($line, array(array('data' => $btn_link, 'class' => 'taskStatus')));
                                 $table_data[] = array_merge($output, $line);
 
@@ -406,8 +406,8 @@ class Create_student_subject extends CI_Capstone_Controller
                  */
                 $header   = array(
                     lang('student_subject_th'), /* lang in students_lang */
-                    lang('student_year_th'),
-                    lang('student_semester_th'),
+                    // lang('student_year_th'),
+                    // lang('student_semester_th'),
                     lang('student_instructor_th'),
                     lang('student_day1_th'),
                     lang('student_start_th'),
@@ -543,9 +543,9 @@ class Create_student_subject extends CI_Capstone_Controller
                                                 ${'session' . $count2} [$d] = $_line->{'subject_offer_line_' . $d};
                                         }
                                 }
-                                for ($i = 1; $i <= $count; $i ++ )
+                                for ($i = 1; $i <= $count; $i ++)
                                 {
-                                        for ($ii = 1; $ii <= $count2; $ii ++ )
+                                        for ($ii = 1; $ii <= $count2; $ii ++)
                                         {
                                                 $tmp = is_not_conflict_subject_offer(${'selected' . $i}, ${'session' . $ii});
                                                 if ( ! $tmp)
