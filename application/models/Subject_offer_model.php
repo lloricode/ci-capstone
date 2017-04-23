@@ -183,7 +183,9 @@ class Subject_offer_model extends MY_Model
                         $this->with_student_subjects(); //'where:`enrollment_id`!=' . $enrollment_id);
                 }
                 $where__     = array(
-                    'with' => array(
+                    'field'    => 'curriculum_subject_year_level,curriculum_subject_semester',
+                    'order_by' => 'curriculum_subject_year_level,curriculum_subject_semester',
+                    'with'     => array(
                         'relation' => 'curriculum',
                         'field'    => 'curriculum_id'
                 ));

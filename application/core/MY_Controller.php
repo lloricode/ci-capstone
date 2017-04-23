@@ -9,12 +9,6 @@ class MY_Controller extends CI_Controller
         {
                 parent::__construct();
 
-//                $this->load->dbutil();
-//                $DB_NAME = 'ci_capstone';
-//                if (!$this->dbutil->database_exists($DB_NAME))
-//                {
-//                        $this->dbforge->create_database($DB_NAME);
-//                }
 
                 if ($this->migration->current())
                 {
@@ -25,32 +19,74 @@ class MY_Controller extends CI_Controller
                  * there is a back button, 
                  * still reach this, so ignore this
                  */
+//                if ($this->session->has_userdata('user_id'))
+//                {
+//                        $this->ion_auth->set_hook(
+//                                'post_login_remembered_user_successful', 'just_notify_user_remember_event', $this/* $this because the class already extended */, 'just_notify_user_remember', array()
+//                        );
+//                }
                 if ($this->session->has_userdata('user_id'))
                 {
-
-                        /**
-                         * we set here , must before check login or before calling a trigger for a name of event
-                         */
                         $this->ion_auth->set_hook(
-                                'logged_in', 'check_log_multiple_user_event', $this/* $this because the class already extended */, 'check_if_multiple_logged_in_one_user', array()
-                        );
-                        $this->ion_auth->set_hook(
-                                'post_login_remembered_user_successful', 'just_notify_user_remember_event', $this/* $this because the class already extended */, 'just_notify_user_remember', array()
+                                'pre_set_session', 'set_session_data_session_event', $this/* $this because the class already extended */, 'set_session_data_session', array()
                         );
                 }
-                /**
-                 * update enrollment status to FALSE in ALL not current semester and school_year
-                 */
-                $this->Enrollment_model->unenroll_all_past_term();
         }
 
-        public function just_notify_user_remember()
+        public function set_session_data_session()
         {
-                /**
-                 * just a temporary
-                 */
-                $this->session->set_flashdata('message', bootstrap_success('User Exntended Login!!'));
+                // show_error('aaaa');
+                $is_dean          = FALSE;
+                $dean_course_id   = NULL;
+                $dean_course_code = NULL;
+                if ($this->ion_auth->in_group($this->config->item('user_group_dean')))
+                {
+                        $is_dean = TRUE;
+                        $this->load->model('Dean_course_model');
+                        $obj     = $this->Dean_course_model->where(array(
+                                    'user_id' => $this->ion_auth->get_user_id()
+                                ))->get();
+                        if ($obj)
+                        {
+                                $this->load->model('Course_model');
+                                $dean_course_id   = $obj->course_id;
+                                $dean_course_code = $this->Course_model->get($obj->course_id)->course_code;
+                        }
+                }
+                //set the user name/last name in session
+                $user_obj = $this->ion_auth->user()->row();
+                $this->session->set_userdata(array(
+                    'user_first_name'          => $user_obj->first_name,
+                    'user_last_name'           => $user_obj->last_name,
+                    'user_fullname'            => $user_obj->last_name . ', ' . $user_obj->first_name,
+                    'gen_code'                 => $user_obj->gen_code, //this will be use for checking multiple logged machines in one account
+                    'user_groups_descriptions' => $this->_current_group_string(),
+                    'user_groups_names'        => $this->_current_group_string('name'),
+                    'user_is_dean'             => $is_dean,
+                    'user_dean_course_id'      => $dean_course_id,
+                    'user_dean_course_code'    => $dean_course_code,
+                ));
         }
+
+        private function _current_group_string($type = 'description')
+        {
+                $return = '';
+                foreach (get_instance()->ion_auth->get_users_groups()->result() as $g)
+                {
+                        $return .= $g->$type . '|';
+                }
+                return trim($return, '|');
+        }
+
+//        public function just_notify_user_remember()
+//        {
+//                $this->load->helper('session');
+//                set_session_data_session();
+//                /**
+//                 * just a temporary
+//                 */
+//                $this->session->set_flashdata('message', bootstrap_success('User Exntended Login!!'));
+//        }
 
         /**
          * 
@@ -61,28 +97,13 @@ class MY_Controller extends CI_Controller
          * @author ion_auth
          */
         public function render($view, $data = null, $returnhtml = false)
-        {//I think this makes more sense
-                //$this->viewdata = (empty($data)) ? $this->data : $data;
+        {
                 $view_html = $this->load->view($view, $data, $returnhtml);
 
                 if ($returnhtml)
                 {
                         return $view_html; //This will return html on 3rd argument being true
                 }
-        }
-
-        /**
-         * @return string | all user_group of current logged user
-         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
-         */
-        public function current_group_string($type = 'description')
-        {
-                $return = '';
-                foreach ($this->ion_auth->get_users_groups()->result() as $g)
-                {
-                        $return .= $g->$type . '|';
-                }
-                return trim($return, '|');
         }
 
         /**
@@ -232,31 +253,6 @@ class CI_Capstone_Controller extends MY_Controller
                 return (bool) $this->db->update($table, array(
                             'updated_at' => time()
                                 ), array('id' => $user_id));
-        }
-
-        /**
-         * 
-         * checking if one account log in another machine
-         * ,this is set hook in constructor in MY_Controller
-         * 
-         * then will call this when trigger the name 'logged_in
-         * 
-         * 
-         * this idea is came from https://github.com/benedmunds/CodeIgniter-Ion-Auth/issues/947
-         * 
-         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
-         */
-        public function check_if_multiple_logged_in_one_user()
-        {
-                $user_current_session_id = $this->session->userdata('gen_code');
-                $session_id              = $this->User_model->get($this->ion_auth->get_user_id())->gen_code;
-
-                if ($session_id != $user_current_session_id)
-                {
-                        $message = 'another_logged_in_user_in_this_account';
-
-                        redirect('auth/logout/' . $message, 'refresh');
-                }
         }
 
 }

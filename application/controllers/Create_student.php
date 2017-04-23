@@ -170,8 +170,8 @@ class Create_student extends CI_Capstone_Controller
                              * not recommended hidden inputs
                              * --Lloric
                              */
-                            'enrollment_semester'    => current_school_semester(TRUE),
-                            'enrollment_school_year' => current_school_year(),
+                           // 'enrollment_semester'    => current_school_semester(TRUE),
+                           // 'enrollment_school_year' => current_school_year(),
                             /**
                              * get the active curriculum base on selected course_id
                              */
@@ -444,20 +444,20 @@ class Create_student extends CI_Capstone_Controller
                  *  i will use freshly from helper, just to make sure client cant override value
                  * --Lloric
                  */
-                $data['enrollment_semester']    = array(
-                    'name'     => 'semester_temp',
-                    'disabled' => '',
-                    'value'    => current_school_semester(),
-                    'type'     => 'text',
-                    'lang'     => 'create_student_semester_label'
-                );
-                $data['enrollment_school_year'] = array(
-                    'name'     => 'school_year_temp',
-                    'disabled' => '',
-                    'value'    => current_school_year(),
-                    'type'     => 'text',
-                    'lang'     => 'create_student_school_year_label'
-                );
+//                $data['enrollment_semester']    = array(
+//                    'name'     => 'semester_temp',
+//                    'disabled' => '',
+//                    'value'    => current_school_semester(),
+//                    'type'     => 'text',
+//                    'lang'     => 'create_student_semester_label'
+//                );
+//                $data['enrollment_school_year'] = array(
+//                    'name'     => 'school_year_temp',
+//                    'disabled' => '',
+//                    'value'    => current_school_year(),
+//                    'type'     => 'text',
+//                    'lang'     => 'create_student_school_year_label'
+//                );
                 /**
                  * redering
                  */

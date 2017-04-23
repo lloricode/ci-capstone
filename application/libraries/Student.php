@@ -23,6 +23,9 @@ defined('BASEPATH') or exit('no direct script allowed');
 class Student extends School_informations
 {
 
+
+        private $_not_enrolled_msg = 'Not Enrolled yet.';
+
         public function __construct($student_id)
         {
                 parent::__construct();
@@ -43,6 +46,7 @@ class Student extends School_informations
                  */
                 $this->__load_enrollment_n_course_n_set_corriculum_id();
                 $this->__load_education();
+                $this->__load_curriculum();
         }
 
         /**
@@ -138,7 +142,7 @@ class Student extends School_informations
                         case 'enrollment_id':
                                 return $this->__enrollment->enrollment_id;
                         case 'curriculum_id':
-                                return $this->__enrollment->curriculum_id;
+                                return $this->__curriculum->curriculum_id;
                         default :
 
                                 /**
@@ -155,6 +159,28 @@ class Student extends School_informations
                 }
         }
 
+        public function curriculum($anchor = FALSE)
+        {
+                $id           = $this->__curriculum->curriculum_id;
+                $effectv_year = $this->__curriculum->curriculum_effective_school_year;
+                $desc         = $this->__curriculum->curriculum_description;
+                if ($anchor)
+                {
+                        $label = $effectv_year . ' -  ' . $desc;
+                        return anchor('curriculums/view?curriculum-id=' . $id, bold($label), array('title' => 'View Curriculum', 'class' => "tip-bottom"));
+                }
+                return 'not implemented yet..';
+        }
+
+        public function enrolled_term_year()
+        {
+                if (is_null($this->__enrollment->enrollment_school_year) OR is_null($this->__enrollment->enrollment_semester))
+                {
+                        return $this->_not_enrolled_msg;
+                }
+                return $this->__enrollment->enrollment_school_year . ', ' . semesters($this->__enrollment->enrollment_semester);
+        }
+
         public function school_id($alter = FALSE)
         {
                 $s_id = (string) $this->__student->student_school_id;
@@ -169,7 +195,7 @@ class Student extends School_informations
                 }
                 if ($s_id === '')
                 {
-                        return 'Not Enrolled yet.';
+                        return $this->_not_enrolled_msg;
                 }
                 return $s_id;
         }
@@ -180,6 +206,10 @@ class Student extends School_informations
                 {
                         show_404();
                 }
+                /**
+                 * start the DB transaction
+                 */
+                $this->db->trans_begin();
 
                 $student_schoo_id_inserted = TRUE;
 
@@ -192,11 +222,6 @@ class Student extends School_informations
                             'student_school_id' => $generated_school_id
                                 ), $this->__student->student_id);
                 }
-                /**
-                 * start the DB transaction
-                 */
-                $this->db->trans_begin();
-
 
                 $subject_ok = $this->_set_enroll_all_subject_offers();
 
@@ -256,9 +281,7 @@ class Student extends School_informations
                 }
                 $this->load->helper('school');
                 if ($this->Enrollment_model->update(array(
-                            'enrollment_semester'    => current_school_semester(TRUE),
-                            'enrollment_school_year' => current_school_year(),
-                            'enrollment_year_level'  => $new_level
+                            'enrollment_year_level' => $new_level
                                 ), $this->__enrollment->enrollment_id))
                 {
                         return TRUE;
@@ -483,6 +506,7 @@ class School_informations
         protected $__enrollment;
         protected $__course;
         protected $__education;
+        protected $__curriculum;
         private $_curriculum_subjects__subject_offers;
 
         public function __construct()
@@ -552,6 +576,11 @@ class School_informations
                         get(array(
                     'education_id' => $this->__course->education_id
                 ));
+        }
+
+        protected function __load_curriculum()
+        {
+                $this->__curriculum = $this->Enrollment_model->with_curriculum()->get($this->__enrollment->enrollment_id)->curriculum;
         }
 
         protected function __students_subjects(/* $limit, $offset */)

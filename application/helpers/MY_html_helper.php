@@ -1,4 +1,4 @@
-        <?php
+<?php
 
 defined('BASEPATH') or exit('no direct script allowed');
 
@@ -271,9 +271,10 @@ if ( ! function_exists('table_row_button_link'))
          * @return string html
          * @author Lloric Garcia <emorickfighter@gmail.com>
          */
-        function table_row_button_link($link, $label, $additional = NULL, $attibutes = NULL)
+        function table_row_button_link($link, $label, $additional = NULL, $attibutes = NULL, $pop_up = FALSE)
         {
-                return anchor(
+                $anchor = ($pop_up) ? 'anchor_popup' : 'anchor';
+                return $anchor(
                         //url link
                         $link,
                         //label for user interface

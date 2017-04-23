@@ -57,7 +57,6 @@ class Enrollment_model extends MY_Model
 
         private function _relations()
         {
-
                 $this->has_one['course'] = array(
                     'foreign_model' => 'Course_model',
                     'foreign_table' => 'courses',
@@ -65,12 +64,18 @@ class Enrollment_model extends MY_Model
                     'local_key'     => 'course_id'
                 );
 
-
                 $this->has_many['students_subjects'] = array(
                     'foreign_model' => 'Students_subjects_model',
                     'foreign_table' => 'students_subjects',
                     'foreign_key'   => 'id',
                     'local_key'     => 'id'
+                );
+
+                $this->has_one['curriculum'] = array(
+                    'foreign_model' => 'Curriculum_model',
+                    'foreign_table' => 'curriculums',
+                    'foreign_key'   => 'curriculum_id',
+                    'local_key'     => 'curriculum_id'
                 );
         }
 
