@@ -28,7 +28,7 @@ class MY_Controller extends CI_Controller
                 if ($this->session->has_userdata('user_id'))
                 {
                         $this->ion_auth->set_hook(
-                                'pre_set_session', 'set_session_data_session_event', $this/* $this because the class already extended */, 'set_session_data_session', array()
+                         /*       'pre_set_session'*/ 'post_login_remembered_user', 'set_session_data_session_event', $this/* $this because the class already extended */, 'set_session_data_session', array()
                         );
                 }
         }

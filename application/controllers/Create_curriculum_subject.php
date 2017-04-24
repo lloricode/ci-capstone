@@ -35,7 +35,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                         }
                 }
 
-                if ($this->input->post('submit'))
+                if ($this->input->post('submit', TRUE))
                 {
                         /**
                          * check curriculum_id
@@ -49,16 +49,67 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                         {
                                 show_error('Edit is not allowed, Already been used by other data.');
                         }
-
+                        
+                        /**
+                         * start the DB transaction
+                         */
+                        $this->db->trans_begin();
 
                         $id = $this->Curriculum_subject_model->from_form()->insert();
-                        if ($id)
+
+                        if ( ! $this->_is_subject_course() OR ! $this->_is_subject_course())
                         {
-                                $this->session->set_flashdata('message', bootstrap_success('curriculum_subject_add_successfull'));
-                                redirect(site_url('curriculums/view?curriculum-id=' . $this->input->post('curriculum')), 'refresh');
+                                /**
+                                 * rollback database
+                                 */
+                                $this->db->trans_rollback();
+                        }
+                        else
+                        {
+                                if ($this->db->trans_commit())
+                                {
+
+                                        $this->session->set_flashdata('message', bootstrap_success('curriculum_subject_add_successfull'));
+                                        redirect(site_url('curriculums/view?curriculum-id=' . $this->input->post('curriculum')), 'refresh');
+                                }
                         }
                 }
                 $this->_form_view();
+        }
+
+        /**
+         * 
+         * @return boolean
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        private function _is_subject_course()
+        {
+                form_dropdown();
+                
+                
+                $subject_id    = $this->input->post('curriculum', TRUE);
+                $curriculum_id = $this->input->post('subject', TRUE);
+
+                //select what course_id from subject ELSE GEN-ED
+                $subj_obj = $this->Subject_model->get($subject_id);
+
+                if (is_null($subj_obj->course_id))
+                {
+                        $this->session->set_flashdata('message', bootstrap_success(' well done! GEN ED '));
+                        return FALSE; //test return
+                }
+                $course_id_1 = $subj_obj->course_id;
+
+                //selest what course_id from curriculum
+                $course_id_2 = $this->Curriculum_model->get($curriculum_id)->course_id;
+
+                if ($course_id_1 != $course_id_2)
+                {
+                        $this->session->set_flashdata('message', bootstrap_error('Not the same course.'));
+                        return FALSE;
+                }
+                $this->session->set_flashdata('message', bootstrap_success(' well done! COURSE'));
+                return FALSE; //test return
         }
 
         /**
