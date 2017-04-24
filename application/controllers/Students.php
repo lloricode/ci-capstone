@@ -61,7 +61,7 @@ class Students extends CI_Capstone_Controller
                                     $this->_highlight_phrase_if_search($student->student_firstname),
                                     $this->_highlight_phrase_if_search($student->student_middlename),
                                     my_htmlspecialchars($student->course_code),
-                                    my_htmlspecialchars(number_place($student->enrollment_year_level) . ' Year'),
+                                    my_htmlspecialchars(number_roman($student->enrollment_year_level)),
                                     my_htmlspecialchars(($student->enrollment_status) ? 'yes' : 'no'),
                                     $view_ . $edit_
                                 );
@@ -99,6 +99,14 @@ class Students extends CI_Capstone_Controller
                         $pagination_index                .= '?course-id=' . $this->input->get('course-id');
                         $course_code                     = check_id_from_url('course_id', 'Course_model', 'course-id')->course_code;
                         $template['search_result_label'] = paragraph(sprintf(lang('search_result_course_label'/* ci_students_lang */), bold($result_count_for_pagination), bold($course_code)));
+                        if (1)//permission
+                        {
+                                $template['student_per_course_report_btn'] = MY_Controller::render('admin/_templates/button_view', array(
+                                            'href'         => 'students/report?course-id=' . $this->input->get('course-id'),
+                                            'button_label' => 'Excel Report for ' . $course_code,
+                                            'extra'        => array('class' => 'btn btn-success icon-print'),
+                                                ), TRUE);
+                        }
                 }
                 if ($key = $this->input->get('search'))
                 {
@@ -119,6 +127,12 @@ class Students extends CI_Capstone_Controller
                  * rendering users view
                  */
                 $this->render('admin/students', $template);
+        }
+
+        public function report()
+        {
+                $course_obj = check_id_from_url('course_id', 'Course_model', 'course-id');
+                $this->Student_model->export_excel($course_obj->course_id, $course_obj->course_code);
         }
 
         private function _highlight_phrase_if_search($data)
