@@ -110,6 +110,7 @@ class Students extends CI_Capstone_Controller
                 }
                 if ($key = $this->input->get('search'))
                 {
+                        $this->session->set_userdata('search-key', $key);
                         if ( ! preg_match('![?]!', $pagination_index))
                         {
                                 $pagination_index .= '?';
