@@ -110,6 +110,13 @@ function function_row_td($link, $label, $popup = FALSE)
                                                      */
                                                     echo function_row_td('students/set-enroll?student-id=' . $this->student->id, 'Set Enroll');
                                             }
+                                            if (in_array('edit-student', permission_controllers()))
+                                            {
+                                                    /**
+                                                     * print
+                                                     */
+                                                    echo function_row_td('edit-student?student-id=' . $this->student->id, 'Edit');
+                                            }
                                             ?>
                                         </td>
                                     </tr>
