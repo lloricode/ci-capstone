@@ -340,7 +340,7 @@ if ( ! function_exists('_bootstrap_message'))
                 /**
                  * check if lang exist,else use this as message
                  */
-                $message = (lang($message_lang)) ? lang($message_lang) : '##' . $message_lang . '##';
+                $message = (lang($message_lang)) ? lang($message_lang) : '## ' . $message_lang . ' ##';
 
                 return '<div class="alert cifade alert-' . $_type . ' alert-block">' . $btn_x . '[ ' . $message . ' ]</div>';
         }
