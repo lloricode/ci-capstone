@@ -109,11 +109,11 @@ class Course_model extends MY_Model
                                 'is_unique' => 'The {field} Already Exist.'
                             )
                         ),
-                        'education_id'       => array(
-                            'label' => lang('index_course_education_th'),
-                            'field' => 'educ',
-                            'rules' => 'trim|required|is_natural_no_zero',
-                        ),
+//                        'education_id'       => array(
+//                            'label' => lang('index_course_education_th'),
+//                            'field' => 'educ',
+//                            'rules' => 'trim|required|is_natural_no_zero',
+//                        ),
                     ),
                     'update' => array(
                         'code'     => array(

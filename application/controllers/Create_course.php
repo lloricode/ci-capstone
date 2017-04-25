@@ -77,15 +77,15 @@ class Create_course extends CI_Capstone_Controller
                         );
                 }
 
-                $inputs['education_id'] = array(
-                    'name'  => 'educ',
-                    'value' => $this->Education_model->
-                            as_dropdown('education_code')->
-                            set_cache('as_dropdown_education_code')->
-                            get_all(),
-                    'type'  => 'dropdown',
-                    'lang'  => 'create_course_education_label'
-                );
+//                $inputs['education_id'] = array(
+//                    'name'  => 'educ',
+//                    'value' => $this->Education_model->
+//                            as_dropdown('education_code')->
+//                            set_cache('as_dropdown_education_code')->
+//                            get_all(),
+//                    'type'  => 'dropdown',
+//                    'lang'  => 'create_course_education_label'
+//                );
 
                 $data['course_form'] = $this->form_boostrap('create-course/index', $inputs, 'create_course_heading', 'create_course_submit_button_label', 'info-sign', NULL, TRUE);
                 $data['bootstrap']   = $this->_bootstrap();

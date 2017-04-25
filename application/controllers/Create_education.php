@@ -12,6 +12,7 @@ class Create_education extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
+                show_404();
                 $this->load->model('Education_model');
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');

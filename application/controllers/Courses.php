@@ -61,7 +61,7 @@ class Courses extends CI_Capstone_Controller
                                 {
                                         $tmp[] = my_htmlspecialchars($course->course_code_id);
                                 }
-                                $tmp[] = my_htmlspecialchars($this->Education_model->get($course->education_id)->education_code);
+//                                $tmp[] = my_htmlspecialchars($this->Education_model->get($course->education_id)->education_code);
 
 
                                 if ($this->ion_auth->is_admin())
@@ -85,7 +85,7 @@ class Courses extends CI_Capstone_Controller
                 {
                         $header[] = lang('index_course_code_id_th');
                 }
-                $header[] = lang('index_education_code_th');
+//                $header[] = lang('index_education_code_th');
 
                 if ($this->ion_auth->is_admin())
                 {
