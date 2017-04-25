@@ -350,7 +350,7 @@ class Edit_student extends CI_Capstone_Controller
                 /**
                  * enrollment inputs
                  */
-                $data['course_id']              = array(
+                $data['course_id']             = array(
                     'name'    => 'courseid',
                     'default' => $this->student->course_id,
                     'value'   => $this->Course_model->
@@ -360,31 +360,31 @@ class Edit_student extends CI_Capstone_Controller
                     'type'    => 'dropdown',
                     'lang'    => 'create_course_label'
                 );
-                $data['enrollment_year_level']  = array(
+                $data['enrollment_year_level'] = array(
                     'name'    => 'level',
                     'default' => $this->student->level,
                     'value'   => _numbers_for_drop_down(0, $this->config->item('max_year_level')),
                     'type'    => 'dropdown',
                     'lang'    => 'create_student_year_level_label'
                 );
-                $data['enrollment_semester']    = array(
-                    'name'    => 'semester',
-                    'default' => $this->student->semester,
-                    'value'   => semesters(),
-                    'type'    => 'dropdown',
-                    'lang'    => 'create_student_semester_label'
-                );
-                $data['enrollment_school_year'] = array(
-                    'name'    => 'school_year',
-                    'default' => $this->student->school_year,
-                    'value'   => school_years($this->student->school_year),
-                    'type'    => 'dropdown',
-                    'lang'    => 'create_student_school_year_label'
-                );
+//                $data['enrollment_semester']    = array(
+//                    'name'    => 'semester',
+//                    'default' => $this->student->semester,
+//                    'value'   => semesters(),
+//                    'type'    => 'dropdown',
+//                    'lang'    => 'create_student_semester_label'
+//                );
+//                $data['enrollment_school_year'] = array(
+//                    'name'    => 'school_year',
+//                    'default' => $this->student->school_year,
+//                    'value'   => school_years($this->student->school_year),
+//                    'type'    => 'dropdown',
+//                    'lang'    => 'create_student_school_year_label'
+//                );
                 /**
                  * redering
                  */
-                $data['bootstrap']              = $this->_bootstrap();
+                $data['bootstrap']             = $this->_bootstrap();
                 $this->render('admin/edit_student', $data);
         }
 
