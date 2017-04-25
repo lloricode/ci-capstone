@@ -75,47 +75,6 @@ class Create_student extends CI_Capstone_Controller
 //                }
 //        }
 
-        /**
-         * this will be use in
-         * adding curriculum_id in enrollment, 
-         * 
-         * @param int $_course_id_
-         * @return boolean
-         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
-         */
-        private function _get_active_currilumn_by_course_id($_course_id_)
-        {
-                /**
-                 * get_all to check also if only one active in curriculum by course_id
-                 */
-                $curriculum_obj = $this->Curriculum_model->where(array(
-                            'course_id'         => $_course_id_,
-                            'curriculum_status' => TRUE//only needed is the active
-                        ))->get_all();
-
-                if ($curriculum_obj)
-                {
-                        if (count($curriculum_obj) > 1)
-                        {
-                                /**
-                                 * the result is more than one, 
-                                 */
-                                $this->session->set_flashdata('message', bootstrap_error('Curriculum is more than 1 active.'));
-                                return FALSE;
-                        }
-                        /**
-                         * convert in single row, because we used get_all() (more than one rows)
-                         * 
-                         * then get the curriculum_id
-                         */
-                        return $curriculum_obj[0]->curriculum_id; //expected only one result [no need advance loop] 
-                }
-                /**
-                 * no curriculum found
-                 */
-                $this->session->set_flashdata('message', bootstrap_error('No curriculumn found'));
-                return FALSE;
-        }
 
         private function _input_ready(/* $uploaded */)
         {
@@ -134,7 +93,7 @@ class Create_student extends CI_Capstone_Controller
                 /**
                  * get the active curriculum base on course_id
                  */
-                $curriculum_id_from_active_course = $this->_get_active_currilumn_by_course_id($_course_id_);
+                $curriculum_id_from_active_course = $this->Curriculum_model->get_active_currilumn_by_course_id($_course_id_);
 
                 /**
                  * start the DB transaction
@@ -170,14 +129,14 @@ class Create_student extends CI_Capstone_Controller
                              * not recommended hidden inputs
                              * --Lloric
                              */
-                           // 'enrollment_semester'    => current_school_semester(TRUE),
-                           // 'enrollment_school_year' => current_school_year(),
+                            // 'enrollment_semester'    => current_school_semester(TRUE),
+                            // 'enrollment_school_year' => current_school_year(),
                             /**
                              * get the active curriculum base on selected course_id
                              */
-                            'curriculum_id'          => $curriculum_id_from_active_course,
+                            'curriculum_id' => $curriculum_id_from_active_course,
                             //--
-                            'student_id'             => $s_id
+                            'student_id'    => $s_id
                         ))->insert();
                 /**
                  * get the validated fields
@@ -209,12 +168,12 @@ class Create_student extends CI_Capstone_Controller
                         if ( ! $s_id)
                         {
                                 $msg = str_replace('.', ',', $msg);
-                                $msg .= ' '.lang('create_student_fail_message');
+                                $msg .= ' ' . lang('create_student_fail_message');
                         }
                         if ( ! $id)
                         {
                                 $msg = str_replace('.', ',', $msg);
-                                $msg .= ' '.lang('enrol_student_fail_message');
+                                $msg .= ' ' . lang('enrol_student_fail_message');
                         }
                         if ( ! $curriculum_id_from_active_course)
                         {
@@ -461,7 +420,7 @@ class Create_student extends CI_Capstone_Controller
                 /**
                  * redering
                  */
-                $data['bootstrap']              = $this->_bootstrap();
+                $data['bootstrap'] = $this->_bootstrap();
                 $this->render('admin/create_student', $data);
         }
 
