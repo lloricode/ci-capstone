@@ -427,14 +427,14 @@ class Migration_Sample_data extends CI_Migration
                         'educ'    => $educ_collge_id,
                         'code_id' => '50'
                     ),
-                    array(
-                        'code'    => 'High School',
-                        'icon'    => 'briefcase',
-                        'color'   => 'lb',
-                        'desc'    => 'High School Department',
-                        'educ'    => $educ_highschool_id,
-                        'code_id' => '60'
-                    ),
+//                    array(
+//                        'code'    => 'High School',
+//                        'icon'    => 'briefcase',
+//                        'color'   => 'lb',
+//                        'desc'    => 'High School Department',
+//                        'educ'    => $educ_highschool_id,
+//                        'code_id' => '60'
+//                    ),
                     array(
                         'code'    => 'AMT',
                         'icon'    => 'beaker',
