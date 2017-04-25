@@ -307,9 +307,9 @@ class Student_model extends MY_Model
                 }
         }
 
-        public function all($limit = NULL, $offset = NULL, $course_id = NULL, $search = NULL, $report = FALSE)
+        public function all($limit = NULL, $offset = NULL, $course_id = NULL, $search = NULL, $report = FALSE, $enrolled_status_only = NULL)
         {
-                $this->_query_all($course_id, $search);
+                $this->_query_all($course_id, $search, $enrolled_status_only);
                 $this->db->order_by('created_at', 'DESC');
                 $this->db->order_by('updated_at', 'DESC');
                 if ( ! $report)
@@ -321,7 +321,7 @@ class Student_model extends MY_Model
 
                 $this->db->reset_query();
 
-                $this->_query_all($course_id, $search);
+                $this->_query_all($course_id, $search, $enrolled_status_only);
                 $count = $this->db->count_all_results($this->table);
 
                 return (object) array(
@@ -330,7 +330,7 @@ class Student_model extends MY_Model
                 );
         }
 
-        private function _query_all($course_id = NULL, $search = NULL)
+        private function _query_all($course_id = NULL, $search = NULL, $enrolled_status_only = NULL)
         {
 
                 $this->load->model(array('Enrollment_model', 'Course_model', 'User_model'));
@@ -369,6 +369,13 @@ class Student_model extends MY_Model
                         $this->db->or_like($table . '.`student_lastname`', $search);
                         $this->db->or_like($table . '.`student_firstname`', $search);
                         $this->db->or_like($table . '.`student_lastname`', $search);
+                }
+                if ( ! is_null($enrolled_status_only))
+                {
+                        if ($enrolled_status_only == 'enrolled')
+                        {
+                                $this->db->where("$enrollment_table.`enrollment_status`=", '1');
+                        }
                 }
                 return $this;
         }

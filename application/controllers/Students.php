@@ -18,7 +18,6 @@ class Students extends CI_Capstone_Controller
                  * pagination limit
                  */
                 $this->limit = 10;
-                $this->breadcrumbs->unshift(2, lang('index_student_heading'), 'students');
         }
 
         public function index()
@@ -36,7 +35,8 @@ class Students extends CI_Capstone_Controller
                         }
                         $course_id = $this->session->userdata('user_dean_course_id');
                 }
-                $student_result = $this->Student_model->all($this->limit, $this->limit * get_page_in_url('page') - $this->limit, $course_id, $this->input->get('search'));
+
+                $student_result = $this->Student_model->all($this->limit, $this->limit * get_page_in_url('page') - $this->limit, $course_id, $this->input->get('search'), FALSE, $this->input->get('status'));
 
                 $student_obj                 = $student_result->result;
                 $result_count_for_pagination = $student_result->count;
@@ -94,6 +94,7 @@ class Students extends CI_Capstone_Controller
                         $header[] = 'Updated By';
                 }
                 $pagination_index = 'students';
+                $bred_crumbs      = '';
                 if ($this->input->get('course-id'))
                 {
                         $pagination_index                .= '?course-id=' . $this->input->get('course-id');
@@ -107,6 +108,7 @@ class Students extends CI_Capstone_Controller
                                             'extra'        => array('class' => 'btn btn-success icon-print'),
                                                 ), TRUE);
                         }
+                        $bred_crumbs = " [ Program: $course_code ]";
                 }
                 if ($key = $this->input->get('search'))
                 {
@@ -118,8 +120,26 @@ class Students extends CI_Capstone_Controller
                         $pagination_index .= 'search=' . $key;
 
                         $template['search_result_label'] = paragraph(sprintf(lang('search_result_label'/* ci_students_lang */), bold($result_count_for_pagination), bold($key)));
+                        $bred_crumbs                     = " [ Search: $key ]";
+                }
+                if ($tmp = $this->input->get('status'))
+                {
+                        if ($tmp == 'enrolled')
+                        {
+                                if ( ! preg_match('![?]!', $pagination_index))
+                                {
+                                        $pagination_index .= '?';
+                                }
+                                $pagination_index .= 'status=enrolled';
+                        }
+                        $template['search_result_label'] = paragraph(sprintf(lang('search_result_enrolled_label'/* ci_students_lang */), bold($result_count_for_pagination)));
+                        $bred_crumbs                     = ' [ Enrolled ]';
                 }
                 $pagination = $this->pagination->generate_bootstrap_link($pagination_index, $result_count_for_pagination / $this->limit, TRUE);
+
+
+                $this->breadcrumbs->unshift(2, lang('index_student_heading') . $bred_crumbs, $pagination_index);
+
 
                 $template['table_students'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_student_heading', $pagination, TRUE);
                 $template['message']        = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
@@ -212,6 +232,10 @@ class Students extends CI_Capstone_Controller
          */
         public function view($return_html = FALSE)//parameter use for printing
         {
+                if ( ! $return_html)
+                {
+                        $this->breadcrumbs->unshift(2, lang('index_student_heading'), 'students');
+                }
                 /*
                  * check url with id,tehn get studewnt row
                  */
