@@ -39,7 +39,10 @@ class Edit_student extends CI_Capstone_Controller
                          */
                         $upload_return = $this->upload->_preparing_image($_post_image_name, FALSE);
                         $uploaded      = $upload_return['uploaded'];
-                        $this->session->set_flashdata('message', bootstrap_error($upload_return['error_message']));
+                        if ($upload_return['error_message'] != '')
+                        {
+                                $this->session->set_flashdata('message', bootstrap_error($upload_return['error_message']));
+                        }
                         $this->_input_ready($this->student->id, $uploaded);
                 }
 
