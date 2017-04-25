@@ -43,13 +43,13 @@ class Student_model extends MY_Model
                 $this->timestamps_format = 'timestamp'; //$this->config->item('my_model_timestamps_format');
 
 
-                $this->cache_driver         = 'file'; //$this->config->item('my_model_cache_driver');
-                $this->cache_prefix         = 'cicapstone'; //$this->config->item('my_model_cache_prefix');
+                $this->cache_driver              = 'file'; //$this->config->item('my_model_cache_driver');
+                $this->cache_prefix              = 'cicapstone'; //$this->config->item('my_model_cache_prefix');
                 /**
                  * some of field is not required, so remove it in array when no value, in inside the *->from_form()->insert() in core MY_Model,
                  */
                 $this->remove_empty_before_write = TRUE; //(bool) $this->config->item('my_model_remove_empty_before_write');
-                $this->delete_cache_on_save = TRUE; //(bool) $this->config->item('my_model_delete_cache_on_save');
+                $this->delete_cache_on_save      = TRUE; //(bool) $this->config->item('my_model_delete_cache_on_save');
         }
 
         private function _relations()
@@ -307,12 +307,15 @@ class Student_model extends MY_Model
                 }
         }
 
-        public function all($limit, $offset, $course_id = NULL, $search = NULL)
+        public function all($limit = NULL, $offset = NULL, $course_id = NULL, $search = NULL, $report = FALSE)
         {
                 $this->_query_all($course_id, $search);
                 $this->db->order_by('created_at', 'DESC');
                 $this->db->order_by('updated_at', 'DESC');
-                $this->db->limit($limit, $offset);
+                if ( ! $report)
+                {
+                        $this->db->limit($limit, $offset);
+                }
                 $rs     = $this->db->get($this->table);
                 $result = $rs->custom_result_object('Student_row');
 
@@ -368,6 +371,48 @@ class Student_model extends MY_Model
                         $this->db->or_like($table . '.`student_lastname`', $search);
                 }
                 return $this;
+        }
+
+        public function export_excel($course_id, $course_code)
+        {
+                if (0)//permission
+                {
+                        show_error('access denied');
+                }
+                $titles = array(
+                    lang('index_student_school_id_th'),
+                    lang('index_student_lastname_th'),
+                    lang('index_student_firstname_th'),
+                    lang('index_student_middlename_th'),
+                    //  'course',
+                    'level',
+                    'enrolled'
+                );
+
+                $student_obj = $this->all(NULL, NULL, $course_id, NULL, TRUE)->result;
+                $table_data  = array();
+
+                if ($student_obj)
+                {
+
+                        foreach ($student_obj as $student)
+                        {
+                                $tmp          = array(
+                                    ($student->student_school_id == '') ? '--' : $student->student_school_id,
+                                    $student->student_lastname,
+                                    $student->student_firstname,
+                                    $student->student_middlename,
+                                    //  my_htmlspecialchars($student->course_code),
+                                    my_htmlspecialchars(number_roman($student->enrollment_year_level)),
+                                    my_htmlspecialchars(($student->enrollment_status) ? 'yes' : 'no')
+                                );
+                                $table_data[] = $tmp;
+                        }
+                }
+                $this->load->library('excel');
+                // echo print_r($data_);
+                $this->excel->filename = 'Stundnts of ' . $course_code;
+                $this->excel->make_from_array($titles, $table_data);
         }
 
 }

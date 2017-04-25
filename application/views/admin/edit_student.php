@@ -74,10 +74,10 @@ echo form_open_multipart(site_url("edit-student?student-id=" . $this->student->i
                         echo input_bootstrap($enrollment_year_level);
 
                         //student_school_year: 
-                        echo input_bootstrap($enrollment_school_year);
+                        //echo input_bootstrap($enrollment_school_year);
 
                         //student_semesterl:
-                        echo input_bootstrap($enrollment_semester);
+                        //echo input_bootstrap($enrollment_semester);
                         ?>
                     </div>
                 </div>

@@ -54,12 +54,15 @@ class Courses extends CI_Capstone_Controller
                         foreach ($course_obj as $course)
                         {
 
-                                $tmp = array(
-                                    my_htmlspecialchars($course->course_code),
-                                    my_htmlspecialchars($course->course_description),
-                                    my_htmlspecialchars($course->course_code_id),
-                                    my_htmlspecialchars($this->Education_model->get($course->education_id)->education_code),
-                                );
+                                $tmp   = array();
+                                $tmp[] = my_htmlspecialchars($course->course_code);
+                                $tmp[] = my_htmlspecialchars($course->course_description);
+                                if ($this->config->item('version_id_generator') == 2)
+                                {
+                                        $tmp[] = my_htmlspecialchars($course->course_code_id);
+                                }
+//                                $tmp[] = my_htmlspecialchars($this->Education_model->get($course->education_id)->education_code);
+
 
                                 if ($this->ion_auth->is_admin())
                                 {
@@ -75,12 +78,15 @@ class Courses extends CI_Capstone_Controller
                 /*
                  * Table headers
                  */
-                $header = array(
-                    lang('index_course_code_th'),
-                    lang('index_course_desc_th'),
-                    lang('index_course_code_id_th'),
-                    lang('index_education_code_th')
-                );
+
+                $header[] = lang('index_course_code_th');
+                $header[] = lang('index_course_desc_th');
+                if ($this->config->item('version_id_generator') == 2)
+                {
+                        $header[] = lang('index_course_code_id_th');
+                }
+//                $header[] = lang('index_education_code_th');
+
                 if ($this->ion_auth->is_admin())
                 {
                         $header[] = 'Created By';

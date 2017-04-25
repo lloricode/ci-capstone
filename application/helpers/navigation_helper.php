@@ -151,12 +151,12 @@ if ( ! function_exists('navigations_main'))
                             'educations'       =>
                             array(
                                 'label' => lang('view_education_label'),
-                                'seen'  => TRUE,
+                                'seen'  => FALSE
                             ),
                             'create-education' =>
                             array(
                                 'label'      => lang('create_education_heading'),
-                                'seen'       => TRUE,
+                                'seen'       => FALSE,
                                 'enrollment' => TRUE
                             ),
                             'courses'          =>

@@ -84,7 +84,7 @@ class Enrollment_model extends MY_Model
 
                 $this->rules = array(
                     'insert' => $this->_common(),
-                    'update' => array_merge($this->_common(), $this->_update())
+                    'update' => $this->_common()
                 );
         }
 

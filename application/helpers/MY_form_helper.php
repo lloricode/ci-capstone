@@ -92,7 +92,7 @@ if ( ! function_exists('input_bootstrap'))
                                 {
 
                                         case 'dropdown':
-                                                $output .= form_dropdown($field['name'], $field['value'], set_value($field['name'], $default_value));
+                                                $output .= form_dropdown($field['name'], $field['value'], set_value($field['name'], $default_value), array('style' => 'width: 220px'));
                                                 break;
                                         case 'multiselect':
                                                 $output .= form_multiselect($field['name'], $field['value'], get_instance()->input->post($field['name'], TRUE));

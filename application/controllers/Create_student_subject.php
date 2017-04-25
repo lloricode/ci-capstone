@@ -83,7 +83,8 @@ class Create_student_subject extends CI_Capstone_Controller
                                                 break;
                                         }
                                 }
-                                if ( ! $all_inserted OR ! $update_year_ok)
+
+                                if ( ! $this->_is_curriculum_yr_lvl_not_exceed() OR ! $this->_is_unit_not_exceed() OR ! $all_inserted OR ! $update_year_ok)
                                 {
                                         /**
                                          * rollback database
@@ -92,6 +93,7 @@ class Create_student_subject extends CI_Capstone_Controller
                                 }
                                 else
                                 {
+                                        $this->db->trans_rollback();
 
                                         if ($this->db->trans_commit())
                                         {
@@ -110,6 +112,36 @@ class Create_student_subject extends CI_Capstone_Controller
                 $this->_form_view($error_message);
         }
 
+        private function _is_curriculum_yr_lvl_not_exceed()
+        {
+                return TRUE;
+        }
+
+        private function _is_unit_not_exceed()
+        {
+                $maximum_units = (int) $this->Curriculum_subject_model->total_units_per_term($this->student->curriculum_id, current_school_semester(TRUE), $this->input->post('level'));
+
+                if ($this->session->has_userdata('total_unit'))
+                {
+                        $unit_session = (int) $this->session->userdata('total_unit');
+                        if ($maximum_units === 0)
+                        {
+                                $this->session->set_flashdata('message', bootstrap_error('no unit'));
+                                return FALSE;
+                        }
+                        elseif ($unit_session > $maximum_units)
+                        {
+                                $this->session->set_flashdata('message', bootstrap_error('unit exceed'));
+                                return FALSE;
+                        }
+
+                        $this->session->set_flashdata('message', bootstrap_error('something wrong brah')); //dont mention :D temporary and means bugs
+                        return FALSE;
+                }
+
+                return TRUE;
+        }
+
         /**
          * this info will now include in submit form
          * 
@@ -124,6 +156,7 @@ class Create_student_subject extends CI_Capstone_Controller
                 {
                         $unit = plural($unit);
                 }
+                $this->session->set_userdata('total_unit', $this->_total_unit);
                 $inputs['totalunit'] = array(
                     'name'     => 'xx',
                     'value'    => $this->_total_unit . ' ' . $unit,
@@ -543,9 +576,9 @@ class Create_student_subject extends CI_Capstone_Controller
                                                 ${'session' . $count2} [$d] = $_line->{'subject_offer_line_' . $d};
                                         }
                                 }
-                                for ($i = 1; $i <= $count; $i ++)
+                                for ($i = 1; $i <= $count; $i ++ )
                                 {
-                                        for ($ii = 1; $ii <= $count2; $ii ++)
+                                        for ($ii = 1; $ii <= $count2; $ii ++ )
                                         {
                                                 $tmp = is_not_conflict_subject_offer(${'selected' . $i}, ${'session' . $ii});
                                                 if ( ! $tmp)

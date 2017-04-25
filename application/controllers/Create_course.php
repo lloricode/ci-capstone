@@ -67,22 +67,25 @@ class Create_course extends CI_Capstone_Controller
                     'lang'  => 'create_course_description_label'
                 );
 
-                $inputs['course_code_id'] = array(
-                    'name'  => 'id',
-                    'value' => $this->form_validation->set_value('id'),
-                    'type'  => 'text',
-                    'lang'  => 'create_course_code_id_label'
-                );
+                if ($this->config->item('version_id_generator') == 2)
+                {
+                        $inputs['course_code_id'] = array(
+                            'name'  => 'id',
+                            'value' => $this->form_validation->set_value('id'),
+                            'type'  => 'text',
+                            'lang'  => 'create_course_code_id_label'
+                        );
+                }
 
-                $inputs['education_id'] = array(
-                    'name'  => 'educ',
-                    'value' => $this->Education_model->
-                            as_dropdown('education_code')->
-                            set_cache('as_dropdown_education_code')->
-                            get_all(),
-                    'type'  => 'dropdown',
-                    'lang'  => 'create_course_education_label'
-                );
+//                $inputs['education_id'] = array(
+//                    'name'  => 'educ',
+//                    'value' => $this->Education_model->
+//                            as_dropdown('education_code')->
+//                            set_cache('as_dropdown_education_code')->
+//                            get_all(),
+//                    'type'  => 'dropdown',
+//                    'lang'  => 'create_course_education_label'
+//                );
 
                 $data['course_form'] = $this->form_boostrap('create-course/index', $inputs, 'create_course_heading', 'create_course_submit_button_label', 'info-sign', NULL, TRUE);
                 $data['bootstrap']   = $this->_bootstrap();

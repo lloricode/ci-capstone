@@ -2,6 +2,11 @@
 
 defined('BASEPATH') OR exit('No direct script allowed');
 
+
+if (isset($student_per_course_report_btn))
+{
+        echo $student_per_course_report_btn;
+}
 /**
  * for table
  */
