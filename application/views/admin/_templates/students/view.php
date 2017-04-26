@@ -28,6 +28,9 @@ function function_row_td($link, $label, $popup = FALSE)
                             <table class="table table-bordered table-invoice">
                                 <tbody>
                                     <tr>
+                                        <td><img src="<?php echo $image_src; ?>" alt="no image" /></td>
+                                    </tr>
+                                    <tr>
                                         <td><?php echo heading($this->student->fullname, 4); ?></td>
                                     </tr>
                                     <tr>
@@ -50,19 +53,12 @@ function function_row_td($link, $label, $popup = FALSE)
                             <table class="table table-bordered table-invoice">
                                 <tbody>
                                     <tr>
-                                        <td><img src="<?php echo $image_src; ?>" alt="no image" /></td>
-                                    </tr>
-                                    <tr>
                                         <td class="width30">School ID:</td>
                                         <td class="width70"><?php echo bold($this->student->school_id()); ?></td>
                                     </tr>
                                     <tr>
-                                        <td>Course</td>
-                                        <td><?php echo bold($this->student->course_code . ' - ' . $this->student->course_description); ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Year Level</td>
-                                        <td> <?php echo bold($this->student->level_place); ?></td>
+                                        <td>Course / Year</td>
+                                        <td><?php echo bold($this->student->course_code . ' - ' . $this->student->level_roman); ?></td>
                                     </tr>
                                     <tr>
                                         <td>Status</td>
@@ -76,16 +72,8 @@ function function_row_td($link, $label, $popup = FALSE)
                                         <td>Enrolled Curriculum</td>
                                         <td> <?php echo $this->student->curriculum(TRUE); ?></td>
                                     </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="row-fluid">
-                        <div class="span12">
-                            <table class="table table-bordered table-invoice-full">
-                                <tbody>
                                     <tr>
-                                        <td class="msg-invoice pull-right">
+                                        <td colspan="2" >
                                             <?php
                                             if ($this->Enrollment_status_model->status())
                                             {
@@ -122,6 +110,11 @@ function function_row_td($link, $label, $popup = FALSE)
                                     </tr>
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+
                             <?php
                             /*
                              * subjects table
