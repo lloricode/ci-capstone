@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 25, 2017 at 09:49 AM
+-- Generation Time: Apr 26, 2017 at 10:01 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 5.6.24
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 DROP TABLE IF EXISTS `controllers`;
 CREATE TABLE `controllers` (
   `controller_id` mediumint(8) UNSIGNED NOT NULL,
-  `controller_name` enum('home','curriculums','create-curriculum','create-curriculum-subject','create-requisite','set-curriculum-enable','students','create-student','edit-student','create-student-subject','subjects','create-subject','subject-offers','create-subject-offer','open-enrollment','educations','create-education','courses','create-course','rooms','create-room','edit-room','users','create-user','groups','create-group','edit-group','deactivate','edit-user','database','report-info','log','permissions','last-logins','') NOT NULL,
+  `controller_name` enum('home','curriculums','create-curriculum','create-curriculum-subject','create-requisite','set-curriculum-enable','students','create-student','edit-student','create-student-subject','subjects','create-subject','subject-offers','create-subject-offer','open-enrollment','educations','create-education','courses','create-course','rooms','create-room','edit-room','users','create-user','groups','create-group','edit-group','deactivate','edit-user','database','report-info','log','permissions','last-logins','','edit-subject') NOT NULL,
   `controller_description` varchar(50) NOT NULL,
   `controller_admin_only` tinyint(1) NOT NULL DEFAULT '0',
   `controller_enrollment_open` tinyint(1) NOT NULL DEFAULT '0',
@@ -80,7 +80,8 @@ INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_descr
 (32, 'permissions', 'Permissions Description', 1, 0, 1491881056),
 (33, 'last-logins', 'Last Logins Description', 1, 0, 1491881056),
 (34, '', 'Default Controller Description', 0, 0, 1491881056),
-(35, 'edit-room', 'Edit Room', 0, 1, 1491881054);
+(35, 'edit-room', 'Edit Room', 0, 1, 1491881054),
+(36, 'edit-subject', 'edit-subject', 0, 1, 1491881054);
 
 -- --------------------------------------------------------
 
@@ -122,7 +123,8 @@ INSERT INTO `courses` (`course_id`, `course_code`, `course_icon`, `course_color`
 (6, 'AMT', 'beaker', 'lv', 'AMT description', '70', 1, 1491881054, 1, NULL, NULL, NULL, NULL),
 (7, 'TESDA', 'group', 'ly', 'Tesda Courses', '80', 1, 1491881054, 1, NULL, NULL, NULL, NULL),
 (8, 'CME', 'tint', 'ls', 'CME description', '90', 1, 1491881054, 1, NULL, NULL, NULL, NULL),
-(9, 'Cross Enroll', 'move', 'lg', 'Cross Enroll description', '01', 1, 1491881054, 1, NULL, NULL, NULL, NULL);
+(9, 'Cross Enroll', 'move', 'lg', 'Cross Enroll description', '01', 1, 1491881054, 1, NULL, NULL, NULL, NULL),
+(10, 'Test Program', 'eye-close', 'lr', 'Tesdt Program Description', NULL, NULL, 1493176853, 1, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -169,7 +171,8 @@ INSERT INTO `curriculums` (`curriculum_id`, `curriculum_description`, `curriculu
 (12, 'ttttttt', '2018-2019', 0, 1, 6, 1492589161, 1, NULL, NULL, 1492802078, 1),
 (13, 'wewewe', '2016-2017', 0, 0, 6, 1492606235, 1, NULL, NULL, 1492802078, 1),
 (14, '333', '2016-2017', 0, 0, 6, 1492662352, 1, NULL, NULL, 1492802078, 1),
-(15, 'zsdfasf', '2016-2017', 0, 0, 6, 1492781702, 1, NULL, NULL, 1492802078, 1);
+(15, 'zsdfasf', '2016-2017', 0, 0, 6, 1492781702, 1, NULL, NULL, 1492802078, 1),
+(16, 'Test Curriculum', '2016-2017', 1, 1, 10, 1493177013, 1, NULL, NULL, 1493192434, 1);
 
 -- --------------------------------------------------------
 
@@ -251,7 +254,23 @@ INSERT INTO `curriculum_subjects` (`curriculum_subject_id`, `curriculum_subject_
 (44, 2, 'second', 3, 1, 2, 11, 8, 1492662253, 1, NULL, NULL, NULL, NULL),
 (45, 3, 'first', 2, 1, 1, 14, 4, 1492662383, 1, NULL, NULL, NULL, NULL),
 (46, 4, 'first', 1, 0, 1, 14, 7, 1492662411, 1, NULL, NULL, NULL, NULL),
-(47, 3, 'summer', 1, 1, 0, 13, 4, 1492675207, 1, NULL, NULL, NULL, NULL);
+(47, 3, 'summer', 1, 1, 0, 13, 4, 1492675207, 1, NULL, NULL, NULL, NULL),
+(55, 1, 'first', 1, 1, 0, 16, 41, 1493191171, 1, NULL, NULL, NULL, NULL),
+(56, 1, 'first', 6, 2, 4, 16, 42, 1493191347, 1, NULL, NULL, NULL, NULL),
+(57, 1, 'second', 1, 1, 0, 16, 44, 1493191376, 1, NULL, NULL, NULL, NULL),
+(58, 1, 'second', 4, 1, 3, 16, 45, 1493191442, 1, NULL, NULL, NULL, NULL),
+(59, 1, 'summer', 4, 0, 4, 16, 64, 1493191561, 1, NULL, NULL, NULL, NULL),
+(60, 1, 'first', 1, 1, 0, 16, 43, 1493191788, 1, NULL, NULL, NULL, NULL),
+(61, 2, 'first', 3, 2, 1, 16, 50, 1493191871, 1, NULL, NULL, NULL, NULL),
+(62, 2, 'first', 1, 0, 1, 16, 55, 1493191912, 1, NULL, NULL, NULL, NULL),
+(63, 2, 'summer', 5, 2, 3, 16, 57, 1493192178, 1, NULL, NULL, NULL, NULL),
+(64, 3, 'first', 1, 0, 1, 16, 47, 1493192207, 1, NULL, NULL, NULL, NULL),
+(65, 2, 'second', 1, 0, 1, 16, 16, 1493192228, 1, NULL, NULL, NULL, NULL),
+(66, 3, 'second', 6, 0, 6, 16, 34, 1493192273, 1, NULL, NULL, NULL, NULL),
+(67, 3, 'summer', 1, 0, 1, 16, 49, 1493192296, 1, NULL, NULL, NULL, NULL),
+(68, 4, 'first', 6, 3, 3, 16, 54, 1493192320, 1, NULL, NULL, NULL, NULL),
+(69, 4, 'second', 3, 1, 2, 16, 35, 1493192373, 1, NULL, NULL, NULL, NULL),
+(70, 4, 'second', 1, 0, 1, 16, 37, 1493192420, 1, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -350,112 +369,113 @@ TRUNCATE TABLE `enrollments`;
 --
 
 INSERT INTO `enrollments` (`enrollment_id`, `student_id`, `course_id`, `curriculum_id`, `enrollment_school_year`, `enrollment_semester`, `enrollment_year_level`, `enrollment_status`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES
-(1, 1, 3, 5, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(2, 2, 3, 5, '2015-2016', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(3, 3, 2, 3, '2013-2014', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(4, 4, 7, 7, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493106409, 1),
-(5, 5, 7, 7, '2013-2014', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(6, 6, 6, 1, '2015-2016', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(7, 7, 9, 9, '2014-2015', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(8, 8, 7, 7, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(9, 9, 4, 4, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(10, 10, 1, 2, '2014-2015', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(11, 11, 2, 3, '2014-2015', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(12, 12, 7, 7, '2014-2015', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(13, 13, 6, 1, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(14, 14, 7, 7, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(15, 15, 3, 3, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493106409, 1),
-(16, 16, 7, 7, '2013-2014', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(17, 17, 9, 9, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(18, 18, 2, 3, '2015-2016', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(19, 19, 4, 4, '2014-2015', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(20, 20, 7, 7, '2015-2016', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493106409, 1),
-(21, 21, 9, 9, '2013-2014', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493106409, 1),
-(22, 22, 4, 4, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(23, 23, 4, 4, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(24, 24, 1, 2, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(25, 25, 4, 4, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(26, 26, 7, 7, '2014-2015', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(27, 27, 6, 1, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493106409, 1),
-(28, 28, 6, 1, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(29, 29, 1, 2, '2013-2014', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(30, 30, 2, 3, '2013-2014', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(31, 31, 2, 2, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493106409, 1),
-(32, 32, 1, 2, '2013-2014', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(33, 33, 6, 1, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493106409, 1),
-(34, 34, 1, 2, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(35, 35, 4, 4, '2013-2014', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(36, 36, 3, 5, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(37, 37, 2, 3, '2013-2014', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(38, 38, 7, 7, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(39, 39, 6, 1, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(40, 40, 1, 2, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493106409, 1),
-(41, 41, 7, 7, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(42, 42, 1, 2, '2013-2014', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(43, 43, 9, 9, '2014-2015', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(44, 44, 4, 4, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(45, 45, 6, 1, '2014-2015', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(46, 46, 1, 1, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493106409, 1),
-(47, 47, 4, 4, '2013-2014', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(48, 48, 6, 1, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(49, 49, 4, 4, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(50, 50, 1, 2, '2013-2014', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(51, 51, 6, 1, '2013-2014', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(52, 52, 9, 9, '2014-2015', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(53, 53, 3, 5, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(54, 54, 8, 8, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(55, 55, 2, 3, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(56, 56, 2, 3, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(57, 57, 4, 4, '2014-2015', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(58, 58, 8, 8, '2014-2015', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493106409, 1),
-(59, 59, 4, 4, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(60, 60, 8, 8, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(61, 61, 2, 3, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(62, 62, 8, 8, '2015-2016', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(63, 63, 7, 7, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(64, 64, 7, 7, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(65, 65, 1, 2, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
+(1, 1, 3, 5, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(2, 2, 3, 5, '2015-2016', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(3, 3, 2, 3, '2013-2014', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(4, 4, 7, 7, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
+(5, 5, 7, 7, '2013-2014', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(6, 6, 6, 1, '2015-2016', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(7, 7, 9, 9, '2014-2015', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(8, 8, 7, 7, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(9, 9, 4, 4, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(10, 10, 1, 2, '2014-2015', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(11, 11, 2, 3, '2014-2015', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(12, 12, 7, 7, '2014-2015', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(13, 13, 6, 1, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(14, 14, 7, 7, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(15, 15, 3, 3, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
+(16, 16, 7, 7, '2013-2014', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(17, 17, 9, 9, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(18, 18, 2, 3, '2015-2016', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(19, 19, 4, 4, '2014-2015', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(20, 20, 7, 7, '2015-2016', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
+(21, 21, 9, 9, '2013-2014', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
+(22, 22, 4, 4, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(23, 23, 4, 4, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(24, 24, 1, 2, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(25, 25, 4, 4, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(26, 26, 7, 7, '2014-2015', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(27, 27, 6, 1, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
+(28, 28, 6, 1, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(29, 29, 1, 2, '2013-2014', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(30, 30, 2, 3, '2013-2014', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(31, 31, 2, 2, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
+(32, 32, 1, 2, '2013-2014', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(33, 33, 6, 1, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
+(34, 34, 1, 2, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(35, 35, 4, 4, '2013-2014', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(36, 36, 3, 5, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(37, 37, 2, 3, '2013-2014', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(38, 38, 7, 7, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(39, 39, 6, 1, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(40, 40, 1, 2, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
+(41, 41, 7, 7, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(42, 42, 1, 2, '2013-2014', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(43, 43, 9, 9, '2014-2015', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(44, 44, 4, 4, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(45, 45, 6, 1, '2014-2015', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(46, 46, 1, 1, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
+(47, 47, 4, 4, '2013-2014', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(48, 48, 6, 1, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(49, 49, 4, 4, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(50, 50, 1, 2, '2013-2014', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(51, 51, 6, 1, '2013-2014', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(52, 52, 9, 9, '2014-2015', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(53, 53, 3, 5, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(54, 54, 8, 8, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(55, 55, 2, 3, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(56, 56, 2, 3, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(57, 57, 4, 4, '2014-2015', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(58, 58, 8, 8, '2014-2015', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
+(59, 59, 4, 4, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(60, 60, 8, 8, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(61, 61, 2, 3, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(62, 62, 8, 8, '2015-2016', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(63, 63, 7, 7, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(64, 64, 7, 7, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(65, 65, 1, 2, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
 (66, 66, 6, 1, '2016-2017', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1492920918, 1),
-(67, 67, 9, 9, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(68, 68, 3, 5, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(69, 69, 6, 1, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493106409, 1),
+(67, 67, 9, 9, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(68, 68, 3, 5, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(69, 69, 6, 1, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
 (70, 70, 6, 1, '2016-2017', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1492581349, 1),
-(71, 71, 4, 4, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(72, 72, 2, 3, '2015-2016', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(73, 73, 1, 2, '2014-2015', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(74, 74, 2, 2, '2013-2014', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493106409, 1),
-(75, 75, 8, 8, '2014-2015', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(76, 76, 9, 9, '2015-2016', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(77, 77, 6, 1, '2015-2016', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(78, 78, 3, 5, '2014-2015', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(79, 79, 6, 1, '2015-2016', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(80, 80, 3, 5, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(81, 81, 6, 1, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(82, 82, 6, 1, '2015-2016', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(83, 83, 9, 9, '2015-2016', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(84, 84, 9, 9, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493106409, 1),
-(85, 85, 2, 3, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(86, 86, 7, 7, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493106409, 1),
-(87, 87, 4, 4, '2013-2014', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(88, 88, 7, 7, '2015-2016', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(89, 89, 4, 4, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(90, 90, 9, 9, '2014-2015', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(91, 91, 8, 8, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(92, 92, 6, 1, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(93, 93, 9, 9, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493106409, 1),
-(94, 94, 2, 3, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(95, 95, 7, 7, '2013-2014', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(96, 96, 1, 2, '2015-2016', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(97, 97, 3, 5, '2014-2015', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(98, 98, 1, 2, '2014-2015', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(99, 99, 3, 5, '2014-2015', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(100, 100, 4, 4, '2014-2015', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1493106409, NULL),
-(102, 101, 6, 1, '2016-2017', 'summer', 1, 1, 1491890796, 1, NULL, NULL, 1492784580, 1),
+(71, 71, 4, 4, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(72, 72, 2, 3, '2015-2016', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(73, 73, 1, 2, '2014-2015', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(74, 74, 2, 2, '2013-2014', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
+(75, 75, 8, 8, '2014-2015', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(76, 76, 9, 9, '2015-2016', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(77, 77, 6, 1, '2015-2016', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(78, 78, 3, 5, '2014-2015', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(79, 79, 6, 1, '2015-2016', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(80, 80, 3, 5, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(81, 81, 6, 1, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(82, 82, 6, 1, '2015-2016', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(83, 83, 9, 9, '2015-2016', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(84, 84, 9, 9, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
+(85, 85, 2, 3, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(86, 86, 7, 7, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
+(87, 87, 4, 4, '2013-2014', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(88, 88, 7, 7, '2015-2016', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(89, 89, 4, 4, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(90, 90, 9, 9, '2014-2015', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(91, 91, 8, 8, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(92, 92, 6, 1, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(93, 93, 9, 9, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
+(94, 94, 2, 3, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(95, 95, 7, 7, '2013-2014', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(96, 96, 1, 2, '2015-2016', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(97, 97, 3, 5, '2014-2015', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(98, 98, 1, 2, '2014-2015', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(99, 99, 3, 5, '2014-2015', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(100, 100, 4, 4, '2014-2015', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(102, 101, 6, 1, '2016-2017', 'summer', 1, 1, 1491890796, 1, NULL, NULL, 1493175446, 1),
 (105, 102, 6, 1, '2016-2017', 'summer', 1, 1, 1492588748, 1, NULL, NULL, 1492588952, 1),
 (107, 103, 6, 12, '2016-2017', 'summer', 1, 0, 1492801999, 1, NULL, NULL, 1493092758, 1),
 (109, 104, 6, 1, '2016-2017', 'summer', 1, 1, 1492802115, 1, NULL, NULL, 1492802128, 1),
 (110, 105, 6, 1, '2016-2017', 'summer', 1, 1, 1492836242, 1, NULL, NULL, 1493092442, 1),
-(112, 106, 6, 1, '2016-2017', 'summer', 1, 1, 1492869629, 1, NULL, NULL, 1493092769, 1);
+(112, 106, 6, 1, '2016-2017', 'summer', 1, 1, 1492869629, 1, NULL, NULL, 1493185357, 1),
+(117, 111, 10, 16, NULL, NULL, 1, 0, 1493192446, 1, NULL, NULL, 1493193535, 1);
 
 -- --------------------------------------------------------
 
@@ -480,7 +500,7 @@ TRUNCATE TABLE `enrollment_status`;
 --
 
 INSERT INTO `enrollment_status` (`status`, `created_at`, `created_user_id`) VALUES
-(1, 1492786602, 1);
+(1, 1493178902, 1);
 
 -- --------------------------------------------------------
 
@@ -531,13 +551,6 @@ CREATE TABLE `login_attempts` (
 --
 
 TRUNCATE TABLE `login_attempts`;
---
--- Dumping data for table `login_attempts`
---
-
-INSERT INTO `login_attempts` (`id`, `ip_address`, `login`, `time`) VALUES
-(2, 0x3a3a31, 'admin@admin.com', 1493084760);
-
 -- --------------------------------------------------------
 
 --
@@ -583,7 +596,7 @@ TRUNCATE TABLE `migrations`;
 --
 
 INSERT INTO `migrations` (`version`) VALUES
-(20170420223732);
+(20170426195912);
 
 -- --------------------------------------------------------
 
@@ -670,7 +683,8 @@ INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `create
 (71, 7, 5, 1491884294, 1),
 (72, 13, 1, 1491884308, 1),
 (73, 13, 4, 1491884308, 1),
-(74, 35, 1, 1492574544, 1);
+(74, 35, 1, 1492574544, 1),
+(75, 36, 1, 1493178867, 1);
 
 -- --------------------------------------------------------
 
@@ -755,7 +769,7 @@ TRUNCATE TABLE `rooms`;
 INSERT INTO `rooms` (`room_id`, `room_number`, `room_capacity`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES
 (1, '105', 5, 1490344975, 1, NULL, NULL, 1492578562, 1),
 (2, '123', 2, 1490858612, 1, NULL, NULL, 1492581330, 1),
-(3, '321', 2, 1490858631, 1, NULL, NULL, 1492582984, 1),
+(3, '321', 4, 1490858631, 1, NULL, NULL, 1493185381, 1),
 (4, '500', 5, 1491707655, 1, NULL, NULL, 1492578548, 1),
 (5, '503', 2, 1491731103, 1, NULL, NULL, 1492578490, 1),
 (6, 'nb 101', 3, 1492590096, 1, NULL, NULL, NULL, NULL),
@@ -910,12 +924,13 @@ INSERT INTO `students` (`student_id`, `student_firstname`, `student_image`, `stu
 (98, 'Pablo', NULL, 'Schroeder', 'Ankunding', 'male', '04-22-1981', '156 Medhurst Stravenue\r\nBergnaumchester, GA 06914-', 'single', 'Filipino', 'Domingo Thompson', '5254 Genesis Points\r\nDickifort, VA 28805-0030', 'West Moniqueport', 'rgion1', '73284 Clare Estates', '+1399696283753', '(877) 874-5510', 'maida.farrell@gmail.com', 'tluettgen@example.com', '20-98', 1491112002, 1, NULL, NULL, NULL, NULL),
 (99, 'Beau', NULL, 'Berge', 'Dach', 'female', '06-30-2011', '21498 Edwardo Falls\r\nStammland, VT 93026-5842', '', 'Filipino', 'Prof. William Powlowski MD', '878 Jon Lights\r\nNew Brenna, LA 27206-1236', 'Briaville', 'rgion1', '7105 Zoie Rapid Apt. 734', '+7884392282999', '877.743.0554', 'hartmann.garnett@kassulke.com', 'genevieve.rolfson@example.net', '40-99', 1491112002, 1, NULL, NULL, NULL, NULL),
 (100, 'Maynard', NULL, 'Schowalter', 'Huel', 'male', '09-06-1996', '19398 Jammie Park Apt. 011\r\nRudolphville, MO 97978', 'single', 'Filipino', 'Simone Blick', '1163 Landen Mill\r\nMillsborough, AR 22180', 'Port Suzanne', 'region3', '49942 Frami Union Apt. 948', '+3234532164336', '877.947.1721', 'htoy@hegmann.info', 'moses02@example.net', '50-100', 1491112002, 1, NULL, NULL, NULL, NULL),
-(101, 'kjh', 'b24561cf419452f9487fdb842e991115.jpg', 'kjhksdfsdf', 'jhksdfsdf', 'male', '02-27-2010', 'sdfsdfsdfsdfsd', 'single', 'sdfsdfsdfdsf', 'dsfsdfsdf', 'sdfsdfsdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '70-102', 1491890796, 1, NULL, NULL, 1492581948, 1),
+(101, 'kjh', '2464c639ae214349de87921f23f584e7.jpg', 'kjhksdfsdf', 'jhksdfsdf', 'male', '02-27-2010', 'sdfsdfsdfsdfsd', 'single', 'sdfsdfsdfdsf', 'dsfsdfsdf', 'sdfsdfsdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '70-102', 1491890796, 1, NULL, NULL, 1493175446, 1),
 (102, 'sdfsdfsdfsdf', NULL, 'sdfsdf', 'sdfsdf', 'male', '02-03-2000', 'sdfsdfsdfsd', 'single', 'sdfsdfsdfsdf', 'dydfshdfhd', 'dsfsdfsdfsdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '70-103', 1492588748, 1, NULL, NULL, 1492588765, 1),
 (103, 'asas', NULL, 'asdasd', 'asdasd', 'male', '01-04-1990', 'asdasdasdasdsad', 'single', 'asdasdsad', 'sadasdasdasd', 'asdasdasdasdasd', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1492801999, 1, NULL, NULL, 1493092758, 1),
 (104, 'aaaaaaaaa', NULL, 'aaaaaaaaaaaa', 'asdasdasdasd', 'female', '02-01-1980', 'asdasdasdasd', 'single', 'asdasdasd', 'asdasdasd', 'asdasdasd', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-0002', 1492802115, 1, NULL, NULL, 1492802128, 1),
 (105, 'test amt', NULL, 'kjhkjdgdfg', 'hjhkjhkjhk', 'male', '03-01-1990', 'dfgdfgdfgdfg', 'single', 'dffffffffffff', 'dffffffffffff', 'dffffffffffffffffff', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-0003', 1492836242, 1, NULL, NULL, 1493092442, 1),
-(106, 'myname', NULL, 'mymiddlename', 'maylastname', 'male', '01-03-1980', 'birtha place grabe na itoh', 'single', 'filipinooooo', 'parent brahhhhh', 'permanet addres brtahhhhh', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-0004', 1492869629, 1, NULL, NULL, 1493092769, 1);
+(106, 'mynamelll', NULL, 'mymiddlenamezzz', 'maylastnamezzz', 'male', '01-03-1980', 'birtha place grabe na itoh', 'single', 'filipinooooo', 'parent brahhhhh', 'permanet addres brtahhhhh', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-0004', 1492869629, 1, NULL, NULL, 1493185357, 1),
+(111, 'testfirst', NULL, 'testmiddle', 'testlst', 'male', '04-12-1990', 'ergdsgdsfgdfgd', 'single', 'fgdfgdfgdfgdfg', 'dfgdfgdfgdfg', 'dffffffffff dfg dfgdfgdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1493192446, 1, NULL, NULL, 1493193535, 1);
 
 -- --------------------------------------------------------
 
@@ -959,7 +974,7 @@ CREATE TABLE `subjects` (
   `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
   `updated_user_id` int(11) UNSIGNED DEFAULT NULL,
-  `course_id` int(11) UNSIGNED DEFAULT NULL
+  `course_id` int(11) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -972,43 +987,66 @@ TRUNCATE TABLE `subjects`;
 --
 
 INSERT INTO `subjects` (`subject_id`, `subject_code`, `subject_description`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`, `course_id`) VALUES
-(1, 'Engl 111', 'Communication Arts', 1490273057, 1, NULL, NULL, NULL, NULL, NULL),
-(2, 'IT 111', 'It Fundamentals', 1490273080, 1, NULL, NULL, NULL, NULL, NULL),
-(3, 'AMT 111', 'Fundamentals of Aero Math', 1490273531, 1, NULL, NULL, NULL, NULL, NULL),
-(4, 'AMT 112', 'Theory of Flight', 1490273558, 1, NULL, NULL, NULL, NULL, NULL),
-(5, 'AMT 113', 'Mechanical Drawing & Blueprints', 1490273607, 1, NULL, NULL, NULL, NULL, NULL),
-(6, 'AMT 114', 'A/C Power plant I (Reciprocating Engine)', 1490277785, 1, NULL, NULL, NULL, NULL, NULL),
-(7, 'AMT 115', 'A/C Materials Construction & Repair', 1490277981, 1, NULL, NULL, NULL, NULL, NULL),
-(8, 'P.E. 111', 'Physical Ecducation I', 1490279027, 1, NULL, NULL, NULL, NULL, NULL),
-(9, 'NSTP 111', 'National Service Training Program', 1490279067, 1, NULL, NULL, NULL, NULL, NULL),
-(10, 'Engl 121', 'English Grammar & Composition II', 1490279159, 1, NULL, NULL, NULL, NULL, NULL),
-(11, 'IT 121', 'Introduction to Internet Web-Base Programming', 1490279201, 1, NULL, NULL, NULL, NULL, NULL),
-(12, 'AMT 121', 'Pnedraulics', 1490279251, 1, NULL, NULL, NULL, NULL, NULL),
-(13, 'AMT 122', 'Aircraft Propellers', 1490279293, 1, NULL, NULL, NULL, NULL, NULL),
-(14, 'AMT 123', 'A/C Fuels & Fuels System', 1490279487, 1, NULL, NULL, NULL, NULL, NULL),
-(15, 'AMT 124', 'A/C Electricity & Ignition System', 1490279530, 1, NULL, NULL, NULL, NULL, NULL),
-(16, 'P.E. 121', 'Physical Ecducation II', 1490279565, 1, NULL, NULL, NULL, NULL, NULL),
-(18, 'NSTP 121', 'National Service Training Program II', 1490279727, 1, NULL, NULL, NULL, NULL, NULL),
-(19, 'AMT 211', 'Civil Arts Laws & Labor Laws', 1490279784, 1, NULL, NULL, NULL, NULL, NULL),
-(20, 'AMT 212', 'Economics of Air Transfortation', 1490279816, 1, NULL, NULL, NULL, NULL, NULL),
-(21, 'AMT 213', 'A/C Powers Plants II (Turbo, Prop & Gas Turbine Engine)', 1490279900, 1, NULL, NULL, NULL, NULL, NULL),
-(22, 'AMT 214', 'Helicopter, Principle & Operations', 1490279970, 1, NULL, NULL, NULL, NULL, NULL),
-(23, 'AMT 215', 'Aircraft Instruments', 1490280172, 1, NULL, NULL, NULL, NULL, NULL),
-(24, 'Pol. Sci. 211', 'Phil. Gov"t & New Constitution', 1490280244, 1, NULL, NULL, NULL, NULL, NULL),
-(25, 'P.E. 211', 'Physical Ecducation III', 1490280310, 1, NULL, NULL, NULL, NULL, NULL),
-(26, 'W.E. 211', 'Social Values', 1490280339, 1, NULL, NULL, NULL, NULL, NULL),
-(27, 'AMT 221', 'Basic Supervision & Shop Management', 1490280458, 1, NULL, NULL, NULL, NULL, NULL),
-(28, 'AMT 222', 'Airframe Maintenance & Servicing', 1490280492, 1, NULL, NULL, NULL, NULL, NULL),
-(29, 'AMT 223', 'A/C Auxiliary System, Maintenance & Servicing', 1490280566, 1, NULL, NULL, NULL, NULL, NULL),
-(30, 'AMT 224', 'Power plant Maintenance Servicing', 1490280621, 1, NULL, NULL, NULL, NULL, NULL),
-(31, 'AMT 225', 'On The Job Training Review', 1490280659, 1, NULL, NULL, NULL, NULL, NULL),
-(32, 'W.E. 221', 'Industrials Values', 1490280870, 1, NULL, NULL, NULL, NULL, NULL),
-(33, 'Cur ls 221', 'Seminar on Drug Abuse, Water & Air Polution & Family Planing', 1490281083, 1, NULL, NULL, NULL, NULL, NULL),
-(34, 'P.E. 221', 'Physical Ecducation IV', 1490281131, 1, NULL, NULL, NULL, NULL, NULL),
-(35, 'Practicum', 'On The Job Training 3 units', 1490281157, 1, NULL, NULL, NULL, NULL, NULL),
-(36, 'HRM 1', 'Housekeeping Procedures', 1490360278, 1, NULL, NULL, NULL, NULL, NULL),
-(37, 'code', 'descriptive', 1491730750, 1, NULL, NULL, NULL, NULL, NULL),
-(40, 'asdasddds', 'asdasdasdasd', 1492937553, 1, NULL, NULL, NULL, NULL, 1);
+(1, 'Engl 111', 'Communication Arts', 1490273057, 1, NULL, NULL, 1493189201, 1, 0),
+(2, 'IT 111', 'It Fundamentals', 1490273080, 1, NULL, NULL, 1493184744, 1, 0),
+(3, 'AMT 111', 'Fundamentals of Aero Math', 1490273531, 1, NULL, NULL, 1493186790, 1, 6),
+(4, 'AMT 112', 'Theory of Flight', 1490273558, 1, NULL, NULL, 1493186786, 1, 6),
+(5, 'AMT 113', 'Mechanical Drawing & Blueprints', 1490273607, 1, NULL, NULL, 1493186729, 1, 6),
+(6, 'AMT 114', 'A/C Power plant I (Reciprocating Engine)', 1490277785, 1, NULL, NULL, 1493186724, 1, 6),
+(7, 'AMT 115', 'A/C Materials Construction & Repair', 1490277981, 1, NULL, NULL, 1493186720, 1, 6),
+(8, 'P.E. 111', 'Physical Ecducation I', 1490279027, 1, NULL, NULL, 1493184744, 1, 0),
+(9, 'NSTP 111', 'National Service Training Program', 1490279067, 1, NULL, NULL, 1493184744, 1, 0),
+(10, 'Engl 121', 'English Grammar & Composition II', 1490279159, 1, NULL, NULL, 1493184744, 1, 0),
+(11, 'IT 121', 'Introduction to Internet Web-Base Programming', 1490279201, 1, NULL, NULL, 1493184744, 1, 0),
+(12, 'AMT 121', 'Pnedraulics', 1490279251, 1, NULL, NULL, 1493186712, 1, 6),
+(13, 'AMT 122', 'Aircraft Propellers', 1490279293, 1, NULL, NULL, 1493186708, 1, 6),
+(14, 'AMT 123', 'A/C Fuels & Fuels System', 1490279487, 1, NULL, NULL, 1493186703, 1, 6),
+(15, 'AMT 124', 'A/C Electricity & Ignition System', 1490279530, 1, NULL, NULL, 1493186698, 1, 6),
+(16, 'P.E. 121', 'Physical Ecducation II', 1490279565, 1, NULL, NULL, 1493184744, 1, 0),
+(18, 'NSTP 121', 'National Service Training Program II', 1490279727, 1, NULL, NULL, 1493184744, 1, 0),
+(19, 'AMT 211', 'Civil Arts Laws & Labor Laws', 1490279784, 1, NULL, NULL, 1493186692, 1, 6),
+(20, 'AMT 212', 'Economics of Air Transfortation', 1490279816, 1, NULL, NULL, 1493186779, 1, 6),
+(21, 'AMT 213', 'A/C Powers Plants II (Turbo, Prop & Gas Turbine Engine)', 1490279900, 1, NULL, NULL, 1493186773, 1, 6),
+(22, 'AMT 214', 'Helicopter, Principle & Operations', 1490279970, 1, NULL, NULL, 1493186762, 1, 6),
+(23, 'AMT 215', 'Aircraft Instruments', 1490280172, 1, NULL, NULL, 1493186758, 1, 6),
+(24, 'Pol. Sci. 211', 'Phil. Gov"t & New Constitution', 1490280244, 1, NULL, NULL, 1493184744, 1, 0),
+(25, 'P.E. 211', 'Physical Ecducation III', 1490280310, 1, NULL, NULL, 1493184744, 1, 0),
+(26, 'W.E. 211', 'Social Values', 1490280339, 1, NULL, NULL, 1493184744, 1, 0),
+(27, 'AMT 221', 'Basic Supervision & Shop Management', 1490280458, 1, NULL, NULL, 1493186753, 1, 6),
+(28, 'AMT 222', 'Airframe Maintenance & Servicing', 1490280492, 1, NULL, NULL, 1493186749, 1, 6),
+(29, 'AMT 223', 'A/C Auxiliary System, Maintenance & Servicing', 1490280566, 1, NULL, NULL, 1493186743, 1, 6),
+(30, 'AMT 224', 'Power plant Maintenance Servicing', 1490280621, 1, NULL, NULL, 1493186740, 1, 6),
+(31, 'AMT 225', 'On The Job Training Review', 1490280659, 1, NULL, NULL, 1493186735, 1, 6),
+(32, 'W.E. 221', 'Industrials Values', 1490280870, 1, NULL, NULL, 1493184744, 1, 0),
+(33, 'Cur ls 221', 'Seminar on Drug Abuse, Water & Air Polution & Family Planing', 1490281083, 1, NULL, NULL, 1493184744, 1, 0),
+(34, 'P.E. 221', 'Physical Ecducation IV', 1490281131, 1, NULL, NULL, 1493184744, 1, 0),
+(35, 'Practicum', 'On The Job Training 3 units', 1490281157, 1, NULL, NULL, 1493184744, 1, 0),
+(36, 'HRM 1', 'Housekeeping Procedures', 1490360278, 1, NULL, NULL, 1493184744, 1, 0),
+(37, 'code', 'descriptive', 1491730750, 1, NULL, NULL, 1493184744, 1, 0),
+(40, 'asdasddds', 'asdasdasdasd', 1492937553, 1, NULL, NULL, 1493184744, 1, 1),
+(41, 'test 1', 'test1 desc', 1493180183, 1, NULL, NULL, 1493185889, 1, 10),
+(42, 'test 2', 'qweqwe', 1493181466, 1, NULL, NULL, 1493185873, 1, 10),
+(43, 'test gened', 'gened', 1493182894, 1, NULL, NULL, 1493184744, 1, 0),
+(44, 'test 3', 'test2', 1493182910, 1, NULL, NULL, 1493185741, 1, 10),
+(45, 'test 4', 'test4', 1493183437, 1, NULL, NULL, 1493184744, 1, 10),
+(46, 'gwwg', 'asdasdsad', 1493184501, 1, NULL, NULL, 1493184744, 1, 0),
+(47, 'sdfsdfqqsdfsdfsdfsdf', 'sdfsdf', 1493184512, 1, NULL, NULL, 1493185665, 1, 0),
+(49, 'ghfgh', 'fgfg', 1493185048, 1, NULL, NULL, NULL, NULL, 0),
+(50, 'terter', 'tertert', 1493185078, 1, NULL, NULL, NULL, NULL, 0),
+(51, 'ssdfsdf', 'sss', 1493185089, 1, NULL, NULL, NULL, NULL, 0),
+(52, 'ssssssssssssssss', 'descccssssss', 1493185097, 1, NULL, NULL, NULL, NULL, 1),
+(53, 'fsdfsdf', 'sdfssd', 1493185124, 1, NULL, NULL, NULL, NULL, 0),
+(54, 'damn', 'damn', 1493185155, 1, NULL, NULL, NULL, NULL, 0),
+(55, 'test 6', 'test6', 1493185707, 1, NULL, NULL, 1493185965, 1, 10),
+(56, 'must null', 'null', 1493188458, 1, NULL, NULL, NULL, NULL, 0),
+(57, 'null2', 'null2', 1493188643, 1, NULL, NULL, NULL, NULL, 0),
+(58, 'null3', 'null3', 1493188657, 1, NULL, NULL, NULL, NULL, 0),
+(59, 'null4', 'null4', 1493188712, 1, NULL, NULL, NULL, NULL, 0),
+(60, 'nulllast', 'lastttt\\', 1493188788, 1, NULL, NULL, NULL, NULL, 0),
+(61, 'dddd', 'dddd', 1493189217, 1, NULL, NULL, 1493190039, 1, 0),
+(62, 'asas', 'asas', 1493189238, 1, NULL, NULL, NULL, NULL, 7),
+(63, 'zerrrr', 'rrrro', 1493189911, 1, NULL, NULL, 1493189968, 1, 0),
+(64, 'test 5', 'test55', 1493191520, 1, NULL, NULL, NULL, NULL, 10);
 
 -- --------------------------------------------------------
 
@@ -1173,7 +1211,7 @@ TRUNCATE TABLE `users`;
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `gen_code`, `updated_at`) VALUES
-(1, 0x7f000001, 'administrator', '$2y$08$m8P3WHDASe.hDP4Jn6J9iut/YsshOKD3xuzuVpjiTKeFf146Mfgoi', '9462e8eee0', 'admin@admin.com', '', NULL, NULL, 'ohrg6Cb6MN1o8dU0yAby8O', 1268889823, 1493105360, 1, 'Admin', 'istrator', 'ADMIN', '0', 'sPmrqu.WDqwMf.AvnL6EnO', 1493105360),
+(1, 0x7f000001, 'administrator', '$2y$08$m8P3WHDASe.hDP4Jn6J9iut/YsshOKD3xuzuVpjiTKeFf146Mfgoi', '9462e8eee0', 'admin@admin.com', '', NULL, NULL, '/Z10BrAeQXy8Zu772w0KFu', 1268889823, 1493172891, 1, 'Admin', 'istrator', 'ADMIN', '0', 'hVbzP7t1bUucznclJYzCpO', 1493172892),
 (2, 0x3a3a31, 'username1', '$2y$08$VbnBcmlg9czB1SIgr7Ay0ueYoWgQ5LJpK1R6WAHq6AahPzwU2tJDe', 'MAVcDoJ5VAh5weVomuibx.', 'emailphfbc1@gmail.com', NULL, NULL, NULL, NULL, 1491881053, NULL, 1, 'Firstlc', 'Lastzted', 'Companys', '+63970-120-6547', NULL, 1492077198),
 (3, 0x3a3a31, 'username2', '$2y$08$EIHZAlVjTizI3EsJd0EEnugOzV4QiV3ABOtroFDbBuIsahsxhzPN6', 'ejQVNM5OAO9ZWFITrJ1kAO', 'emailshu2@gmail.com', NULL, NULL, NULL, NULL, 1491881053, NULL, 1, 'Firstrdlw', 'Lastosjxs', 'Companyqe', '+63926-512-7038', NULL, NULL),
 (4, 0x3a3a31, 'username3', '$2y$08$uFrsQKdseWglVdUh/ZOCVucxgAjZyw3xiZQBGmB2c6.z//gP3RMKi', 'AQoK7aQ8D7UGLbpDK6LFFe', 'emailjad3@gmail.com', NULL, NULL, NULL, NULL, 1491881053, NULL, 1, 'Firstbii', 'Lasth', 'Companyg', '+63992-627-2604', NULL, NULL),
@@ -1362,7 +1400,8 @@ ALTER TABLE `students_subjects`
 ALTER TABLE `subjects`
   ADD PRIMARY KEY (`subject_id`),
   ADD UNIQUE KEY `subject_code` (`subject_code`),
-  ADD UNIQUE KEY `subject_description` (`subject_description`);
+  ADD UNIQUE KEY `subject_description` (`subject_description`),
+  ADD UNIQUE KEY `subject_description_2` (`subject_description`);
 
 --
 -- Indexes for table `subject_offers`
@@ -1404,22 +1443,22 @@ ALTER TABLE `users_last_logins`
 -- AUTO_INCREMENT for table `controllers`
 --
 ALTER TABLE `controllers`
-  MODIFY `controller_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `controller_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 --
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `course_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `course_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `curriculums`
 --
 ALTER TABLE `curriculums`
-  MODIFY `curriculum_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `curriculum_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `curriculum_subjects`
 --
 ALTER TABLE `curriculum_subjects`
-  MODIFY `curriculum_subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `curriculum_subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 --
 -- AUTO_INCREMENT for table `dean_course`
 --
@@ -1434,7 +1473,7 @@ ALTER TABLE `educations`
 -- AUTO_INCREMENT for table `enrollments`
 --
 ALTER TABLE `enrollments`
-  MODIFY `enrollment_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
+  MODIFY `enrollment_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
 --
 -- AUTO_INCREMENT for table `groups`
 --
@@ -1444,7 +1483,7 @@ ALTER TABLE `groups`
 -- AUTO_INCREMENT for table `login_attempts`
 --
 ALTER TABLE `login_attempts`
-  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `logs`
 --
@@ -1454,7 +1493,7 @@ ALTER TABLE `logs`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `permission_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `permission_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 --
 -- AUTO_INCREMENT for table `requisites`
 --
@@ -1469,17 +1508,17 @@ ALTER TABLE `rooms`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `student_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
+  MODIFY `student_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
 --
 -- AUTO_INCREMENT for table `students_subjects`
 --
 ALTER TABLE `students_subjects`
-  MODIFY `student_subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `student_subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 --
 -- AUTO_INCREMENT for table `subject_offers`
 --
@@ -1504,7 +1543,7 @@ ALTER TABLE `users_groups`
 -- AUTO_INCREMENT for table `users_last_logins`
 --
 ALTER TABLE `users_last_logins`
-  MODIFY `users_last_login_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=183;
+  MODIFY `users_last_login_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=185;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
