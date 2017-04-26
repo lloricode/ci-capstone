@@ -34,6 +34,15 @@ class Create_subject extends CI_Capstone_Controller
                 $this->_form_view();
         }
 
+        private function _course_drpdwn()
+        {
+                $this->load->model('Course_model');
+                $return = array(0 => 'GEN ED');
+                $tmp    = $this->Course_model->as_dropdown('course_code')->get_all();
+
+                return array_merge($return, $tmp);
+        }
+
         private function _form_view()
         {
                 $inputs['subject_code'] = array(
@@ -53,6 +62,14 @@ class Create_subject extends CI_Capstone_Controller
                     'type'  => 'text',
                     'lang'  => 'create_subject_description_label'
                 );
+
+                $inputs['course_id'] = array(
+                    'name'  => 'course',
+                    'value' => $this->_course_drpdwn(),
+                    'type'  => 'dropdown',
+                    'lang'  => 'index_course_heading'
+                );
+
 
                 $data['subject_form'] = $this->form_boostrap('create-subject', $inputs, 'create_subject_heading', 'create_subject_submit_button_label', 'info-sign', NULL, TRUE);
                 $data['bootstrap']    = $this->_bootstrap();

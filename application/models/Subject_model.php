@@ -22,6 +22,19 @@ class Subject_model extends MY_Model
 
         protected function _add_created_by($data)
         {
+                //check if really in add subject,then check if "course [post]" is zero 
+                //then remove to get NULL,to make gen-ed
+                $controll_name = $this->uri->segment($this->config->item('segment_controller'));
+                if ('create-subject' === (string) str_replace('_', '-', $controll_name))
+                {
+                        if (isset($data['course']))
+                        {
+                                if ($data['course'] == 0)
+                                {
+                                        unset($data['course']);
+                                }
+                        }
+                }
                 $data['created_user_id'] = $this->ion_auth->get_user_id(); //add user_id
                 return $data;
         }
@@ -97,15 +110,12 @@ class Subject_model extends MY_Model
                                 'is_unique' => 'The {field} already exist.'
                             )
                         ),
-//                        'subject_unit'        => array(
-//                            'label'  => lang('create_subject_unit_label'),
-//                            'field'  => 'unit',
-//                            'rules'  => 'trim|required|is_natural_no_zero',
-//                            'errors' => array(
-//                                'is_unique' => 'The {field} already exist.'
-//                            )
-//                        ),
-                    ),
+                        'course_id'           => array(
+                            'label' => lang('index_course_heading'),
+                            'field' => 'course',
+                            'rules' => 'trim|is_natural'// zero mean gen-ed
+                        )
+                    )
                 );
         }
 
