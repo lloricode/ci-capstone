@@ -172,7 +172,7 @@ class Curriculums extends CI_Capstone_Controller
                                         $total_units  = $this->Curriculum_subject_model->total_units_per_term($cur_subj->curriculum_id, $cur_subj->curriculum_subject_semester, $cur_subj->curriculum_subject_year_level);
                                         $table_data[] = array(
                                             array(
-                                                'data'    => heading(number_place($cur_subj->curriculum_subject_year_level) . ' Year - ' .
+                                                'data'    => heading(strtoupper(number_place($cur_subj->curriculum_subject_year_level) . ' Year') . ' - ' .
                                                         semesters($cur_subj->curriculum_subject_semester)
                                                         , 4) . ' Total units: ' . bold($total_units),
                                                 'colspan' => '9'

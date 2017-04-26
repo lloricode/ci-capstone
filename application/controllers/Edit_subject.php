@@ -2,36 +2,37 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Edit_room extends CI_Capstone_Controller
+class Edit_subject extends CI_Capstone_Controller
 {
 
         function __construct()
         {
                 parent::__construct();
                 $this->load->library('form_validation');
-                $this->breadcrumbs->unshift(2, lang('index_utility_label'), '#');
-                $this->breadcrumbs->unshift(3, lang('index_room_heading'), 'rooms');
+                $this->breadcrumbs->unshift(2, lang('index_subject_heading_th'), 'subjects');
         }
 
         public function index()
         {
-                $room_obj = check_id_from_url('room_id', 'Room_model', 'room-id');
-                $this->breadcrumbs->unshift(4, lang('edit_editroom_label') . ' [ ' . $room_obj->room_number . ' ]', 'edit-room?room-id=' . $room_obj->room_id);
-
+                $subject_obj = check_id_from_url('subject_id', 'Subject_model', 'subject-id', 'course');
+                $this->breadcrumbs->unshift(3, lang('edit_subject_label') . ' [ ' . $subject_obj->subject_code . ' ]', 'edit-subject?subject-id=' . $subject_obj->subject_id);
 
 
                 if ($this->input->post('submit'))
                 {
-                        $this->load->model('Room_model');
-                        $id = $this->Room_model->from_form(NULL, NULL, array('room_id' => $room_obj->room_id))->update();
+                        $this->load->model('Subject_model');
+                        $id = $this->Subject_model->from_form(NULL, NULL, array('subject_id' => $subject_obj->subject_id))->update();
+                       
                         if ($id)
                         {
-                                $this->session->set_flashdata('message', bootstrap_success('room_succesfully_update_message'));
-                                redirect(site_url('rooms'), 'refresh');
+                                $this->session->set_flashdata('message', bootstrap_success('create_subject_succesfully_update_message'));
+                                redirect(site_url('subjects'), 'refresh');
+                        }else{
+                                 $this->session->set_flashdata('message', bootstrap_error("failed"));
                         }
                 }
 
-                $this->_form_view($room_obj);
+                $this->_form_view($subject_obj);
         }
 
         public function check_unique()
@@ -40,37 +41,46 @@ class Edit_room extends CI_Capstone_Controller
                 {
                         show_404();
                 }
-                $input_number = (int) $this->input->post('number', TRUE);
-                $db_number    = (int) check_id_from_url('room_id', 'Room_model', 'room-id')->room_number;
+                $code_input = (string) $this->input->post('code', TRUE);
+                $code_db    = (string) check_id_from_url('subject_id', 'Subject_model', 'subject-id')->subject_code;
 
-                if ($input_number === $db_number)
+                if ($code_input === $code_db)
                 {
                         return TRUE;
                 }
-                $row = $this->Room_model->where(array(
-                            'room_number' => $input_number
+                $row = $this->Subject_model->where(array(
+                            'subject_code' => $code_input
                         ))->count_rows();
-                $this->form_validation->set_message('check_unique', 'Alredddady in exist.');
+                $this->form_validation->set_message('check_unique', 'Already in exist.');
                 return (bool) ($row == 0);
         }
 
-        private function _form_view($room_obj)
+        private function _form_view($subject_obj)
         {
-                $inputs['number'] = array(
-                    'name'  => 'number',
-                    'value' => $this->form_validation->set_value('number', $room_obj->room_number),
+                $inputs['code'] = array(
+                    'name'  => 'code',
+                    'value' => $this->form_validation->set_value('code', $subject_obj->subject_code),
                     'type'  => 'text',
-                    'lang'  => 'create_room_number_label'
+                    'lang'  => 'index_subject_code_th'
                 );
 
-                $inputs['capacity'] = array(
-                    'name'  => 'capacity',
-                    'value' => $this->form_validation->set_value('capacity', $room_obj->room_capacity),
+                $inputs['description'] = array(
+                    'name'  => 'description',
+                    'value' => $this->form_validation->set_value('description', $subject_obj->subject_description),
                     'type'  => 'text',
-                    'lang'  => 'create_room_capacity_label'
+                    'lang'  => 'index_subject_description_th'
                 );
 
-                $data['edit_room_form'] = $this->form_boostrap('edit-room?room-id=' . $room_obj->room_id, $inputs, 'edit_editroom_label', 'edit_editroom_label', 'info-sign', NULL, TRUE, FALSE);
+                $this->load->model('Course_model');
+                $inputs['course_id'] = array(
+                    'name'      => 'course',
+                    'value'     => $this->Course_model->drpdown_with_gen_ed(),
+                    'type'      => 'dropdown',
+                    'lang'      => 'index_course_heading',
+                    'default' => $subject_obj->course_id
+                );
+
+                $data['edit_room_form'] = $this->form_boostrap('edit-subject?subject-id=' . $subject_obj->subject_id, $inputs, 'edit_subject_label', 'edit_subject_label', 'info-sign', NULL, TRUE, FALSE);
 
 
 

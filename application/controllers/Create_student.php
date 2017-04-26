@@ -178,7 +178,7 @@ class Create_student extends CI_Capstone_Controller
                         if ( ! $curriculum_id_from_active_course)
                         {
                                 $msg = str_replace('.', ',', $msg);
-                                $msg .= ' $curriculum_id_from_active_course.';
+                                $msg .= ' No Curriculum Active Found of selected Program.';
                         }
                         $this->session->set_flashdata('message', bootstrap_error($msg));
 //                        if ($uploaded['uploaded'])

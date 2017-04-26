@@ -145,4 +145,19 @@ class Course_model extends MY_Model
                 );
         }
 
+        public function drpdown_with_gen_ed()
+        {
+                $return = array(0 => 'GEN ED');
+                $tmp    = $this->as_dropdown('course_code')->get_all();
+                /**
+                 * to preserv keys that refer to ids
+                 */
+                foreach ($tmp as $k => $v)
+                {
+                        $return[$k] = $v;
+                }
+                return $return;
+                //return array_merge($return, $tmp);
+        }
+
 }

@@ -34,38 +34,26 @@ class Create_subject extends CI_Capstone_Controller
                 $this->_form_view();
         }
 
-        private function _course_drpdwn()
-        {
-                $this->load->model('Course_model');
-                $return = array(0 => 'GEN ED');
-                $tmp    = $this->Course_model->as_dropdown('course_code')->get_all();
-
-                return array_merge($return, $tmp);
-        }
-
         private function _form_view()
         {
                 $inputs['subject_code'] = array(
                     'name'  => 'code',
-                    'id'    => 'code',
                     'type'  => 'text',
                     'value' => $this->form_validation->set_value('code'),
-                    'type'  => 'text',
                     'lang'  => 'create_subject_code_label',
                 );
 
                 $inputs['subject_description'] = array(
-                    'name'  => 'desc',
-                    'id'    => 'desc',
+                    'name'  => 'description',
                     'type'  => 'text',
-                    'value' => $this->form_validation->set_value('desc'),
-                    'type'  => 'text',
+                    'value' => $this->form_validation->set_value('description'),
                     'lang'  => 'create_subject_description_label'
                 );
 
+                $this->load->model('Course_model');
                 $inputs['course_id'] = array(
                     'name'  => 'course',
-                    'value' => $this->_course_drpdwn(),
+                    'value' => $this->Course_model->drpdown_with_gen_ed(),
                     'type'  => 'dropdown',
                     'lang'  => 'index_course_heading'
                 );

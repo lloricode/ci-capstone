@@ -209,8 +209,12 @@ class Students extends CI_Capstone_Controller
                 $report_obj = $this->Report_info_model->get();
                 if ($action     = (string) $this->input->get('action'))
                 {
-                        $id                  = check_id_from_url('student_id', 'Student_model', 'student-id')->student_id;
+                        $id = check_id_from_url('student_id', 'Student_model', 'student-id')->student_id;
                         $this->Student_model->set_informations($id);
+                        if ( ! $this->student->is_enrolled())
+                        {
+                                show_error('Stundent Copy is not available when not enrolled.');
+                        }
                         $data['subjecs']     = $this->view(TRUE);
                         $data['report_info'] = $report_obj;
 
@@ -318,7 +322,7 @@ class Students extends CI_Capstone_Controller
                          * for web view design template table bootstrap
                          */
                         $this->config->load('admin/table');
-                        $caption        = heading('Subjects', 4);
+                        $caption        = heading('Subjects Current Enrolled', 4);
                         $tbale_template = array(
                             'table_open'         => $this->config->item('table_open_invoice'), //modified
                             'thead_open'         => '<thead>',

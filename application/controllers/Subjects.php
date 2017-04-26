@@ -56,6 +56,11 @@ class Subjects extends CI_Capstone_Controller
                                     my_htmlspecialchars($subject->subject_description),
                                     $this->_subject_course($subject->course_id),
                                 );
+
+                                if (in_array('edit-subject', permission_controllers()))
+                                {
+                                        $tmp[] = table_row_button_link('edit-subject?subject-id=' . $subject->subject_id, 'Edit');
+                                }
                                 if ($this->ion_auth->is_admin())
                                 {
 
@@ -74,6 +79,10 @@ class Subjects extends CI_Capstone_Controller
                     lang('index_subject_description_th'),
                     lang('index_course_heading'),
                 );
+                if (in_array('edit-subject', permission_controllers()))
+                {
+                        $header[] = 'Edit';
+                }
                 if ($this->ion_auth->is_admin())
                 {
                         $header[] = 'Created By';

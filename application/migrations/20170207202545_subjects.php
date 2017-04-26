@@ -36,14 +36,15 @@ class Migration_Subjects extends CI_Migration
                     'subject_description' => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
-                        'unique'     => TRUE,
+                        // 'unique'     => TRUE,
                         'null'       => FALSE
                     ),
                     'course_id'           => array(
                         'type'       => 'INT',
                         'constraint' => 11,
                         'unsigned'   => TRUE,
-                        'null'       => TRUE//if NULL means gen-ed
+                        'default'    => 0, // means gen-ed
+                        'null'       => FALSE
                     ),
 //                    'subject_unit'        => array(
 //                        'type'       => 'INT',

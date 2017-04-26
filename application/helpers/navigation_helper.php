@@ -132,7 +132,15 @@ if ( ! function_exists('navigations_main'))
                                 'seen'       => TRUE,
                                 'enrollment' => TRUE
                             ),
-                        ),
+                            /**
+                             * hidden
+                             */
+                            'edit-subject'             =>
+                            array(
+                                'label' => lang('edit_subject_label'),
+                                'seen'  => FALSE,
+                            )
+                        )
                     ),
                     //--------END SCHEDULE--------
                     //--------START UTILITIES--------
