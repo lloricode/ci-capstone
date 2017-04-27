@@ -153,10 +153,8 @@ class Create_student_subject extends CI_Capstone_Controller
         private function _student_information()
         {
                 $unit = 'unit';
-                if ($this->_total_unit > 0)
-                {
-                        $unit = plural($unit);
-                }
+                $unit = ($this->_total_unit > 1) ? plural($unit) : $unit;
+
                 $this->session->set_userdata('total_unit', $this->_total_unit);
                 $inputs['totalunit'] = array(
                     'name'     => 'xx',
