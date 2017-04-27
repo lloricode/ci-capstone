@@ -106,6 +106,7 @@ class Create_student_subject extends CI_Capstone_Controller
                         else
                         {
                                 $error_message = 'please select subject.';
+                                $this->session->set_flashdata('message', bootstrap_error($error_message));
                         }
                 }
 
@@ -126,7 +127,7 @@ class Create_student_subject extends CI_Capstone_Controller
                         $unit_session = (int) $this->session->userdata('total_unit');
                         if ($maximum_units === 0)
                         {
-                                $this->session->set_flashdata('message', bootstrap_error('no unit'));
+                                $this->session->set_flashdata('message', bootstrap_error('no unit found or there is no term/year in curriclum in current term. [ ' . current_school_semester() . ' ]'));
                                 return FALSE;
                         }
                         elseif ($unit_session > $maximum_units)
@@ -135,7 +136,7 @@ class Create_student_subject extends CI_Capstone_Controller
                                 return FALSE;
                         }
 
-                        $this->session->set_flashdata('message', bootstrap_error('something wrong brah')); //dont mention :D temporary and means bugs
+                        $this->session->set_flashdata('message', bootstrap_error('something wrong brah on line: ', __LINE__)); //dont mention :D temporary and means bugs
                         return FALSE;
                 }
 
@@ -152,10 +153,8 @@ class Create_student_subject extends CI_Capstone_Controller
         private function _student_information()
         {
                 $unit = 'unit';
-                if ($this->_total_unit > 0)
-                {
-                        $unit = plural($unit);
-                }
+                $unit = ($this->_total_unit > 1) ? plural($unit) : $unit;
+
                 $this->session->set_userdata('total_unit', $this->_total_unit);
                 $inputs['totalunit'] = array(
                     'name'     => 'xx',
@@ -576,9 +575,9 @@ class Create_student_subject extends CI_Capstone_Controller
                                                 ${'session' . $count2} [$d] = $_line->{'subject_offer_line_' . $d};
                                         }
                                 }
-                                for ($i = 1; $i <= $count; $i ++ )
+                                for ($i = 1; $i <= $count; $i ++)
                                 {
-                                        for ($ii = 1; $ii <= $count2; $ii ++ )
+                                        for ($ii = 1; $ii <= $count2; $ii ++)
                                         {
                                                 $tmp = is_not_conflict_subject_offer(${'selected' . $i}, ${'session' . $ii});
                                                 if ( ! $tmp)

@@ -14,79 +14,7 @@ class MY_Controller extends CI_Controller
                 {
                         $this->delete_all_query_cache();
                 }
-
-                /**
-                 * there is a back button, 
-                 * still reach this, so ignore this
-                 */
-//                if ($this->session->has_userdata('user_id'))
-//                {
-//                        $this->ion_auth->set_hook(
-//                                'post_login_remembered_user_successful', 'just_notify_user_remember_event', $this/* $this because the class already extended */, 'just_notify_user_remember', array()
-//                        );
-//                }
-                if ($this->session->has_userdata('user_id'))
-                {
-                        $this->ion_auth->set_hook(
-                                'pre_set_session', 'set_session_data_session_event', $this/* $this because the class already extended */, 'set_session_data_session', array()
-                        );
-                }
         }
-
-        public function set_session_data_session()
-        {
-                // show_error('aaaa');
-                $is_dean          = FALSE;
-                $dean_course_id   = NULL;
-                $dean_course_code = NULL;
-                if ($this->ion_auth->in_group($this->config->item('user_group_dean')))
-                {
-                        $is_dean = TRUE;
-                        $this->load->model('Dean_course_model');
-                        $obj     = $this->Dean_course_model->where(array(
-                                    'user_id' => $this->ion_auth->get_user_id()
-                                ))->get();
-                        if ($obj)
-                        {
-                                $this->load->model('Course_model');
-                                $dean_course_id   = $obj->course_id;
-                                $dean_course_code = $this->Course_model->get($obj->course_id)->course_code;
-                        }
-                }
-                //set the user name/last name in session
-                $user_obj = $this->ion_auth->user()->row();
-                $this->session->set_userdata(array(
-                    'user_first_name'          => $user_obj->first_name,
-                    'user_last_name'           => $user_obj->last_name,
-                    'user_fullname'            => $user_obj->last_name . ', ' . $user_obj->first_name,
-                    'gen_code'                 => $user_obj->gen_code, //this will be use for checking multiple logged machines in one account
-                    'user_groups_descriptions' => $this->_current_group_string(),
-                    'user_groups_names'        => $this->_current_group_string('name'),
-                    'user_is_dean'             => $is_dean,
-                    'user_dean_course_id'      => $dean_course_id,
-                    'user_dean_course_code'    => $dean_course_code,
-                ));
-        }
-
-        private function _current_group_string($type = 'description')
-        {
-                $return = '';
-                foreach (get_instance()->ion_auth->get_users_groups()->result() as $g)
-                {
-                        $return .= $g->$type . '|';
-                }
-                return trim($return, '|');
-        }
-
-//        public function just_notify_user_remember()
-//        {
-//                $this->load->helper('session');
-//                set_session_data_session();
-//                /**
-//                 * just a temporary
-//                 */
-//                $this->session->set_flashdata('message', bootstrap_success('User Exntended Login!!'));
-//        }
 
         /**
          * 

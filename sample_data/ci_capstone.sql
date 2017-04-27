@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 25, 2017 at 05:45 AM
+-- Generation Time: Apr 26, 2017 at 10:01 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 5.6.24
 
@@ -26,16 +26,15 @@ SET time_zone = "+00:00";
 -- Table structure for table `controllers`
 --
 
-CREATE TABLE IF NOT EXISTS `controllers` (
-  `controller_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `controller_name` enum('home','curriculums','create-curriculum','create-curriculum-subject','create-requisite','set-curriculum-enable','students','create-student','edit-student','create-student-subject','subjects','create-subject','subject-offers','create-subject-offer','open-enrollment','educations','create-education','courses','create-course','rooms','create-room','edit-room','users','create-user','groups','create-group','edit-group','deactivate','edit-user','database','report-info','log','permissions','last-logins','') NOT NULL,
+DROP TABLE IF EXISTS `controllers`;
+CREATE TABLE `controllers` (
+  `controller_id` mediumint(8) UNSIGNED NOT NULL,
+  `controller_name` enum('home','curriculums','create-curriculum','create-curriculum-subject','create-requisite','set-curriculum-enable','students','create-student','edit-student','create-student-subject','subjects','create-subject','subject-offers','create-subject-offer','open-enrollment','educations','create-education','courses','create-course','rooms','create-room','edit-room','users','create-user','groups','create-group','edit-group','deactivate','edit-user','database','report-info','log','permissions','last-logins','','edit-subject') NOT NULL,
   `controller_description` varchar(50) NOT NULL,
   `controller_admin_only` tinyint(1) NOT NULL DEFAULT '0',
   `controller_enrollment_open` tinyint(1) NOT NULL DEFAULT '0',
-  `created_at` int(11) NOT NULL,
-  PRIMARY KEY (`controller_id`),
-  UNIQUE KEY `controller_name` (`controller_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+  `created_at` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `controllers`
@@ -81,7 +80,8 @@ INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_descr
 (32, 'permissions', 'Permissions Description', 1, 0, 1491881056),
 (33, 'last-logins', 'Last Logins Description', 1, 0, 1491881056),
 (34, '', 'Default Controller Description', 0, 0, 1491881056),
-(35, 'edit-room', 'Edit Room', 0, 1, 1491881054);
+(35, 'edit-room', 'Edit Room', 0, 1, 1491881054),
+(36, 'edit-subject', 'edit-subject', 0, 1, 1491881054);
 
 -- --------------------------------------------------------
 
@@ -89,8 +89,9 @@ INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_descr
 -- Table structure for table `courses`
 --
 
-CREATE TABLE IF NOT EXISTS `courses` (
-  `course_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `courses`;
+CREATE TABLE `courses` (
+  `course_id` int(8) UNSIGNED NOT NULL,
   `course_code` varchar(50) NOT NULL,
   `course_icon` varchar(20) NOT NULL,
   `course_color` varchar(20) NOT NULL,
@@ -102,12 +103,8 @@ CREATE TABLE IF NOT EXISTS `courses` (
   `deleted_at` int(11) DEFAULT NULL,
   `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL,
-  PRIMARY KEY (`course_id`),
-  UNIQUE KEY `course_code` (`course_code`),
-  UNIQUE KEY `course_description` (`course_description`),
-  UNIQUE KEY `course_code_id` (`course_code_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `courses`
@@ -126,7 +123,8 @@ INSERT INTO `courses` (`course_id`, `course_code`, `course_icon`, `course_color`
 (6, 'AMT', 'beaker', 'lv', 'AMT description', '70', 1, 1491881054, 1, NULL, NULL, NULL, NULL),
 (7, 'TESDA', 'group', 'ly', 'Tesda Courses', '80', 1, 1491881054, 1, NULL, NULL, NULL, NULL),
 (8, 'CME', 'tint', 'ls', 'CME description', '90', 1, 1491881054, 1, NULL, NULL, NULL, NULL),
-(9, 'Cross Enroll', 'move', 'lg', 'Cross Enroll description', '01', 1, 1491881054, 1, NULL, NULL, NULL, NULL);
+(9, 'Cross Enroll', 'move', 'lg', 'Cross Enroll description', '01', 1, 1491881054, 1, NULL, NULL, NULL, NULL),
+(10, 'Test Program', 'eye-close', 'lr', 'Tesdt Program Description', NULL, NULL, 1493176853, 1, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -134,8 +132,9 @@ INSERT INTO `courses` (`course_id`, `course_code`, `course_icon`, `course_color`
 -- Table structure for table `curriculums`
 --
 
-CREATE TABLE IF NOT EXISTS `curriculums` (
-  `curriculum_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `curriculums`;
+CREATE TABLE `curriculums` (
+  `curriculum_id` int(8) UNSIGNED NOT NULL,
   `curriculum_description` varchar(50) NOT NULL,
   `curriculum_effective_school_year` varchar(9) NOT NULL,
   `curriculum_status` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
@@ -146,9 +145,8 @@ CREATE TABLE IF NOT EXISTS `curriculums` (
   `deleted_at` int(11) DEFAULT NULL,
   `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL,
-  PRIMARY KEY (`curriculum_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `curriculums`
@@ -165,7 +163,6 @@ INSERT INTO `curriculums` (`curriculum_id`, `curriculum_description`, `curriculu
 (3, 'Bachelor of Science in Hotel Restaurant Management', '2016-2017', 1, 1, 2, 1490272821, 1, NULL, NULL, 1491886228, 1),
 (4, 'Bachelor of Science in Computer Science', '2015-2016', 1, 1, 4, 1490273333, 1, NULL, NULL, 1491886223, 1),
 (5, 'paramedical', '2016-2017', 1, 1, 3, 1491115358, 1, NULL, NULL, 1491886219, 1),
-(6, 'HS', '2016-2017', 1, 1, 5, 1491115397, 1, NULL, NULL, 1491886215, 1),
 (7, 'tesda', '2016-2017', 1, 1, 7, 1491115417, 1, NULL, NULL, 1491886211, 1),
 (8, 'cme', '2016-2017', 1, 1, 8, 1491115432, 1, NULL, NULL, 1491886207, 1),
 (9, 'cross enroll', '2016-2017', 1, 1, 9, 1491115451, 1, NULL, NULL, 1491886203, 1),
@@ -174,7 +171,8 @@ INSERT INTO `curriculums` (`curriculum_id`, `curriculum_description`, `curriculu
 (12, 'ttttttt', '2018-2019', 0, 1, 6, 1492589161, 1, NULL, NULL, 1492802078, 1),
 (13, 'wewewe', '2016-2017', 0, 0, 6, 1492606235, 1, NULL, NULL, 1492802078, 1),
 (14, '333', '2016-2017', 0, 0, 6, 1492662352, 1, NULL, NULL, 1492802078, 1),
-(15, 'zsdfasf', '2016-2017', 0, 0, 6, 1492781702, 1, NULL, NULL, 1492802078, 1);
+(15, 'zsdfasf', '2016-2017', 0, 0, 6, 1492781702, 1, NULL, NULL, 1492802078, 1),
+(16, 'Test Curriculum', '2016-2017', 1, 1, 10, 1493177013, 1, NULL, NULL, 1493192434, 1);
 
 -- --------------------------------------------------------
 
@@ -182,8 +180,9 @@ INSERT INTO `curriculums` (`curriculum_id`, `curriculum_description`, `curriculu
 -- Table structure for table `curriculum_subjects`
 --
 
-CREATE TABLE IF NOT EXISTS `curriculum_subjects` (
-  `curriculum_subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `curriculum_subjects`;
+CREATE TABLE `curriculum_subjects` (
+  `curriculum_subject_id` int(8) UNSIGNED NOT NULL,
   `curriculum_subject_year_level` tinyint(11) UNSIGNED NOT NULL,
   `curriculum_subject_semester` enum('first','second','summer') NOT NULL,
   `curriculum_subject_units` tinyint(11) UNSIGNED NOT NULL,
@@ -196,9 +195,8 @@ CREATE TABLE IF NOT EXISTS `curriculum_subjects` (
   `deleted_at` int(11) DEFAULT NULL,
   `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL,
-  PRIMARY KEY (`curriculum_subject_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `curriculum_subjects`
@@ -256,7 +254,23 @@ INSERT INTO `curriculum_subjects` (`curriculum_subject_id`, `curriculum_subject_
 (44, 2, 'second', 3, 1, 2, 11, 8, 1492662253, 1, NULL, NULL, NULL, NULL),
 (45, 3, 'first', 2, 1, 1, 14, 4, 1492662383, 1, NULL, NULL, NULL, NULL),
 (46, 4, 'first', 1, 0, 1, 14, 7, 1492662411, 1, NULL, NULL, NULL, NULL),
-(47, 3, 'summer', 1, 1, 0, 13, 4, 1492675207, 1, NULL, NULL, NULL, NULL);
+(47, 3, 'summer', 1, 1, 0, 13, 4, 1492675207, 1, NULL, NULL, NULL, NULL),
+(55, 1, 'first', 1, 1, 0, 16, 41, 1493191171, 1, NULL, NULL, NULL, NULL),
+(56, 1, 'first', 6, 2, 4, 16, 42, 1493191347, 1, NULL, NULL, NULL, NULL),
+(57, 1, 'second', 1, 1, 0, 16, 44, 1493191376, 1, NULL, NULL, NULL, NULL),
+(58, 1, 'second', 4, 1, 3, 16, 45, 1493191442, 1, NULL, NULL, NULL, NULL),
+(59, 1, 'summer', 4, 0, 4, 16, 64, 1493191561, 1, NULL, NULL, NULL, NULL),
+(60, 1, 'first', 1, 1, 0, 16, 43, 1493191788, 1, NULL, NULL, NULL, NULL),
+(61, 2, 'first', 3, 2, 1, 16, 50, 1493191871, 1, NULL, NULL, NULL, NULL),
+(62, 2, 'first', 1, 0, 1, 16, 55, 1493191912, 1, NULL, NULL, NULL, NULL),
+(63, 2, 'summer', 5, 2, 3, 16, 57, 1493192178, 1, NULL, NULL, NULL, NULL),
+(64, 3, 'first', 1, 0, 1, 16, 47, 1493192207, 1, NULL, NULL, NULL, NULL),
+(65, 2, 'second', 1, 0, 1, 16, 16, 1493192228, 1, NULL, NULL, NULL, NULL),
+(66, 3, 'second', 6, 0, 6, 16, 34, 1493192273, 1, NULL, NULL, NULL, NULL),
+(67, 3, 'summer', 1, 0, 1, 16, 49, 1493192296, 1, NULL, NULL, NULL, NULL),
+(68, 4, 'first', 6, 3, 3, 16, 54, 1493192320, 1, NULL, NULL, NULL, NULL),
+(69, 4, 'second', 3, 1, 2, 16, 35, 1493192373, 1, NULL, NULL, NULL, NULL),
+(70, 4, 'second', 1, 0, 1, 16, 37, 1493192420, 1, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -264,8 +278,9 @@ INSERT INTO `curriculum_subjects` (`curriculum_subject_id`, `curriculum_subject_
 -- Table structure for table `dean_course`
 --
 
-CREATE TABLE IF NOT EXISTS `dean_course` (
-  `dean_course_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `dean_course`;
+CREATE TABLE `dean_course` (
+  `dean_course_id` int(8) UNSIGNED NOT NULL,
   `user_id` int(11) NOT NULL,
   `course_id` int(11) NOT NULL,
   `created_at` int(11) NOT NULL,
@@ -273,10 +288,8 @@ CREATE TABLE IF NOT EXISTS `dean_course` (
   `deleted_at` int(11) DEFAULT NULL,
   `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL,
-  PRIMARY KEY (`dean_course_id`),
-  UNIQUE KEY `user_id` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `dean_course`
@@ -296,8 +309,9 @@ INSERT INTO `dean_course` (`dean_course_id`, `user_id`, `course_id`, `created_at
 -- Table structure for table `educations`
 --
 
-CREATE TABLE IF NOT EXISTS `educations` (
-  `education_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `educations`;
+CREATE TABLE `educations` (
+  `education_id` int(8) UNSIGNED NOT NULL,
   `education_code` varchar(50) NOT NULL,
   `education_description` varchar(50) NOT NULL,
   `created_at` int(11) NOT NULL,
@@ -305,11 +319,8 @@ CREATE TABLE IF NOT EXISTS `educations` (
   `deleted_at` int(11) DEFAULT NULL,
   `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL,
-  PRIMARY KEY (`education_id`),
-  UNIQUE KEY `education_code` (`education_code`),
-  UNIQUE KEY `education_description` (`education_description`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `educations`
@@ -330,8 +341,9 @@ INSERT INTO `educations` (`education_id`, `education_code`, `education_descripti
 -- Table structure for table `enrollments`
 --
 
-CREATE TABLE IF NOT EXISTS `enrollments` (
-  `enrollment_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `enrollments`;
+CREATE TABLE `enrollments` (
+  `enrollment_id` int(8) UNSIGNED NOT NULL,
   `student_id` int(11) NOT NULL,
   `course_id` int(11) NOT NULL,
   `curriculum_id` int(11) NOT NULL,
@@ -344,10 +356,8 @@ CREATE TABLE IF NOT EXISTS `enrollments` (
   `deleted_at` int(11) DEFAULT NULL,
   `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL,
-  PRIMARY KEY (`enrollment_id`),
-  UNIQUE KEY `student_id` (`student_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `enrollments`
@@ -359,112 +369,113 @@ TRUNCATE TABLE `enrollments`;
 --
 
 INSERT INTO `enrollments` (`enrollment_id`, `student_id`, `course_id`, `curriculum_id`, `enrollment_school_year`, `enrollment_semester`, `enrollment_year_level`, `enrollment_status`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES
-(1, 1, 3, 5, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(2, 2, 3, 5, '2015-2016', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(3, 3, 2, 3, '2013-2014', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(4, 4, 7, 7, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493091883, 1),
-(5, 5, 7, 7, '2013-2014', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(6, 6, 6, 1, '2015-2016', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(7, 7, 9, 9, '2014-2015', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(8, 8, 7, 7, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(9, 9, 4, 4, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(10, 10, 1, 2, '2014-2015', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(11, 11, 2, 3, '2014-2015', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(12, 12, 7, 7, '2014-2015', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(13, 13, 6, 1, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(14, 14, 7, 7, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(15, 15, 3, 6, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493091883, 1),
-(16, 16, 7, 7, '2013-2014', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(17, 17, 9, 9, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(18, 18, 2, 3, '2015-2016', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(19, 19, 4, 4, '2014-2015', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(20, 20, 1, 6, '2015-2016', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493091883, 1),
-(21, 21, 9, 9, '2013-2014', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(22, 22, 4, 4, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(23, 23, 4, 4, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(24, 24, 1, 2, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(25, 25, 4, 4, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(26, 26, 7, 7, '2014-2015', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(27, 27, 4, 6, '2015-2016', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493091883, 1),
-(28, 28, 6, 1, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(29, 29, 1, 2, '2013-2014', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(30, 30, 2, 3, '2013-2014', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(31, 31, 2, 6, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493091883, 1),
-(32, 32, 1, 2, '2013-2014', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(33, 33, 6, 6, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493091883, 1),
-(34, 34, 1, 2, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(35, 35, 4, 4, '2013-2014', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(36, 36, 3, 5, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(37, 37, 2, 3, '2013-2014', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(38, 38, 7, 7, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(39, 39, 6, 1, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(40, 40, 1, 6, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493091883, 1),
-(41, 41, 7, 7, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(42, 42, 1, 2, '2013-2014', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(43, 43, 9, 9, '2014-2015', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(44, 44, 4, 4, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(45, 45, 6, 1, '2014-2015', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(46, 46, 1, 6, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493091883, 1),
-(47, 47, 4, 4, '2013-2014', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(48, 48, 6, 1, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(49, 49, 4, 4, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(50, 50, 1, 2, '2013-2014', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(51, 51, 6, 1, '2013-2014', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(52, 52, 9, 9, '2014-2015', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(53, 53, 3, 5, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(54, 54, 8, 8, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(55, 55, 2, 3, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(56, 56, 2, 3, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(57, 57, 4, 4, '2014-2015', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(58, 58, 8, 6, '2014-2015', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493091883, 1),
-(59, 59, 4, 4, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(60, 60, 8, 8, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(61, 61, 2, 3, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(62, 62, 8, 8, '2015-2016', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(63, 63, 7, 7, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(64, 64, 7, 7, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(65, 65, 1, 2, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
+(1, 1, 3, 5, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(2, 2, 3, 5, '2015-2016', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(3, 3, 2, 3, '2013-2014', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(4, 4, 7, 7, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
+(5, 5, 7, 7, '2013-2014', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(6, 6, 6, 1, '2015-2016', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(7, 7, 9, 9, '2014-2015', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(8, 8, 7, 7, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(9, 9, 4, 4, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(10, 10, 1, 2, '2014-2015', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(11, 11, 2, 3, '2014-2015', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(12, 12, 7, 7, '2014-2015', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(13, 13, 6, 1, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(14, 14, 7, 7, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(15, 15, 3, 3, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
+(16, 16, 7, 7, '2013-2014', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(17, 17, 9, 9, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(18, 18, 2, 3, '2015-2016', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(19, 19, 4, 4, '2014-2015', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(20, 20, 7, 7, '2015-2016', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
+(21, 21, 9, 9, '2013-2014', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
+(22, 22, 4, 4, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(23, 23, 4, 4, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(24, 24, 1, 2, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(25, 25, 4, 4, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(26, 26, 7, 7, '2014-2015', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(27, 27, 6, 1, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
+(28, 28, 6, 1, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(29, 29, 1, 2, '2013-2014', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(30, 30, 2, 3, '2013-2014', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(31, 31, 2, 2, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
+(32, 32, 1, 2, '2013-2014', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(33, 33, 6, 1, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
+(34, 34, 1, 2, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(35, 35, 4, 4, '2013-2014', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(36, 36, 3, 5, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(37, 37, 2, 3, '2013-2014', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(38, 38, 7, 7, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(39, 39, 6, 1, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(40, 40, 1, 2, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
+(41, 41, 7, 7, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(42, 42, 1, 2, '2013-2014', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(43, 43, 9, 9, '2014-2015', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(44, 44, 4, 4, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(45, 45, 6, 1, '2014-2015', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(46, 46, 1, 1, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
+(47, 47, 4, 4, '2013-2014', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(48, 48, 6, 1, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(49, 49, 4, 4, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(50, 50, 1, 2, '2013-2014', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(51, 51, 6, 1, '2013-2014', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(52, 52, 9, 9, '2014-2015', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(53, 53, 3, 5, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(54, 54, 8, 8, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(55, 55, 2, 3, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(56, 56, 2, 3, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(57, 57, 4, 4, '2014-2015', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(58, 58, 8, 8, '2014-2015', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
+(59, 59, 4, 4, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(60, 60, 8, 8, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(61, 61, 2, 3, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(62, 62, 8, 8, '2015-2016', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(63, 63, 7, 7, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(64, 64, 7, 7, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(65, 65, 1, 2, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
 (66, 66, 6, 1, '2016-2017', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1492920918, 1),
-(67, 67, 9, 9, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(68, 68, 3, 5, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(69, 69, 6, 6, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493091883, 1),
+(67, 67, 9, 9, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(68, 68, 3, 5, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(69, 69, 6, 1, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
 (70, 70, 6, 1, '2016-2017', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1492581349, 1),
-(71, 71, 4, 4, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(72, 72, 2, 3, '2015-2016', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(73, 73, 1, 2, '2014-2015', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(74, 74, 2, 6, '2013-2014', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493091883, 1),
-(75, 75, 8, 8, '2014-2015', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(76, 76, 9, 9, '2015-2016', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(77, 77, 6, 1, '2015-2016', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(78, 78, 3, 5, '2014-2015', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(79, 79, 6, 1, '2015-2016', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(80, 80, 3, 5, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(81, 81, 6, 1, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(82, 82, 6, 1, '2015-2016', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(83, 83, 9, 9, '2015-2016', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(84, 84, 9, 6, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493091883, 1),
-(85, 85, 2, 3, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(86, 86, 7, 6, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493091883, 1),
-(87, 87, 4, 4, '2013-2014', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(88, 88, 7, 7, '2015-2016', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(89, 89, 4, 4, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(90, 90, 9, 9, '2014-2015', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(91, 91, 8, 8, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(92, 92, 6, 1, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(93, 93, 9, 6, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493091883, 1),
-(94, 94, 2, 3, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(95, 95, 7, 7, '2013-2014', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(96, 96, 1, 2, '2015-2016', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(97, 97, 3, 5, '2014-2015', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(98, 98, 1, 2, '2014-2015', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(99, 99, 3, 5, '2014-2015', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(100, 100, 4, 4, '2014-2015', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1493091883, NULL),
-(102, 101, 6, 1, '2016-2017', 'summer', 1, 1, 1491890796, 1, NULL, NULL, 1492784580, 1),
+(71, 71, 4, 4, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(72, 72, 2, 3, '2015-2016', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(73, 73, 1, 2, '2014-2015', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(74, 74, 2, 2, '2013-2014', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
+(75, 75, 8, 8, '2014-2015', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(76, 76, 9, 9, '2015-2016', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(77, 77, 6, 1, '2015-2016', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(78, 78, 3, 5, '2014-2015', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(79, 79, 6, 1, '2015-2016', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(80, 80, 3, 5, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(81, 81, 6, 1, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(82, 82, 6, 1, '2015-2016', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(83, 83, 9, 9, '2015-2016', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(84, 84, 9, 9, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
+(85, 85, 2, 3, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(86, 86, 7, 7, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
+(87, 87, 4, 4, '2013-2014', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(88, 88, 7, 7, '2015-2016', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(89, 89, 4, 4, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(90, 90, 9, 9, '2014-2015', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(91, 91, 8, 8, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(92, 92, 6, 1, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(93, 93, 9, 9, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
+(94, 94, 2, 3, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(95, 95, 7, 7, '2013-2014', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(96, 96, 1, 2, '2015-2016', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(97, 97, 3, 5, '2014-2015', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(98, 98, 1, 2, '2014-2015', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(99, 99, 3, 5, '2014-2015', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(100, 100, 4, 4, '2014-2015', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(102, 101, 6, 1, '2016-2017', 'summer', 1, 1, 1491890796, 1, NULL, NULL, 1493175446, 1),
 (105, 102, 6, 1, '2016-2017', 'summer', 1, 1, 1492588748, 1, NULL, NULL, 1492588952, 1),
-(107, 103, 6, 12, '2016-2017', 'summer', 1, 0, 1492801999, 1, NULL, NULL, NULL, NULL),
+(107, 103, 6, 12, '2016-2017', 'summer', 1, 0, 1492801999, 1, NULL, NULL, 1493092758, 1),
 (109, 104, 6, 1, '2016-2017', 'summer', 1, 1, 1492802115, 1, NULL, NULL, 1492802128, 1),
-(110, 105, 6, 1, '2016-2017', 'summer', 1, 1, 1492836242, 1, NULL, NULL, 1492836263, 1),
-(112, 106, 6, 1, '2016-2017', 'summer', 1, 1, 1492869629, 1, NULL, NULL, 1492869976, 1);
+(110, 105, 6, 1, '2016-2017', 'summer', 1, 1, 1492836242, 1, NULL, NULL, 1493092442, 1),
+(112, 106, 6, 1, '2016-2017', 'summer', 1, 1, 1492869629, 1, NULL, NULL, 1493185357, 1),
+(117, 111, 10, 16, NULL, NULL, 1, 0, 1493192446, 1, NULL, NULL, 1493193535, 1);
 
 -- --------------------------------------------------------
 
@@ -472,7 +483,8 @@ INSERT INTO `enrollments` (`enrollment_id`, `student_id`, `course_id`, `curricul
 -- Table structure for table `enrollment_status`
 --
 
-CREATE TABLE IF NOT EXISTS `enrollment_status` (
+DROP TABLE IF EXISTS `enrollment_status`;
+CREATE TABLE `enrollment_status` (
   `status` tinyint(1) UNSIGNED NOT NULL,
   `created_at` int(11) NOT NULL,
   `created_user_id` int(11) UNSIGNED NOT NULL
@@ -488,7 +500,7 @@ TRUNCATE TABLE `enrollment_status`;
 --
 
 INSERT INTO `enrollment_status` (`status`, `created_at`, `created_user_id`) VALUES
-(1, 1492786602, 1);
+(1, 1493178902, 1);
 
 -- --------------------------------------------------------
 
@@ -496,12 +508,12 @@ INSERT INTO `enrollment_status` (`status`, `created_at`, `created_user_id`) VALU
 -- Table structure for table `groups`
 --
 
-CREATE TABLE IF NOT EXISTS `groups` (
-  `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `groups`;
+CREATE TABLE `groups` (
+  `id` mediumint(8) UNSIGNED NOT NULL,
   `name` varchar(20) NOT NULL,
-  `description` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+  `description` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `groups`
@@ -526,31 +538,28 @@ INSERT INTO `groups` (`id`, `name`, `description`) VALUES
 -- Table structure for table `login_attempts`
 --
 
-CREATE TABLE IF NOT EXISTS `login_attempts` (
-  `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `login_attempts`;
+CREATE TABLE `login_attempts` (
+  `id` mediumint(8) UNSIGNED NOT NULL,
   `ip_address` varbinary(16) NOT NULL,
   `login` varchar(100) NOT NULL,
-  `time` int(11) UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `ip_address` (`ip_address`),
-  KEY `login` (`login`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  `time` int(11) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `login_attempts`
 --
 
 TRUNCATE TABLE `login_attempts`;
-
-
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `logs`
 --
 
-CREATE TABLE IF NOT EXISTS `logs` (
-  `id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `logs`;
+CREATE TABLE `logs` (
+  `id` int(8) UNSIGNED NOT NULL,
   `errno` int(2) NOT NULL,
   `errtype` varchar(32) NOT NULL,
   `errstr` text NOT NULL,
@@ -558,10 +567,7 @@ CREATE TABLE IF NOT EXISTS `logs` (
   `errline` int(4) NOT NULL,
   `user_agent` varchar(120) NOT NULL,
   `ip_address` varchar(45) NOT NULL,
-  `time` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `ip_address` (`ip_address`),
-  KEY `user_agent` (`user_agent`)
+  `time` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -575,7 +581,8 @@ TRUNCATE TABLE `logs`;
 -- Table structure for table `migrations`
 --
 
-CREATE TABLE IF NOT EXISTS `migrations` (
+DROP TABLE IF EXISTS `migrations`;
+CREATE TABLE `migrations` (
   `version` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -589,7 +596,7 @@ TRUNCATE TABLE `migrations`;
 --
 
 INSERT INTO `migrations` (`version`) VALUES
-(20170420223732);
+(20170426195912);
 
 -- --------------------------------------------------------
 
@@ -597,14 +604,14 @@ INSERT INTO `migrations` (`version`) VALUES
 -- Table structure for table `permissions`
 --
 
-CREATE TABLE IF NOT EXISTS `permissions` (
-  `permission_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `permissions`;
+CREATE TABLE `permissions` (
+  `permission_id` int(8) UNSIGNED NOT NULL,
   `controller_id` int(11) NOT NULL,
   `group_id` int(11) NOT NULL,
   `created_at` int(11) NOT NULL,
-  `created_user_id` int(11) UNSIGNED DEFAULT NULL,
-  PRIMARY KEY (`permission_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8;
+  `created_user_id` int(11) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `permissions`
@@ -676,7 +683,8 @@ INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `create
 (71, 7, 5, 1491884294, 1),
 (72, 13, 1, 1491884308, 1),
 (73, 13, 4, 1491884308, 1),
-(74, 35, 1, 1492574544, 1);
+(74, 35, 1, 1492574544, 1),
+(75, 36, 1, 1493178867, 1);
 
 -- --------------------------------------------------------
 
@@ -684,7 +692,8 @@ INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `create
 -- Table structure for table `report_info`
 --
 
-CREATE TABLE IF NOT EXISTS `report_info` (
+DROP TABLE IF EXISTS `report_info`;
+CREATE TABLE `report_info` (
   `school_name` varchar(100) NOT NULL,
   `school_address` varchar(100) NOT NULL,
   `school_contact` varchar(100) NOT NULL,
@@ -710,8 +719,9 @@ INSERT INTO `report_info` (`school_name`, `school_address`, `school_contact`, `c
 -- Table structure for table `requisites`
 --
 
-CREATE TABLE IF NOT EXISTS `requisites` (
-  `requisite_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `requisites`;
+CREATE TABLE `requisites` (
+  `requisite_id` int(8) UNSIGNED NOT NULL,
   `requisite_type` enum('co','pre') NOT NULL,
   `curriculum_subject_id` int(11) UNSIGNED NOT NULL,
   `subject_id` int(11) UNSIGNED NOT NULL,
@@ -720,8 +730,7 @@ CREATE TABLE IF NOT EXISTS `requisites` (
   `deleted_at` int(11) DEFAULT NULL,
   `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL,
-  PRIMARY KEY (`requisite_id`)
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -735,8 +744,9 @@ TRUNCATE TABLE `requisites`;
 -- Table structure for table `rooms`
 --
 
-CREATE TABLE IF NOT EXISTS `rooms` (
-  `room_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `rooms`;
+CREATE TABLE `rooms` (
+  `room_id` int(8) UNSIGNED NOT NULL,
   `room_number` varchar(50) NOT NULL,
   `room_capacity` int(2) NOT NULL,
   `created_at` int(11) NOT NULL,
@@ -744,10 +754,8 @@ CREATE TABLE IF NOT EXISTS `rooms` (
   `deleted_at` int(11) DEFAULT NULL,
   `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL,
-  PRIMARY KEY (`room_id`),
-  UNIQUE KEY `room_number` (`room_number`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `rooms`
@@ -761,7 +769,7 @@ TRUNCATE TABLE `rooms`;
 INSERT INTO `rooms` (`room_id`, `room_number`, `room_capacity`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES
 (1, '105', 5, 1490344975, 1, NULL, NULL, 1492578562, 1),
 (2, '123', 2, 1490858612, 1, NULL, NULL, 1492581330, 1),
-(3, '321', 2, 1490858631, 1, NULL, NULL, 1492582984, 1),
+(3, '321', 4, 1490858631, 1, NULL, NULL, 1493185381, 1),
 (4, '500', 5, 1491707655, 1, NULL, NULL, 1492578548, 1),
 (5, '503', 2, 1491731103, 1, NULL, NULL, 1492578490, 1),
 (6, 'nb 101', 3, 1492590096, 1, NULL, NULL, NULL, NULL),
@@ -776,8 +784,9 @@ INSERT INTO `rooms` (`room_id`, `room_number`, `room_capacity`, `created_at`, `c
 -- Table structure for table `students`
 --
 
-CREATE TABLE IF NOT EXISTS `students` (
-  `student_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `students`;
+CREATE TABLE `students` (
+  `student_id` int(8) UNSIGNED NOT NULL,
   `student_firstname` varchar(100) NOT NULL,
   `student_image` varchar(50) DEFAULT NULL,
   `student_middlename` varchar(50) NOT NULL,
@@ -802,12 +811,8 @@ CREATE TABLE IF NOT EXISTS `students` (
   `deleted_at` int(11) DEFAULT NULL,
   `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL,
-  PRIMARY KEY (`student_id`),
-  UNIQUE KEY `student_personal_email` (`student_personal_email`),
-  UNIQUE KEY `student_guardian_email` (`student_guardian_email`),
-  UNIQUE KEY `student_school_id` (`student_school_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `students`
@@ -838,27 +843,27 @@ INSERT INTO `students` (`student_id`, `student_firstname`, `student_image`, `stu
 (17, 'Emmitt', NULL, 'Nitzsche', 'Mills', 'male', '07-05-1933', '434 Balistreri Square\r\nSouth Bernhardfort, FL 3186', 'single', 'Filipino', 'Ola Auer', '82161 Wilburn Cliff Suite 792\r\nLake Virginiafurt, IN 80742', 'Cartwrightborough', 'region4', '2284 Emard Mall', '+6922812785792', '888.437.3109', 'cassandra04@yahoo.com', 'nikki.legros@example.net', '01-17', 1491112002, 1, NULL, NULL, NULL, NULL),
 (18, 'Rosetta', NULL, 'Koepp', 'Dietrich', 'male', '10-27-2006', '372 Hyatt Corner Suite 528\r\nSouth Robb, ME 54667-9', '', 'Other', 'Willis Lesch', '78471 Amaya Burg Apt. 849\r\nMargeton, WV 51052', 'New Delphia', 'region2', '9770 Freeda Brooks Suite 802', '+2696779699527', '844.748.7872', 'dullrich@hotmail.com', 'hermina.hickle@example.org', '30-18', 1491112002, 1, NULL, NULL, NULL, NULL),
 (19, 'Brad', NULL, 'Hackett', 'Baumbach', 'male', '09-07-2009', '5941 Zechariah Islands Apt. 255\r\nWest Rosaliahaven', '', 'Filipino', 'Dario Olson', '323 Murphy Lights Suite 189\r\nNew Josiah, NJ 67684', 'North Feliciaville', 'rgion1', '2439 Christiansen Prairie', '+5122734143634', '844-868-0584', 'pmante@predovic.com', 'anahi.hackett@example.com', '50-19', 1491112002, 1, NULL, NULL, NULL, NULL),
-(20, 'Fermin', NULL, 'Powlowski', 'Quigley', 'female', '09-12-1978', '4930 Langosh Corners Suite 923\r\nConroyville, SD 52', 'single', 'Filipino', 'Whitney Treutel', '32239 Borer Trafficway Suite 650\r\nPort Gregoriashire, AR 60929', 'North Stone', 'region2..............', '435 Aracely Walks Suite 303', '+5396416007280', '1-844-419-3108', 'leola.okuneva@hahn.com', 'murphy.dorris@example.org', '60-20', 1491112002, 1, NULL, NULL, 1493091661, 1),
-(21, 'Palma', NULL, 'Tromp', 'Schoen', 'female', '11-15-1928', '6245 Mariam Orchard\r\nSouth Rowland, VA 25125', '', 'Filipino', 'Bridie Bartoletti', '2786 Winifred Path Apt. 021\r\nNew Brennanside, VT 28569-1759', 'Stoltenbergfurt', 'rgion1', '39019 Rau Squares', '+7180762231226', '1-800-540-5636', 'reagan37@haley.com', 'ybednar@example.com', '01-21', 1491112002, 1, NULL, NULL, NULL, NULL),
+(20, 'Fermin', NULL, 'Powlowski', 'Quigley', 'female', '09-12-1978', '4930 Langosh Corners Suite 923\r\nConroyville, SD 52', 'single', 'Filipino', 'Whitney Treutel', '32239 Borer Trafficway Suite 650\r\nPort Gregoriashire, AR 60929', 'North Stone', 'region2..............', '435 Aracely Walks Suite 303', '+5396416007280', '1-844-419-3108', 'leola.okuneva@hahn.com', 'murphy.dorris@example.org', '60-20', 1491112002, 1, NULL, NULL, 1493105895, 1),
+(21, 'Palma', NULL, 'Tromp', 'Schoen', 'female', '11-15-1980', '6245 Mariam Orchard\r\nSouth Rowland, VA 25125', 'single', 'Filipino', 'Bridie Bartoletti', '2786 Winifred Path Apt. 021\r\nNew Brennanside, VT 28569-1759', 'Stoltenbergfurt', 'rgion1...............', '39019 Rau Squares', '+7180762231226', '1-800-540-5636', 'reagan37@haley.com', 'ybednar@example.com', '01-21', 1491112002, 1, NULL, NULL, 1493092421, 1),
 (22, 'Verner', NULL, 'Nitzsche', 'Weimann', 'female', '11-13-1945', '2209 Fatima Walk\r\nEast Emmetmouth, TN 93125-4852', '', 'Filipino', 'Mitchel Legros', '523 Spinka Inlet\r\nLake Ruthie, KS 46078', 'Port Russell', 'region3', '4347 Labadie Greens Suite 973', '+3673051143343', '(800) 257-6693', 'ismael.feeney@schmidt.com', 'keebler.rupert@example.com', '50-22', 1491112002, 1, NULL, NULL, NULL, NULL),
 (23, 'Violet', NULL, 'King', 'Gottlieb', 'female', '06-07-2006', '785 Abdullah Green Apt. 687\r\nTatumburgh, CO 97342-', 'single', 'Filipino', 'Megane Kuhic', '25278 Jordy Landing Apt. 708\r\nDickensview, AK 51057-5960', 'Wisokyland', 'region4', '447 Batz Lodge Apt. 591', '+8706182062216', '888-918-5590', 'fatima.mcdermott@hotmail.com', 'layla.adams@example.net', '50-23', 1491112002, 1, NULL, NULL, NULL, NULL),
 (24, 'Mozell', NULL, 'Kris', 'Gottlieb', 'male', '11-27-1934', '61730 Adeline Parks\r\nZboncakville, IL 37641-0746', 'single', 'Filipino', 'Dr. Delaney Witting III', '36795 Serenity Land Apt. 868\r\nDenesikfurt, WY 55966', 'Hildegardshire', 'region4', '626 Kutch River Apt. 892', '+7017265217224', '(888) 336-2926', 'akoch@windler.biz', 'umarquardt@example.org', '20-24', 1491112002, 1, NULL, NULL, NULL, NULL),
 (25, 'Derek', NULL, 'Padberg', 'Flatley', 'male', '12-12-1986', '86492 Luna Terrace Suite 145\r\nWest Sandyfort, MD 4', 'single', 'Other', 'Mr. Mallory Carter Sr.', '85432 Gudrun Lights\r\nLake Zariamouth, IA 35162-8595', 'North Daren', 'region3', '62041 Lydia Camp Apt. 696', '+8223271264442', '877-822-8202', 'lamont.krajcik@feeney.net', 'jeramy53@example.org', '50-25', 1491112002, 1, NULL, NULL, NULL, NULL),
 (26, 'Rowland', NULL, 'Schuster', 'Ferry', 'female', '02-23-1958', '335 Judy Course\r\nSouth Christmouth, VA 17116', '', 'Filipino', 'Ramiro Brakus I', '71736 McCullough Ville\r\nJovannymouth, NE 27268-5450', 'Lake Anthonyhaven', 'rgion1', '44900 Mozell Plaza Apt. 397', '+4194571329106', '(855) 492-5033', 'jakob.ullrich@gmail.com', 'jameson26@example.com', '80-26', 1491112002, 1, NULL, NULL, NULL, NULL),
-(27, 'Adelia', NULL, 'McKenzie', 'Leannon', 'female', '12-30-1981', '13602 Ledner Views Suite 730\r\nNew Corrine, OH 7038', 'single', 'Filipino', 'Rosemarie Hudson', '759 Geo Road\r\nNorth Willytown, MT 50429', 'Macejkovicstad', 'region2...................', '13180 Ankunding Spur Apt. 677', '+3951117749626', '800.842.5268', 'kertzmann.raoul@kirlin.net', 'ykeebler@example.net', '60-27', 1491112002, 1, NULL, NULL, 1493091715, 1),
+(27, 'Adelia', NULL, 'McKenzie', 'Leannon', 'female', '12-30-1981', '13602 Ledner Views Suite 730\r\nNew Corrine, OH 7038', 'single', 'Filipino', 'Rosemarie Hudson', '759 Geo Road\r\nNorth Willytown, MT 50429', 'Macejkovicstad', 'region2...................', '13180 Ankunding Spur Apt. 677', '+3951117749626', '800.842.5268', 'kertzmann.raoul@kirlin.net', 'ykeebler@example.net', '60-27', 1491112002, 1, NULL, NULL, 1493105961, 1),
 (28, 'Amari', NULL, 'Rau', 'Langworth', 'male', '07-28-2002', '2808 Rudy Flat Apt. 265\r\nIsabelleside, WV 42260', 'single', 'Other', 'Dr. Florian Flatley', '1477 Sipes Plain Apt. 680\r\nWest Lacyport, OR 28754-6086', 'Grantmouth', 'rgion1', '93624 Bergstrom Knolls', '+9226624600301', '866-339-0598', 'arnoldo04@yahoo.com', 'lukas60@example.org', '70-28', 1491112002, 1, NULL, NULL, NULL, NULL),
 (29, 'Misael', NULL, 'Hagenes', 'Willms', 'female', '11-19-1992', '396 Lee Port\r\nNorth Arvelview, MS 32253', 'single', 'Other', 'Palma Cruickshank', '879 Barton Run\r\nSouth Justonshire, GA 99889-0623', 'Wilfredton', 'region4', '641 Roberts Radial', '+9640438920654', '(888) 800-7192', 'jadon04@yahoo.com', 'kaitlyn59@example.net', '20-29', 1491112002, 1, NULL, NULL, NULL, NULL),
 (30, 'Maybelle', NULL, 'Hagenes', 'Ziemann', 'female', '09-13-1944', '2356 Barton Keys Apt. 547\r\nNew Ianfurt, PA 65407', 'single', 'Filipino', 'Ashlynn Hartmann', '1801 Lang Expressway Apt. 191\r\nNorth Taylormouth, VA 39280', 'Lake Maevefort', 'region3', '63179 Patricia Rest', '+2164407362199', '877.649.2069', 'asa64@hotmail.com', 'aniyah.trantow@example.net', '30-30', 1491112002, 1, NULL, NULL, NULL, NULL),
 (31, 'Jaren', NULL, 'Graham', 'Boyle', 'female', '12-04-1993', '345 Orn Underpass\r\nJordanmouth, WA 89184', 'single', 'Filipino', 'Jaydon Balistreri', '91459 Chelsey Lock\r\nHumbertofort, OK 58972', 'Maximoberg', 'region2............', '428 Javier Camp', '+6075653350929', '1-888-750-4403', 'ahickle@windler.com', 'rhaag@example.org', '60-31', 1491112002, 1, NULL, NULL, 1493091764, 1),
 (32, 'Lorenza', NULL, 'Thiel', 'Murray', 'male', '01-08-2009', '1499 Gleason Fall\r\nEast Emmanuelleton, RI 90003', '', 'Filipino', 'Ashly Schoen', '147 Maybell Wells\r\nQuitzonstad, TX 92285-1217', 'Shainaside', 'region3', '211 Heber Valleys', '+8200469213924', '(855) 612-0750', 'alind@dubuque.org', 'bernie97@example.com', '20-32', 1491112002, 1, NULL, NULL, NULL, NULL),
-(33, 'Rasheed', NULL, 'Douglas', 'Quitzon', 'male', '09-17-2000', '34663 Israel Avenue\r\nNew Gregmouth, MT 39597-9309', 'single', 'Other', 'Lennie Erdman', '58219 Pietro Spurs Suite 564\r\nSouth Alberta, CA 06138', 'Monahanton', 'rgion1,,,,,,,,,,,,,', '61130 Herzog Manors', '+9809827055705', '1-800-514-0093', 'marley63@hotmail.com', 'jlind@example.com', '60-33', 1491112002, 1, NULL, NULL, 1493091831, 1),
+(33, 'Rasheed', NULL, 'Douglas', 'Quitzon', 'male', '09-17-2000', '34663 Israel Avenue\r\nNew Gregmouth, MT 39597-9309', 'single', 'Other', 'Lennie Erdman', '58219 Pietro Spurs Suite 564\r\nSouth Alberta, CA 06138', 'Monahanton', 'rgion1,,,,,,,,,,,,,', '61130 Herzog Manors', '+9809827055705', '1-800-514-0093', 'marley63@hotmail.com', 'jlind@example.com', '60-33', 1491112002, 1, NULL, NULL, 1493106408, 1),
 (34, 'Torey', NULL, 'Kulas', 'Schneider', 'female', '10-23-1967', '1701 Esperanza Overpass Suite 065\r\nLavernamouth, M', '', 'Other', 'Francisco Hansen Sr.', '62319 Delia Common\r\nRutherfordland, MA 63232', 'Carterburgh', 'region4', '13710 Abernathy Landing Suite 095', '+2427620580662', '800-209-9707', 'bgusikowski@hotmail.com', 'raleigh41@example.net', '20-34', 1491112002, 1, NULL, NULL, NULL, NULL),
 (35, 'Roselyn', NULL, 'Erdman', 'Bechtelar', 'male', '05-08-1919', '694 Hilpert Parks\r\nNew Ahmad, AK 11767-2970', '', 'Other', 'Mr. Rosendo Gerlach II', '4808 Kunde Skyway\r\nSouth Oranmouth, NH 41033-4644', 'Lake Finn', 'region4', '9255 Casper Mountain', '+1964528477665', '877-806-7696', 'roderick.kemmer@gmail.com', 'schuster.leonard@example.net', '50-35', 1491112002, 1, NULL, NULL, NULL, NULL),
 (36, 'Eliseo', NULL, 'Rodriguez', 'Bernhard', 'male', '03-31-1993', '41907 Jordy Fort Apt. 206\r\nBashiriantown, UT 22299', '', 'Other', 'Candido Labadie', '4821 Goldner Camp\r\nHellerfort, IN 54710-1955', 'South Lorine', 'region4', '241 Fahey Springs Apt. 713', '+4381139582411', '(877) 666-1843', 'walker.marta@hotmail.com', 'elvie.shanahan@example.com', '40-36', 1491112002, 1, NULL, NULL, NULL, NULL),
 (37, 'Glenda', NULL, 'Hane', 'Ferry', 'male', '04-24-1969', '35045 Adella Shoals\r\nPort Jalyn, IL 52230', '', 'Other', 'Renee Jast', '611 Nicolas Course Suite 398\r\nSouth Urbanland, VT 41511-7170', 'West Tressie', 'region3', '8231 Koss Route', '+8481023842658', '(800) 912-4812', 'dmitchell@hotmail.com', 'xgibson@example.com', '30-37', 1491112002, 1, NULL, NULL, NULL, NULL),
 (38, 'Amir', NULL, 'Pfeffer', 'Tillman', 'female', '08-14-1977', '842 Bednar Terrace Suite 990\r\nBahringermouth, WV 4', '', 'Other', 'Eleanora Stracke', '993 Coby Court\r\nSashaborough, AK 27783-5150', 'Brownland', 'rgion1', '420 Barton Tunnel', '+5502799624778', '(877) 300-7017', 'murazik.delores@dare.com', 'alivia68@example.org', '80-38', 1491112002, 1, NULL, NULL, NULL, NULL),
 (39, 'Nat', NULL, 'Berge', 'Funk', 'female', '08-09-1961', '5297 Daugherty Point Suite 702\r\nGinatown, WV 71437', 'single', 'Filipino', 'Corene Powlowski IV', '74427 Einar Common Apt. 928\r\nNorth Isidro, CA 06965-0439', 'East Macie', 'rgion1', '74160 O Connell Pines Apt. 369', '+7634265418983', '855.686.8379', 'amira50@hotmail.com', 'gusikowski.brock@example.com', '70-39', 1491112002, 1, NULL, NULL, NULL, NULL),
-(40, 'Amani', NULL, 'Schmitt', 'Parker', 'female', '07-13-1995', '4495 Kylee Shoals Apt. 854\r\nDeckowville, MO 19873-', 'single', 'Other', 'Furman Aufderhar', '359 Winona Shoals\r\nNew Tomas, VT 48972-3763', 'Ryanport', 'region4,,,,,,,,,,', '3595 Frami Avenue', '+4455778324113', '1-800-826-4766', 'ahuels@nolan.com', 'glover.lionel@example.net', '60-40', 1491112002, 1, NULL, NULL, 1493091848, 1),
+(40, 'Amani', NULL, 'Schmitt', 'Parker', 'female', '07-13-1995', '4495 Kylee Shoals Apt. 854\r\nDeckowville, MO 19873-', 'single', 'Other', 'Furman Aufderhar', '359 Winona Shoals\r\nNew Tomas, VT 48972-3763', 'Ryanport', 'region4,,,,,,,,,,', '3595 Frami Avenue', '+4455778324113', '1-800-826-4766', 'ahuels@nolan.com', 'glover.lionel@example.net', '60-40', 1491112002, 1, NULL, NULL, 1493106356, 1),
 (41, 'Jamarcus', NULL, 'Jacobs', 'Lynch', 'female', '07-12-1977', '4970 Andreane Locks\r\nEast Joelle, MI 74350-2421', 'single', 'Other', 'Mireille Terry', '3294 Goldner Lodge Suite 404\r\nNew Emmittburgh, IA 13510-3205', 'Lynchborough', 'region4', '576 McLaughlin Light', '+8266695808298', '(844) 523-2160', 'legros.raymundo@hotmail.com', 'lcasper@example.org', '80-41', 1491112002, 1, NULL, NULL, NULL, NULL),
 (42, 'Taya', NULL, 'Rohan', 'Flatley', 'male', '10-05-1977', '27929 Waelchi Green Suite 931\r\nConnhaven, VT 67789', 'single', 'Filipino', 'Keegan Rolfson Jr.', '384 Dina Lodge Suite 268\r\nSouth Sabinaville, AR 19924-6759', 'Port Lessiefort', 'region2', '1144 Veronica Square', '+5757707275988', '1-800-568-8910', 'ellen.upton@breitenberg.com', 'ijacobson@example.org', '20-42', 1491112002, 1, NULL, NULL, NULL, NULL),
 (43, 'Kathryne', NULL, 'McLaughlin', 'Kunde', 'male', '01-13-1945', '4159 Elenor Corner\r\nNorth Andyhaven, RI 53469', '', 'Other', 'Heidi Okuneva', '6037 Esteban Springs Apt. 795\r\nNew Cristina, SD 84580', 'Lake Savanna', 'rgion1', '840 Swaniawski Street Suite 172', '+7424002329490', '1-844-821-5598', 'bernard.walker@gmail.com', 'maria43@example.net', '01-43', 1491112002, 1, NULL, NULL, NULL, NULL),
@@ -887,7 +892,7 @@ INSERT INTO `students` (`student_id`, `student_firstname`, `student_image`, `stu
 (66, 'Roscoe', NULL, 'Farrell', 'Turner', 'male', '01-27-1970', '2876 Bashirian Run\r\nCecileville, ND 30286-1236', 'single', 'Filipino', 'Nicolas Leuschke', '414 Hillary Forest Suite 983\r\nTorpburgh, NV 96418-4552', 'Majorside', 'region4', '9398 Donnelly Island', '+9290776135836', '1-888-354-8459', 'ashlee01@schmeler.info', 'padberg.amya@example.com', '70-66', 1491112002, 1, NULL, NULL, NULL, NULL),
 (67, 'Kellie', NULL, 'Spencer', 'Braun', 'female', '02-24-2014', '8974 Beatty Locks\r\nWest Maryam, WV 80390', '', 'Other', 'Hester Schiller', '914 Bergstrom Extensions Apt. 196\r\nIvorytown, CO 81576', 'Mortonchester', 'rgion1', '7003 Kailee Bridge', '+6470174747056', '800-494-5832', 'ashley.blick@yahoo.com', 'spencer.cicero@example.com', '01-67', 1491112002, 1, NULL, NULL, NULL, NULL),
 (68, 'Barbara', NULL, 'Parker', 'Lang', 'male', '11-07-1954', '713 Gleason Vista Apt. 362\r\nBergstromfort, TN 8814', '', 'Filipino', 'Magnolia Boehm II', '30676 Jeanie Mount\r\nLake Winnifred, WY 21686-3223', 'East Aliza', 'region4', '3127 Steuber Pine', '+4757373127865', '(844) 440-2772', 'hmiller@hotmail.com', 'beier.brandon@example.net', '40-68', 1491112002, 1, NULL, NULL, NULL, NULL),
-(69, 'Maurine', NULL, 'Goyette', 'Kohler', 'female', '09-01-1990', '3128 Reichel Glens\r\nWest Rosella, SD 23569', 'single', 'Filipino', 'Lonnie Murray', '752 Salvatore Green Apt. 096\r\nLemkeview, MT 89826', 'Ondrickashire', 'region2.........................', '6433 Malachi Motorway Suite 269', '+2048998046470', '888.832.4502', 'jamey69@hotmail.com', 'deonte.windler@example.org', '60-69', 1491112002, 1, NULL, NULL, 1493091188, 1),
+(69, 'Maurine', NULL, 'Goyette', 'Kohler', 'female', '09-01-1990', '3128 Reichel Glens\r\nWest Rosella, SD 23569', 'single', 'Filipino', 'Lonnie Murray', '752 Salvatore Green Apt. 096\r\nLemkeview, MT 89826', 'Ondrickashire', 'region2.........................', '6433 Malachi Motorway Suite 269', '+2048998046470', '888.832.4502', 'jamey69@hotmail.com', 'deonte.windler@example.org', '60-69', 1491112002, 1, NULL, NULL, 1493106031, 1),
 (70, 'Pattie', NULL, 'Satterfield', 'Collins', 'female', '10-01-1988', '877 Herman Dale Suite 308\r\nSatterfieldfurt, WI 295', '', 'Filipino', 'Dr. Jacynthe Crist DVM', '81237 Ullrich River\r\nAshlynnfurt, MD 42329', 'New Sigurd', 'rgion1', '2626 Fay Turnpike Apt. 457', '+4421111180474', '1-844-308-7320', 'frodriguez@yahoo.com', 'lelah.ondricka@example.net', '70-70', 1491112002, 1, NULL, NULL, NULL, NULL),
 (71, 'Katelin', NULL, 'Homenick', 'Klein', 'male', '08-13-1953', '5183 Dibbert Circles\r\nGibsonton, VT 03496', 'single', 'Filipino', 'Emory Hyatt', '79509 Modesto Center Suite 941\r\nEast Kylaberg, OR 58152', 'Blickfort', 'region4', '204 Feest Rapids Apt. 875', '+1720902291467', '800.320.5647', 'ubahringer@mckenzie.com', 'koelpin.gabriel@example.org', '50-71', 1491112002, 1, NULL, NULL, NULL, NULL),
 (72, 'Deon', NULL, 'Johnson', 'Lind', 'male', '09-11-1988', '646 Tabitha Mews\r\nEast Petratown, VA 83459-7423', 'single', 'Other', 'Roma Huels', '5684 Legros Locks Suite 382\r\nOscarfurt, AK 61669', 'Treutelstad', 'region3', '5000 Davis Park Suite 414', '+4944999891743', '877.219.4008', 'guiseppe.mckenzie@kunde.org', 'andreane46@example.net', '30-72', 1491112002, 1, NULL, NULL, NULL, NULL),
@@ -919,12 +924,13 @@ INSERT INTO `students` (`student_id`, `student_firstname`, `student_image`, `stu
 (98, 'Pablo', NULL, 'Schroeder', 'Ankunding', 'male', '04-22-1981', '156 Medhurst Stravenue\r\nBergnaumchester, GA 06914-', 'single', 'Filipino', 'Domingo Thompson', '5254 Genesis Points\r\nDickifort, VA 28805-0030', 'West Moniqueport', 'rgion1', '73284 Clare Estates', '+1399696283753', '(877) 874-5510', 'maida.farrell@gmail.com', 'tluettgen@example.com', '20-98', 1491112002, 1, NULL, NULL, NULL, NULL),
 (99, 'Beau', NULL, 'Berge', 'Dach', 'female', '06-30-2011', '21498 Edwardo Falls\r\nStammland, VT 93026-5842', '', 'Filipino', 'Prof. William Powlowski MD', '878 Jon Lights\r\nNew Brenna, LA 27206-1236', 'Briaville', 'rgion1', '7105 Zoie Rapid Apt. 734', '+7884392282999', '877.743.0554', 'hartmann.garnett@kassulke.com', 'genevieve.rolfson@example.net', '40-99', 1491112002, 1, NULL, NULL, NULL, NULL),
 (100, 'Maynard', NULL, 'Schowalter', 'Huel', 'male', '09-06-1996', '19398 Jammie Park Apt. 011\r\nRudolphville, MO 97978', 'single', 'Filipino', 'Simone Blick', '1163 Landen Mill\r\nMillsborough, AR 22180', 'Port Suzanne', 'region3', '49942 Frami Union Apt. 948', '+3234532164336', '877.947.1721', 'htoy@hegmann.info', 'moses02@example.net', '50-100', 1491112002, 1, NULL, NULL, NULL, NULL),
-(101, 'kjh', 'b24561cf419452f9487fdb842e991115.jpg', 'kjhksdfsdf', 'jhksdfsdf', 'male', '02-27-2010', 'sdfsdfsdfsdfsd', 'single', 'sdfsdfsdfdsf', 'dsfsdfsdf', 'sdfsdfsdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '70-102', 1491890796, 1, NULL, NULL, 1492581948, 1),
+(101, 'kjh', '2464c639ae214349de87921f23f584e7.jpg', 'kjhksdfsdf', 'jhksdfsdf', 'male', '02-27-2010', 'sdfsdfsdfsdfsd', 'single', 'sdfsdfsdfdsf', 'dsfsdfsdf', 'sdfsdfsdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '70-102', 1491890796, 1, NULL, NULL, 1493175446, 1),
 (102, 'sdfsdfsdfsdf', NULL, 'sdfsdf', 'sdfsdf', 'male', '02-03-2000', 'sdfsdfsdfsd', 'single', 'sdfsdfsdfsdf', 'dydfshdfhd', 'dsfsdfsdfsdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '70-103', 1492588748, 1, NULL, NULL, 1492588765, 1),
-(103, 'asas', NULL, 'asdasd', 'asdasd', 'male', '01-04-1990', 'asdasdasdasdsad', 'single', 'asdasdsad', 'sadasdasdasd', 'asdasdasdasdasd', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1492801999, 1, NULL, NULL, 1492835859, 1),
+(103, 'asas', NULL, 'asdasd', 'asdasd', 'male', '01-04-1990', 'asdasdasdasdsad', 'single', 'asdasdsad', 'sadasdasdasd', 'asdasdasdasdasd', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1492801999, 1, NULL, NULL, 1493092758, 1),
 (104, 'aaaaaaaaa', NULL, 'aaaaaaaaaaaa', 'asdasdasdasd', 'female', '02-01-1980', 'asdasdasdasd', 'single', 'asdasdasd', 'asdasdasd', 'asdasdasd', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-0002', 1492802115, 1, NULL, NULL, 1492802128, 1),
-(105, 'test amt', NULL, 'kjhkjdgdfg', 'hjhkjhkjhk', 'male', '03-01-1990', 'dfgdfgdfgdfg', 'single', 'dffffffffffff', 'dffffffffffff', 'dffffffffffffffffff', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-0003', 1492836242, 1, NULL, NULL, 1492836263, 1),
-(106, 'myname', NULL, 'mymiddlename', 'maylastname', 'male', '01-03-1980', 'birtha place grabe na itoh', 'single', 'filipinooooo', 'parent brahhhhh', 'permanet addres brtahhhhh', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-0004', 1492869629, 1, NULL, NULL, 1492869976, 1);
+(105, 'test amt', NULL, 'kjhkjdgdfg', 'hjhkjhkjhk', 'male', '03-01-1990', 'dfgdfgdfgdfg', 'single', 'dffffffffffff', 'dffffffffffff', 'dffffffffffffffffff', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-0003', 1492836242, 1, NULL, NULL, 1493092442, 1),
+(106, 'mynamelll', NULL, 'mymiddlenamezzz', 'maylastnamezzz', 'male', '01-03-1980', 'birtha place grabe na itoh', 'single', 'filipinooooo', 'parent brahhhhh', 'permanet addres brtahhhhh', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-0004', 1492869629, 1, NULL, NULL, 1493185357, 1),
+(111, 'testfirst', NULL, 'testmiddle', 'testlst', 'male', '04-12-1990', 'ergdsgdsfgdfgd', 'single', 'fgdfgdfgdfgdfg', 'dfgdfgdfgdfg', 'dffffffffff dfg dfgdfgdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1493192446, 1, NULL, NULL, 1493193535, 1);
 
 -- --------------------------------------------------------
 
@@ -932,8 +938,9 @@ INSERT INTO `students` (`student_id`, `student_firstname`, `student_image`, `stu
 -- Table structure for table `students_subjects`
 --
 
-CREATE TABLE IF NOT EXISTS `students_subjects` (
-  `student_subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `students_subjects`;
+CREATE TABLE `students_subjects` (
+  `student_subject_id` int(8) UNSIGNED NOT NULL,
   `enrollment_id` int(11) NOT NULL,
   `subject_offer_id` int(11) NOT NULL,
   `student_subject_enroll_status` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
@@ -942,8 +949,7 @@ CREATE TABLE IF NOT EXISTS `students_subjects` (
   `deleted_at` int(11) DEFAULT NULL,
   `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL,
-  PRIMARY KEY (`student_subject_id`)
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -957,8 +963,9 @@ TRUNCATE TABLE `students_subjects`;
 -- Table structure for table `subjects`
 --
 
-CREATE TABLE IF NOT EXISTS `subjects` (
-  `subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `subjects`;
+CREATE TABLE `subjects` (
+  `subject_id` int(8) UNSIGNED NOT NULL,
   `subject_code` varchar(50) NOT NULL,
   `subject_description` varchar(100) NOT NULL,
   `created_at` int(11) NOT NULL,
@@ -967,11 +974,8 @@ CREATE TABLE IF NOT EXISTS `subjects` (
   `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
   `updated_user_id` int(11) UNSIGNED DEFAULT NULL,
-  `course_id` int(11) UNSIGNED DEFAULT NULL,
-  PRIMARY KEY (`subject_id`),
-  UNIQUE KEY `subject_code` (`subject_code`),
-  UNIQUE KEY `subject_description` (`subject_description`)
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
+  `course_id` int(11) UNSIGNED NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `subjects`
@@ -983,43 +987,66 @@ TRUNCATE TABLE `subjects`;
 --
 
 INSERT INTO `subjects` (`subject_id`, `subject_code`, `subject_description`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`, `course_id`) VALUES
-(1, 'Engl 111', 'Communication Arts', 1490273057, 1, NULL, NULL, NULL, NULL, NULL),
-(2, 'IT 111', 'It Fundamentals', 1490273080, 1, NULL, NULL, NULL, NULL, NULL),
-(3, 'AMT 111', 'Fundamentals of Aero Math', 1490273531, 1, NULL, NULL, NULL, NULL, NULL),
-(4, 'AMT 112', 'Theory of Flight', 1490273558, 1, NULL, NULL, NULL, NULL, NULL),
-(5, 'AMT 113', 'Mechanical Drawing & Blueprints', 1490273607, 1, NULL, NULL, NULL, NULL, NULL),
-(6, 'AMT 114', 'A/C Power plant I (Reciprocating Engine)', 1490277785, 1, NULL, NULL, NULL, NULL, NULL),
-(7, 'AMT 115', 'A/C Materials Construction & Repair', 1490277981, 1, NULL, NULL, NULL, NULL, NULL),
-(8, 'P.E. 111', 'Physical Ecducation I', 1490279027, 1, NULL, NULL, NULL, NULL, NULL),
-(9, 'NSTP 111', 'National Service Training Program', 1490279067, 1, NULL, NULL, NULL, NULL, NULL),
-(10, 'Engl 121', 'English Grammar & Composition II', 1490279159, 1, NULL, NULL, NULL, NULL, NULL),
-(11, 'IT 121', 'Introduction to Internet Web-Base Programming', 1490279201, 1, NULL, NULL, NULL, NULL, NULL),
-(12, 'AMT 121', 'Pnedraulics', 1490279251, 1, NULL, NULL, NULL, NULL, NULL),
-(13, 'AMT 122', 'Aircraft Propellers', 1490279293, 1, NULL, NULL, NULL, NULL, NULL),
-(14, 'AMT 123', 'A/C Fuels & Fuels System', 1490279487, 1, NULL, NULL, NULL, NULL, NULL),
-(15, 'AMT 124', 'A/C Electricity & Ignition System', 1490279530, 1, NULL, NULL, NULL, NULL, NULL),
-(16, 'P.E. 121', 'Physical Ecducation II', 1490279565, 1, NULL, NULL, NULL, NULL, NULL),
-(18, 'NSTP 121', 'National Service Training Program II', 1490279727, 1, NULL, NULL, NULL, NULL, NULL),
-(19, 'AMT 211', 'Civil Arts Laws & Labor Laws', 1490279784, 1, NULL, NULL, NULL, NULL, NULL),
-(20, 'AMT 212', 'Economics of Air Transfortation', 1490279816, 1, NULL, NULL, NULL, NULL, NULL),
-(21, 'AMT 213', 'A/C Powers Plants II (Turbo, Prop & Gas Turbine Engine)', 1490279900, 1, NULL, NULL, NULL, NULL, NULL),
-(22, 'AMT 214', 'Helicopter, Principle & Operations', 1490279970, 1, NULL, NULL, NULL, NULL, NULL),
-(23, 'AMT 215', 'Aircraft Instruments', 1490280172, 1, NULL, NULL, NULL, NULL, NULL),
-(24, 'Pol. Sci. 211', 'Phil. Gov"t & New Constitution', 1490280244, 1, NULL, NULL, NULL, NULL, NULL),
-(25, 'P.E. 211', 'Physical Ecducation III', 1490280310, 1, NULL, NULL, NULL, NULL, NULL),
-(26, 'W.E. 211', 'Social Values', 1490280339, 1, NULL, NULL, NULL, NULL, NULL),
-(27, 'AMT 221', 'Basic Supervision & Shop Management', 1490280458, 1, NULL, NULL, NULL, NULL, NULL),
-(28, 'AMT 222', 'Airframe Maintenance & Servicing', 1490280492, 1, NULL, NULL, NULL, NULL, NULL),
-(29, 'AMT 223', 'A/C Auxiliary System, Maintenance & Servicing', 1490280566, 1, NULL, NULL, NULL, NULL, NULL),
-(30, 'AMT 224', 'Power plant Maintenance Servicing', 1490280621, 1, NULL, NULL, NULL, NULL, NULL),
-(31, 'AMT 225', 'On The Job Training Review', 1490280659, 1, NULL, NULL, NULL, NULL, NULL),
-(32, 'W.E. 221', 'Industrials Values', 1490280870, 1, NULL, NULL, NULL, NULL, NULL),
-(33, 'Cur ls 221', 'Seminar on Drug Abuse, Water & Air Polution & Family Planing', 1490281083, 1, NULL, NULL, NULL, NULL, NULL),
-(34, 'P.E. 221', 'Physical Ecducation IV', 1490281131, 1, NULL, NULL, NULL, NULL, NULL),
-(35, 'Practicum', 'On The Job Training 3 units', 1490281157, 1, NULL, NULL, NULL, NULL, NULL),
-(36, 'HRM 1', 'Housekeeping Procedures', 1490360278, 1, NULL, NULL, NULL, NULL, NULL),
-(37, 'code', 'descriptive', 1491730750, 1, NULL, NULL, NULL, NULL, NULL),
-(40, 'asdasddds', 'asdasdasdasd', 1492937553, 1, NULL, NULL, NULL, NULL, 1);
+(1, 'Engl 111', 'Communication Arts', 1490273057, 1, NULL, NULL, 1493189201, 1, 0),
+(2, 'IT 111', 'It Fundamentals', 1490273080, 1, NULL, NULL, 1493184744, 1, 0),
+(3, 'AMT 111', 'Fundamentals of Aero Math', 1490273531, 1, NULL, NULL, 1493186790, 1, 6),
+(4, 'AMT 112', 'Theory of Flight', 1490273558, 1, NULL, NULL, 1493186786, 1, 6),
+(5, 'AMT 113', 'Mechanical Drawing & Blueprints', 1490273607, 1, NULL, NULL, 1493186729, 1, 6),
+(6, 'AMT 114', 'A/C Power plant I (Reciprocating Engine)', 1490277785, 1, NULL, NULL, 1493186724, 1, 6),
+(7, 'AMT 115', 'A/C Materials Construction & Repair', 1490277981, 1, NULL, NULL, 1493186720, 1, 6),
+(8, 'P.E. 111', 'Physical Ecducation I', 1490279027, 1, NULL, NULL, 1493184744, 1, 0),
+(9, 'NSTP 111', 'National Service Training Program', 1490279067, 1, NULL, NULL, 1493184744, 1, 0),
+(10, 'Engl 121', 'English Grammar & Composition II', 1490279159, 1, NULL, NULL, 1493184744, 1, 0),
+(11, 'IT 121', 'Introduction to Internet Web-Base Programming', 1490279201, 1, NULL, NULL, 1493184744, 1, 0),
+(12, 'AMT 121', 'Pnedraulics', 1490279251, 1, NULL, NULL, 1493186712, 1, 6),
+(13, 'AMT 122', 'Aircraft Propellers', 1490279293, 1, NULL, NULL, 1493186708, 1, 6),
+(14, 'AMT 123', 'A/C Fuels & Fuels System', 1490279487, 1, NULL, NULL, 1493186703, 1, 6),
+(15, 'AMT 124', 'A/C Electricity & Ignition System', 1490279530, 1, NULL, NULL, 1493186698, 1, 6),
+(16, 'P.E. 121', 'Physical Ecducation II', 1490279565, 1, NULL, NULL, 1493184744, 1, 0),
+(18, 'NSTP 121', 'National Service Training Program II', 1490279727, 1, NULL, NULL, 1493184744, 1, 0),
+(19, 'AMT 211', 'Civil Arts Laws & Labor Laws', 1490279784, 1, NULL, NULL, 1493186692, 1, 6),
+(20, 'AMT 212', 'Economics of Air Transfortation', 1490279816, 1, NULL, NULL, 1493186779, 1, 6),
+(21, 'AMT 213', 'A/C Powers Plants II (Turbo, Prop & Gas Turbine Engine)', 1490279900, 1, NULL, NULL, 1493186773, 1, 6),
+(22, 'AMT 214', 'Helicopter, Principle & Operations', 1490279970, 1, NULL, NULL, 1493186762, 1, 6),
+(23, 'AMT 215', 'Aircraft Instruments', 1490280172, 1, NULL, NULL, 1493186758, 1, 6),
+(24, 'Pol. Sci. 211', 'Phil. Gov"t & New Constitution', 1490280244, 1, NULL, NULL, 1493184744, 1, 0),
+(25, 'P.E. 211', 'Physical Ecducation III', 1490280310, 1, NULL, NULL, 1493184744, 1, 0),
+(26, 'W.E. 211', 'Social Values', 1490280339, 1, NULL, NULL, 1493184744, 1, 0),
+(27, 'AMT 221', 'Basic Supervision & Shop Management', 1490280458, 1, NULL, NULL, 1493186753, 1, 6),
+(28, 'AMT 222', 'Airframe Maintenance & Servicing', 1490280492, 1, NULL, NULL, 1493186749, 1, 6),
+(29, 'AMT 223', 'A/C Auxiliary System, Maintenance & Servicing', 1490280566, 1, NULL, NULL, 1493186743, 1, 6),
+(30, 'AMT 224', 'Power plant Maintenance Servicing', 1490280621, 1, NULL, NULL, 1493186740, 1, 6),
+(31, 'AMT 225', 'On The Job Training Review', 1490280659, 1, NULL, NULL, 1493186735, 1, 6),
+(32, 'W.E. 221', 'Industrials Values', 1490280870, 1, NULL, NULL, 1493184744, 1, 0),
+(33, 'Cur ls 221', 'Seminar on Drug Abuse, Water & Air Polution & Family Planing', 1490281083, 1, NULL, NULL, 1493184744, 1, 0),
+(34, 'P.E. 221', 'Physical Ecducation IV', 1490281131, 1, NULL, NULL, 1493184744, 1, 0),
+(35, 'Practicum', 'On The Job Training 3 units', 1490281157, 1, NULL, NULL, 1493184744, 1, 0),
+(36, 'HRM 1', 'Housekeeping Procedures', 1490360278, 1, NULL, NULL, 1493184744, 1, 0),
+(37, 'code', 'descriptive', 1491730750, 1, NULL, NULL, 1493184744, 1, 0),
+(40, 'asdasddds', 'asdasdasdasd', 1492937553, 1, NULL, NULL, 1493184744, 1, 1),
+(41, 'test 1', 'test1 desc', 1493180183, 1, NULL, NULL, 1493185889, 1, 10),
+(42, 'test 2', 'qweqwe', 1493181466, 1, NULL, NULL, 1493185873, 1, 10),
+(43, 'test gened', 'gened', 1493182894, 1, NULL, NULL, 1493184744, 1, 0),
+(44, 'test 3', 'test2', 1493182910, 1, NULL, NULL, 1493185741, 1, 10),
+(45, 'test 4', 'test4', 1493183437, 1, NULL, NULL, 1493184744, 1, 10),
+(46, 'gwwg', 'asdasdsad', 1493184501, 1, NULL, NULL, 1493184744, 1, 0),
+(47, 'sdfsdfqqsdfsdfsdfsdf', 'sdfsdf', 1493184512, 1, NULL, NULL, 1493185665, 1, 0),
+(49, 'ghfgh', 'fgfg', 1493185048, 1, NULL, NULL, NULL, NULL, 0),
+(50, 'terter', 'tertert', 1493185078, 1, NULL, NULL, NULL, NULL, 0),
+(51, 'ssdfsdf', 'sss', 1493185089, 1, NULL, NULL, NULL, NULL, 0),
+(52, 'ssssssssssssssss', 'descccssssss', 1493185097, 1, NULL, NULL, NULL, NULL, 1),
+(53, 'fsdfsdf', 'sdfssd', 1493185124, 1, NULL, NULL, NULL, NULL, 0),
+(54, 'damn', 'damn', 1493185155, 1, NULL, NULL, NULL, NULL, 0),
+(55, 'test 6', 'test6', 1493185707, 1, NULL, NULL, 1493185965, 1, 10),
+(56, 'must null', 'null', 1493188458, 1, NULL, NULL, NULL, NULL, 0),
+(57, 'null2', 'null2', 1493188643, 1, NULL, NULL, NULL, NULL, 0),
+(58, 'null3', 'null3', 1493188657, 1, NULL, NULL, NULL, NULL, 0),
+(59, 'null4', 'null4', 1493188712, 1, NULL, NULL, NULL, NULL, 0),
+(60, 'nulllast', 'lastttt\\', 1493188788, 1, NULL, NULL, NULL, NULL, 0),
+(61, 'dddd', 'dddd', 1493189217, 1, NULL, NULL, 1493190039, 1, 0),
+(62, 'asas', 'asas', 1493189238, 1, NULL, NULL, NULL, NULL, 7),
+(63, 'zerrrr', 'rrrro', 1493189911, 1, NULL, NULL, 1493189968, 1, 0),
+(64, 'test 5', 'test55', 1493191520, 1, NULL, NULL, NULL, NULL, 10);
 
 -- --------------------------------------------------------
 
@@ -1027,8 +1054,9 @@ INSERT INTO `subjects` (`subject_id`, `subject_code`, `subject_description`, `cr
 -- Table structure for table `subject_offers`
 --
 
-CREATE TABLE IF NOT EXISTS `subject_offers` (
-  `subject_offer_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `subject_offers`;
+CREATE TABLE `subject_offers` (
+  `subject_offer_id` int(8) UNSIGNED NOT NULL,
   `subject_offer_semester` enum('first','second','summer') NOT NULL,
   `subject_offer_school_year` varchar(9) NOT NULL,
   `user_id` int(11) UNSIGNED NOT NULL,
@@ -1038,9 +1066,8 @@ CREATE TABLE IF NOT EXISTS `subject_offers` (
   `deleted_at` int(11) DEFAULT NULL,
   `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL,
-  PRIMARY KEY (`subject_offer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `subject_offers`
@@ -1079,8 +1106,9 @@ INSERT INTO `subject_offers` (`subject_offer_id`, `subject_offer_semester`, `sub
 -- Table structure for table `subject_offer_line`
 --
 
-CREATE TABLE IF NOT EXISTS `subject_offer_line` (
-  `subject_offer_line_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `subject_offer_line`;
+CREATE TABLE `subject_offer_line` (
+  `subject_offer_line_id` int(8) UNSIGNED NOT NULL,
   `subject_offer_line_start` time NOT NULL,
   `subject_offer_line_end` time NOT NULL,
   `subject_offer_line_monday` tinyint(1) NOT NULL DEFAULT '0',
@@ -1103,9 +1131,8 @@ CREATE TABLE IF NOT EXISTS `subject_offer_line` (
   `deleted_at` int(11) DEFAULT NULL,
   `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL,
-  PRIMARY KEY (`subject_offer_line_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `subject_offer_line`
@@ -1151,8 +1178,9 @@ INSERT INTO `subject_offer_line` (`subject_offer_line_id`, `subject_offer_line_s
 -- Table structure for table `users`
 --
 
-CREATE TABLE IF NOT EXISTS `users` (
-  `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `id` mediumint(8) UNSIGNED NOT NULL,
   `ip_address` varbinary(16) NOT NULL,
   `username` varchar(100) NOT NULL,
   `password` varchar(80) NOT NULL,
@@ -1170,11 +1198,8 @@ CREATE TABLE IF NOT EXISTS `users` (
   `company` varchar(100) DEFAULT NULL,
   `phone` varchar(50) DEFAULT NULL,
   `gen_code` varchar(100) DEFAULT NULL,
-  `updated_at` int(11) UNSIGNED DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`),
-  UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+  `updated_at` int(11) UNSIGNED DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `users`
@@ -1186,7 +1211,7 @@ TRUNCATE TABLE `users`;
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `gen_code`, `updated_at`) VALUES
-(1, 0x7f000001, 'administrator', '$2y$08$m8P3WHDASe.hDP4Jn6J9iut/YsshOKD3xuzuVpjiTKeFf146Mfgoi', '9462e8eee0', 'admin@admin.com', '', NULL, NULL, 'P.VVK2FJcCuNcEc3DmjCHu', 1268889823, 1493091143, 1, 'Admin', 'istrator', 'ADMIN', '0', 'TRjFe8wlcIQTDHzJ0mQWyO', 1493087701),
+(1, 0x7f000001, 'administrator', '$2y$08$m8P3WHDASe.hDP4Jn6J9iut/YsshOKD3xuzuVpjiTKeFf146Mfgoi', '9462e8eee0', 'admin@admin.com', '', NULL, NULL, '/Z10BrAeQXy8Zu772w0KFu', 1268889823, 1493172891, 1, 'Admin', 'istrator', 'ADMIN', '0', 'hVbzP7t1bUucznclJYzCpO', 1493172892),
 (2, 0x3a3a31, 'username1', '$2y$08$VbnBcmlg9czB1SIgr7Ay0ueYoWgQ5LJpK1R6WAHq6AahPzwU2tJDe', 'MAVcDoJ5VAh5weVomuibx.', 'emailphfbc1@gmail.com', NULL, NULL, NULL, NULL, 1491881053, NULL, 1, 'Firstlc', 'Lastzted', 'Companys', '+63970-120-6547', NULL, 1492077198),
 (3, 0x3a3a31, 'username2', '$2y$08$EIHZAlVjTizI3EsJd0EEnugOzV4QiV3ABOtroFDbBuIsahsxhzPN6', 'ejQVNM5OAO9ZWFITrJ1kAO', 'emailshu2@gmail.com', NULL, NULL, NULL, NULL, 1491881053, NULL, 1, 'Firstrdlw', 'Lastosjxs', 'Companyqe', '+63926-512-7038', NULL, NULL),
 (4, 0x3a3a31, 'username3', '$2y$08$uFrsQKdseWglVdUh/ZOCVucxgAjZyw3xiZQBGmB2c6.z//gP3RMKi', 'AQoK7aQ8D7UGLbpDK6LFFe', 'emailjad3@gmail.com', NULL, NULL, NULL, NULL, 1491881053, NULL, 1, 'Firstbii', 'Lasth', 'Companyg', '+63992-627-2604', NULL, NULL),
@@ -1205,12 +1230,12 @@ INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`
 -- Table structure for table `users_groups`
 --
 
-CREATE TABLE IF NOT EXISTS `users_groups` (
-  `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `users_groups`;
+CREATE TABLE `users_groups` (
+  `id` mediumint(8) UNSIGNED NOT NULL,
   `user_id` mediumint(8) UNSIGNED NOT NULL,
-  `group_id` mediumint(8) UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=183 DEFAULT CHARSET=utf8;
+  `group_id` mediumint(8) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `users_groups`
@@ -1242,15 +1267,15 @@ INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
 -- Table structure for table `users_last_logins`
 --
 
-CREATE TABLE IF NOT EXISTS `users_last_logins` (
-  `users_last_login_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `users_last_logins`;
+CREATE TABLE `users_last_logins` (
+  `users_last_login_id` int(8) UNSIGNED NOT NULL,
   `user_id` int(11) NOT NULL,
   `ip_address` varbinary(16) NOT NULL,
   `agent` varchar(100) NOT NULL,
   `platform` varchar(100) NOT NULL,
-  `created_at` int(11) NOT NULL,
-  PRIMARY KEY (`users_last_login_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=182 DEFAULT CHARSET=utf8;
+  `created_at` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Truncate table before insert `users_last_logins`
@@ -1259,6 +1284,264 @@ CREATE TABLE IF NOT EXISTS `users_last_logins` (
 TRUNCATE TABLE `users_last_logins`;
 
 
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `controllers`
+--
+ALTER TABLE `controllers`
+  ADD PRIMARY KEY (`controller_id`),
+  ADD UNIQUE KEY `controller_name` (`controller_name`);
+
+--
+-- Indexes for table `courses`
+--
+ALTER TABLE `courses`
+  ADD PRIMARY KEY (`course_id`),
+  ADD UNIQUE KEY `course_code` (`course_code`),
+  ADD UNIQUE KEY `course_description` (`course_description`),
+  ADD UNIQUE KEY `course_code_id` (`course_code_id`);
+
+--
+-- Indexes for table `curriculums`
+--
+ALTER TABLE `curriculums`
+  ADD PRIMARY KEY (`curriculum_id`);
+
+--
+-- Indexes for table `curriculum_subjects`
+--
+ALTER TABLE `curriculum_subjects`
+  ADD PRIMARY KEY (`curriculum_subject_id`);
+
+--
+-- Indexes for table `dean_course`
+--
+ALTER TABLE `dean_course`
+  ADD PRIMARY KEY (`dean_course_id`),
+  ADD UNIQUE KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `educations`
+--
+ALTER TABLE `educations`
+  ADD PRIMARY KEY (`education_id`),
+  ADD UNIQUE KEY `education_code` (`education_code`),
+  ADD UNIQUE KEY `education_description` (`education_description`);
+
+--
+-- Indexes for table `enrollments`
+--
+ALTER TABLE `enrollments`
+  ADD PRIMARY KEY (`enrollment_id`),
+  ADD UNIQUE KEY `student_id` (`student_id`);
+
+--
+-- Indexes for table `groups`
+--
+ALTER TABLE `groups`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `login_attempts`
+--
+ALTER TABLE `login_attempts`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `ip_address` (`ip_address`),
+  ADD KEY `login` (`login`);
+
+--
+-- Indexes for table `logs`
+--
+ALTER TABLE `logs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `ip_address` (`ip_address`),
+  ADD KEY `user_agent` (`user_agent`);
+
+--
+-- Indexes for table `permissions`
+--
+ALTER TABLE `permissions`
+  ADD PRIMARY KEY (`permission_id`);
+
+--
+-- Indexes for table `requisites`
+--
+ALTER TABLE `requisites`
+  ADD PRIMARY KEY (`requisite_id`);
+
+--
+-- Indexes for table `rooms`
+--
+ALTER TABLE `rooms`
+  ADD PRIMARY KEY (`room_id`),
+  ADD UNIQUE KEY `room_number` (`room_number`);
+
+--
+-- Indexes for table `students`
+--
+ALTER TABLE `students`
+  ADD PRIMARY KEY (`student_id`),
+  ADD UNIQUE KEY `student_personal_email` (`student_personal_email`),
+  ADD UNIQUE KEY `student_guardian_email` (`student_guardian_email`),
+  ADD UNIQUE KEY `student_school_id` (`student_school_id`);
+
+--
+-- Indexes for table `students_subjects`
+--
+ALTER TABLE `students_subjects`
+  ADD PRIMARY KEY (`student_subject_id`);
+
+--
+-- Indexes for table `subjects`
+--
+ALTER TABLE `subjects`
+  ADD PRIMARY KEY (`subject_id`),
+  ADD UNIQUE KEY `subject_code` (`subject_code`);
+
+--
+-- Indexes for table `subject_offers`
+--
+ALTER TABLE `subject_offers`
+  ADD PRIMARY KEY (`subject_offer_id`);
+
+--
+-- Indexes for table `subject_offer_line`
+--
+ALTER TABLE `subject_offer_line`
+  ADD PRIMARY KEY (`subject_offer_line_id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indexes for table `users_groups`
+--
+ALTER TABLE `users_groups`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users_last_logins`
+--
+ALTER TABLE `users_last_logins`
+  ADD PRIMARY KEY (`users_last_login_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `controllers`
+--
+ALTER TABLE `controllers`
+  MODIFY `controller_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+--
+-- AUTO_INCREMENT for table `courses`
+--
+ALTER TABLE `courses`
+  MODIFY `course_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+--
+-- AUTO_INCREMENT for table `curriculums`
+--
+ALTER TABLE `curriculums`
+  MODIFY `curriculum_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+--
+-- AUTO_INCREMENT for table `curriculum_subjects`
+--
+ALTER TABLE `curriculum_subjects`
+  MODIFY `curriculum_subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+--
+-- AUTO_INCREMENT for table `dean_course`
+--
+ALTER TABLE `dean_course`
+  MODIFY `dean_course_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+--
+-- AUTO_INCREMENT for table `educations`
+--
+ALTER TABLE `educations`
+  MODIFY `education_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `enrollments`
+--
+ALTER TABLE `enrollments`
+  MODIFY `enrollment_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
+--
+-- AUTO_INCREMENT for table `groups`
+--
+ALTER TABLE `groups`
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `login_attempts`
+--
+ALTER TABLE `login_attempts`
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `logs`
+--
+ALTER TABLE `logs`
+  MODIFY `id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `permissions`
+--
+ALTER TABLE `permissions`
+  MODIFY `permission_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+--
+-- AUTO_INCREMENT for table `requisites`
+--
+ALTER TABLE `requisites`
+  MODIFY `requisite_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `rooms`
+--
+ALTER TABLE `rooms`
+  MODIFY `room_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+--
+-- AUTO_INCREMENT for table `students`
+--
+ALTER TABLE `students`
+  MODIFY `student_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
+--
+-- AUTO_INCREMENT for table `students_subjects`
+--
+ALTER TABLE `students_subjects`
+  MODIFY `student_subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+--
+-- AUTO_INCREMENT for table `subjects`
+--
+ALTER TABLE `subjects`
+  MODIFY `subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+--
+-- AUTO_INCREMENT for table `subject_offers`
+--
+ALTER TABLE `subject_offers`
+  MODIFY `subject_offer_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+--
+-- AUTO_INCREMENT for table `subject_offer_line`
+--
+ALTER TABLE `subject_offer_line`
+  MODIFY `subject_offer_line_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+--
+-- AUTO_INCREMENT for table `users_groups`
+--
+ALTER TABLE `users_groups`
+  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=183;
+--
+-- AUTO_INCREMENT for table `users_last_logins`
+--
+ALTER TABLE `users_last_logins`
+  MODIFY `users_last_login_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=185;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

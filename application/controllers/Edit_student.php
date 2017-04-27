@@ -88,6 +88,7 @@ class Edit_student extends CI_Capstone_Controller
 
         private function _input_ready($student_id, $uploaded)
         {
+                $this->load->model('Curriculum_model');
                 /**
                  * preparing the image name from uploading image
                  */
@@ -102,6 +103,13 @@ class Edit_student extends CI_Capstone_Controller
                 {
                         $additional_values_in_student['student_image'] = $img_name;
                 }
+
+                /**
+                 * get the active curriculum base on course_id
+                 */
+                $additional_data_enrollment = array(
+                    'curriculum_id' => $this->Curriculum_model->get_active_currilumn_by_course_id($this->input->post('courseid', TRUE))
+                );
                 /**
                  * start the DB transaction
                  */
@@ -116,7 +124,7 @@ class Edit_student extends CI_Capstone_Controller
                             'student_id' => $this->student->id
                         ))->update();
 
-                $e_affected_rows = $this->Enrollment_model->from_form(NULL, NULL, array(
+                $e_affected_rows = $this->Enrollment_model->from_form(NULL, $additional_data_enrollment, array(
                             'enrollment_id' => $this->student->enrollment_id
                         ))->update();
                 //:::::::::::::::::::::::::::::::::::::::::::::::::::::::::end

@@ -22,7 +22,7 @@ class Migration_Subjects extends CI_Migration
                 $fields = array(
                     'subject_id'          => array(
                         'type'           => 'INT',
-                        'constraint'     => 8,
+                        'constraint'     => 11,
                         'unsigned'       => TRUE,
                         'null'           => FALSE,
                         'auto_increment' => TRUE
@@ -36,7 +36,14 @@ class Migration_Subjects extends CI_Migration
                     'subject_description' => array(
                         'type'       => 'VARCHAR',
                         'constraint' => '100',
-                        'unique'     => TRUE,
+                        // 'unique'     => TRUE,
+                        'null'       => FALSE
+                    ),
+                    'course_id'           => array(
+                        'type'       => 'INT',
+                        'constraint' => 11,
+                        'unsigned'   => TRUE,
+                        'default'    => 0, // means gen-ed
                         'null'       => FALSE
                     ),
 //                    'subject_unit'        => array(

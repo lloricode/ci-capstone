@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ENGLISH
  */
@@ -26,6 +27,8 @@ $lang['index_subject_course_name_th'] = 'Program';
 
 $lang['view_subject_label'] = 'View Courses';
 
+$lang['edit_subject_label'] = 'Edit Course';
+$lang['create_subject_succesfully_update_message'] = 'Course Succesfully Updated!!';
 
 
 

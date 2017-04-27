@@ -13,7 +13,7 @@
             <?php endif; ?>
             <?php if (isset($student_enrolled_count)): ?>
                     <li class="bg_lg"> 
-                        <a href="<?php echo site_url('students'); ?>"> 
+                        <a href="<?php echo site_url('students?status=enrolled'); ?>"> 
                             <i class="icon-user"></i> 
                             <span class="label label-important"><?php echo $student_enrolled_count; ?></span> 
                             Enrolled Students 

@@ -151,4 +151,50 @@ class Curriculum_model extends MY_Model
                 );
         }
 
+        /**
+         * this will be use in
+         * adding/update curriculum_id in enrollment, 
+         * 
+         * @param int $_course_id_
+         * @return boolean
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        public function get_active_currilumn_by_course_id($_course_id_ = NULL)
+        {
+                if (is_null($_course_id_))
+                {
+                        show_error('no corriculum provided.');
+                }
+                /**
+                 * get_all to check also if only one active in curriculum by course_id
+                 */
+                $curriculum_obj = $this->where(array(
+                            'course_id'         => $_course_id_,
+                            'curriculum_status' => TRUE//only needed is the active
+                        ))->get_all();
+
+                if ($curriculum_obj)
+                {
+                        if (count($curriculum_obj) > 1)
+                        {
+                                /**
+                                 * the result is more than one, 
+                                 */
+                                $this->session->set_flashdata('message', bootstrap_error('Curriculum is more than 1 active.'));
+                                return FALSE;
+                        }
+                        /**
+                         * convert in single row, because we used get_all() (more than one rows)
+                         * 
+                         * then get the curriculum_id
+                         */
+                        return $curriculum_obj[0]->curriculum_id; //expected only one result [no need advance loop] 
+                }
+                /**
+                 * no curriculum found
+                 */
+                $this->session->set_flashdata('message', bootstrap_error('No curriculumn found'));
+                return FALSE;
+        }
+
 }

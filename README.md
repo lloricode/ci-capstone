@@ -1,5 +1,5 @@
 # [ci-capstone](http://ci-capstone.lloricmayugagarcia.com/)
-## A Thesis project made by using [CodeIgniter](http://codeigniter.com).
+## A Thesis project (Enrollment System) made by using [CodeIgniter](http://codeigniter.com).
 
 
 

@@ -92,7 +92,7 @@ echo doctype();
             <ul class="nav">
                 <li  class="dropdown" id="profile-messages" >
                     <?php
-                    echo anchor('#', '<i class="icon icon-user"></i><span class="text">' . $user_info . '</span><b class="caret"></b>', array(
+                    echo anchor('#', '<i class="icon icon-user"></i><span class="text"> ' . $user_info . ' </span><b class="caret"></b>', array(
                         'title'       => '',
                         'data-toggle' => 'dropdown',
                         'data-target' => '#profile-messages',
@@ -112,7 +112,7 @@ echo doctype();
                 </li>
                 <li class="dropdown" id="menu-messages">
                     <?php
-                    echo anchor('#', ' <i class="icon icon-flag"></i><span class="text">' . lang('lang_label') . '</span><b class="caret"></b>', array(
+                    echo anchor('#', ' <i class="icon icon-flag"></i><span class="text"> ' . lang('lang_label') . ' </span><b class="caret"></b>', array(
                         'title'       => '',
                         'data-toggle' => 'dropdown',
                         'data-target' => '#menu-messages',

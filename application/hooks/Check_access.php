@@ -25,6 +25,10 @@ class Check_access
 
         public function validate()
         {
+                $this->ion_auth->set_hook(
+                        /*       'pre_set_session' */ 'post_set_session', 'set_session_data_session_event', $this/* $this because the class already extended */, 'set_session_data_session', array()
+                );
+                
                 /**
                  * ignore login/authentication controller
                  */
@@ -37,7 +41,7 @@ class Check_access
                         redirect(site_url('auth/login'), 'refresh');
                 }
 
-             //   $this->_check_if_multiple_logged_in_one_user();
+                //   $this->_check_if_multiple_logged_in_one_user();
 
                 /**
                  * check controllers available of users, depend on user_groups
@@ -80,6 +84,53 @@ class Check_access
                          */
                         $this->session->unset_userdata($this->config->item('create_student_subject__session_name'));
                 }
+        }
+
+        private function _current_group_string($type = 'description')
+        {
+                $return = '';
+                foreach (get_instance()->ion_auth->get_users_groups()->result() as $g)
+                {
+                        $return .= $g->$type . '|';
+                }
+                return trim($return, '|');
+        }
+
+        public function set_session_data_session()
+        {
+                // show_error('aaaa');
+                $is_dean          = FALSE;
+                $dean_course_id   = NULL;
+                $dean_course_code = NULL;
+                if ($this->ion_auth->in_group($this->config->item('user_group_dean')))
+                {
+                        $is_dean = TRUE;
+                        $this->load->model('Dean_course_model');
+                        $obj     = $this->Dean_course_model->where(array(
+                                    'user_id' => $this->ion_auth->get_user_id()
+                                ))->get();
+                        if ($obj)
+                        {
+                                $this->load->model('Course_model');
+                                $dean_course_id   = $obj->course_id;
+                                $dean_course_code = $this->Course_model->get($obj->course_id)->course_code;
+                        }
+                }
+                //set the user name/last name in session
+                $user_obj = $this->ion_auth->user()->row();
+                $this->session->set_userdata(array(
+                    'user_first_name'          => $user_obj->first_name,
+                    'user_last_name'           => $user_obj->last_name,
+                    'user_fullname'            => $user_obj->last_name . ', ' . $user_obj->first_name,
+                    'gen_code'                 => $user_obj->gen_code, //this will be use for checking multiple logged machines in one account
+                    'user_groups_descriptions' => $this->_current_group_string(),
+                    'user_groups_names'        => $this->_current_group_string('name'),
+                    'user_is_dean'             => $is_dean,
+                    'user_dean_course_id'      => $dean_course_id,
+                    'user_dean_course_code'    => $dean_course_code,
+                ));
+//                $this->session->set_flashdata('message', bootstrap_success('User Exntended Login!!'));
+//                redirect('home' , 'refresh');
         }
 
         /**

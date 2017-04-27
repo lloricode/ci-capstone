@@ -38,21 +38,26 @@ class Create_subject extends CI_Capstone_Controller
         {
                 $inputs['subject_code'] = array(
                     'name'  => 'code',
-                    'id'    => 'code',
                     'type'  => 'text',
                     'value' => $this->form_validation->set_value('code'),
-                    'type'  => 'text',
                     'lang'  => 'create_subject_code_label',
                 );
 
                 $inputs['subject_description'] = array(
-                    'name'  => 'desc',
-                    'id'    => 'desc',
+                    'name'  => 'description',
                     'type'  => 'text',
-                    'value' => $this->form_validation->set_value('desc'),
-                    'type'  => 'text',
+                    'value' => $this->form_validation->set_value('description'),
                     'lang'  => 'create_subject_description_label'
                 );
+
+                $this->load->model('Course_model');
+                $inputs['course_id'] = array(
+                    'name'  => 'course',
+                    'value' => $this->Course_model->drpdown_with_gen_ed(),
+                    'type'  => 'dropdown',
+                    'lang'  => 'index_course_heading'
+                );
+
 
                 $data['subject_form'] = $this->form_boostrap('create-subject', $inputs, 'create_subject_heading', 'create_subject_submit_button_label', 'info-sign', NULL, TRUE);
                 $data['bootstrap']    = $this->_bootstrap();

@@ -13,7 +13,7 @@ class Subjects extends CI_Capstone_Controller
         {
                 parent::__construct();
                 $this->lang->load('ci_capstone/ci_subjects');
-                $this->load->model('Subject_model');
+                $this->load->model(array('Subject_model', 'Course_model'));
                 $this->load->library('pagination');
 
                 /**
@@ -54,8 +54,13 @@ class Subjects extends CI_Capstone_Controller
                                 $tmp = array(
                                     my_htmlspecialchars($subject->subject_code),
                                     my_htmlspecialchars($subject->subject_description),
-                                        //my_htmlspecialchars($subject->subject_unit),
+                                    $this->_subject_course($subject->course_id),
                                 );
+
+                                if (in_array('edit-subject', permission_controllers()))
+                                {
+                                        $tmp[] = table_row_button_link('edit-subject?subject-id=' . $subject->subject_id, 'Edit');
+                                }
                                 if ($this->ion_auth->is_admin())
                                 {
 
@@ -72,8 +77,12 @@ class Subjects extends CI_Capstone_Controller
                 $header = array(
                     lang('index_subject_code_th'),
                     lang('index_subject_description_th'),
-                        //lang('index_subject_unit_th'),
+                    lang('index_course_heading'),
                 );
+                if (in_array('edit-subject', permission_controllers()))
+                {
+                        $header[] = 'Edit';
+                }
                 if ($this->ion_auth->is_admin())
                 {
                         $header[] = 'Created By';
@@ -97,6 +106,15 @@ class Subjects extends CI_Capstone_Controller
                  * rendering users view
                  */
                 $this->render('admin/subjects', $template);
+        }
+
+        private function _subject_course($course_id)
+        {
+                if (is_null($course_id) OR $course_id == 0)
+                {
+                        return 'GEN ED';
+                }
+                return $this->Course_model->get($course_id)->course_code;
         }
 
         /**
