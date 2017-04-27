@@ -1399,9 +1399,7 @@ ALTER TABLE `students_subjects`
 --
 ALTER TABLE `subjects`
   ADD PRIMARY KEY (`subject_id`),
-  ADD UNIQUE KEY `subject_code` (`subject_code`),
-  ADD UNIQUE KEY `subject_description` (`subject_description`),
-  ADD UNIQUE KEY `subject_description_2` (`subject_description`);
+  ADD UNIQUE KEY `subject_code` (`subject_code`);
 
 --
 -- Indexes for table `subject_offers`
