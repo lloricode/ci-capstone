@@ -129,8 +129,7 @@ class Auth extends MY_Controller
                                 $this->session->set_flashdata('message', $this->ion_auth->messages());
                                 $this->_insert_session_id();
                                 $this->_insert_last_login();
-
-                                $this->set_session_data_session();
+                                
                                 redirect(site_url('home'), 'refresh');
                         }
                         else
