@@ -132,6 +132,33 @@ if ( ! function_exists('check_id_form_url'))
 
 }
 
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('uri_all_segments'))
+{
+
+        /**
+         * 
+         * @return string
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        function uri_all_segments()
+        {
+                $__get = '';
+                if ($_get_ = get_instance()->input->get())
+                {
+                        $__get .= '?';
+                        foreach ($_get_ as $k => $v)
+                        {
+                                $__get .= $k . '=' . $v . '&';
+                        }
+                        $__get = trim($__get, '&');
+                }
+                return $__get;
+        }
+
+}
+
 //
 //if (!function_exists('save_current_url'))
 //{

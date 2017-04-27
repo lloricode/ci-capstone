@@ -149,20 +149,7 @@ class MY_Lang extends CI_Lang
                 }
                 $uri = implode('/', $exploded);
 
-                /**
-                 * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
-                 */
-                $__get = '';
-                if ($_get_ = $CI->input->get())
-                {
-                        $__get .= '?';
-                        foreach ($_get_ as $k => $v)
-                        {
-                                $__get .= $k . '=' . $v . '&';
-                        }
-                        $__get = trim($__get, '&');
-                }
-                return $uri . $__get;
+                return $uri . uri_all_segments();
         }
 
         /**
