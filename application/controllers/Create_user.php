@@ -8,13 +8,6 @@ class Create_user extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
-                /**
-                 * just to make sure
-                 */
-                if ( ! $this->ion_auth->is_admin())
-                {
-                        show_error(lang('access_denied_of_current_user_group'));
-                }
                 $this->load->library('form_validation');
                 $this->lang->load('ci_ion_auth', TRUE);
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
@@ -25,6 +18,13 @@ class Create_user extends CI_Capstone_Controller
 
         public function index()
         {
+                /**
+                 * just to make sure
+                 */
+                if ( ! $this->ion_auth->is_admin())
+                {
+                        show_error(lang('access_denied_of_current_user_group'));
+                }
                 $tables          = $this->config->item('tables', 'ion_auth');
                 $identity_column = $this->config->item('identity', 'ion_auth');
                 $this->_set_validation($tables, $identity_column);
@@ -143,7 +143,7 @@ class Create_user extends CI_Capstone_Controller
                     'name'  => 'identity',
                     'value' => $this->form_validation->set_value('identity'),
                     'type'  => 'text',
-                    'lang'  => 'username_label',//from $this->lang->load('ci_ion_auth', TRUE);
+                    'lang'  => 'username_label', //from $this->lang->load('ci_ion_auth', TRUE);
                 );
 
                 $inputs['phone'] = array(

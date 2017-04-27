@@ -28,7 +28,7 @@ class Check_access
                 $this->ion_auth->set_hook(
                         /*       'pre_set_session' */ 'post_set_session', 'set_session_data_session_event', $this/* $this because the class already extended */, 'set_session_data_session', array()
                 );
-                
+
                 /**
                  * ignore login/authentication controller
                  */
@@ -129,8 +129,6 @@ class Check_access
                     'user_dean_course_id'      => $dean_course_id,
                     'user_dean_course_code'    => $dean_course_code,
                 ));
-//                $this->session->set_flashdata('message', bootstrap_success('User Exntended Login!!'));
-//                redirect('home' , 'refresh');
         }
 
         /**

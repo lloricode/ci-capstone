@@ -12,13 +12,6 @@ class Permissions extends CI_Capstone_Controller
         {
                 parent::__construct();
 
-                /**
-                 * just to make sure
-                 */
-                if ( ! $this->ion_auth->is_admin())
-                {
-                        show_error(lang('access_denied_of_current_user_group'));
-                }
                 $this->load->model('Group_model');
                 $this->load->library('pagination');
 
@@ -43,6 +36,13 @@ class Permissions extends CI_Capstone_Controller
          */
         public function index()
         {
+                /**
+                 * just to make sure
+                 */
+                if ( ! $this->ion_auth->is_admin())
+                {
+                        show_error(lang('access_denied_of_current_user_group'));
+                }
                 $this->main();
         }
 
