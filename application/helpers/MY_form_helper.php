@@ -95,7 +95,7 @@ if ( ! function_exists('input_bootstrap'))
                                                 $output .= form_dropdown($field['name'], $field['value'], set_value($field['name'], $default_value), array('style' => 'width: 220px'));
                                                 break;
                                         case 'multiselect':
-                                                $output .= form_multiselect($field['name'], $field['value'], get_instance()->input->post($field['name'], TRUE));
+                                                $output .= form_multiselect($field['name'], $field['value'], $CI->input->post($field['name'], TRUE));
                                                 break;
                                         default:
                                                 /**
@@ -138,7 +138,7 @@ if ( ! function_exists('input_bootstrap'))
                                                                                 $ignore = TRUE;
                                                                         }
                                                                 }
-                                                                
+
                                                                 if ( ! $ignore)
                                                                 {
                                                                         if (is_numeric($v))
@@ -154,7 +154,7 @@ if ( ! function_exists('input_bootstrap'))
                                                                                 $lang_ = lang($v);
                                                                         }
                                                                 }
-                                                                
+
                                                                 switch ($field['type'])
                                                                 {
                                                                         case 'checkbox':
