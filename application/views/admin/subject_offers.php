@@ -5,3 +5,7 @@ if (isset($table_subject_offers))
 {
         echo $table_subject_offers;
 }
+if (isset($view))
+{
+        echo $view;
+}
