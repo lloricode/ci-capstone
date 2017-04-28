@@ -190,6 +190,22 @@ class Subject_offers extends CI_Capstone_Controller
          */
         public function view()
         {
+                $data = $this->_data();
+
+                $template['facullty_schedule_students'] = MY_Controller::render('admin/_templates/button_view', array(
+                            'href'         => 'subject-offers/report?subject-offer-id=' . $data->obj->subject_offer_id . '&report=excel',
+                            'button_label' => 'Excel Report for ',
+                            'extra'        => array('class' => 'btn btn-success icon-print'),
+                                ), TRUE);
+
+                $template['view'] = $this->table_bootstrap($data->header, $data->data, 'table_open_bordered', 'index_student_heading', FALSE, TRUE);
+
+                $template['bootstrap'] = $this->_bootstrap();
+                $this->render('admin/subject_offers', $template);
+        }
+
+        private function _data()
+        {
                 $subj_orr_obj = check_id_from_url('subject_offer_id', 'Subject_offer_model', 'subject-offer-id');
                 $this->breadcrumbs->unshift(4, 'View', 'subject-offers/view?subject-offer-id=' . $subj_orr_obj->subject_offer_id);
 
@@ -235,8 +251,6 @@ class Subject_offers extends CI_Capstone_Controller
                         }
                 }
 
-
-
                 $header = array(
                     lang('index_student_school_id_th'),
                     lang('index_student_lastname_th'),
@@ -247,10 +261,22 @@ class Subject_offers extends CI_Capstone_Controller
                     'subject enrolled'
                 );
 
-                $template['view'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_student_heading', FALSE, TRUE);
+                return (object) array(
+                            'header' => $header,
+                            'data'   => $table_data,
+                            'obj'    => $subj_orr_obj
+                );
+        }
 
-                $template['bootstrap'] = $this->_bootstrap();
-                $this->render('admin/subject_offers', $template);
+        public function report()
+        {
+                if ('excel' === ((string) $this->input->get('report')))
+                {
+                        $data                  = $this->_data();
+                        $this->load->library('excel');
+                        $this->excel->filename = 'Report Schedule.';
+                        $this->excel->make_from_array($data->header, $data->data);
+                }
         }
 
         /**
