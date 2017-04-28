@@ -315,14 +315,14 @@ class Create_subject_offer extends CI_Capstone_Controller
                     'name'  => 'start2',
                     'value' => time_list(),
                     'type'  => 'dropdown',
-                    'lang'  => 'create_subject_offer_start_label2'
+                    'lang'  => 'create_subject_offer_start_label'
                 );
 
                 $this->data['subject_offer_end2'] = array(
                     'name'  => 'end2',
                     'value' => time_list(),
                     'type'  => 'dropdown',
-                    'lang'  => 'create_subject_offer_end_label2'
+                    'lang'  => 'create_subject_offer_end_label'
                 );
 
 
@@ -333,7 +333,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                             set_cache('as_dropdown_room_number')->
                             get_all(),
                     'type'  => 'dropdown',
-                    'lang'  => 'create_room_id_label2'
+                    'lang'  => 'create_room_id_label'
                 );
 
 

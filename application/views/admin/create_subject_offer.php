@@ -39,8 +39,11 @@ if (isset($two_forms_conflict_message))
                     echo input_bootstrap($user_id);
                     echo input_bootstrap($subject_id);
                     ?>
-
-                    <h3>sched</h3>                    
+                    <div class="control-group">
+                        <div class="control-label">
+                                <h3>Schedule</h3>    
+                        </div>
+                    </div>
 
                     <?php
                     /**
@@ -71,8 +74,11 @@ if (isset($two_forms_conflict_message))
                     echo input_bootstrap($room_id);
                     echo input_bootstrap($leclab);
                     ?>
-
-                    <h3>sched 2</h3>check to exclude<?php echo form_checkbox('exclude', TRUE, set_checkbox('exclude', set_value('exclude'))); ?>
+                    <div class="control-group">
+                        <div class="control-label">
+                                <h3>Schedule 2</h3>Check to exclude <?php echo form_checkbox('exclude', TRUE, set_checkbox('exclude', set_value('exclude'))); ?>
+                        </div>
+                    </div>
 
                     <?php
                     /**
