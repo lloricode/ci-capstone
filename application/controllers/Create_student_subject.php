@@ -90,11 +90,19 @@ class Create_student_subject extends CI_Capstone_Controller
                                          * rollback database
                                          */
                                         $this->db->trans_rollback();
+                                        $msg = '';
+                                        if ( ! $all_inserted)
+                                        {
+                                                $msg .= ' $all_inserted';
+                                        }
+                                        if ( ! $update_year_ok)
+                                        {
+                                                $msg .= ' $all_inserted';
+                                        }
+                                        $this->session->set_flashdata('message', bootstrap_error($msg)); //dont mention :D temporary and means bugs
                                 }
                                 else
                                 {
-                                        $this->db->trans_rollback();
-
                                         if ($this->db->trans_commit())
                                         {
                                                 $this->_reset_session();
@@ -136,11 +144,9 @@ class Create_student_subject extends CI_Capstone_Controller
                                 return FALSE;
                         }
 
-                        $this->session->set_flashdata('message', bootstrap_error('something wrong brah on line: ', __LINE__)); //dont mention :D temporary and means bugs
-                        return FALSE;
+                        return TRUE;
                 }
-
-                return TRUE;
+                return FALSE;
         }
 
         /**
