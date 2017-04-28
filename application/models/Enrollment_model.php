@@ -77,6 +77,13 @@ class Enrollment_model extends MY_Model
                     'foreign_key'   => 'curriculum_id',
                     'local_key'     => 'curriculum_id'
                 );
+
+                $this->has_one['student'] = array(
+                    'foreign_model' => 'Student_model',
+                    'foreign_table' => 'stundents',
+                    'foreign_key'   => 'student_id',
+                    'local_key'     => 'student_id'
+                );
         }
 
         private function _form()

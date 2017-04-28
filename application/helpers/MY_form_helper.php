@@ -95,7 +95,7 @@ if ( ! function_exists('input_bootstrap'))
                                                 $output .= form_dropdown($field['name'], $field['value'], set_value($field['name'], $default_value), array('style' => 'width: 220px'));
                                                 break;
                                         case 'multiselect':
-                                                $output .= form_multiselect($field['name'], $field['value'], get_instance()->input->post($field['name'], TRUE));
+                                                $output .= form_multiselect($field['name'], $field['value'], $CI->input->post($field['name'], TRUE));
                                                 break;
                                         default:
                                                 /**
@@ -124,10 +124,45 @@ if ( ! function_exists('input_bootstrap'))
                                                         foreach ($labels as $k => $v)
                                                         {
                                                                 $defaut = NULL;
+                                                                $lang_  = NULL;
+
+                                                                $ignore = FALSE;
+                                                                if (isset($field['field_lang']))
+                                                                {
+                                                                        if ( ! $field['field_lang'])
+                                                                        {
+                                                                                /**
+                                                                                 * no need lang
+                                                                                 */
+                                                                                $lang_  = $v;
+                                                                                $ignore = TRUE;
+                                                                        }
+                                                                }
+
+                                                                if ( ! $ignore)
+                                                                {
+                                                                        if (is_numeric($v))
+                                                                        {
+                                                                                /**
+                                                                                 * no need lang if numeric
+                                                                                 */
+                                                                                $lang_ = $v;
+                                                                        }
+                                                                        else
+                                                                        {
+
+                                                                                $lang_ = lang($v);
+                                                                        }
+                                                                }
+
                                                                 switch ($field['type'])
                                                                 {
                                                                         case 'checkbox':
-                                                                                if (isset($field['default']) && ((int) count((array) $CI->input->post($field['name'], TRUE)) === 0))
+                                                                                if (isset($field['value_is_one_name_is_label']))
+                                                                                {
+                                                                                        $defaut = (bool) $CI->input->post(strtolower($lang_ . $field['append_name']), TRUE);
+                                                                                }
+                                                                                elseif (isset($field['default']) && ((int) count((array) $CI->input->post($field['name'], TRUE)) === 0))
                                                                                 {
                                                                                         $field_default = $field['default'];
                                                                                         if ( ! is_array($field_default))
@@ -145,38 +180,16 @@ if ( ! function_exists('input_bootstrap'))
                                                                                 $defaut = ($field['value'] == $k);
                                                                                 break;
                                                                 }
-                                                                $lang_ = NULL;
 
-
-                                                                $ignore = FALSE;
-                                                                if (isset($field['field_lang']))
+                                                                $form_ = 'form_' . $field['type'];
+                                                                if (isset($field['value_is_one_name_is_label']))
                                                                 {
-                                                                        if ( ! $field['field_lang'])
-                                                                        {
-                                                                                /**
-                                                                                 * no need lang
-                                                                                 */
-                                                                                $lang_  = $v;
-                                                                                $ignore = TRUE;
-                                                                        }
+                                                                        $output .= form_label($form_(strtolower($lang_ . $field['append_name']), 1, $defaut) . ' ' . $lang_) . PHP_EOL;
                                                                 }
-                                                                if ( ! $ignore)
+                                                                else
                                                                 {
-                                                                        if (is_numeric($v))
-                                                                        {
-                                                                                /**
-                                                                                 * no need lang if numeric
-                                                                                 */
-                                                                                $lang_ = $v;
-                                                                        }
-                                                                        else
-                                                                        {
-
-                                                                                $lang_ = lang($v);
-                                                                        }
+                                                                        $output .= form_label($form_($field['name'], $k, $defaut) . ' ' . $lang_) . PHP_EOL;
                                                                 }
-                                                                $form_  = 'form_' . $field['type'];
-                                                                $output .= form_label($form_($field['name'], $k, $defaut) . ' ' . $lang_) . PHP_EOL;
                                                         }
                                                         break;
 //                                                case 'checkbox':

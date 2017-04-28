@@ -165,7 +165,7 @@ class Subject_offer_model extends MY_Model
                 return $this;
         }
 
-        public function all($current_sem_year = FALSE, $curriculum_id = FALSE, $enrollment_id = FALSE, $limit = NULL, $offset = NULL)
+        public function all($current_sem_year = FALSE, $curriculum_id = FALSE, $enrollment_id = FALSE, $limit = NULL, $offset = NULL, $faculty_id = NULL/* to get all current schedules */)
         {
                 $this->_query();
                 if ($current_sem_year)
@@ -198,7 +198,12 @@ class Subject_offer_model extends MY_Model
                         $where__               = array_merge($where__, $nested_where);
                         $change_name           = 'curriculum_id' . $curriculum_id;
                 }
-
+                if ( ! is_null($faculty_id))
+                {
+                        $this->where(array(
+                            'user_id' => $faculty_id
+                        ));
+                }
                 $this->with_curriculum_subject($where__);
                 if ( ! is_null($limit) && ! is_null($offset))
                 {

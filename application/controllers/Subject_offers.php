@@ -31,6 +31,7 @@ class Subject_offers extends CI_Capstone_Controller
          */
         public function index()
         {
+
                 /**
                  * get the page from url
                  * 
@@ -38,7 +39,7 @@ class Subject_offers extends CI_Capstone_Controller
                 $this->page_ = get_page_in_url();
 
                 //note: only current SEMESTER && SCHOOL_YEAR showed/result
-                $subl = $this->Subject_offer_model->all(TRUE, FALSE, FALSE, $this->limit, $this->limit * $this->page_ - $this->limit); //1st parameter is set to current semester and year
+                $subl = $this->Subject_offer_model->all(TRUE/* current sem n yr */, FALSE/* curr_id */, FALSE/* enrol_id */, $this->limit/* limit */, $this->limit * $this->page_ - $this->limit/* offset */, $this->_for_faculty_group()/* faculty_id */); //1st parameter is set to current semester and year
 
                 $table_data = array();
                 if ($subl)
@@ -74,6 +75,7 @@ class Subject_offers extends CI_Capstone_Controller
                                 {
                                         $line = array_merge($line, array(array('data' => 'no data', 'colspan' => '6', 'class' => 'taskStatus'/* just to make center */)));
                                 }
+                                $line[] = $this->_option_button_view($s->subject_offer_id);
                                 if ($this->ion_auth->is_admin())
                                 {
 
@@ -108,6 +110,7 @@ class Subject_offers extends CI_Capstone_Controller
                     'End',
                     'Room',
                     'Capacity',
+                    'Option'
                 );
 
                 if ($this->ion_auth->is_admin())
@@ -116,7 +119,15 @@ class Subject_offers extends CI_Capstone_Controller
                         $header[] = 'Updated By';
                 }
 
-                $count = $this->Subject_offer_model->where($this->Subject_offer_model->where_current_sem_year(TRUE))->count_rows();
+                $obj_pagination = $this->Subject_offer_model->where($this->Subject_offer_model->where_current_sem_year(TRUE));
+                if ($user_id        = $this->_for_faculty_group())
+                {
+                        $obj_pagination->where(array(
+                            'user_id' => $user_id
+                        ));
+                }
+
+                $count = $obj_pagination->count_rows();
 
                 $pagination = $this->pagination->generate_bootstrap_link('subject-offers/index', $count / $this->limit);
 
@@ -127,6 +138,25 @@ class Subject_offers extends CI_Capstone_Controller
                  * rendering users view
                  */
                 $this->render('admin/subject_offers', $template);
+        }
+
+        private function _option_button_view($subj_offr_id)
+        {
+                return table_row_button_link('subject-offers/view?subject-offer-id=' . $subj_offr_id, 'Details');
+        }
+
+        /**
+         * if user has 'faculty',then return the user_id, else NULL
+         * 
+         * @return int
+         */
+        private function _for_faculty_group()
+        {
+                if ($this->ion_auth->in_group($this->config->item('user_group_faculty')))
+                {
+                        return $this->ion_auth->get_user_id();
+                }
+                return NULL;
         }
 
         private function _room_capacity($subj_off_id, $capacity)
@@ -155,45 +185,98 @@ class Subject_offers extends CI_Capstone_Controller
         }
 
         /**
-         * 
-         * @return array
+         * for viewing detail of specific schedule.
          *  @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        private function _bootstrap_for_view()
+        public function view()
         {
-                /**
-                 * for header
-                 *
-                 */
-                $header       = array(
-                    'css' => array(
-                        'css/bootstrap.min.css',
-                        'css/bootstrap-responsive.min.css',
-                        'css/matrix-style.css',
-                        'css/matrix-media.css',
-                        'font-awesome/css/font-awesome.css',
-                        'http://fonts.googleapis.com/css?family=Open+Sans:400,700,800',
-                    ),
-                    'js'  => array(),
+                $data = $this->_data();
+
+                $template['facullty_schedule_students'] = MY_Controller::render('admin/_templates/button_view', array(
+                            'href'         => 'subject-offers/report?subject-offer-id=' . $data->obj->subject_offer_id . '&report=excel',
+                            'button_label' => 'Excel Report for ',
+                            'extra'        => array('class' => 'btn btn-success icon-print'),
+                                ), TRUE);
+
+                $template['view'] = $this->table_bootstrap($data->header, $data->data, 'table_open_bordered', 'index_student_heading', FALSE, TRUE);
+
+                $template['bootstrap'] = $this->_bootstrap();
+                $this->render('admin/subject_offers', $template);
+        }
+
+        private function _data()
+        {
+                $subj_orr_obj = check_id_from_url('subject_offer_id', 'Subject_offer_model', 'subject-offer-id');
+                $this->breadcrumbs->unshift(4, 'View', 'subject-offers/view?subject-offer-id=' . $subj_orr_obj->subject_offer_id);
+
+                if ($this->_for_faculty_group())//if faculty
+                {
+                        /**
+                         * check if user access none schedule with own
+                         */
+                        if ($subj_orr_obj->user_id != $this->ion_auth->get_user_id())
+                        {
+                                show_error('Class Schedule is not in your permission.');
+                        }
+                }
+
+                $this->load->model(array('Students_subjects_model', 'Course_model'));
+                $this->load->helper('number');
+                $obj        = $this->Students_subjects_model->
+                        with_enrollments(array(
+                            'fields' => 'student_id,course_id,enrollment_year_level,enrollment_status',
+                            'with'   => array(
+                                'relation' => 'student'
+                            )
+                        ))->
+                        where(array(
+                            'subject_offer_id' => $subj_orr_obj->subject_offer_id
+                        ))->
+                        //set_cache()->
+                        get_all();
+                $table_data = array();
+                if ($obj)
+                {
+                        foreach ($obj as $s)
+                        {
+                                array_push($table_data, array(
+                                    ( $s->enrollments->student->student_school_id) ? $s->enrollments->student->student_school_id : '--',
+                                    $s->enrollments->student->student_lastname,
+                                    $s->enrollments->student->student_firstname,
+                                    $s->enrollments->student->student_middlename,
+                                    $this->Course_model->get($s->enrollments->course_id)->course_code,
+                                    number_roman($s->enrollments->enrollment_year_level),
+                                    ($s->enrollments->enrollment_status) ? 'Enrolled' : 'Not',
+                                ));
+                        }
+                }
+
+                $header = array(
+                    lang('index_student_school_id_th'),
+                    lang('index_student_lastname_th'),
+                    lang('index_student_firstname_th'),
+                    lang('index_student_middlename_th'),
+                    'course',
+                    'level',
+                    'subject enrolled'
                 );
-                /**
-                 * for footer
-                 * 
-                 */
-                $footer       = array(
-                    'css' => array(),
-                    'js'  => array(
-                        'js/jquery.min.js',
-                        'js/jquery.ui.custom.js',
-                        'js/bootstrap.min.js',
-                        'js/matrix.js'
-                    ),
+
+                return (object) array(
+                            'header' => $header,
+                            'data'   => $table_data,
+                            'obj'    => $subj_orr_obj
                 );
-                /**
-                 * footer extra
-                 */
-                $footer_extra = '';
-                return generate_link_script_tag($header, $footer, $footer_extra);
+        }
+
+        public function report()
+        {
+                if ('excel' === ((string) $this->input->get('report')))
+                {
+                        $data                  = $this->_data();
+                        $this->load->library('excel');
+                        $this->excel->filename = 'Report Schedule.';
+                        $this->excel->make_from_array($data->header, $data->data);
+                }
         }
 
         /**

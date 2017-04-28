@@ -8,13 +8,6 @@ class Edit_group extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
-                /**
-                 * just to make sure
-                 */
-                if ( ! $this->ion_auth->is_admin())
-                {
-                        show_error(lang('access_denied_of_current_user_group'));
-                }
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
                 $this->breadcrumbs->unshift(2, lang('administrators_label'), '#');
@@ -26,6 +19,13 @@ class Edit_group extends CI_Capstone_Controller
         {
 
 
+                /**
+                 * just to make sure
+                 */
+                if ( ! $this->ion_auth->is_admin())
+                {
+                        show_error(lang('access_denied_of_current_user_group'));
+                }
                 if ( ! ($id = $this->input->get('group-id')))
                 {
                         show_error('Invalid request.');

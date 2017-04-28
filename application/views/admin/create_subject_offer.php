@@ -39,8 +39,11 @@ if (isset($two_forms_conflict_message))
                     echo input_bootstrap($user_id);
                     echo input_bootstrap($subject_id);
                     ?>
-
-                    <h3>sched</h3>                    
+                    <div class="control-group">
+                        <div class="control-label">
+                            <h3>Schedule</h3>    
+                        </div>
+                    </div>
 
                     <?php
                     /**
@@ -52,27 +55,15 @@ if (isset($two_forms_conflict_message))
 
                     //subject_offer_end:
                     echo input_bootstrap($subject_offer_end);
-                    ?>
-                    <div class="control-group">
-                        <div class="controls">
-                            <?php
-                            $this->table->set_template(array(
-                                'table_open' => '<table>',
-                            ));
-                            ?>
-                            <?php foreach ($days as $d): ?>
-                                    <?php $this->table->add_row(form_label(lang('cal_' . $d), $d), form_label(form_checkbox($d, TRUE/* i set this TRUE for directly insert, */, set_checkbox($d, set_value($d))), $d)); ?>
-                            <?php endforeach; ?>
-                            <?php echo $this->table->generate(); ?>
-                        </div>
-                    </div>
-
-                    <?php
+                    echo input_bootstrap($days1);
                     echo input_bootstrap($room_id);
                     echo input_bootstrap($leclab);
                     ?>
-
-                    <h3>sched 2</h3>check to exclude<?php echo form_checkbox('exclude', TRUE, set_checkbox('exclude', set_value('exclude'))); ?>
+                    <div class="control-group">
+                        <div class="control-label">
+                            <h3>Schedule 2</h3>Check to exclude <?php echo form_checkbox('exclude', TRUE, set_checkbox('exclude', set_value('exclude'))); ?>
+                        </div>
+                    </div>
 
                     <?php
                     /**
@@ -84,31 +75,7 @@ if (isset($two_forms_conflict_message))
 
                     //subject_offer_end:
                     echo input_bootstrap($subject_offer_end2);
-                    ?>
-                    <div class="control-group">
-                        <div class="controls">
-                            <?php
-                            $this->table->set_template(array(
-                                'table_open' => '<table>',
-                            ));
-                            ?>
-                            <?php foreach ($days as $d): ?>
-                                    <?php
-                                    $this->table->add_row(
-                                            form_label(
-                                                    lang('cal_' . $d), $d . '2'), form_label(
-                                                    form_checkbox(
-                                                            $d . '2', TRUE/* i set this TRUE for directly insert, */, set_checkbox($d . '2', set_value($d . '2'))
-                                                    ), $d
-                                            )
-                                    );
-                                    ?>
-                            <?php endforeach; ?>
-                            <?php echo $this->table->generate(); ?>
-                        </div>
-                    </div>
-
-                    <?php
+                    echo input_bootstrap($days2);
                     echo input_bootstrap($room_id2);
                     echo input_bootstrap($leclab2);
 
