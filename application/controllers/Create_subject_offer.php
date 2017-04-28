@@ -190,7 +190,7 @@ class Create_subject_offer extends CI_Capstone_Controller
          */
         private function _validate_two_shedules()
         {
-                for ($i = 1; $i <= 2; $i ++ )
+                for ($i = 1; $i <= 2; $i ++)
                 {
                         $tmp            = ($i === 1) ? '' : '2';
                         ${'sched' . $i} = array(
@@ -285,7 +285,24 @@ class Create_subject_offer extends CI_Capstone_Controller
                     'type'  => 'dropdown',
                     'lang'  => 'create_subject_offer_end_label'
                 );
-
+                
+                $this->data['days1']             = array(
+                    'name'                       => 'days1',
+                    'fields'                     => array(//we used radio here 
+                        'cal_sunday',
+                        'cal_monday',
+                        'cal_tuesday',
+                        'cal_wednesday',
+                        'cal_thursday',
+                        'cal_friday',
+                        'cal_saturday'
+                    ),
+                    'type'                       => 'checkbox',
+                    'lang'                       => 'index_subject_offer_days_th',
+                    //===
+                    'value_is_one_name_is_label' => TRUE,
+                    'append_name'                => ''
+                );
 
                 $this->data['room_id'] = array(
                     'name'  => 'room',
@@ -336,6 +353,23 @@ class Create_subject_offer extends CI_Capstone_Controller
                     'lang'  => 'create_room_id_label'
                 );
 
+                $this->data['days2'] = array(
+                    'name'                       => 'days2',
+                    'fields'                     => array(//we used radio here 
+                        'cal_sunday',
+                        'cal_monday',
+                        'cal_tuesday',
+                        'cal_wednesday',
+                        'cal_thursday',
+                        'cal_friday',
+                        'cal_saturday'
+                    ),
+                    'type'                       => 'checkbox',
+                    'lang'                       => 'index_subject_offer_days_th',
+                    //===
+                    'value_is_one_name_is_label' => TRUE,
+                    'append_name'                => '2'
+                );
 
                 $this->data['leclab2'] = array(
                     'name'   => 'leclab2[]',
