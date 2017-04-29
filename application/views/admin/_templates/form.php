@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') or exit('Direct Script is not allowed'); ?>
 <div class="container-fluid">
     <div class="row-fluid">
-        <div class="span12">
+        <div class="span<?php echo $form_size; ?>">
             <div class="widget-box">
                 <div class="widget-title"> <span class="icon"> <i class="icon-<?php echo $icon; ?>"></i> </span>
                     <h5><?php echo lang($lang_header) ?></h5>
