@@ -278,10 +278,37 @@ class Create_student_subject extends CI_Capstone_Controller
                         // 'form_size'     => $_form_size,
                         // 'hidden_inputs' => $_hidden_inputs
                 );
-                $data['student_subject_form'] = $this->form_boostrap($frm_bosstrap, TRUE); //second parant if return html
+                $data['student_subject_form'] = $this->form_boostrap($frm_bosstrap, TRUE, TRUE); //second parant if return html,tirdth param is remove bootstrap_divs
 
                 $data['bootstrap'] = $this->_bootstrap();
+                $data['term_units'] = $this->_term_units();
                 $this->render('admin/create_student_subject', $data);
+        }
+
+        private function _term_units()
+        {
+                $current_sem = current_school_semester(TRUE);
+                $t_unit      = array();
+                foreach ($this->student->get_all_term_units() as $v)
+                {
+                        $temp  = '';
+                        if ($level = $this->input->post('level'))
+                        {
+                                if ($level === $v->level && $current_sem === $v->sem)
+                                {
+                                        $temp = '<span style="color:red">===></span>  ';
+                                }
+                        }
+                        $t_unit[] = array(
+                            'name'         => 'xx',
+                            'value'        => $v->unit,
+                            'type'         => 'text',
+                            'lang'         => $temp . number_roman($v->level) . ' - ' . lang('semester_' . $v->sem . '_short_label'),
+                            'ingnore_lang' => TRUE,
+                            'disabled'     => ''
+                        );
+                }
+                return $t_unit;
         }
 
         /**
@@ -592,9 +619,9 @@ class Create_student_subject extends CI_Capstone_Controller
                                                 ${'session' . $count2} [$d] = $_line->{'subject_offer_line_' . $d};
                                         }
                                 }
-                                for ($i = 1; $i <= $count; $i ++ )
+                                for ($i = 1; $i <= $count; $i ++)
                                 {
-                                        for ($ii = 1; $ii <= $count2; $ii ++ )
+                                        for ($ii = 1; $ii <= $count2; $ii ++)
                                         {
                                                 $tmp = is_not_conflict_subject_offer(${'selected' . $i}, ${'session' . $ii});
                                                 if ( ! $tmp)

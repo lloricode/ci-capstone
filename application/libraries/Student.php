@@ -488,6 +488,33 @@ class Student extends School_informations
                 return $this->__curriculum_subjects();
         }
 
+        public function get_all_term_units()
+        {
+                $cur_subj_obj = $this->Curriculum_subject_model->curriculum_subjects($this->__curriculum->curriculum_id);
+                $return       = array();
+                if ($cur_subj_obj)
+                {
+                        $tmp_compare = '';
+                        foreach ($cur_subj_obj as $cur_subj)
+                        {
+                                $tmp_sem_year = $cur_subj->curriculum_subject_year_level . $cur_subj->curriculum_subject_semester;
+                                if ($tmp_compare != $tmp_sem_year)
+                                {
+                                        $tmp_compare = $tmp_sem_year;
+                                        $sem         = $cur_subj->curriculum_subject_semester;
+                                        $level       = $cur_subj->curriculum_subject_year_level;
+                                        $total_units = $this->Curriculum_subject_model->total_units_per_term($cur_subj->curriculum_id, $sem, $level);
+                                        $return[]    = (object) array(
+                                                    'sem'   => $sem,
+                                                    'level' => $level,
+                                                    'unit'  => $total_units
+                                        );
+                                }
+                        }
+                }
+                return (object) $return;
+        }
+
 }
 
 /**
