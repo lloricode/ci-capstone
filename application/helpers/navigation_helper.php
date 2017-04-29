@@ -43,15 +43,15 @@ if ( ! function_exists('navigations_main'))
                                 'seen'       => TRUE,
                                 'enrollment' => TRUE
                             ),
-                            'create-curriculum-subject' =>
-                            array(
-                                'label'      => lang('create_curriculum_subject_label'),
-                                'seen'       => TRUE,
-                                'enrollment' => TRUE
-                            ),
                             /**
                              * hidden
                              */
+                            'create-curriculum-subject' =>
+                            array(
+                                'label'      => lang('create_curriculum_subject_label'),
+                                'seen'       => FALSE,
+                                'enrollment' => TRUE
+                            ),
                             'create-requisite'          =>
                             array(
                                 'label'      => 'Create Requisite',
@@ -135,7 +135,7 @@ if ( ! function_exists('navigations_main'))
                             /**
                              * hidden
                              */
-                            'edit-subject'             =>
+                            'edit-subject'         =>
                             array(
                                 'label' => lang('edit_subject_label'),
                                 'seen'  => FALSE,

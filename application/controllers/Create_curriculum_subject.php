@@ -21,52 +21,39 @@ class Create_curriculum_subject extends CI_Capstone_Controller
 
         public function index()
         {
-                $templink  = '';
-                $templabel = '';
-                if ($this->input->get('curriculum-id'))
+                $curriculum_obj = check_id_from_url('curriculum_id', 'Curriculum_model', 'curriculum-id', 'course');
+
+                if ($curriculum_obj->curriculum_status)
                 {
-                        $curriculum_obj = check_id_from_url('curriculum_id', 'Curriculum_model', 'curriculum-id', 'course');
-                        if ($curriculum_obj->curriculum_status)
-                        {
-                                show_error('Already Enabled');
-                        }
-                        if ($curriculum_obj->curriculum_already_used)
-                        {
-                                show_error('Edit is not allowed, Already been used by other data.');
-                        }
-                        $templink  = '?curriculum-id=' . $curriculum_obj->curriculum_id;
-                        $templabel = ' [ ' . $curriculum_obj->course->course_code . ' ]';
+                        show_error('Already Enabled');
                 }
-                $this->breadcrumbs->unshift(3, lang('create_curriculum_subject_label') . $templabel, 'create-curriculum-subject' . $templink);
+                if ($curriculum_obj->curriculum_already_used)
+                {
+                        show_error('Edit is not allowed, Already been used by other data.');
+                }
+
+                $this->breadcrumbs->unshift(3, lang('curriculum_subject_label'), 'curriculums/view?curriculum-id=' . $curriculum_obj->curriculum_id);
+                $this->breadcrumbs->unshift(4, lang('create_curriculum_subject_label') . ' [ ' . $curriculum_obj->course->course_code . ' ]', 'create-curriculum-subject?curriculum-id=' . $curriculum_obj->curriculum_id);
+
 
                 if ($this->input->post('submit', TRUE))
                 {
-                        /**
-                         * check curriculum_id
-                         */
-                        $curriculum_obj = $this->Curriculum_model->get($this->input->post('curriculum'));
-                        if ($curriculum_obj->curriculum_status)
-                        {
-                                show_error('Already Enabled');
-                        }
-                        if ($curriculum_obj->curriculum_already_used)
-                        {
-                                show_error('Edit is not allowed, Already been used by other data.');
-                        }
-
                         /**
                          * start the DB transaction
                          */
                         $this->db->trans_begin();
 
-                        $id = $this->Curriculum_subject_model->from_form()->insert();
+                        $id = $this->Curriculum_subject_model->from_form(NULL, array(
+                                    'curriculum_id' => $curriculum_obj->curriculum_id
+                                ))->insert();
 
-                        if ( ! $this->_is_subject_course() OR ! $id)
+                        if ( ! $this->_is_subject_course($curriculum_obj->curriculum_id) OR ! $id)
                         {
                                 /**
                                  * rollback database
                                  */
                                 $this->db->trans_rollback();
+                                $this->session->set_flashdata('message', bootstrap_error('curriculum_subject_add_unsuccessfull'));
                         }
                         else
                         {
@@ -74,11 +61,11 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                                 {
 
                                         $this->session->set_flashdata('message', bootstrap_success('curriculum_subject_add_successfull'));
-                                        redirect(site_url('curriculums/view?curriculum-id=' . $this->input->post('curriculum')), 'refresh');
+                                        redirect(site_url('curriculums/view?curriculum-id=' . $curriculum_obj->curriculum_id), 'refresh');
                                 }
                         }
                 }
-                $this->_form_view($templink);
+                $this->_form_view($curriculum_obj);
         }
 
         /**
@@ -86,11 +73,10 @@ class Create_curriculum_subject extends CI_Capstone_Controller
          * @return boolean
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        private function _is_subject_course()
+        private function _is_subject_course($curriculum_id)
         {
 
-                $curriculum_id = $this->input->post('curriculum', TRUE);
-                $subject_id    = $this->input->post('subject', TRUE);
+                $subject_id = $this->input->post('subject', TRUE);
 
                 //select what course_id from subject ELSE GEN-ED
                 $subj_obj = $this->Subject_model->get($subject_id);
@@ -156,34 +142,6 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                         ))->count_rows() == 0;
         }
 
-        private function _dropdown_for_curriculumn()
-        {
-                $return = array();
-
-                $cur_obj = $this->Curriculum_model->
-                        where(array(
-                            'curriculum_status'       => FALSE,
-                            'curriculum_already_used' => FALSE
-                        ))->
-                        set_cache('curriculum_get_all')->
-                        get_all();
-
-                if ($cur_obj)
-                {
-                        foreach ($cur_obj as $v)
-                        {
-                                $course_code               = $this->Course_model->
-                                                set_cache('course_' . $v->course_id)->
-                                                get($v->course_id)->
-                                        course_code;
-                                $return[$v->curriculum_id] = $v->curriculum_effective_school_year . ' | ' .
-                                        $course_code . ' | ' .
-                                        $v->curriculum_description;
-                        }
-                }
-                return $return;
-        }
-
         private function _dropdown_for_subjects()
         {
 
@@ -217,16 +175,8 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                 return $return; // array_merge(array('' => 'no subject'), (array) $subjects_obj);
         }
 
-        private function _form_view($templink)
+        private function _form_view($curriculum_obj)
         {
-
-                $inputs['curriculum_id'] = array(
-                    'name'    => 'curriculum',
-                    'value'   => $this->_dropdown_for_curriculumn(),
-                    'type'    => 'dropdown',
-                    'lang'    => 'curriculum_subject_curriculum_label',
-                    'default' => $this->input->get('curriculum-id')//directly, if not found will return NULL
-                );
 
                 $inputs['subject_id'] = array(
                     'name'  => 'subject',
@@ -271,9 +221,10 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                     'lang'  => 'curriculum_subject_units_label'
                 );
 
-                $data['curriculum_subject_form'] = $this->form_boostrap('create-curriculum-subject' . $templink, $inputs, 'create_curriculum_subject_label', 'create_curriculum_subject_label', 'info-sign', NULL, TRUE);
-                $data['bootstrap']               = $this->_bootstrap();
-                $this->render('admin/create_curriculum_subject', $data);
+                $template['curriculum_information']  = MY_Controller::render('admin/_templates/curriculums/curriculum_information', array('curriculum_obj' => $curriculum_obj), TRUE);
+                $template['curriculum_subject_form'] = $this->form_boostrap('create-curriculum-subject?curriculum-id=' . $curriculum_obj->curriculum_id, $inputs, 'create_curriculum_subject_label', 'create_curriculum_subject_label', 'info-sign', NULL, TRUE);
+                $template['bootstrap']               = $this->_bootstrap();
+                $this->render('admin/create_curriculum_subject', $template);
         }
 
         private function _bootstrap()
