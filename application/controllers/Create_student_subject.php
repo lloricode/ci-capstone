@@ -99,7 +99,7 @@ class Create_student_subject extends CI_Capstone_Controller
                                         {
                                                 $msg .= ' $all_inserted';
                                         }
-                                        $this->session->set_flashdata('message', bootstrap_error($msg)); //dont mention :D temporary and means bugs
+                                        // $this->session->set_flashdata('message', bootstrap_error($msg)); //dont mention :D temporary and means bugs
                                 }
                                 else
                                 {
@@ -146,6 +146,7 @@ class Create_student_subject extends CI_Capstone_Controller
 
                         return TRUE;
                 }
+                $this->session->set_flashdata('message', bootstrap_error('_is_unit_not_exceed'));
                 return FALSE;
         }
 
@@ -265,9 +266,19 @@ class Create_student_subject extends CI_Capstone_Controller
                 /**
                  * generate information for current student
                  */
-                $data['student_subject_form'] = $this->form_boostrap(
-                        'create-student-subject?student-id=' . $this->student->id, $this->_student_information(), 'student_information', 'add_student_subject_label', 'user', NULL, TRUE, $error_message
+                $frm_bosstrap                 = array(
+                    //required
+                    'inputs'      => $this->_student_information(),
+                    'action'      => 'create-student-subject?student-id=' . $this->student->id,
+                    'lang_header' => 'student_information',
+                    'lang_button' => 'add_student_subject_label',
+                    'icon'        => 'user',
+                    //non required
+                    'error'       => $error_message,
+                        // 'form_size'     => $_form_size,
+                        // 'hidden_inputs' => $_hidden_inputs
                 );
+                $data['student_subject_form'] = $this->form_boostrap($frm_bosstrap, TRUE); //second parant if return html
 
                 $data['bootstrap'] = $this->_bootstrap();
                 $this->render('admin/create_student_subject', $data);
@@ -581,9 +592,9 @@ class Create_student_subject extends CI_Capstone_Controller
                                                 ${'session' . $count2} [$d] = $_line->{'subject_offer_line_' . $d};
                                         }
                                 }
-                                for ($i = 1; $i <= $count; $i ++)
+                                for ($i = 1; $i <= $count; $i ++ )
                                 {
-                                        for ($ii = 1; $ii <= $count2; $ii ++)
+                                        for ($ii = 1; $ii <= $count2; $ii ++ )
                                         {
                                                 $tmp = is_not_conflict_subject_offer(${'selected' . $i}, ${'session' . $ii});
                                                 if ( ! $tmp)

@@ -131,9 +131,12 @@ class CI_Capstone_Controller extends MY_Controller
         }
 
         /**
+         * if the passing parameter is array, it must a second parameter for return HTML, or default is FALSE
          * 
-         * @param string $_action
-         * @param array $_inputs
+         * 
+         * 
+         * @param string $_action_or_array
+         * @param array $_inputs_or_returnhtml
          * @param string $_lang_header
          * @param string $_lang_button
          * @param string $_icon
@@ -144,17 +147,59 @@ class CI_Capstone_Controller extends MY_Controller
          * @return string
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        public function form_boostrap($_action, $_inputs, $_lang_header, $_lang_button, $_icon, $_hidden_inputs = NULL, $return_html = FALSE, $_error = FALSE, $form_size = 6)
+        public function form_boostrap($_action_or_array, $_inputs_or_returnhtml = FALSE/* FALSE is default when use array */, $_lang_header = NULL/* for array */, $_lang_button = NULL/* for array */, $_icon = NULL/* for array */, $_hidden_inputs = NULL, $return_html = FALSE, $_error = FALSE, $_form_size = 6)
         {
-                $_data['inputs']        = $_inputs;
-                $_data['action']        = $_action;
-                $_data['lang_header']   = $_lang_header;
-                $_data['lang_button']   = $_lang_button;
-                $_data['icon']          = $_icon;
-                $_data['hidden_inputs'] = $_hidden_inputs;
-                $_data['error']         = $_error;
-                $_data['form_size']     = $form_size;
+                if (is_array($_action_or_array))
+                {
+                        $return_html  = (bool) $_inputs_or_returnhtml;
+                        $required     = array('inputs', 'action', 'lang_header', 'lang_button', 'icon');
+                        $non_required = array('hidden_inputs' => NULL, 'error' => FALSE, 'form_size' => 6);
 
+                        $all_keys = array();
+                        foreach ($required as $v)// required
+                        {
+                                if ( ! isset($_action_or_array[$v]))
+                                {
+                                        show_error('key ' . strong($v) . ' in form_boostrap is required.');
+                                }
+                                $_data[$v]  = $_action_or_array[$v];
+                                $all_keys[] = $v;
+                        }
+                        foreach ($non_required as $k => $v)//not required, and has default
+                        {
+                                $all_keys[] = $k;
+                                if (isset($_action_or_array[$k]))
+                                {
+                                        $_data[$k] = $_action_or_array[$k];
+                                        continue;
+                                }
+                                $_data[$k] = $v;
+                        }
+
+                        //just check keys if there in non of our need keys
+                        foreach ($_action_or_array as $k => $v)
+                        {
+                                if ( ! in_array($k, $all_keys))
+                                {
+                                        show_error('unsual key: ' . strong($k) . ' in form_bootstrap.');
+                                }
+                        }
+                }
+                else
+                {
+                        $_data['inputs']        = $_inputs_or_returnhtml;
+                        $_data['action']        = $_action_or_array;
+                        $_data['lang_header']   = $_lang_header;
+                        $_data['lang_button']   = $_lang_button;
+                        $_data['icon']          = $_icon;
+                        $_data['hidden_inputs'] = $_hidden_inputs;
+                        $_data['error']         = $_error;
+                        $_data['form_size']     = $_form_size;
+                        $_data['second_form']   = FALSE;
+                }
+                /**
+                 * for 2nd form is need
+                 */
                 $generated_html_form = parent::render('admin/_templates/form', $_data, $return_html);
                 if ($return_html)
                 {
