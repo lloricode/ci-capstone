@@ -195,7 +195,6 @@ class CI_Capstone_Controller extends MY_Controller
                         $_data['hidden_inputs'] = $_hidden_inputs;
                         $_data['error']         = $_error;
                         $_data['form_size']     = $_form_size;
-                        $_data['second_form']   = FALSE;
                 }
                 /**
                  * for 2nd form is need
