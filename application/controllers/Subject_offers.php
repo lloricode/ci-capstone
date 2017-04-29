@@ -44,24 +44,23 @@ class Subject_offers extends CI_Capstone_Controller
                 $table_data = array();
                 if ($subl)
                 {
-                        ;
                         foreach ($subl as $s)
                         {
                                 if ( ! isset($s->subject_line))
                                 {
                                         // continue;
                                 }
-                                $output = array(
-                                    $s->subject->subject_code,
-                                    $this->User_model->button_link($s->faculty->id, $s->faculty->last_name, $s->faculty->first_name)
-                                );
 
-                                $line = array();
-                                $inc  = 0;
+                                /**
+                                 * get first the schedules times, to know if there a second schedule
+                                 */
+                                $sched1    = NULL;
+                                $sched2    = NULL;
+                                $row_count = 0;
                                 foreach ($s->subject_line as $su_l)
                                 {
-                                        $inc ++;
-                                        $schd = array(
+                                        ++ $row_count;
+                                        ${'sched' . $row_count} = array(
                                             subject_offers_days($su_l),
                                             $this->_type($su_l->subject_offer_line_lec, $su_l->subject_offer_line_lab),
                                             convert_24_to_12hrs($su_l->subject_offer_line_start),
@@ -69,50 +68,65 @@ class Subject_offers extends CI_Capstone_Controller
                                             $su_l->room->room_number,
                                             $this->_room_capacity($s->subject_offer_id, $su_l->room->room_capacity)
                                         );
-                                        $line = array_merge($line, $schd);
                                 }
-                                if ($inc === 1)
+
+                                $row_output   = array();
+                                $row_output[] = $this->_row($s->subject->subject_code, $row_count);
+
+                                if ( ! $this->_for_faculty_group())
                                 {
-                                        $line = array_merge($line, array(array('data' => 'no data', 'colspan' => '6', 'class' => 'taskStatus'/* just to make center */)));
+                                        /**
+                                         *  if current user_group is faculty, no need to view who faculty of schedule
+                                         */
+                                        $row_output[] = $this->_row($this->User_model->button_link($s->faculty->id, $s->faculty->last_name, $s->faculty->first_name), $row_count);
                                 }
-                                $line[] = $this->_option_button_view($s->subject_offer_id);
+
+                                foreach ($sched1 as $v)
+                                {
+                                        $row_output[] = $v;
+                                }
+
+                                $row_output[] = $this->_row($this->_option_button_view($s->subject_offer_id), $row_count);
                                 if ($this->ion_auth->is_admin())
                                 {
 
-                                        $line[] = $this->User_model->modidy($s, 'created');
-                                        $line[] = $this->User_model->modidy($s, 'updated');
+                                        $row_output[] = $this->_row($this->User_model->modidy($s, 'created'), $row_count);
+                                        $row_output[] = $this->_row($this->User_model->modidy($s, 'updated'), $row_count);
                                 }
-                                $table_data[] = array_merge($output, $line);
+                                $table_data[] = $row_output;
+
+                                if ($row_count === 2)// if there a second sched
+                                {
+                                        $tmp = array();
+                                        foreach ($sched2 as $v)
+                                        {
+                                                $tmp[] = $v;
+                                        }
+                                        $table_data[] = $tmp;
+                                }
                         }
                 }
                 /*
                  * Table headers
                  */
                 $header = array(
-                    //'id',
-//                    lang('index_subject_id_th'),
-//                    lang('index_subject_offer_start_th'),
-//                    lang('index_subject_offer_end_th'),
-//                    lang('index_subject_offer_days_th'),
-//                    lang('index_room_id_th'),
-//                    lang('index_user_id_th'),
-                    'Course',
-                    'Faculty',
-                    'Days (1st Schedule)',
-                    'Type',
-                    'Time Start',
-                    'Time End',
-                    'Room',
-                    'Capacity',
-                    'Days (2nd Schedule)',
-                    'Type',
-                    'Start',
-                    'End',
-                    'Room',
-                    'Capacity',
+                    lang('index_subject_id_th'),
+                    lang('index_user_id_th'),
+                    lang('index_subject_offer_days_th'),
+                    lang('create_type_label'),
+                    lang('index_subject_offer_start_th'),
+                    lang('index_subject_offer_end_th'),
+                    lang('index_room_id_th'),
+                    lang('index_room_capacity_th'),
                     'Option'
                 );
-
+                if ($this->_for_faculty_group())
+                {
+                        /**
+                         * unset header faculty|instructor if current user_group is faculty
+                         */
+                        unset($header[1]);
+                }
                 if ($this->ion_auth->is_admin())
                 {
                         $header[] = 'Created By';
@@ -138,6 +152,15 @@ class Subject_offers extends CI_Capstone_Controller
                  * rendering users view
                  */
                 $this->render('admin/subject_offers', $template);
+        }
+
+        private function _row($data, $row_span)
+        {
+                if ($row_span > 1)
+                {
+                        return array('data' => $data, 'rowspan' => "$row_span");
+                }
+                return $data;
         }
 
         private function _option_button_view($subj_offr_id)
