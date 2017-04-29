@@ -151,11 +151,6 @@ class Curriculum_subject_model extends MY_Model
                         'field' => 'laboratory',
                         'rules' => 'trim|required|is_natural'
                     ),
-                    'curriculum_id'                       => array(
-                        'label' => lang('curriculum_subject_curriculum_label'),
-                        'field' => 'curriculum',
-                        'rules' => 'trim|required|is_natural_no_zero'
-                    ),
                     'subject_id'                          => array(
                         'label' => lang('curriculum_subject_subject_label'),
                         'field' => 'subject',

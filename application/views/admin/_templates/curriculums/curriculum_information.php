@@ -13,6 +13,8 @@ defined('BASEPATH') OR exit('No direct script allowed');
                     <h2><?php echo $curriculum_obj->curriculum_effective_school_year; ?></h2> 
                     <h5>Course</h5>
                     <h2><?php echo $curriculum_obj->course->course_code; ?></h2> 
+                    <h5>Description</h5>
+                    <h2><?php echo $curriculum_obj->curriculum_description; ?></h2> 
                     <h5>Status</h5>
                     <h2><?php echo ($curriculum_obj->curriculum_status) ? 'Active' : 'Inactive'; ?></h2> 
                 </div>

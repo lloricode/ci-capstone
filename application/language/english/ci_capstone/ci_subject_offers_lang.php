@@ -14,7 +14,7 @@ $lang['create_subject_offer_heading']                   = 'Create Class Schedule
 $lang['create_subject_offer_start_label']               = 'Time Start:';
 $lang['create_subject_offer_end_label']                 = 'Time End:';
 $lang['create_user_id_label']                           = 'Instructor:';
-$lang['create_subject_id_label']                        = 'Subject:';
+$lang['create_subject_id_label']                        = 'Course:';
 $lang['create_room_id_label']                           = 'Room:';
 $lang['create_type_label']                              = 'Type';
 $lang['create_subject_offer_submit_button_label']       = 'Add Subject Offer';
@@ -26,7 +26,7 @@ $lang['index_subject_offer_start_th'] = 'Time Start';
 $lang['index_subject_offer_end_th']   = 'Time End';
 $lang['index_subject_offer_days_th']  = 'Days';
 $lang['index_user_id_th']             = 'Instructor';
-$lang['index_subject_id_th']          = 'Subject';
+$lang['index_subject_id_th']          = 'Course';
 $lang['index_room_id_th']             = 'Room';
 
 $lang['view_class_schedule_label'] = 'View Class schedule';
