@@ -15,7 +15,7 @@ if (isset($two_forms_conflict_message))
 ?>
 <div class="container-fluid">
     <div class="row-fluid">
-        <div class="span12">
+        <div class="span6">
 
             <div class="widget-box">
                 <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>

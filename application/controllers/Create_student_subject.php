@@ -99,7 +99,7 @@ class Create_student_subject extends CI_Capstone_Controller
                                         {
                                                 $msg .= ' $all_inserted';
                                         }
-                                        $this->session->set_flashdata('message', bootstrap_error($msg)); //dont mention :D temporary and means bugs
+                                        // $this->session->set_flashdata('message', bootstrap_error($msg)); //dont mention :D temporary and means bugs
                                 }
                                 else
                                 {
@@ -146,6 +146,7 @@ class Create_student_subject extends CI_Capstone_Controller
 
                         return TRUE;
                 }
+                $this->session->set_flashdata('message', bootstrap_error('_is_unit_not_exceed'));
                 return FALSE;
         }
 
@@ -265,12 +266,49 @@ class Create_student_subject extends CI_Capstone_Controller
                 /**
                  * generate information for current student
                  */
-                $data['student_subject_form'] = $this->form_boostrap(
-                        'create-student-subject?student-id=' . $this->student->id, $this->_student_information(), 'student_information', 'add_student_subject_label', 'user', NULL, TRUE, $error_message
+                $frm_bosstrap                 = array(
+                    //required
+                    'inputs'      => $this->_student_information(),
+                    'action'      => 'create-student-subject?student-id=' . $this->student->id,
+                    'lang_header' => 'student_information',
+                    'lang_button' => 'add_student_subject_label',
+                    'icon'        => 'user',
+                    //non required
+                    'error'       => $error_message,
+                        // 'form_size'     => $_form_size,
+                        // 'hidden_inputs' => $_hidden_inputs
                 );
+                $data['student_subject_form'] = $this->form_boostrap($frm_bosstrap, TRUE, TRUE); //second parant if return html,tirdth param is remove bootstrap_divs
 
-                $data['bootstrap'] = $this->_bootstrap();
+                $data['bootstrap']  = $this->_bootstrap();
+                $data['term_units'] = $this->_term_units();
                 $this->render('admin/create_student_subject', $data);
+        }
+
+        private function _term_units()
+        {
+                $current_sem = current_school_semester(TRUE);
+                $t_unit      = array();
+                foreach ($this->student->get_all_term_units() as $v)
+                {
+                        $temp  = '';
+                        if ($level = $this->input->post('level'))
+                        {
+                                if ($level === $v->level && $current_sem === $v->sem)
+                                {
+                                        $temp = '<span style="color:red">===></span>  ';
+                                }
+                        }
+                        $t_unit[] = array(
+                            'name'         => 'xx',
+                            'value'        => $v->unit,
+                            'type'         => 'text',
+                            'lang'         => $temp . number_roman($v->level) . ' - ' . lang('semester_' . $v->sem . '_short_label'),
+                            'ingnore_lang' => TRUE,
+                            'disabled'     => ''
+                        );
+                }
+                return $t_unit;
         }
 
         /**
@@ -368,40 +406,39 @@ class Create_student_subject extends CI_Capstone_Controller
                                         );
                                 }
 
-                                $output = array(
-                                    $this->Curriculum_model->button_link($s->curriculum_subject->curriculum_id, $s->subject->subject_code, $s->subject->subject_description),
-                                    // number_place($s->curriculum_subject->curriculum_subject_year_level) . ' Year',
-                                    // semesters($s->curriculum_subject->curriculum_subject_semester),
-                                    $this->User_model->button_link($s->faculty->id, $s->faculty->last_name, $s->faculty->first_name)
-                                );
-
-                                $line = array();
-                                $inc  = 0;
-
                                 //for db
                                 $full_room = FALSE;
 
+                                $sched1    = NULL;
+                                $sched2    = NULL;
+                                $row_count = 0;
                                 foreach ($s->subject_line as $su_l)
                                 {
-                                        $inc ++;
-                                        $schd = array(
+                                        ++ $row_count;
+                                        ${'sched' . $row_count} = array(
                                             subject_offers_days($su_l),
                                             convert_24_to_12hrs($su_l->subject_offer_line_start),
                                             convert_24_to_12hrs($su_l->subject_offer_line_end),
                                             $su_l->room->room_number,
                                             $this->_room_capacity($s->subject_offer_id, $su_l->room->room_capacity)
                                         );
-                                        $line = array_merge($line, $schd);
                                         if ($type == 'db' && ! $full_room)
                                         {
                                                 list($ocupy, $max) = explode('/', $this->_room_capacity($s->subject_offer_id, $su_l->room->room_capacity));
                                                 $full_room = (bool) ( ! ($ocupy < $max));
                                         }
                                 }
-                                if ($inc === 1)
+                                $row_output   = array();
+                                $row_output[] = $this->_row($this->Curriculum_model->button_link($s->curriculum_subject->curriculum_id, $s->subject->subject_code, $s->subject->subject_description), $row_count);
+
+                                $row_output[] = $this->_row($this->User_model->button_link($s->faculty->id, $s->faculty->last_name, $s->faculty->first_name), $row_count);
+
+
+                                foreach ($sched1 as $v)
                                 {
-                                        $line = array_merge($line, array(array('data' => 'no data', 'colspan' => '5', 'class' => 'taskStatus')));
+                                        $row_output[] = $v;
                                 }
+
                                 $btn_link = '';
                                 switch ($type)
                                 {
@@ -429,10 +466,18 @@ class Create_student_subject extends CI_Capstone_Controller
                                                 );
                                                 break;
                                 }
-                                $line[]       = $s->curriculum_subject->curriculum_subject_units;
-                                $line         = array_merge($line, array(array('data' => $btn_link, 'class' => 'taskStatus')));
-                                $table_data[] = array_merge($output, $line);
-
+                                $row_output[] = $this->_row($s->curriculum_subject->curriculum_subject_units, $row_count);
+                                $row_output[] = $this->_row($btn_link, $row_count, array('class' => 'taskStatus'));
+                                $table_data[] = $row_output;
+                                if ($row_count === 2)// if there a second sched
+                                {
+                                        $tmp = array();
+                                        foreach ($sched2 as $v)
+                                        {
+                                                $tmp[] = $v;
+                                        }
+                                        $table_data[] = $tmp;
+                                }
                                 /**
                                  * sumation of unit
                                  */
@@ -444,15 +489,8 @@ class Create_student_subject extends CI_Capstone_Controller
                  */
                 $header   = array(
                     lang('student_subject_th'), /* lang in students_lang */
-                    // lang('student_year_th'),
-                    // lang('student_semester_th'),
                     lang('student_instructor_th'),
                     lang('student_day1_th'),
-                    lang('student_start_th'),
-                    lang('student_end_th'),
-                    lang('student_room_th'),
-                    lang('index_room_capacity_th'),
-                    lang('student_day2_th'),
                     lang('student_start_th'),
                     lang('student_end_th'),
                     lang('student_room_th'),
@@ -462,6 +500,23 @@ class Create_student_subject extends CI_Capstone_Controller
                 $header[] = $header_col;
 
                 return $this->table_bootstrap($header, $table_data, 'table_open_bordered', $lang_caption/* lang in in students_lang */, FALSE, TRUE);
+        }
+
+        private function _row($data, $row_span, $attrib = FALSE)
+        {
+                if ($attrib)
+                {
+                        if ($row_span > 1)
+                        {
+                                return array_merge(array('data' => $data, 'rowspan' => "$row_span"), $attrib);
+                        }
+                        return array_merge(array('data' => $data), $attrib);
+                }
+                if ($row_span > 1)
+                {
+                        return array('data' => $data, 'rowspan' => "$row_span");
+                }
+                return $data;
         }
 
         private function _room_capacity($subj_off_id, $capacity)
@@ -581,9 +636,9 @@ class Create_student_subject extends CI_Capstone_Controller
                                                 ${'session' . $count2} [$d] = $_line->{'subject_offer_line_' . $d};
                                         }
                                 }
-                                for ($i = 1; $i <= $count; $i ++)
+                                for ($i = 1; $i <= $count; $i ++ )
                                 {
-                                        for ($ii = 1; $ii <= $count2; $ii ++)
+                                        for ($ii = 1; $ii <= $count2; $ii ++ )
                                         {
                                                 $tmp = is_not_conflict_subject_offer(${'selected' . $i}, ${'session' . $ii});
                                                 if ( ! $tmp)

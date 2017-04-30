@@ -39,7 +39,15 @@ if ( ! function_exists('input_bootstrap'))
                 }
                 else
                 {
-                        $output .= lang($field['lang'], $field['name'], array(
+                        $lang_or_label = 'lang';
+                        if (isset($field['ingnore_lang']))
+                        {
+                                if ($field['ingnore_lang'] === TRUE)
+                                {
+                                        $lang_or_label = 'form_label';
+                                }
+                        }
+                        $output .= $lang_or_label($field['lang'], $field['name'], array(
                                     'class' => 'control-label',
                                 )) . PHP_EOL;
                 }

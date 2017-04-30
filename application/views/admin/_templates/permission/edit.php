@@ -3,11 +3,11 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
 ?>
 <div class="container-fluid">
     <div class="row-fluid">
-        <div class="span12">
+        <div class="span6">
 
             <div class="widget-box">
                 <div class="widget-title"> <span class="icon"> <i class="icon-edit"></i> </span>
-                    <h5><?php echo 'Update Permission' ?></h5>
+                    <?php echo heading('Update Permission', 5) ?>
                 </div>
                 <div class="widget-content nopadding">
                     <?php
@@ -20,64 +20,30 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
                         'novalidate' => 'novalidate',
                     ));
 
-                    if ($this->ion_auth->is_admin()):
+                    if ($this->ion_auth->is_admin())://just to make sure that only admin can manage this
                             ?>
 
-                            <h3><?php echo $controller_obj->controller_name . ' [' . $controller_obj->controller_description . ']'; ?></h3>
+                            <label class="checkbox"><?php echo heading($controller_obj->controller_name, 3) . paragraph($controller_obj->controller_description); ?></label>
                             <?php foreach ($this->ion_auth->groups()->result() as $group): ?>
                                     <label class="checkbox">
                                         <?php
-                                        $checked = null;
-                                        $item    = null;
+                                        $checked = FALSE;
                                         foreach ($this->permission->controller_groups($controller_obj->controller_id) as $g_id)
                                         {
                                                 if ($group->id == $g_id)
                                                 {
-                                                        $checked = ' checked="checked"';
+                                                        $checked = TRUE;
                                                         break;
                                                 }
                                         }
                                         ?>
-                                        <input type="checkbox" name="groups[]" value="<?php echo $group->id; ?>"<?php echo $checked; ?>>
+                                        <?php echo form_checkbox('groups[]', $group->id, $checked) ?>
                                         <?php echo htmlspecialchars($group->name, ENT_QUOTES, 'UTF-8'); ?>
                                     </label>
                             <?php endforeach ?>
 
                             <?php
                     endif;
-//
-//                    //Name:
-//                    $tmp = (form_error('name') == '') ? '' : ' error';
-//                    echo '<div class="control-group' . $tmp . '">';
-//                    echo lang('create_group_name_label', 'name', array(
-//                        'class' => 'control-label',
-//                        'id'    => 'inputError'
-//                    ));
-//                    echo '<div class="controls">';
-//                    echo form_input($name, array(
-//                        'id' => 'inputError'
-//                    ));
-//                    echo form_error('name');
-//                    echo '</div></div> ';
-//
-//
-//
-//                    //desc:
-//                    $tmp = (form_error('desc') == '') ? '' : ' error';
-//                    echo '<div class="control-group' . $tmp . '">';
-//                    echo lang('create_group_desc_label', 'desc', array(
-//                        'class' => 'control-label',
-//                        'id'    => 'inputError'
-//                    ));
-//                    echo '<div class="controls">';
-//                    echo form_input($desc, array(
-//                        'id' => 'inputError'
-//                    ));
-//                    echo form_error('desc');
-//                    echo '</div></div> ';
-//
-//
-
 
                     echo ' <div class="form-actions">';
 
