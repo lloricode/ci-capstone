@@ -16,6 +16,17 @@ class Migration_Students_subjects extends CI_Migration
                 parent::__construct($config);
         }
 
+        private function _semesters()
+        {
+                $return = '';
+                $this->load->helper('school');
+                foreach (semesters() as $k => $v)
+                {
+                        $return .= '"' . $k . '",';
+                }
+                return trim($return, ',');
+        }
+
         public function up()
         {
                 $this->down();
@@ -48,6 +59,18 @@ class Migration_Students_subjects extends CI_Migration
                         'type'       => 'INT',
                         'constraint' => '11',
                         'unsigned'   => TRUE,
+                        'null'       => FALSE
+                    ),
+                    /**
+                     * to find when this enrolled, and easy find what current enrolled
+                     */
+                    'student_subject_semester'      => array(
+                        'type' => 'ENUM(' . $this->_semesters() . ')',
+                        'null' => FALSE
+                    ),
+                    'student_subject_school_year'   => array(
+                        'type'       => 'VARCHAR',
+                        'constraint' => '9',
                         'null'       => FALSE
                     ),
                     //------------------------------------

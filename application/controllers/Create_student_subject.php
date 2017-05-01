@@ -74,9 +74,11 @@ class Create_student_subject extends CI_Capstone_Controller
                                 foreach ($from_session as $subj_offr_id)
                                 {
                                         $gen_id = $this->Students_subjects_model->insert(array(
-                                            'enrollment_id'    => $this->student->enrollment_id,
-                                            'curriculum_id'    => $this->student->curriculum_id,
-                                            'subject_offer_id' => $subj_offr_id
+                                            'enrollment_id'          => $this->student->enrollment_id,
+                                            'curriculum_id'          => $this->student->curriculum_id,
+                                            'student_subject_semester'    => current_school_semester(TRUE),
+                                            'student_subject_school_year' => current_school_year(),
+                                            'subject_offer_id'       => $subj_offr_id
                                         ));
                                         if ( ! $gen_id)
                                         {
@@ -103,7 +105,7 @@ class Create_student_subject extends CI_Capstone_Controller
                                         }
                                         if ( ! $all_inserted OR ! $update_year_ok)
                                         {
-                                               $this->session->set_flashdata('message', bootstrap_error($msg)); //dont mention :D temporary and means bugs
+                                                $this->session->set_flashdata('message', bootstrap_error($msg)); //dont mention :D temporary and means bugs
                                         }
                                 }
                                 else
@@ -140,7 +142,7 @@ class Create_student_subject extends CI_Capstone_Controller
                         $unit_session = (int) $this->session->userdata('total_unit');
                         if ($maximum_units === 0)
                         {
-                                $this->session->set_flashdata('message', bootstrap_error( lang('no_unit') . ' [ ' . current_school_semester() . ' ]'));
+                                $this->session->set_flashdata('message', bootstrap_error(lang('no_unit') . ' [ ' . current_school_semester() . ' ]'));
                                 return FALSE;
                         }
                         elseif ($unit_session > $maximum_units)
@@ -641,9 +643,9 @@ class Create_student_subject extends CI_Capstone_Controller
                                                 ${'session' . $count2} [$d] = $_line->{'subject_offer_line_' . $d};
                                         }
                                 }
-                                for ($i = 1; $i <= $count; $i ++)
+                                for ($i = 1; $i <= $count; $i ++ )
                                 {
-                                        for ($ii = 1; $ii <= $count2; $ii ++)
+                                        for ($ii = 1; $ii <= $count2; $ii ++ )
                                         {
                                                 $tmp = is_not_conflict_subject_offer(${'selected' . $i}, ${'session' . $ii});
                                                 if ( ! $tmp)
