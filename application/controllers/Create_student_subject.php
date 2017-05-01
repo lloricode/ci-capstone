@@ -9,6 +9,7 @@ class Create_student_subject extends CI_Capstone_Controller
         private $_session_name_;
         private $_sub_off__added_obj_from_session;
         private $_total_unit;
+        private $_all_unit_plus_pending;
 
         function __construct()
         {
@@ -53,6 +54,7 @@ class Create_student_subject extends CI_Capstone_Controller
                         }
                 }
 
+                $this->_all_unit_plus_pending = $this->student->enrolled_units(TRUE, FALSE);
 
                 $error_message = '';
 
@@ -156,7 +158,7 @@ class Create_student_subject extends CI_Capstone_Controller
                 if ($this->session->has_userdata('total_unit'))
                 {
                         $unit_session = (int) $this->session->userdata('total_unit');
-                        $unit_session += $this->student->enrolled_units(TRUE);
+                        $unit_session += $this->_all_unit_plus_pending;
                         if ($maximum_units === 0)
                         {
                                 $this->session->set_flashdata('message', bootstrap_error(lang('no_unit') . ' [ ' . current_school_semester() . ' ]'));
@@ -195,13 +197,14 @@ class Create_student_subject extends CI_Capstone_Controller
                     'disabled' => ''
                 );
 
-                $all_unit                      = ($this->_total_unit + $this->student->enrolled_units(TRUE));
+                $all_unit                      = ($this->_total_unit + $this->_all_unit_plus_pending);
                 $inputs['enrooler_units_plus'] = array(
                     'name'     => 'xx',
                     'value'    => $all_unit . ' ' . (($all_unit > 1) ? plural($unit) : $unit),
                     'type'     => 'text',
                     'lang'     => 'stundent_enrolled_unit_plus_added_subjects_label', //student_lang
-                    'disabled' => ''
+                    'disabled' => '',
+                    'note'     => 'Included pending subjects to enroll.'
                 );
 
                 $inputs['enrooler_units'] = array(
@@ -426,12 +429,12 @@ class Create_student_subject extends CI_Capstone_Controller
                                 if ($tmp_compare != $tmp_sem_year)
                                 {
                                         $tmp_compare  = $tmp_sem_year;
-                                        $total_units  = $this->Curriculum_subject_model->total_units_per_term($curr_subj_obj___->curriculum_id, $curr_subj_obj___->curriculum_subject_semester, $curr_subj_obj___->curriculum_subject_year_level);
+                                        // $total_units  = $this->Curriculum_subject_model->total_units_per_term($curr_subj_obj___->curriculum_id, $curr_subj_obj___->curriculum_subject_semester, $curr_subj_obj___->curriculum_subject_year_level);
                                         $table_data[] = array(
                                             array(
                                                 'data'    => heading(number_place($curr_subj_obj___->curriculum_subject_year_level) . ' Year - ' .
                                                         semesters($curr_subj_obj___->curriculum_subject_semester)
-                                                        , 4) . ' Total units: ' . bold($total_units),
+                                                        , 4), //. ' Total units: ' . bold($total_units),
                                                 'colspan' => '16'
                                             )
                                         );
@@ -667,9 +670,9 @@ class Create_student_subject extends CI_Capstone_Controller
                                                 ${'session' . $count2} [$d] = $_line->{'subject_offer_line_' . $d};
                                         }
                                 }
-                                for ($i = 1; $i <= $count; $i ++)
+                                for ($i = 1; $i <= $count; $i ++ )
                                 {
-                                        for ($ii = 1; $ii <= $count2; $ii ++)
+                                        for ($ii = 1; $ii <= $count2; $ii ++ )
                                         {
                                                 $tmp = is_not_conflict_subject_offer(${'selected' . $i}, ${'session' . $ii});
                                                 if ( ! $tmp)

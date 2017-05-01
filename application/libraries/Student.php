@@ -494,6 +494,26 @@ class Student extends School_informations
                 return $this->age->result() . (($msg) ? ' years old' : '');
         }
 
+        private function _get_registered_subject_offers()
+        {
+                $tmp    = $this->Students_subjects_model->
+                        fields('subject_offer_id')->
+                        where(array(
+                            'enrollment_id' => $this->__enrollment->enrollment_id
+                        ))->
+                        //set_cache()->
+                        get_all();
+                $return = array();
+                if ($tmp)
+                {
+                        foreach ($tmp as $v)
+                        {
+                                $return[] = $v->subject_offer_id;
+                        }
+                }
+                return $return;
+        }
+
         /**
          * 
          * @return type
@@ -501,15 +521,18 @@ class Student extends School_informations
          */
         public function get_all_subject_available_to_enroll()
         {
+
+                $subject_offer_ids = $this->_get_registered_subject_offers();
                 // return $this->__curriculum_subjects();
-                $obj    = $this->Curriculum_subject_model->
+                $obj               = $this->Curriculum_subject_model->
                         fields('subject_id')->
+                        order_by('curriculum_subject_semester,curriculum_subject_year_level')->
                         where(array(
                             'curriculum_id' => $this->__curriculum->curriculum_id
                         ))->
                         //set_cache()->
                         get_all();
-                $return = array();
+                $return            = array();
                 if ($obj)
                 {
                         foreach ($obj as $s)
@@ -541,13 +564,16 @@ class Student extends School_informations
                                             'subject_offer_school_year' => current_school_year()
                                         ))->
                                         // set_cache()->
-                                        get();
-                                /**
-                                 * check if has,from subject_id
-                                 */
+                                        get_all();
                                 if ($tmp)
                                 {
-                                        $return[] = $tmp;
+                                        foreach ($tmp as $v)
+                                        {
+                                                if ( ! in_array($v->subject_offer_id, $subject_offer_ids))
+                                                {
+                                                        $return[] = $v;
+                                                }
+                                        }
                                 }
                         }
                 }
@@ -581,20 +607,25 @@ class Student extends School_informations
                 return (object) $return;
         }
 
-        public function enrolled_units($int = FALSE)
+        public function enrolled_units($int = FALSE, $enroll_only = TRUE)
         {
                 $obj = $this->Students_subjects_model->
                         fields('curriculum_subject_id')->
                         with_curriculum_subject()->
                         where(array(
-                            'student_subject_semester'      => current_school_semester(TRUE),
-                            'student_subject_school_year'   => current_school_year(),
-                            'enrollment_id'                 => $this->__enrollment->enrollment_id,
+                    'student_subject_semester'    => current_school_semester(TRUE),
+                    'student_subject_school_year' => current_school_year(),
+                    'enrollment_id'               => $this->__enrollment->enrollment_id
+                ));
+                if ($enroll_only)
+                {
+                        $obj->where(array(
                             'student_subject_enroll_status' => TRUE
-                        ))->
+                        ));
+                }
+                $obj   = $obj->
                         //set_cache()->
                         get_all();
-
                 $units = 0;
                 if ($obj)
                 {
