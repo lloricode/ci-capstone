@@ -62,7 +62,7 @@ class Curriculums extends CI_Capstone_Controller
                 {
                         foreach ($curriculum_obj as $curriculum)
                         {
-                                $view = table_row_button_link('curriculums/view?curriculum-id=' . $curriculum->curriculum_id, lang('curriculumn_view'));
+                                $view = table_row_button_link('curriculums/view?curriculum-id=' . $curriculum->curriculum_id, lang('curriculumn_view'), 'btn-info');
 
                                 $tmp = array(
                                     my_htmlspecialchars($curriculum->course->course_code),
