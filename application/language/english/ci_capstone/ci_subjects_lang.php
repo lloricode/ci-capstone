@@ -27,8 +27,10 @@ $lang['index_subject_course_name_th'] = 'Program';
 
 $lang['view_subject_label'] = 'View Courses';
 
-$lang['edit_subject_label'] = 'Edit Course';
+$lang['edit_subject_label']                        = 'Edit Course';
 $lang['create_subject_succesfully_update_message'] = 'Course Succesfully Updated!!';
 
+$lang['stundent_enrolled_unit_plus_added_subjects_label'] = 'Total All Unit/s';
+$lang['stundent_enrolled_unit_label']                     = 'Enrolled Unit/s';
 
 

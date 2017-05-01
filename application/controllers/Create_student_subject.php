@@ -156,6 +156,7 @@ class Create_student_subject extends CI_Capstone_Controller
                 if ($this->session->has_userdata('total_unit'))
                 {
                         $unit_session = (int) $this->session->userdata('total_unit');
+                        $unit_session += $this->student->enrolled_units(TRUE);
                         if ($maximum_units === 0)
                         {
                                 $this->session->set_flashdata('message', bootstrap_error(lang('no_unit') . ' [ ' . current_school_semester() . ' ]'));
@@ -191,6 +192,23 @@ class Create_student_subject extends CI_Capstone_Controller
                     'value'    => $this->_total_unit . ' ' . $unit,
                     'type'     => 'text',
                     'lang'     => 'added_subjects_total_units',
+                    'disabled' => ''
+                );
+
+                $all_unit                      = ($this->_total_unit + $this->student->enrolled_units(TRUE));
+                $inputs['enrooler_units_plus'] = array(
+                    'name'     => 'xx',
+                    'value'    => $all_unit . ' ' . (($all_unit > 1) ? plural($unit) : $unit),
+                    'type'     => 'text',
+                    'lang'     => 'stundent_enrolled_unit_plus_added_subjects_label', //student_lang
+                    'disabled' => ''
+                );
+
+                $inputs['enrooler_units'] = array(
+                    'name'     => 'xx',
+                    'value'    => $this->student->enrolled_units(),
+                    'type'     => 'text',
+                    'lang'     => 'stundent_enrolled_unit_label', //student_lang
                     'disabled' => ''
                 );
 

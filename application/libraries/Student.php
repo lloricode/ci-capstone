@@ -581,7 +581,7 @@ class Student extends School_informations
                 return (object) $return;
         }
 
-        public function enrolled_units()
+        public function enrolled_units($int = FALSE)
         {
                 $obj = $this->Students_subjects_model->
                         fields('curriculum_subject_id')->
@@ -602,6 +602,10 @@ class Student extends School_informations
                         {
                                 $units += (int) $v->curriculum_subject->curriculum_subject_units;
                         }
+                }
+                if ($int)
+                {
+                        return $units;
                 }
 
                 $this->load->helper('inflector');
