@@ -276,4 +276,20 @@ class Curriculum_subject_model extends MY_Model
                                 get($this->table)->row()->curriculum_subject_units;
         }
 
+        public function get_unit($id = NULL, $curr_id = NULL, $subject_id = NULL)
+        {
+                $obj = $this;
+                if (is_null($id))
+                {
+                        $obj->where(array(
+                            'curriculum_id' => $curr_id,
+                            'subject_id'    => $subject_id
+                        ));
+                        return (int) $obj->get()->
+                                curriculum_subject_units;
+                }
+                return (int) $obj->get($id)->
+                        curriculum_subject_units;
+        }
+
 }

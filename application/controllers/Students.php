@@ -279,8 +279,8 @@ class Students extends CI_Capstone_Controller
                  * sorting the rows of subject result 
                  */
                 $sort_result_as = array(
-                    'year',
-                    'semester',
+                    // 'year',
+                    // 'semester',
                     'faculty',
                     'subject',
                     'unit',
@@ -364,8 +364,8 @@ class Students extends CI_Capstone_Controller
                  * table header
                  */
                 $header = array(
-                    lang('student_year_th'),
-                    lang('student_semester_th'),
+                    //  lang('student_year_th'),
+                    // lang('student_semester_th'),
                     lang('student_instructor_th'),
                     lang('student_subject_th'), /* lang in students_lang */
                     lang('student_unit_th'),

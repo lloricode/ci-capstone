@@ -65,11 +65,15 @@ function function_row_td($link, $label, $popup = FALSE)
                                         <td> <?php echo bold($this->student->is_enrolled(TRUE)); ?></td>
                                     </tr>
                                     <tr>
-                                        <td>Enrolled Term</td>
+                                        <td>Enrolled Unit/s</td>
+                                        <td> <?php echo bold($this->student->enrolled_units()); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Term</td>
                                         <td> <?php echo bold($this->student->enrolled_term_year()); ?></td>
                                     </tr>
                                     <tr>
-                                        <td>Enrolled Curriculum</td>
+                                        <td>Curriculum</td>
                                         <td> <?php echo $this->student->curriculum(TRUE); ?></td>
                                     </tr>
                                     <tr>

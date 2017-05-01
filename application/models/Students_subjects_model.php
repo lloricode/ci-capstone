@@ -56,13 +56,18 @@ class Students_subjects_model extends MY_Model
                     'local_key'     => 'user_id'
                 );
 
-
-
                 $this->has_one['enrollments'] = array(
                     'foreign_model' => 'Enrollment_model',
                     'foreign_table' => 'enrollments',
                     'foreign_key'   => 'enrollment_id',
                     'local_key'     => 'enrollment_id'
+                );
+
+                $this->has_one['curriculum_subject'] = array(
+                    'foreign_model' => 'Curriculum_subject_model',
+                    'foreign_table' => 'curriculum_subjects',
+                    'foreign_key'   => 'curriculum_subject_id',
+                    'local_key'     => 'curriculum_subject_id'
                 );
         }
 

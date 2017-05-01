@@ -91,12 +91,15 @@ class Subject_offer_model extends MY_Model
                     'local_key'     => 'subject_offer_id'
                 );
 
-                $this->has_one['curriculum_subject'] = array(
-                    'foreign_model' => 'Curriculum_subject_model',
-                    'foreign_table' => 'curriculum_subjects',
-                    'foreign_key'   => 'subject_id',
-                    'local_key'     => 'subject_id'
-                );
+                /**
+                 * remove this is no issue
+                 */
+//                $this->has_one['curriculum_subject'] = array(
+//                    'foreign_model' => 'Curriculum_subject_model',
+//                    'foreign_table' => 'curriculum_subjects',
+//                    'foreign_key'   => 'subject_id',
+//                    'local_key'     => 'subject_id'
+//                );
 
                 $this->has_one['student_subjects'] = array(
                     'foreign_model' => 'Students_subjects_model',
@@ -182,20 +185,20 @@ class Subject_offer_model extends MY_Model
                          */
                         $this->with_student_subjects(); //'where:`enrollment_id`!=' . $enrollment_id);
                 }
-                $where__     = array(
-                    'field'    => 'curriculum_subject_year_level,curriculum_subject_semester',
-                    'order_by' => 'curriculum_subject_year_level,curriculum_subject_semester',
-                    'with'     => array(
-                        'relation' => 'curriculum',
-                        'field'    => 'curriculum_id'
-                ));
+//                $where__     = array(
+//                    'field'    => 'curriculum_subject_year_level,curriculum_subject_semester',
+//                    'order_by' => 'curriculum_subject_year_level,curriculum_subject_semester',
+//                    'with'     => array(
+//                        'relation' => 'curriculum',
+//                        'field'    => 'curriculum_id'
+//                ));
                 $change_name = '';
                 if ($curriculum_id)
                 {
                         $nested_where['where'] = array(
                             'curriculum_id' => $curriculum_id
                         );
-                        $where__               = array_merge($where__, $nested_where);
+                        // $where__               = array_merge($where__, $nested_where);
                         $change_name           = 'curriculum_id' . $curriculum_id;
                 }
                 if ( ! is_null($faculty_id))
@@ -204,7 +207,7 @@ class Subject_offer_model extends MY_Model
                             'user_id' => $faculty_id
                         ));
                 }
-                $this->with_curriculum_subject($where__);
+                // $this->with_curriculum_subject($where__);
                 if ( ! is_null($limit) && ! is_null($offset))
                 {
                         /**

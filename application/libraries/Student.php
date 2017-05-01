@@ -344,7 +344,7 @@ class Student extends School_informations
         public function subject_offers($button_link = FALSE, $return_type = 'object', $sort_ = FALSE)
         {
                 $this->load->helper(array('day', 'school', 'time'));
-                $s_o_           = $this->__students_subjects(/* $limit, $offset */);
+                $s_o_           = $this->__students_subjects();
                 $subject_offers = array();
                 if ($s_o_)
                 {
@@ -354,11 +354,6 @@ class Student extends School_informations
                                         fields('subject_offer_id')->
                                         with_faculty('fields:last_name,first_name')->
                                         with_subject('fields:subject_code,subject_description')->
-                                        with_curriculum_subject(
-                                                'fields:curriculum_subject_year_level,'
-                                                . 'curriculum_subject_semester,'
-                                                . 'curriculum_subject_units'
-                                        )->
                                         with_subject_line(array(
                                             'with'   => array(
                                                 'relation' => 'room',
@@ -400,15 +395,13 @@ class Student extends School_informations
                                             'room' . $tmp  => '--',
                                         ));
                                 }
+
+                                $unit   = $this->Curriculum_subject_model->get_unit(NULL, $stud_sub->curriculum_id, $sub_of->subject->subject_id);
                                 $tmp__  = array_merge(array(
-                                    // 'id'       => $sub_of->subject_offer_id,
-                                    'year'     => number_place($sub_of->curriculum_subject->curriculum_subject_year_level) . ' Year',
-                                    'semester' => semesters($sub_of->curriculum_subject->curriculum_subject_semester),
-                                    'subject'  => $sub_of->subject->subject_code,
-                                    'faculty'  => ($button_link) ? ($sub_of->faculty->last_name . ', ' . $sub_of->faculty->first_name) : $this->User_model->button_link($sub_of->faculty->id, $sub_of->faculty->last_name, $sub_of->faculty->first_name),
-                                    //--
-                                    'unit'     => $sub_of->curriculum_subject->curriculum_subject_units,
-                                    'status'   => ($stud_sub->student_subject_enroll_status) ? 'Enrolled' : 'Pending'
+                                    'subject' => $sub_of->subject->subject_code,
+                                    'faculty' => ($button_link) ? ($sub_of->faculty->last_name . ', ' . $sub_of->faculty->first_name) : $this->User_model->button_link($sub_of->faculty->id, $sub_of->faculty->last_name, $sub_of->faculty->first_name),
+                                    'status'  => ($stud_sub->student_subject_enroll_status) ? 'Enrolled' : 'Pending',
+                                    'unit'    => $unit
                                         ), $subject_line);
                                 /**
                                  * sorting
@@ -508,7 +501,57 @@ class Student extends School_informations
          */
         public function get_all_subject_available_to_enroll()
         {
-                return $this->__curriculum_subjects();
+                // return $this->__curriculum_subjects();
+                $obj    = $this->Curriculum_subject_model->
+                        fields('subject_id')->
+                        where(array(
+                            'curriculum_id' => $this->__curriculum->curriculum_id
+                        ))->
+                        //set_cache()->
+                        get_all();
+                $return = array();
+                if ($obj)
+                {
+                        foreach ($obj as $s)
+                        {
+                                $tmp = $this->Subject_offer_model->
+                                        with_subject('fields:subject_code,subject_description')->
+                                        with_faculty('fields:first_name,last_name')->
+                                        with_subject_line(array(
+                                            'fields' =>
+                                            'subject_offer_line_start,' .
+                                            'subject_offer_line_end,' .
+                                            'subject_offer_line_monday,' .
+                                            'subject_offer_line_tuesday,' .
+                                            'subject_offer_line_wednesday,' .
+                                            'subject_offer_line_thursday,' .
+                                            'subject_offer_line_friday,' .
+                                            'subject_offer_line_saturday,' .
+                                            'subject_offer_line_sunday,' .
+                                            'subject_offer_line_lec,' .
+                                            'subject_offer_line_lab',
+                                            'with'   => array(//sub query of sub query
+                                                'relation' => 'room',
+                                                'fields'   => 'room_number,room_capacity'
+                                            )
+                                        ))->
+                                        where(array(
+                                            'subject_id'                => $s->subject_id,
+                                            'subject_offer_semester'    => current_school_semester(TRUE),
+                                            'subject_offer_school_year' => current_school_year()
+                                        ))->
+                                        // set_cache()->
+                                        get();
+                                /**
+                                 * check if has,from subject_id
+                                 */
+                                if ($tmp)
+                                {
+                                        $return[] = $tmp;
+                                }
+                        }
+                }
+                return $return;
         }
 
         public function get_all_term_units()
@@ -538,6 +581,34 @@ class Student extends School_informations
                 return (object) $return;
         }
 
+        public function enrolled_units()
+        {
+                $obj = $this->Students_subjects_model->
+                        fields('curriculum_subject_id')->
+                        with_curriculum_subject()->
+                        where(array(
+                            'student_subject_semester'      => current_school_semester(TRUE),
+                            'student_subject_school_year'   => current_school_year(),
+                            'enrollment_id'                 => $this->__enrollment->enrollment_id,
+                            'student_subject_enroll_status' => TRUE
+                        ))->
+                        //set_cache()->
+                        get_all();
+
+                $units = 0;
+                if ($obj)
+                {
+                        foreach ($obj as $v)
+                        {
+                                $units += (int) $v->curriculum_subject->curriculum_subject_units;
+                        }
+                }
+
+                $this->load->helper('inflector');
+                $tmp = 'Unit';
+                return $units . ' ' . (($units > 1) ? plural($tmp) : $tmp);
+        }
+
 }
 
 /**
@@ -557,7 +628,8 @@ class School_informations
         protected $__course;
         protected $__education;
         protected $__curriculum;
-        private $_curriculum_subjects__subject_offers;
+
+        // private $_curriculum_subjects__subject_offers;
 
         public function __construct()
         {
@@ -612,11 +684,11 @@ class School_informations
                 /**
                  * course
                  */
-                $this->__course                             = $this->__enrollment->course;
+                $this->__course = $this->__enrollment->course;
                 /**
                  * set curriculum_id
                  */
-                $this->_curriculum_subjects__subject_offers = $this->Subject_offer_model->all(TRUE, $this->__enrollment->curriculum_id, $this->__enrollment->enrollment_id); //parameter is set to current semester and year
+                // $this->_curriculum_subjects__subject_offers = $this->Subject_offer_model->all(TRUE, $this->__enrollment->curriculum_id, $this->__enrollment->enrollment_id); //parameter is set to current semester and year
         }
 
         protected function __load_education()
@@ -633,16 +705,24 @@ class School_informations
                 $this->__curriculum = $this->Enrollment_model->with_curriculum()->get($this->__enrollment->enrollment_id)->curriculum;
         }
 
-        protected function __students_subjects(/* $limit, $offset */)
+        protected function __students_subjects($current_term_year = TRUE)
         {
-                return $this->Students_subjects_model->
-                                where(array(
-                                    'enrollment_id' => $this->__enrollment->enrollment_id
-                                ))->
-                                //set_cache('student_library_students_subjects_' . $this->__enrollment->enrollment_id . '_limit_' . $limit . '_offset_' . $offset)->
-                                set_cache('student_library_students_subjects_' . $this->__enrollment->enrollment_id)->
-                                // limit($limit, $offset)->
-                                get_all();
+                $obj = $this->Students_subjects_model->
+                        where(array(
+                            'enrollment_id' => $this->__enrollment->enrollment_id
+                        ))->
+                        //set_cache('student_library_students_subjects_' . $this->__enrollment->enrollment_id . '_limit_' . $limit . '_offset_' . $offset)->
+                        set_cache('student_library_students_subjects_' . $this->__enrollment->enrollment_id);
+
+
+                if ($current_term_year)
+                {
+                        $obj->where(array(
+                            'student_subject_semester'    => current_school_semester(TRUE),
+                            'student_subject_school_year' => current_school_year()
+                        ));
+                }
+                return $obj->get_all();
         }
 
         /**
@@ -650,36 +730,35 @@ class School_informations
          * 
          * @return array
          */
-        protected function __curriculum_subjects($add_level = 0)//parameter will use in recursive call
-        {
-                $level  = (int) $this->__enrollment->enrollment_year_level;
-                $level  += $add_level;
-                $return = array();
-                if ($this->_curriculum_subjects__subject_offers)
-                {
-                        foreach ($this->_curriculum_subjects__subject_offers as $s)
-                        {
-
-                                if (isset($s->student_subjects->enrollment_id))
-                                {
-                                        // i made an issue for this
-                                        //https://github.com/avenirer/CodeIgniter-MY_Model/issues/231
-                                        //this is temporary,(if fixed will refactor)
-                                        if ($s->student_subjects->enrollment_id == $this->__enrollment->enrollment_id)//i set to not != so check if exist then skip
-                                        {
-
-                                                continue;
-                                        }
-                                }
-
-
-                                // if ($level == $s->curriculum_subject->curriculum_subject_year_level)
-                                // {
-                                $return[] = $s;
-                                // }
-                        }
-                }
-                return $return;
-        }
-
+//        protected function __curriculum_subjects($add_level = 0)//parameter will use in recursive call
+//        {
+//                $level  = (int) $this->__enrollment->enrollment_year_level;
+//                $level  += $add_level;
+//                $return = array();
+//                if ($this->_curriculum_subjects__subject_offers)
+//                {
+//                        foreach ($this->_curriculum_subjects__subject_offers as $s)
+//                        {
+//
+//                                if (isset($s->student_subjects->enrollment_id))
+//                                {
+//                                        // i made an issue for this
+//                                        //https://github.com/avenirer/CodeIgniter-MY_Model/issues/231
+//                                        //this is temporary,(if fixed will refactor)
+//                                        if ($s->student_subjects->enrollment_id == $this->__enrollment->enrollment_id)//i set to not != so check if exist then skip
+//                                        {
+//
+//                                                continue;
+//                                        }
+//                                }
+//
+//
+//                                // if ($level == $s->curriculum_subject->curriculum_subject_year_level)
+//                                // {
+//                                $return[] = $s;
+//                                // }
+//                        }
+//                }
+//                return $return;
+//        }
 }

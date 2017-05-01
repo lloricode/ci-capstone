@@ -61,6 +61,12 @@ class Migration_Students_subjects extends CI_Migration
                         'unsigned'   => TRUE,
                         'null'       => FALSE
                     ),
+                    'curriculum_subject_id'         => array(//easy get units
+                        'type'       => 'INT',
+                        'constraint' => '11',
+                        'unsigned'   => TRUE,
+                        'null'       => FALSE
+                    ),
                     /**
                      * to find when this enrolled, and easy find what current enrolled
                      */

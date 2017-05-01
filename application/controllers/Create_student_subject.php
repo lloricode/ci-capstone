@@ -73,12 +73,14 @@ class Create_student_subject extends CI_Capstone_Controller
                                 $all_inserted = TRUE;
                                 foreach ($from_session as $subj_offr_id)
                                 {
-                                        $gen_id = $this->Students_subjects_model->insert(array(
-                                            'enrollment_id'          => $this->student->enrollment_id,
-                                            'curriculum_id'          => $this->student->curriculum_id,
+                                        $subject_id = $this->Subject_offer_model->get($subj_offr_id)->subject_id;
+                                        $gen_id     = $this->Students_subjects_model->insert(array(
+                                            'enrollment_id'               => $this->student->enrollment_id,
+                                            'curriculum_id'               => $this->student->curriculum_id,
                                             'student_subject_semester'    => current_school_semester(TRUE),
                                             'student_subject_school_year' => current_school_year(),
-                                            'subject_offer_id'       => $subj_offr_id
+                                            'subject_offer_id'            => $subj_offr_id,
+                                            'curriculum_subject_id'       => $this->_get_curriculum_subject_id($this->student->curriculum_id, $subject_id)
                                         ));
                                         if ( ! $gen_id)
                                         {
@@ -128,6 +130,20 @@ class Create_student_subject extends CI_Capstone_Controller
                 $this->_form_view($error_message);
         }
 
+        private function _get_curriculum_subject_id($cur_id, $subject_id)
+        {
+                return $this->
+                                Curriculum_subject_model->
+                                fields($this->Curriculum_subject_model->primary_key)->
+                                //set_cache()->
+                                where(array(
+                                    'curriculum_id' => $cur_id,
+                                    'subject_id'    => $subject_id
+                                ))->
+                                get()->
+                        {$this->Curriculum_subject_model->primary_key};
+        }
+
         private function _is_curriculum_yr_lvl_not_exceed()
         {
                 return TRUE;
@@ -147,7 +163,7 @@ class Create_student_subject extends CI_Capstone_Controller
                         }
                         elseif ($unit_session > $maximum_units)
                         {
-                                $this->session->set_flashdata('message', bootstrap_error(lang('unit_exceed')));
+                                $this->session->set_flashdata('message', bootstrap_error('unit_exceed'));
                                 return FALSE;
                         }
 
@@ -375,20 +391,6 @@ class Create_student_subject extends CI_Capstone_Controller
                         $tmp_compare = '';
                         foreach ($cur_subj_obj as $s)
                         {
-
-                                if ( ! isset($s->curriculum_subject->curriculum_subject_id))
-                                {
-                                        // i made an issue for this
-                                        //https://github.com/avenirer/CodeIgniter-MY_Model/issues/231
-                                        //this is temporary,(if fixed will refactor)
-                                        continue;
-                                }
-
-                                if ( ! isset($s->subject_line))
-                                {
-                                        continue;
-                                }
-
                                 if ($type == 'db')
                                 {
                                         if ($this->_is_in_session($s->subject_offer_id))
@@ -397,16 +399,20 @@ class Create_student_subject extends CI_Capstone_Controller
                                                 continue; //skip, already in session
                                         }
                                 }
-                                $tmp_sem_year = $s->curriculum_subject->curriculum_subject_year_level . $s->curriculum_subject->curriculum_subject_semester;
+                                $curr_subj_obj___ = $this->Curriculum_subject_model->where(array(
+                                            'curriculum_id' => $this->student->curriculum_id,
+                                            'subject_id'    => $s->subject->subject_id
+                                        ))->get();
+                                $tmp_sem_year     = $curr_subj_obj___->curriculum_subject_year_level . $curr_subj_obj___->curriculum_subject_semester;
 
                                 if ($tmp_compare != $tmp_sem_year)
                                 {
                                         $tmp_compare  = $tmp_sem_year;
-                                        $total_units  = $this->Curriculum_subject_model->total_units_per_term($s->curriculum_subject->curriculum_id, $s->curriculum_subject->curriculum_subject_semester, $s->curriculum_subject->curriculum_subject_year_level);
+                                        $total_units  = $this->Curriculum_subject_model->total_units_per_term($curr_subj_obj___->curriculum_id, $curr_subj_obj___->curriculum_subject_semester, $curr_subj_obj___->curriculum_subject_year_level);
                                         $table_data[] = array(
                                             array(
-                                                'data'    => heading(number_place($s->curriculum_subject->curriculum_subject_year_level) . ' Year - ' .
-                                                        semesters($s->curriculum_subject->curriculum_subject_semester)
+                                                'data'    => heading(number_place($curr_subj_obj___->curriculum_subject_year_level) . ' Year - ' .
+                                                        semesters($curr_subj_obj___->curriculum_subject_semester)
                                                         , 4) . ' Total units: ' . bold($total_units),
                                                 'colspan' => '16'
                                             )
@@ -436,7 +442,7 @@ class Create_student_subject extends CI_Capstone_Controller
                                         }
                                 }
                                 $row_output   = array();
-                                $row_output[] = $this->_row($this->Curriculum_model->button_link($s->curriculum_subject->curriculum_id, $s->subject->subject_code, $s->subject->subject_description), $row_count);
+                                $row_output[] = $this->_row($this->Curriculum_model->button_link($curr_subj_obj___->curriculum_id, $s->subject->subject_code, $s->subject->subject_description), $row_count);
 
                                 $row_output[] = $this->_row($this->User_model->button_link($s->faculty->id, $s->faculty->last_name, $s->faculty->first_name), $row_count);
 
@@ -473,7 +479,7 @@ class Create_student_subject extends CI_Capstone_Controller
                                                 );
                                                 break;
                                 }
-                                $row_output[] = $this->_row($s->curriculum_subject->curriculum_subject_units, $row_count);
+                                $row_output[] = $this->_row($curr_subj_obj___->curriculum_subject_units, $row_count);
                                 $row_output[] = $this->_row($btn_link, $row_count, array('class' => 'taskStatus'));
                                 $table_data[] = $row_output;
                                 if ($row_count === 2)// if there a second sched
@@ -488,7 +494,7 @@ class Create_student_subject extends CI_Capstone_Controller
                                 /**
                                  * sumation of unit
                                  */
-                                $this->_total_unit += $s->curriculum_subject->curriculum_subject_units;
+                                $this->_total_unit += $curr_subj_obj___->curriculum_subject_units;
                         }
                 }
                 /*
@@ -643,9 +649,9 @@ class Create_student_subject extends CI_Capstone_Controller
                                                 ${'session' . $count2} [$d] = $_line->{'subject_offer_line_' . $d};
                                         }
                                 }
-                                for ($i = 1; $i <= $count; $i ++ )
+                                for ($i = 1; $i <= $count; $i ++)
                                 {
-                                        for ($ii = 1; $ii <= $count2; $ii ++ )
+                                        for ($ii = 1; $ii <= $count2; $ii ++)
                                         {
                                                 $tmp = is_not_conflict_subject_offer(${'selected' . $i}, ${'session' . $ii});
                                                 if ( ! $tmp)
