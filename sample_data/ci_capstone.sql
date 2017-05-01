@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.2
+-- version 4.2.11
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: Apr 26, 2017 at 10:01 AM
--- Server version: 10.1.19-MariaDB
--- PHP Version: 5.6.24
+-- Host: 127.0.0.1
+-- Generation Time: May 01, 2017 at 05:19 AM
+-- Server version: 5.6.21
+-- PHP Version: 5.6.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `ci_capstone`
@@ -26,21 +26,15 @@ SET time_zone = "+00:00";
 -- Table structure for table `controllers`
 --
 
-DROP TABLE IF EXISTS `controllers`;
-CREATE TABLE `controllers` (
-  `controller_id` mediumint(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `controllers` (
+`controller_id` mediumint(8) unsigned NOT NULL,
   `controller_name` enum('home','curriculums','create-curriculum','create-curriculum-subject','create-requisite','set-curriculum-enable','students','create-student','edit-student','create-student-subject','subjects','create-subject','subject-offers','create-subject-offer','open-enrollment','educations','create-education','courses','create-course','rooms','create-room','edit-room','users','create-user','groups','create-group','edit-group','deactivate','edit-user','database','report-info','log','permissions','last-logins','','edit-subject') NOT NULL,
   `controller_description` varchar(50) NOT NULL,
   `controller_admin_only` tinyint(1) NOT NULL DEFAULT '0',
   `controller_enrollment_open` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `controllers`
---
-
-TRUNCATE TABLE `controllers`;
 --
 -- Dumping data for table `controllers`
 --
@@ -89,9 +83,8 @@ INSERT INTO `controllers` (`controller_id`, `controller_name`, `controller_descr
 -- Table structure for table `courses`
 --
 
-DROP TABLE IF EXISTS `courses`;
-CREATE TABLE `courses` (
-  `course_id` int(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `courses` (
+`course_id` int(8) unsigned NOT NULL,
   `course_code` varchar(50) NOT NULL,
   `course_icon` varchar(20) NOT NULL,
   `course_color` varchar(20) NOT NULL,
@@ -99,18 +92,13 @@ CREATE TABLE `courses` (
   `course_code_id` varchar(5) DEFAULT NULL,
   `education_id` int(11) DEFAULT NULL,
   `created_at` int(11) NOT NULL,
-  `created_user_id` int(11) UNSIGNED NOT NULL,
+  `created_user_id` int(11) unsigned NOT NULL,
   `deleted_at` int(11) DEFAULT NULL,
-  `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
+  `deleted_user_id` int(11) unsigned DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) unsigned DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `courses`
---
-
-TRUNCATE TABLE `courses`;
 --
 -- Dumping data for table `courses`
 --
@@ -132,33 +120,27 @@ INSERT INTO `courses` (`course_id`, `course_code`, `course_icon`, `course_color`
 -- Table structure for table `curriculums`
 --
 
-DROP TABLE IF EXISTS `curriculums`;
-CREATE TABLE `curriculums` (
-  `curriculum_id` int(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `curriculums` (
+`curriculum_id` int(8) unsigned NOT NULL,
   `curriculum_description` varchar(50) NOT NULL,
   `curriculum_effective_school_year` varchar(9) NOT NULL,
-  `curriculum_status` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
-  `curriculum_already_used` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
-  `course_id` int(11) UNSIGNED NOT NULL,
+  `curriculum_status` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `curriculum_already_used` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `course_id` int(11) unsigned NOT NULL,
   `created_at` int(11) NOT NULL,
-  `created_user_id` int(11) UNSIGNED NOT NULL,
+  `created_user_id` int(11) unsigned NOT NULL,
   `deleted_at` int(11) DEFAULT NULL,
-  `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
+  `deleted_user_id` int(11) unsigned DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) unsigned DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `curriculums`
---
-
-TRUNCATE TABLE `curriculums`;
 --
 -- Dumping data for table `curriculums`
 --
 
 INSERT INTO `curriculums` (`curriculum_id`, `curriculum_description`, `curriculum_effective_school_year`, `curriculum_status`, `curriculum_already_used`, `course_id`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES
-(1, 'Two Year Aircraft Maintenance & Technology', '2016-2017', 1, 1, 6, 1490272433, 1, NULL, NULL, 1492802078, 1),
+(1, 'Two Year Aircraft Maintenance & Technology', '2016-2017', 0, 1, 6, 1490272433, 1, NULL, NULL, 1493563170, 7),
 (2, 'Bachelor Science Elementary Education', '2015-2016', 1, 1, 1, 1490272501, 1, NULL, NULL, 1491886232, 1),
 (3, 'Bachelor of Science in Hotel Restaurant Management', '2016-2017', 1, 1, 2, 1490272821, 1, NULL, NULL, 1491886228, 1),
 (4, 'Bachelor of Science in Computer Science', '2015-2016', 1, 1, 4, 1490273333, 1, NULL, NULL, 1491886223, 1),
@@ -166,13 +148,15 @@ INSERT INTO `curriculums` (`curriculum_id`, `curriculum_description`, `curriculu
 (7, 'tesda', '2016-2017', 1, 1, 7, 1491115417, 1, NULL, NULL, 1491886211, 1),
 (8, 'cme', '2016-2017', 1, 1, 8, 1491115432, 1, NULL, NULL, 1491886207, 1),
 (9, 'cross enroll', '2016-2017', 1, 1, 9, 1491115451, 1, NULL, NULL, 1491886203, 1),
-(10, 'test for AMT', '2016-2017', 0, 0, 6, 1492589066, 1, NULL, NULL, 1492802078, 1),
-(11, 'dddddd', '2016-2017', 0, 0, 6, 1492589116, 1, NULL, NULL, 1492802078, 1),
-(12, 'ttttttt', '2018-2019', 0, 1, 6, 1492589161, 1, NULL, NULL, 1492802078, 1),
-(13, 'wewewe', '2016-2017', 0, 0, 6, 1492606235, 1, NULL, NULL, 1492802078, 1),
-(14, '333', '2016-2017', 0, 0, 6, 1492662352, 1, NULL, NULL, 1492802078, 1),
-(15, 'zsdfasf', '2016-2017', 0, 0, 6, 1492781702, 1, NULL, NULL, 1492802078, 1),
-(16, 'Test Curriculum', '2016-2017', 1, 1, 10, 1493177013, 1, NULL, NULL, 1493192434, 1);
+(10, 'test for AMT', '2016-2017', 0, 0, 6, 1492589066, 1, NULL, NULL, 1493563170, 7),
+(11, 'dddddd', '2016-2017', 0, 0, 6, 1492589116, 1, NULL, NULL, 1493563170, 7),
+(12, 'ttttttt', '2018-2019', 0, 1, 6, 1492589161, 1, NULL, NULL, 1493563170, 7),
+(13, 'wewewe', '2016-2017', 0, 0, 6, 1492606235, 1, NULL, NULL, 1493563170, 7),
+(14, '333', '2016-2017', 0, 0, 6, 1492662352, 1, NULL, NULL, 1493563170, 7),
+(15, 'zsdfasf', '2016-2017', 0, 0, 6, 1492781702, 1, NULL, NULL, 1493563170, 7),
+(16, 'Test Curriculum', '2016-2017', 1, 1, 10, 1493177013, 1, NULL, NULL, 1493192434, 1),
+(17, 'edz', '2016-2017', 0, 1, 6, 1493558845, 7, NULL, NULL, 1493563170, 7),
+(18, 'edz2', '2016-2017', 1, 1, 6, 1493562699, 7, NULL, NULL, 1493563170, 7);
 
 -- --------------------------------------------------------
 
@@ -180,29 +164,23 @@ INSERT INTO `curriculums` (`curriculum_id`, `curriculum_description`, `curriculu
 -- Table structure for table `curriculum_subjects`
 --
 
-DROP TABLE IF EXISTS `curriculum_subjects`;
-CREATE TABLE `curriculum_subjects` (
-  `curriculum_subject_id` int(8) UNSIGNED NOT NULL,
-  `curriculum_subject_year_level` tinyint(11) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `curriculum_subjects` (
+`curriculum_subject_id` int(8) unsigned NOT NULL,
+  `curriculum_subject_year_level` tinyint(11) unsigned NOT NULL,
   `curriculum_subject_semester` enum('first','second','summer') NOT NULL,
-  `curriculum_subject_units` tinyint(11) UNSIGNED NOT NULL,
-  `curriculum_subject_lecture_hours` tinyint(11) UNSIGNED NOT NULL,
-  `curriculum_subject_laboratory_hours` tinyint(11) UNSIGNED NOT NULL,
-  `curriculum_id` int(11) UNSIGNED NOT NULL,
-  `subject_id` int(11) UNSIGNED NOT NULL,
+  `curriculum_subject_units` tinyint(11) unsigned NOT NULL,
+  `curriculum_subject_lecture_hours` tinyint(11) unsigned NOT NULL,
+  `curriculum_subject_laboratory_hours` tinyint(11) unsigned NOT NULL,
+  `curriculum_id` int(11) unsigned NOT NULL,
+  `subject_id` int(11) unsigned NOT NULL,
   `created_at` int(11) NOT NULL,
-  `created_user_id` int(11) UNSIGNED NOT NULL,
+  `created_user_id` int(11) unsigned NOT NULL,
   `deleted_at` int(11) DEFAULT NULL,
-  `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
+  `deleted_user_id` int(11) unsigned DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) unsigned DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `curriculum_subjects`
---
-
-TRUNCATE TABLE `curriculum_subjects`;
 --
 -- Dumping data for table `curriculum_subjects`
 --
@@ -270,7 +248,9 @@ INSERT INTO `curriculum_subjects` (`curriculum_subject_id`, `curriculum_subject_
 (67, 3, 'summer', 1, 0, 1, 16, 49, 1493192296, 1, NULL, NULL, NULL, NULL),
 (68, 4, 'first', 6, 3, 3, 16, 54, 1493192320, 1, NULL, NULL, NULL, NULL),
 (69, 4, 'second', 3, 1, 2, 16, 35, 1493192373, 1, NULL, NULL, NULL, NULL),
-(70, 4, 'second', 1, 0, 1, 16, 37, 1493192420, 1, NULL, NULL, NULL, NULL);
+(70, 4, 'second', 1, 0, 1, 16, 37, 1493192420, 1, NULL, NULL, NULL, NULL),
+(71, 1, 'summer', 3, 0, 3, 18, 65, 1493562856, 7, NULL, NULL, NULL, NULL),
+(72, 2, 'summer', 1, 1, 0, 18, 66, 1493562878, 7, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -278,24 +258,18 @@ INSERT INTO `curriculum_subjects` (`curriculum_subject_id`, `curriculum_subject_
 -- Table structure for table `dean_course`
 --
 
-DROP TABLE IF EXISTS `dean_course`;
-CREATE TABLE `dean_course` (
-  `dean_course_id` int(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `dean_course` (
+`dean_course_id` int(8) unsigned NOT NULL,
   `user_id` int(11) NOT NULL,
   `course_id` int(11) NOT NULL,
   `created_at` int(11) NOT NULL,
-  `created_user_id` int(11) UNSIGNED NOT NULL,
+  `created_user_id` int(11) unsigned NOT NULL,
   `deleted_at` int(11) DEFAULT NULL,
-  `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
+  `deleted_user_id` int(11) unsigned DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) unsigned DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `dean_course`
---
-
-TRUNCATE TABLE `dean_course`;
 --
 -- Dumping data for table `dean_course`
 --
@@ -309,24 +283,18 @@ INSERT INTO `dean_course` (`dean_course_id`, `user_id`, `course_id`, `created_at
 -- Table structure for table `educations`
 --
 
-DROP TABLE IF EXISTS `educations`;
-CREATE TABLE `educations` (
-  `education_id` int(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `educations` (
+`education_id` int(8) unsigned NOT NULL,
   `education_code` varchar(50) NOT NULL,
   `education_description` varchar(50) NOT NULL,
   `created_at` int(11) NOT NULL,
-  `created_user_id` int(11) UNSIGNED NOT NULL,
+  `created_user_id` int(11) unsigned NOT NULL,
   `deleted_at` int(11) DEFAULT NULL,
-  `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
+  `deleted_user_id` int(11) unsigned DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) unsigned DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `educations`
---
-
-TRUNCATE TABLE `educations`;
 --
 -- Dumping data for table `educations`
 --
@@ -341,9 +309,8 @@ INSERT INTO `educations` (`education_id`, `education_code`, `education_descripti
 -- Table structure for table `enrollments`
 --
 
-DROP TABLE IF EXISTS `enrollments`;
-CREATE TABLE `enrollments` (
-  `enrollment_id` int(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `enrollments` (
+`enrollment_id` int(8) unsigned NOT NULL,
   `student_id` int(11) NOT NULL,
   `course_id` int(11) NOT NULL,
   `curriculum_id` int(11) NOT NULL,
@@ -352,130 +319,128 @@ CREATE TABLE `enrollments` (
   `enrollment_year_level` tinyint(11) NOT NULL,
   `enrollment_status` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` int(11) NOT NULL,
-  `created_user_id` int(11) UNSIGNED NOT NULL,
+  `created_user_id` int(11) unsigned NOT NULL,
   `deleted_at` int(11) DEFAULT NULL,
-  `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
+  `deleted_user_id` int(11) unsigned DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) unsigned DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=121 DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `enrollments`
---
-
-TRUNCATE TABLE `enrollments`;
 --
 -- Dumping data for table `enrollments`
 --
 
 INSERT INTO `enrollments` (`enrollment_id`, `student_id`, `course_id`, `curriculum_id`, `enrollment_school_year`, `enrollment_semester`, `enrollment_year_level`, `enrollment_status`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES
-(1, 1, 3, 5, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(2, 2, 3, 5, '2015-2016', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(3, 3, 2, 3, '2013-2014', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(4, 4, 7, 7, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
-(5, 5, 7, 7, '2013-2014', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(6, 6, 6, 1, '2015-2016', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(7, 7, 9, 9, '2014-2015', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(8, 8, 7, 7, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(9, 9, 4, 4, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(10, 10, 1, 2, '2014-2015', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(11, 11, 2, 3, '2014-2015', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(12, 12, 7, 7, '2014-2015', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(13, 13, 6, 1, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(14, 14, 7, 7, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(15, 15, 3, 3, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
-(16, 16, 7, 7, '2013-2014', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(17, 17, 9, 9, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(18, 18, 2, 3, '2015-2016', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(19, 19, 4, 4, '2014-2015', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(20, 20, 7, 7, '2015-2016', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
-(21, 21, 9, 9, '2013-2014', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
-(22, 22, 4, 4, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(23, 23, 4, 4, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(24, 24, 1, 2, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(25, 25, 4, 4, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(26, 26, 7, 7, '2014-2015', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(27, 27, 6, 1, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
-(28, 28, 6, 1, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(29, 29, 1, 2, '2013-2014', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(30, 30, 2, 3, '2013-2014', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(31, 31, 2, 2, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
-(32, 32, 1, 2, '2013-2014', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(33, 33, 6, 1, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
-(34, 34, 1, 2, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(35, 35, 4, 4, '2013-2014', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(36, 36, 3, 5, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(37, 37, 2, 3, '2013-2014', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(38, 38, 7, 7, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(39, 39, 6, 1, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(40, 40, 1, 2, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
-(41, 41, 7, 7, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(42, 42, 1, 2, '2013-2014', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(43, 43, 9, 9, '2014-2015', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(44, 44, 4, 4, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(45, 45, 6, 1, '2014-2015', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(46, 46, 1, 1, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
-(47, 47, 4, 4, '2013-2014', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(48, 48, 6, 1, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(49, 49, 4, 4, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(50, 50, 1, 2, '2013-2014', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(51, 51, 6, 1, '2013-2014', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(52, 52, 9, 9, '2014-2015', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(53, 53, 3, 5, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(54, 54, 8, 8, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(55, 55, 2, 3, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(56, 56, 2, 3, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(57, 57, 4, 4, '2014-2015', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(58, 58, 8, 8, '2014-2015', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
-(59, 59, 4, 4, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(60, 60, 8, 8, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(61, 61, 2, 3, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(62, 62, 8, 8, '2015-2016', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(63, 63, 7, 7, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(64, 64, 7, 7, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(65, 65, 1, 2, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(1, 1, 3, 5, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(2, 2, 3, 5, '2015-2016', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(3, 3, 2, 3, '2013-2014', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(4, 4, 7, 7, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493568313, 1),
+(5, 5, 7, 7, '2013-2014', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(6, 6, 6, 1, '2015-2016', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(7, 7, 9, 9, '2014-2015', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(8, 8, 7, 7, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(9, 9, 4, 4, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(10, 10, 1, 2, '2014-2015', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(11, 11, 2, 3, '2014-2015', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(12, 12, 7, 7, '2014-2015', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(13, 13, 6, 1, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(14, 14, 7, 7, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(15, 15, 3, 3, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493568313, 1),
+(16, 16, 7, 7, '2013-2014', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(17, 17, 9, 9, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(18, 18, 2, 3, '2015-2016', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(19, 19, 4, 4, '2014-2015', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(20, 20, 7, 7, '2015-2016', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493568313, 1),
+(21, 21, 9, 9, '2013-2014', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493568313, 1),
+(22, 22, 4, 4, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(23, 23, 4, 4, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(24, 24, 1, 2, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(25, 25, 4, 4, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(26, 26, 7, 7, '2014-2015', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(27, 27, 6, 1, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493568313, 1),
+(28, 28, 6, 1, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(29, 29, 1, 2, '2013-2014', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(30, 30, 2, 3, '2013-2014', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(31, 31, 2, 2, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493568313, 1),
+(32, 32, 1, 2, '2013-2014', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(33, 33, 6, 1, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493568313, 1),
+(34, 34, 1, 2, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(35, 35, 4, 4, '2013-2014', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(36, 36, 3, 5, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(37, 37, 2, 3, '2013-2014', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(38, 38, 7, 7, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(39, 39, 6, 1, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(40, 40, 1, 2, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493568313, 1),
+(41, 41, 7, 7, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(42, 42, 1, 2, '2013-2014', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(43, 43, 9, 9, '2014-2015', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(44, 44, 4, 4, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(45, 45, 6, 1, '2014-2015', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(46, 46, 1, 1, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493568313, 1),
+(47, 47, 4, 4, '2013-2014', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(48, 48, 6, 1, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(49, 49, 4, 4, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(50, 50, 1, 2, '2013-2014', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(51, 51, 6, 1, '2013-2014', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(52, 52, 9, 9, '2014-2015', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(53, 53, 3, 5, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(54, 54, 8, 8, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(55, 55, 2, 3, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(56, 56, 2, 3, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(57, 57, 4, 4, '2014-2015', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(58, 58, 8, 8, '2014-2015', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493568313, 1),
+(59, 59, 4, 4, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(60, 60, 8, 8, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(61, 61, 2, 3, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(62, 62, 8, 8, '2015-2016', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(63, 63, 7, 7, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(64, 64, 7, 7, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(65, 65, 1, 2, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
 (66, 66, 6, 1, '2016-2017', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1492920918, 1),
-(67, 67, 9, 9, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(68, 68, 3, 5, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(69, 69, 6, 1, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
+(67, 67, 9, 9, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(68, 68, 3, 5, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(69, 69, 6, 1, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493568313, 1),
 (70, 70, 6, 1, '2016-2017', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1492581349, 1),
-(71, 71, 4, 4, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(72, 72, 2, 3, '2015-2016', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(73, 73, 1, 2, '2014-2015', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(74, 74, 2, 2, '2013-2014', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
-(75, 75, 8, 8, '2014-2015', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(76, 76, 9, 9, '2015-2016', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(77, 77, 6, 1, '2015-2016', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(78, 78, 3, 5, '2014-2015', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(79, 79, 6, 1, '2015-2016', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(80, 80, 3, 5, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(81, 81, 6, 1, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(82, 82, 6, 1, '2015-2016', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(83, 83, 9, 9, '2015-2016', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(84, 84, 9, 9, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
-(85, 85, 2, 3, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(86, 86, 7, 7, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
-(87, 87, 4, 4, '2013-2014', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(88, 88, 7, 7, '2015-2016', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(89, 89, 4, 4, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(90, 90, 9, 9, '2014-2015', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(91, 91, 8, 8, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(92, 92, 6, 1, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(93, 93, 9, 9, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, 1),
-(94, 94, 2, 3, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(95, 95, 7, 7, '2013-2014', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(96, 96, 1, 2, '2015-2016', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(97, 97, 3, 5, '2014-2015', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(98, 98, 1, 2, '2014-2015', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(99, 99, 3, 5, '2014-2015', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
-(100, 100, 4, 4, '2014-2015', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1493193538, NULL),
+(71, 71, 4, 4, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(72, 72, 2, 3, '2015-2016', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(73, 73, 1, 2, '2014-2015', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(74, 74, 2, 2, '2013-2014', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493568313, 1),
+(75, 75, 8, 8, '2014-2015', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(76, 76, 9, 9, '2015-2016', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(77, 77, 6, 1, '2015-2016', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(78, 78, 3, 5, '2014-2015', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(79, 79, 6, 1, '2015-2016', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(80, 80, 3, 5, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(81, 81, 6, 1, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(82, 82, 6, 1, '2015-2016', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(83, 83, 9, 9, '2015-2016', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(84, 84, 9, 9, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493568313, 1),
+(85, 85, 2, 3, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(86, 86, 7, 7, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493568313, 1),
+(87, 87, 4, 4, '2013-2014', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(88, 88, 7, 7, '2015-2016', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(89, 89, 4, 4, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(90, 90, 9, 9, '2014-2015', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(91, 91, 8, 8, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(92, 92, 6, 1, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(93, 93, 9, 9, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1493568313, 1),
+(94, 94, 2, 3, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(95, 95, 7, 7, '2013-2014', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(96, 96, 1, 2, '2015-2016', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(97, 97, 3, 5, '2014-2015', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(98, 98, 1, 2, '2014-2015', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(99, 99, 3, 5, '2014-2015', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
+(100, 100, 4, 4, '2014-2015', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1493568313, NULL),
 (102, 101, 6, 1, '2016-2017', 'summer', 1, 1, 1491890796, 1, NULL, NULL, 1493175446, 1),
 (105, 102, 6, 1, '2016-2017', 'summer', 1, 1, 1492588748, 1, NULL, NULL, 1492588952, 1),
 (107, 103, 6, 12, '2016-2017', 'summer', 1, 0, 1492801999, 1, NULL, NULL, 1493092758, 1),
 (109, 104, 6, 1, '2016-2017', 'summer', 1, 1, 1492802115, 1, NULL, NULL, 1492802128, 1),
 (110, 105, 6, 1, '2016-2017', 'summer', 1, 1, 1492836242, 1, NULL, NULL, 1493092442, 1),
 (112, 106, 6, 1, '2016-2017', 'summer', 1, 1, 1492869629, 1, NULL, NULL, 1493185357, 1),
-(117, 111, 10, 16, NULL, NULL, 1, 0, 1493192446, 1, NULL, NULL, 1493193535, 1);
+(117, 111, 10, 16, NULL, NULL, 1, 0, 1493192446, 1, NULL, NULL, 1493193535, 1),
+(118, 112, 6, 17, NULL, NULL, 1, 0, 1493563154, 7, NULL, NULL, NULL, NULL),
+(119, 113, 6, 18, NULL, NULL, 1, 0, 1493563196, 7, NULL, NULL, 1493563209, 7),
+(120, 114, 6, 18, NULL, NULL, 2, 0, 1493563242, 7, NULL, NULL, 1493563252, 7);
 
 -- --------------------------------------------------------
 
@@ -483,18 +448,12 @@ INSERT INTO `enrollments` (`enrollment_id`, `student_id`, `course_id`, `curricul
 -- Table structure for table `enrollment_status`
 --
 
-DROP TABLE IF EXISTS `enrollment_status`;
-CREATE TABLE `enrollment_status` (
-  `status` tinyint(1) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `enrollment_status` (
+  `status` tinyint(1) unsigned NOT NULL,
   `created_at` int(11) NOT NULL,
-  `created_user_id` int(11) UNSIGNED NOT NULL
+  `created_user_id` int(11) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `enrollment_status`
---
-
-TRUNCATE TABLE `enrollment_status`;
 --
 -- Dumping data for table `enrollment_status`
 --
@@ -508,18 +467,12 @@ INSERT INTO `enrollment_status` (`status`, `created_at`, `created_user_id`) VALU
 -- Table structure for table `groups`
 --
 
-DROP TABLE IF EXISTS `groups`;
-CREATE TABLE `groups` (
-  `id` mediumint(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `groups` (
+`id` mediumint(8) unsigned NOT NULL,
   `name` varchar(20) NOT NULL,
   `description` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `groups`
---
-
-TRUNCATE TABLE `groups`;
 --
 -- Dumping data for table `groups`
 --
@@ -538,28 +491,21 @@ INSERT INTO `groups` (`id`, `name`, `description`) VALUES
 -- Table structure for table `login_attempts`
 --
 
-DROP TABLE IF EXISTS `login_attempts`;
-CREATE TABLE `login_attempts` (
-  `id` mediumint(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `login_attempts` (
+`id` mediumint(8) unsigned NOT NULL,
   `ip_address` varbinary(16) NOT NULL,
   `login` varchar(100) NOT NULL,
-  `time` int(11) UNSIGNED NOT NULL
+  `time` int(11) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `login_attempts`
---
-
-TRUNCATE TABLE `login_attempts`;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `logs`
 --
 
-DROP TABLE IF EXISTS `logs`;
-CREATE TABLE `logs` (
-  `id` int(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `logs` (
+`id` int(8) unsigned NOT NULL,
   `errno` int(2) NOT NULL,
   `errtype` varchar(32) NOT NULL,
   `errstr` text NOT NULL,
@@ -570,27 +516,16 @@ CREATE TABLE `logs` (
   `time` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `logs`
---
-
-TRUNCATE TABLE `logs`;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `migrations`
 --
 
-DROP TABLE IF EXISTS `migrations`;
-CREATE TABLE `migrations` (
+CREATE TABLE IF NOT EXISTS `migrations` (
   `version` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `migrations`
---
-
-TRUNCATE TABLE `migrations`;
 --
 -- Dumping data for table `migrations`
 --
@@ -604,37 +539,22 @@ INSERT INTO `migrations` (`version`) VALUES
 -- Table structure for table `permissions`
 --
 
-DROP TABLE IF EXISTS `permissions`;
-CREATE TABLE `permissions` (
-  `permission_id` int(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `permissions` (
+`permission_id` int(8) unsigned NOT NULL,
   `controller_id` int(11) NOT NULL,
   `group_id` int(11) NOT NULL,
   `created_at` int(11) NOT NULL,
-  `created_user_id` int(11) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `created_user_id` int(11) unsigned DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=119 DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `permissions`
---
-
-TRUNCATE TABLE `permissions`;
 --
 -- Dumping data for table `permissions`
 --
 
 INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `created_user_id`) VALUES
-(6, 6, 1, 1491881056, 1),
-(11, 11, 1, 1491881056, 1),
-(12, 12, 1, 1491881056, 1),
 (15, 15, 1, 1491881056, 1),
-(16, 16, 1, 1491881056, 1),
-(17, 17, 1, 1491881056, 1),
-(19, 19, 1, 1491881056, 1),
-(20, 20, 1, 1491881056, 1),
-(21, 21, 1, 1491881056, 1),
 (22, 22, 1, 1491881056, 1),
 (23, 23, 1, 1491881057, 1),
-(24, 24, 1, 1491881057, 1),
 (25, 25, 1, 1491881057, 1),
 (26, 26, 1, 1491881057, 1),
 (27, 27, 1, 1491881057, 1),
@@ -656,35 +576,55 @@ INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `create
 (44, 1, 4, 1491883832, 1),
 (45, 1, 5, 1491883832, 1),
 (46, 1, 6, 1491883832, 1),
-(47, 18, 1, 1491883875, 1),
-(48, 18, 2, 1491883875, 1),
-(49, 18, 3, 1491883875, 1),
-(50, 18, 4, 1491883875, 1),
-(51, 18, 6, 1491883875, 1),
-(52, 3, 1, 1491883916, 1),
-(53, 3, 4, 1491883916, 1),
-(54, 4, 1, 1491883927, 1),
-(55, 4, 4, 1491883927, 1),
-(56, 5, 1, 1491883946, 1),
-(57, 5, 4, 1491883946, 1),
 (58, 8, 1, 1491884067, 1),
 (59, 8, 3, 1491884067, 1),
-(60, 10, 1, 1491884115, 1),
-(61, 10, 4, 1491884115, 1),
-(62, 14, 1, 1491884188, 1),
-(63, 14, 4, 1491884188, 1),
-(64, 2, 1, 1491884209, 1),
-(65, 2, 4, 1491884209, 1),
-(66, 9, 1, 1491884245, 1),
-(67, 9, 4, 1491884245, 1),
 (68, 7, 1, 1491884294, 1),
 (69, 7, 3, 1491884294, 1),
 (70, 7, 4, 1491884294, 1),
 (71, 7, 5, 1491884294, 1),
-(72, 13, 1, 1491884308, 1),
-(73, 13, 4, 1491884308, 1),
-(74, 35, 1, 1492574544, 1),
-(75, 36, 1, 1493178867, 1);
+(76, 18, 1, 1493567503, 7),
+(77, 18, 3, 1493567504, 7),
+(78, 19, 1, 1493567523, 7),
+(79, 19, 3, 1493567523, 7),
+(80, 3, 1, 1493567973, 7),
+(81, 3, 3, 1493567973, 7),
+(82, 4, 1, 1493567992, 7),
+(83, 4, 3, 1493567993, 7),
+(84, 5, 1, 1493568052, 7),
+(85, 5, 3, 1493568052, 7),
+(86, 21, 1, 1493568063, 7),
+(87, 21, 3, 1493568063, 7),
+(88, 12, 1, 1493568080, 7),
+(89, 12, 3, 1493568080, 7),
+(90, 14, 1, 1493568094, 7),
+(91, 14, 3, 1493568094, 7),
+(92, 14, 4, 1493568094, 7),
+(93, 10, 1, 1493568105, 7),
+(94, 10, 3, 1493568105, 7),
+(95, 10, 4, 1493568105, 7),
+(96, 17, 1, 1493568114, 7),
+(97, 17, 3, 1493568114, 7),
+(98, 2, 1, 1493568176, 7),
+(99, 2, 3, 1493568176, 7),
+(100, 35, 1, 1493568228, 7),
+(101, 35, 3, 1493568228, 7),
+(102, 9, 1, 1493568241, 7),
+(103, 9, 3, 1493568241, 7),
+(104, 36, 1, 1493568246, 7),
+(105, 36, 3, 1493568246, 7),
+(106, 16, 1, 1493568250, 7),
+(107, 16, 3, 1493568250, 7),
+(108, 24, 1, 1493568254, 7),
+(109, 24, 3, 1493568255, 7),
+(110, 20, 1, 1493568261, 7),
+(111, 20, 3, 1493568261, 7),
+(112, 6, 1, 1493568269, 7),
+(113, 6, 3, 1493568269, 7),
+(114, 13, 1, 1493568295, 7),
+(115, 13, 3, 1493568295, 7),
+(116, 13, 4, 1493568295, 7),
+(117, 11, 1, 1493568300, 7),
+(118, 11, 3, 1493568300, 7);
 
 -- --------------------------------------------------------
 
@@ -692,20 +632,14 @@ INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `create
 -- Table structure for table `report_info`
 --
 
-DROP TABLE IF EXISTS `report_info`;
-CREATE TABLE `report_info` (
+CREATE TABLE IF NOT EXISTS `report_info` (
   `school_name` varchar(100) NOT NULL,
   `school_address` varchar(100) NOT NULL,
   `school_contact` varchar(100) NOT NULL,
   `created_at` int(11) NOT NULL,
-  `created_user_id` int(11) UNSIGNED NOT NULL
+  `created_user_id` int(11) unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `report_info`
---
-
-TRUNCATE TABLE `report_info`;
 --
 -- Dumping data for table `report_info`
 --
@@ -719,49 +653,44 @@ INSERT INTO `report_info` (`school_name`, `school_address`, `school_contact`, `c
 -- Table structure for table `requisites`
 --
 
-DROP TABLE IF EXISTS `requisites`;
-CREATE TABLE `requisites` (
-  `requisite_id` int(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `requisites` (
+`requisite_id` int(8) unsigned NOT NULL,
   `requisite_type` enum('co','pre') NOT NULL,
-  `curriculum_subject_id` int(11) UNSIGNED NOT NULL,
-  `subject_id` int(11) UNSIGNED NOT NULL,
+  `curriculum_subject_id` int(11) unsigned NOT NULL,
+  `subject_id` int(11) unsigned NOT NULL,
   `created_at` int(11) NOT NULL,
-  `created_user_id` int(11) UNSIGNED NOT NULL,
+  `created_user_id` int(11) unsigned NOT NULL,
   `deleted_at` int(11) DEFAULT NULL,
-  `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
+  `deleted_user_id` int(11) unsigned DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) unsigned DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
--- Truncate table before insert `requisites`
+-- Dumping data for table `requisites`
 --
 
-TRUNCATE TABLE `requisites`;
+INSERT INTO `requisites` (`requisite_id`, `requisite_type`, `curriculum_subject_id`, `subject_id`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES
+(1, 'pre', 72, 65, 1493562942, 7, NULL, NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `rooms`
 --
 
-DROP TABLE IF EXISTS `rooms`;
-CREATE TABLE `rooms` (
-  `room_id` int(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `rooms` (
+`room_id` int(8) unsigned NOT NULL,
   `room_number` varchar(50) NOT NULL,
   `room_capacity` int(2) NOT NULL,
   `created_at` int(11) NOT NULL,
-  `created_user_id` int(11) UNSIGNED NOT NULL,
+  `created_user_id` int(11) unsigned NOT NULL,
   `deleted_at` int(11) DEFAULT NULL,
-  `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
+  `deleted_user_id` int(11) unsigned DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) unsigned DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `rooms`
---
-
-TRUNCATE TABLE `rooms`;
 --
 -- Dumping data for table `rooms`
 --
@@ -784,9 +713,8 @@ INSERT INTO `rooms` (`room_id`, `room_number`, `room_capacity`, `created_at`, `c
 -- Table structure for table `students`
 --
 
-DROP TABLE IF EXISTS `students`;
-CREATE TABLE `students` (
-  `student_id` int(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `students` (
+`student_id` int(8) unsigned NOT NULL,
   `student_firstname` varchar(100) NOT NULL,
   `student_image` varchar(50) DEFAULT NULL,
   `student_middlename` varchar(50) NOT NULL,
@@ -807,18 +735,13 @@ CREATE TABLE `students` (
   `student_guardian_email` varchar(50) DEFAULT NULL,
   `student_school_id` varchar(9) DEFAULT NULL,
   `created_at` int(11) NOT NULL,
-  `created_user_id` int(11) UNSIGNED NOT NULL,
+  `created_user_id` int(11) unsigned NOT NULL,
   `deleted_at` int(11) DEFAULT NULL,
-  `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
+  `deleted_user_id` int(11) unsigned DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) unsigned DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `students`
---
-
-TRUNCATE TABLE `students`;
 --
 -- Dumping data for table `students`
 --
@@ -930,7 +853,10 @@ INSERT INTO `students` (`student_id`, `student_firstname`, `student_image`, `stu
 (104, 'aaaaaaaaa', NULL, 'aaaaaaaaaaaa', 'asdasdasdasd', 'female', '02-01-1980', 'asdasdasdasd', 'single', 'asdasdasd', 'asdasdasd', 'asdasdasd', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-0002', 1492802115, 1, NULL, NULL, 1492802128, 1),
 (105, 'test amt', NULL, 'kjhkjdgdfg', 'hjhkjhkjhk', 'male', '03-01-1990', 'dfgdfgdfgdfg', 'single', 'dffffffffffff', 'dffffffffffff', 'dffffffffffffffffff', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-0003', 1492836242, 1, NULL, NULL, 1493092442, 1),
 (106, 'mynamelll', NULL, 'mymiddlenamezzz', 'maylastnamezzz', 'male', '01-03-1980', 'birtha place grabe na itoh', 'single', 'filipinooooo', 'parent brahhhhh', 'permanet addres brtahhhhh', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2016-0004', 1492869629, 1, NULL, NULL, 1493185357, 1),
-(111, 'testfirst', NULL, 'testmiddle', 'testlst', 'male', '04-12-1990', 'ergdsgdsfgdfgd', 'single', 'fgdfgdfgdfgdfg', 'dfgdfgdfgdfg', 'dffffffffff dfg dfgdfgdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1493192446, 1, NULL, NULL, 1493193535, 1);
+(111, 'testfirst', NULL, 'testmiddle', 'testlst', 'male', '04-12-1990', 'ergdsgdsfgdfgd', 'single', 'fgdfgdfgdfgdfg', 'dfgdfgdfgdfg', 'dffffffffff dfg dfgdfgdf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1493192446, 1, NULL, NULL, 1493193535, 1),
+(112, 'edzar', NULL, 'tia', 'asdasdasdasd', 'male', '07-10-1990', 'asdasdasdasdasd', 'single', 'asdasdasdasdasd', 'asdasdasdasdasd', 'asdasdasdasdasdasd', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1493563154, 7, NULL, NULL, NULL, NULL),
+(113, 'asdasdasdd', NULL, 'dddddddddddddddddd', 'aaaaaaaaaaaaaaaaaa', 'female', '02-10-1999', 'ddddddddddddddddddddd', 'single', 'aaaaaaaaaaaaaaaaaa', 'cccccccccccccccc', 'zxcccccccccc', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1493563196, 7, NULL, NULL, NULL, NULL),
+(114, 'ddddddddddddddda', NULL, 'aaaaaaaaaaaaaaa', 'aaaaaaaaaaaaaaaaaaa', 'male', '06-06-2000', 'dddddddddddddd', 'single', 'aaaaaaaaaaaaaaaaa', 'aaaaaaaaaaaa', 'ddddddddddddddddd', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1493563242, 7, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -938,50 +864,46 @@ INSERT INTO `students` (`student_id`, `student_firstname`, `student_image`, `stu
 -- Table structure for table `students_subjects`
 --
 
-DROP TABLE IF EXISTS `students_subjects`;
-CREATE TABLE `students_subjects` (
-  `student_subject_id` int(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `students_subjects` (
+`student_subject_id` int(8) unsigned NOT NULL,
   `enrollment_id` int(11) NOT NULL,
   `subject_offer_id` int(11) NOT NULL,
-  `student_subject_enroll_status` tinyint(1) UNSIGNED NOT NULL DEFAULT '0',
+  `student_subject_enroll_status` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `created_at` int(11) NOT NULL,
-  `created_user_id` int(11) UNSIGNED NOT NULL,
+  `created_user_id` int(11) unsigned NOT NULL,
   `deleted_at` int(11) DEFAULT NULL,
-  `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
+  `deleted_user_id` int(11) unsigned DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) unsigned DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 --
--- Truncate table before insert `students_subjects`
+-- Dumping data for table `students_subjects`
 --
 
-TRUNCATE TABLE `students_subjects`;
+INSERT INTO `students_subjects` (`student_subject_id`, `enrollment_id`, `subject_offer_id`, `student_subject_enroll_status`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES
+(9, 119, 30, 0, 1493563209, 7, NULL, NULL, NULL, NULL),
+(10, 120, 29, 0, 1493563252, 7, NULL, NULL, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `subjects`
 --
 
-DROP TABLE IF EXISTS `subjects`;
-CREATE TABLE `subjects` (
-  `subject_id` int(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `subjects` (
+`subject_id` int(8) unsigned NOT NULL,
   `subject_code` varchar(50) NOT NULL,
   `subject_description` varchar(100) NOT NULL,
   `created_at` int(11) NOT NULL,
-  `created_user_id` int(11) UNSIGNED NOT NULL,
+  `created_user_id` int(11) unsigned NOT NULL,
   `deleted_at` int(11) DEFAULT NULL,
-  `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
+  `deleted_user_id` int(11) unsigned DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL,
-  `course_id` int(11) UNSIGNED NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) unsigned DEFAULT NULL,
+  `course_id` int(11) unsigned NOT NULL DEFAULT '0'
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `subjects`
---
-
-TRUNCATE TABLE `subjects`;
 --
 -- Dumping data for table `subjects`
 --
@@ -1046,7 +968,9 @@ INSERT INTO `subjects` (`subject_id`, `subject_code`, `subject_description`, `cr
 (61, 'dddd', 'dddd', 1493189217, 1, NULL, NULL, 1493190039, 1, 0),
 (62, 'asas', 'asas', 1493189238, 1, NULL, NULL, NULL, NULL, 7),
 (63, 'zerrrr', 'rrrro', 1493189911, 1, NULL, NULL, 1493189968, 1, 0),
-(64, 'test 5', 'test55', 1493191520, 1, NULL, NULL, NULL, NULL, 10);
+(64, 'test 5', 'test55', 1493191520, 1, NULL, NULL, NULL, NULL, 10),
+(65, 'edz 111', 'gen ed ni edz', 1493558924, 7, NULL, NULL, NULL, NULL, 0),
+(66, 'edz 112', 'major ni edz', 1493558951, 7, NULL, NULL, NULL, NULL, 6);
 
 -- --------------------------------------------------------
 
@@ -1054,26 +978,20 @@ INSERT INTO `subjects` (`subject_id`, `subject_code`, `subject_description`, `cr
 -- Table structure for table `subject_offers`
 --
 
-DROP TABLE IF EXISTS `subject_offers`;
-CREATE TABLE `subject_offers` (
-  `subject_offer_id` int(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `subject_offers` (
+`subject_offer_id` int(8) unsigned NOT NULL,
   `subject_offer_semester` enum('first','second','summer') NOT NULL,
   `subject_offer_school_year` varchar(9) NOT NULL,
-  `user_id` int(11) UNSIGNED NOT NULL,
-  `subject_id` int(11) UNSIGNED NOT NULL,
+  `user_id` int(11) unsigned NOT NULL,
+  `subject_id` int(11) unsigned NOT NULL,
   `created_at` int(11) NOT NULL,
-  `created_user_id` int(11) UNSIGNED NOT NULL,
+  `created_user_id` int(11) unsigned NOT NULL,
   `deleted_at` int(11) DEFAULT NULL,
-  `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
+  `deleted_user_id` int(11) unsigned DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) unsigned DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `subject_offers`
---
-
-TRUNCATE TABLE `subject_offers`;
 --
 -- Dumping data for table `subject_offers`
 --
@@ -1098,7 +1016,9 @@ INSERT INTO `subject_offers` (`subject_offer_id`, `subject_offer_semester`, `sub
 (24, 'summer', '2016-2017', 5, 1, 1492590218, 1, NULL, NULL, NULL, NULL),
 (25, 'summer', '2016-2017', 5, 24, 1492882514, 1, NULL, NULL, NULL, NULL),
 (26, 'summer', '2016-2017', 3, 26, 1492882629, 1, NULL, NULL, NULL, NULL),
-(28, 'summer', '2016-2017', 5, 7, 1492882808, 1, NULL, NULL, NULL, NULL);
+(28, 'summer', '2016-2017', 5, 7, 1492882808, 1, NULL, NULL, NULL, NULL),
+(29, 'summer', '2016-2017', 4, 66, 1493559863, 7, NULL, NULL, NULL, NULL),
+(30, 'summer', '2016-2017', 8, 65, 1493562996, 7, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1106,9 +1026,8 @@ INSERT INTO `subject_offers` (`subject_offer_id`, `subject_offer_semester`, `sub
 -- Table structure for table `subject_offer_line`
 --
 
-DROP TABLE IF EXISTS `subject_offer_line`;
-CREATE TABLE `subject_offer_line` (
-  `subject_offer_line_id` int(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `subject_offer_line` (
+`subject_offer_line_id` int(8) unsigned NOT NULL,
   `subject_offer_line_start` time NOT NULL,
   `subject_offer_line_end` time NOT NULL,
   `subject_offer_line_monday` tinyint(1) NOT NULL DEFAULT '0',
@@ -1120,25 +1039,20 @@ CREATE TABLE `subject_offer_line` (
   `subject_offer_line_sunday` tinyint(1) NOT NULL DEFAULT '0',
   `subject_offer_line_lec` tinyint(1) NOT NULL DEFAULT '0',
   `subject_offer_line_lab` tinyint(1) NOT NULL DEFAULT '0',
-  `subject_offer_id` int(11) UNSIGNED NOT NULL,
-  `user_id` int(11) UNSIGNED NOT NULL,
-  `subject_id` int(11) UNSIGNED NOT NULL,
-  `room_id` int(11) UNSIGNED NOT NULL,
+  `subject_offer_id` int(11) unsigned NOT NULL,
+  `user_id` int(11) unsigned NOT NULL,
+  `subject_id` int(11) unsigned NOT NULL,
+  `room_id` int(11) unsigned NOT NULL,
   `subject_offer_semester` enum('first','second','summer') NOT NULL,
   `subject_offer_school_year` varchar(9) NOT NULL,
   `created_at` int(11) NOT NULL,
-  `created_user_id` int(11) UNSIGNED NOT NULL,
+  `created_user_id` int(11) unsigned NOT NULL,
   `deleted_at` int(11) DEFAULT NULL,
-  `deleted_user_id` int(11) UNSIGNED DEFAULT NULL,
+  `deleted_user_id` int(11) unsigned DEFAULT NULL,
   `updated_at` int(11) DEFAULT NULL,
-  `updated_user_id` int(11) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `updated_user_id` int(11) unsigned DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `subject_offer_line`
---
-
-TRUNCATE TABLE `subject_offer_line`;
 --
 -- Dumping data for table `subject_offer_line`
 --
@@ -1170,7 +1084,9 @@ INSERT INTO `subject_offer_line` (`subject_offer_line_id`, `subject_offer_line_s
 (38, '07:30:00', '09:00:00', 0, 0, 0, 0, 0, 0, 1, 1, 0, 26, 3, 26, 4, 'summer', '2016-2017', 1492882629, 1, NULL, NULL, NULL, NULL),
 (39, '06:30:00', '07:30:00', 1, 0, 0, 0, 0, 0, 0, 1, 0, 26, 26, 3, 6, 'summer', '2016-2017', 1492882629, 1, NULL, NULL, NULL, NULL),
 (42, '07:00:00', '07:30:00', 0, 1, 0, 0, 0, 0, 0, 1, 1, 28, 5, 7, 10, 'summer', '2016-2017', 1492882808, 1, NULL, NULL, NULL, NULL),
-(43, '07:00:00', '08:00:00', 0, 0, 0, 0, 0, 1, 0, 1, 1, 28, 7, 5, 4, 'summer', '2016-2017', 1492882808, 1, NULL, NULL, NULL, NULL);
+(43, '07:00:00', '08:00:00', 0, 0, 0, 0, 0, 1, 0, 1, 1, 28, 7, 5, 4, 'summer', '2016-2017', 1492882808, 1, NULL, NULL, NULL, NULL),
+(44, '08:30:00', '09:00:00', 0, 0, 1, 0, 0, 0, 0, 0, 1, 29, 4, 66, 5, 'summer', '2016-2017', 1493559863, 7, NULL, NULL, NULL, NULL),
+(45, '06:00:00', '17:30:00', 0, 0, 0, 1, 0, 0, 0, 0, 1, 30, 8, 65, 7, 'summer', '2016-2017', 1493562996, 7, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1178,9 +1094,8 @@ INSERT INTO `subject_offer_line` (`subject_offer_line_id`, `subject_offer_line_s
 -- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users` (
-  `id` mediumint(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `users` (
+`id` mediumint(8) unsigned NOT NULL,
   `ip_address` varbinary(16) NOT NULL,
   `username` varchar(100) NOT NULL,
   `password` varchar(80) NOT NULL,
@@ -1188,24 +1103,19 @@ CREATE TABLE `users` (
   `email` varchar(100) DEFAULT NULL,
   `activation_code` varchar(40) DEFAULT NULL,
   `forgotten_password_code` varchar(40) DEFAULT NULL,
-  `forgotten_password_time` int(11) UNSIGNED DEFAULT NULL,
+  `forgotten_password_time` int(11) unsigned DEFAULT NULL,
   `remember_code` varchar(40) DEFAULT NULL,
-  `created_on` int(11) UNSIGNED NOT NULL,
-  `last_login` int(11) UNSIGNED DEFAULT NULL,
-  `active` tinyint(1) UNSIGNED DEFAULT NULL,
+  `created_on` int(11) unsigned NOT NULL,
+  `last_login` int(11) unsigned DEFAULT NULL,
+  `active` tinyint(1) unsigned DEFAULT NULL,
   `first_name` varchar(50) DEFAULT NULL,
   `last_name` varchar(100) DEFAULT NULL,
   `company` varchar(100) DEFAULT NULL,
   `phone` varchar(50) DEFAULT NULL,
   `gen_code` varchar(100) DEFAULT NULL,
-  `updated_at` int(11) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `updated_at` int(11) unsigned DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `users`
---
-
-TRUNCATE TABLE `users`;
 --
 -- Dumping data for table `users`
 --
@@ -1217,7 +1127,7 @@ INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`
 (4, 0x3a3a31, 'username3', '$2y$08$uFrsQKdseWglVdUh/ZOCVucxgAjZyw3xiZQBGmB2c6.z//gP3RMKi', 'AQoK7aQ8D7UGLbpDK6LFFe', 'emailjad3@gmail.com', NULL, NULL, NULL, NULL, 1491881053, NULL, 1, 'Firstbii', 'Lasth', 'Companyg', '+63992-627-2604', NULL, NULL),
 (5, 0x3a3a31, 'username4', '$2y$08$dIh.40mKDd56Lss2iNmpSe1Rj03XLmgILMfSUy35xh.ELQXU5ophS', '1QeHjkNfuNn/ElY/0vV3ju', 'emailxso4@gmail.com', NULL, NULL, NULL, NULL, 1491881053, NULL, 1, 'Firstxn', 'Lastfxqby', 'Companyq', '+63926-569-3745', NULL, NULL),
 (6, 0x3a3a31, 'username5', '$2y$08$gcgBnvVzmGzSyAGwKwysSe72fvvKP54ROa9a5MH9048DiZzqo3qcG', 'mvPP4eltm.r7FSkGqAFl5u', 'emailoxfz5@gmail.com', NULL, NULL, NULL, NULL, 1491881053, NULL, 1, 'Firstcta', 'Lastrtunz', 'Companywk', '+63958-730-5680', NULL, NULL),
-(7, 0x3a3a31, 'admin', '$2y$08$bqvlY5COHZKuXBe25V69TeF1JkvuezODSbeHHk4SJt7c/Fomwlyw2', 'SvJttaw9shfZiQMl1oBA9.', NULL, NULL, NULL, NULL, '/25giHFWyTw9QRaO88ivHO', 1491885265, 1493083210, 1, 'admin', 'im', '', '', '7W.h7r3CH3Q9x7XkCIAQIu', 1493083210),
+(7, 0x3a3a31, 'admin', '$2y$08$bqvlY5COHZKuXBe25V69TeF1JkvuezODSbeHHk4SJt7c/Fomwlyw2', 'SvJttaw9shfZiQMl1oBA9.', NULL, NULL, NULL, NULL, '/25giHFWyTw9QRaO88ivHO', 1491885265, 1493567067, 1, 'admin', 'im', '', '', '20wKqMILeKw9VFJ/K8.FSO', 1493567067),
 (8, 0x3a3a31, 'faculty', '$2y$08$RbuJiMjRrh12IAUgmdXP8.m8GNUx1xfeWw1UHrKdy8gNcVZloLXVW', 'SwUtfPPGjtwpOz3TA0RbU.', NULL, NULL, NULL, NULL, NULL, 1491885297, 1491885380, 1, 'faculty', 'im', '', '', NULL, NULL),
 (9, 0x3a3a31, 'dean', '$2y$08$aJ9HkZlFmbpMZcEzhko8nuHznwqfNCrtom0OhqORl6JgsS9XUFbMS', '6/BctdhAPgZzJFqIhzfzSe', NULL, NULL, 'VAEh6D3D9cFCJUDmhzDN5Oe6a97ca4b3aa0a386c', 1491955867, NULL, 1491885317, 1492838844, 1, 'dean', 'im', '', '', 'g6gvcIz2alduxdzQMIEX1.', 1492838844),
 (10, 0x3a3a31, 'accounting', '$2y$08$8Zj209s0as7scZsd04Woe.pB0EwkEIcNYTx.T4zwkJGe7FEizBfra', 'Ad8l1.vwotAtpGqpGu0AgO', NULL, NULL, NULL, NULL, NULL, 1491885337, NULL, 1, 'accounting', 'im', '', '', NULL, 1491885464),
@@ -1230,18 +1140,12 @@ INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`
 -- Table structure for table `users_groups`
 --
 
-DROP TABLE IF EXISTS `users_groups`;
-CREATE TABLE `users_groups` (
-  `id` mediumint(8) UNSIGNED NOT NULL,
-  `user_id` mediumint(8) UNSIGNED NOT NULL,
-  `group_id` mediumint(8) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `users_groups` (
+`id` mediumint(8) unsigned NOT NULL,
+  `user_id` mediumint(8) unsigned NOT NULL,
+  `group_id` mediumint(8) unsigned NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=183 DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `users_groups`
---
-
-TRUNCATE TABLE `users_groups`;
 --
 -- Dumping data for table `users_groups`
 --
@@ -1267,22 +1171,24 @@ INSERT INTO `users_groups` (`id`, `user_id`, `group_id`) VALUES
 -- Table structure for table `users_last_logins`
 --
 
-DROP TABLE IF EXISTS `users_last_logins`;
-CREATE TABLE `users_last_logins` (
-  `users_last_login_id` int(8) UNSIGNED NOT NULL,
+CREATE TABLE IF NOT EXISTS `users_last_logins` (
+`users_last_login_id` int(8) unsigned NOT NULL,
   `user_id` int(11) NOT NULL,
   `ip_address` varbinary(16) NOT NULL,
   `agent` varchar(100) NOT NULL,
   `platform` varchar(100) NOT NULL,
   `created_at` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=189 DEFAULT CHARSET=utf8;
 
 --
--- Truncate table before insert `users_last_logins`
+-- Dumping data for table `users_last_logins`
 --
 
-TRUNCATE TABLE `users_last_logins`;
-
+INSERT INTO `users_last_logins` (`users_last_login_id`, `user_id`, `ip_address`, `agent`, `platform`, `created_at`) VALUES
+(185, 7, 0x3a3a31, 'Firefox 54.0', 'Windows 10', 1493440012),
+(186, 7, 0x3a3a31, 'Firefox 54.0', 'Windows 10', 1493440254),
+(187, 7, 0x3a3a31, 'Chrome 58.0.3029.81', 'Windows 10', 1493557444),
+(188, 7, 0x3a3a31, 'Chrome 58.0.3029.81', 'Windows 10', 1493567067);
 
 --
 -- Indexes for dumped tables
@@ -1292,146 +1198,127 @@ TRUNCATE TABLE `users_last_logins`;
 -- Indexes for table `controllers`
 --
 ALTER TABLE `controllers`
-  ADD PRIMARY KEY (`controller_id`),
-  ADD UNIQUE KEY `controller_name` (`controller_name`);
+ ADD PRIMARY KEY (`controller_id`), ADD UNIQUE KEY `controller_name` (`controller_name`);
 
 --
 -- Indexes for table `courses`
 --
 ALTER TABLE `courses`
-  ADD PRIMARY KEY (`course_id`),
-  ADD UNIQUE KEY `course_code` (`course_code`),
-  ADD UNIQUE KEY `course_description` (`course_description`),
-  ADD UNIQUE KEY `course_code_id` (`course_code_id`);
+ ADD PRIMARY KEY (`course_id`), ADD UNIQUE KEY `course_code` (`course_code`), ADD UNIQUE KEY `course_description` (`course_description`), ADD UNIQUE KEY `course_code_id` (`course_code_id`);
 
 --
 -- Indexes for table `curriculums`
 --
 ALTER TABLE `curriculums`
-  ADD PRIMARY KEY (`curriculum_id`);
+ ADD PRIMARY KEY (`curriculum_id`);
 
 --
 -- Indexes for table `curriculum_subjects`
 --
 ALTER TABLE `curriculum_subjects`
-  ADD PRIMARY KEY (`curriculum_subject_id`);
+ ADD PRIMARY KEY (`curriculum_subject_id`);
 
 --
 -- Indexes for table `dean_course`
 --
 ALTER TABLE `dean_course`
-  ADD PRIMARY KEY (`dean_course_id`),
-  ADD UNIQUE KEY `user_id` (`user_id`);
+ ADD PRIMARY KEY (`dean_course_id`), ADD UNIQUE KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `educations`
 --
 ALTER TABLE `educations`
-  ADD PRIMARY KEY (`education_id`),
-  ADD UNIQUE KEY `education_code` (`education_code`),
-  ADD UNIQUE KEY `education_description` (`education_description`);
+ ADD PRIMARY KEY (`education_id`), ADD UNIQUE KEY `education_code` (`education_code`), ADD UNIQUE KEY `education_description` (`education_description`);
 
 --
 -- Indexes for table `enrollments`
 --
 ALTER TABLE `enrollments`
-  ADD PRIMARY KEY (`enrollment_id`),
-  ADD UNIQUE KEY `student_id` (`student_id`);
+ ADD PRIMARY KEY (`enrollment_id`), ADD UNIQUE KEY `student_id` (`student_id`);
 
 --
 -- Indexes for table `groups`
 --
 ALTER TABLE `groups`
-  ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `login_attempts`
 --
 ALTER TABLE `login_attempts`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `ip_address` (`ip_address`),
-  ADD KEY `login` (`login`);
+ ADD PRIMARY KEY (`id`), ADD KEY `ip_address` (`ip_address`), ADD KEY `login` (`login`);
 
 --
 -- Indexes for table `logs`
 --
 ALTER TABLE `logs`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `ip_address` (`ip_address`),
-  ADD KEY `user_agent` (`user_agent`);
+ ADD PRIMARY KEY (`id`), ADD KEY `ip_address` (`ip_address`), ADD KEY `user_agent` (`user_agent`);
 
 --
 -- Indexes for table `permissions`
 --
 ALTER TABLE `permissions`
-  ADD PRIMARY KEY (`permission_id`);
+ ADD PRIMARY KEY (`permission_id`);
 
 --
 -- Indexes for table `requisites`
 --
 ALTER TABLE `requisites`
-  ADD PRIMARY KEY (`requisite_id`);
+ ADD PRIMARY KEY (`requisite_id`);
 
 --
 -- Indexes for table `rooms`
 --
 ALTER TABLE `rooms`
-  ADD PRIMARY KEY (`room_id`),
-  ADD UNIQUE KEY `room_number` (`room_number`);
+ ADD PRIMARY KEY (`room_id`), ADD UNIQUE KEY `room_number` (`room_number`);
 
 --
 -- Indexes for table `students`
 --
 ALTER TABLE `students`
-  ADD PRIMARY KEY (`student_id`),
-  ADD UNIQUE KEY `student_personal_email` (`student_personal_email`),
-  ADD UNIQUE KEY `student_guardian_email` (`student_guardian_email`),
-  ADD UNIQUE KEY `student_school_id` (`student_school_id`);
+ ADD PRIMARY KEY (`student_id`), ADD UNIQUE KEY `student_personal_email` (`student_personal_email`), ADD UNIQUE KEY `student_guardian_email` (`student_guardian_email`), ADD UNIQUE KEY `student_school_id` (`student_school_id`);
 
 --
 -- Indexes for table `students_subjects`
 --
 ALTER TABLE `students_subjects`
-  ADD PRIMARY KEY (`student_subject_id`);
+ ADD PRIMARY KEY (`student_subject_id`);
 
 --
 -- Indexes for table `subjects`
 --
 ALTER TABLE `subjects`
-  ADD PRIMARY KEY (`subject_id`),
-  ADD UNIQUE KEY `subject_code` (`subject_code`);
+ ADD PRIMARY KEY (`subject_id`), ADD UNIQUE KEY `subject_code` (`subject_code`);
 
 --
 -- Indexes for table `subject_offers`
 --
 ALTER TABLE `subject_offers`
-  ADD PRIMARY KEY (`subject_offer_id`);
+ ADD PRIMARY KEY (`subject_offer_id`);
 
 --
 -- Indexes for table `subject_offer_line`
 --
 ALTER TABLE `subject_offer_line`
-  ADD PRIMARY KEY (`subject_offer_line_id`);
+ ADD PRIMARY KEY (`subject_offer_line_id`);
 
 --
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `username` (`username`),
-  ADD UNIQUE KEY `email` (`email`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `username` (`username`), ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indexes for table `users_groups`
 --
 ALTER TABLE `users_groups`
-  ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `users_last_logins`
 --
 ALTER TABLE `users_last_logins`
-  ADD PRIMARY KEY (`users_last_login_id`);
+ ADD PRIMARY KEY (`users_last_login_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -1441,107 +1328,107 @@ ALTER TABLE `users_last_logins`
 -- AUTO_INCREMENT for table `controllers`
 --
 ALTER TABLE `controllers`
-  MODIFY `controller_id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+MODIFY `controller_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=37;
 --
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `course_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+MODIFY `course_id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `curriculums`
 --
 ALTER TABLE `curriculums`
-  MODIFY `curriculum_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+MODIFY `curriculum_id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `curriculum_subjects`
 --
 ALTER TABLE `curriculum_subjects`
-  MODIFY `curriculum_subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+MODIFY `curriculum_subject_id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=73;
 --
 -- AUTO_INCREMENT for table `dean_course`
 --
 ALTER TABLE `dean_course`
-  MODIFY `dean_course_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+MODIFY `dean_course_id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `educations`
 --
 ALTER TABLE `educations`
-  MODIFY `education_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+MODIFY `education_id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `enrollments`
 --
 ALTER TABLE `enrollments`
-  MODIFY `enrollment_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
+MODIFY `enrollment_id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=121;
 --
 -- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+MODIFY `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `login_attempts`
 --
 ALTER TABLE `login_attempts`
-  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+MODIFY `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(8) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `permission_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+MODIFY `permission_id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=119;
 --
 -- AUTO_INCREMENT for table `requisites`
 --
 ALTER TABLE `requisites`
-  MODIFY `requisite_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+MODIFY `requisite_id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `rooms`
 --
 ALTER TABLE `rooms`
-  MODIFY `room_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+MODIFY `room_id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `student_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
+MODIFY `student_id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=115;
 --
 -- AUTO_INCREMENT for table `students_subjects`
 --
 ALTER TABLE `students_subjects`
-  MODIFY `student_subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+MODIFY `student_subject_id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+MODIFY `subject_id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=67;
 --
 -- AUTO_INCREMENT for table `subject_offers`
 --
 ALTER TABLE `subject_offers`
-  MODIFY `subject_offer_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+MODIFY `subject_offer_id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=31;
 --
 -- AUTO_INCREMENT for table `subject_offer_line`
 --
 ALTER TABLE `subject_offer_line`
-  MODIFY `subject_offer_line_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+MODIFY `subject_offer_line_id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=46;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+MODIFY `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `users_groups`
 --
 ALTER TABLE `users_groups`
-  MODIFY `id` mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=183;
+MODIFY `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=183;
 --
 -- AUTO_INCREMENT for table `users_last_logins`
 --
 ALTER TABLE `users_last_logins`
-  MODIFY `users_last_login_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=185;
+MODIFY `users_last_login_id` int(8) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=189;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
