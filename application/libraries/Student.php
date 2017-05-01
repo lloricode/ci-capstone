@@ -206,6 +206,11 @@ class Student extends School_informations
                 {
                         show_404();
                 }
+                if ($this->__enrollment->enrollment_status)
+                {
+                        $this->session->set_flashdata('message', bootstrap_error('Student Already Enrolled'));
+                        return;
+                }
                 /**
                  * start the DB transaction
                  */
@@ -223,7 +228,7 @@ class Student extends School_informations
                                 ), $this->__student->student_id);
                 }
 
-                $subject_ok = $this->_set_enroll_all_subject_offers();
+                $subject_ok = $this->set_enroll_all_subject_offers();
 
                 $enroll_ok = $this->Enrollment_model->update(array(
                     'enrollment_status'      => TRUE,
@@ -259,12 +264,30 @@ class Student extends School_informations
                 }
         }
 
-        private function _set_enroll_all_subject_offers()
+        public function set_enroll_all_subject_offers()
         {
                 return $this->Students_subjects_model->update(array(
                             'student_subject_enroll_status' => TRUE,
                             'enrollment_id'                 => $this->__enrollment->enrollment_id
                                 ), 'enrollment_id');
+        }
+
+        /**
+         * return false if student is NOT enrolled
+         * 
+         * @return bool
+         */
+        public function is_has_pending()
+        {
+                if ( ! $this->__enrollment->enrollment_status)
+                {
+                        return FALSE;
+                }
+
+                return (bool) $this->Students_subjects_model->where(array(
+                            'student_subject_enroll_status' => FALSE,
+                            'enrollment_id'                 => $this->__enrollment->enrollment_id
+                        ))->count_rows();
         }
 
         public function update_level($new_level)

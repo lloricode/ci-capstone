@@ -80,7 +80,8 @@ $lang['edit_student_submit_button_label'] = 'Edit Student';
 
 //$lang['add_student_subject_label'] = 'Enroll Subject';
 
-$lang['add_student_subject_label'] = 'Enroll Subject/s';
+$lang['add_student_subject_label']            = 'Enroll Subject/s';
+$lang['add_student_enrolled___subject_label'] = 'Add Subject/s';
 
 /**
  * for create student subject

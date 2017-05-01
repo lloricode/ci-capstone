@@ -83,8 +83,9 @@ class Create_student_subject extends CI_Capstone_Controller
                                                 break;
                                         }
                                 }
-
-                                if ( ! $this->_is_curriculum_yr_lvl_not_exceed() OR ! $this->_is_unit_not_exceed() OR ! $all_inserted OR ! $update_year_ok)
+                                $is_curriculum_yr_lvl_not_exceed = $this->_is_curriculum_yr_lvl_not_exceed();
+                                $is_unit_not_exceed              = $this->_is_unit_not_exceed();
+                                if ( ! $is_curriculum_yr_lvl_not_exceed OR ! $is_unit_not_exceed OR ! $all_inserted OR ! $update_year_ok)
                                 {
                                         /**
                                          * rollback database
@@ -93,13 +94,16 @@ class Create_student_subject extends CI_Capstone_Controller
                                         $msg = '';
                                         if ( ! $all_inserted)
                                         {
-                                                $msg .= ' $all_inserted';
+                                                $msg .= ' Failed add subjects';
                                         }
                                         if ( ! $update_year_ok)
                                         {
-                                                $msg .= ' $all_inserted';
+                                                $msg .= ' Failed update year level';
                                         }
-                                        // $this->session->set_flashdata('message', bootstrap_error($msg)); //dont mention :D temporary and means bugs
+                                        if ( ! $all_inserted OR ! $update_year_ok)
+                                        {
+                                               $this->session->set_flashdata('message', bootstrap_error($msg)); //dont mention :D temporary and means bugs
+                                        }
                                 }
                                 else
                                 {
@@ -636,9 +640,9 @@ class Create_student_subject extends CI_Capstone_Controller
                                                 ${'session' . $count2} [$d] = $_line->{'subject_offer_line_' . $d};
                                         }
                                 }
-                                for ($i = 1; $i <= $count; $i ++ )
+                                for ($i = 1; $i <= $count; $i ++)
                                 {
-                                        for ($ii = 1; $ii <= $count2; $ii ++ )
+                                        for ($ii = 1; $ii <= $count2; $ii ++)
                                         {
                                                 $tmp = is_not_conflict_subject_offer(${'selected' . $i}, ${'session' . $ii});
                                                 if ( ! $tmp)

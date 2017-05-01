@@ -203,6 +203,21 @@ class Students extends CI_Capstone_Controller
                 redirect('students/view?student-id=' . $this->student->id, 'refresh');
         }
 
+        public function set_enroll_added_subjects()
+        {
+                $this->Student_model->set_informations($this->input->get('student-id'));
+                if ($this->student->set_enroll_all_subject_offers())
+                {
+
+                        $this->session->set_flashdata('message', bootstrap_success('Subject/s Enrolled Successfully!'));
+                }
+                else
+                {
+                        $this->session->set_flashdata('message', bootstrap_error('Failed to Enroll Subjects.'));
+                }
+                redirect('students/view?student-id=' . $this->student->id, 'refresh');
+        }
+
         public function print_data()
         {
                 $this->load->model('Report_info_model');

@@ -80,7 +80,15 @@ function function_row_td($link, $label, $popup = FALSE)
                                                     /**
                                                      * add subject
                                                      */
-                                                    echo function_row_td('create-student-subject?student-id=' . $this->student->id, lang('add_student_subject_label'));
+                                                    $lang_for_add_subject = ($this->student->is_enrolled()) ? lang('add_student_enrolled___subject_label') : lang('add_student_subject_label');
+                                                    echo function_row_td('create-student-subject?student-id=' . $this->student->id, $lang_for_add_subject);
+                                            }
+                                            if ($this->student->is_has_pending())
+                                            {
+                                                    /**
+                                                     * set enroll added subject/s
+                                                     */
+                                                    echo function_row_td('students/set-enroll-added-subjects?student-id=' . $this->student->id, 'Enroll Added Subject/s');
                                             }
                                             if ($this->student->is_enrolled())
                                             {
