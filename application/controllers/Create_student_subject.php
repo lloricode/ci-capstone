@@ -75,6 +75,7 @@ class Create_student_subject extends CI_Capstone_Controller
                                 {
                                         $gen_id = $this->Students_subjects_model->insert(array(
                                             'enrollment_id'    => $this->student->enrollment_id,
+                                            'curriculum_id'    => $this->student->curriculum_id,
                                             'subject_offer_id' => $subj_offr_id
                                         ));
                                         if ( ! $gen_id)

@@ -44,6 +44,12 @@ class Migration_Students_subjects extends CI_Migration
                         'null'       => FAlSE,
                         'default'    => FALSE
                     ),
+                    'curriculum_id'                 => array(//just incase, if student shift program, so it will dectect which curriculum
+                        'type'       => 'INT',
+                        'constraint' => '11',
+                        'unsigned'   => TRUE,
+                        'null'       => FALSE
+                    ),
                     //------------------------------------
                     'created_at'                    => array(
                         'type'       => 'INT',
