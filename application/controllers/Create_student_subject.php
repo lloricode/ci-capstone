@@ -62,7 +62,9 @@ class Create_student_subject extends CI_Capstone_Controller
                 {
                         if ($this->session->has_userdata($this->_session_name_))
                         {
-                                $from_session = $this->session->userdata($this->_session_name_);
+                                $update_year_ok = TRUE;
+                                $all_inserted   = TRUE;
+                                $from_session   = $this->session->userdata($this->_session_name_);
                                 $this->load->model('Students_subjects_model');
 
                                 /**
@@ -70,9 +72,14 @@ class Create_student_subject extends CI_Capstone_Controller
                                  */
                                 $this->db->trans_begin();
 
-                                $update_year_ok = $this->student->update_level((int) $this->input->post('level'));
+                                /**
+                                 * check if needed to update level, i use '<' updating level must higher than current
+                                 */
+                                if ($this->student->level < (int) $this->input->post('level'))
+                                {
+                                        $update_year_ok = $this->student->update_level((int) $this->input->post('level'));
+                                }
 
-                                $all_inserted = TRUE;
                                 foreach ($from_session as $subj_offr_id)
                                 {
                                         $subject_id = $this->Subject_offer_model->get($subj_offr_id)->subject_id;
@@ -670,9 +677,9 @@ class Create_student_subject extends CI_Capstone_Controller
                                                 ${'session' . $count2} [$d] = $_line->{'subject_offer_line_' . $d};
                                         }
                                 }
-                                for ($i = 1; $i <= $count; $i ++ )
+                                for ($i = 1; $i <= $count; $i ++)
                                 {
-                                        for ($ii = 1; $ii <= $count2; $ii ++ )
+                                        for ($ii = 1; $ii <= $count2; $ii ++)
                                         {
                                                 $tmp = is_not_conflict_subject_offer(${'selected' . $i}, ${'session' . $ii});
                                                 if ( ! $tmp)
