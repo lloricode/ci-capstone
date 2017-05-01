@@ -135,12 +135,12 @@ class Create_student_subject extends CI_Capstone_Controller
                         $unit_session = (int) $this->session->userdata('total_unit');
                         if ($maximum_units === 0)
                         {
-                                $this->session->set_flashdata('message', bootstrap_error('no unit found or there is no term/year in curriclum in current term. [ ' . current_school_semester() . ' ]'));
+                                $this->session->set_flashdata('message', bootstrap_error( lang('no_unit') . ' [ ' . current_school_semester() . ' ]'));
                                 return FALSE;
                         }
                         elseif ($unit_session > $maximum_units)
                         {
-                                $this->session->set_flashdata('message', bootstrap_error('unit exceed'));
+                                $this->session->set_flashdata('message', bootstrap_error(lang('unit_exceed')));
                                 return FALSE;
                         }
 
