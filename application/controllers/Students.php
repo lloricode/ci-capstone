@@ -48,11 +48,11 @@ class Students extends CI_Capstone_Controller
 
                         foreach ($student_obj as $student)
                         {
-                                $view_ = table_row_button_link('students/view?student-id=' . $student->student_id, 'View');
+                                $view_ = table_row_button_link('students/view?student-id=' . $student->student_id, 'View', 'btn-info');
                                 $edit_ = '';
                                 if (in_array('edit-student', permission_controllers()))
                                 {
-                                        $edit_ = table_row_button_link('edit-student?student-id=' . $student->student_id, 'Edit');
+                                        $edit_ = table_row_button_link('edit-student?student-id=' . $student->student_id, 'Edit', 'btn-warning');
                                 }
                                 $tmp = array(
                                     $this->_images_for_table($student),
