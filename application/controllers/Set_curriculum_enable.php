@@ -8,6 +8,7 @@ class Set_curriculum_enable extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
+                $this->load->model('Curriculum_subject_model');
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
                 $this->breadcrumbs->unshift(2, lang('curriculum_label'), 'curriculums');
@@ -49,19 +50,26 @@ class Set_curriculum_enable extends CI_Capstone_Controller
                                 );
                                 $updated2     = $this->Curriculum_model->update($data_disable, 'course_id');
 
-                                $data    = array(
+                                $data        = array(
                                     'curriculum_id'           => $curriculum_obj->curriculum_id,
                                     'curriculum_status'       => TRUE,
                                     'curriculum_already_used' => TRUE
                                 );
-                                $updated = $this->Curriculum_model->update($data, 'curriculum_id');
+                                $updated     = $this->Curriculum_model->update($data, 'curriculum_id');
+                                $is_has_subj = $this->Curriculum_subject_model->is_has_subject($curriculum_obj->curriculum_id);
 
-                                if ( ! $updated OR ! $updated2)
+                                if (!$updated OR ! $updated2 OR ! $is_has_subj)
                                 {
                                         /**
                                          * rollback database
                                          */
                                         $this->db->trans_rollback();
+
+                                        if (!$is_has_subj)
+                                        {
+
+                                                $this->session->set_flashdata('message', bootstrap_error('no_subjects_in_curriculum'));
+                                        }
                                 }
                                 else
                                 {
