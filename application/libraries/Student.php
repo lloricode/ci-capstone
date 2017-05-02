@@ -341,8 +341,18 @@ class Student extends School_informations
          * @return object
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        public function subject_offers($button_link = FALSE, $return_type = 'object', $sort_ = FALSE)
+        public function subject_offers($return_html = FALSE, $return_type = 'object', $sort_ = FALSE)
         {
+                $status_return = function ($_status, $return_html)
+                {
+                        $tmp     = ($_status) ? 'done' : 'pending';
+                        $_status = ($_status) ? 'Enrolled' : 'Pending';
+                        if ($return_html)
+                        {
+                                return $_status;
+                        }
+                        return array('data' => '<span class="' . $tmp . '">' . $_status . '</span>', 'class' => 'taskStatus');
+                };
                 $this->load->helper(array('day', 'school', 'time'));
                 $s_o_           = $this->__students_subjects();
                 $subject_offers = array();
@@ -399,8 +409,8 @@ class Student extends School_informations
                                 $unit   = $this->Curriculum_subject_model->get_unit(NULL, $stud_sub->curriculum_id, $sub_of->subject->subject_id);
                                 $tmp__  = array_merge(array(
                                     'subject' => $sub_of->subject->subject_code,
-                                    'faculty' => ($button_link) ? ($sub_of->faculty->last_name . ', ' . $sub_of->faculty->first_name) : $this->User_model->button_link($sub_of->faculty->id, $sub_of->faculty->last_name, $sub_of->faculty->first_name),
-                                    'status'  => ($stud_sub->student_subject_enroll_status) ? 'Enrolled' : 'Pending',
+                                    'faculty' => ($return_html) ? ($sub_of->faculty->last_name . ', ' . $sub_of->faculty->first_name) : $this->User_model->button_link($sub_of->faculty->id, $sub_of->faculty->last_name, $sub_of->faculty->first_name),
+                                    'status'  => $status_return($stud_sub->student_subject_enroll_status, $return_html),
                                     'unit'    => $unit
                                         ), $subject_line);
                                 /**

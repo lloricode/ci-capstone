@@ -249,7 +249,7 @@ class Students extends CI_Capstone_Controller
         /**
          *  @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        public function view($return_html = FALSE)//parameter use for printing
+        public function view($return_html = FALSE)//parameter TRUE use for printing
         {
                 if ( ! $return_html)
                 {
