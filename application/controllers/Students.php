@@ -337,7 +337,7 @@ class Students extends CI_Capstone_Controller
                          * for web view design template table bootstrap
                          */
                         $this->config->load('admin/table');
-                        $caption        = heading('Subjects Current Enrolled', 4);
+                        $caption        = heading(lang('subjects_currently_enrolled'), 4);
                         $tbale_template = array(
                             'table_open'         => $this->config->item('table_open_invoice'), //modified
                             'thead_open'         => '<thead>',

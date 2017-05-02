@@ -310,6 +310,8 @@ class Student_model extends MY_Model
         public function all($limit = NULL, $offset = NULL, $course_id = NULL, $search = NULL, $report = FALSE, $enrolled_status_only = NULL)
         {
                 $this->_query_all($course_id, $search, $enrolled_status_only);
+                $this->db->order_by('enrollment_year_level', 'ASC');
+                $this->db->order_by('student_lastname', 'ASC');
                 $this->db->order_by('created_at', 'DESC');
                 $this->db->order_by('updated_at', 'DESC');
                 if ( ! $report)
@@ -392,8 +394,8 @@ class Student_model extends MY_Model
                     lang('index_student_firstname_th'),
                     lang('index_student_middlename_th'),
                     //  'course',
-                    'level',
-                    'enrolled'
+                    lang('index_student_year_level_th'),
+                    lang('index_student_is_enrolled')
                 );
 
                 $student_obj = $this->all(NULL, NULL, $course_id, NULL, TRUE)->result;
