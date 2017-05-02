@@ -1,19 +1,22 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-function info_row($str)
+/**
+ * anonymous functions
+ */
+$info_row = function ($str)
 {
         if ($str == '')
         {
                 return;
         }
         return '<tr><td>' . $str . '</td></tr>';
-}
+};
 
-function function_row_td($link, $label, $popup = FALSE)
+$function_row_td = function ($link, $label, $popup = FALSE)
 {
         return table_row_button_link($link, $label, NULL, array('title' => $label, 'class' => "tip-bottom"), $popup);
-}
+};
 ?>
 <div class="container-fluid">
     <div class="row-fluid">
@@ -36,10 +39,10 @@ function function_row_td($link, $label, $popup = FALSE)
                                     <tr>
                                         <td><?php echo $this->student->address; ?></td>
                                     </tr>
-                                    <?php echo info_row($this->student->town); ?>
-                                    <?php echo info_row($this->student->region); ?>
-                                    <?php echo info_row($this->student->contact); ?>
-                                    <?php echo info_row($this->student->email); ?>
+                                    <?php echo $info_row($this->student->town); ?>
+                                    <?php echo $info_row($this->student->region); ?>
+                                    <?php echo $info_row($this->student->contact); ?>
+                                    <?php echo $info_row($this->student->email); ?>
                                     <tr>
                                         <td><?php echo $this->student->birthdate; ?></td>
                                     </tr> 
@@ -85,21 +88,21 @@ function function_row_td($link, $label, $popup = FALSE)
                                                      * add subject
                                                      */
                                                     $lang_for_add_subject = ($this->student->is_enrolled()) ? lang('add_student_enrolled___subject_label') : lang('add_student_subject_label');
-                                                    echo function_row_td('create-student-subject?student-id=' . $this->student->id, $lang_for_add_subject);
+                                                    echo $function_row_td('create-student-subject?student-id=' . $this->student->id, $lang_for_add_subject);
                                             }
                                             if ($this->student->is_has_pending())
                                             {
                                                     /**
                                                      * set enroll added subject/s
                                                      */
-                                                    echo function_row_td('students/set-enroll-added-subjects?student-id=' . $this->student->id, 'Enroll Added Subject/s');
+                                                    echo $function_row_td('students/set-enroll-added-subjects?student-id=' . $this->student->id, 'Enroll Added Subject/s');
                                             }
                                             if ($this->student->is_enrolled())
                                             {
                                                     /**
                                                      * print
                                                      */
-                                                    echo function_row_td('students/print_data?action=prev&student-id=' . $this->student->id, lang('print_label'), TRUE);
+                                                    echo $function_row_td('students/print_data?action=prev&student-id=' . $this->student->id, lang('print_label'), TRUE);
                                             }
                                             if (( ! $this->student->is_enrolled()) &&
                                                     $this->Enrollment_status_model->status() &&
@@ -108,14 +111,14 @@ function function_row_td($link, $label, $popup = FALSE)
                                                     /**
                                                      * set enroll
                                                      */
-                                                    echo function_row_td('students/set-enroll?student-id=' . $this->student->id, 'Set Enroll');
+                                                    echo $function_row_td('students/set-enroll?student-id=' . $this->student->id, 'Set Enroll');
                                             }
                                             if (in_array('edit-student', permission_controllers()))
                                             {
                                                     /**
                                                      * print
                                                      */
-                                                    echo function_row_td('edit-student?student-id=' . $this->student->id, 'Edit');
+                                                    echo $function_row_td('edit-student?student-id=' . $this->student->id, 'Edit');
                                             }
                                             ?>
                                         </td>
@@ -140,3 +143,9 @@ function function_row_td($link, $label, $popup = FALSE)
         </div>
     </div>
 </div>
+<?php
+/**
+ * just unset to prevent use in another file
+ */
+unset($function_row_td);
+unset($info_row);
