@@ -373,7 +373,7 @@ class Subject_offer_validation
                         $this->form_validation->set_message(
                                 'subject_offer_check_check_conflict', $this->error_strat_delimeter .
                                 // 'Conflict ' . $this->affected_rows .
-                                'Conflic ' . $this->affected_rows .
+                                'Schedule conflicts ' . $this->affected_rows . ' schedule/s'. br(1) .' above. Refer to table above.' .
 //                                ' schedules.' .
 //                                '<pre>' .
 //                                $this->db->last_query() .
