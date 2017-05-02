@@ -32,8 +32,7 @@ $lang['index_room_id_th']             = 'Room';
 $lang['view_class_schedule_label'] = 'View Class schedule';
 
 
-$lang['subject_offer_conflict_data']  = 'Conflict Data';
-$lang['2subject_offer_conflict_data'] = 'Conflict Data 2';
+$lang['subject_offer_conflict_data']  = 'Conflict Schedule/s';
 
 
 
