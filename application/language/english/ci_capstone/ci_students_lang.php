@@ -56,6 +56,10 @@ $lang['index_student_course_id_th']         = 'Course ID';
 $lang['index_student_course_th']            = 'Course';
 $lang['index_student_year_level_th']        = 'Year Level';
 
+/**
+ * excel report header
+ */
+$lang['index_student_is_enrolled']        = 'Is Enrolled';
 
 $lang['index_student_guardian_fullname_th'] = 'Guardian Fullname';
 $lang['index_student_town_th']              = 'Town';
@@ -127,6 +131,8 @@ $lang['search_result_label']          = '%s result for search key \'%s\'.';
 $lang['search_result_course_label']   = '%s result for Program \'%s\'.';
 $lang['search_result_enrolled_label'] = '%s result for Enrolled Students.';
 
+
+$lang['subjects_currently_enrolled'] = 'Subjects Enrolled';
 
 /**
  * 
