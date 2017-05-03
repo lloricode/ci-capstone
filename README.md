@@ -39,7 +39,7 @@ administrator|mypasswordisadmin1
 -Updated overview over the Admin Panel
 ![screenshot at 2017-04-09 21-26-03](https://cloud.githubusercontent.com/assets/8251344/24837640/50a98c44-1d6b-11e7-95b8-11c754f8c81d.png)
 
--Database Relation,(result after migration)
+-Database Relation,(result after migration) [outdated soon to update]
 ![screenshot at 2017-04-02 13-04-48](https://cloud.githubusercontent.com/assets/8251344/24584608/3e2cb008-17a5-11e7-8e48-a1bdeadcd2b0.png)
 
 ## Note:
