@@ -26,8 +26,12 @@ class Check_access
         public function validate()
         {
                 $this->ion_auth->set_hook(
-                        /*       'pre_set_session' */ 'post_set_session', 'set_session_data_session_event', $this/* $this because the class already extended */, 'set_session_data_session', array()
+                        'post_set_session', '_set_session_data_event', $this, '_set_session_data', array()
                 );
+
+//                $this->ion_auth->set_hook(
+//                        'logged_in', '_check_if_multiple_logged_in_one_user_event', $this, '_check_if_multiple_logged_in_one_user', array()
+//                );
 
                 /**
                  * ignore login/authentication controller
@@ -36,6 +40,8 @@ class Check_access
                 {
                         return;
                 }
+
+                $current_controller = str_replace('_', '-', $this->uri->segment($this->config->item('segment_controller')));
                 if ( ! $this->ion_auth->logged_in())
                 {
                         redirect(site_url('auth/login'), 'refresh');
@@ -46,7 +52,7 @@ class Check_access
                 /**
                  * check controllers available of users, depend on user_groups
                  */
-                if ( ! in_array(str_replace('_', '-', $this->uri->segment($this->config->item('segment_controller'))), permission_controllers()))
+                if ( ! in_array($current_controller, permission_controllers()))
                 {
                         show_404();
                 }
@@ -60,7 +66,7 @@ class Check_access
                  */
                 if ( ! $this->Enrollment_status_model->status())
                 {
-                        if (in_array($this->uri->segment($this->config->item('segment_controller')), get_all_controller_with_enrollment()))
+                        if (in_array($current_controller, get_all_controller_with_enrollment()))
                         {
                                 show_404();
                         }
@@ -74,7 +80,7 @@ class Check_access
                  * use this if navigate to another controller, it will unset session for subject offer
                  * to prevent passing session to another enrolling subjects in another students
                  */
-                if ('create-student-subject' != str_replace('_', '-', $this->uri->segment($this->config->item('segment_controller'))) &&
+                if ('create-student-subject' != $current_controller &&
                         $this->session->has_userdata($this->config->item('create_student_subject__session_name')))
                 {
                         /**
@@ -96,7 +102,7 @@ class Check_access
                 return trim($return, '|');
         }
 
-        public function set_session_data_session()
+        public function _set_session_data()
         {
                 // show_error('aaaa');
                 $is_dean          = FALSE;
@@ -143,18 +149,16 @@ class Check_access
          * 
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        private function _check_if_multiple_logged_in_one_user()
-        {
-                $CI                      = &get_instance();
-                $user_current_session_id = $CI->session->userdata('gen_code');
-                $session_id              = $CI->User_model->get($CI->ion_auth->get_user_id())->gen_code;
-
-                if ($session_id != $user_current_session_id)
-                {
-                        $message = 'another_logged_in_user_in_this_account';
-
-                        redirect('auth/logout/' . $message, 'refresh');
-                }
-        }
+//        public function _check_if_multiple_logged_in_one_user()
+//        {
+//                $user_current_session_id = $this->session->userdata('gen_code');
+//                $session_id              = $this->User_model->get($this->ion_auth->get_user_id())->gen_code;
+//
+//                if ($session_id != $user_current_session_id)
+//                {
+//                        $message = 'another_logged_in_user_in_this_account';
+//                        redirect('auth/logout/' . $message, 'refresh');
+//                }
+//        }
 
 }
