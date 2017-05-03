@@ -34,4 +34,7 @@ $lang['enable_curriculum_confirm_y_label'] = 'Yes';
 $lang['enable_curriculum_confirm_n_label'] = 'No';
 $lang['enable_curriculum_confirm_success'] = 'Enabled Successfully!';
 
+$lang['no_subjects_in_curriculum'] = 'Fail to enable curriculum. No subjects added in this curriculum.';
+
 $lang['curriculum_add_success'] = 'Curriculum Added Successfully!';
+
