@@ -48,24 +48,24 @@ class Migration_Curriculum_subjects extends CI_Migration
                         'type' => 'ENUM(' . $this->_semesters() . ')',
                         'null' => FALSE
                     ),
-                    'curriculum_subject_units'            => array(
-                        'type'       => 'TINYINT',
-                        'constraint' => '11',
-                        'unsigned'   => TRUE,
-                        'null'       => FALSE
-                    ),
-                    'curriculum_subject_lecture_hours'    => array(
-                        'type'       => 'TINYINT',
-                        'constraint' => '11',
-                        'unsigned'   => TRUE,
-                        'null'       => FALSE
-                    ),
-                    'curriculum_subject_laboratory_hours' => array(
-                        'type'       => 'TINYINT',
-                        'constraint' => '11',
-                        'unsigned'   => TRUE,
-                        'null'       => FALSE
-                    ),
+//                    'curriculum_subject_units'            => array(
+//                        'type'       => 'TINYINT',
+//                        'constraint' => '11',
+//                        'unsigned'   => TRUE,
+//                        'null'       => FALSE
+//                    ),
+//                    'curriculum_subject_lecture_hours'    => array(
+//                        'type'       => 'TINYINT',
+//                        'constraint' => '11',
+//                        'unsigned'   => TRUE,
+//                        'null'       => FALSE
+//                    ),
+//                    'curriculum_subject_laboratory_hours' => array(
+//                        'type'       => 'TINYINT',
+//                        'constraint' => '11',
+//                        'unsigned'   => TRUE,
+//                        'null'       => FALSE
+//                    ),
                     /**
                      * foreign
                      */
@@ -80,6 +80,12 @@ class Migration_Curriculum_subjects extends CI_Migration
                         'constraint' => '11',
                         'unsigned'   => TRUE,
                         'null'       => FALSE
+                    ),
+                    'unit_id'     => array(
+                        'type'       => 'INT',
+                        'constraint' => '11',
+                        'unsigned'   => TRUE,
+                        'null'       => TRUE
                     ),
 //                    'subject_id_pre'                      => array(//pre-requisite
 //                        'type'       => 'INT',

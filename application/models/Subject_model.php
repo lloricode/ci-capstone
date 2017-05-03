@@ -20,38 +20,14 @@ class Subject_model extends MY_Model
                 parent::__construct();
         }
 
-        private function _set_null($data, $contrller)
-        {
-//                $controll_name = $this->uri->segment($this->config->item('segment_controller'));
-//                if ($contrller === (string) str_replace('_', '-', $controll_name))
-//                {
-//                        if (isset($data['course_id']))
-//                        {
-//                                if ($data['course_id'] == 0)
-//                                {
-//                                        if ('create-subject' === $contrller)
-//                                        {
-//
-//                                                //check if really in add subject,then check if "course [post]" is zero 
-//                                                //then remove to get NULL,to make gen-ed
-//                                                unset($data['course_id']);
-//                                        }
-//                                }
-//                        }
-//                }
-                return $data;
-        }
-
         protected function _add_created_by($data)
         {
-                $data                    = $this->_set_null($data, 'create-subject');
                 $data['created_user_id'] = $this->ion_auth->get_user_id(); //add user_id
                 return $data;
         }
 
         protected function _add_updated_by($data)
         {
-                $data                    = $this->_set_null($data, 'edit-subject');
                 $data['updated_user_id'] = $this->ion_auth->get_user_id(); //add user_id
                 return $data;
         }
@@ -68,7 +44,7 @@ class Subject_model extends MY_Model
                 /**
                  * some of field is not required, so remove it in array when no value, in inside the *->from_form()->insert() in core MY_Model,
                  */
-                // $this->remove_empty_before_write = TRUE;//(bool) $this->config->item('my_model_remove_empty_before_write');
+                $this->remove_empty_before_write = TRUE;//(bool) $this->config->item('my_model_remove_empty_before_write');
                 $this->delete_cache_on_save = TRUE; //(bool) $this->config->item('my_model_delete_cache_on_save');
         }
 
@@ -111,9 +87,21 @@ class Subject_model extends MY_Model
         {
 
                 $this->rules = array(
-                    'insert' => $this->_common('is_unique[subjects.subject_code]'),
+                    // 'insert' => $this->_common('is_unique[subjects.subject_code]'),
                     'update' => $this->_common('callback_check_unique')
                 );
+        }
+
+        public function insert_validation()
+        {
+                $tmp = array(
+                    'course_id' => array(
+                        'label' => lang('index_course_heading'),
+                        'field' => 'course',
+                        'rules' => 'trim|is_natural'// zero mean gen-ed // then it will remove in update oberver to take NULL in DB
+                    )
+                );
+                return array_merge($tmp, $this->_common('is_unique[subjects.subject_code]'));
         }
 
         private function _common($unique)
@@ -134,11 +122,6 @@ class Subject_model extends MY_Model
                         'errors' => array(
                             'is_unique' => 'The {field} already exist.'
                         )
-                    ),
-                    'course_id'           => array(
-                        'label' => lang('index_course_heading'),
-                        'field' => 'course',
-                        'rules' => 'trim|is_natural'// zero mean gen-ed // then it will remove in update oberver to take NULL in DB
                     )
                 );
         }

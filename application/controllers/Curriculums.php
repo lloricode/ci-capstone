@@ -148,7 +148,7 @@ class Curriculums extends CI_Capstone_Controller
                 $curriculum_obj = check_id_from_url('curriculum_id', 'Curriculum_model', 'curriculum-id', 'course');
                 $this->breadcrumbs->unshift(3, lang('curriculum_subject_label'), 'curriculums/view?curriculum-id=' . $curriculum_obj->curriculum_id);
 
-                $this->load->model(array('Curriculum_subject_model', 'Subject_model', 'Requisites_model'));
+                $this->load->model(array('Curriculum_subject_model', 'Subject_model', 'Requisites_model', 'Unit_model'));
                 $this->load->helper(array('number', 'text'));
                 $highlight_phrase = '';
 
@@ -179,14 +179,24 @@ class Curriculums extends CI_Capstone_Controller
                                             )
                                         );
                                 }
+                                $id = NULL;
+                                if ( ! is_null($cur_subj->unit_id) && ! empty($cur_subj->unit_id))
+                                {
+                                        $id = $cur_subj->unit_id;
+                                }
+                                else
+                                {
+                                        $id = $cur_subj->subject->unit_id;
+                                }
+                                $unit_obj  = $this->Unit_model->get($id);
                                 $requisite = $this->Requisites_model->subjects(isset($cur_subj->requisites) ? $cur_subj->requisites : NULL);
                                 $tmp       = array(
                                     //  my_htmlspecialchars(semesters($cur_subj->curriculum_subject_semester, FALSE, 'short')),
                                     highlight_phrase($cur_subj->subject->subject_code, $highlight_phrase, '<mark id="' . dash($cur_subj->subject->subject_code) . '">', '</mark>'),
                                     my_htmlspecialchars($cur_subj->subject->subject_description),
-                                    my_htmlspecialchars($cur_subj->curriculum_subject_units),
-                                    my_htmlspecialchars($cur_subj->curriculum_subject_lecture_hours),
-                                    my_htmlspecialchars($cur_subj->curriculum_subject_laboratory_hours),
+                                    my_htmlspecialchars($unit_obj->unit_value),
+                                    my_htmlspecialchars($unit_obj->lec_value),
+                                    my_htmlspecialchars($unit_obj->lab_value),
                                     $requisite->pre,
                                     $requisite->co
                                 );
@@ -214,9 +224,15 @@ class Curriculums extends CI_Capstone_Controller
                 {
                         $header[] = 'add Requisite';
 
-                        $template['create_curriculum_subject_button'] = MY_Controller::render('admin/_templates/button_view', array(
-                                    'href'         => 'create-curriculum-subject?curriculum-id=' . $curriculum_obj->curriculum_id,
-                                    'button_label' => lang('create_curriculum_subject_label'),
+                        $template['create_curriculum_subject_major_button'] = MY_Controller::render('admin/_templates/button_view', array(
+                                    'href'         => 'create-curriculum-subject?curriculum-id=' . $curriculum_obj->curriculum_id . '&type=major',
+                                    'button_label' => 'Create Major Subject', //lang('create_curriculum_subject_label'),
+                                    'extra'        => array('class' => 'btn btn-success icon-edit'),
+                                        ), TRUE);
+
+                        $template['create_curriculum_subject_monor_button'] = MY_Controller::render('admin/_templates/button_view', array(
+                                    'href'         => 'create-curriculum-subject?curriculum-id=' . $curriculum_obj->curriculum_id . '&type=minor',
+                                    'button_label' => 'Create Minor Subject', //lang('create_curriculum_subject_label'),
                                     'extra'        => array('class' => 'btn btn-success icon-edit'),
                                         ), TRUE);
                 }

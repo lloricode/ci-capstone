@@ -77,11 +77,18 @@ class Curriculum_subject_model extends MY_Model
                     'local_key'     => 'curriculum_subject_id'
                 );
 
-                $this->has_one['user']            = array(
+                $this->has_one['user'] = array(
                     'foreign_model' => 'User_model',
                     'foreign_table' => 'users',
                     'foreign_key'   => 'id',
                     'local_key'     => 'created_user_id'
+                );
+
+                $this->has_one['unit']            = array(
+                    'foreign_model' => 'Unit_model',
+                    'foreign_table' => 'units',
+                    'foreign_key'   => 'unit_id',
+                    'local_key'     => 'unit_id'
                 );
                 /**
                  * subject offer
@@ -122,13 +129,15 @@ class Curriculum_subject_model extends MY_Model
 
         private function _insert()
         {
+//                $lec = (int) $this->input->post('lecture', TRUE);
+//                $lab = (int) $this->input->post('laboratory', TRUE);
                 return array(
-                    'curriculum_subject_year_level'       => array(
+                    'curriculum_subject_year_level' => array(
                         'label' => lang('curriculum_subject_year_level_label'),
                         'field' => 'level',
                         'rules' => 'trim|required|is_natural_no_zero'
                     ),
-                    'curriculum_subject_semester'         => array(
+                    'curriculum_subject_semester'   => array(
                         'label'  => lang('curriculum_subject_semester_label'),
                         'field'  => 'semester',
                         'rules'  => 'trim|required|in_list[' . $this->_inlist_semesters() . ']', //must be specific value needed,table type type in enum
@@ -136,22 +145,22 @@ class Curriculum_subject_model extends MY_Model
                             'in_list' => 'Invalid value in {field}'
                         )
                     ),
-                    'curriculum_subject_units'            => array(
-                        'label' => lang('curriculum_subject_units_label'),
-                        'field' => 'units',
-                        'rules' => 'trim|required|is_natural_no_zero|callback_unit_relate_types'
-                    ),
-                    'curriculum_subject_lecture_hours'    => array(
-                        'label' => lang('curriculum_subject_lecture_hours_label'),
-                        'field' => 'lecture',
-                        'rules' => 'trim|required|is_natural'
-                    ),
-                    'curriculum_subject_laboratory_hours' => array(
-                        'label' => lang('curriculum_subject_laboratory_hours_label'),
-                        'field' => 'laboratory',
-                        'rules' => 'trim|required|is_natural'
-                    ),
-                    'subject_id'                          => array(
+//                    'curriculum_subject_units'            => array(
+//                        'label' => lang('curriculum_subject_units_label'),
+//                        'field' => 'units',
+//                        'rules' => "trim|required|is_natural_no_zero|is_unit_relate_types[$lec.$lab]"
+//                    ),
+//                    'curriculum_subject_lecture_hours'    => array(
+//                        'label' => lang('curriculum_subject_lecture_hours_label'),
+//                        'field' => 'lecture',
+//                        'rules' => 'trim|required|is_natural'
+//                    ),
+//                    'curriculum_subject_laboratory_hours' => array(
+//                        'label' => lang('curriculum_subject_laboratory_hours_label'),
+//                        'field' => 'laboratory',
+//                        'rules' => 'trim|required|is_natural'
+//                    ),
+                    'subject_id'                    => array(
                         'label' => lang('curriculum_subject_subject_label'),
                         'field' => 'subject',
                         'rules' => 'trim|required|is_natural_no_zero|differs[pre_requisite]|differs[co_requisite]|callback_check_subject_in_curiculum'
@@ -172,14 +181,21 @@ class Curriculum_subject_model extends MY_Model
                             'curriculum_id',
                             'curriculum_subject_year_level',
                             'curriculum_subject_semester',
-                            'curriculum_subject_units',
-                            'curriculum_subject_lecture_hours',
-                            'curriculum_subject_laboratory_hours'
+                            'unit_id',
+//                            'curriculum_subject_units',
+//                            'curriculum_subject_lecture_hours',
+//                            'curriculum_subject_laboratory_hours'
                         ))->
                         /**
                          * foreign table with specific fields
                          */
-                        with_subject('fields:subject_code,subject_description')->
+                        with_subject(array(
+                            'fields' => 'subject_code,subject_description,unit_id',
+                            'with'   => array(
+                                'relation' => 'unit',
+                                'fields'   => 'unit_id'
+                            )
+                        ))->
                         /**
                          * it has nested relation with subjects
                          */
@@ -267,13 +283,33 @@ class Curriculum_subject_model extends MY_Model
 
         public function total_units_per_term($cur_id, $sem, $yr_lvl)
         {
-                return $this->db->select_sum('curriculum_subject_units')->
-                                where(array(
-                                    'curriculum_id'                 => $cur_id,
-                                    'curriculum_subject_semester'   => $sem,
-                                    'curriculum_subject_year_level' => $yr_lvl
-                                ))->
-                                get($this->table)->row()->curriculum_subject_units;
+                $obj    = $this->fields('unit_id')->
+                        with_subject('fields:unit_id')->
+                        where(array(
+                            'curriculum_id'                 => $cur_id,
+                            'curriculum_subject_semester'   => $sem,
+                            'curriculum_subject_year_level' => $yr_lvl
+                        ))->
+                        get_all();
+                $return = 0;
+                if ($obj)
+                {
+                        $this->load->model('Unit_model');
+                        foreach ($obj as $v)
+                        {
+                                $id = NULL;
+                                if ( ! is_null($v->unit_id))
+                                {
+                                        $id = $v->unit_id;
+                                }
+                                else
+                                {
+                                        $id = $v->subject->unit_id;
+                                }
+                                $return += $this->Unit_model->get($id)->unit_value;
+                        }
+                }
+                return $return;
         }
 
         public function get_unit($id = NULL, $curr_id = NULL, $subject_id = NULL)

@@ -71,14 +71,14 @@ class Edit_subject extends CI_Capstone_Controller
                     'lang'  => 'index_subject_description_th'
                 );
 
-                $this->load->model('Course_model');
-                $inputs['course_id'] = array(
-                    'name'      => 'course',
-                    'value'     => $this->Course_model->drpdown_with_gen_ed(),
-                    'type'      => 'dropdown',
-                    'lang'      => 'index_course_heading',
-                    'default' => $subject_obj->course_id
-                );
+//                $this->load->model('Course_model');
+//                $inputs['course_id'] = array(
+//                    'name'      => 'course',
+//                    'value'     => $this->Course_model->drpdown_with_gen_ed(),
+//                    'type'      => 'dropdown',
+//                    'lang'      => 'index_course_heading',
+//                    'default' => $subject_obj->course_id
+//                );
 
                 $data['edit_room_form'] = $this->form_boostrap('edit-subject?subject-id=' . $subject_obj->subject_id, $inputs, 'edit_subject_label', 'edit_subject_label', 'info-sign', NULL, TRUE, FALSE);
 

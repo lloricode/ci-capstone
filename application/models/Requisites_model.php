@@ -100,8 +100,8 @@ class Requisites_model extends MY_Model
                         }
                 }
                 return (object) (array(
-                    'pre' => ($pre == '') ? '--' : trim($pre, br()),
-                    'co'  => ($co == '') ? '--' : trim($co, br())
+                    'pre' => ($pre == '') ? '--' : $pre,
+                    'co'  => ($co == '') ? '--' : $co
                 ));
         }
 

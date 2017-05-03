@@ -8,7 +8,7 @@ class Create_subject extends CI_Capstone_Controller
         function __construct()
         {
                 parent::__construct();
-                $this->load->model('Subject_model');
+                $this->load->model(array('Subject_model', 'Unit_model'));
                 $this->load->library('form_validation');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
                 $this->breadcrumbs->unshift(2, lang('index_subject_heading_th'), 'subjects');
@@ -21,15 +21,66 @@ class Create_subject extends CI_Capstone_Controller
                  * @Contributor: Jinkee Po <pojinkee1@gmail.com>
                  *         
                  */
-                if ($this->input->post('submit'))
+                $this->form_validation->set_rules($this->Subject_model->insert_validation());
+
+                if ($this->form_validation->run())
                 {
-                        $id = $this->Subject_model->from_form()->insert();
-                        if ($id)
+                        $this->db->trans_begin();
+
+                        $unit_ok   = TRUE;
+                        $unit_id   = TRUE;
+                        $course_id = NULL;
+
+                        $subj_insert = array(
+                            'subject_code'        => $this->input->post('code', TRUE),
+                            'subject_description' => $this->input->post('description', TRUE),
+                        );
+
+                        //check if gen-ed,then add form set rule and validate it,else nothing
+                        if (((string) $this->input->post('course', TRUE) ) === '0')
                         {
-                                $this->session->set_flashdata('message', bootstrap_success('create_subject_succesfully_added_message'));
-                                redirect(site_url('subjects'), 'refresh');
+                              //  $this->form_validation->reset_validation();
+                                $this->form_validation->set_rules($this->Unit_model->insert_validation());
+                                $unit_ok = $this->form_validation->run();
+                                if ($unit_ok)
+                                {
+                                        $unit_id = $this->Unit_model->insert(array(
+                                            'unit_value' => $this->input->post('units', TRUE),
+                                            'lec_value'  => $this->input->post('lecture', TRUE),
+                                            'lab_value'  => $this->input->post('laboratory', TRUE)
+                                        ));
+                                }
+                                if ($unit_id)
+                                {
+                                        $subj_insert['unit_id'] = $unit_id;
+                                }
+                        }
+                        else
+                        {
+                                $subj_insert['course_id'] = $this->input->post('course', TRUE);
+                        }
+
+                        $ubject_id = $this->Subject_model->insert($subj_insert);
+
+
+
+                        if ( ! $ubject_id OR ! $unit_id OR ! $unit_ok)
+                        {
+                                /**
+                                 * rollback database
+                                 */
+                                $this->db->trans_rollback();
+                        }
+                        else
+                        {
+                                if ($this->db->trans_commit())
+                                {
+                                        $this->session->set_flashdata('message', bootstrap_success('create_subject_succesfully_added_message'));
+                                        redirect(site_url('subjects'), 'refresh');
+                                }
                         }
                 }
+
 
                 $this->_form_view();
         }
@@ -58,6 +109,30 @@ class Create_subject extends CI_Capstone_Controller
                     'lang'  => 'index_course_heading'
                 );
 
+                $this->load->helper('combobox');
+                $inputs['curriculum_subject_lecture_hours'] = array(
+                    'name'  => 'lecture',
+                    'value' => _numbers_for_drop_down(0, 5),
+                    'type'  => 'dropdown',
+                    'lang'  => 'curriculum_subject_lecture_hours_label',
+                    'note'  => 'require when program in GEN-ED'
+                );
+
+                $inputs['curriculum_subject_laboratory_hours'] = array(
+                    'name'  => 'laboratory',
+                    'value' => _numbers_for_drop_down(0, 9),
+                    'type'  => 'dropdown',
+                    'lang'  => 'curriculum_subject_laboratory_hours_label',
+                    'note'  => 'require when program in GEN-ED'
+                );
+
+                $inputs['curriculum_subject_units'] = array(
+                    'name'  => 'units',
+                    'value' => _numbers_for_drop_down(1, 6),
+                    'type'  => 'dropdown',
+                    'lang'  => 'curriculum_subject_units_label',
+                    'note'  => 'require when program in GEN-ED'
+                );
 
                 $data['subject_form'] = $this->form_boostrap('create-subject', $inputs, 'create_subject_heading', 'create_subject_submit_button_label', 'info-sign', NULL, TRUE);
                 $data['bootstrap']    = $this->_bootstrap();

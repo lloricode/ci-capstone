@@ -9,6 +9,7 @@ class Create_requisite extends CI_Capstone_Controller
         {
                 parent::__construct();
                 $this->load->library('form_validation');
+                $this->load->model('Unit_model');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
                 $this->breadcrumbs->unshift(2, lang('curriculum_label'), 'curriculums');
         }
@@ -236,14 +237,24 @@ class Create_requisite extends CI_Capstone_Controller
                 if ($cur_subj)
                 {
                         $this->load->model('Requisites_model');
-                        $requisite    = $this->Requisites_model->subjects(isset($cur_subj->requisites) ? $cur_subj->requisites : NULL);
+                        $requisite = $this->Requisites_model->subjects(isset($cur_subj->requisites) ? $cur_subj->requisites : NULL);
+                        $id        = NULL;
+                        if ( ! is_null($cur_subj->unit_id) && ! empty($cur_subj->unit_id))
+                        {
+                                $id = $cur_subj->unit_id;
+                        }
+                        else
+                        {
+                                $id = $cur_subj->subject->unit_id;
+                        }
+                        $unit_obj     = $this->Unit_model->get($id);
                         $table_data[] = array(
                             my_htmlspecialchars($cur_subj->curriculum_subject_year_level),
                             my_htmlspecialchars(semesters($cur_subj->curriculum_subject_semester)),
                             my_htmlspecialchars($cur_subj->subject->subject_code),
-                            my_htmlspecialchars($cur_subj->curriculum_subject_units),
-                            my_htmlspecialchars($cur_subj->curriculum_subject_lecture_hours . ' Hours'),
-                            my_htmlspecialchars($cur_subj->curriculum_subject_laboratory_hours . ' Hours'),
+                            my_htmlspecialchars($unit_obj->unit_value),
+                            my_htmlspecialchars($unit_obj->lec_value . ' Hours'),
+                            my_htmlspecialchars($unit_obj->lab_value . ' Hours'),
                             $requisite->pre,
                             $requisite->co
                         );

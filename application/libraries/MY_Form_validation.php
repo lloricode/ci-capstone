@@ -356,4 +356,22 @@ class MY_Form_validation extends CI_Form_validation
                 return TRUE;
         }
 
+        /**
+         * check if LEC plus LAB is equal to input value
+         * 
+         * @param int $value
+         * @param int $leclab
+         * @return boolean
+         * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
+         */
+        public function is_unit_relate_types($value, $leclab)
+        {
+                list($lec, $lab) = explode('.', $leclab);
+                $value = (int) $value;
+                $lec   = (int) $lec;
+                $lab   = (int) $lab;
+                $this->CI->form_validation->set_message('is_unit_relate_types', lang('validation_unit_relate_types_failed'));
+                return (bool) (($lec + $lab) === $value);
+        }
+
 }
