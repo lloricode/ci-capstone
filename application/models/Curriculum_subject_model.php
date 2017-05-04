@@ -262,7 +262,7 @@ class Curriculum_subject_model extends MY_Model
 
                         foreach ($subject_from_cur as $v)
                         {
-                                if (!in_array($v->subject_id, $requisites))//check if already added as requisite
+                                if ( ! in_array($v->subject_id, $requisites))//check if already added as requisite
                                 {
                                         $return[$v->subject_id] = $v->subject->subject_code;
                                 }
@@ -317,12 +317,24 @@ class Curriculum_subject_model extends MY_Model
                 $obj = $this;
                 if (is_null($id))
                 {
+                        $this->load->model('Unit_model');
                         $obj->where(array(
                             'curriculum_id' => $curr_id,
                             'subject_id'    => $subject_id
                         ));
-                        return (int) $obj->get()->
-                                curriculum_subject_units;
+                        $obj = $obj->get();
+                        if ($obj->unit_id)
+                        {
+                                /**
+                                 * major
+                                 */
+                                return (int) $this->Unit_model->get($obj->unit_id)->unit_value;
+                        }
+                        /**
+                         * minor
+                         */
+                        $this->load->model('Subject_model');
+                        return (int) $this->Subject_model->with_unit('fields:unit_value')->get($obj->subject_id)->unit->unit_value;
                 }
                 return (int) $obj->get($id)->
                         curriculum_subject_units;

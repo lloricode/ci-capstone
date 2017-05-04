@@ -641,7 +641,7 @@ class Student extends School_informations
                 {
                         foreach ($obj as $v)
                         {
-                                $units += (int) $v->curriculum_subject->curriculum_subject_units;
+                                $units += (int) $this->Curriculum_subject_model->get_unit(NULL, $v->curriculum_subject->curriculum_id, $v->curriculum_subject->subject_id);
                         }
                 }
                 if ($int)

@@ -22,7 +22,8 @@ class Create_student_subject extends CI_Capstone_Controller
                     'Subject_model',
                     'Requisites_model',
                     'Curriculum_model',
-                    'Room_model'
+                    'Room_model',
+                    'Unit_model'
                 ));
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span>');
                 $this->breadcrumbs->unshift(2, lang('index_student_heading'), 'students');
@@ -427,7 +428,9 @@ class Create_student_subject extends CI_Capstone_Controller
                                                 continue; //skip, already in session
                                         }
                                 }
-                                $curr_subj_obj___ = $this->Curriculum_subject_model->where(array(
+                                $curr_subj_obj___ = $this->Curriculum_subject_model->
+                                        with_subject()->
+                                        where(array(
                                             'curriculum_id' => $this->student->curriculum_id,
                                             'subject_id'    => $s->subject->subject_id
                                         ))->get();
@@ -507,7 +510,19 @@ class Create_student_subject extends CI_Capstone_Controller
                                                 );
                                                 break;
                                 }
-                                $row_output[] = $this->_row($curr_subj_obj___->curriculum_subject_units, $row_count);
+
+                                $id = NULL;
+                                if ( ! is_null($curr_subj_obj___->unit_id) && ! empty($curr_subj_obj___->unit_id))
+                                {
+                                        $id = $curr_subj_obj___->unit_id;
+                                }
+                                else
+                                {
+                                        $id = $curr_subj_obj___->subject->unit_id;
+                                }
+                                $unit_value = $this->Unit_model->get($id)->unit_value;
+
+                                $row_output[] = $this->_row($unit_value, $row_count);
                                 $row_output[] = $this->_row($btn_link, $row_count, array('class' => 'taskStatus'));
                                 $table_data[] = $row_output;
                                 if ($row_count === 2)// if there a second sched
@@ -522,7 +537,7 @@ class Create_student_subject extends CI_Capstone_Controller
                                 /**
                                  * sumation of unit
                                  */
-                                $this->_total_unit += $curr_subj_obj___->curriculum_subject_units;
+                                $this->_total_unit += $unit_value;
                         }
                 }
                 /*

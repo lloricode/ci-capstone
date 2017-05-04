@@ -190,7 +190,7 @@ class Create_subject_offer extends CI_Capstone_Controller
          */
         private function _validate_two_shedules()
         {
-                for ($i = 1; $i <= 2; $i ++)
+                for ($i = 1; $i <= 2; $i ++ )
                 {
                         $tmp            = ($i === 1) ? '' : '2';
                         ${'sched' . $i} = array(
@@ -285,10 +285,10 @@ class Create_subject_offer extends CI_Capstone_Controller
                     'type'  => 'dropdown',
                     'lang'  => 'create_subject_offer_end_label'
                 );
-                
-                $this->data['days1']             = array(
+
+                $this->data['days1'] = array(
                     'name'                       => 'days1',
-                    'fields'                     => array(//we used radio here 
+                    'fields'                     => array(
                         'cal_sunday',
                         'cal_monday',
                         'cal_tuesday',
@@ -355,7 +355,7 @@ class Create_subject_offer extends CI_Capstone_Controller
 
                 $this->data['days2'] = array(
                     'name'                       => 'days2',
-                    'fields'                     => array(//we used radio here 
+                    'fields'                     => array(
                         'cal_sunday',
                         'cal_monday',
                         'cal_tuesday',
@@ -403,10 +403,6 @@ class Create_subject_offer extends CI_Capstone_Controller
                     'default' => $this->input->get('subject-id')
                 );
 
-                /**
-                 * for check box
-                 */
-                $this->data['days'] = days_for_db();
 
                 $this->data['bootstrap'] = $this->_bootstrap();
                 $this->render('admin/create_subject_offer', $this->data);
@@ -426,7 +422,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                 /**
                  * get all user that has faculty group
                  */
-                $faculties_obj = $this->ion_auth->users('faculty')->result();
+                $faculties_obj = $this->ion_auth->users($this->config->item('user_group_faculty'))->result();
 
                 /**
                  * convert to array with specific value id|full_name
