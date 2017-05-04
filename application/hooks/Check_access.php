@@ -41,12 +41,12 @@ class Check_access
                         return;
                 }
 
-                $current_controller = str_replace('_', '-', $this->uri->segment($this->config->item('segment_controller')));
                 if ( ! $this->ion_auth->logged_in())
                 {
                         redirect(site_url('auth/login'), 'refresh');
                 }
 
+                $current_controller = str_replace('_', '-', $this->uri->segment($this->config->item('segment_controller')));
                 //   $this->_check_if_multiple_logged_in_one_user();
 
                 /**
@@ -160,5 +160,4 @@ class Check_access
 //                        redirect('auth/logout/' . $message, 'refresh');
 //                }
 //        }
-
 }
