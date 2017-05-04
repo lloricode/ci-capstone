@@ -12,6 +12,12 @@ if (isset($two_forms_conflict_message))
 {
         echo $two_forms_conflict_message;
 }
+echo form_open(site_url('create-subject-offer'), array(
+    'class'      => 'form-horizontal',
+    'name'       => 'basic_validate',
+    'id'         => 'basic_validate',
+    'novalidate' => 'novalidate',
+));
 ?>
 <div class="container-fluid">
     <div class="row-fluid">
@@ -27,12 +33,6 @@ if (isset($two_forms_conflict_message))
                  * @Contributor: Jinkee Po <pojinkee1@gmail.com>
                  *         
                  */
-                echo form_open(site_url('create-subject-offer'), array(
-                    'class'      => 'form-horizontal',
-                    'name'       => 'basic_validate',
-                    'id'         => 'basic_validate',
-                    'novalidate' => 'novalidate',
-                ));
                 /**
                  * info
                  */
@@ -108,7 +108,6 @@ if (isset($two_forms_conflict_message))
                 ));
 
                 echo '</div>';
-                echo form_close();
                 ?>
             </div>
         </div>
@@ -117,4 +116,6 @@ if (isset($two_forms_conflict_message))
 </div>
 </div>
 </div>
+<?php
+echo form_close();
 
