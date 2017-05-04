@@ -76,3 +76,9 @@ $config['tab_icon_logo']                  = $config['default_student_image_in_ta
  * hooks: Check_access
  */
 $config['create_student_subject__session_name'] = 'curriculum_subjects__subject_offer_ids';
+
+/**
+ * forgot password
+ * 
+ */
+$config['ci_capstone_forgot_password'] = FALSE;

@@ -7,6 +7,7 @@ class Auth extends MY_Controller
 
 
         private $data;
+        private $is_forgot_pass_enabled;
 
         public function __construct()
         {
@@ -16,6 +17,7 @@ class Auth extends MY_Controller
                 $this->form_validation->set_error_delimiters(
                         $this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth')
                 );
+                $this->is_forgot_pass_enabled = $this->config->item('ci_capstone_forgot_password');
         }
 
         public function index()
@@ -129,7 +131,7 @@ class Auth extends MY_Controller
                                 $this->session->set_flashdata('message', $this->ion_auth->messages());
                                 $this->_insert_session_id();
                                 $this->_insert_last_login();
-                                
+
                                 redirect(site_url('home'), 'refresh');
                         }
                         else
@@ -155,6 +157,10 @@ class Auth extends MY_Controller
          */
         public function forgot_password()
         {
+                if ( ! $this->is_forgot_pass_enabled)
+                {
+                        show_404();
+                }
                 // setting validation rules by checking whether identity is username or email
                 if ($this->config->item('identity', 'ion_auth') != 'email')
                 {
@@ -218,6 +224,10 @@ class Auth extends MY_Controller
          */
         public function reset_password($code = NULL)
         {
+                if ( ! $this->is_forgot_pass_enabled)
+                {
+                        show_404();
+                }
                 if ( ! $code)
                 {
                         show_404();

@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') or exit('no direct script allowed');
-$link = base_url($this->config->item('bootstarp_dir'));
+$link                   = base_url($this->config->item('bootstarp_dir'));
+$is_forgot_pass_enabled = $this->config->item('ci_capstone_forgot_password');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +25,7 @@ $link = base_url($this->config->item('bootstarp_dir'));
             <div class="control-group">
                 <div class="controls">
                     <div class="main_input_box">
-                        <?php echo (!is_null($message)) ? '<div class="form-group">' . $message . '</div>' : ''; ?>       
+                        <?php echo ( ! is_null($message)) ? '<div class="form-group">' . $message . '</div>' : ''; ?>       
                     </div>
                 </div>
             </div><div class="control-group">
@@ -50,15 +51,22 @@ $link = base_url($this->config->item('bootstarp_dir'));
             <div class="control-group">
                 <div class="controls">
                     <div class="main_input_box">
-                        <?php
-                        echo form_label('Remember me', 'remember', array('style' => 'color:white'));
-                        echo form_checkbox($remember);
-                        ?>
+                        <?php if ($is_forgot_pass_enabled): ?>
+                                <?php
+                                echo form_label('Remember me', 'remember', array('style' => 'color:white'));
+                                echo form_checkbox($remember);
+                                ?>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
             <div class="form-actions">
-                <span class="pull-left"><a href="#" class="flip-link btn btn-info" id="to-recover"><?php echo lang('login_forgot_password'); ?></a></span>
+                <?php if ($is_forgot_pass_enabled): ?>
+                        <span class="pull-left"><a href="#" class="flip-link btn btn-info" id="to-recover"><?php echo lang('login_forgot_password'); ?></a></span>
+                <?php else: ?>
+                        <?php echo form_label('Remember me', 'remember', array('style' => 'color:white')); ?>
+                        <?php echo form_checkbox($remember); ?>
+                <?php endif; ?>
                 <span class="pull-right">
                     <?php
                     echo form_submit('submit', lang('login_submit_btn'), array(
@@ -67,27 +75,34 @@ $link = base_url($this->config->item('bootstarp_dir'));
                     ?>
                 </span>
             </div>
-            <?php echo form_close(); ?>
-            <?php echo form_open('auth/forgot-password', array('class' => 'form-vertical', 'id' => 'recoverform')) ?>
-            <p class="normal_text">Enter your Username below and we will send you instructions how to recover a password.</p>
+            <?php
+            echo form_close();
+            if ($is_forgot_pass_enabled):
+                    ?>
+                    <?php echo form_open('auth/forgot-password', array('class' => 'form-vertical', 'id' => 'recoverform')) ?>
+                    <p class="normal_text">Enter your Username below and we will send you instructions how to recover a password.</p>
 
-            <div class="controls">
-                <div class="main_input_box">
-                    <span class="add-on bg_lo"><i class="icon-envelope"></i></span>
-                    <?php //echo (($type == 'email') ? sprintf(lang('forgot_password_email_label'), $identity_label) : sprintf(lang('forgot_password_identity_label'), $identity_label)); ?>
-                    <?php echo form_input($identity); ?>
-                </div>
-            </div>
+                    <div class="controls">
+                        <div class="main_input_box">
+                            <span class="add-on bg_lo"><i class="icon-envelope"></i></span>
+                            <?php //echo (($type == 'email') ? sprintf(lang('forgot_password_email_label'), $identity_label) : sprintf(lang('forgot_password_identity_label'), $identity_label));   ?>
+                            <?php echo form_input($identity); ?>
+                        </div>
+                    </div>
 
-            <div class="form-actions">
-                <span class="pull-left">
-                    <a href="#" class="flip-link btn btn-success" id="to-login">&laquo; Back to login</a>
-                </span>
-                <span class="pull-right">
-                    <?php echo form_submit('submit', lang('forgot_password_submit_btn'), array('class' => "btn btn-info")); ?>
-                </span>
-            </div>
-            <?php echo form_close(); ?>
+                    <div class="form-actions">
+                        <span class="pull-left">
+                            <a href="#" class="flip-link btn btn-success" id="to-login">&laquo; Back to login</a>
+                        </span>
+                        <span class="pull-right">
+                            <?php echo form_submit('submit', lang('forgot_password_submit_btn'), array('class' => "btn btn-info")); ?>
+                        </span>
+                    </div>
+                    <?php
+                    echo form_close();
+
+            endif;
+            ?>
         </div>
 
         <script src="<?php echo $link; ?>js/jquery.min.js"></script>  
