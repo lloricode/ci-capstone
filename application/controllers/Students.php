@@ -7,6 +7,7 @@ class Students extends CI_Capstone_Controller
 
 
         private $limit;
+        private $student_search;
 
         function __construct()
         {
@@ -23,7 +24,8 @@ class Students extends CI_Capstone_Controller
         public function index()
         {
 
-                $course_id = $this->input->get('course-id');
+                $search_course_id     = $this->input->get('course-id');
+                $this->student_search = $this->input->get('search-student');
                 /**
                  * check if user has a "dean" user_group
                  */
@@ -33,10 +35,10 @@ class Students extends CI_Capstone_Controller
                         {
                                 show_error('Current user_group is DEAN, but no course_id related.');
                         }
-                        $course_id = $this->session->userdata('user_dean_course_id');
+                        $search_course_id = $this->session->userdata('user_dean_course_id');
                 }
 
-                $student_result = $this->Student_model->all($this->limit, $this->limit * get_page_in_url('page') - $this->limit, $course_id, $this->input->get('search'), FALSE, $this->input->get('status'));
+                $student_result = $this->Student_model->all($this->limit, $this->limit * get_page_in_url('page') - $this->limit, $search_course_id, $this->student_search, FALSE, $this->input->get('status'));
 
                 $student_obj                 = $student_result->result;
                 $result_count_for_pagination = $student_result->count;
@@ -95,29 +97,29 @@ class Students extends CI_Capstone_Controller
                 }
                 $pagination_index = 'students';
                 $bred_crumbs      = '';
-                if ($this->input->get('course-id'))
+                if ($search_course_id)
                 {
-                        $pagination_index                .= '?course-id=' . $this->input->get('course-id');
+                        $pagination_index                .= '?course-id=' . $search_course_id;
                         $course_code                     = check_id_from_url('course_id', 'Course_model', 'course-id')->course_code;
                         $template['search_result_label'] = paragraph(sprintf(lang('search_result_course_label'/* ci_students_lang */), bold($result_count_for_pagination), bold($course_code)));
                         if (1)//permission
                         {
                                 $template['student_per_course_report_btn'] = MY_Controller::render('admin/_templates/button_view', array(
-                                            'href'         => 'students/report?course-id=' . $this->input->get('course-id'),
+                                            'href'         => 'students/report?course-id=' . $search_course_id,
                                             'button_label' => 'Excel Report for ' . $course_code,
                                             'extra'        => array('class' => 'btn btn-success icon-print'),
                                                 ), TRUE);
                         }
                         $bred_crumbs = " [ Program: $course_code ]";
                 }
-                if ($key = $this->input->get('search'))
+                if ($key = $this->student_search)
                 {
-                        $this->session->set_userdata('search-key', $key);
+                        $this->session->set_userdata('search-student', $key);
                         if ( ! preg_match('![?]!', $pagination_index))
                         {
                                 $pagination_index .= '?';
                         }
-                        $pagination_index .= 'search=' . $key;
+                        $pagination_index .= 'search-student=' . $key;
 
                         $template['search_result_label'] = paragraph(sprintf(lang('search_result_label'/* ci_students_lang */), bold($result_count_for_pagination), bold($key)));
                         $bred_crumbs                     = " [ Search: $key ]";
@@ -158,9 +160,9 @@ class Students extends CI_Capstone_Controller
 
         private function _highlight_phrase_if_search($data)
         {
-                if ($key = $this->input->get('search'))
+                if ($this->student_search)
                 {
-                        return highlight_phrase($data, $key);
+                        return highlight_phrase($data, $this->student_search);
                 }
                 return $data;
         }
