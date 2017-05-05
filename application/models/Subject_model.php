@@ -154,6 +154,11 @@ class Subject_model extends MY_Model
                  * in distinct mode
                  */
                 $subject_ids = $this->Curriculum_subject_model->
+                        with_curriculum(array(
+                            'where' => array(
+                                'curriculum_status' => TRUE
+                            )
+                        ))->
                         fields($this->primary_key)->
                         distinct()->
                         get_all();

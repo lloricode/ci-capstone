@@ -195,13 +195,13 @@ class Create_subject_offer extends CI_Capstone_Controller
                 $v2 = TRUE;
                 if ($sche2)
                 {
-                        $v2 = $this->_unit_validator($unit_obj, $subject_id, '2');
+                        $v2 = $this->_unit_validator($unit_obj, '2');
                 }
-                $v1 = $this->_unit_validator($unit_obj, $subject_id);
+                $v1 = $this->_unit_validator($unit_obj);
                 return (bool) ($v1 && $v2);
         }
 
-        private function _unit_validator($unit, $subject_id, $arg = '')
+        private function _unit_validator($unit, $arg = '')
         {
 
                 $start = $this->input->post('start' . $arg, TRUE);
@@ -262,7 +262,7 @@ class Create_subject_offer extends CI_Capstone_Controller
          */
         private function _validate_two_shedules()
         {
-                for ($i = 1; $i <= 2; $i ++)
+                for ($i = 1; $i <= 2; $i ++ )
                 {
                         $tmp            = ($i === 1) ? '' : '2';
                         ${'sched' . $i} = array(
