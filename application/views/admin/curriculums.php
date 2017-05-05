@@ -21,5 +21,9 @@ if (isset($table_corriculum_subjects))
 
 if (isset($table_curriculm))
 {
+        if (isset($curriculum_button_view_all))
+        {
+                echo $curriculum_button_view_all;
+        }
         echo $table_curriculm;
 }

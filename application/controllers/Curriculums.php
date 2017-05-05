@@ -8,13 +8,14 @@ class Curriculums extends CI_Capstone_Controller
 
         private $page_;
         private $limit;
+        private $curriculum_search;
 
         function __construct()
         {
                 parent::__construct();
                 $this->load->model(array('Curriculum_model', 'Course_model'));
                 $this->load->library('pagination');
-                $this->load->helper('school');
+                $this->load->helper(array('school', 'text'));
                 /**
                  * @Contributor: Jinkee Po <pojinkee1@gmail.com>
                  *         
@@ -28,33 +29,110 @@ class Curriculums extends CI_Capstone_Controller
                  * get the page from url
                  * 
                  */
-                $this->page_ = get_page_in_url();
-                $this->breadcrumbs->unshift(2, lang('curriculum_label'), 'curriculums');
+                $this->page_ = get_page_in_url('page');
         }
 
         public function index()
         {
+                $this->curriculum_search = $this->input->get('search-curriculum');
 
 
                 $curriculum_obj = $this->Curriculum_model->
                         fields(array(
-                            'curriculum_description',
-                            'curriculum_effective_school_year',
-                            'curriculum_status',
-                            'curriculum_already_used',
-                            'curriculum_id',
-                            'created_at',
-                            'updated_at'
-                        ))->
+                    'curriculum_description',
+                    'curriculum_effective_school_year',
+                    'curriculum_status',
+                    'curriculum_already_used',
+                    'curriculum_id',
+                    'created_at',
+                    'updated_at'
+                ));
+
+                $bred_crumbs_label   = '';
+                $bred_crumbs_link    = '';
+                $bred_crumbs_unshift = 2;
+                if ($this->curriculum_search)
+                {
+                        $this->session->set_userdata('search-curriculum', $this->curriculum_search);
+                        $c_obj = $this->Course_model->
+                                fields('course_id')->
+                                or_like(array(
+                                    'course_description' => $this->curriculum_search
+                                ))->
+                                //set_cache()->
+                                get_all();
+
+                        if ($c_obj)
+                        {
+                                foreach ($c_obj as $v)
+                                {
+                                        $curriculum_obj = $curriculum_obj->or_where(array(
+                                            'course_id' => $v->course_id
+                                        ));
+                                }
+                        }
+
+                        $curriculum_obj = $curriculum_obj->or_like(array(
+                            'curriculum_description'           => $this->curriculum_search,
+                            'curriculum_effective_school_year' => $this->curriculum_search
+                        ));
+
+                        /**
+                         * button
+                         */
+                        $bred_crumbs_label   = " [ Search: $this->curriculum_search ]";
+                        $bred_crumbs_link    = '?search-curriculum=' . $this->curriculum_search;
+                        $bred_crumbs_unshift = 3;
+                        $this->breadcrumbs->unshift(2, lang('curriculum_label'), 'curriculums');
+                }
+
+                $view_link = '';
+                $key_view  = $this->input->get('view');
+                $viewall   = TRUE;
+                if ($key_view)
+                {
+                        if ($key_view == 'all')
+                        {
+                                $viewall = FALSE;
+                        }
+                }
+                $linkkk               = '';
+                $labelll              = '';
+                $view_link_pagination = '';
+                if ($viewall)
+                {
+                        $curriculum_obj       = $curriculum_obj->where(array(
+                            'curriculum_effective_school_year' => current_school_year()
+                        ));
+                        $linkkk               = '?view=all';
+                        $view_link_pagination = '';
+                        $labelll              = 'All Year';
+                }
+                else
+                {
+                        $linkkk               = '';
+                        $view_link_pagination = '?view=all';
+                        $labelll              = 'Only Current Year';
+                }
+                $template['curriculum_button_view_all'] = MY_Controller::render('admin/_templates/button_view', array(
+                            'href'         => 'curriculums' . $linkkk,
+                            'button_label' => 'View ' . $labelll,
+                            'extra'        => array('class' => 'btn btn-success icon-eye-open'),
+                                ), TRUE);
+
+
+                $this->breadcrumbs->unshift($bred_crumbs_unshift, lang('curriculum_label') . $bred_crumbs_label, 'curriculums' . $bred_crumbs_link);
+                $curriculum_obj_for_count = $curriculum_obj;
+
+                $curriculum_obj = $curriculum_obj->
                         with_course('fields:course_code')->
                         with_user_created('fields:first_name,last_name')->
                         with_user_updated('fields:first_name,last_name')->
                         limit($this->limit, $this->limit * $this->page_ - $this->limit)->
                         order_by('created_at', 'DESC')->
                         order_by('updated_at', 'DESC')->
-                        set_cache('curriculum_page_' . $this->page_)->
+                        // set_cache('curriculum_page_' . $this->page_)->
                         get_all();
-
 
                 $table_data = array();
 
@@ -65,9 +143,9 @@ class Curriculums extends CI_Capstone_Controller
                                 $view = table_row_button_link('curriculums/view?curriculum-id=' . $curriculum->curriculum_id, lang('curriculumn_view'), 'btn-info');
 
                                 $tmp = array(
-                                    my_htmlspecialchars($curriculum->course->course_code),
-                                    my_htmlspecialchars($curriculum->curriculum_description),
-                                    my_htmlspecialchars($curriculum->curriculum_effective_school_year),
+                                    highlight_phrase($curriculum->course->course_code, $this->curriculum_search),
+                                    highlight_phrase($curriculum->curriculum_description, $this->curriculum_search),
+                                    highlight_phrase($curriculum->curriculum_effective_school_year, $this->curriculum_search),
                                     $this->_enable_button($curriculum->curriculum_status, $curriculum->curriculum_id, $curriculum->curriculum_already_used),
                                     $view
                                 );
@@ -97,7 +175,8 @@ class Curriculums extends CI_Capstone_Controller
                         $header[] = 'Created By';
                         $header[] = 'Updated By';
                 }
-                $pagination = $this->pagination->generate_bootstrap_link('curriculums/index', $this->Curriculum_model->count_rows() / $this->limit);
+                $pagination = $this->pagination->generate_bootstrap_link('curriculums' . $view_link_pagination . $bred_crumbs_link . $view_link, $curriculum_obj_for_count->count_rows() / $this->limit, TRUE);
+
 
                 $template['table_curriculm'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'curriculum_label', $pagination, TRUE);
                 $template['message']         = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
