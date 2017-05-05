@@ -249,7 +249,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                 $return = (bool) ($lec_ok && $lab_ok);
                 if ( ! $return)
                 {
-                        $this->session->set_flashdata('message', bootstrap_error("Schedule$arg $msg reach maximum unit limit, see cirriculum for information."));
+                        $this->session->set_flashdata('message', bootstrap_error("Schedule$arg $msg reach maximum hour(s) limit, see curriculum for information."));
                 }
                 return $return;
         }
