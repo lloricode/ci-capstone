@@ -81,8 +81,8 @@ class Subject_model extends MY_Model
                     'foreign_key'   => 'course_id',
                     'local_key'     => 'course_id'
                 );
-                
-                $this->has_one['unit']   = array(
+
+                $this->has_one['unit'] = array(
                     'foreign_model' => 'Unit_model',
                     'foreign_table' => 'units',
                     'foreign_key'   => 'unit_id',
@@ -130,6 +130,119 @@ class Subject_model extends MY_Model
                             'is_unique' => 'The {field} already exist.'
                         )
                     )
+                );
+        }
+
+        /**
+         * 
+         * @param int $id id of subject
+         * @return bool
+         */
+        public function is_has_curriculum($id)
+        {
+                $this->load->model('Curriculum_subject_model');
+                return (bool) (0 !== $this->Curriculum_subject_model->where(array(
+                            $this->primary_key => $id
+                        ))->count_rows());
+        }
+
+        public function all_with_curriculum_for_dropdown($field)
+        {
+                $this->load->model('Curriculum_subject_model');
+                /**
+                 * get all subject ids in curriculum_subject
+                 * in distinct mode
+                 */
+                $subject_ids = $this->Curriculum_subject_model->
+                        fields($this->primary_key)->
+                        distinct()->
+                        get_all();
+
+                $return = array();
+                if ($subject_ids)
+                {
+                        $s_ids = array();
+                        /**
+                         * prepare for where_in parameter
+                         */
+                        foreach ($subject_ids as $v)
+                        {
+                                $s_ids[] = $v->{$this->primary_key};
+                        }
+                        /**
+                         * I use native CI, because 'where_in' in MY_Model not work properly
+                         */
+                        $obj = $this->db->
+                                select("{$this->primary_key},$field")->
+                                where_in($this->primary_key, $s_ids)->
+                                get($this->table)->
+                                result();
+
+                        if ($obj)
+                        {
+                                foreach ($obj as $v)
+                                {
+                                        $return[$v->{$this->primary_key}] = $v->$field;
+                                }
+                        }
+                }
+                return $return;
+        }
+
+        public function get_leclab_hrs($id)
+        {
+                $obj = $this->fields('unit_id,course_id')->get($id);
+                $lec = 0;
+                $lab = 0;
+                if ($obj)
+                {
+                        $this->load->model('Unit_model');
+                        if ($obj->unit_id)
+                        {
+                                /**
+                                 * minor
+                                 */
+                                $tmp = $this->with_unit('fields:lec_value,lab_value')->get($id);
+                                if ($tmp)
+                                {
+                                        $lec = $tmp->unit->lec_value;
+                                        $lab = $tmp->unit->lab_value;
+                                }
+                        }
+                        else
+                        {
+                                $this->load->model(array('Curriculum_model', 'Curriculum_subject_model'));
+
+                                //get active corriculum_id where course_id ->curriculum tbl
+                                $curriculum_id = $this->Curriculum_model->
+                                                fields('curriculum_id')->
+                                                where(array(
+                                                    'curriculum_status' => TRUE,
+                                                    'course_id'         => $obj->course_id
+                                                ))->
+                                                get()->curriculum_id;
+
+                                //get unit_id where corriculum_id and subject_id ->curriculum_subject tbl
+                                $unit_id = $this->Curriculum_subject_model->
+                                                fields('unit_id')->
+                                                where(array(
+                                                    'curriculum_id' => $curriculum_id,
+                                                    'subject_id'    => $id
+                                                ))->
+                                                get()->unit_id;
+
+                                $unit_obj = $this->Unit_model->get($unit_id);
+
+                                if ($unit_obj)
+                                {
+                                        $lec = $unit_obj->lec_value;
+                                        $lab = $unit_obj->lab_value;
+                                }
+                        }
+                }
+                return (object) array(
+                            'lec' => (int) $lec,
+                            'lab' => (int) $lab
                 );
         }
 

@@ -12,6 +12,7 @@ class Create_subject_offer extends CI_Capstone_Controller
         {
                 parent::__construct();
                 $this->load->library('form_validation');
+                $this->load->model('Subject_model');
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
                 $this->breadcrumbs->unshift(2, lang('index_subject_heading_th'), 'subjects');
                 $this->breadcrumbs->unshift(3, lang('index_subject_offer_heading'), 'subject-offers');
@@ -119,10 +120,13 @@ class Create_subject_offer extends CI_Capstone_Controller
 
                                 $sched_id  = $this->Subject_offer_line_model->insert($sched_1_insert);
                                 $sched_id2 = TRUE;
+
+                                $include_validate_unit_sched2 = FALSE;
                                 if ( ! ($exclude && ! empty($exclude)))
                                 {
-                                        $lec = FALSE;
-                                        $lab = FALSE;
+                                        $include_validate_unit_sched2 = TRUE;
+                                        $lec                          = FALSE;
+                                        $lab                          = FALSE;
                                         foreach ($this->input->post('leclab2', TRUE) as $v)
                                         {
                                                 if ($v == 'lec')
@@ -153,11 +157,11 @@ class Create_subject_offer extends CI_Capstone_Controller
                                         }
                                         $sched_id2 = $this->Subject_offer_line_model->insert($sched_2_insert);
                                 }
-                                //   echo print_r($sched_12_insert);
+                                $unit_validated = $this->_is_time_hrs_equal_in_unit($include_validate_unit_sched2);
                                 /**
                                  * checking if one of the insert is failed, either in [form validation] or in [syntax error] or [upload]
                                  */
-                                if ( ! $sub_offer_id OR ! $sched_id OR ! $sched_id2 OR ! $validate_two_forms)
+                                if ( ! $unit_validated OR ! $sub_offer_id OR ! $sched_id OR ! $sched_id2 OR ! $validate_two_forms)
                                 {
                                         /**
                                          * rollback database
@@ -172,7 +176,6 @@ class Create_subject_offer extends CI_Capstone_Controller
                                 {
                                         if ($this->db->trans_commit())
                                         {
-                                                //echo 'done';
                                                 $this->session->set_flashdata('message', bootstrap_success('create_subject_offer_succesfully_added_message'));
                                                 redirect(site_url('create-subject-offer'), 'refresh');
                                         }
@@ -180,6 +183,75 @@ class Create_subject_offer extends CI_Capstone_Controller
                         }
                 }
                 $this->_form_view();
+        }
+
+        private function _is_time_hrs_equal_in_unit($sche2)
+        {
+                $this->load->helper('time');
+                $subject_id = $this->input->post('subject', TRUE);
+                $unit_obj   = $this->Subject_model->get_leclab_hrs($subject_id);
+
+                $v1 = TRUE;
+                $v2 = TRUE;
+                if ($sche2)
+                {
+                        $v2 = $this->_unit_validator($unit_obj, $subject_id, '2');
+                }
+                $v1 = $this->_unit_validator($unit_obj, $subject_id);
+                return (bool) ($v1 && $v2);
+        }
+
+        private function _unit_validator($unit, $subject_id, $arg = '')
+        {
+
+                $start = $this->input->post('start' . $arg, TRUE);
+                $end   = $this->input->post('end' . $arg, TRUE);
+
+                $sec = convert_24hrs_to_seconds($end) - convert_24hrs_to_seconds($start);
+                $hr  = (int) gmdate("H", $sec);
+
+                $lec          = $unit->lec;
+                $lab          = $unit->lab;
+                $lec_selected = FALSE;
+                $lab_selected = FALSE;
+                foreach ($this->input->post('leclab' . $arg, TRUE) as $v)
+                {
+                        if ($v == 'lec')
+                        {
+                                $lec_selected = TRUE;
+                        }
+                        if ($v == 'lab')
+                        {
+                                $lab_selected = TRUE;
+                        }
+                }
+
+
+                $lec_ok = TRUE;
+                $lab_ok = TRUE;
+                $msg    = '';
+                if ($lec_selected)
+                {
+                        $lec_ok = (bool) ($lec >= $hr);
+                        if ( ! $lec_ok)
+                        {
+                                $msg .= ' LEC';
+                        }
+                }
+                if ($lab_selected)
+                {
+                        $lab_ok = (bool) ($lab >= $hr);
+                        if ( ! $lab_ok)
+                        {
+                                $msg .= ' LAB';
+                        }
+                }
+                $return = (bool) ($lec_ok && $lab_ok);
+                if ( ! $return)
+                {
+                        $this->session->set_flashdata('message', bootstrap_error("Schedule$arg $msg reach maximum unit limit, see cirriculum for information."));
+                }
+                return $return;
         }
 
         /**
@@ -190,7 +262,7 @@ class Create_subject_offer extends CI_Capstone_Controller
          */
         private function _validate_two_shedules()
         {
-                for ($i = 1; $i <= 2; $i ++ )
+                for ($i = 1; $i <= 2; $i ++)
                 {
                         $tmp            = ($i === 1) ? '' : '2';
                         ${'sched' . $i} = array(
@@ -394,10 +466,7 @@ class Create_subject_offer extends CI_Capstone_Controller
 
                 $this->data['subject_id'] = array(
                     'name'    => 'subject',
-                    'value'   => $this->Subject_model->
-                            as_dropdown('subject_code')->
-                            set_cache('as_dropdown_subject_code')->
-                            get_all(),
+                    'value'   => $this->Subject_model->all_with_curriculum_for_dropdown('subject_code'),
                     'type'    => 'dropdown',
                     'lang'    => 'create_subject_id_label',
                     'default' => $this->input->get('subject-id')
