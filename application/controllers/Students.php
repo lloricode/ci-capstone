@@ -58,10 +58,10 @@ class Students extends CI_Capstone_Controller
                                 }
                                 $tmp = array(
                                     $this->_images_for_table($student),
-                                    $this->_highlight_phrase_if_search(($student->student_school_id == '') ? '--' : $student->student_school_id),
-                                    $this->_highlight_phrase_if_search($student->student_lastname),
-                                    $this->_highlight_phrase_if_search($student->student_firstname),
-                                    $this->_highlight_phrase_if_search($student->student_middlename),
+                                    highlight_phrase(($student->student_school_id == '') ? '--' : $student->student_school_id, $this->student_search),
+                                    highlight_phrase($student->student_lastname, $this->student_search),
+                                    highlight_phrase($student->student_firstname, $this->student_search),
+                                    highlight_phrase($student->student_middlename, $this->student_search),
                                     my_htmlspecialchars($student->course_code),
                                     my_htmlspecialchars(number_roman($student->enrollment_year_level)),
                                     my_htmlspecialchars(($student->enrollment_status) ? 'yes' : 'no'),
@@ -112,17 +112,17 @@ class Students extends CI_Capstone_Controller
                         }
                         $bred_crumbs = " [ Program: $course_code ]";
                 }
-                if ($key = $this->student_search)
+                if ($this->student_search)
                 {
-                        $this->session->set_userdata('search-student', $key);
+                        $this->session->set_userdata('search-student', $this->student_search);
                         if ( ! preg_match('![?]!', $pagination_index))
                         {
                                 $pagination_index .= '?';
                         }
-                        $pagination_index .= 'search-student=' . $key;
+                        $pagination_index .= 'search-student=' . $this->student_search;
 
-                        $template['search_result_label'] = paragraph(sprintf(lang('search_result_label'/* ci_students_lang */), bold($result_count_for_pagination), bold($key)));
-                        $bred_crumbs                     = " [ Search: $key ]";
+                        $template['search_result_label'] = paragraph(sprintf(lang('search_result_label'/* ci_students_lang */), bold($result_count_for_pagination), bold($this->student_search)));
+                        $bred_crumbs                     = " [ Search:  $this->student_search ]";
                 }
                 if ($tmp = $this->input->get('status'))
                 {
@@ -156,15 +156,6 @@ class Students extends CI_Capstone_Controller
         {
                 $course_obj = check_id_from_url('course_id', 'Course_model', 'course-id');
                 $this->Student_model->export_excel($course_obj->course_id, $course_obj->course_code);
-        }
-
-        private function _highlight_phrase_if_search($data)
-        {
-                if ($this->student_search)
-                {
-                        return highlight_phrase($data, $this->student_search);
-                }
-                return $data;
         }
 
         private function _images_for_table($student)
