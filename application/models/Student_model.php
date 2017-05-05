@@ -325,7 +325,7 @@ class Student_model extends MY_Model
 
                 $this->_query_all($course_id, $search, $enrolled_status_only);
                 $count = $this->db->count_all_results($this->table);
-
+                
                 return (object) array(
                             'result' => $result,
                             'count'  => $count
@@ -355,7 +355,7 @@ class Student_model extends MY_Model
                         $str_select_student .= "$table.`$v`,";
                 }
 
-                $this->db->select("`u_c`.`id,u_c`.`first_name`,`u_c`.`last_name`," . $str_select_student . "$course_table.$course_primary_key,$course_table.`course_code`,$enrollment_table.`enrollment_year_level`,$enrollment_table.`enrollment_status`");
+                $this->db->select("`u_c`.`id`,`u_c`.`first_name`,`u_c`.`last_name`," . $str_select_student . "$course_table.$course_primary_key,$course_table.`course_code`,$enrollment_table.`enrollment_year_level`,$enrollment_table.`enrollment_status`");
                 $this->db->join($enrollment_table, "$enrollment_table.$primary_key=$table.$primary_key");
                 $this->db->join($course_table, "$course_table.$course_primary_key=$enrollment_table.$course_primary_key");
 
@@ -370,7 +370,7 @@ class Student_model extends MY_Model
                         $this->db->or_like($table . '.`student_school_id`', $search);
                         $this->db->or_like($table . '.`student_lastname`', $search);
                         $this->db->or_like($table . '.`student_firstname`', $search);
-                        $this->db->or_like($table . '.`student_lastname`', $search);
+                        $this->db->or_like($table . '.`student_middlename`', $search);
                 }
                 if ( ! is_null($enrolled_status_only))
                 {
