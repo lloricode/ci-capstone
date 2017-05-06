@@ -232,7 +232,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                 $msg    = '';
                 if ($lec_selected)
                 {
-                        $lec_ok = (bool) ($lec >= $hr);
+                        $lec_ok = (bool) ($lec === $hr);
                         if ( ! $lec_ok)
                         {
                                 $msg .= ' LEC';
@@ -240,7 +240,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                 }
                 if ($lab_selected)
                 {
-                        $lab_ok = (bool) ($lab >= $hr);
+                        $lab_ok = (bool) ($lab === $hr);
                         if ( ! $lab_ok)
                         {
                                 $msg .= ' LAB';
@@ -262,7 +262,7 @@ class Create_subject_offer extends CI_Capstone_Controller
          */
         private function _validate_two_shedules()
         {
-                for ($i = 1; $i <= 2; $i ++ )
+                for ($i = 1; $i <= 2; $i ++)
                 {
                         $tmp            = ($i === 1) ? '' : '2';
                         ${'sched' . $i} = array(
