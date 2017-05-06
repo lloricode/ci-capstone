@@ -225,6 +225,7 @@ class Curriculums extends CI_Capstone_Controller
         public function view()
         {
                 $curriculum_obj = check_id_from_url('curriculum_id', 'Curriculum_model', 'curriculum-id', 'course');
+                $this->breadcrumbs->unshift(2, lang('curriculum_label'), 'curriculums');
                 $this->breadcrumbs->unshift(3, lang('curriculum_subject_label'), 'curriculums/view?curriculum-id=' . $curriculum_obj->curriculum_id);
 
                 $this->load->model(array('Curriculum_subject_model', 'Subject_model', 'Requisites_model', 'Unit_model'));
