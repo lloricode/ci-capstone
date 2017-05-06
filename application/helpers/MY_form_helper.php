@@ -228,7 +228,7 @@ if ( ! function_exists('input_bootstrap'))
                 }
                 if (isset($field['note']))
                 {
-                        $output .= '<span class="help-block">' . $field['note'] . '</span>' . PHP_EOL;
+                        $output .= '<span class="help-block">' . lang($field['note']) . '</span>' . PHP_EOL;
                 }
                 $output .= form_error($field['name']) . PHP_EOL;
                 $output .= '</div>' . PHP_EOL;
