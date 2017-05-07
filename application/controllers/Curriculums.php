@@ -102,17 +102,17 @@ class Curriculums extends CI_Capstone_Controller
                 if ($viewall)
                 {
                         $curriculum_obj       = $curriculum_obj->where(array(
-                            'curriculum_effective_school_year' => current_school_year()
+                            'curriculum_status' => TRUE
                         ));
                         $linkkk               = '?view=all';
                         $view_link_pagination = '';
-                        $labelll              = 'All Year';
+                        $labelll              = 'All';
                 }
                 else
                 {
                         $linkkk               = '';
                         $view_link_pagination = '?view=all';
-                        $labelll              = 'Only Current Year';
+                        $labelll              = 'Only Active';
                 }
                 $template['curriculum_button_view_all'] = MY_Controller::render('admin/_templates/button_view', array(
                             'href'         => 'curriculums' . $linkkk,
