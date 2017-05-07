@@ -194,11 +194,13 @@ class Subject_model extends MY_Model
                 return $return;
         }
 
-        public function get_leclab_hrs($id)
+        // public function get_leclab_hrs($id)
+        public function get_unit($id)
         {
-                $obj = $this->fields('unit_id,course_id')->get($id);
-                $lec = 0;
-                $lab = 0;
+                $obj  = $this->fields('unit_id,course_id')->get($id);
+//                $lec = 0;
+//                $lab = 0;
+                $unit = 0;
                 if ($obj)
                 {
                         $this->load->model('Unit_model');
@@ -207,12 +209,12 @@ class Subject_model extends MY_Model
                                 /**
                                  * minor
                                  */
-                                $tmp = $this->with_unit('fields:lec_value,lab_value')->get($id);
-                                if ($tmp)
-                                {
-                                        $lec = $tmp->unit->lec_value;
-                                        $lab = $tmp->unit->lab_value;
-                                }
+                                $unit = $this->with_unit('fields:unit_value')->get($id)->unit->unit_value;
+//                                if ($tmp)
+//                                {
+//                                        $lec = $tmp->unit->lec_value;
+//                                        $lab = $tmp->unit->lab_value;
+//                                }
                         }
                         else
                         {
@@ -236,19 +238,16 @@ class Subject_model extends MY_Model
                                                 ))->
                                                 get()->unit_id;
 
-                                $unit_obj = $this->Unit_model->get($unit_id);
+                                $unit = $this->Unit_model->fields('unit_value')->get($unit_id)->unit_value;
 
-                                if ($unit_obj)
-                                {
-                                        $lec = $unit_obj->lec_value;
-                                        $lab = $unit_obj->lab_value;
-                                }
+//                                if ($unit_obj)
+//                                {
+//                                        $lec = $unit_obj->lec_value;
+//                                        $lab = $unit_obj->lab_value;
+//                                }
                         }
                 }
-                return (object) array(
-                            'lec' => (int) $lec,
-                            'lab' => (int) $lab
-                );
+                return (int) $unit;
         }
 
 }

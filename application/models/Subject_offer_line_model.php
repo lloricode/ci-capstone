@@ -94,11 +94,11 @@ class Subject_offer_line_model extends MY_Model
                         'field' => 'room',
                         'rules' => 'trim|required|is_natural_no_zero',
                     ),
-                    array(
-                        'label' => lang('create_type_label'),
-                        'field' => 'leclab[]',
-                        'rules' => 'trim|required',
-                    )
+//                    array(
+//                        'label' => lang('create_type_label'),
+//                        'field' => 'leclab[]',
+//                        'rules' => 'trim|required',
+//                    )
                 );
                 $this->load->helper('day');
                 /**
@@ -140,11 +140,11 @@ class Subject_offer_line_model extends MY_Model
                         'field' => 'room2',
                         'rules' => 'trim|required|is_natural_no_zero',
                     ),
-                    array(
-                        'label' => lang('create_type_label'),
-                        'field' => 'leclab2[]',
-                        'rules' => 'trim|required',
-                    )
+//                    array(
+//                        'label' => lang('create_type_label'),
+//                        'field' => 'leclab2[]',
+//                        'rules' => 'trim|required',
+//                    )
                 );
                 $this->load->helper('day');
                 /**

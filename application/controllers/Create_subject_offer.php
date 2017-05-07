@@ -87,19 +87,19 @@ class Create_subject_offer extends CI_Capstone_Controller
                                 );
                                 $sub_offer_id         = $this->Subject_offer_model->insert($subject_offer_insert);
 
-                                $lec = FALSE;
-                                $lab = FALSE;
-                                foreach ($this->input->post('leclab', TRUE) as $v)
-                                {
-                                        if ($v == 'lec')
-                                        {
-                                                $lec = TRUE;
-                                        }
-                                        if ($v == 'lab')
-                                        {
-                                                $lab = TRUE;
-                                        }
-                                }
+//                                $lec = FALSE;
+//                                $lab = FALSE;
+//                                foreach ($this->input->post('leclab', TRUE) as $v)
+//                                {
+//                                        if ($v == 'lec')
+//                                        {
+//                                                $lec = TRUE;
+//                                        }
+//                                        if ($v == 'lab')
+//                                        {
+//                                                $lab = TRUE;
+//                                        }
+//                                }
 
                                 $sched_1_insert = array(
                                     'subject_offer_line_start'  => $this->input->post('start', TRUE),
@@ -110,8 +110,8 @@ class Create_subject_offer extends CI_Capstone_Controller
                                     'subject_offer_id'          => $sub_offer_id,
                                     'subject_offer_semester'    => current_school_semester(TRUE),
                                     'subject_offer_school_year' => current_school_year(),
-                                    'subject_offer_line_lec'    => $lec,
-                                    'subject_offer_line_lab'    => $lab
+//                                    'subject_offer_line_lec'    => $lec,
+//                                    'subject_offer_line_lab'    => $lab
                                 );
                                 foreach (days_for_db() as $d)
                                 {
@@ -125,19 +125,19 @@ class Create_subject_offer extends CI_Capstone_Controller
                                 if ( ! ($exclude && ! empty($exclude)))
                                 {
                                         $include_validate_unit_sched2 = TRUE;
-                                        $lec                          = FALSE;
-                                        $lab                          = FALSE;
-                                        foreach ($this->input->post('leclab2', TRUE) as $v)
-                                        {
-                                                if ($v == 'lec')
-                                                {
-                                                        $lec = TRUE;
-                                                }
-                                                if ($v == 'lab')
-                                                {
-                                                        $lab = TRUE;
-                                                }
-                                        }
+//                                        $lec                          = FALSE;
+//                                        $lab                          = FALSE;
+//                                        foreach ($this->input->post('leclab2', TRUE) as $v)
+//                                        {
+//                                                if ($v == 'lec')
+//                                                {
+//                                                        $lec = TRUE;
+//                                                }
+//                                                if ($v == 'lab')
+//                                                {
+//                                                        $lab = TRUE;
+//                                                }
+//                                        }
 
                                         $sched_2_insert = array(
                                             'subject_offer_line_start'  => $this->input->post('start2', TRUE),
@@ -148,8 +148,8 @@ class Create_subject_offer extends CI_Capstone_Controller
                                             'subject_offer_id'          => $sub_offer_id,
                                             'subject_offer_semester'    => current_school_semester(TRUE),
                                             'subject_offer_school_year' => current_school_year(),
-                                            'subject_offer_line_lec'    => $lec,
-                                            'subject_offer_line_lab'    => $lab
+//                                            'subject_offer_line_lec'    => $lec,
+//                                            'subject_offer_line_lab'    => $lab
                                         );
                                         foreach (days_for_db() as $d)
                                         {
@@ -189,70 +189,88 @@ class Create_subject_offer extends CI_Capstone_Controller
         {
                 $this->load->helper('time');
                 $subject_id = $this->input->post('subject', TRUE);
-                $unit_obj   = $this->Subject_model->get_leclab_hrs($subject_id);
+                //$unit_obj   = $this->Subject_model->get_leclab_hrs($subject_id);
+                $unit_value = $this->Subject_model->get_unit($subject_id);
 
-                $v1 = TRUE;
-                $v2 = TRUE;
+                $total_hrs_input = 0;
                 if ($sche2)
                 {
-                        $v2 = $this->_unit_validator($unit_obj, '2');
+                        $total_hrs_input += $this->_get_hrs($unit_value, '2');
                 }
-                $v1 = $this->_unit_validator($unit_obj);
-                return (bool) ($v1 && $v2);
+                $total_hrs_input += $this->_get_hrs($unit_value);
+
+                $return = (bool) ($total_hrs_input === $unit_value);
+
+                if ( ! $return)
+                {
+                        $this->session->set_flashdata('message', bootstrap_error('Schedule not meet require ' . strong($unit_value . ' hour(s)') . ', from your input ' . strong($total_hrs_input . ' hour(s)') . ', see curriculum for information.'));
+                }
+                return $return;
         }
 
-        private function _unit_validator($unit, $arg = '')
+        private function _get_hrs($unit_value, $arg = '')
         {
 
                 $start = $this->input->post('start' . $arg, TRUE);
                 $end   = $this->input->post('end' . $arg, TRUE);
 
                 $sec = convert_24hrs_to_seconds($end) - convert_24hrs_to_seconds($start);
-                $hr  = (int) gmdate("H", $sec);
-
-                $lec          = $unit->lec;
-                $lab          = $unit->lab;
-                $lec_selected = FALSE;
-                $lab_selected = FALSE;
-                foreach ($this->input->post('leclab' . $arg, TRUE) as $v)
-                {
-                        if ($v == 'lec')
-                        {
-                                $lec_selected = TRUE;
-                        }
-                        if ($v == 'lab')
-                        {
-                                $lab_selected = TRUE;
-                        }
-                }
-
-
-                $lec_ok = TRUE;
-                $lab_ok = TRUE;
-                $msg    = '';
-                if ($lec_selected)
-                {
-                        $lec_ok = (bool) ($lec === $hr);
-                        if ( ! $lec_ok)
-                        {
-                                $msg .= ' LEC';
-                        }
-                }
-                if ($lab_selected)
-                {
-                        $lab_ok = (bool) ($lab === $hr);
-                        if ( ! $lab_ok)
-                        {
-                                $msg .= ' LAB';
-                        }
-                }
-                $return = (bool) ($lec_ok && $lab_ok);
-                if ( ! $return)
-                {
-                        $this->session->set_flashdata('message', bootstrap_error("Schedule$arg $msg reach maximum hour(s) limit, see curriculum for information."));
-                }
-                return $return;
+                return (int) gmdate("H", $sec);
         }
+
+        #just in case
+//        private function _unit_validator($unit, $arg = '')
+//        {
+//
+//                $start = $this->input->post('start' . $arg, TRUE);
+//                $end   = $this->input->post('end' . $arg, TRUE);
+//
+//                $sec = convert_24hrs_to_seconds($end) - convert_24hrs_to_seconds($start);
+//                $hr  = (int) gmdate("H", $sec);
+//
+//                $lec          = $unit->lec;
+//                $lab          = $unit->lab;
+//                $lec_selected = FALSE;
+//                $lab_selected = FALSE;
+//                foreach ($this->input->post('leclab' . $arg, TRUE) as $v)
+//                {
+//                        if ($v == 'lec')
+//                        {
+//                                $lec_selected = TRUE;
+//                        }
+//                        if ($v == 'lab')
+//                        {
+//                                $lab_selected = TRUE;
+//                        }
+//                }
+//
+//
+//                $lec_ok = TRUE;
+//                $lab_ok = TRUE;
+//                $msg    = '';
+//                if ($lec_selected)
+//                {
+//                        $lec_ok = (bool) ($lec === $hr);
+//                        if ( ! $lec_ok)
+//                        {
+//                                $msg .= ' LEC';
+//                        }
+//                }
+//                if ($lab_selected)
+//                {
+//                        $lab_ok = (bool) ($lab === $hr);
+//                        if ( ! $lab_ok)
+//                        {
+//                                $msg .= ' LAB';
+//                        }
+//                }
+//                $return = (bool) ($lec_ok && $lab_ok);
+//                if ( ! $return)
+//                {
+//                        $this->session->set_flashdata('message', bootstrap_error("Schedule$arg $msg reach maximum hour(s) limit, see curriculum for information."));
+//                }
+//                return $return;
+//        }
 
         /**
          * check conflict in two forms
@@ -386,16 +404,16 @@ class Create_subject_offer extends CI_Capstone_Controller
                     'lang'  => 'create_room_id_label'
                 );
 
-                $this->data['leclab'] = array(
-                    'name'   => 'leclab[]',
-                    'fields' => array(//we used radio here 
-                        'lec' => 'create_type_lec_label',
-                        'lab' => 'create_type_lab_label'
-                    ),
-                    'value'  => $this->form_validation->set_value('leclab[]'),
-                    'type'   => 'checkbox',
-                    'lang'   => 'create_type_label'
-                );
+//                $this->data['leclab'] = array(
+//                    'name'   => 'leclab[]',
+//                    'fields' => array(//we used radio here 
+//                        'lec' => 'create_type_lec_label',
+//                        'lab' => 'create_type_lab_label'
+//                    ),
+//                    'value'  => $this->form_validation->set_value('leclab[]'),
+//                    'type'   => 'checkbox',
+//                    'lang'   => 'create_type_label'
+//                );
 
                 /**
                  * 2nd
@@ -443,16 +461,16 @@ class Create_subject_offer extends CI_Capstone_Controller
                     'append_name'                => '2'
                 );
 
-                $this->data['leclab2'] = array(
-                    'name'   => 'leclab2[]',
-                    'fields' => array(//we used radio here 
-                        'lec' => 'create_type_lec_label',
-                        'lab' => 'create_type_lab_label'
-                    ),
-                    'value'  => $this->form_validation->set_value('leclab2[]'),
-                    'type'   => 'checkbox',
-                    'lang'   => 'create_type_label'
-                );
+//                $this->data['leclab2'] = array(
+//                    'name'   => 'leclab2[]',
+//                    'fields' => array(//we used radio here 
+//                        'lec' => 'create_type_lec_label',
+//                        'lab' => 'create_type_lab_label'
+//                    ),
+//                    'value'  => $this->form_validation->set_value('leclab2[]'),
+//                    'type'   => 'checkbox',
+//                    'lang'   => 'create_type_label'
+//                );
 
                 /**
                  * foreign
