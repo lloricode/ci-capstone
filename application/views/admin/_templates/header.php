@@ -128,7 +128,7 @@ echo doctype();
                         <?php endforeach; ?>
                     </ul>
                 </li>
-                <?php if (ENVIRONMENT === 'development' OR ENVIRONMENT === 'testing'): ?>
+                <?php if (ENVIRONMENT === 'development'): ?>
                         <li class="">
                             <a title="">
                                 <i class="icon icon-bolt"></i> 

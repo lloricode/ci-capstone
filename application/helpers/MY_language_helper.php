@@ -20,11 +20,11 @@ if ( ! function_exists('lang_array_'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('lang'))
+if ( ! function_exists('lang') && (ENVIRONMENT === 'development'))//load only this when ENVIRONMENT is 'development'
 {
 
         /**
-         * Lang
+         * Lang (extended)
          *
          * Fetches a language variable and optionally outputs a form label
          *
@@ -41,7 +41,7 @@ if ( ! function_exists('lang'))
                 //=====================================================================                
                 $line = ($line) ? $line : '## ' . $label . ' ##';
                 //=====================================================================
-
+                unset($label);
                 if ($for !== '')
                 {
                         $line = '<label for="' . $for . '"' . _stringify_attributes($attributes) . '>' . $line . '</label>';
