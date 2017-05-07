@@ -100,7 +100,12 @@ if ( ! function_exists('input_bootstrap'))
                                 {
 
                                         case 'dropdown':
-                                                $output .= form_dropdown($field['name'], $field['value'], set_value($field['name'], $default_value), array('style' => 'width: 220px'));
+                                                $extra = array('style' => 'width: 220px');
+                                                if (isset($field['extra']))
+                                                {
+                                                        $extra = array_merge($extra, $field['extra']);
+                                                }
+                                                $output .= form_dropdown($field['name'], $field['value'], set_value($field['name'], $default_value), $extra);
                                                 break;
                                         case 'multiselect':
                                                 $output .= form_multiselect($field['name'], $field['value'], $CI->input->post($field['name'], TRUE));
