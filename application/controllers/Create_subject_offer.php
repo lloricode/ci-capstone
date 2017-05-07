@@ -5,6 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Create_subject_offer extends CI_Capstone_Controller
 {
 
+
         private $data;
 
         function __construct()
@@ -53,7 +54,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                          */
                         $sched_id2 = TRUE;
                         $exclude   = $this->input->post('exclude'); //see view for this code
-                        if (!($exclude && !empty($exclude)))
+                        if ( ! ($exclude && ! empty($exclude)))
                         {
                                 /**
                                  * will check if two form conflict, if included the second form
@@ -122,7 +123,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                                 $sched_id2 = TRUE;
 
                                 $include_validate_unit_sched2 = FALSE;
-                                if (!($exclude && !empty($exclude)))
+                                if ( ! ($exclude && ! empty($exclude)))
                                 {
                                         $include_validate_unit_sched2 = TRUE;
 //                                        $lec                          = FALSE;
@@ -161,14 +162,14 @@ class Create_subject_offer extends CI_Capstone_Controller
                                 /**
                                  * checking if one of the insert is failed, either in [form validation] or in [syntax error] or [upload]
                                  */
-                                if (!$unit_validated OR ! $sub_offer_id OR ! $sched_id OR ! $sched_id2 OR ! $validate_two_forms)
+                                if ( ! $unit_validated OR ! $sub_offer_id OR ! $sched_id OR ! $sched_id2 OR ! $validate_two_forms)
                                 {
                                         /**
                                          * rollback database
                                          */
                                         $this->db->trans_rollback();
                                         $is_error = TRUE;
-                                        if (!$validate_two_forms)
+                                        if ( ! $validate_two_forms)
                                         {
                                                 $this->session->set_flashdata('message', bootstrap_error('Conflict two forms.'));
                                         }
@@ -181,6 +182,10 @@ class Create_subject_offer extends CI_Capstone_Controller
                                                 redirect(site_url('create-subject-offer'), 'refresh');
                                         }
                                 }
+                        }
+                        else
+                        {
+                                $is_error = TRUE;
                         }
                 }
                 $this->_form_view($is_error);
@@ -202,7 +207,7 @@ class Create_subject_offer extends CI_Capstone_Controller
 
                 $return = (bool) ($total_hrs_input === $unit_value);
 
-                if (!$return)
+                if ( ! $return)
                 {
                         $this->session->set_flashdata('message', bootstrap_error('Schedule not meet require ' . strong($unit_value . ' hour(s)') . ', from your input ' . strong($total_hrs_input . ' hour(s)') . ', see curriculum for information.'));
                 }
@@ -281,7 +286,7 @@ class Create_subject_offer extends CI_Capstone_Controller
          */
         private function _validate_two_shedules()
         {
-                for ($i = 1; $i <= 2; $i ++ )
+                for ($i = 1; $i <= 2; $i ++)
                 {
                         $tmp            = ($i === 1) ? '' : '2';
                         ${'sched' . $i} = array(
@@ -310,7 +315,7 @@ class Create_subject_offer extends CI_Capstone_Controller
          */
         public function subject_offer_check_check_conflict($val, $form_ = '')
         {
-                if (!$this->input->post('submit'))
+                if ( ! $this->input->post('submit'))
                 {
                         show_404();
                 }//echo ' >' . $form_ . '< ';
@@ -493,7 +498,7 @@ class Create_subject_offer extends CI_Capstone_Controller
 
 
                 $this->data['bootstrap'] = $this->_bootstrap();
-                $this->data['err'] = $is_error;
+                $this->data['err']       = $is_error;
                 $this->render('admin/create_subject_offer', $this->data);
         }
 
