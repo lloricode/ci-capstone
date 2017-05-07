@@ -62,7 +62,7 @@ class Subject_offers extends CI_Capstone_Controller
                                         ++ $row_count;
                                         ${'sched' . $row_count} = array(
                                             subject_offers_days($su_l),
-                                            $this->_type($su_l->subject_offer_line_lec, $su_l->subject_offer_line_lab),
+//                                            $this->_type($su_l->subject_offer_line_lec, $su_l->subject_offer_line_lab),
                                             convert_24_to_12hrs($su_l->subject_offer_line_start),
                                             convert_24_to_12hrs($su_l->subject_offer_line_end),
                                             $su_l->room->room_number,
@@ -113,7 +113,7 @@ class Subject_offers extends CI_Capstone_Controller
                     lang('index_subject_id_th'),
                     lang('index_user_id_th'),
                     lang('index_subject_offer_days_th'),
-                    lang('create_type_label'),
+//                    lang('create_type_label'),
                     lang('index_subject_offer_start_th'),
                     lang('index_subject_offer_end_th'),
                     lang('index_room_id_th'),

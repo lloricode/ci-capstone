@@ -57,7 +57,7 @@ echo form_open(site_url('create-subject-offer'), array(
                 echo input_bootstrap($subject_offer_end);
                 echo input_bootstrap($days1);
                 echo input_bootstrap($room_id);
-                echo input_bootstrap($leclab);
+//                echo input_bootstrap($leclab);
                 ?>
                 <div class="control-group">
                     <div class="control-label">
@@ -87,7 +87,7 @@ echo form_open(site_url('create-subject-offer'), array(
                             echo input_bootstrap($subject_offer_end2);
                             echo input_bootstrap($days2);
                             echo input_bootstrap($room_id2);
-                            echo input_bootstrap($leclab2);
+//                            echo input_bootstrap($leclab2);
 
                             echo form_close();
                             ?>
