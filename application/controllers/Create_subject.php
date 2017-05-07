@@ -21,6 +21,7 @@ class Create_subject extends CI_Capstone_Controller
                  * @Contributor: Jinkee Po <pojinkee1@gmail.com>
                  *         
                  */
+                $is_error = FALSE;
                 $this->form_validation->set_rules($this->Subject_model->insert_validation());
 
                 if ($this->form_validation->run())
@@ -39,7 +40,7 @@ class Create_subject extends CI_Capstone_Controller
                         //check if gen-ed,then add form set rule and validate it,else nothing
                         if (((string) $this->input->post('course', TRUE) ) === '0')
                         {
-                              //  $this->form_validation->reset_validation();
+                                //  $this->form_validation->reset_validation();
                                 $this->form_validation->set_rules($this->Unit_model->insert_validation());
                                 $unit_ok = $this->form_validation->run();
                                 if ($unit_ok)
@@ -64,12 +65,13 @@ class Create_subject extends CI_Capstone_Controller
 
 
 
-                        if ( ! $ubject_id OR ! $unit_id OR ! $unit_ok)
+                        if (!$ubject_id OR ! $unit_id OR ! $unit_ok)
                         {
                                 /**
                                  * rollback database
                                  */
                                 $this->db->trans_rollback();
+                                $is_error = TRUE;
                         }
                         else
                         {
@@ -81,11 +83,11 @@ class Create_subject extends CI_Capstone_Controller
                         }
                 }
 
-
-                $this->_form_view();
+                
+                $this->_form_view($is_error);
         }
 
-        private function _form_view()
+        private function _form_view($is_error)
         {
                 $inputs['subject_code'] = array(
                     'name'  => 'code',
@@ -134,7 +136,8 @@ class Create_subject extends CI_Capstone_Controller
                     'note'  => 'require when program in GEN-ED'
                 );
 
-                $inputs['bootstrap']    = $this->_bootstrap();
+                $inputs['bootstrap'] = $this->_bootstrap();
+                $inputs['err'] = $is_error;
                 $this->render('admin/create_subject', $inputs);
         }
 
@@ -170,17 +173,11 @@ class Create_subject extends CI_Capstone_Controller
                         'js/jquery.min.js',
                         'js/jquery.ui.custom.js',
                         'js/bootstrap.min.js',
-                        'js/bootstrap-colorpicker.js',
-                        'js/bootstrap-datepicker.js',
-                        'js/jquery.toggle.buttons.js',
-                        'js/masked.js',
                         'js/jquery.uniform.js',
                         'js/select2.min.js',
+                        'js/jquery.dataTables.min.js',
                         'js/matrix.js',
-                        'js/matrix.form_common.js',
-                        'js/wysihtml5-0.3.0.js',
-                        'js/jquery.peity.min.js',
-                        'js/bootstrap-wysihtml5.js',
+                        'js/matrix.tables.js',
                     ),
                 );
                 /**
