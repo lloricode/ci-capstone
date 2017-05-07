@@ -87,14 +87,14 @@ class Create_subject extends CI_Capstone_Controller
 
         private function _form_view()
         {
-                $inputs['subject_code'] = array(
+                $this->data['subject_code'] = array(
                     'name'  => 'code',
                     'type'  => 'text',
                     'value' => $this->form_validation->set_value('code'),
                     'lang'  => 'create_subject_code_label',
                 );
 
-                $inputs['subject_description'] = array(
+                $this->data['subject_description'] = array(
                     'name'  => 'description',
                     'type'  => 'text',
                     'value' => $this->form_validation->set_value('description'),
@@ -102,7 +102,7 @@ class Create_subject extends CI_Capstone_Controller
                 );
 
                 $this->load->model('Course_model');
-                $inputs['course_id'] = array(
+                $this->data['course_id'] = array(
                     'name'  => 'course',
                     'value' => $this->Course_model->drpdown_with_gen_ed(),
                     'type'  => 'dropdown',
@@ -110,7 +110,7 @@ class Create_subject extends CI_Capstone_Controller
                 );
 
                 $this->load->helper('combobox');
-                $inputs['curriculum_subject_lecture_hours'] = array(
+                $this->data['curriculum_subject_lecture_hours'] = array(
                     'name'  => 'lecture',
                     'value' => _numbers_for_drop_down(0, 5),
                     'type'  => 'dropdown',
@@ -118,7 +118,7 @@ class Create_subject extends CI_Capstone_Controller
                     'note'  => 'require when program in GEN-ED'
                 );
 
-                $inputs['curriculum_subject_laboratory_hours'] = array(
+                $this->data['curriculum_subject_laboratory_hours'] = array(
                     'name'  => 'laboratory',
                     'value' => _numbers_for_drop_down(0, 9),
                     'type'  => 'dropdown',
@@ -126,7 +126,7 @@ class Create_subject extends CI_Capstone_Controller
                     'note'  => 'require when program in GEN-ED'
                 );
 
-                $inputs['curriculum_subject_units'] = array(
+                $this->data['curriculum_subject_units'] = array(
                     'name'  => 'units',
                     'value' => _numbers_for_drop_down(1, 6),
                     'type'  => 'dropdown',
@@ -134,9 +134,8 @@ class Create_subject extends CI_Capstone_Controller
                     'note'  => 'require when program in GEN-ED'
                 );
 
-                $data['subject_form'] = $this->form_boostrap('create-subject', $inputs, 'create_subject_heading', 'create_subject_submit_button_label', 'info-sign', NULL, TRUE);
-                $data['bootstrap']    = $this->_bootstrap();
-                $this->render('admin/create_subject', $data);
+                $this->data['bootstrap']    = $this->_bootstrap();
+                $this->render('admin/create_subject', $this->data);
         }
 
         private function _bootstrap()
