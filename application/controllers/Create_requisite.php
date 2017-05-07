@@ -114,7 +114,7 @@ class Create_requisite extends CI_Capstone_Controller
                                         );
                                 }
                                 //insert also in reverse subjects
-                                $co_all_inserted = $this->_insert_also_revesre_as_co_requisite($co_array, $curriculum_subject_id, $curriculum_id);
+                                //$co_all_inserted = $this->_insert_also_revesre_as_co_requisite($co_array, $curriculum_subject_id, $curriculum_id);
                         }
                         if ($pre_array)
                         {

@@ -185,7 +185,7 @@ class Create_student_subject extends CI_Capstone_Controller
         }
 
         /**
-         * this info will now include in submit form
+         * this info will not include in submit form
          * 
          * 
          * 

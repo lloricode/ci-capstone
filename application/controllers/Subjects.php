@@ -59,7 +59,7 @@ class Subjects extends CI_Capstone_Controller
 
                                 if (in_array('edit-subject', permission_controllers()))
                                 {
-                                        $tmp[] = table_row_button_link('edit-subject?subject-id=' . $subject->subject_id, 'Edit');
+                                        $tmp[] = table_row_button_link('edit-subject?subject-id=' . $subject->subject_id, 'Edit', 'btn-warning');
                                 }
                                 if ($this->ion_auth->is_admin())
                                 {

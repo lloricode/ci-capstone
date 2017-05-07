@@ -134,9 +134,8 @@ class Create_subject extends CI_Capstone_Controller
                     'note'  => 'require when program in GEN-ED'
                 );
 
-                $data['subject_form'] = $this->form_boostrap('create-subject', $inputs, 'create_subject_heading', 'create_subject_submit_button_label', 'info-sign', NULL, TRUE);
-                $data['bootstrap']    = $this->_bootstrap();
-                $this->render('admin/create_subject', $data);
+                $inputs['bootstrap']    = $this->_bootstrap();
+                $this->render('admin/create_subject', $inputs);
         }
 
         private function _bootstrap()

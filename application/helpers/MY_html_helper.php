@@ -337,12 +337,12 @@ if ( ! function_exists('_bootstrap_message'))
                  */
                 $btn_x = ($dismiss_btn) ? anchor('#', 'x', array('class' => 'close', 'data-dismiss' => 'alert')) : '';
 
-                /**
-                 * check if lang exist,else use this as message
-                 */
-                // $message = (lang($message_lang)) ? lang($message_lang) : '## ' . $message_lang . ' ##';
-
-                return '<div class="alert cifade alert-' . $_type . ' alert-block">' . $btn_x . '[ ' . lang($message_lang) . ' ]</div>';
+                $msg = lang($message_lang);
+                if (ENVIRONMENT === 'development')
+                {
+                        $msg = '[ ' . $msg . ' ]';
+                }
+                return '<div class="alert cifade alert-' . $_type . ' alert-block">' . $btn_x . $msg . '</div>';
         }
 
 }        

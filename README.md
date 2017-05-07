@@ -1,4 +1,4 @@
-# [ci-capstone](http://ci-capstone.lloricmayugagarcia.com/)
+# [ci-capstone](http://ci-capstone.sprikiwiki.club/)
 ## A Thesis project (Enrollment System) made by using [CodeIgniter](http://codeigniter.com).
 
 
