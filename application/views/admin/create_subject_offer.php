@@ -72,7 +72,7 @@ echo form_open(site_url('create-subject-offer'), array(
                         <h5>Another Class Schedule</h5>
                     </a> </div>  
                 <div class="widget-content nopadding">
-                    <div class="collapse" id="collapseTwo">
+                    <div <?php echo($err) ? '' : 'class="collapse"' ?> id="collapseTwo">
                         <div class="widget-content"> 
 
                             <?php

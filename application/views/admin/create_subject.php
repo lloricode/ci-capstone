@@ -18,7 +18,7 @@ echo form_open(site_url('create-subject'), array(
                     </a> </div>
 
                 <?php
-               /**
+                /**
                  * @Author: Jinkee Po <pojinkee1@gmail.com>
                  *         
                  */
@@ -27,14 +27,15 @@ echo form_open(site_url('create-subject'), array(
                 echo input_bootstrap($course_id);
                 ?>
                 <div class="control-group">
-                    
+
                 </div>
 
                 <div class="widget-title"> <a href="#collapseTwo" data-toggle="collapse"> <span class="icon"><i class="icon-plus"></i></span>
                         <h5>Required for program GEN-ED</h5>
                     </a> </div>  
                 <div class="widget-content nopadding">
-                    <div class="collapse" id="collapseTwo">
+                    <div <?php echo($err) ? '' : 'class="collapse"' ?> id="collapseTwo">
+
                         <div class="widget-content"> 
 
                             <?php
@@ -70,5 +71,6 @@ echo form_open(site_url('create-subject'), array(
         </div>
     </div>
 </div>
+
 <?php
 echo form_close();
