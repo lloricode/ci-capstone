@@ -195,9 +195,9 @@ class Create_subject_offer extends CI_Capstone_Controller
                 $total_hrs_input = 0;
                 if ($sche2)
                 {
-                        $total_hrs_input += $this->_get_hrs($unit_value, '2');
+                        $total_hrs_input += $this->_get_hrs('2');
                 }
-                $total_hrs_input += $this->_get_hrs($unit_value);
+                $total_hrs_input += $this->_get_hrs();
 
                 $return = (bool) ($total_hrs_input === $unit_value);
 
@@ -208,7 +208,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                 return $return;
         }
 
-        private function _get_hrs($unit_value, $arg = '')
+        private function _get_hrs($arg = '')
         {
 
                 $start = $this->input->post('start' . $arg, TRUE);
@@ -280,7 +280,7 @@ class Create_subject_offer extends CI_Capstone_Controller
          */
         private function _validate_two_shedules()
         {
-                for ($i = 1; $i <= 2; $i ++)
+                for ($i = 1; $i <= 2; $i ++ )
                 {
                         $tmp            = ($i === 1) ? '' : '2';
                         ${'sched' . $i} = array(
