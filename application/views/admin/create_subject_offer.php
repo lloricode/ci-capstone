@@ -64,7 +64,7 @@ echo form_open(site_url('create-subject-offer'), array(
                         Check to exclude second form
                     </div>
                     <div class="controls">
-                        <?php echo form_checkbox('exclude', TRUE, set_checkbox('exclude', set_value('exclude'))); ?>
+                        <?php echo form_checkbox('exclude', TRUE, set_checkbox('exclude', set_value('exclude'), TRUE)); ?>
                     </div>
                 </div>
 
