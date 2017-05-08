@@ -16,6 +16,10 @@ if (isset($table_corriculum_subjects))
         {
                 echo $create_curriculum_subject_monor_button;
         }
+         if (isset($view_by_semester_btn))
+        {
+                echo $view_by_semester_btn;
+        }
         echo $table_corriculum_subjects;
 }
 
