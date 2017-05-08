@@ -14,6 +14,7 @@ $lang['create_curriculum_subject_label'] = 'Create Curriculum Subjects';
 $lang['curriculum_subject_year_level_label']       = 'Year Level';
 $lang['curriculum_subject_semester_label']         = 'Semester';
 $lang['curriculum_subject_units_label']            = 'Units';
+$lang['curriculum_subject_rate_label']            = 'Rate';
 $lang['curriculum_subject_lecture_hours_label']    = 'Lecture Hours';
 $lang['curriculum_subject_laboratory_hours_label'] = 'Laboratory Hours';
 $lang['curriculum_subject_curriculum_label']       = 'Curriculum';
