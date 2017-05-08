@@ -129,6 +129,14 @@ class Subject_model extends MY_Model
                         'errors' => array(
                             'is_unique' => 'The {field} already exist.'
                         )
+                    ),
+                    'subject_rate' => array(
+                        'label'  => lang('curriculum_subject_rate_label'),
+                        'field'  => 'rate',
+                        'rules'  => 'trim|required|decimal|min_length[1]|max_length[4]',
+                        'errors' => array(
+                            'decimal' => 'The {field} is not a valid number.'
+                        )
                     )
                 );
         }
