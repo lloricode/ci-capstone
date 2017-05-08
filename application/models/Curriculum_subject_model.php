@@ -212,11 +212,20 @@ class Curriculum_subject_model extends MY_Model
                 return $this; //just cotinuation of a function chain
         }
 
-        public function curriculum_subjects($curriculum_id, $subject_offer = FALSE)
+        public function curriculum_subjects($curriculum_id, $subject_offer = FALSE, $all_current_semester = FALSE)
         {
-                return $this->
-                                _curriculum_subject_query()->
-                                where(array('curriculum_id' => $curriculum_id))->
+                $obj = $this->
+                        _curriculum_subject_query()->
+                        where(array('curriculum_id' => $curriculum_id));
+
+                if ($all_current_semester)
+                {
+                     $obj->where(array(
+                         'curriculum_subject_semester' => current_school_semester(TRUE)
+                     ));   
+                }
+                
+                return $obj->
                                 order_by('curriculum_subject_year_level', 'ASC')->
                                 order_by('curriculum_subject_semester', 'ASC')->
                                 //set_cache()->
@@ -262,7 +271,7 @@ class Curriculum_subject_model extends MY_Model
 
                         foreach ($subject_from_cur as $v)
                         {
-                                if ( ! in_array($v->subject_id, $requisites))//check if already added as requisite
+                                if (!in_array($v->subject_id, $requisites))//check if already added as requisite
                                 {
                                         $return[$v->subject_id] = $v->subject->subject_code;
                                 }
@@ -298,7 +307,7 @@ class Curriculum_subject_model extends MY_Model
                         foreach ($obj as $v)
                         {
                                 $id = NULL;
-                                if ( ! is_null($v->unit_id))
+                                if (!is_null($v->unit_id))
                                 {
                                         $id = $v->unit_id;
                                 }

@@ -5,7 +5,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Curriculums extends CI_Capstone_Controller
 {
 
-
         private $page_;
         private $limit;
         private $curriculum_search;
@@ -211,7 +210,7 @@ class Curriculums extends CI_Capstone_Controller
 //                        $addtional_data['data'] = '<span class="pending">Disabled</span>';
 //                        return $addtional_data;
 //                }
-                if ( ! in_array('set-curriculum-enable', permission_controllers()))
+                if (!in_array('set-curriculum-enable', permission_controllers()))
                 {
                         $addtional_data['data'] = '<span class="pending">Disabled</span>';
                 }
@@ -237,7 +236,22 @@ class Curriculums extends CI_Capstone_Controller
                         $highlight_phrase = $h;
                 }
 
-                $cur_subj_obj = $this->Curriculum_subject_model->curriculum_subjects($curriculum_obj->curriculum_id);
+                $label    = 'Current Semester';
+                $url_link = '&semester=current';
+                $all_current_semester = FALSE;
+
+                if ($semster_value = $this->input->get('semester'))
+                {
+                        if ($semster_value == 'current')
+                        {
+                                $label    = 'All Semester';
+                                $url_link = '';
+                                $all_current_semester = TRUE;
+                        }
+                }
+
+
+                $cur_subj_obj = $this->Curriculum_subject_model->curriculum_subjects($curriculum_obj->curriculum_id, FALSE, $all_current_semester);
 
                 $table_data = array();
                 if ($cur_subj_obj)
@@ -260,7 +274,7 @@ class Curriculums extends CI_Capstone_Controller
                                         );
                                 }
                                 $id = NULL;
-                                if ( ! is_null($cur_subj->unit_id) && ! empty($cur_subj->unit_id))
+                                if (!is_null($cur_subj->unit_id) && !empty($cur_subj->unit_id))
                                 {
                                         $id = $cur_subj->unit_id;
                                 }
@@ -280,7 +294,7 @@ class Curriculums extends CI_Capstone_Controller
                                     $requisite->pre,
                                     $requisite->co
                                 );
-                                if ( ! $curriculum_obj->curriculum_status && ! $curriculum_obj->curriculum_already_used)
+                                if (!$curriculum_obj->curriculum_status && !$curriculum_obj->curriculum_already_used)
                                 {
                                         $tmp[] = table_row_button_link('create-requisite?curriculum-id=' . $curriculum_obj->curriculum_id . '&curriculum-subject-id=' . $cur_subj->curriculum_subject_id, lang('create_requisite_label'));
                                 }
@@ -300,7 +314,7 @@ class Curriculums extends CI_Capstone_Controller
                     lang('curriculum_subject_co_subject_label')
                 );
 
-                if ( ! $curriculum_obj->curriculum_status && ! $curriculum_obj->curriculum_already_used)
+                if (!$curriculum_obj->curriculum_status && !$curriculum_obj->curriculum_already_used)
                 {
                         $header[] = 'Options';
 
@@ -322,6 +336,14 @@ class Curriculums extends CI_Capstone_Controller
                 $template['table_corriculum_subjects'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'curriculum_subject_label', FALSE, TRUE);
                 $template['message']                   = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
                 $template['bootstrap']                 = $this->_bootstrap();
+
+
+
+                $template['view_by_semester_btn'] = MY_Controller::render('admin/_templates/button_view', array(
+                            'href'         => 'curriculums/view?curriculum-id=' . $curriculum_obj->curriculum_id . $url_link,
+                            'button_label' => $label,
+                            'extra'        => array('class' => 'btn btn-success icon-edit'),
+                                ), TRUE);
                 $this->render('admin/curriculums', $template);
         }
 
