@@ -39,6 +39,11 @@ class Migration_Subjects extends CI_Migration
                         // 'unique'     => TRUE,
                         'null'       => FALSE
                     ),
+                    'subject_rate'        => array(
+                        'type'       => 'DOUBLE',
+                        'constraint' => '11',
+                        'unsigned'   => TRUE
+                    ),
                     'course_id'           => array(
                         'type'       => 'INT',
                         'constraint' => 11,
@@ -51,7 +56,7 @@ class Migration_Subjects extends CI_Migration
 //                        'constraint' => '11',
 //                        'null'       => FALSE
 //                    ),
-                    'unit_id'     => array(
+                    'unit_id'             => array(
                         'type'       => 'INT',
                         'constraint' => '11',
                         'unsigned'   => TRUE,
