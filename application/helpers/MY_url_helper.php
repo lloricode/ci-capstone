@@ -67,7 +67,10 @@ if ( ! function_exists('check_id_form_url'))
                  */
                 if ( ! $CI->input->get($id_name))
                 {
-                        show_error('id ' . bold($id_name) . ' required.');
+                        $bt     = debug_backtrace();
+                        $caller = array_shift($bt);
+
+                        show_error('id ' . bold($id_name) . ' required. ' . $caller['file'] . ': ' . $caller['line']);
                 }
 
                 $id = $CI->input->get($id_name);
