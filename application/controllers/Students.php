@@ -99,8 +99,13 @@ class Students extends CI_Capstone_Controller
                 $bred_crumbs      = '';
                 if ($search_course_id)
                 {
-                        $pagination_index                .= '?course-id=' . $search_course_id;
-                        $course_code                     = $this->Course_model->get($search_course_id)->course_code;
+                        $pagination_index .= '?course-id=' . $search_course_id;
+                        $course_code      = $this->Course_model->get($search_course_id);
+                        if ( ! $course_code)
+                        {
+                                show_error('no result');
+                        }
+                        $course_code                     = $course_code->course_code;
                         $template['search_result_label'] = paragraph(sprintf(lang('search_result_course_label'/* ci_students_lang */), bold($result_count_for_pagination), bold($course_code)));
                         if (1)//permission
                         {
