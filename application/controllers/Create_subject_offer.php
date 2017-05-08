@@ -201,14 +201,14 @@ class Create_subject_offer extends CI_Capstone_Controller
                 //$unit_obj   = $this->Subject_model->get_leclab_hrs($subject_id);
                 $unit_value = $this->Subject_model->get_unit($subject_id);
 
-                $total_hrs_input = 0;
+                $total_hrs_input = 0.0;
                 if ($sche2)
                 {
                         $total_hrs_input += $this->_get_hrs('2');
                 }
                 $total_hrs_input += $this->_get_hrs();
 
-                $return = (bool) ($total_hrs_input === $unit_value);
+                $return = (bool) ($total_hrs_input == $unit_value);
 
                 if ( ! $return)
                 {
@@ -224,7 +224,23 @@ class Create_subject_offer extends CI_Capstone_Controller
                 $end   = $this->input->post('end' . $arg, TRUE);
 
                 $sec = convert_24hrs_to_seconds($end) - convert_24hrs_to_seconds($start);
-                return (int) gmdate("H", $sec);
+
+                list($hrs, $min) = explode(':', gmdate("H:i", $sec));
+
+                if ($min === '30')
+                {
+                        $hrs += .5;
+                }
+
+                $total_days = 0;
+                foreach (days_for_db() as $d)
+                {
+                        if ($this->input->post($d . $arg, TRUE))
+                        {
+                                $total_days ++;
+                        }
+                }
+                return ($hrs * $total_days);
         }
 
         #just in case
@@ -289,7 +305,7 @@ class Create_subject_offer extends CI_Capstone_Controller
          */
         private function _validate_two_shedules()
         {
-                for ($i = 1; $i <= 2; $i ++ )
+                for ($i = 1; $i <= 2; $i ++)
                 {
                         $tmp            = ($i === 1) ? '' : '2';
                         ${'sched' . $i} = array(
