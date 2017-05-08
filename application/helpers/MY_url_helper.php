@@ -62,18 +62,19 @@ if ( ! function_exists('check_id_form_url'))
                  */
                 $CI = & get_instance();
 
+                $bgtr = '';
+                if (ENVIRONMENT === 'development')
+                {
+                        $bt     = debug_backtrace();
+                        $caller = array_shift($bt);
+                        $bgtr   = br(2) . $caller['file'] . ': ' . $caller['line'];
+                }
+
                 /**
                  * check if id is set
                  */
                 if ( ! $CI->input->get($id_name))
                 {
-                        $bgtr = '';
-                        if (ENVIRONMENT === 'development')
-                        {
-                                $bt     = debug_backtrace();
-                                $caller = array_shift($bt);
-                                $bgtr   = br(2) . $caller['file'] . ': ' . $caller['line'];
-                        }
                         show_error('id ' . bold($id_name) . ' required.' . $bgtr);
                 }
 
@@ -132,7 +133,7 @@ if ( ! function_exists('check_id_form_url'))
                  */
                 if ( ! $obj)
                 {
-                        show_error('No result found in given id_name ' . bold($id_name) . '.');
+                        show_error('No result found in given id_name ' . bold($id_name) . '.' . $bgtr);
                 }
                 return $obj;
         }
