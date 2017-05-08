@@ -20,7 +20,7 @@ if ( ! function_exists('lang_array_'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('lang') && (ENVIRONMENT === 'development'))//load only this when ENVIRONMENT is 'development'
+if ( ! function_exists('lang'))//load only this when ENVIRONMENT is 'development'
 {
 
         /**
@@ -38,8 +38,8 @@ if ( ! function_exists('lang') && (ENVIRONMENT === 'development'))//load only th
                 $label = $line;
                 $line  = get_instance()->lang->line($line);
 
-                //=====================================================================                
-                $line = ($line) ? $line : '## ' . $label . ' ##';
+                //===================================================================== 
+                $line = ($line) ? $line : ((ENVIRONMENT === 'development') ? '## ' . $label . ' ##' : $label);
                 //=====================================================================
                 unset($label);
                 if ($for !== '')
