@@ -185,7 +185,10 @@ class Create_subject_offer extends CI_Capstone_Controller
                         }
                         else
                         {
-                                $is_error = TRUE;
+                                if ( ! $exclude)
+                                {
+                                        $is_error = TRUE;
+                                }
                         }
                 }
                 $this->_form_view($is_error);
@@ -286,7 +289,7 @@ class Create_subject_offer extends CI_Capstone_Controller
          */
         private function _validate_two_shedules()
         {
-                for ($i = 1; $i <= 2; $i ++)
+                for ($i = 1; $i <= 2; $i ++ )
                 {
                         $tmp            = ($i === 1) ? '' : '2';
                         ${'sched' . $i} = array(
