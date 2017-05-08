@@ -67,10 +67,14 @@ if ( ! function_exists('check_id_form_url'))
                  */
                 if ( ! $CI->input->get($id_name))
                 {
-                        $bt     = debug_backtrace();
-                        $caller = array_shift($bt);
-
-                        show_error('id ' . bold($id_name) . ' required. ' . $caller['file'] . ': ' . $caller['line']);
+                        $bgtr = '';
+                        if (ENVIRONMENT === 'development')
+                        {
+                                $bt     = debug_backtrace();
+                                $caller = array_shift($bt);
+                                $bgtr   = br(2) . $caller['file'] . ': ' . $caller['line'];
+                        }
+                        show_error('id ' . bold($id_name) . ' required.' . $bgtr);
                 }
 
                 $id = $CI->input->get($id_name);
