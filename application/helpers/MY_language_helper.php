@@ -20,7 +20,7 @@ if ( ! function_exists('lang_array_'))
 
 // ------------------------------------------------------------------------
 
-if ( ! function_exists('lang'))//load only this when ENVIRONMENT is 'development'
+if ( ! function_exists('lang'))
 {
 
         /**
