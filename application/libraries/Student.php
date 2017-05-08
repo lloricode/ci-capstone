@@ -560,9 +560,7 @@ class Student extends School_informations
                                             'subject_offer_line_thursday,' .
                                             'subject_offer_line_friday,' .
                                             'subject_offer_line_saturday,' .
-                                            'subject_offer_line_sunday,' .
-                                            'subject_offer_line_lec,' .
-                                            'subject_offer_line_lab',
+                                            'subject_offer_line_sunday',
                                             'with'   => array(//sub query of sub query
                                                 'relation' => 'room',
                                                 'fields'   => 'room_number,room_capacity'
