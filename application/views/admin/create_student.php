@@ -175,7 +175,7 @@ echo form_open_multipart(site_url("create-student/index"), array(
                 ));
 
                 echo form_submit('submit', lang('create_student_submit_button_label'), array(
-                    'class' => 'btn btn-primary'
+                    'class' => 'btn btn-success'
                 ));
                 echo '<div id="status"></div>';
                 echo '</div>';

@@ -165,7 +165,7 @@ class Subject_offers extends CI_Capstone_Controller
 
         private function _option_button_view($subj_offr_id)
         {
-                return table_row_button_link('subject-offers/view?subject-offer-id=' . $subj_offr_id, 'Details');
+                return table_row_button_link('subject-offers/view?subject-offer-id=' . $subj_offr_id, 'Details', 'btn-info');
         }
 
         /**
