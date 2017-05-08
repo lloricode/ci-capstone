@@ -579,13 +579,26 @@ class Student extends School_informations
                                         {
                                                 if ( ! in_array($v->subject_offer_id, $subject_offer_ids))
                                                 {
-                                                        $return[] = $v;
+                                                        if ($this->_check_requisite($v->subject_offer_id))
+                                                        {
+                                                                $return[] = $v;
+                                                        }
                                                 }
                                         }
                                 }
                         }
                 }
                 return $return;
+        }
+
+        private function _check_requisite($subj_offr_id)
+        {
+
+                //get all pre-requsite of $subj_offr_id
+                //-
+                //check the requsite if done then return TRUE [pre]
+                //
+                return TRUE;
         }
 
         public function get_all_term_units()
