@@ -22,13 +22,15 @@ class Edit_subject extends CI_Capstone_Controller
                 {
                         $this->load->model('Subject_model');
                         $id = $this->Subject_model->from_form(NULL, NULL, array('subject_id' => $subject_obj->subject_id))->update();
-                       
+
                         if ($id)
                         {
                                 $this->session->set_flashdata('message', bootstrap_success('create_subject_succesfully_update_message'));
                                 redirect(site_url('subjects'), 'refresh');
-                        }else{
-                                 $this->session->set_flashdata('message', bootstrap_error("failed"));
+                        }
+                        else
+                        {
+                                $this->session->set_flashdata('message', bootstrap_error("failed"));
                         }
                 }
 
@@ -37,7 +39,7 @@ class Edit_subject extends CI_Capstone_Controller
 
         public function check_unique()
         {
-                if ( ! (bool) $this->input->post('submit'))
+                if (!(bool) $this->input->post('submit'))
                 {
                         show_404();
                 }
@@ -69,6 +71,13 @@ class Edit_subject extends CI_Capstone_Controller
                     'value' => $this->form_validation->set_value('description', $subject_obj->subject_description),
                     'type'  => 'text',
                     'lang'  => 'index_subject_description_th'
+                );
+
+                $inputs['rate'] = array(
+                    'name'  => 'rate',
+                    'value' => $this->form_validation->set_value('rate', $subject_obj->subject_rate),
+                    'type'  => 'text',
+                    'lang'  => 'curriculum_subject_rate_label'
                 );
 
 //                $this->load->model('Course_model');

@@ -55,6 +55,7 @@ class Subjects extends CI_Capstone_Controller
                                     my_htmlspecialchars($subject->subject_code),
                                     my_htmlspecialchars($subject->subject_description),
                                     $this->_subject_course($subject->course_id),
+                                    my_htmlspecialchars($subject->subject_rate),
                                 );
 
                                 if (in_array('edit-subject', permission_controllers()))
@@ -78,6 +79,7 @@ class Subjects extends CI_Capstone_Controller
                     lang('index_subject_code_th'),
                     lang('index_subject_description_th'),
                     lang('index_course_heading'),
+                    lang('curriculum_subject_rate_label'),
                 );
                 if (in_array('edit-subject', permission_controllers()))
                 {
