@@ -82,16 +82,16 @@ $lang['student_image_required'] = 'Image Required!';
 
 $lang['edit_student_submit_button_label'] = 'Edit Student';
 
-//$lang['add_student_subject_label'] = 'Enroll Subject';
+//$lang['add_student_subject_label'] = 'Enroll Course';
 
-$lang['add_student_subject_label']            = 'Enroll Subject/s';
-$lang['add_student_enrolled___subject_label'] = 'Add Subject/s';
+$lang['add_student_subject_label']            = 'Enroll Course/s';
+$lang['add_student_enrolled___subject_label'] = 'Add Course/s';
 
 /**
  * for create student subject
  */
 $lang['available_subjects_to_enroll'] = 'Available subjects to enroll';
-$lang['added_subjects_to_enroll']     = 'Subjects Added to enroll';
+$lang['added_subjects_to_enroll']     = 'Courses Added to enroll';
 $lang['remove_subjects_to_enroll']    = 'Remove';
 
 $lang['student_course_code']    = 'Course:';
@@ -103,7 +103,7 @@ $lang['added_subjects_total_units'] = 'Total Units:';
 /* * Units
  * for students subject table
  */
-$lang['student_subject_th']    = 'Subject';
+$lang['student_subject_th']    = 'Course';
 $lang['student_year_th']       = 'Year';
 $lang['student_semester_th']   = 'Semester';
 $lang['student_instructor_th'] = 'Instructor';
@@ -132,7 +132,7 @@ $lang['search_result_course_label']   = '%s result for Program \'%s\'.';
 $lang['search_result_enrolled_label'] = '%s result for Enrolled Students.';
 
 
-$lang['subjects_currently_enrolled'] = 'Subjects Enrolled';
+$lang['subjects_currently_enrolled'] = 'Courses Enrolled';
 
 /**
  * 

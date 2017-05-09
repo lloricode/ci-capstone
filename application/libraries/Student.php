@@ -548,7 +548,7 @@ class Student extends School_informations
                         foreach ($obj as $s)
                         {
                                 $tmp = $this->Subject_offer_model->
-                                        with_subject('fields:subject_code,subject_description')->
+                                        with_subject('fields:subject_code,subject_description,subject_rate')->
                                         with_faculty('fields:first_name,last_name')->
                                         with_subject_line(array(
                                             'fields' =>

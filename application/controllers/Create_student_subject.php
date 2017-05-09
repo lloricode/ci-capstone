@@ -429,11 +429,11 @@ class Create_student_subject extends CI_Capstone_Controller
                                         }
                                 }
                                 $curr_subj_obj___ = $this->Curriculum_subject_model->
-                                        with_subject()->
-                                        where(array(
-                                            'curriculum_id' => $this->student->curriculum_id,
-                                            'subject_id'    => $s->subject->subject_id
-                                        ))->get();
+                                                with_subject()->
+                                                where(array(
+                                                    'curriculum_id' => $this->student->curriculum_id,
+                                                    'subject_id'    => $s->subject->subject_id
+                                                ))->get();
                                 $tmp_sem_year     = $curr_subj_obj___->curriculum_subject_year_level . $curr_subj_obj___->curriculum_subject_semester;
 
                                 if ($tmp_compare != $tmp_sem_year)
@@ -523,6 +523,7 @@ class Create_student_subject extends CI_Capstone_Controller
                                 $unit_value = $this->Unit_model->get($id)->unit_value;
 
                                 $row_output[] = $this->_row($unit_value, $row_count);
+                                $row_output[] = $this->_row($s->subject->subject_rate . ' / ' . ($s->subject->subject_rate * $unit_value), $row_count);
                                 $row_output[] = $this->_row($btn_link, $row_count, array('class' => 'taskStatus'));
                                 $table_data[] = $row_output;
                                 if ($row_count === 2)// if there a second sched
@@ -551,7 +552,8 @@ class Create_student_subject extends CI_Capstone_Controller
                     lang('student_end_th'),
                     lang('student_room_th'),
                     lang('index_room_capacity_th'),
-                    lang('student_unit_th')
+                    lang('student_unit_th'),
+                    'Course Rate / Price'
                 );
                 $header[] = $header_col;
 

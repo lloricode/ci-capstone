@@ -131,7 +131,7 @@ class Subject_offer_model extends MY_Model
                         fields('subject_offer_id,created_at,updated_at')->
                         with_user_created('fields:first_name,last_name')->
                         with_user_updated('fields:first_name,last_name')->
-                        with_subject('fields:subject_code,subject_description')->
+                        with_subject('fields:subject_code,subject_description,subject_rate')->
                         with_faculty('fields:first_name,last_name')->
                         with_subject_line(array(
                             'fields' => // array(
