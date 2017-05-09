@@ -116,7 +116,7 @@ class Curriculums extends CI_Capstone_Controller
                 $template['curriculum_button_view_all'] = MY_Controller::render('admin/_templates/button_view', array(
                             'href'         => 'curriculums' . $linkkk,
                             'button_label' => 'View ' . $labelll,
-                            'extra'        => array('class' => 'btn btn-success icon-eye-open'),
+                            'extra'        => array('class' => 'btn btn-primary icon-eye-open'),
                                 ), TRUE);
 
 
@@ -342,7 +342,7 @@ class Curriculums extends CI_Capstone_Controller
                 $template['view_by_semester_btn'] = MY_Controller::render('admin/_templates/button_view', array(
                             'href'         => 'curriculums/view?curriculum-id=' . $curriculum_obj->curriculum_id . $url_link,
                             'button_label' => $label,
-                            'extra'        => array('class' => 'btn btn-success icon-edit'),
+                            'extra'        => array('class' => 'btn btn-primary icon-eye-open'),
                                 ), TRUE);
                 $this->render('admin/curriculums', $template);
         }
