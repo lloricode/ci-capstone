@@ -171,7 +171,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                                         $is_error = TRUE;
                                         if ( ! $validate_two_forms)
                                         {
-                                                $this->session->set_flashdata('message', bootstrap_error('Conflict two forms.'));
+                                                $this->session->set_flashdata('message', bootstrap_error('Both form schedule conflicted. Please review input.'));
                                         }
                                 }
                                 else
@@ -212,7 +212,7 @@ class Create_subject_offer extends CI_Capstone_Controller
 
                 if ( ! $return)
                 {
-                        $this->session->set_flashdata('message', bootstrap_error('Schedule not meet require ' . strong($unit_value . ' hour(s)') . ', from your input ' . strong($total_hrs_input . ' hour(s)') . ', see curriculum for information.'));
+                        $this->session->set_flashdata('message', bootstrap_error('Schedule did not meet the required ' . strong($unit_value . ' hour(s)') . '. Your input is only ' . strong($total_hrs_input . ' hour(s)') . ', see curriculum for further information.'));
                 }
                 return $return;
         }
