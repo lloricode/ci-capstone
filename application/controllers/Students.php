@@ -276,28 +276,28 @@ class Students extends CI_Capstone_Controller
                 /**
                  * sorting the rows of subject result 
                  */
-                $sort_result_as = array(
-                    // 'year',
-                    // 'semester',
-                    'faculty',
-                    'subject',
-                    'unit',
-                    'day1',
-                    'start1',
-                    'end1',
-                    'room1',
-                    'day2',
-                    'start2',
-                    'end2',
-                    'room2',
-                    'status',
-                );
+//                $sort_result_as = array(
+//                    // 'year',
+//                    // 'semester',
+//                    'faculty',
+//                    'subject',
+//                    'unit',
+//                    'day1',
+//                    'start1',
+//                    'end1',
+//                    'room1',
+////                    'day2',
+////                    'start2',
+////                    'end2',
+////                    'room2',
+//                    'status',
+//                );
 
                 /**
                  * get subject from db
                  */
                 //parameter is for remove button link in faculty
-                $student_subjects_result = $this->student->subject_offers($return_html, 'array', $sort_result_as);
+                $student_subjects_result = $this->student->subject_offers($return_html, 'array');
 
                 $tbale_template = NULL;
 
@@ -371,10 +371,10 @@ class Students extends CI_Capstone_Controller
                     lang('student_start_th'),
                     lang('student_end_th'),
                     lang('student_room_th'),
-                    lang('student_day2_th'),
-                    lang('student_start_th'),
-                    lang('student_end_th'),
-                    lang('student_room_th'),
+//                    lang('student_day2_th'),
+//                    lang('student_start_th'),
+//                    lang('student_end_th'),
+//                    lang('student_room_th'),
                     lang('student_status_th')
                 );
 

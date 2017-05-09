@@ -341,9 +341,9 @@ class Student extends School_informations
          * @return object
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        public function subject_offers($return_html = FALSE, $return_type = 'object', $sort_ = FALSE)
+        public function subject_offers($return_html = FALSE, $return_type = 'object')
         {
-                $status_return = function ($_status, $return_html)
+                $status_return = function ($_status, $return_html, $row)
                 {
                         $tmp     = ($_status) ? 'done' : 'pending';
                         $_status = ($_status) ? 'Enrolled' : 'Pending';
@@ -351,7 +351,7 @@ class Student extends School_informations
                         {
                                 return $_status;
                         }
-                        return array('data' => '<span class="' . $tmp . '">' . $_status . '</span>', 'class' => 'taskStatus');
+                        return array('data' => '<span class="' . $tmp . '">' . $_status . '</span>', 'class' => 'taskStatus', 'rowspan' => $row);
                 };
                 $this->load->helper(array('day', 'school', 'time'));
                 $s_o_           = $this->__students_subjects();
@@ -383,65 +383,44 @@ class Student extends School_informations
                                         set_cache('student_library_subject_offers_' . $stud_sub->subject_offer_id)->
                                         get($stud_sub->subject_offer_id);
 
-                                $subject_line = array();
-                                $tmp          = 0;
+                                $sched1    = NULL;
+                                $sched2    = NULL;
+                                $row_count = 0;
+
                                 foreach ($sub_of->subject_line as $line)
                                 {
-                                        $tmp ++;
-                                        $subject_line = array_merge($subject_line, array(
-                                            'day' . $tmp   => subject_offers_days($line),
-                                            'start' . $tmp => convert_24_to_12hrs($line->subject_offer_line_start),
-                                            'end' . $tmp   => convert_24_to_12hrs($line->subject_offer_line_end),
-                                            'room' . $tmp  => $line->room->room_number,
-                                        ));
-                                }
-                                if ($tmp === 1)
-                                {
-                                        $tmp ++;
-                                        $subject_line = array_merge($subject_line, array(
-                                            'day' . $tmp   => '--',
-                                            'start' . $tmp => '--',
-                                            'end' . $tmp   => '--',
-                                            'room' . $tmp  => '--',
-                                        ));
+                                        ++ $row_count;
+                                        ${'sched' . $row_count} = array(
+                                            subject_offers_days($line),
+                                            convert_24_to_12hrs($line->subject_offer_line_start),
+                                            convert_24_to_12hrs($line->subject_offer_line_end),
+                                            $line->room->room_number,
+                                        );
                                 }
 
-                                $unit   = $this->Curriculum_subject_model->get_unit(NULL, $stud_sub->curriculum_id, $sub_of->subject->subject_id);
-                                $tmp__  = array_merge(array(
-                                    'subject' => $sub_of->subject->subject_code,
-                                    'faculty' => ($return_html) ? ($sub_of->faculty->last_name . ', ' . $sub_of->faculty->first_name) : $this->User_model->button_link($sub_of->faculty->id, $sub_of->faculty->last_name, $sub_of->faculty->first_name),
-                                    'status'  => $status_return($stud_sub->student_subject_enroll_status, $return_html),
-                                    'unit'    => $unit
-                                        ), $subject_line);
-                                /**
-                                 * sorting
-                                 */
-                                $sorted = array();
-                                if ($sort_)
+                                $unit       = $this->Curriculum_subject_model->get_unit(NULL, $stud_sub->curriculum_id, $sub_of->subject->subject_id);
+                                $row_output = array(
+                                    $this->_row((($return_html) ? ($sub_of->faculty->last_name . ', ' . $sub_of->faculty->first_name) : $this->User_model->button_link($sub_of->faculty->id, $sub_of->faculty->last_name, $sub_of->faculty->first_name)), $row_count),
+                                    $this->_row($sub_of->subject->subject_code, $row_count),
+                                    $this->_row($unit, $row_count)
+                                );
+
+                                foreach ($sched1 as $v)
                                 {
-                                        foreach ($sort_ as $sortk)
+                                        $row_output[] = $v;
+                                }
+                                $row_output [] = $status_return($stud_sub->student_subject_enroll_status, $return_html, $row_count);
+
+
+                                $subject_offers[] = $row_output;
+                                if ($row_count === 2)// if there a second sched
+                                {
+                                        $tmp = array();
+                                        foreach ($sched2 as $v)
                                         {
-                                                if (array_key_exists($sortk, $tmp__))//check the key if really exist
-                                                {
-                                                        $sorted[] = $tmp__[$sortk];
-                                                }
-                                                else
-                                                {
-                                                        show_error('key ' . bold($sortk) . ' not found.');
-                                                }
+                                                $tmp[] = $v;
                                         }
-                                }
-                                else
-                                {
-                                        $sorted = $tmp__;
-                                }
-                                if ($return_type === 'object')
-                                {
-                                        $subject_offers[] = (object) $sorted;
-                                }
-                                if ($return_type === 'array')
-                                {
-                                        $subject_offers[] = $sorted;
+                                        $subject_offers[] = $tmp;
                                 }
                         }
                         if ($return_type === 'object')
@@ -459,6 +438,23 @@ class Student extends School_informations
 //                        $col_count = count($sort_);
 //                }
                 return array(array(array('data' => 'no data', 'colspan' => '14', 'class' => 'taskStatus')));
+        }
+
+        private function _row($data, $row_span, $attrib = FALSE)
+        {
+                if ($attrib)
+                {
+                        if ($row_span > 1)
+                        {
+                                return array_merge(array('data' => $data, 'rowspan' => "$row_span"), $attrib);
+                        }
+                        return array_merge(array('data' => $data), $attrib);
+                }
+                if ($row_span > 1)
+                {
+                        return array('data' => $data, 'rowspan' => "$row_span");
+                }
+                return $data;
         }
 
         /**
