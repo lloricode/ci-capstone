@@ -120,6 +120,18 @@ $function_row_td = function ($link, $label, $popup = FALSE)
                                                      */
                                                     echo $function_row_td('edit-student?student-id=' . $this->student->id, 'Edit');
                                             }
+                                            $link  = '&subject=all';
+                                            $label = 'test view all';
+                                            if ($key   = $this->input->get('subject'))
+                                            {
+                                                    if ($key == 'all')
+                                                    {
+                                                            $link  = '';
+                                                            $label = 'test view current';
+                                                    }
+                                                    unset($key);
+                                            }
+                                            echo $function_row_td('students/view?student-id=' . $this->student->id . $link, $label);
                                             ?>
                                         </td>
                                     </tr>
@@ -149,3 +161,5 @@ $function_row_td = function ($link, $label, $popup = FALSE)
  */
 unset($function_row_td);
 unset($info_row);
+unset($link);
+unset($label);

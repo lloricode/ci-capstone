@@ -272,32 +272,22 @@ class Students extends CI_Capstone_Controller
                                 show_error('Current DEAN is not same course of current student.');
                         }
                 }
-
-                /**
-                 * sorting the rows of subject result 
-                 */
-//                $sort_result_as = array(
-//                    // 'year',
-//                    // 'semester',
-//                    'faculty',
-//                    'subject',
-//                    'unit',
-//                    'day1',
-//                    'start1',
-//                    'end1',
-//                    'room1',
-////                    'day2',
-////                    'start2',
-////                    'end2',
-////                    'room2',
-//                    'status',
-//                );
-
+                $caption__       = '';
+                $current_subject = TRUE;
+                if ($key             = $this->input->get('subject'))
+                {
+                        if ($key == 'all')
+                        {
+                                $current_subject = FALSE;
+                                $caption__=' [ALL]';
+                        }
+                        unset($key);
+                }
                 /**
                  * get subject from db
                  */
                 //parameter is for remove button link in faculty
-                $student_subjects_result = $this->student->subject_offers($return_html, 'array');
+                $student_subjects_result = $this->student->subject_offers($return_html, 'array', $current_subject);
 
                 $tbale_template = NULL;
 
@@ -335,7 +325,7 @@ class Students extends CI_Capstone_Controller
                          * for web view design template table bootstrap
                          */
                         $this->config->load('admin/table');
-                        $caption        = heading(lang('subjects_currently_enrolled'), 4);
+                        $caption        = heading(lang('subjects_currently_enrolled') . $caption__, 4);
                         $tbale_template = array(
                             'table_open'         => $this->config->item('table_open_invoice'), //modified
                             'thead_open'         => '<thead>',

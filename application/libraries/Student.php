@@ -266,10 +266,15 @@ class Student extends School_informations
 
         public function set_enroll_all_subject_offers()
         {
-                return $this->Students_subjects_model->update(array(
-                            'student_subject_enroll_status' => TRUE,
-                            'enrollment_id'                 => $this->__enrollment->enrollment_id
-                                ), 'enrollment_id');
+                return $this->Students_subjects_model->
+                                where(array(
+                                    'student_subject_semester'    => current_school_semester(TRUE),
+                                    'student_subject_school_year' => current_school_year()
+                                ))->
+                                update(array(
+                                    'student_subject_enroll_status' => TRUE,
+                                    'enrollment_id'                 => $this->__enrollment->enrollment_id
+                                        ), 'enrollment_id');
         }
 
         /**
@@ -341,7 +346,7 @@ class Student extends School_informations
          * @return object
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        public function subject_offers($return_html = FALSE, $return_type = 'object')
+        public function subject_offers($return_html = FALSE, $return_type = 'object', $current_subject = TRUE)
         {
                 $status_return = function ($_status, $return_html, $row)
                 {
@@ -354,7 +359,7 @@ class Student extends School_informations
                         return array('data' => '<span class="' . $tmp . '">' . $_status . '</span>', 'class' => 'taskStatus', 'rowspan' => $row);
                 };
                 $this->load->helper(array('day', 'school', 'time'));
-                $s_o_           = $this->__students_subjects();
+                $s_o_           = $this->__students_subjects($current_subject);
                 $subject_offers = array();
                 if ($s_o_)
                 {
@@ -775,7 +780,7 @@ class School_informations
                             'student_subject_school_year' => current_school_year()
                         ));
                 }
-                return $obj->get_all();
+                return $obj->order_by('student_subject_school_year,student_subject_semester')->get_all();
         }
 
         /**
