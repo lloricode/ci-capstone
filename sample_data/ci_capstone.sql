@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 08, 2017 at 04:29 PM
+-- Generation Time: May 10, 2017 at 03:48 AM
 -- Server version: 10.1.19-MariaDB
 -- PHP Version: 5.6.24
 
@@ -329,106 +329,106 @@ TRUNCATE TABLE `enrollments`;
 --
 
 INSERT INTO `enrollments` (`enrollment_id`, `student_id`, `course_id`, `curriculum_id`, `enrollment_school_year`, `enrollment_semester`, `enrollment_year_level`, `enrollment_status`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES
-(1, 1, 3, 5, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(2, 2, 3, 5, '2015-2016', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(3, 3, 2, 3, '2013-2014', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(4, 4, 7, 7, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1494251039, 1),
-(5, 5, 7, 7, '2013-2014', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(6, 6, 6, 1, '2015-2016', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(7, 7, 9, 9, '2014-2015', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(8, 8, 7, 7, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(9, 9, 4, 4, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(10, 10, 1, 2, '2014-2015', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(11, 11, 2, 3, '2014-2015', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(12, 12, 7, 7, '2014-2015', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(13, 13, 6, 1, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(14, 14, 7, 7, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(15, 15, 3, 3, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1494251039, 1),
-(16, 16, 7, 7, '2013-2014', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(17, 17, 9, 9, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(18, 18, 2, 3, '2015-2016', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(19, 19, 4, 4, '2014-2015', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
+(1, 1, 3, 5, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(2, 2, 3, 5, '2015-2016', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(3, 3, 2, 3, '2013-2014', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(4, 4, 7, 7, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1494380862, 1),
+(5, 5, 7, 7, '2013-2014', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(6, 6, 6, 1, '2015-2016', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(7, 7, 9, 9, '2014-2015', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(8, 8, 7, 7, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(9, 9, 4, 4, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(10, 10, 1, 2, '2014-2015', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(11, 11, 2, 3, '2014-2015', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(12, 12, 7, 7, '2014-2015', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(13, 13, 6, 1, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(14, 14, 7, 7, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(15, 15, 3, 3, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1494380862, 1),
+(16, 16, 7, 7, '2013-2014', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(17, 17, 9, 9, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(18, 18, 2, 3, '2015-2016', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(19, 19, 4, 4, '2014-2015', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
 (20, 20, 10, 16, '2016-2017', 'summer', 1, 1, 1490342599, 1, NULL, NULL, 1493644150, 1),
-(21, 21, 9, 9, '2013-2014', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1494251039, 1),
-(22, 22, 4, 4, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(23, 23, 4, 4, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(24, 24, 1, 2, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(25, 25, 4, 4, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(26, 26, 7, 7, '2014-2015', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(27, 27, 6, 1, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1494251039, 1),
-(28, 28, 6, 1, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(29, 29, 1, 2, '2013-2014', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(30, 30, 2, 3, '2013-2014', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(31, 31, 2, 2, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1494251039, 1),
-(32, 32, 1, 2, '2013-2014', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(33, 33, 6, 1, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1494251039, 1),
-(34, 34, 1, 2, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(35, 35, 4, 4, '2013-2014', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(36, 36, 3, 5, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(37, 37, 2, 3, '2013-2014', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(38, 38, 7, 7, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(39, 39, 6, 1, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(40, 40, 1, 2, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1494251039, 1),
-(41, 41, 7, 7, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(42, 42, 1, 2, '2013-2014', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(43, 43, 9, 9, '2014-2015', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(44, 44, 4, 4, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(45, 45, 6, 1, '2014-2015', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(46, 46, 1, 1, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1494251039, 1),
-(47, 47, 4, 4, '2013-2014', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(48, 48, 6, 1, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(49, 49, 4, 4, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(50, 50, 1, 2, '2013-2014', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(51, 51, 6, 1, '2013-2014', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(52, 52, 9, 9, '2014-2015', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(53, 53, 3, 5, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(54, 54, 8, 8, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(55, 55, 2, 3, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(56, 56, 2, 3, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(57, 57, 4, 4, '2014-2015', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(58, 58, 8, 8, '2014-2015', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1494251039, 1),
-(59, 59, 4, 4, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(60, 60, 8, 8, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(61, 61, 2, 3, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(62, 62, 8, 8, '2015-2016', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(63, 63, 7, 7, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(64, 64, 7, 7, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(65, 65, 1, 2, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
+(21, 21, 9, 9, '2013-2014', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1494380862, 1),
+(22, 22, 4, 4, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(23, 23, 4, 4, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(24, 24, 1, 2, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(25, 25, 4, 4, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(26, 26, 7, 7, '2014-2015', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(27, 27, 6, 1, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1494380862, 1),
+(28, 28, 6, 1, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(29, 29, 1, 2, '2013-2014', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(30, 30, 2, 3, '2013-2014', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(31, 31, 2, 2, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1494380862, 1),
+(32, 32, 1, 2, '2013-2014', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(33, 33, 6, 1, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1494380862, 1),
+(34, 34, 1, 2, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(35, 35, 4, 4, '2013-2014', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(36, 36, 3, 5, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(37, 37, 2, 3, '2013-2014', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(38, 38, 7, 7, '2014-2015', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(39, 39, 6, 1, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(40, 40, 1, 2, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1494380862, 1),
+(41, 41, 7, 7, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(42, 42, 1, 2, '2013-2014', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(43, 43, 9, 9, '2014-2015', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(44, 44, 4, 4, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(45, 45, 6, 1, '2014-2015', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(46, 46, 1, 1, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1494380862, 1),
+(47, 47, 4, 4, '2013-2014', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(48, 48, 6, 1, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(49, 49, 4, 4, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(50, 50, 1, 2, '2013-2014', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(51, 51, 6, 1, '2013-2014', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(52, 52, 9, 9, '2014-2015', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(53, 53, 3, 5, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(54, 54, 8, 8, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(55, 55, 2, 3, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(56, 56, 2, 3, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(57, 57, 4, 4, '2014-2015', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(58, 58, 8, 8, '2014-2015', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1494380862, 1),
+(59, 59, 4, 4, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(60, 60, 8, 8, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(61, 61, 2, 3, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(62, 62, 8, 8, '2015-2016', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(63, 63, 7, 7, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(64, 64, 7, 7, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(65, 65, 1, 2, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
 (66, 66, 6, 1, '2016-2017', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1493627287, 1),
-(67, 67, 9, 9, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(68, 68, 3, 5, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(69, 69, 6, 1, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1494251039, 1),
+(67, 67, 9, 9, '2015-2016', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(68, 68, 3, 5, '2013-2014', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(69, 69, 6, 1, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1494380862, 1),
 (70, 70, 6, 1, '2016-2017', 'summer', 3, 0, 1490342599, 1, NULL, NULL, 1493627287, 1),
-(71, 71, 4, 4, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(72, 72, 2, 3, '2015-2016', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(73, 73, 1, 2, '2014-2015', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(74, 74, 2, 2, '2013-2014', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1494251039, 1),
-(75, 75, 8, 8, '2014-2015', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(76, 76, 9, 9, '2015-2016', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(77, 77, 6, 1, '2015-2016', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(78, 78, 3, 5, '2014-2015', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(79, 79, 6, 1, '2015-2016', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(80, 80, 3, 5, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(81, 81, 6, 1, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(82, 82, 6, 1, '2015-2016', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(83, 83, 9, 9, '2015-2016', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(84, 84, 9, 9, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1494251039, 1),
-(85, 85, 2, 3, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(86, 86, 7, 7, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1494251039, 1),
-(87, 87, 4, 4, '2013-2014', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(88, 88, 7, 7, '2015-2016', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(89, 89, 4, 4, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(90, 90, 9, 9, '2014-2015', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(91, 91, 8, 8, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(92, 92, 6, 1, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(93, 93, 9, 9, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1494251039, 1),
-(94, 94, 2, 3, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(95, 95, 7, 7, '2013-2014', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(96, 96, 1, 2, '2015-2016', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(97, 97, 3, 5, '2014-2015', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(98, 98, 1, 2, '2014-2015', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(99, 99, 3, 5, '2014-2015', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
-(100, 100, 4, 4, '2014-2015', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1494251039, NULL),
+(71, 71, 4, 4, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(72, 72, 2, 3, '2015-2016', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(73, 73, 1, 2, '2014-2015', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(74, 74, 2, 2, '2013-2014', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1494380862, 1),
+(75, 75, 8, 8, '2014-2015', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(76, 76, 9, 9, '2015-2016', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(77, 77, 6, 1, '2015-2016', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(78, 78, 3, 5, '2014-2015', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(79, 79, 6, 1, '2015-2016', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(80, 80, 3, 5, '2013-2014', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(81, 81, 6, 1, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(82, 82, 6, 1, '2015-2016', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(83, 83, 9, 9, '2015-2016', 'second', 3, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(84, 84, 9, 9, '2013-2014', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1494380862, 1),
+(85, 85, 2, 3, '2013-2014', 'summer', 1, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(86, 86, 7, 7, '2015-2016', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1494380862, 1),
+(87, 87, 4, 4, '2013-2014', 'first', 4, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(88, 88, 7, 7, '2015-2016', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(89, 89, 4, 4, '2015-2016', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(90, 90, 9, 9, '2014-2015', 'summer', 4, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(91, 91, 8, 8, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(92, 92, 6, 1, '2013-2014', 'first', 3, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(93, 93, 9, 9, '2015-2016', 'first', 2, 0, 1490342599, 1, NULL, NULL, 1494380862, 1),
+(94, 94, 2, 3, '2014-2015', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(95, 95, 7, 7, '2013-2014', 'second', 1, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(96, 96, 1, 2, '2015-2016', 'second', 4, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(97, 97, 3, 5, '2014-2015', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(98, 98, 1, 2, '2014-2015', 'summer', 2, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(99, 99, 3, 5, '2014-2015', 'first', 1, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
+(100, 100, 4, 4, '2014-2015', 'second', 2, 0, 1490342599, 1, NULL, NULL, 1494380862, NULL),
 (102, 101, 6, 1, '2016-2017', 'summer', 1, 0, 1491890796, 1, NULL, NULL, 1493627287, 1),
 (105, 102, 6, 1, '2016-2017', 'summer', 1, 0, 1492588748, 1, NULL, NULL, 1493627287, 1),
 (107, 103, 6, 12, '2016-2017', 'summer', 1, 1, 1492801999, 1, NULL, NULL, 1493904130, 1),
@@ -535,6 +535,74 @@ CREATE TABLE `logs` (
 --
 
 TRUNCATE TABLE `logs`;
+--
+-- Dumping data for table `logs`
+--
+
+INSERT INTO `logs` (`id`, `errno`, `errtype`, `errstr`, `errfile`, `errline`, `user_agent`, `ip_address`, `time`) VALUES
+(1, 2, 'Warning', 'Cannot use a scalar value as an array', '/opt/lampp/htdocs/ci-capstone/application/controllers/Subject_offers.php', 88, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:46:43'),
+(2, 2, 'Warning', 'Cannot use a scalar value as an array', '/opt/lampp/htdocs/ci-capstone/application/controllers/Subject_offers.php', 88, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:46:43'),
+(3, 2, 'Warning', 'Cannot use a scalar value as an array', '/opt/lampp/htdocs/ci-capstone/application/controllers/Subject_offers.php', 88, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:46:43'),
+(4, 2, 'Warning', 'Cannot use a scalar value as an array', '/opt/lampp/htdocs/ci-capstone/application/controllers/Subject_offers.php', 88, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:46:43'),
+(5, 2, 'Warning', 'Cannot use a scalar value as an array', '/opt/lampp/htdocs/ci-capstone/application/controllers/Subject_offers.php', 88, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:46:43'),
+(6, 2, 'Warning', 'Cannot use a scalar value as an array', '/opt/lampp/htdocs/ci-capstone/application/controllers/Subject_offers.php', 88, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:46:43'),
+(7, 2, 'Warning', 'Cannot use a scalar value as an array', '/opt/lampp/htdocs/ci-capstone/application/controllers/Subject_offers.php', 88, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:46:43'),
+(8, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Subject_offers.php', 88, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:48:59'),
+(9, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Subject_offers.php', 88, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:48:59'),
+(10, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Subject_offers.php', 88, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:48:59'),
+(11, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Subject_offers.php', 88, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:48:59'),
+(12, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Subject_offers.php', 88, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:48:59'),
+(13, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Subject_offers.php', 88, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:48:59'),
+(14, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Subject_offers.php', 88, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:48:59'),
+(15, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Subject_offers.php', 88, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:49:06'),
+(16, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Subject_offers.php', 88, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:49:06'),
+(17, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Subject_offers.php', 88, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:49:06'),
+(18, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Subject_offers.php', 88, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:49:06'),
+(19, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Subject_offers.php', 88, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:49:06'),
+(20, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Subject_offers.php', 88, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:49:06'),
+(21, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Subject_offers.php', 88, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:49:06'),
+(22, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:55:45'),
+(23, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:55:46'),
+(24, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:55:46'),
+(25, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:55:46'),
+(26, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:55:46'),
+(27, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:55:46'),
+(28, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:55:46'),
+(29, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:56:06'),
+(30, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:56:06'),
+(31, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:56:06'),
+(32, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:56:06'),
+(33, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:56:06'),
+(34, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:56:06'),
+(35, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:56:07'),
+(36, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:56:09'),
+(37, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:56:09'),
+(38, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:56:09'),
+(39, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:56:09'),
+(40, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:56:09'),
+(41, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:56:09'),
+(42, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:56:09'),
+(43, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:56:40'),
+(44, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:56:40'),
+(45, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:56:40'),
+(46, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:56:40'),
+(47, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:56:40'),
+(48, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:56:40'),
+(49, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:56:40'),
+(50, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:56:40'),
+(51, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:56:40'),
+(52, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:56:40'),
+(53, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:56:40'),
+(54, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:56:41'),
+(55, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:56:41'),
+(56, 8, 'Notice', 'Undefined property: stdClass::$subject_rate', '/opt/lampp/htdocs/ci-capstone/application/controllers/Create_student_subject.php', 526, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 08:56:41'),
+(57, 8, 'Notice', 'Array to string conversion', '/opt/lampp/htdocs/ci-capstone/system/libraries/Table.php', 398, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 11:29:15'),
+(58, 8, 'Notice', 'Array to string conversion', '/opt/lampp/htdocs/ci-capstone/system/libraries/Table.php', 398, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 11:29:16'),
+(59, 8, 'Notice', 'Array to string conversion', '/opt/lampp/htdocs/ci-capstone/system/libraries/Table.php', 398, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 11:29:16'),
+(60, 8, 'Notice', 'Array to string conversion', '/opt/lampp/htdocs/ci-capstone/system/libraries/Table.php', 398, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 11:32:08'),
+(61, 8, 'Notice', 'Array to string conversion', '/opt/lampp/htdocs/ci-capstone/system/libraries/Table.php', 398, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 11:32:08'),
+(62, 8, 'Notice', 'Array to string conversion', '/opt/lampp/htdocs/ci-capstone/system/libraries/Table.php', 398, 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:53.0) Gecko/20100101 Firefox/53.0', '::1', '2017-05-09 11:32:08');
+
 -- --------------------------------------------------------
 
 --
@@ -583,18 +651,9 @@ TRUNCATE TABLE `permissions`;
 --
 
 INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `created_at`, `created_user_id`) VALUES
-(6, 6, 1, 1491881056, 1),
-(11, 11, 1, 1491881056, 1),
-(12, 12, 1, 1491881056, 1),
 (15, 15, 1, 1491881056, 1),
-(16, 16, 1, 1491881056, 1),
-(17, 17, 1, 1491881056, 1),
-(19, 19, 1, 1491881056, 1),
-(20, 20, 1, 1491881056, 1),
-(21, 21, 1, 1491881056, 1),
 (22, 22, 1, 1491881056, 1),
 (23, 23, 1, 1491881057, 1),
-(24, 24, 1, 1491881057, 1),
 (25, 25, 1, 1491881057, 1),
 (26, 26, 1, 1491881057, 1),
 (27, 27, 1, 1491881057, 1),
@@ -616,37 +675,68 @@ INSERT INTO `permissions` (`permission_id`, `controller_id`, `group_id`, `create
 (44, 1, 4, 1491883832, 1),
 (45, 1, 5, 1491883832, 1),
 (46, 1, 6, 1491883832, 1),
-(52, 3, 1, 1491883916, 1),
-(53, 3, 4, 1491883916, 1),
-(54, 4, 1, 1491883927, 1),
-(55, 4, 4, 1491883927, 1),
-(56, 5, 1, 1491883946, 1),
-(57, 5, 4, 1491883946, 1),
-(58, 8, 1, 1491884067, 1),
-(59, 8, 3, 1491884067, 1),
-(60, 10, 1, 1491884115, 1),
-(61, 10, 4, 1491884115, 1),
-(62, 14, 1, 1491884188, 1),
-(63, 14, 4, 1491884188, 1),
-(64, 2, 1, 1491884209, 1),
-(65, 2, 4, 1491884209, 1),
-(66, 9, 1, 1491884245, 1),
-(67, 9, 4, 1491884245, 1),
-(74, 35, 1, 1492574544, 1),
-(75, 36, 1, 1493178867, 1),
-(76, 7, 1, 1493353775, 1),
-(77, 7, 2, 1493353775, 1),
-(78, 7, 3, 1493353775, 1),
-(79, 7, 4, 1493353775, 1),
-(80, 7, 5, 1493353775, 1),
-(81, 13, 1, 1493353981, 1),
-(82, 13, 2, 1493353981, 1),
-(83, 13, 4, 1493353981, 1),
-(105, 18, 1, 1493462345, 1),
-(106, 18, 2, 1493462345, 1),
-(107, 18, 3, 1493462345, 1),
-(108, 18, 4, 1493462345, 1),
-(109, 18, 6, 1493462345, 1);
+(110, 18, 1, 1494380219, 1),
+(111, 18, 2, 1494380219, 1),
+(112, 18, 3, 1494380219, 1),
+(113, 18, 4, 1494380220, 1),
+(114, 18, 6, 1494380220, 1),
+(115, 19, 1, 1494380233, 1),
+(116, 19, 3, 1494380233, 1),
+(117, 3, 1, 1494380246, 1),
+(118, 3, 3, 1494380246, 1),
+(119, 3, 4, 1494380246, 1),
+(120, 4, 1, 1494380263, 1),
+(121, 4, 3, 1494380263, 1),
+(122, 4, 4, 1494380263, 1),
+(123, 17, 1, 1494380277, 1),
+(124, 17, 3, 1494380277, 1),
+(125, 5, 1, 1494380285, 1),
+(126, 5, 3, 1494380285, 1),
+(127, 5, 4, 1494380285, 1),
+(130, 21, 1, 1494380435, 1),
+(131, 21, 3, 1494380435, 1),
+(132, 8, 1, 1494380445, 1),
+(133, 8, 3, 1494380445, 1),
+(134, 10, 1, 1494380453, 1),
+(135, 10, 3, 1494380453, 1),
+(136, 10, 4, 1494380453, 1),
+(137, 12, 1, 1494380475, 1),
+(138, 12, 3, 1494380475, 1),
+(139, 14, 1, 1494380484, 1),
+(140, 14, 3, 1494380484, 1),
+(141, 14, 4, 1494380484, 1),
+(142, 2, 1, 1494380502, 1),
+(143, 2, 3, 1494380502, 1),
+(144, 2, 4, 1494380502, 1),
+(145, 35, 1, 1494380526, 1),
+(146, 35, 3, 1494380526, 1),
+(147, 9, 1, 1494380531, 1),
+(148, 9, 3, 1494380531, 1),
+(149, 9, 4, 1494380531, 1),
+(150, 36, 1, 1494380558, 1),
+(151, 36, 3, 1494380558, 1),
+(152, 16, 1, 1494380572, 1),
+(153, 16, 3, 1494380572, 1),
+(154, 24, 1, 1494380578, 1),
+(155, 24, 3, 1494380578, 1),
+(156, 20, 1, 1494380612, 1),
+(157, 20, 3, 1494380612, 1),
+(158, 20, 4, 1494380612, 1),
+(159, 6, 1, 1494380628, 1),
+(160, 6, 3, 1494380628, 1),
+(161, 7, 1, 1494380639, 1),
+(162, 7, 2, 1494380639, 1),
+(163, 7, 3, 1494380639, 1),
+(164, 7, 4, 1494380639, 1),
+(165, 7, 5, 1494380639, 1),
+(166, 7, 6, 1494380639, 1),
+(167, 13, 1, 1494380651, 1),
+(168, 13, 2, 1494380651, 1),
+(169, 13, 3, 1494380651, 1),
+(170, 13, 4, 1494380651, 1),
+(171, 11, 1, 1494380660, 1),
+(172, 11, 3, 1494380660, 1),
+(173, 11, 4, 1494380660, 1);
 
 -- --------------------------------------------------------
 
@@ -939,6 +1029,17 @@ CREATE TABLE `students_subjects` (
 --
 
 TRUNCATE TABLE `students_subjects`;
+--
+-- Dumping data for table `students_subjects`
+--
+
+INSERT INTO `students_subjects` (`student_subject_id`, `enrollment_id`, `subject_offer_id`, `student_subject_enroll_status`, `curriculum_id`, `curriculum_subject_id`, `student_subject_semester`, `student_subject_school_year`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`) VALUES
+(1, 20, 19, 1, 16, 26, 'second', '2016-2017', 1494291497, 1, NULL, NULL, 1494304909, 1),
+(2, 20, 20, 1, 16, 30, 'summer', '2016-2017', 1494291497, 1, NULL, NULL, 1494304909, 1),
+(3, 20, 16, 1, 16, 22, 'summer', '2016-2017', 1494299764, 1, NULL, NULL, 1494304909, 1),
+(4, 20, 21, 1, 16, 20, 'summer', '2016-2017', 1494302442, 1, NULL, NULL, 1494304909, 1),
+(5, 20, 14, 1, 16, 19, 'summer', '2016-2017', 1494304653, 1, NULL, NULL, 1494304909, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -971,25 +1072,26 @@ TRUNCATE TABLE `subjects`;
 --
 
 INSERT INTO `subjects` (`subject_id`, `subject_code`, `subject_description`, `created_at`, `created_user_id`, `deleted_at`, `deleted_user_id`, `updated_at`, `updated_user_id`, `unit_id`, `course_id`, `subject_rate`) VALUES
-(19, 'fil1', 'Filipino 1', 1493733039, 1, NULL, NULL, 1494144591, 1, 12, NULL, 1.5),
-(20, 'major', 'MAJOR', 1493733072, 1, NULL, NULL, NULL, NULL, NULL, 6, 2.5),
-(21, 'eng1', 'English 1', 1493733167, 1, NULL, NULL, 1494144460, 1, 14, NULL, 2.5),
-(22, 'major2', 'MAOR2', 1493904767, 1, NULL, NULL, NULL, NULL, NULL, 6, 5.6),
-(23, 'sample 112', 'sasas1123', 1493968711, 1, NULL, NULL, NULL, NULL, NULL, 4, 5.6),
-(24, 'test1', 'TEST!', 1494139769, 1, NULL, NULL, NULL, NULL, NULL, 10, 5.4),
-(25, 'test 2', 'test2', 1494140253, 1, NULL, NULL, NULL, NULL, NULL, 10, 6.4),
-(27, 'test3', 'test3', 1494140271, 1, NULL, NULL, NULL, NULL, NULL, 10, 4.4),
-(28, 'test4', 'test4', 1494140508, 1, NULL, NULL, NULL, NULL, NULL, 10, 6.4),
-(29, 'pe 1', 'PE1', 1494140947, 1, NULL, NULL, NULL, NULL, 21, NULL, 5.4),
-(30, 'pe2', 'PE2', 1494141001, 1, NULL, NULL, NULL, NULL, 22, NULL, 3),
-(31, 'test 5', 'test5', 1494143541, 1, NULL, NULL, 1494159393, 1, NULL, 10, 8),
-(32, 'forlan1', 'Foreign Language 1', 1494144027, 1, NULL, NULL, NULL, NULL, 25, NULL, 4.2),
-(33, 'forlan2', 'Foreign Language 2', 1494144049, 1, NULL, NULL, NULL, NULL, 26, NULL, 6.4),
-(34, 'pe3', 'PE 3', 1494144175, 1, NULL, NULL, NULL, NULL, 27, NULL, 2.3),
-(35, 'eng2', 'English 2', 1494144230, 1, NULL, NULL, 1494144435, 1, 28, NULL, 2.1),
-(36, 'fil2', 'Filipino 2', 1494144625, 1, NULL, NULL, NULL, NULL, 29, NULL, 2.3),
-(37, 'dgdfg', 'dfgdfg', 1494177049, 1, NULL, NULL, NULL, NULL, NULL, 6, 4.6),
-(41, 'ghjg', 'ghjghj', 1494177089, 1, NULL, NULL, NULL, NULL, 30, NULL, 5.1);
+(19, 'fil1', 'Filipino 1', 1493733039, 1, NULL, NULL, 1494307742, 1, 12, NULL, 96.4),
+(20, 'major', 'MAJOR', 1493733072, 1, NULL, NULL, 1494307841, 1, NULL, 6, 132.5),
+(21, 'eng1', 'English 1', 1493733167, 1, NULL, NULL, 1494307754, 1, 14, NULL, 120.3),
+(22, 'major2', 'MAOR2', 1493904767, 1, NULL, NULL, 1494307849, 1, NULL, 6, 105.6),
+(23, 'sample 112', 'sasas1123', 1493968711, 1, NULL, NULL, 1494307858, 1, NULL, 4, 95.6),
+(24, 'test1', 'TEST!', 1494139769, 1, NULL, NULL, 1494307869, 1, NULL, 10, 125.4),
+(25, 'test 2', 'test2', 1494140253, 1, NULL, NULL, 1494307878, 1, NULL, 10, 106.4),
+(27, 'test3', 'test3', 1494140271, 1, NULL, NULL, 1494307888, 1, NULL, 10, 114.4),
+(28, 'test4', 'test4', 1494140508, 1, NULL, NULL, 1494307911, 1, NULL, 10, 96.4),
+(29, 'pe 1', 'PE1', 1494140947, 1, NULL, NULL, 1494307819, 1, 21, NULL, 105.4),
+(30, 'pe2', 'PE2', 1494141001, 1, NULL, NULL, 1494307901, 1, 22, NULL, 113),
+(31, 'test 5', 'test5', 1494143541, 1, NULL, NULL, 1494307526, 1, NULL, 10, 100),
+(32, 'forlan1', 'Foreign Language 1', 1494144027, 1, NULL, NULL, 1494307712, 1, 25, NULL, 95.5),
+(33, 'forlan2', 'Foreign Language 2', 1494144049, 1, NULL, NULL, 1494307830, 1, 26, NULL, 106.4),
+(34, 'pe3', 'PE 3', 1494144175, 1, NULL, NULL, 1494307798, 1, 27, NULL, 122.3),
+(35, 'eng2', 'English 2', 1494144230, 1, NULL, NULL, 1494307762, 1, 28, NULL, 100.5),
+(36, 'fil2', 'Filipino 2', 1494144625, 1, NULL, NULL, 1494307792, 1, 29, NULL, 102.3),
+(37, 'dgdfg', 'dfgdfg', 1494177049, 1, NULL, NULL, 1494307785, 1, NULL, 6, 84.6),
+(41, 'ghjg', 'ghjghj', 1494177089, 1, NULL, NULL, 1494307778, 1, 30, NULL, 95.1),
+(43, 'qwqw', 'qwqw', 1494261876, 1, NULL, NULL, 1494307770, 1, NULL, 10, 123.2);
 
 -- --------------------------------------------------------
 
@@ -1028,7 +1130,8 @@ INSERT INTO `subject_offers` (`subject_offer_id`, `subject_offer_semester`, `sub
 (16, 'summer', '2016-2017', 8, 29, 1494248500, 1, NULL, NULL, NULL, NULL),
 (17, 'summer', '2016-2017', 6, 35, 1494249584, 1, NULL, NULL, NULL, NULL),
 (19, 'summer', '2016-2017', 6, 32, 1494249661, 1, NULL, NULL, NULL, NULL),
-(20, 'summer', '2016-2017', 5, 36, 1494251020, 1, NULL, NULL, NULL, NULL);
+(20, 'summer', '2016-2017', 5, 36, 1494251020, 1, NULL, NULL, NULL, NULL),
+(21, 'summer', '2016-2017', 8, 25, 1494302426, 1, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1079,7 +1182,9 @@ INSERT INTO `subject_offer_line` (`subject_offer_line_id`, `subject_offer_line_s
 (17, '07:30:00', '10:30:00', 0, 0, 0, 0, 1, 0, 0, 16, 29, 8, 4, 'summer', '2016-2017', 1494248500, 1, NULL, NULL, NULL, NULL),
 (18, '08:00:00', '11:00:00', 1, 0, 0, 0, 0, 0, 0, 17, 6, 35, 10, 'summer', '2016-2017', 1494249584, 1, NULL, NULL, NULL, NULL),
 (20, '06:00:00', '07:30:00', 1, 1, 0, 0, 0, 0, 0, 19, 6, 32, 2, 'summer', '2016-2017', 1494249661, 1, NULL, NULL, NULL, NULL),
-(21, '06:00:00', '08:00:00', 1, 0, 0, 0, 0, 0, 0, 20, 5, 36, 3, 'summer', '2016-2017', 1494251020, 1, NULL, NULL, NULL, NULL);
+(21, '06:00:00', '08:00:00', 1, 0, 0, 0, 0, 0, 0, 20, 5, 36, 3, 'summer', '2016-2017', 1494251020, 1, NULL, NULL, NULL, NULL),
+(22, '06:00:00', '07:00:00', 1, 0, 0, 0, 0, 0, 0, 21, 8, 25, 10, 'summer', '2016-2017', 1494302426, 1, NULL, NULL, NULL, NULL),
+(23, '07:00:00', '08:00:00', 0, 1, 0, 0, 0, 0, 0, 21, 25, 8, 3, 'summer', '2016-2017', 1494302426, 1, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1170,7 +1275,7 @@ TRUNCATE TABLE `users`;
 --
 
 INSERT INTO `users` (`id`, `ip_address`, `username`, `password`, `salt`, `email`, `activation_code`, `forgotten_password_code`, `forgotten_password_time`, `remember_code`, `created_on`, `last_login`, `active`, `first_name`, `last_name`, `company`, `phone`, `gen_code`, `updated_at`) VALUES
-(1, 0x7f000001, 'administrator', '$2y$08$m8P3WHDASe.hDP4Jn6J9iut/YsshOKD3xuzuVpjiTKeFf146Mfgoi', '9462e8eee0', 'admin@admin.com', '', NULL, NULL, 'NQ6EIYeVl.8r/t24VE52Pu', 1268889823, 1494246565, 1, 'Admin', 'istrator', 'ADMIN', '0', 'zB7R6Oo.CWxnbIOktNRREe', 1494222526),
+(1, 0x7f000001, 'administrator', '$2y$08$m8P3WHDASe.hDP4Jn6J9iut/YsshOKD3xuzuVpjiTKeFf146Mfgoi', '9462e8eee0', 'admin@admin.com', '', NULL, NULL, 'TVGw.QsagfXBqPID0x7Ws.', 1268889823, 1494378643, 1, 'Admin', 'istrator', 'ADMIN', '0', 'nVekCaxyT265Zy6vt6ZX5.', 1494299699),
 (2, 0x3a3a31, 'username1', '$2y$08$VbnBcmlg9czB1SIgr7Ay0ueYoWgQ5LJpK1R6WAHq6AahPzwU2tJDe', 'MAVcDoJ5VAh5weVomuibx.', 'emailphfbc1@gmail.com', '2e8aeccf95a5f5bb5fbe4bacef3af32f3b095ea9', NULL, NULL, NULL, 1491881053, NULL, 0, 'Firstlc', 'Lastzted', 'Companys', '+63970-120-6547', NULL, 1492077198),
 (3, 0x3a3a31, 'username2', '$2y$08$EIHZAlVjTizI3EsJd0EEnugOzV4QiV3ABOtroFDbBuIsahsxhzPN6', 'ejQVNM5OAO9ZWFITrJ1kAO', 'emailshu2@gmail.com', NULL, NULL, NULL, NULL, 1491881053, NULL, 1, 'Firstrdlw', 'Lastosjxs', 'Companyqe', '+63926-512-7038', NULL, NULL),
 (4, 0x3a3a31, 'username3', '$2y$08$uFrsQKdseWglVdUh/ZOCVucxgAjZyw3xiZQBGmB2c6.z//gP3RMKi', 'AQoK7aQ8D7UGLbpDK6LFFe', 'emailjad3@gmail.com', NULL, NULL, NULL, NULL, 1491881053, NULL, 1, 'Firstbii', 'Lasth', 'Companyg', '+63992-627-2604', NULL, NULL),
@@ -1452,12 +1557,12 @@ ALTER TABLE `login_attempts`
 -- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 --
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `permission_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
+  MODIFY `permission_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=174;
 --
 -- AUTO_INCREMENT for table `requisites`
 --
@@ -1477,22 +1582,22 @@ ALTER TABLE `students`
 -- AUTO_INCREMENT for table `students_subjects`
 --
 ALTER TABLE `students_subjects`
-  MODIFY `student_subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `student_subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `subject_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 --
 -- AUTO_INCREMENT for table `subject_offers`
 --
 ALTER TABLE `subject_offers`
-  MODIFY `subject_offer_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `subject_offer_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT for table `subject_offer_line`
 --
 ALTER TABLE `subject_offer_line`
-  MODIFY `subject_offer_line_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `subject_offer_line_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 --
 -- AUTO_INCREMENT for table `units`
 --
@@ -1512,7 +1617,7 @@ ALTER TABLE `users_groups`
 -- AUTO_INCREMENT for table `users_last_logins`
 --
 ALTER TABLE `users_last_logins`
-  MODIFY `users_last_login_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=397;
+  MODIFY `users_last_login_id` int(8) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=398;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
