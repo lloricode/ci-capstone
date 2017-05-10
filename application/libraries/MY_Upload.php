@@ -39,9 +39,7 @@ class MY_Upload extends CI_Upload
                          * image required
                          * with error delimiter in ion_auth configuration
                          */
-                        $image_error_message = $this->_CI->config->item('error_start_delimiter', 'ion_auth') .
-                                lang('student_image_required') .
-                                $this->_CI->config->item('error_end_delimiter', 'ion_auth');
+                        $image_error_message = bootstrap_error('student_image_required');
                 }
                 /**
                  * check if has error in upload $_FILES[] and pass rule validation
@@ -62,9 +60,12 @@ class MY_Upload extends CI_Upload
                                  * get error upload message
                                  * with error delimiter in ion_auth config
                                  */
-                                $image_error_message = $this->_CI->config->item('error_start_delimiter', 'ion_auth') .
-                                        $this->_CI->upload->display_errors() .
-                                        $this->_CI->config->item('error_end_delimiter', 'ion_auth');
+                                $image_error_message = //$this->_CI->config->item('error_start_delimiter', 'ion_auth') .
+                                        $this->_CI->upload->display_errors() ;
+                                      //  $this->_CI->config->item('error_end_delimiter', 'ion_auth');
+                                
+                                $image_error_message= str_replace('<p>', '', $image_error_message);
+                                $image_error_message= str_replace('</p>', '', $image_error_message);
                         }
                 }
                 return array(
