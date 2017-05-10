@@ -363,8 +363,26 @@ class Student extends School_informations
                 $subject_offers = array();
                 if ($s_o_)
                 {
+                        $tmp_compare = '';
                         foreach ($s_o_ as $stud_sub)
                         {
+                                if ( ! $current_subject)
+                                {
+                                        $tmp_sem_year = $stud_sub->student_subject_school_year . $stud_sub->student_subject_semester;
+
+                                        if ($tmp_compare != $tmp_sem_year)
+                                        {
+                                                $tmp_compare = $tmp_sem_year;
+                                                $current_    = '';
+                                                if (current_school_semester(TRUE) == $stud_sub->student_subject_semester && current_school_year() == $stud_sub->student_subject_school_year)
+                                                {
+                                                        $current_ = ' [Current]';
+                                                }
+                                                $temp_            = heading($stud_sub->student_subject_school_year . ', ' . semesters($stud_sub->student_subject_semester) . $current_, 4);
+                                                $subject_offers[] = array(array('data' => $temp_, 'colspan' => 9));
+                                        }
+                                }
+
                                 $sub_of = $this->Subject_offer_model->
                                         fields('subject_offer_id')->
                                         with_faculty('fields:last_name,first_name')->
