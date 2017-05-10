@@ -15,6 +15,7 @@ class Subjects extends CI_Capstone_Controller
                 $this->lang->load('ci_capstone/ci_subjects');
                 $this->load->model(array('Subject_model', 'Course_model'));
                 $this->load->library('pagination');
+                $this->load->helper('text');
 
                 /**
                  * pagination limit
@@ -31,16 +32,29 @@ class Subjects extends CI_Capstone_Controller
 
         public function index()
         {
-
+                $subject_search = $this->input->get('search-subject');
 
                 $subject_obj = $this->Subject_model->
                         with_user_created('fields:first_name,last_name')->
-                        with_user_updated('fields:first_name,last_name')->
-                        limit($this->limit, $this->limit * $this->page_ - $this->limit)->
+                        with_user_updated('fields:first_name,last_name');
+
+                if ($subject_search)
+                {
+                        $this->session->set_userdata('search-subject', $subject_search);
+                        $subject_obj = $subject_obj->or_like(array(
+                            'subject_code'        => $subject_search,
+                            'subject_description' => $subject_search
+                        ));
+                }
+
+                $tmp_obj     = $subject_obj;
+                $subject_obj = $subject_obj->limit($this->limit, $this->limit * $this->page_ - $this->limit)->
                         order_by('updated_at', 'DESC')->
                         order_by('created_at', 'DESC')->
                         set_cache('subjects_page_' . $this->page_)->
                         get_all();
+
+                $row_count = $tmp_obj->count_rows();
 
 
                 $table_data = array();
@@ -52,8 +66,8 @@ class Subjects extends CI_Capstone_Controller
                         {
 
                                 $tmp = array(
-                                    my_htmlspecialchars($subject->subject_code),
-                                    my_htmlspecialchars($subject->subject_description),
+                                    highlight_phrase($subject->subject_code, $subject_search),
+                                    highlight_phrase($subject->subject_description, $subject_search),
                                     $this->_subject_course($subject->course_id),
                                     my_htmlspecialchars($subject->subject_rate),
                                 );
@@ -90,7 +104,7 @@ class Subjects extends CI_Capstone_Controller
                         $header[] = 'Created By';
                         $header[] = 'Updated By';
                 }
-                $pagination = $this->pagination->generate_bootstrap_link('subjects/index', $this->Subject_model->count_rows() / $this->limit);
+                $pagination = $this->pagination->generate_bootstrap_link('subjects/index', $row_count / $this->limit);
 
                 if (in_array('create-subject', permission_controllers()))
                 {

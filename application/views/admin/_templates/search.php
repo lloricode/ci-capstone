@@ -2,8 +2,16 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+$current_controller = str_replace('_', '-', $this->uri->segment($this->config->item('segment_controller')));
 
-if ('curriculums' === str_replace('_', '-', $this->uri->segment($this->config->item('segment_controller'))))
+if ('subjects' === $current_controller)
+{
+        $search_n_session_key = 'search-subject';
+        $action               = 'subjects';
+        $placeholder          = 'Search Subject...';
+        $title                = 'Search Subject';
+}
+elseif ('curriculums' === $current_controller)
 {
         $search_n_session_key = 'search-curriculum';
         $action               = 'curriculums';
@@ -32,3 +40,4 @@ unset($title);
 unset($serch_value);
 unset($search_n_session_key);
 unset($action);
+unset($current_controller);
