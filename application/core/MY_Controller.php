@@ -154,7 +154,7 @@ class CI_Capstone_Controller extends MY_Controller
                         $return_html                  = (bool) $_inputs_or_returnhtml;
                         $_data['remove_bootrapt_div'] = $_lang_header_or_bootstrap_div;
                         $required                     = array('inputs', 'action', 'lang_header', 'lang_button', 'icon');
-                        $non_required                 = array('hidden_inputs' => NULL, 'error' => FALSE, 'form_size' => 6);
+                        $non_required                 = array('hidden_inputs' => NULL, 'error' => FALSE, 'form_size' => 6, 'other_attributes_form_open' => FALSE);
 
                         $all_keys = array();
                         foreach ($required as $v)// required
