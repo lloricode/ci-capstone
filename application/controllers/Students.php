@@ -42,7 +42,11 @@ class Students extends CI_Capstone_Controller
 
                 if ($is_dean)
                 {
-                        if ($this->student_search)
+                        if ($this->input->get('status'))
+                        {
+                                $template = $this->_table_view($search_course_id);
+                        }
+                        elseif ($this->student_search)
                         {
                                 $template = $this->_table_view($search_course_id, $is_dean);
                         }
