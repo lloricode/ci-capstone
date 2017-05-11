@@ -2,28 +2,26 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-$current_controller = str_replace('_', '-', $this->uri->segment($this->config->item('segment_controller')));
-
-if ('subjects' === $current_controller)
+switch (str_replace('_', '-', $this->uri->segment($this->config->item('segment_controller'))))
 {
-        $search_n_session_key = 'search-subject';
-        $action               = 'subjects';
-        $placeholder          = 'Search Subject...';
-        $title                = 'Search Subject';
-}
-elseif ('curriculums' === $current_controller)
-{
-        $search_n_session_key = 'search-curriculum';
-        $action               = 'curriculums';
-        $placeholder          = 'Search Curriculum...';
-        $title                = 'Search Curriculum';
-}
-else
-{
-        $search_n_session_key = 'search-student';
-        $action               = 'students';
-        $placeholder          = 'Search Student...';
-        $title                = 'Search Student';
+        case 'subjects':
+                $search_n_session_key = 'search-subject';
+                $action               = 'subjects';
+                $placeholder          = 'Search Subject...';
+                $title                = 'Search Subject';
+                break;
+        case 'curriculums' :
+                $search_n_session_key = 'search-curriculum';
+                $action               = 'curriculums';
+                $placeholder          = 'Search Curriculum...';
+                $title                = 'Search Curriculum';
+                break;
+        default :
+                $search_n_session_key = 'search-student';
+                $action               = 'students';
+                $placeholder          = 'Search Student...';
+                $title                = 'Search Student';
+                break;
 }
 
 
@@ -40,4 +38,3 @@ unset($title);
 unset($serch_value);
 unset($search_n_session_key);
 unset($action);
-unset($current_controller);
