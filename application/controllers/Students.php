@@ -29,6 +29,7 @@ class Students extends CI_Capstone_Controller
                 /**
                  * check if user has a "dean" user_group
                  */
+                $is_dean              = FALSE;
                 if ($this->session->userdata('user_is_dean'))
                 {
                         if (is_null($this->session->userdata('user_dean_course_id')))
@@ -36,9 +37,50 @@ class Students extends CI_Capstone_Controller
                                 show_error('Current user_group is DEAN, but no course_id related.');
                         }
                         $search_course_id = $this->session->userdata('user_dean_course_id');
+                        $is_dean          = TRUE;
                 }
 
-                $student_result = $this->Student_model->all($this->limit, $this->limit * get_page_in_url('page') - $this->limit, $search_course_id, $this->student_search, FALSE, $this->input->get('status'));
+                if ($is_dean)
+                {
+                        if ($this->student_search)
+                        {
+                                $template = $this->_table_view($search_course_id, $is_dean);
+                        }
+                        else
+                        {
+                                $this->breadcrumbs->unshift(3, lang('index_student_heading') . ' Search Form', 'students');
+                                $template = $this->_search_form();
+                        }
+                }
+                else
+                {
+                        $template = $this->_table_view($search_course_id);
+                }
+
+                $template['bootstrap'] = $this->_bootstrap();
+                /**
+                 * rendering students view
+                 */
+                $this->render('admin/students', $template);
+        }
+
+        private function _search_form()
+        {
+
+                $inputs['student_search'] = array(
+                    'name'  => 'search-student',
+                    'value' => $this->session->userdata('search-student'),
+                    'type'  => 'text',
+                    'lang'  => 'student_search_label'
+                );
+
+                $template['search_form_for_dean'] = $this->form_boostrap('students', $inputs, 'student_search_label', 'student_search_label', 'info-sign', NULL, TRUE, FALSE, 6, FALSE, array('method' => 'get'));
+                return $template;
+        }
+
+        private function _table_view($search_course_id, $is_dean = FALSE)
+        {
+                $student_result = $this->Student_model->all($this->limit, $this->limit * get_page_in_url('page') - $this->limit, $search_course_id, $this->student_search, FALSE, $this->input->get('status'), $is_dean);
 
                 $student_obj                 = $student_result->result;
                 $result_count_for_pagination = $student_result->count;
@@ -124,6 +166,10 @@ class Students extends CI_Capstone_Controller
                         {
                                 $pagination_index .= '?';
                         }
+                        else
+                        {
+                                $pagination_index .= '&';
+                        }
                         $pagination_index .= 'search-student=' . $this->student_search;
 
                         $template['search_result_label'] = paragraph(sprintf(lang('search_result_label'/* ci_students_lang */), bold($result_count_for_pagination), bold($this->student_search)));
@@ -139,6 +185,10 @@ class Students extends CI_Capstone_Controller
                                 }
                                 $pagination_index .= 'status=enrolled';
                         }
+                        else
+                        {
+                                $pagination_index .= '&';
+                        }
                         $template['search_result_label'] = paragraph(sprintf(lang('search_result_enrolled_label'/* ci_students_lang */), bold($result_count_for_pagination)));
                         $bred_crumbs                     = ' [ Enrolled ]';
                 }
@@ -149,12 +199,7 @@ class Students extends CI_Capstone_Controller
 
 
                 $template['table_students'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_student_heading', $pagination, TRUE);
-                $template['message']        = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
-                $template['bootstrap']      = $this->_bootstrap();
-                /**
-                 * rendering users view
-                 */
-                $this->render('admin/students', $template);
+                return $template;
         }
 
         public function report()
@@ -279,7 +324,7 @@ class Students extends CI_Capstone_Controller
                         if ($key == 'all')
                         {
                                 $current_subject = FALSE;
-                                $caption__=' [ALL]';
+                                $caption__       = ' [ALL]';
                         }
                         unset($key);
                 }

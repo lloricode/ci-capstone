@@ -28,5 +28,13 @@ if (isset($view))
 {
         echo $view;
 }
-?>
+
+
+/**
+ * search form for dean users_group
+ */
+if (isset($search_form_for_dean))
+{
+        echo $search_form_for_dean;
+}
                 

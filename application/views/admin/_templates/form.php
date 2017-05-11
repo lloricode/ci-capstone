@@ -28,13 +28,21 @@ if ( ! $remove_bootrapt_div)
                     }
             }
 
-            echo form_open(site_url($action), array(
+            $attibutes = array(
                 'class'      => 'form-horizontal',
                 'name'       => 'basic_validate',
                 'id'         => 'basic_validate',
                 'novalidate' => 'novalidate',
-                    ), ((isset($hidden_inputs)) ? $hidden_inputs : NULL));
+            );
+            if ( ! is_null($other_attributes_form_open))
+            {
+                    if (is_array($other_attributes_form_open))
+                    {
+                            $attibutes = array_merge($attibutes, $other_attributes_form_open);
+                    }
+            }
 
+            echo form_open(site_url($action), $attibutes, ((isset($hidden_inputs)) ? $hidden_inputs : NULL));
 
             foreach ($inputs as $k => $v)
             {
@@ -64,5 +72,15 @@ if ( ! $remove_bootrapt_div)
 if ( ! $remove_bootrapt_div)
 {
         echo '</div></div>';
-} 
-
+}
+unset($remove_bootrapt_div);
+unset($form_size);
+unset($icon);
+unset($lang_header);
+unset($error);
+unset($action);
+unset($attibutes);
+unset($hidden_inputs);
+unset($inputs);
+unset($lang_button);
+unset($other_attributes_form_open);

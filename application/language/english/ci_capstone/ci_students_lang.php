@@ -59,7 +59,7 @@ $lang['index_student_year_level_th']        = 'Year Level';
 /**
  * excel report header
  */
-$lang['index_student_is_enrolled']        = 'Is Enrolled';
+$lang['index_student_is_enrolled'] = 'Is Enrolled';
 
 $lang['index_student_guardian_fullname_th'] = 'Guardian Fullname';
 $lang['index_student_town_th']              = 'Town';
@@ -151,3 +151,5 @@ $lang['student_requirements_honorable_dismissal'] = 'Honorable Dismissal';
 $lang['student_requirements_transcript']          = 'Transcript of Records';
 
 $lang['student_requirements_certificate_of_rating'] = 'Certificate of Rating';
+
+$lang['student_search_label'] = 'Search Student';
