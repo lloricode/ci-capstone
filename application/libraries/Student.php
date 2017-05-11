@@ -386,7 +386,7 @@ class Student extends School_informations
                                 $sub_of = $this->Subject_offer_model->
                                         fields('subject_offer_id')->
                                         with_faculty('fields:last_name,first_name')->
-                                        with_subject('fields:subject_code,subject_description,subject_rate')->
+                                        with_subject('fields:subject_code,subject_description'/* ,subject_rate' */)->
                                         with_subject_line(array(
                                             'with'   => array(
                                                 'relation' => 'room',
@@ -432,7 +432,7 @@ class Student extends School_informations
                                 {
                                         $row_output[] = $v;
                                 }
-                                $row_output [] = $this->_row($sub_of->subject->subject_rate . ' / ' . ($sub_of->subject->subject_rate * $unit), $row_count);
+//                                $row_output [] = $this->_row($sub_of->subject->subject_rate . ' / ' . ($sub_of->subject->subject_rate * $unit), $row_count);
                                 $row_output [] = $status_return($stud_sub->student_subject_enroll_status, $return_html, $row_count);
 
 
@@ -568,7 +568,7 @@ class Student extends School_informations
                         foreach ($obj as $s)
                         {
                                 $tmp = $this->Subject_offer_model->
-                                        with_subject('fields:subject_code,subject_description,subject_rate')->
+                                        with_subject('fields:subject_code,subject_description'/* ,subject_rate' */)->
                                         with_faculty('fields:first_name,last_name')->
                                         with_subject_line(array(
                                             'fields' =>

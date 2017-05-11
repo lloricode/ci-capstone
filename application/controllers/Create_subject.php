@@ -34,8 +34,8 @@ class Create_subject extends CI_Capstone_Controller
 
                         $subj_insert = array(
                             'subject_code'        => $this->input->post('code', TRUE),
-                            'subject_description' => $this->input->post('description', TRUE),
-                            'subject_rate'        => $this->input->post('rate', TRUE),
+                            'subject_description' => $this->input->post('description', TRUE)
+//                            'subject_rate'        => $this->input->post('rate', TRUE),
                         );
 
                         //check if gen-ed,then add form set rule and validate it,else nothing
@@ -66,7 +66,7 @@ class Create_subject extends CI_Capstone_Controller
 
 
 
-                        if (!$ubject_id OR ! $unit_id OR ! $unit_ok)
+                        if ( ! $ubject_id OR ! $unit_id OR ! $unit_ok)
                         {
                                 /**
                                  * rollback database
@@ -137,12 +137,12 @@ class Create_subject extends CI_Capstone_Controller
                     'note'  => 'require when program in GEN-ED'
                 );
 
-                $inputs['curriculum_subject_rate'] = array(
-                    'name'  => 'rate',
-                    'value' => $this->form_validation->set_value('rate'),
-                    'type'  => 'text',
-                    'lang'  => 'curriculum_subject_rate_label'
-                );
+//                $inputs['subject_rate'] = array(
+//                    'name'  => 'rate',
+//                    'value' => $this->form_validation->set_value('rate'),
+//                    'type'  => 'text',
+//                    'lang'  => 'curriculum_subject_rate_label'
+//                );
 
                 $inputs['bootstrap'] = $this->_bootstrap();
                 $inputs['err']       = $is_error;

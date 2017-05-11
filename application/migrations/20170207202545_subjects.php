@@ -42,7 +42,8 @@ class Migration_Subjects extends CI_Migration
                     'subject_rate'        => array(
                         'type'       => 'DOUBLE',
                         'constraint' => '11',
-                        'unsigned'   => TRUE
+                        'unsigned'   => TRUE,
+                        'null'       => TRUE
                     ),
                     'course_id'           => array(
                         'type'       => 'INT',

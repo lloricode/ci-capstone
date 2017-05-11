@@ -73,12 +73,12 @@ class Edit_subject extends CI_Capstone_Controller
                     'lang'  => 'index_subject_description_th'
                 );
 
-                $inputs['rate'] = array(
-                    'name'  => 'rate',
-                    'value' => $this->form_validation->set_value('rate', $subject_obj->subject_rate),
-                    'type'  => 'text',
-                    'lang'  => 'curriculum_subject_rate_label'
-                );
+//                $inputs['rate'] = array(
+//                    'name'  => 'rate',
+//                    'value' => $this->form_validation->set_value('rate', $subject_obj->subject_rate),
+//                    'type'  => 'text',
+//                    'lang'  => 'curriculum_subject_rate_label'
+//                );
 
 //                $this->load->model('Course_model');
 //                $inputs['course_id'] = array(

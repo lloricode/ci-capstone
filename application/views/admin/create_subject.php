@@ -25,7 +25,7 @@ echo form_open(site_url('create-subject'), array(
                 echo input_bootstrap($subject_code);
                 echo input_bootstrap($subject_description);
                 echo input_bootstrap($course_id);
-                echo input_bootstrap($curriculum_subject_rate);
+//                echo input_bootstrap($subject_rate);
                 ?>
                 <div class="control-group">
 
