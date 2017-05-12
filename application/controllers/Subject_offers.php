@@ -85,7 +85,7 @@ class Subject_offers extends CI_Capstone_Controller
                                 {
                                         $row_output[] = $v;
                                 }
-                                $row_output[] = $this->_row($s->subject->subject_rate, $row_count);
+//                                $row_output[] = $this->_row($s->subject->subject_rate, $row_count);
                                 $row_output[] = $this->_row($this->_option_button_view($s->subject_offer_id), $row_count);
                                 if ($this->ion_auth->is_admin())
                                 {
@@ -118,7 +118,7 @@ class Subject_offers extends CI_Capstone_Controller
                     lang('index_subject_offer_end_th'),
                     lang('index_room_id_th'),
                     lang('index_room_capacity_th'),
-                    'Course Rate',
+//                    'Course Rate',
                     'Option'
                 );
                 if ($this->_for_faculty_group())
