@@ -197,9 +197,9 @@ class Create_subject_offer extends CI_Capstone_Controller
         private function _is_time_hrs_equal_in_unit($sche2)
         {
                 $this->load->helper('time');
-                $subject_id = $this->input->post('subject', TRUE);
+                $subject_id       = $this->input->post('subject', TRUE);
                 //$unit_obj   = $this->Subject_model->get_leclab_hrs($subject_id);
-                $unit_value = $this->Subject_model->get_unit($subject_id);
+                $leclab_total_hrs = $this->Subject_model->get_unit($subject_id, TRUE); //second paramete is to get total lec and lab hours
 
                 $total_hrs_input = 0.0;
                 if ($sche2)
@@ -208,11 +208,11 @@ class Create_subject_offer extends CI_Capstone_Controller
                 }
                 $total_hrs_input += $this->_get_hrs();
 
-                $return = (bool) ($total_hrs_input == $unit_value);
+                $return = (bool) ($total_hrs_input == $leclab_total_hrs);
 
                 if ( ! $return)
                 {
-                        $this->session->set_flashdata('message', bootstrap_error('Schedule did not meet the required ' . strong($unit_value . ' hour(s)') . '. Your input is only ' . strong($total_hrs_input . ' hour(s)') . ', see curriculum for further information.'));
+                        $this->session->set_flashdata('message', bootstrap_error('Schedule did not meet the required ' . strong($leclab_total_hrs . ' hour(s)') . '. Your input is only ' . strong($total_hrs_input . ' hour(s)') . ', see curriculum for further information.'));
                 }
                 return $return;
         }
