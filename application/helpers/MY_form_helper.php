@@ -14,7 +14,7 @@ if ( ! function_exists('input_bootstrap'))
          * @param string $prepend
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        function input_bootstrap($field, $prepend = FALSE)
+        function input_bootstrap($field, $prepend = FALSE, $comment = TRUE)
         {
                 $output = '';
                 if ( ! isset($field['type']))
@@ -25,9 +25,12 @@ if ( ! function_exists('input_bootstrap'))
                 {
                         $field['lang'] = 'test';
                 }
-                $CI     = &get_instance();
+                $CI = &get_instance();
                 $CI->load->helper('html');
-                $output .= PHP_EOL . comment_tag($field['name'] . ' [' . $field['type'] . ']');
+                if ($comment)
+                {
+                        $output .= PHP_EOL . comment_tag($field['name'] . ' [' . $field['type'] . ']');
+                }
                 $tmp    = (form_error($field['name']) == '') ? '' : ' error';
                 $output .= '<div class="control-group' . $tmp . '">' . PHP_EOL;
 
@@ -238,8 +241,10 @@ if ( ! function_exists('input_bootstrap'))
                 $output .= form_error($field['name']) . PHP_EOL;
                 $output .= '</div>' . PHP_EOL;
                 $output .= '</div>' . PHP_EOL;
-                $output .= comment_tag('end-' . $field['name'] . ' [' . $field['type'] . ']') . PHP_EOL;
-
+                if ($comment)
+                {
+                        $output .= comment_tag('end-' . $field['name'] . ' [' . $field['type'] . ']') . PHP_EOL;
+                }
                 return $output;
         }
 

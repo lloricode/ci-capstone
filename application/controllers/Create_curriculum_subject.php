@@ -59,34 +59,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                          */
                         $this->db->trans_begin();
 
-
-                        if ($this->type == 'major')
-                        {
-                                $this->form_validation->set_rules($this->Unit_model->insert_validation());
-                                $unit_ok = $this->form_validation->run();
-
-                                $unit_id = $this->Unit_model->insert(array(
-                                    'unit_value' => $this->input->post('units', TRUE),
-                                    'lec_value'  => $this->input->post('lecture', TRUE),
-                                    'lab_value'  => $this->input->post('laboratory', TRUE)
-                                ));
-                        }
-                        else
-                        {
-                                $unit_ok = TRUE;
-                                $unit_id = NULL;
-                        }
-                        $id = $this->Curriculum_subject_model->from_form(NULL, array(
-                                    'curriculum_id' => $curriculum_obj->curriculum_id,
-                                    'unit_id'       => $unit_id
-                                ))->insert();
-                        if ($this->type == 'minor')
-                        {
-                                $unit_id = TRUE;
-                        }
-
-
-                        if ( ! $this->_is_subject_course($curriculum_obj->curriculum_id) OR ! $id OR ! $unit_id OR ! $unit_ok)
+                        if ( ! $this->_is_subject_course($curriculum_obj->curriculum_id) OR ! $this->_insert_batch_($this->input->post('data'), $curriculum_obj->curriculum_id))
                         {
                                 /**
                                  * rollback database
@@ -105,6 +78,62 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                         }
                 }
                 $this->_form_view($curriculum_obj);
+        }
+
+        private function _insert_batch_($datas, $curriculum_id)
+        {
+                if ($datas)
+                {
+                        $ok    = TRUE;
+                        $index = 0;
+                        foreach ($datas as $row)
+                        {
+                                if ($this->type == 'major')
+                                {
+                                        $this->form_validation->set_rules($this->Unit_model->insert_validation($index ++ ));
+                                }
+                                $ok = $this->_insert_one_data((object) $row, $curriculum_id);
+                                if ( ! $ok)
+                                {
+                                        break;
+                                }
+                                /**
+                                 * to not affect next validation
+                                 */
+                                $this->form_validation->reset_validation();
+                        }
+                        return $ok;
+                }
+                return FALSE;
+        }
+
+        private function _insert_one_data($row, $curriculum_id)
+        {
+                if ($this->type == 'major')
+                {
+                        $unit_ok = $this->form_validation->run();
+
+                        $unit_id = $this->Unit_model->insert(array(
+                            'unit_value' => $row->units,
+                            'lec_value'  => $row->lecture,
+                            'lab_value'  => $row->laboratory
+                        ));
+                }
+                else
+                {
+                        $unit_ok = TRUE;
+                        $unit_id = NULL;
+                }
+                $id = $this->Curriculum_subject_model->from_form(NULL, array(
+                            'curriculum_id' => $curriculum_id,
+                            'unit_id'       => $unit_id
+                        ))->insert();
+                if ($this->type == 'minor')
+                {
+                        $unit_id = TRUE;
+                }
+
+                return (bool) ($unit_ok && $unit_id & $id);
         }
 
         /**
@@ -231,54 +260,14 @@ class Create_curriculum_subject extends CI_Capstone_Controller
         private function _form_view($curriculum_obj)
         {
 
-                $inputs['subject_id'] = array(
-                    'name'  => 'subject',
-                    'value' => $this->_dropdown_for_subjects(),
-                    'type'  => 'dropdown',
-                    'lang'  => 'curriculum_subject_subject_label',
-                        // 'note'  => 'Requisites is on the next form after submit this current form.'
-                );
 
-                $inputs['curriculum_subject_year_level'] = array(
-                    'name'  => 'level',
-                    'value' => _numbers_for_drop_down(1, 4),
-                    'type'  => 'dropdown',
-                    'lang'  => 'curriculum_subject_year_level_label',
-                );
-
-                $inputs['curriculum_subject_semester'] = array(
-                    'name'  => 'semester',
-                    'value' => semesters(FALSE),
-                    'type'  => 'dropdown',
-                    'lang'  => 'curriculum_subject_semester_label'
-                );
-                if ($this->type === 'major')
-                {
-                        $inputs['curriculum_subject_lecture_hours'] = array(
-                            'name'  => 'lecture',
-                            'value' => _numbers_for_drop_down(0, 5),
-                            'type'  => 'dropdown',
-                            'lang'  => 'curriculum_subject_lecture_hours_label'
-                        );
-
-                        $inputs['curriculum_subject_laboratory_hours'] = array(
-                            'name'  => 'laboratory',
-                            'value' => _numbers_for_drop_down(0, 9),
-                            'type'  => 'dropdown',
-                            'lang'  => 'curriculum_subject_laboratory_hours_label'
-                        );
-
-                        $inputs['curriculum_subject_units'] = array(
-                            'name'  => 'units',
-                            'value' => _numbers_for_drop_down(1, 6),
-                            'type'  => 'dropdown',
-                            'lang'  => 'curriculum_subject_units_label'
-                        );
-                }
-                $template['curriculum_information']  = MY_Controller::render('admin/_templates/curriculums/curriculum_information', array('curriculum_obj' => $curriculum_obj), TRUE);
-                $template['curriculum_subject_form'] = $this->form_boostrap('create-curriculum-subject?curriculum-id=' . $curriculum_obj->curriculum_id . '&type=' . $this->type, $inputs, 'create_curriculum_subject_label', 'create_curriculum_subject_label', 'info-sign', NULL, TRUE);
-                $template['bootstrap']               = $this->_bootstrap();
-                $this->render('admin/create_curriculum_subject', $template);
+                $inputs['_dropdown_for_subjects']   = $this->_dropdown_for_subjects();
+                $inputs['curriculum_id']            = $curriculum_obj->curriculum_id;
+                $inputs['type']                     = $this->type;
+                $template['curriculum_information'] = MY_Controller::render('admin/_templates/curriculums/curriculum_information', array('curriculum_obj' => $curriculum_obj), TRUE);
+//                $template['curriculum_subject_form'] = $this->form_boostrap('create-curriculum-subject?curriculum-id=' . $curriculum_obj->curriculum_id . '&type=' . $this->type, $inputs, 'create_curriculum_subject_label', 'create_curriculum_subject_label', 'info-sign', NULL, TRUE);
+                $template['bootstrap']              = $this->_bootstrap();
+                $this->render('admin/create_curriculum_subject', array_merge($template, $inputs));
         }
 
         private function _bootstrap()
@@ -286,7 +275,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                 /**
                  * for header
                  */
-                $header       = array(
+                $header = array(
                     'css' => array(
                         'css/bootstrap.min.css',
                         'css/bootstrap-responsive.min.css',
@@ -301,12 +290,13 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                         'http://fonts.googleapis.com/css?family=Open+Sans:400,700,800'
                     ),
                     'js'  => array(
+                        'https://code.jquery.com/jquery-3.2.1.min.js'
                     ),
                 );
                 /**
                  * for footer
                  */
-                $footer       = array(
+                $footer = array(
                     'css' => array(
                     ),
                     'js'  => array(
@@ -329,6 +319,21 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                 /**
                  * footer extra
                  */
+                $search = array(
+                    '/\>[^\S ]+/s',
+                    '/[^\S ]+\</s',
+                    '/(\s)+/s',
+                    '#(?://)?<!\[CDATA\[(.*?)(?://)?\]\]>#s',
+                    '/\>(\s)+\</'
+                );
+
+                $replace      = array(
+                    '>',
+                    '<',
+                    '\\1',
+                    "//&lt;![CDATA[\n" . '\1' . "\n//]]>",
+                    '><'
+                );
                 $footer_extra = '<script type="text/javascript">
         // This function is called from the pop-up menus to transfer to
         // a different page. Ignore if the value returned is a null string:
@@ -352,7 +357,21 @@ class Create_curriculum_subject extends CI_Capstone_Controller
         function resetMenu() {
             document.gomenu.selector.selectedIndex = 2;
         }
-</script>';
+</script>
+<script type="text/javascript">
+
+function loaddata()
+{
+     $(\'#newformplease\').html("' . preg_replace($search, $replace, str_replace('"', '\"', $this->load->view('admin/_templates/form_view', array(
+                                            'index_iputs'            => 1,
+                                            'type'                   => $this->type,
+                                            '_dropdown_for_subjects' => $this->_dropdown_for_subjects()
+                                                ), TRUE))) . '");
+   // alert("hey");
+}
+
+</script>
+';
                 return generate_link_script_tag($header, $footer, $footer_extra);
         }
 

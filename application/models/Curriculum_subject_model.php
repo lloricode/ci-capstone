@@ -134,12 +134,12 @@ class Curriculum_subject_model extends MY_Model
                 return array(
                     'curriculum_subject_year_level' => array(
                         'label' => lang('curriculum_subject_year_level_label'),
-                        'field' => 'level',
+                        'field' => 'data[0][level]',
                         'rules' => 'trim|required|is_natural_no_zero'
                     ),
                     'curriculum_subject_semester'   => array(
                         'label'  => lang('curriculum_subject_semester_label'),
-                        'field'  => 'semester',
+                        'field'  => 'data[0][semester]',
                         'rules'  => 'trim|required|in_list[' . $this->_inlist_semesters() . ']', //must be specific value needed,table type type in enum
                         'errors' => array(
                             'in_list' => 'Invalid value in {field}'
@@ -162,7 +162,7 @@ class Curriculum_subject_model extends MY_Model
 //                    ),
                     'subject_id'                    => array(
                         'label' => lang('curriculum_subject_subject_label'),
-                        'field' => 'subject',
+                        'field' => 'data[0][subject]',
                         'rules' => 'trim|required|is_natural_no_zero|differs[pre_requisite]|differs[co_requisite]|callback_check_subject_in_curiculum'
                     ),
                 );
