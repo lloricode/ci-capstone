@@ -403,13 +403,14 @@ class Students extends CI_Capstone_Controller
                 $header = array(
                     //  lang('student_year_th'),
                     // lang('student_semester_th'),
-                    lang('student_instructor_th'),
                     lang('student_subject_th'), /* lang in students_lang */
+                    lang('student_subject_desc_th'), /* lang in students_lang */
                     lang('student_unit_th'),
                     lang('student_day1_th'),
                     lang('student_start_th'),
                     lang('student_end_th'),
                     lang('student_room_th'),
+                    lang('student_instructor_th'),
 //                    lang('student_day2_th'),
 //                    lang('student_start_th'),
 //                    lang('student_end_th'),

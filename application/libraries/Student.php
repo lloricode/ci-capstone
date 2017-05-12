@@ -423,8 +423,8 @@ class Student extends School_informations
 
                                 $unit       = $this->Curriculum_subject_model->get_unit(NULL, $stud_sub->curriculum_id, $sub_of->subject->subject_id);
                                 $row_output = array(
-                                    $this->_row((($return_html) ? ($sub_of->faculty->last_name . ', ' . $sub_of->faculty->first_name) : $this->User_model->button_link($sub_of->faculty->id, $sub_of->faculty->last_name, $sub_of->faculty->first_name)), $row_count),
                                     $this->_row($sub_of->subject->subject_code, $row_count),
+                                    $this->_row($sub_of->subject->subject_description, $row_count),
                                     $this->_row($unit, $row_count)
                                 );
 
@@ -432,6 +432,7 @@ class Student extends School_informations
                                 {
                                         $row_output[] = $v;
                                 }
+                                $row_output[]  = $this->_row((($return_html) ? ($sub_of->faculty->last_name . ', ' . $sub_of->faculty->first_name) : $this->User_model->button_link($sub_of->faculty->id, $sub_of->faculty->last_name, $sub_of->faculty->first_name)), $row_count);
 //                                $row_output [] = $this->_row($sub_of->subject->subject_rate . ' / ' . ($sub_of->subject->subject_rate * $unit), $row_count);
                                 $row_output [] = $status_return($stud_sub->student_subject_enroll_status, $return_html, $row_count);
 

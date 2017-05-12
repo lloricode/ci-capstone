@@ -104,6 +104,7 @@ $lang['added_subjects_total_units'] = 'Total Units:';
  * for students subject table
  */
 $lang['student_subject_th']    = 'Course';
+$lang['student_subject_desc_th']    = 'Description';
 $lang['student_year_th']       = 'Year';
 $lang['student_semester_th']   = 'Semester';
 $lang['student_instructor_th'] = 'Instructor';
