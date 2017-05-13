@@ -63,7 +63,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                                 /**
                                  * merge validation rules
                                  */
-                                $all_validations    = array_merge($all_validations, $this->Subject_offer_line_model->insert_validations2());
+                                $all_validations    = array_merge($all_validations, $this->Subject_offer_line_model->insert_validations('2'));
                         }
 
                         /**
@@ -243,6 +243,11 @@ class Create_subject_offer extends CI_Capstone_Controller
                 return ($hrs * $total_days);
         }
 
+        private function _suggest_sched()
+        {
+                
+        }
+
         #just in case
 //        private function _unit_validator($unit, $arg = '')
 //        {
@@ -305,7 +310,7 @@ class Create_subject_offer extends CI_Capstone_Controller
          */
         private function _validate_two_shedules()
         {
-                for ($i = 1; $i <= 2; $i ++)
+                for ($i = 1; $i <= 2; $i ++ )
                 {
                         $tmp            = ($i === 1) ? '' : '2';
                         ${'sched' . $i} = array(

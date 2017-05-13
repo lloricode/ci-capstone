@@ -74,70 +74,75 @@ class Subject_offer_line_model extends MY_Model
 //                );
         }
 
-        public function insert_validations()
-        {
-                $validation = array(
-                    array(
-                        'label' => lang('create_subject_offer_start_label'),
-                        'field' => 'start',
-                        'rules' => 'required|trim|min_length[3]|max_length[5]|time_24hr|time_24hr|'
-                        . 'time_lessthan[' . $this->input->post('end', TRUE) . ']|'
-                        . 'callback_subject_offer_check_check_conflict',
-                    ),
-                    array(
-                        'label' => lang('create_subject_offer_end_label'),
-                        'field' => 'end',
-                        'rules' => 'required|trim|min_length[3]|max_length[5]',
-                    ),
-                    array(
-                        'label' => lang('create_room_id_label'),
-                        'field' => 'room',
-                        'rules' => 'trim|required|is_natural_no_zero',
-                    ),
+//        public function insert_validations()
+//        {
+//                $validation = array(
 //                    array(
-//                        'label' => lang('create_type_label'),
-//                        'field' => 'leclab[]',
-//                        'rules' => 'trim|required',
-//                    )
-                );
-                $this->load->helper('day');
-                /**
-                 * additional for days
-                 */
-                foreach (days_for_db() as $d)
-                {
+//                        'label' => lang('create_subject_offer_start_label'),
+//                        'field' => 'start',
+//                        'rules' => 'required|trim|min_length[3]|max_length[5]|time_24hr|time_24hr|'
+//                        . 'time_lessthan[' . $this->input->post('end', TRUE) . ']|'
+//                        . 'callback_subject_offer_check_check_conflict',
+//                    ),
+//                    array(
+//                        'label' => lang('create_subject_offer_end_label'),
+//                        'field' => 'end',
+//                        'rules' => 'required|trim|min_length[3]|max_length[5]',
+//                    ),
+//                    array(
+//                        'label' => lang('create_room_id_label'),
+//                        'field' => 'room',
+//                        'rules' => 'trim|required|is_natural_no_zero',
+//                    ),
+////                    array(
+////                        'label' => lang('create_type_label'),
+////                        'field' => 'leclab[]',
+////                        'rules' => 'trim|required',
+////                    )
+//                );
+//                $this->load->helper('day');
+//                /**
+//                 * additional for days
+//                 */
+//                foreach (days_for_db() as $d)
+//                {
+//
+//                        /**
+//                         * days
+//                         */
+//                        $validation[] = array(
+//                            'label' => ucfirst($d),
+//                            'field' => $d,
+//                            'rules' => '', //not all required
+//                        );
+//                }
+//
+//                return $validation;
+//        }
 
-                        /**
-                         * days
-                         */
-                        $validation[] = array(
-                            'label' => ucfirst($d),
-                            'field' => $d,
-                            'rules' => '', //not all required
-                        );
-                }
-
-                return $validation;
-        }
-
-        public function insert_validations2()
+        public function insert_validations($arg = '')
         {
+                $tmp = '';
+                if ($arg == '2')
+                {
+                        $tmp = '[2]';
+                }
                 $validation = array(
                     array(
                         'label' => lang('create_subject_offer_start_label'),
-                        'field' => 'start2',
+                        'field' => 'start' . $arg,
                         'rules' => 'required|trim|min_length[3]|max_length[5]|time_24hr|time_24hr|'
-                        . 'time_lessthan[' . $this->input->post('end2', TRUE) . ']|'
-                        . 'callback_subject_offer_check_check_conflict[2]',
+                        . 'time_lessthan[' . $this->input->post('end' . $arg, TRUE) . ']|'
+                        . 'callback_subject_offer_check_check_conflict' . $tmp,
                     ),
                     array(
                         'label' => lang('create_subject_offer_end_label'),
-                        'field' => 'end2',
+                        'field' => 'end' . $arg,
                         'rules' => 'required|trim|min_length[3]|max_length[5]',
                     ),
                     'room_id' => array(
                         'label' => lang('create_room_id_label'),
-                        'field' => 'room2',
+                        'field' => 'room' . $arg,
                         'rules' => 'trim|required|is_natural_no_zero',
                     ),
 //                    array(
@@ -158,7 +163,7 @@ class Subject_offer_line_model extends MY_Model
                          */
                         $validation[] = array(
                             'label' => ucfirst($d),
-                            'field' => $d . '2',
+                            'field' => $d . $arg,
                             'rules' => '', //not all required
                         );
                 }
