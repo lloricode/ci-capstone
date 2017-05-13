@@ -243,11 +243,6 @@ class Create_subject_offer extends CI_Capstone_Controller
                 return ($hrs * $total_days);
         }
 
-        private function _suggest_sched()
-        {
-                
-        }
-
         #just in case
 //        private function _unit_validator($unit, $arg = '')
 //        {
@@ -310,7 +305,7 @@ class Create_subject_offer extends CI_Capstone_Controller
          */
         private function _validate_two_shedules()
         {
-                for ($i = 1; $i <= 2; $i ++ )
+                for ($i = 1; $i <= 2; $i ++)
                 {
                         $tmp            = ($i === 1) ? '' : '2';
                         ${'sched' . $i} = array(
@@ -349,10 +344,10 @@ class Create_subject_offer extends CI_Capstone_Controller
                 $this->subject_offer_validation->form_($form_);
                 $this->subject_offer_validation->init('post');
 
-                $conflic             = $this->subject_offer_validation->subject_offer_check_check_conflict();
-                $this->data_conflict = $this->subject_offer_validation->conflict();
+                $conflic       = $this->subject_offer_validation->subject_offer_check_check_conflict();
+                $data_conflict = $this->subject_offer_validation->conflict();
 
-                if ($this->data_conflict)
+                if ($data_conflict)
                 {
                         $inc        = 1;
                         $header     = array(
@@ -365,23 +360,36 @@ class Create_subject_offer extends CI_Capstone_Controller
                             lang('index_room_id_th'),
                         );
                         $table_data = array();
-                        foreach ($this->data_conflict as $subject_offer)
+                        foreach ($data_conflict as $subject_offer)
                         {
-                                $user = $this->User_model->get($subject_offer->user_id);
                                 array_push($table_data, array(
                                     $inc ++,
                                     my_htmlspecialchars(convert_24_to_12hrs($subject_offer->subject_offer_line_start)),
                                     my_htmlspecialchars(convert_24_to_12hrs($subject_offer->subject_offer_line_end)),
                                     my_htmlspecialchars(subject_offers_days($subject_offer)),
-                                    my_htmlspecialchars($user->last_name . ', ' . $user->first_name),
-                                    my_htmlspecialchars($this->Subject_model->get($subject_offer->subject_id)->subject_code),
-                                    my_htmlspecialchars($this->Room_model->get($subject_offer->room_id)->room_number),
+                                    my_htmlspecialchars($subject_offer->faculty->last_name . ', ' . $subject_offer->faculty->first_name),
+                                    my_htmlspecialchars($subject_offer->subject->subject_code),
+                                    my_htmlspecialchars($subject_offer->room->room_number),
                                 ));
                         }
-                        $this->data['conflict_data' . $form_] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', $form_ . 'subject_offer_conflict_data', FALSE, TRUE);
+                        $this->data['conflict_data' . $form_] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'subject_offer_conflict_data' . $form_, FALSE, TRUE);
                 }
                 $this->subject_offer_validation->reset__();
+                if ( ! $conflic)
+                {
+                        $this->_suggest_sched($data_conflict, $header);
+                }
                 return $conflic;
+        }
+
+        private function _suggest_sched($data_conflict, $header)
+        {
+                $table_data = array();
+       
+
+                $header[]                        = 'option';
+                $this->data['suggest_sechedule'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'Suggest Schedules', FALSE, TRUE);
+                //    echo 'im seggest';
         }
 
         private function _form_view($is_error)
