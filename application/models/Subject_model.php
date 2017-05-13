@@ -253,11 +253,11 @@ class Subject_model extends MY_Model
 
                                 if ($total_leclab)
                                 {
-                                        $return = $unit_obj->lec_value + $unit_obj->lab_value;
+                                        $return = $obj->lec_value + $obj->lab_value;
                                 }
                                 else
                                 {
-                                        $return = $unit_obj->unit_value;
+                                        $return = $obj->unit_value;
                                 }
                         }
                 }
