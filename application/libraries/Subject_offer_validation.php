@@ -371,14 +371,10 @@ class Subject_offer_validation
                 if ( ! $this->enable_migrate)
                 {
                         $this->form_validation->set_message(
-                                'subject_offer_check_check_conflict', $this->error_strat_delimeter .
-                                // 'Conflict ' . $this->affected_rows .
-                                'Schedule conflicts ' . $this->affected_rows . ' schedule/s'. br(1) .' above. Refer to table above.' .
-//                                ' schedules.' .
-//                                '<pre>' .
-//                                $this->db->last_query() .
-//                                '</pre>' .
-                                $this->error_end_delimeter);
+                                'subject_offer_check_check_conflict', bootstrap_error('Schedule conflicts ' .
+                                        $this->affected_rows . ' schedule/s' . br(1) .
+                                        ' above. Refer to table above.')
+                        );
                 }
 
                 return (bool) ! $this->affected_rows; //0 is true/means no conflict
