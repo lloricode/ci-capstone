@@ -434,9 +434,10 @@ class Student extends School_informations
                                 }
                                 $row_output[]  = $this->_row((($return_html) ? ($sub_of->faculty->last_name . ', ' . $sub_of->faculty->first_name) : $this->User_model->button_link($sub_of->faculty->id, $sub_of->faculty->last_name, $sub_of->faculty->first_name)), $row_count);
 //                                $row_output [] = $this->_row($sub_of->subject->subject_rate . ' / ' . ($sub_of->subject->subject_rate * $unit), $row_count);
-                                $row_output [] = $status_return($stud_sub->student_subject_enroll_status, $return_html, $row_count);
-
-
+                                if ( ! $return_html)
+                                {
+                                        $row_output [] = $status_return($stud_sub->student_subject_enroll_status, $return_html, $row_count);
+                                }
                                 $subject_offers[] = $row_output;
                                 if ($row_count === 2)// if there a second sched
                                 {

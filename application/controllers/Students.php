@@ -416,8 +416,11 @@ class Students extends CI_Capstone_Controller
 //                    lang('student_end_th'),
 //                    lang('student_room_th'),
 //                    'Rate / Price',
-                    lang('student_status_th')
                 );
+                if (!$return_html)
+                {
+                        $header[] = lang('student_status_th');
+                }
 
 
                 /**
