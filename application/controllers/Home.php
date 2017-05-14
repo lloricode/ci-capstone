@@ -11,6 +11,25 @@ class Home extends CI_Capstone_Controller
                 $this->load->model(array('User_model', 'Course_model', 'Enrollment_model'));
         }
 
+        private function _count_enrolled()
+        {
+                $obj = $this->Enrollment_model->where(array(
+                    'enrollment_status' => TRUE
+                ));
+
+                if ($this->session->userdata('user_is_dean'))
+                {
+                        if ($id = $this->session->userdata('user_dean_course_id'))
+                        {
+                                $obj->where(array(
+                                    'course_id' => $id
+                                ));
+                        }
+                }
+
+                return $obj->count_rows();
+        }
+
         /**
          * Function to show index page with count for dashboard
          * 
@@ -28,9 +47,7 @@ class Home extends CI_Capstone_Controller
                 }
                 if (in_array('students', permission_controllers()))
                 {
-                        $data['student_enrolled_count'] = $this->Enrollment_model->where(array(
-                                    'enrollment_status' => TRUE
-                                ))->count_rows();
+                        $data['student_enrolled_count'] = $this->_count_enrolled();
 
                         $courses_detale = array();
                         if ($this->session->userdata('user_is_dean'))

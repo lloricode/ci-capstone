@@ -212,7 +212,18 @@ class Subject_offer_validation
                 $foriegn_ids['user_id']    = $this->user_id;
                 $foriegn_ids['room_id']    = $this->room_id;
                 $foriegn_ids['subject_id'] = $this->subject_id;
+                
+                $tmp_days='';
+                foreach (days_for_db() as $d)
+                {
+                        $tmp_days.="subject_offer_line_$d," ;
+                }
+                
                 return $this->Subject_offer_line_model->
+                                fields('subject_offer_line_start,subject_offer_line_end,'. trim($tmp_days,','))->
+                                with_subject('fields:subject_code')->
+                                with_room('fields:room_number')->
+                                with_faculty('fields:last_name,first_name')->
                                 //**********
                                 group_start()->//big start
                                 //::::::::::::::::::::::::::::::
@@ -371,14 +382,10 @@ class Subject_offer_validation
                 if ( ! $this->enable_migrate)
                 {
                         $this->form_validation->set_message(
-                                'subject_offer_check_check_conflict', $this->error_strat_delimeter .
-                                // 'Conflict ' . $this->affected_rows .
-                                'Schedule conflicts ' . $this->affected_rows . ' schedule/s'. br(1) .' above. Refer to table above.' .
-//                                ' schedules.' .
-//                                '<pre>' .
-//                                $this->db->last_query() .
-//                                '</pre>' .
-                                $this->error_end_delimeter);
+                                'subject_offer_check_check_conflict', bootstrap_error('Schedule conflicts ' .
+                                        $this->affected_rows . ' schedule/s' . br(1) .
+                                        ' above. Refer to table above.')
+                        );
                 }
 
                 return (bool) ! $this->affected_rows; //0 is true/means no conflict
@@ -390,25 +397,26 @@ class Subject_offer_validation
                 /**
                  * generate name for db cache, so i will use all post value to be using
                  */
-                $db_cache_name = '';
+//                $db_cache_name = '';
 //                foreach ($this->input->post() as $p)
 //                {
 //                        $tmp           = str_replace(' ', '_', $p);
 //                        $db_cache_name .= $tmp . '_';
 //                }
 //                $db_cache_name = trim($db_cache_name, '_');
-                $sub_off       = array();
+//                $sub_off       = array();
                 if ($this->affected_rows)
                 {
-                        $res = $this->_query_group()->
+                        return $this->_query_group()->
                                         //-----------
-                                        set_cache('subject_offer_check_check_conflict_' . $db_cache_name . $this->form_)->get_all();
-                        //echo $this->db->last_query();
-                        foreach ($res as $row)
-                        {
-                                $sub_off[] = $this->Subject_offer_line_model->where(array('subject_offer_id' => $row->subject_offer_id))->get();
-                        }//echo print_r($sub_off);
-                        return $sub_off;
+//                                        set_cache('subject_offer_check_check_conflict_' . $db_cache_name . $this->form_)->
+                                get_all();
+//                        //echo $this->db->last_query();
+//                        foreach ($res as $row)
+//                        {
+//                                $sub_off[] = $this->Subject_offer_line_model->where(array('subject_offer_id' => $row->subject_offer_id))->get();
+//                        }//echo print_r($sub_off);
+//                        return $sub_off;
                 }
                 return FALSE;
                 // return 'test data confict [not implemented yet]<br />' . $this->db->last_query();

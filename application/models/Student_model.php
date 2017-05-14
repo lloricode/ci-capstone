@@ -307,9 +307,9 @@ class Student_model extends MY_Model
                 }
         }
 
-        public function all($limit = NULL, $offset = NULL, $course_id = NULL, $search = NULL, $report = FALSE, $enrolled_status_only = NULL)
+        public function all($limit = NULL, $offset = NULL, $course_id = NULL, $search = NULL, $report = FALSE, $enrolled_status_only = NULL, $is_dean = FALSE)
         {
-                $this->_query_all($course_id, $search, $enrolled_status_only);
+                $this->_query_all($course_id, $search, $enrolled_status_only, $is_dean);
                 $this->db->order_by('enrollment_year_level', 'ASC');
                 $this->db->order_by('student_lastname', 'ASC');
                 $this->db->order_by('created_at', 'DESC');
@@ -323,16 +323,16 @@ class Student_model extends MY_Model
 
                 $this->db->reset_query();
 
-                $this->_query_all($course_id, $search, $enrolled_status_only);
+                $this->_query_all($course_id, $search, $enrolled_status_only, $is_dean);
                 $count = $this->db->count_all_results($this->table);
-                
+
                 return (object) array(
                             'result' => $result,
                             'count'  => $count
                 );
         }
 
-        private function _query_all($course_id = NULL, $search = NULL, $enrolled_status_only = NULL)
+        private function _query_all($course_id = NULL, $search = NULL, $enrolled_status_only = NULL, $is_dean)
         {
 
                 $this->load->model(array('Enrollment_model', 'Course_model', 'User_model'));
@@ -365,12 +365,21 @@ class Student_model extends MY_Model
                 {
                         $this->db->where("$course_table.$course_primary_key=", $course_id);
                 }
+                if ($is_dean)
+                {
+                        $this->db->group_start();
+                }
                 if ( ! is_null($search))
                 {
+
                         $this->db->or_like($table . '.`student_school_id`', $search);
                         $this->db->or_like($table . '.`student_lastname`', $search);
                         $this->db->or_like($table . '.`student_firstname`', $search);
                         $this->db->or_like($table . '.`student_middlename`', $search);
+                }
+                if ($is_dean)
+                {
+                        $this->db->group_end();
                 }
                 if ( ! is_null($enrolled_status_only))
                 {

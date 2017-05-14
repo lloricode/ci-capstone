@@ -54,17 +54,17 @@ class Unit_model extends MY_Model
                     array(//unit_value
                         'label' => lang('unit_unit_label'),
                         'field' => 'units',
-                        'rules' => "trim|required|min_length[1]|max_length[2]|is_natural_no_zero|is_unit_relate_types[$lec.$lab]"
+                        'rules' => "trim|required|min_length[1]|max_length[2]|is_natural_no_zero", //|is_unit_relate_types[$lec.$lab]"
                     ),
                     array(//lec_value
                         'label' => lang('unit_lec_label'),
                         'field' => 'lecture',
-                        'rules' => 'trim|required|min_length[1]|max_length[2]|is_natural'
+                        'rules' => "trim|required|min_length[1]|max_length[2]|is_natural|select_atleast_one[$lab]"
                     ),
                     array(//lab_value
                         'label' => lang('unit_lab_label'),
                         'field' => 'laboratory',
-                        'rules' => 'trim|required|min_length[1]|max_length[2]|is_natural'
+                        'rules' => "trim|required|min_length[1]|max_length[2]|is_natural|select_atleast_one[$lec]"
                     ),
                 );
         }

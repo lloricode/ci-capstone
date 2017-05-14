@@ -364,14 +364,26 @@ class MY_Form_validation extends CI_Form_validation
          * @return boolean
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        public function is_unit_relate_types($value, $leclab)
+//        public function is_unit_relate_types($value, $leclab)
+//        {
+//                list($lec, $lab) = explode('.', $leclab);
+//                $value = (int) $value;
+//                $lec   = (int) $lec;
+//                $lab   = (int) $lab;
+//                $this->CI->form_validation->set_message('is_unit_relate_types', lang('validation_unit_relate_types_failed'));
+//                return (bool) (($lec + $lab) === $value);
+//        }
+
+        public function select_atleast_one($value, $other)
         {
-                list($lec, $lab) = explode('.', $leclab);
                 $value = (int) $value;
-                $lec   = (int) $lec;
-                $lab   = (int) $lab;
-                $this->CI->form_validation->set_message('is_unit_relate_types', lang('validation_unit_relate_types_failed'));
-                return (bool) (($lec + $lab) === $value);
+                $other = (int) $other;
+                if ($value === 0 && $other === 0)
+                {
+                        $this->CI->form_validation->set_message('select_atleast_one', 'Select atleast one of them.');
+                        return FALSE;
+                }
+                return TRUE;
         }
 
 }

@@ -68,8 +68,8 @@ class Subjects extends CI_Capstone_Controller
                                 $tmp = array(
                                     highlight_phrase($subject->subject_code, $subject_search),
                                     highlight_phrase($subject->subject_description, $subject_search),
-                                    $this->_subject_course($subject->course_id),
-                                    my_htmlspecialchars($subject->subject_rate),
+                                    $this->_subject_course($subject->course_id)
+//                                    my_htmlspecialchars($subject->subject_rate),
                                 );
 
                                 if (in_array('edit-subject', permission_controllers()))
@@ -93,7 +93,7 @@ class Subjects extends CI_Capstone_Controller
                     lang('index_subject_code_th'),
                     lang('index_subject_description_th'),
                     lang('index_course_heading'),
-                    lang('curriculum_subject_rate_label'),
+//                    lang('curriculum_subject_rate_label'),
                 );
                 if (in_array('edit-subject', permission_controllers()))
                 {

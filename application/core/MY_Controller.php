@@ -147,14 +147,14 @@ class CI_Capstone_Controller extends MY_Controller
          * @return string
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        public function form_boostrap($_action_or_array, $_inputs_or_returnhtml = FALSE/* FALSE is default when use array */, $_lang_header_or_bootstrap_div = NULL/* for array */, $_lang_button = NULL/* for array */, $_icon = NULL/* for array */, $_hidden_inputs = NULL, $return_html = FALSE, $_error = FALSE, $_form_size = 6, $remove_bootrapt_div = FALSE)
+        public function form_boostrap($_action_or_array, $_inputs_or_returnhtml = FALSE/* FALSE is default when use array */, $_lang_header_or_bootstrap_div = NULL/* for array */, $_lang_button = NULL/* for array */, $_icon = NULL/* for array */, $_hidden_inputs = NULL, $return_html = FALSE, $_error = FALSE, $_form_size = 6, $remove_bootrapt_div = FALSE, $form_open_attrb = NULL)
         {
                 if (is_array($_action_or_array))
                 {
                         $return_html                  = (bool) $_inputs_or_returnhtml;
                         $_data['remove_bootrapt_div'] = $_lang_header_or_bootstrap_div;
                         $required                     = array('inputs', 'action', 'lang_header', 'lang_button', 'icon');
-                        $non_required                 = array('hidden_inputs' => NULL, 'error' => FALSE, 'form_size' => 6);
+                        $non_required                 = array('hidden_inputs' => NULL, 'error' => FALSE, 'form_size' => 6, 'other_attributes_form_open' => FALSE);
 
                         $all_keys = array();
                         foreach ($required as $v)// required
@@ -188,15 +188,16 @@ class CI_Capstone_Controller extends MY_Controller
                 }
                 else
                 {
-                        $_data['inputs']              = $_inputs_or_returnhtml;
-                        $_data['action']              = $_action_or_array;
-                        $_data['lang_header']         = $_lang_header_or_bootstrap_div;
-                        $_data['lang_button']         = $_lang_button;
-                        $_data['icon']                = $_icon;
-                        $_data['hidden_inputs']       = $_hidden_inputs;
-                        $_data['error']               = $_error;
-                        $_data['form_size']           = $_form_size;
-                        $_data['remove_bootrapt_div'] = $remove_bootrapt_div;
+                        $_data['inputs']                     = $_inputs_or_returnhtml;
+                        $_data['action']                     = $_action_or_array;
+                        $_data['lang_header']                = $_lang_header_or_bootstrap_div;
+                        $_data['lang_button']                = $_lang_button;
+                        $_data['icon']                       = $_icon;
+                        $_data['hidden_inputs']              = $_hidden_inputs;
+                        $_data['error']                      = $_error;
+                        $_data['form_size']                  = $_form_size;
+                        $_data['remove_bootrapt_div']        = $remove_bootrapt_div;
+                        $_data['other_attributes_form_open'] = $form_open_attrb;
                 }
                 /**
                  * for 2nd form is need

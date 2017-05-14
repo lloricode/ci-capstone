@@ -63,7 +63,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                                 /**
                                  * merge validation rules
                                  */
-                                $all_validations    = array_merge($all_validations, $this->Subject_offer_line_model->insert_validations2());
+                                $all_validations    = array_merge($all_validations, $this->Subject_offer_line_model->insert_validations('2'));
                         }
 
                         /**
@@ -197,9 +197,9 @@ class Create_subject_offer extends CI_Capstone_Controller
         private function _is_time_hrs_equal_in_unit($sche2)
         {
                 $this->load->helper('time');
-                $subject_id = $this->input->post('subject', TRUE);
+                $subject_id       = $this->input->post('subject', TRUE);
                 //$unit_obj   = $this->Subject_model->get_leclab_hrs($subject_id);
-                $unit_value = $this->Subject_model->get_unit($subject_id);
+                $leclab_total_hrs = $this->Subject_model->get_unit($subject_id, TRUE); //second paramete is to get total lec and lab hours
 
                 $total_hrs_input = 0.0;
                 if ($sche2)
@@ -208,11 +208,11 @@ class Create_subject_offer extends CI_Capstone_Controller
                 }
                 $total_hrs_input += $this->_get_hrs();
 
-                $return = (bool) ($total_hrs_input == $unit_value);
+                $return = (bool) ($total_hrs_input == $leclab_total_hrs);
 
                 if ( ! $return)
                 {
-                        $this->session->set_flashdata('message', bootstrap_error('Schedule did not meet the required ' . strong($unit_value . ' hour(s)') . '. Your input is only ' . strong($total_hrs_input . ' hour(s)') . ', see curriculum for further information.'));
+                        $this->session->set_flashdata('message', bootstrap_error('Schedule did not meet the required ' . strong($leclab_total_hrs . ' hour(s)') . '. Your input is only ' . strong($total_hrs_input . ' hour(s)') . ', see curriculum for further information.'));
                 }
                 return $return;
         }
@@ -344,10 +344,10 @@ class Create_subject_offer extends CI_Capstone_Controller
                 $this->subject_offer_validation->form_($form_);
                 $this->subject_offer_validation->init('post');
 
-                $conflic             = $this->subject_offer_validation->subject_offer_check_check_conflict();
-                $this->data_conflict = $this->subject_offer_validation->conflict();
+                $conflic       = $this->subject_offer_validation->subject_offer_check_check_conflict();
+                $data_conflict = $this->subject_offer_validation->conflict();
 
-                if ($this->data_conflict)
+                if ($data_conflict)
                 {
                         $inc        = 1;
                         $header     = array(
@@ -360,23 +360,36 @@ class Create_subject_offer extends CI_Capstone_Controller
                             lang('index_room_id_th'),
                         );
                         $table_data = array();
-                        foreach ($this->data_conflict as $subject_offer)
+                        foreach ($data_conflict as $subject_offer)
                         {
-                                $user = $this->User_model->get($subject_offer->user_id);
                                 array_push($table_data, array(
                                     $inc ++,
                                     my_htmlspecialchars(convert_24_to_12hrs($subject_offer->subject_offer_line_start)),
                                     my_htmlspecialchars(convert_24_to_12hrs($subject_offer->subject_offer_line_end)),
                                     my_htmlspecialchars(subject_offers_days($subject_offer)),
-                                    my_htmlspecialchars($user->last_name . ', ' . $user->first_name),
-                                    my_htmlspecialchars($this->Subject_model->get($subject_offer->subject_id)->subject_code),
-                                    my_htmlspecialchars($this->Room_model->get($subject_offer->room_id)->room_number),
+                                    my_htmlspecialchars($subject_offer->faculty->last_name . ', ' . $subject_offer->faculty->first_name),
+                                    my_htmlspecialchars($subject_offer->subject->subject_code),
+                                    my_htmlspecialchars($subject_offer->room->room_number),
                                 ));
                         }
-                        $this->data['conflict_data' . $form_] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', $form_ . 'subject_offer_conflict_data', FALSE, TRUE);
+                        $this->data['conflict_data' . $form_] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'subject_offer_conflict_data' . $form_, FALSE, TRUE);
                 }
                 $this->subject_offer_validation->reset__();
+                if ( ! $conflic)
+                {
+                        $this->_suggest_sched($data_conflict, $header);
+                }
                 return $conflic;
+        }
+
+        private function _suggest_sched($data_conflict, $header)
+        {
+                $table_data = array();
+       
+
+                $header[]                        = 'option';
+                $this->data['suggest_sechedule'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'Suggest Schedules', FALSE, TRUE);
+                //    echo 'im seggest';
         }
 
         private function _form_view($is_error)

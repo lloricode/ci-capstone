@@ -59,7 +59,7 @@ $lang['index_student_year_level_th']        = 'Year Level';
 /**
  * excel report header
  */
-$lang['index_student_is_enrolled']        = 'Is Enrolled';
+$lang['index_student_is_enrolled'] = 'Is Enrolled';
 
 $lang['index_student_guardian_fullname_th'] = 'Guardian Fullname';
 $lang['index_student_town_th']              = 'Town';
@@ -104,6 +104,7 @@ $lang['added_subjects_total_units'] = 'Total Units:';
  * for students subject table
  */
 $lang['student_subject_th']    = 'Course';
+$lang['student_subject_desc_th']    = 'Description';
 $lang['student_year_th']       = 'Year';
 $lang['student_semester_th']   = 'Semester';
 $lang['student_instructor_th'] = 'Instructor';
@@ -151,3 +152,5 @@ $lang['student_requirements_honorable_dismissal'] = 'Honorable Dismissal';
 $lang['student_requirements_transcript']          = 'Transcript of Records';
 
 $lang['student_requirements_certificate_of_rating'] = 'Certificate of Rating';
+
+$lang['student_search_label'] = 'Search Student';

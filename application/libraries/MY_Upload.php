@@ -61,11 +61,8 @@ class MY_Upload extends CI_Upload
                                  * with error delimiter in ion_auth config
                                  */
                                 $image_error_message = //$this->_CI->config->item('error_start_delimiter', 'ion_auth') .
-                                        $this->_CI->upload->display_errors() ;
-                                      //  $this->_CI->config->item('error_end_delimiter', 'ion_auth');
-                                
-                                $image_error_message= str_replace('<p>', '', $image_error_message);
-                                $image_error_message= str_replace('</p>', '', $image_error_message);
+                                        $this->_CI->upload->display_errors('', '');
+                                //  $this->_CI->config->item('error_end_delimiter', 'ion_auth');
                         }
                 }
                 return array(

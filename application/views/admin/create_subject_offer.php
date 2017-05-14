@@ -3,14 +3,22 @@ defined('BASEPATH') or exit('Direct Script is not allowed');
 if (isset($conflict_data))
 {
         echo $conflict_data;
+        unset($conflict_data);
 }
 if (isset($conflict_data2))
 {
         echo $conflict_data2;
+        unset($conflict_data2);
 }
 if (isset($two_forms_conflict_message))
 {
         echo $two_forms_conflict_message;
+        unset($two_forms_conflict_message);
+}
+if (isset($suggest_sechedule))
+{
+        echo $suggest_sechedule;
+        unset($suggest_sechedule);
 }
 echo form_open(site_url('create-subject-offer'), array(
     'class'      => 'form-horizontal',

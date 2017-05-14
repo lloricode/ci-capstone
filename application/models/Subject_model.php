@@ -129,15 +129,15 @@ class Subject_model extends MY_Model
                         'errors' => array(
                             'is_unique' => 'The {field} already exist.'
                         )
-                    ),
-                    'subject_rate' => array(
-                        'label'  => lang('curriculum_subject_rate_label'),
-                        'field'  => 'rate',
-                        'rules'  => 'trim|required|decimal|min_length[1]|max_length[5]',
-                        'errors' => array(
-                            'decimal' => 'The {field} is not a valid number.'
-                        )
                     )
+//                    'subject_rate' => array(
+//                        'label'  => lang('curriculum_subject_rate_label'),
+//                        'field'  => 'rate',
+//                        'rules'  => 'trim|required|decimal|min_length[1]|max_length[5]',
+//                        'errors' => array(
+//                            'decimal' => 'The {field} is not a valid number.'
+//                        )
+//                    )
                 );
         }
 
@@ -203,12 +203,12 @@ class Subject_model extends MY_Model
         }
 
         // public function get_leclab_hrs($id)
-        public function get_unit($id)
+        public function get_unit($id, $total_leclab = FALSE)
         {
-                $obj  = $this->fields('unit_id,course_id')->get($id);
+                $obj    = $this->fields('unit_id,course_id')->get($id);
 //                $lec = 0;
 //                $lab = 0;
-                $unit = 0;
+                $return = 0;
                 if ($obj)
                 {
                         $this->load->model('Unit_model');
@@ -217,12 +217,15 @@ class Subject_model extends MY_Model
                                 /**
                                  * minor
                                  */
-                                $unit = $this->with_unit('fields:unit_value')->get($id)->unit->unit_value;
-//                                if ($tmp)
-//                                {
-//                                        $lec = $tmp->unit->lec_value;
-//                                        $lab = $tmp->unit->lab_value;
-//                                }
+                                $obj = $this->with_unit('fields:unit_value,lec_value,lab_value')->get($id);
+                                if ($total_leclab)
+                                {
+                                        $return = $obj->unit->lec_value + $obj->unit->lab_value;
+                                }
+                                else
+                                {
+                                        $return = $obj->unit->unit_value;
+                                }
                         }
                         else
                         {
@@ -246,16 +249,19 @@ class Subject_model extends MY_Model
                                                 ))->
                                                 get()->unit_id;
 
-                                $unit = $this->Unit_model->fields('unit_value')->get($unit_id)->unit_value;
+                                $obj = $this->Unit_model->fields('unit_value,lec_value,lab_value')->get($unit_id);
 
-//                                if ($unit_obj)
-//                                {
-//                                        $lec = $unit_obj->lec_value;
-//                                        $lab = $unit_obj->lab_value;
-//                                }
+                                if ($total_leclab)
+                                {
+                                        $return = $obj->lec_value + $obj->lab_value;
+                                }
+                                else
+                                {
+                                        $return = $obj->unit_value;
+                                }
                         }
                 }
-                return (int) $unit;
+                return (int) $return;
         }
 
 }
