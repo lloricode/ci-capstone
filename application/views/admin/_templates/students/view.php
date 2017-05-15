@@ -121,13 +121,13 @@ $function_row_td = function ($link, $label, $popup = FALSE)
                                                     echo $function_row_td('edit-student?student-id=' . $this->student->id, 'Edit');
                                             }
                                             $link  = '&subject=all';
-                                            $label = 'test view all';
+                                            $label = 'View All Courses';
                                             if ($key   = $this->input->get('subject'))
                                             {
                                                     if ($key == 'all')
                                                     {
                                                             $link  = '';
-                                                            $label = 'test view current';
+                                                            $label = 'View Current Courses';
                                                     }
                                                     unset($key);
                                             }

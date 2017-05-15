@@ -138,7 +138,7 @@ class Student extends School_informations
                         case 'school_year':
                                 return $this->__enrollment->enrollment_school_year;
                         case 'semester':
-                                return semesters($this->__enrollment->enrollment_semester);
+                                return semesters($this->__enrollment->enrollment_semester, FALSE, 'short');
                         case 'enrollment_id':
                                 return $this->__enrollment->enrollment_id;
                         case 'curriculum_id':
@@ -178,7 +178,7 @@ class Student extends School_informations
                 {
                         return $this->_not_enrolled_msg;
                 }
-                return $this->__enrollment->enrollment_school_year . ', ' . semesters($this->__enrollment->enrollment_semester);
+                return $this->__enrollment->enrollment_school_year . ', ' . semesters($this->__enrollment->enrollment_semester, FALSE, 'short');
         }
 
         public function school_id($alter = FALSE)

@@ -91,12 +91,12 @@ if ( ! function_exists('current_school_semester'))
          * @return string current month that will be save in database
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        function current_school_semester($key = FALSE)
+        function current_school_semester($key = FALSE, $shorten = FALSE)
         {
 
                 $CI                       = &get_instance();
                 $CI->load->helper('month');
-                $terms                    = semesters();
+                $terms                    = semesters(FALSE, FALSE, 'short');
                 $output                   = NULL;
                 /**
                  * get configuration 

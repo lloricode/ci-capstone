@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="isNew">
             <input type="checkbox"> New Student<br>
             <input type="checkbox"> Old Student
-            <p class="marginTop_10"> Semester: <u><?php echo $this->student->semester; ?></u></p>
+            <p class="marginTop_10"> Term: <u><?php echo $this->student->semester; ?></u></p>
             <p class="marginTop_10"> S.Y: <u><?php echo $this->student->school_year; ?></u></p>
         </div>
 
