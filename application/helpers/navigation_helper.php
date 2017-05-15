@@ -487,7 +487,7 @@ if ( ! function_exists('sidebar_menu_ci_capstone'))
                 /**
                  * current semester && school_year
                  */
-                $current_term = '<li class="content">' . current_school_year() . ', ' . current_school_semester() . '</li>';
+                $current_term = '<li class="content">' . current_school_year() . ', ' . current_school_semester(FALSE, TRUE) . '</li>';
                 return $return . $status__ . $current_term . '</ul>' . PHP_EOL . comment_tag('end-navigations');
         }
 

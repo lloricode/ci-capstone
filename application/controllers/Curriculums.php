@@ -326,7 +326,7 @@ class Curriculums extends CI_Capstone_Controller
 
                         $template['create_curriculum_subject_monor_button'] = MY_Controller::render('admin/_templates/button_view', array(
                                     'href'         => 'create-curriculum-subject?curriculum-id=' . $curriculum_obj->curriculum_id . '&type=minor',
-                                    'button_label' => 'Add Gen-Ed Subject', //lang('create_curriculum_subject_label'),
+                                    'button_label' => 'Add Service Subject', //lang('create_curriculum_subject_label'),
                                     'extra'        => array('class' => 'btn btn-success icon-edit'),
                                         ), TRUE);
                 }
