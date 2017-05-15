@@ -105,10 +105,10 @@ class User_model extends MY_Model
                 return $this->button_link($id, $ln, $fn) . br() . unix_to_human($time);
         }
 
-        public function button_link($id, $ln, $fn)
+        public function button_link($id, $ln, $fn, $ignore_btn = FALSE)
         {
                 $label = $ln . ', ' . $fn;
-                if (in_array('edit-user', permission_controllers()))
+                if (in_array('edit-user', permission_controllers()) && !$ignore_btn)
                 {
                         $url = 'edit-user?user-id=' . $id;
                         return table_row_button_link($url, $label);
