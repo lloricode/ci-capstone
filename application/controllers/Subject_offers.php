@@ -5,7 +5,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Subject_offers extends CI_Capstone_Controller
 {
 
-
         private $page_;
         private $limit;
 
@@ -29,7 +28,7 @@ class Subject_offers extends CI_Capstone_Controller
         /**
          * @contributor Jinkee Po <pojinkee1@gmail.com>
          */
-        public function index()
+        public function index($report = FALSE)
         {
 
                 /**
@@ -46,7 +45,7 @@ class Subject_offers extends CI_Capstone_Controller
                 {
                         foreach ($subl as $s)
                         {
-                                if ( ! isset($s->subject_line))
+                                if (!isset($s->subject_line))
                                 {
                                         // continue;
                                 }
@@ -59,26 +58,30 @@ class Subject_offers extends CI_Capstone_Controller
                                 $row_count = 0;
                                 foreach ($s->subject_line as $su_l)
                                 {
-                                        ++ $row_count;
+                                        ++$row_count;
                                         ${'sched' . $row_count} = array(
                                             subject_offers_days($su_l),
 //                                            $this->_type($su_l->subject_offer_line_lec, $su_l->subject_offer_line_lab),
                                             convert_24_to_12hrs($su_l->subject_offer_line_start),
                                             convert_24_to_12hrs($su_l->subject_offer_line_end),
-                                            $su_l->room->room_number,
-                                            $this->_room_capacity($s->subject_offer_id, $su_l->room->room_capacity)
+                                            $su_l->room->room_number
+                                           
                                         );
+                                        if (!$report)
+                                        {
+                                             ${'sched' . $row_count}[]= $this->_room_capacity($s->subject_offer_id, $su_l->room->room_capacity);   
+                                        }
                                 }
 
                                 $row_output   = array();
-                                $row_output[] = $this->_row($s->subject->subject_code, $row_count);
+                                $row_output[] = $this->_row($s->subject->subject_code, $row_count, $report);
 
-                                if ( ! $this->_for_faculty_group())
+                                if (!$this->_for_faculty_group())
                                 {
                                         /**
                                          *  if current user_group is faculty, no need to view who faculty of schedule
                                          */
-                                        $row_output[] = $this->_row($this->User_model->button_link($s->faculty->id, $s->faculty->last_name, $s->faculty->first_name), $row_count);
+                                        $row_output[] = $this->_row($this->User_model->button_link($s->faculty->id, $s->faculty->last_name, $s->faculty->first_name, TRUE/* ignore creating btn */), $row_count, $report);
                                 }
 
                                 foreach ($sched1 as $v)
@@ -86,12 +89,16 @@ class Subject_offers extends CI_Capstone_Controller
                                         $row_output[] = $v;
                                 }
 //                                $row_output[] = $this->_row($s->subject->subject_rate, $row_count);
-                                $row_output[] = $this->_row($this->_option_button_view($s->subject_offer_id), $row_count);
-                                if ($this->ion_auth->is_admin())
+                                if (!$report)
+                                {
+                                        $row_output[] = $this->_row($this->_option_button_view($s->subject_offer_id), $row_count, $report);
+                                }
+
+                                if ($this->ion_auth->is_admin() && !$report)
                                 {
 
-                                        $row_output[] = $this->_row($this->User_model->modidy($s, 'created'), $row_count);
-                                        $row_output[] = $this->_row($this->User_model->modidy($s, 'updated'), $row_count);
+                                        $row_output[] = $this->_row($this->User_model->modidy($s, 'created'), $row_count, $report);
+                                        $row_output[] = $this->_row($this->User_model->modidy($s, 'updated'), $row_count, $report);
                                 }
                                 $table_data[] = $row_output;
 
@@ -117,10 +124,21 @@ class Subject_offers extends CI_Capstone_Controller
                     lang('index_subject_offer_start_th'),
                     lang('index_subject_offer_end_th'),
                     lang('index_room_id_th'),
-                    lang('index_room_capacity_th'),
+//                    lang('index_room_capacity_th'),
 //                    'Course Rate',
-                    'Option'
+//                    'Option'
                 );
+
+                if ($report)
+                {
+                        return (object) array(
+                                    'header'     => $header,
+                                    'table_data' => $table_data
+                        );
+                }
+                $header[] = lang('index_room_capacity_th');
+                $header[] = 'Option';
+                
                 if ($this->_for_faculty_group())
                 {
                         /**
@@ -146,6 +164,12 @@ class Subject_offers extends CI_Capstone_Controller
 
                 $pagination = $this->pagination->generate_bootstrap_link('subject-offers/index', $count / $this->limit);
 
+                $template['print_schedule_btn'] = MY_Controller::render('admin/_templates/button_view', array(
+                            'href'         => 'subject-offers/report-schedule',
+                            'button_label' => 'Excel Report for Subject Offers',
+                            'extra'        => array('class' => 'btn btn-success icon-print'),
+                                ), TRUE);
+
                 $template['table_subject_offers'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'index_subject_offer_heading', $pagination, TRUE);
                 $template['message']              = (($this->ion_auth->errors() ? $this->ion_auth->errors() : $this->session->flashdata('message')));
                 $template['bootstrap']            = $this->_bootstrap();
@@ -155,9 +179,9 @@ class Subject_offers extends CI_Capstone_Controller
                 $this->render('admin/subject_offers', $template);
         }
 
-        private function _row($data, $row_span)
+        private function _row($data, $row_span, $igore)
         {
-                if ($row_span > 1)
+                if ($row_span > 1 && !$igore)
                 {
                         return array('data' => $data, 'rowspan' => "$row_span");
                 }
@@ -201,7 +225,7 @@ class Subject_offers extends CI_Capstone_Controller
                 {
                         $return .= 'LAB';
                 }
-                if ( ! $lec && ! $lab)
+                if (!$lec && !$lab)
                 {
                         $return = '--';
                 }
@@ -301,6 +325,16 @@ class Subject_offers extends CI_Capstone_Controller
                         $this->excel->filename = 'Report Schedule.';
                         $this->excel->make_from_array($data->header, $data->data);
                 }
+        }
+
+        public function report_schedule()
+        {
+
+                $data                  = $this->index(TRUE);
+                $this->load->library('excel');
+                $this->excel->filename = 'Report Subject Offers.';
+
+                $this->excel->make_from_array($data->header, $data->table_data);
         }
 
         /**
