@@ -6,6 +6,10 @@ class Create_subject_offer extends CI_Capstone_Controller
 {
 
 
+        private $_is_conflict;
+        private $_is_conflict2;
+//        private $_conflict_data;
+//        private $_conflict_data2;
         private $data;
 
         function __construct()
@@ -22,6 +26,9 @@ class Create_subject_offer extends CI_Capstone_Controller
                  */
                 $this->load->library('table');
                 $this->load->helper('time');
+
+                $this->_is_conflict  = FALSE;
+                $this->_is_conflict2 = FALSE;
         }
 
         /**
@@ -53,7 +60,7 @@ class Create_subject_offer extends CI_Capstone_Controller
                          * check if second schedule if excluded
                          */
                         $sched_id2 = TRUE;
-                        $exclude   = $this->input->post('exclude'); //see view for this code
+                        $exclude   = $this->input->post('exclude', TRUE); //see view for this code
                         if ( ! ($exclude && ! empty($exclude)))
                         {
                                 /**
@@ -188,6 +195,11 @@ class Create_subject_offer extends CI_Capstone_Controller
                                 if ( ! $exclude)
                                 {
                                         $is_error = TRUE;
+                                }
+
+                                if ($this->_is_conflict OR $this->_is_conflict2)
+                                {
+                                        $this->_suggest_sched();
                                 }
                         }
                 }
@@ -349,47 +361,172 @@ class Create_subject_offer extends CI_Capstone_Controller
 
                 if ($data_conflict)
                 {
-                        $inc        = 1;
-                        $header     = array(
-                            '#',
-                            lang('index_subject_offer_start_th'),
-                            lang('index_subject_offer_end_th'),
-                            lang('index_subject_offer_days_th'),
-                            lang('index_user_id_th'),
-                            lang('index_subject_id_th'),
-                            lang('index_room_id_th'),
-                        );
-                        $table_data = array();
+                        $this->{'_conflict_data' . $form_} = $data_conflict;
+                        $inc                               = 1;
+                        $table_data                        = array();
                         foreach ($data_conflict as $subject_offer)
                         {
                                 array_push($table_data, array(
                                     $inc ++,
+                                    my_htmlspecialchars($subject_offer->subject->subject_code),
+                                    my_htmlspecialchars(subject_offers_days($subject_offer)),
                                     my_htmlspecialchars(convert_24_to_12hrs($subject_offer->subject_offer_line_start)),
                                     my_htmlspecialchars(convert_24_to_12hrs($subject_offer->subject_offer_line_end)),
-                                    my_htmlspecialchars(subject_offers_days($subject_offer)),
-                                    my_htmlspecialchars($subject_offer->faculty->last_name . ', ' . $subject_offer->faculty->first_name),
-                                    my_htmlspecialchars($subject_offer->subject->subject_code),
                                     my_htmlspecialchars($subject_offer->room->room_number),
+                                    my_htmlspecialchars($subject_offer->faculty->last_name . ', ' . $subject_offer->faculty->first_name),
                                 ));
                         }
+                        $header                               = array(
+                            '#',
+                            lang('index_subject_id_th'),
+                            lang('index_subject_offer_days_th'),
+                            lang('index_subject_offer_start_th'),
+                            lang('index_subject_offer_end_th'),
+                            lang('index_room_id_th'),
+                            lang('index_user_id_th')
+                        );
                         $this->data['conflict_data' . $form_] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'subject_offer_conflict_data' . $form_, FALSE, TRUE);
                 }
                 $this->subject_offer_validation->reset__();
-                if ( ! $conflic)
-                {
-                        $this->_suggest_sched($data_conflict, $header);
-                }
+                $this->{'_is_conflict' . $form_ } = ! $conflic;
                 return $conflic;
         }
 
-        private function _suggest_sched($data_conflict, $header)
+        private function _suggest_sched()
         {
-                $table_data = array();
-       
-
+                $header                          = array(
+                    '#',
+//                    lang('index_subject_id_th'),
+                    lang('index_subject_offer_days_th'),
+                    lang('index_subject_offer_start_th'),
+                    lang('index_subject_offer_end_th'),
+//                    lang('index_room_id_th'),
+//                    lang('index_user_id_th'),
+                );
                 $header[]                        = 'option';
-                $this->data['suggest_sechedule'] = $this->table_bootstrap($header, $table_data, 'table_open_bordered', 'Suggest Schedules', FALSE, TRUE);
+                $this->data['suggest_sechedule'] = $this->table_bootstrap($header, $this->_suggest_sched_generate(), 'table_open_bordered', 'Suggest Schedules', FALSE, TRUE);
                 //    echo 'im seggest';
+        }
+
+        private function _suggest_sched_generate()
+        {
+
+
+                $return = array();
+
+                $subject_id = $this->input->post('subject', TRUE);
+
+                $subject_hrs  = $this->Subject_model->get_unit($subject_id, TRUE);
+                $subject_code = $this->Subject_model->get($subject_id)->subject_code;
+
+                $room_number = $this->Room_model->get($this->input->post('room', TRUE))->room_number;
+
+                $faculty_obj = $this->User_model->get($this->input->post('faculty', TRUE));
+                $faculty     = $faculty_obj->last_name . ', ' . $faculty_obj->first_name;
+
+
+
+                $row     = 1;
+                $days2   = '';
+                $exclude = $this->input->post('exclude', TRUE); //see view for this code
+                if ( ! ($exclude && ! empty($exclude)))
+                {
+                        $row ++;
+                        foreach (days_for_db() as $k => $d)
+                        {
+                                if ($this->input->post($d . '2', TRUE))
+                                {
+                                        $days2                                   .= $k;
+                                        $days_where2['subject_offer_line_' . $d] = '1';
+                                }
+                        }
+                        //get all same sched except hours
+                        $exist_sched2_obj = $this->Subject_offer_line_model->
+                                        fields('subject_offer_line_start AS start,subject_offer_line_end AS end')->
+                                        where(array_merge(
+                                                        $days_where2, array(
+                                            'room_id'    => $this->input->post('room2', TRUE),
+                                            'subject_id' => $this->input->post('faculty', TRUE),
+                                            'user_id'    => $this->input->post('subject', TRUE),
+                                        )))->get_all();
+                }
+
+                $days       = '';
+                $days_where = array();
+                foreach (days_for_db() as $k => $d)
+                {
+                        if ($this->input->post($d, TRUE))
+                        {
+                                $days                                   .= $k;
+                                $days_where['subject_offer_line_' . $d] = '1';
+                        }
+                }
+
+
+//===============================================================
+                //get all same sched except hours
+                $exist_sched_obj = $this->Subject_offer_line_model->
+                                fields('subject_offer_line_start AS start,subject_offer_line_end AS end')->
+                                or_where($days_where)->
+                                where(array(
+                                    'room_id'    => $this->input->post('room', TRUE),
+                                    'subject_id' => $this->input->post('faculty', TRUE),
+                                    'user_id'    => $this->input->post('subject', TRUE),
+                                ))->get_all();
+                echo $this->db->last_query();
+//                print_r($exist_sched_obj);
+//                $time_1 = array();
+//                if ($exist_sched_obj)
+//                {
+//                        foreach ($exist_sched_obj as $v)
+//                        {
+//                                $time_1[] = array(
+//                                    'start'=>$v->,
+//                                    'end'=>''
+//                                        );
+//                        }
+//                }
+                if ($exist_sched_obj)
+                {
+                        $time_conflicts = array();
+                        foreach ($exist_sched_obj as $v)
+                        {
+                                $time_conflicts[] = array(
+                                    'start' => convert_24hrs_to_seconds($v->start),
+                                    'end'   => convert_24hrs_to_seconds($v->end)
+                                );
+
+                                $return[] = array(
+                                    $this->_row('#', $row),
+//                            $this->_row($subject_code, $row),
+                                    $days,
+                                    $v->start,
+                                    $v->end,
+//                            $room_number,
+//                            $this->_row($faculty, $row),
+                                    $this->_row('option', $row)
+                                );
+                                if ($row != 1)
+                                {
+
+
+
+                                        $return[] = array(
+                                            $days2,
+                                            'star2222',
+                                            'end222'
+                                        );
+                                }
+                        }
+                }
+//                echo convert_seconds_to_12hrs(convert_24hrs_to_seconds('18:13:43'));
+//===============================================================
+                return $return;
+        }
+
+        private function _row($data, $count)
+        {
+                return array('data' => $data, 'rowspan' => $count);
         }
 
         private function _form_view($is_error)

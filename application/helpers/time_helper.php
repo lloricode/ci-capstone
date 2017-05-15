@@ -159,3 +159,28 @@ if ( ! function_exists('convert_24hrs_to_seconds'))
 
 }
 
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('convert_seconds_to_24hrs'))
+{
+
+        function convert_seconds_to_24hrs($sec)
+        {
+                return gmdate("H:i", $sec);
+        }
+
+}
+
+
+// ------------------------------------------------------------------------
+
+if ( ! function_exists('convert_seconds_to_12hrs'))
+{
+
+        function convert_seconds_to_12hrs($sec)
+        {
+                return convert_24_to_12hrs(gmdate("H:i", $sec));
+        }
+
+}
+
