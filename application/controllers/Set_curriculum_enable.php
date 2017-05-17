@@ -58,14 +58,18 @@ class Set_curriculum_enable extends CI_Capstone_Controller
                                 $updated     = $this->Curriculum_model->update($data, 'curriculum_id');
                                 $is_has_subj = $this->Curriculum_subject_model->is_has_subject($curriculum_obj->curriculum_id);
 
-                                if (!$updated OR ! $updated2 OR ! $is_has_subj)
+                                $min_unit = $this->_check_minimum_units();
+                                if ( ! $min_unit OR ! $updated OR ! $updated2 OR ! $is_has_subj)
                                 {
                                         /**
                                          * rollback database
                                          */
                                         $this->db->trans_rollback();
-
-                                        if (!$is_has_subj)
+                                        if ( ! $min_unit)
+                                        {
+                                                $this->session->set_flashdata('message', bootstrap_error('Below Minimum Unit is not allowed.'));
+                                        }
+                                        elseif ( ! $is_has_subj)
                                         {
 
                                                 $this->session->set_flashdata('message', bootstrap_error('no_subjects_in_curriculum'));
@@ -79,9 +83,36 @@ class Set_curriculum_enable extends CI_Capstone_Controller
                                         }
                                 }
                         }
-                        redirect('curriculums', 'refresh');
+                      redirect('curriculums', 'refresh');
                 }
                 $this->_form_view($curriculum_obj);
+        }
+
+        private function _check_minimum_units()
+        {
+
+                //get unit limit config
+                $this->config->load('admin/curriculum_subject', TRUE);
+                $first_min   = $this->config->item('first_semester_min_unit_limit', 'admin/curriculum_subject');
+                $second_min = $this->config->item('second_semester_min_unit_limit', 'admin/curriculum_subject');
+                $summer_min  = $this->config->item('summer_semester_min_unit_limit', 'admin/curriculum_subject');
+
+
+
+                $unit_obj = $this->Curriculum_model->get_all_term_units($this->input->get('curriculum-id', TRUE));
+
+                if ($unit_obj)
+                {
+                        foreach ($unit_obj as $row)
+                        {
+                                if (${$row->sem . '_min'} < $row->unit)
+                                {
+                                        return FALSE;
+                                }
+                        }
+                        return TRUE;
+                }
+                return FALSE;
         }
 
         private function _form_view($curriculum_obj)

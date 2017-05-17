@@ -116,7 +116,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                 //get unit limit config
                 $this->config->load('admin/curriculum_subject', TRUE);
                 $input_semester    = $this->input->post('semester', TRUE);
-                $unit_limit_config = $this->config->item("{$input_semester}_semester_unit_limit", 'admin/curriculum_subject');
+                $unit_max_limit_config = $this->config->item("{$input_semester}_semester_max_unit_limit", 'admin/curriculum_subject');
 
                 //get unit in selected subject
                 $unit_from_selected_input = $this->Subject_model->get_unit($this->input->post('subject', TRUE));
@@ -129,9 +129,9 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                 $new_total_unit = $unit_from_selected_input + $total_unit_in_term;
 
                 //compare it from config
-                if ($new_total_unit > $unit_limit_config)
+                if ($new_total_unit > $unit_max_limit_config)
                 {
-                        $this->session->set_flashdata('message', bootstrap_error("Only $unit_limit_config unit(s) allowed in Term"));
+                        $this->session->set_flashdata('message', bootstrap_error("Only $unit_max_limit_config unit(s) allowed in Term"));
                         return FALSE;
                 }
                 //else ok
