@@ -85,14 +85,18 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                                 $unit_id = TRUE;
                         }
 
-
-                        if ( ! $this->_is_subject_course($curriculum_obj->curriculum_id) OR ! $id OR ! $unit_id OR ! $unit_ok)
+                        $unit_limit = $this->_unit_term_limit();
+                        if ( ! $unit_limit OR ! $this->_is_subject_course($curriculum_obj->curriculum_id) OR ! $id OR ! $unit_id OR ! $unit_ok)
                         {
                                 /**
                                  * rollback database
                                  */
                                 $this->db->trans_rollback();
-                                $this->session->set_flashdata('message', bootstrap_error('curriculum_subject_add_unsuccessfull'));
+                                if ($unit_limit)
+                                {
+                                        
+                                        $this->session->set_flashdata('message', bootstrap_error('curriculum_subject_add_unsuccessfull'));
+                                }
                         }
                         else
                         {
@@ -105,6 +109,33 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                         }
                 }
                 $this->_form_view($curriculum_obj);
+        }
+
+        private function _unit_term_limit()
+        {
+                //get unit limit config
+                $this->config->load('admin/curriculum_subject', TRUE);
+                $input_semester    = $this->input->post('semester', TRUE);
+                $unit_limit_config = $this->config->item("{$input_semester}_semester_unit_limit", 'admin/curriculum_subject');
+
+                //get unit in selected subject
+                $unit_from_selected_input = $this->Subject_model->get_unit($this->input->post('subject', TRUE));
+
+                //get total unit in select term AND year
+                $total_unit_in_term = $this->Curriculum_subject_model->total_units_per_term($this->input->get('curriculum-id', TRUE), $input_semester, $this->input->post('level', TRUE));
+
+
+                //add new unit PLUS total unit
+                $new_total_unit = $unit_from_selected_input + $total_unit_in_term;
+
+                //compare it from config
+                if ($new_total_unit > $unit_limit_config)
+                {
+                        $this->session->set_flashdata('message', bootstrap_error("Only $unit_limit_config unit(s) allowed in Term"));
+                        return FALSE;
+                }
+                //else ok
+                return TRUE;
         }
 
         /**
