@@ -20,6 +20,10 @@ if (isset($table_corriculum_subjects))
         {
                 echo $view_by_semester_btn;
         }
+         if (isset($export_curriculum_btn))
+        {
+                echo $export_curriculum_btn;
+        }
         echo $table_corriculum_subjects;
 }
 

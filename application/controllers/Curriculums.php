@@ -223,21 +223,6 @@ class Curriculums extends CI_Capstone_Controller
 
         public function view()
         {
-                $curriculum_obj = check_id_from_url('curriculum_id', 'Curriculum_model', 'curriculum-id', 'course');
-                $this->breadcrumbs->unshift(2, lang('curriculum_label'), 'curriculums');
-                $this->breadcrumbs->unshift(3, lang('curriculum_subject_label'), 'curriculums/view?curriculum-id=' . $curriculum_obj->curriculum_id);
-
-                $this->load->model(array('Curriculum_subject_model', 'Subject_model', 'Requisites_model', 'Unit_model'));
-                $this->load->helper(array('number', 'text'));
-                $highlight_phrase = '';
-
-                if ($h = $this->input->get('highlight'))
-                {
-                        $highlight_phrase = $h;
-                }
-
-                $label    = 'Current Semester';
-                $url_link = '&semester=current';
                 $all_current_semester = FALSE;
 
                 if ($semster_value = $this->input->get('semester'))
@@ -249,72 +234,19 @@ class Curriculums extends CI_Capstone_Controller
                                 $all_current_semester = TRUE;
                         }
                 }
+                $tmp_result     = $this->_curriculum_subjects($all_current_semester);
+                $header         = $tmp_result['header'];
+                $table_data     = $tmp_result['data'];
+                $curriculum_obj = $tmp_result['curriculum_obj'];
+                unset($tmp_result);
 
+                $this->breadcrumbs->unshift(2, lang('curriculum_label'), 'curriculums');
+                $this->breadcrumbs->unshift(3, lang('curriculum_subject_label'), 'curriculums/view?curriculum-id=' . $curriculum_obj->curriculum_id);
 
-                $cur_subj_obj = $this->Curriculum_subject_model->curriculum_subjects($curriculum_obj->curriculum_id, FALSE, $all_current_semester);
+                $label    = 'Current Semester';
+                $url_link = '&semester=current';
 
-                $table_data = array();
-                if ($cur_subj_obj)
-                {
-                        $tmp_compare = '';
-                        foreach ($cur_subj_obj as $cur_subj)
-                        {
-                                $tmp_sem_year = $cur_subj->curriculum_subject_year_level . $cur_subj->curriculum_subject_semester;
-                                if ($tmp_compare != $tmp_sem_year)
-                                {
-                                        $tmp_compare  = $tmp_sem_year;
-                                        $total_units  = $this->Curriculum_subject_model->total_units_per_term($cur_subj->curriculum_id, $cur_subj->curriculum_subject_semester, $cur_subj->curriculum_subject_year_level);
-                                        $table_data[] = array(
-                                            array(
-                                                'data'    => heading(strtoupper(number_place($cur_subj->curriculum_subject_year_level) . ' Year') . ' - ' .
-                                                        semesters($cur_subj->curriculum_subject_semester)
-                                                        , 4) . ' Total units: ' . bold($total_units),
-                                                'colspan' => '9'
-                                            )
-                                        );
-                                }
-                                $id = NULL;
-                                if (!is_null($cur_subj->unit_id) && !empty($cur_subj->unit_id))
-                                {
-                                        $id = $cur_subj->unit_id;
-                                }
-                                else
-                                {
-                                        $id = $cur_subj->subject->unit_id;
-                                }
-                                $unit_obj  = $this->Unit_model->get($id);
-                                $requisite = $this->Requisites_model->subjects(isset($cur_subj->requisites) ? $cur_subj->requisites : NULL);
-                                $tmp       = array(
-                                    //  my_htmlspecialchars(semesters($cur_subj->curriculum_subject_semester, FALSE, 'short')),
-                                    highlight_phrase($cur_subj->subject->subject_code, $highlight_phrase, '<mark id="' . dash($cur_subj->subject->subject_code) . '">', '</mark>'),
-                                    my_htmlspecialchars($cur_subj->subject->subject_description),
-                                    my_htmlspecialchars($unit_obj->unit_value),
-                                    my_htmlspecialchars($unit_obj->lec_value),
-                                    my_htmlspecialchars($unit_obj->lab_value),
-                                    $requisite->pre,
-                                    $requisite->co
-                                );
-                                if (!$curriculum_obj->curriculum_status && !$curriculum_obj->curriculum_already_used)
-                                {
-                                        $tmp[] = table_row_button_link('create-requisite?curriculum-id=' . $curriculum_obj->curriculum_id . '&curriculum-subject-id=' . $cur_subj->curriculum_subject_id, lang('create_requisite_label'));
-                                }
-                                $table_data[] = $tmp;
-                        }
-                }
-                /*
-                 * Table headers
-                 */
-                $header = array(
-                    lang('curriculum_subject_subject_label'),
-                    'desc',
-                    lang('curriculum_subject_units_label'),
-                    lang('curriculum_subject_lecture_hours_label'),
-                    lang('curriculum_subject_laboratory_hours_label'),
-                    lang('curriculum_subject_pre_subject_label'),
-                    lang('curriculum_subject_co_subject_label')
-                );
-
-                if (!$curriculum_obj->curriculum_status && !$curriculum_obj->curriculum_already_used)
+                if ( ! $curriculum_obj->curriculum_status && ! $curriculum_obj->curriculum_already_used)
                 {
                         $header[] = 'Options';
 
@@ -344,7 +276,122 @@ class Curriculums extends CI_Capstone_Controller
                             'button_label' => $label,
                             'extra'        => array('class' => 'btn btn-primary icon-eye-open'),
                                 ), TRUE);
+                $template['export_curriculum_btn'] = MY_Controller::render('admin/_templates/button_view', array(
+                            'href'         => 'curriculums/export?curriculum-id=' . $curriculum_obj->curriculum_id,
+                            'button_label' => 'Exprot Excel',
+                            'extra'        => array('class' => 'btn btn-primary icon-print'),
+                                ), TRUE);
                 $this->render('admin/curriculums', $template);
+        }
+
+        public function export()
+        {
+                $tmp_result     = $this->_curriculum_subjects(FALSE, TRUE);
+                $header         = $tmp_result['header'];
+                $table_data     = $tmp_result['data'];
+                $curriculum_obj = $tmp_result['curriculum_obj'];
+
+                $this->load->library('excel');
+                $this->excel->filename = 'Curriculum Export - ' . $curriculum_obj->curriculum_effective_school_year . ', ' .
+                        $curriculum_obj->course->course_code . ', ' .
+                        $curriculum_obj->curriculum_description;
+                $this->excel->make_from_array($header, $table_data);
+        }
+
+        private function _curriculum_subjects($all_current_semester, $export_excel = FALSE)
+        {
+                $curriculum_obj   = check_id_from_url('curriculum_id', 'Curriculum_model', 'curriculum-id', 'course');
+                $this->load->model(array('Curriculum_subject_model', 'Subject_model', 'Requisites_model', 'Unit_model'));
+                $this->load->helper(array('number', 'text'));
+                $highlight_phrase = '';
+
+                if ( ! $export_excel)
+                {
+                        if ($h = $this->input->get('highlight'))
+                        {
+                                $highlight_phrase = $h;
+                        }
+                }
+
+                $cur_subj_obj = $this->Curriculum_subject_model->curriculum_subjects($curriculum_obj->curriculum_id, FALSE, $all_current_semester);
+
+                $table_data = array();
+                if ($cur_subj_obj)
+                {
+                        $tmp_compare = '';
+                        foreach ($cur_subj_obj as $cur_subj)
+                        {
+                                $tmp_sem_year = $cur_subj->curriculum_subject_year_level . $cur_subj->curriculum_subject_semester;
+                                if ($tmp_compare != $tmp_sem_year)
+                                {
+                                        $tmp_compare  = $tmp_sem_year;
+                                        $total_units  = $this->Curriculum_subject_model->total_units_per_term($cur_subj->curriculum_id, $cur_subj->curriculum_subject_semester, $cur_subj->curriculum_subject_year_level);
+                                       
+                                        if ($export_excel)
+                                        {
+                                                $table_data[] = array(
+                                                    'data' => strtoupper(number_place($cur_subj->curriculum_subject_year_level) . ' Year') . ' - ' .
+                                                    semesters($cur_subj->curriculum_subject_semester)
+                                                    . ' Total units: ' . $total_units
+                                                );
+                                        }
+                                        else
+                                        {
+                                                $table_data[] = array(
+                                                    array(
+                                                        'data'    => heading(strtoupper(number_place($cur_subj->curriculum_subject_year_level) . ' Year') . ' - ' .
+                                                                semesters($cur_subj->curriculum_subject_semester)
+                                                                , 4) . ' Total units: ' . bold($total_units),
+                                                        'colspan' => '9'
+                                                    )
+                                                );
+                                        }
+                                }
+                                $id = NULL;
+                                if ( ! is_null($cur_subj->unit_id) && ! empty($cur_subj->unit_id))
+                                {
+                                        $id = $cur_subj->unit_id;
+                                }
+                                else
+                                {
+                                        $id = $cur_subj->subject->unit_id;
+                                }
+                                $unit_obj  = $this->Unit_model->get($id);
+                                $requisite = $this->Requisites_model->subjects(isset($cur_subj->requisites) ? $cur_subj->requisites : NULL);
+                                $tmp       = array(
+                                    //  my_htmlspecialchars(semesters($cur_subj->curriculum_subject_semester, FALSE, 'short')),
+                                    highlight_phrase($cur_subj->subject->subject_code, $highlight_phrase, '<mark id="' . dash($cur_subj->subject->subject_code) . '">', '</mark>'),
+                                    my_htmlspecialchars($cur_subj->subject->subject_description),
+                                    my_htmlspecialchars($unit_obj->unit_value),
+                                    my_htmlspecialchars($unit_obj->lec_value),
+                                    my_htmlspecialchars($unit_obj->lab_value),
+                                    str_replace(br(), ', ', $requisite->pre),
+                                    str_replace(br(), ', ', $requisite->co)
+                                );
+                                if ( ! $curriculum_obj->curriculum_status && ! $curriculum_obj->curriculum_already_used && ! $export_excel)
+                                {
+                                        $tmp[] = table_row_button_link('create-requisite?curriculum-id=' . $curriculum_obj->curriculum_id . '&curriculum-subject-id=' . $cur_subj->curriculum_subject_id, lang('create_requisite_label'));
+                                }
+                                $table_data[] = $tmp;
+                        }
+                }
+                /*
+                 * Table headers
+                 */
+                $header = array(
+                    lang('curriculum_subject_subject_label'),
+                    'desc',
+                    lang('curriculum_subject_units_label'),
+                    lang('curriculum_subject_lecture_hours_label'),
+                    lang('curriculum_subject_laboratory_hours_label'),
+                    lang('curriculum_subject_pre_subject_label'),
+                    lang('curriculum_subject_co_subject_label')
+                );
+                return array(
+                    'header'       => $header,
+                    'data'         => $table_data,
+                    'curriculum_obj' => $curriculum_obj
+                );
         }
 
         /**
