@@ -97,7 +97,8 @@ class Requisites_model extends MY_Model
                                 {
                                         ${$r->requisite_type} .= $r->subjects->subject_code . $delimeter;
                                 }
-                                ${$r->requisite_type} = trim(${$r->requisite_type}, $delimeter);
+                                $pre = trim($pre, $delimeter);
+                                $co  = trim($co, $delimeter);
                         }
                 }
                 return (object) (array(
