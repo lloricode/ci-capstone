@@ -231,4 +231,9 @@ class Subject_offer_model extends MY_Model
                                 get_all();
         }
 
+        public function get_subject($id)
+        {
+                return $this->with_subject()->get($id)->subject;
+        }
+
 }

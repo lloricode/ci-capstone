@@ -295,7 +295,8 @@ class Students extends CI_Capstone_Controller
 
         private function _drop_student_subject()
         {
-                if (($stud_subj_id = $this->input->get('student-subject-id')) && ($action       = $this->input->get('action')))
+                $confirm_view = FALSE;
+                if ($this->input->get('student-subject-id') && ($action       = $this->input->get('action')))
                 {
                         if ($action == 'drop-student-subject')
                         {
@@ -306,33 +307,74 @@ class Students extends CI_Capstone_Controller
                                 {
                                         //ignore the process
                                         $this->session->set_flashdata('message', bootstrap_error('invalid request.'));
-                                        return;
+                                        return FALSE;
                                 }
-                                
+
                                 //check if already droped
                                 if ($verified_student_subject_obj->student_subject_drop)
                                 {
 
                                         //ignore the process
                                         $this->session->set_flashdata('message', bootstrap_error('already dropped.'));
-                                        return;
+                                        return FALSE;
                                 }
 
                                 //confirm?
                                 //so let take the process....
+                                $confirm_view=TRUE;
+                                $this->load->library('form_validation');
+                                $this->form_validation->set_rules('confirm', 'Confirmition', 'required');
                                 
                                 
-                                //no need to load model, already done in 'check_id_from_url'
-                               $affected_rows = $this->Students_subjects_model->update(array(
-                                    'student_subject_drop' => TRUE
-                                        ), $verified_student_subject_obj->student_subject_id);
-                                if ($affected_rows > 0)
+                              
+                                
+                                if ($this->form_validation->run())
                                 {
+                                        if ($this->input->post('confirm', TRUE) == 'yes')
+                                        {
+                                                //no need to load model, already done in 'check_id_from_url'
+                                                $affected_rows = $this->Students_subjects_model->update(array(
+                                                    'student_subject_drop' => TRUE
+                                                        ), $verified_student_subject_obj->student_subject_id);
+                                                if ($affected_rows > 0)
+                                                {
 
-                                        $this->session->set_flashdata('message', bootstrap_success('Success!!'));
+                                                        $this->session->set_flashdata('message', bootstrap_success('Success!!'));
+                                                }
+                                                else
+                                                {
+                                                        $this->session->set_flashdata('message', bootstrap_error('Failed.'));
+                                                }
+                                        }
+                                        else
+                                        {
+                                                $this->session->set_flashdata('message', bootstrap_error('Canceled.'));
+                                        }
+                                        redirect("students/view?student-id={$this->student->id}", 'refresh');
                                 }
+
+                                //are they sure?
+                                $this->load->model('Subject_offer_model');
+                                $subj_obj              = $this->Subject_offer_model->get_subject($verified_student_subject_obj->subject_offer_id);
+                                $inputs['tmp'] = array(
+                                'name' => 'confirm',
+                                'fields' => array(
+                                        'yes' => 'drop_subject_confirm_y_label',
+                                        'no'  => 'drop_subject_confirm_n_label'
+                                    ),
+                                    'value'  => $this->form_validation->set_value('confirm'),
+                                    'type'   => 'radio',
+                                    'lang'   => array(
+                                        'main_lang' => 'drop_confirmition',//ci_students_lang
+                                        'sprintf'   => $subj_obj->subject_code . ' - ' . $subj_obj->subject_description//'test'//$verified_student_subject_obj->subject->subject_code
+                                    )
+                                );
+                                $template['drop_view'] = $this->form_boostrap("students/view?student-id={$this->student->id}&student-subject-id={$verified_student_subject_obj->student_subject_id}&action=drop-student-subject", $inputs, 'drop_subject_label', 'drop_subject_submit_btn', 'info-sign', NULL, TRUE);
+                                $template['bootstrap'] = $this->_bootstrap_for_view();
+                                $this->render('admin/students', $template);
                         }
                 }
+                return $confirm_view;
         }
 
         /**
@@ -348,11 +390,15 @@ class Students extends CI_Capstone_Controller
                  * check url with id,tehn get studewnt row
                  */
                 $this->Student_model->set_informations($this->input->get('student-id'));
-                
-                //set here to load first student library..
-                $this->_drop_student_subject();
-                
                 $this->breadcrumbs->unshift(3, 'View Student [' . $this->student->school_id(TRUE) . ']', 'students/view?student-id=' . $this->student->id);
+
+                //set here to load first student library..
+                if ($this->_drop_student_subject())
+                {
+                        //wait for confirmition
+                        return;
+                }
+
                 /**
                  * check if user is "dean" then check the courseId of student
                  */

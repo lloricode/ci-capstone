@@ -37,4 +37,12 @@ if (isset($search_form_for_dean))
 {
         echo $search_form_for_dean;
 }
+
+/**
+ * dropping subject
+ */
+if (isset($drop_view))
+{
+        echo $drop_view;
+}
                 

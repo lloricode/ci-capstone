@@ -154,3 +154,14 @@ $lang['student_requirements_transcript']          = 'Transcript of Records';
 $lang['student_requirements_certificate_of_rating'] = 'Certificate of Rating';
 
 $lang['student_search_label'] = 'Search Student';
+
+
+/**
+ * drop subject
+ */
+
+$lang['drop_subject_label']      = 'Drop Subject';
+$lang['drop_subject_confirm_y_label'] = 'Yes';
+$lang['drop_subject_confirm_n_label'] = 'No';
+$lang['drop_subject_submit_btn']      = 'Drop Subject';
+$lang['drop_confirmition']            = 'Are you sure ' . br() . 'you want to drop subject '. br().' \'%s\'';
