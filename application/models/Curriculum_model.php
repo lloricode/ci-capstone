@@ -225,4 +225,37 @@ class Curriculum_model extends MY_Model
                 return (object) $return;
         }
 
+        public function get_total_units_all_gen_eds($id)
+        {
+                $total = 0;
+
+                $this->load->model('Curriculum_subject_model');
+                $subject_ids = $this->Curriculum_subject_model->
+                        fields('subject_id,unit_id')->
+                        where(array(
+                            $this->primary_key => $id
+                        ))->
+                        //set_cache('')->
+                        get_all();
+
+                if ($subject_ids)
+                {
+                        $this->load->model('Subject_model');
+                        foreach ($subject_ids as $v)
+                        {
+                                if (is_null($v->unit_id))//i use this method bcause tired of manual query
+                                {
+                                        $total += $this->Subject_model->
+                                                        fields('unit_id')->
+                                                        with_unit('fields:unit_value')->
+                                                        get($v->subject_id)->
+                                                unit->
+                                                unit_value;
+                                }
+                        }
+                }
+
+                return $total;
+        }
+
 }

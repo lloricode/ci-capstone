@@ -35,6 +35,7 @@ class Set_curriculum_enable extends CI_Capstone_Controller
                         // do we really want to enable?
                         if ($this->input->post('confirm', TRUE) == 'yes')
                         {
+                                $this->config->load('admin/curriculum_subject', TRUE);
                                 /**
                                  * start the DB transaction
                                  */
@@ -59,13 +60,18 @@ class Set_curriculum_enable extends CI_Capstone_Controller
                                 $is_has_subj = $this->Curriculum_subject_model->is_has_subject($curriculum_obj->curriculum_id);
 
                                 $min_unit = $this->_check_minimum_units();
-                                if ( ! $min_unit OR ! $updated OR ! $updated2 OR ! $is_has_subj)
+                                $gen_ed_minimum = $this->_check_all_gen_ed_minimum_unit();
+                                if ( ! $gen_ed_minimum OR ! $min_unit OR ! $updated OR ! $updated2 OR ! $is_has_subj)
                                 {
                                         /**
                                          * rollback database
                                          */
                                         $this->db->trans_rollback();
-                                        if ( ! $min_unit)
+                                        if ( ! $gen_ed_minimum)
+                                        {
+                                                $this->session->set_flashdata('message', bootstrap_error('Minimum Gen Ed exceed.'));
+                                        }
+                                        elseif ( ! $min_unit)
                                         {
                                                 $this->session->set_flashdata('message', bootstrap_error('Below Minimum Unit is not allowed.'));
                                         }
@@ -88,11 +94,20 @@ class Set_curriculum_enable extends CI_Capstone_Controller
                 $this->_form_view($curriculum_obj);
         }
 
+        //TRUE on success/valid
+        private function _check_all_gen_ed_minimum_unit()
+        {
+                //get unit limit config
+                $config_min = $this->config->item('minimum_total_gen_ed_units', 'admin/curriculum_subject');
+
+                $total_unit = $this->Curriculum_model->get_total_units_all_gen_eds($this->input->get('curriculum-id'));
+                return (bool) ($config_min <= $total_unit);
+        }
+        //TRUE on success/valid
         private function _check_minimum_units()
         {
 
                 //get unit limit config
-                $this->config->load('admin/curriculum_subject', TRUE);
                 $first_min   = $this->config->item('first_semester_min_unit_limit', 'admin/curriculum_subject');
                 $second_min = $this->config->item('second_semester_min_unit_limit', 'admin/curriculum_subject');
                 $summer_min  = $this->config->item('summer_semester_min_unit_limit', 'admin/curriculum_subject');
