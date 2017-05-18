@@ -338,7 +338,7 @@ class Curriculums extends CI_Capstone_Controller
                                                 $table_data[] = array(
                                                     'data' => strtoupper(number_place($cur_subj->curriculum_subject_year_level) . ' Year') . ' - ' .
                                                     semesters($cur_subj->curriculum_subject_semester)
-                                                    . ' Total units: ' . $total_units
+                                                    . ' | Total units: ' . $total_units
                                                 );
                                         }
                                         else
@@ -363,7 +363,7 @@ class Curriculums extends CI_Capstone_Controller
                                         $id = $cur_subj->subject->unit_id;
                                 }
                                 $unit_obj  = $this->Unit_model->get($id);
-                                $requisite = $this->Requisites_model->subjects(isset($cur_subj->requisites) ? $cur_subj->requisites : NULL);
+                                $requisite = $this->Requisites_model->subjects((isset($cur_subj->requisites) ? $cur_subj->requisites : NULL), (($export_excel) ? ', ' : br()));
                                 $tmp       = array(
                                     //  my_htmlspecialchars(semesters($cur_subj->curriculum_subject_semester, FALSE, 'short')),
                                     highlight_phrase($cur_subj->subject->subject_code, $highlight_phrase, '<mark id="' . dash($cur_subj->subject->subject_code) . '">', '</mark>'),
@@ -371,8 +371,8 @@ class Curriculums extends CI_Capstone_Controller
                                     my_htmlspecialchars($unit_obj->unit_value),
                                     my_htmlspecialchars($unit_obj->lec_value),
                                     my_htmlspecialchars($unit_obj->lab_value),
-                                    str_replace(br(), ', ', $requisite->pre),
-                                    str_replace(br(), ', ', $requisite->co)
+                                    $requisite->pre,
+                                    $requisite->co
                                 );
                                 if ( ! $curriculum_obj->curriculum_status && ! $curriculum_obj->curriculum_already_used && ! $export_excel)
                                 {

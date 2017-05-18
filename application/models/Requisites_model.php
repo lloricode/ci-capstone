@@ -85,7 +85,7 @@ class Requisites_model extends MY_Model
          * @param object $requisites
          * @return object co|pre
          */
-        public function subjects($requisites = NULL)
+        public function subjects($requisites = NULL, $delimeter = ', ')
         {
                 $pre = '';
                 $co  = '';
@@ -95,8 +95,9 @@ class Requisites_model extends MY_Model
                         {
                                 foreach ($requisites as $r)
                                 {
-                                        ${$r->requisite_type} .= $r->subjects->subject_code . br();
+                                        ${$r->requisite_type} .= $r->subjects->subject_code . $delimeter;
                                 }
+                                ${$r->requisite_type} = trim(${$r->requisite_type}, $delimeter);
                         }
                 }
                 return (object) (array(
