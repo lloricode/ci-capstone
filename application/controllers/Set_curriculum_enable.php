@@ -83,7 +83,7 @@ class Set_curriculum_enable extends CI_Capstone_Controller
                                         }
                                 }
                         }
-                      redirect('curriculums', 'refresh');
+                        redirect('curriculums?view=all', 'refresh');
                 }
                 $this->_form_view($curriculum_obj);
         }
@@ -101,16 +101,22 @@ class Set_curriculum_enable extends CI_Capstone_Controller
 
                 $unit_obj = $this->Curriculum_model->get_all_term_units($this->input->get('curriculum-id', TRUE));
 
+                $first_ok  = FALSE;
+                $second_ok = FALSE;
+                $summer_ok = FALSE;
+                
                 if ($unit_obj)
                 {
                         foreach ($unit_obj as $row)
                         {
+                                ${$row->sem . '_ok'} = TRUE;
                                 if (${$row->sem . '_min'} < $row->unit)
                                 {
                                         return FALSE;
                                 }
                         }
-                        return TRUE;
+                        //double check if all term checked
+                        return (bool) ($first_ok && $second_ok && $summer_ok);
                 }
                 return FALSE;
         }
