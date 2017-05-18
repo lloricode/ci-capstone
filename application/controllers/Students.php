@@ -293,6 +293,48 @@ class Students extends CI_Capstone_Controller
                 }
         }
 
+        private function _drop_student_subject()
+        {
+                if (($stud_subj_id = $this->input->get('student-subject-id')) && ($action       = $this->input->get('action')))
+                {
+                        if ($action == 'drop-student-subject')
+                        {
+                                $verified_student_subject_obj = check_id_from_url('student_subject_id', 'Students_subjects_model', 'student-subject-id');
+
+                                //check if this stundet_subject is really belong to a current student
+                                if ($verified_student_subject_obj->enrollment_id != $this->student->enrollment_id)
+                                {
+                                        //ignore the process
+                                        $this->session->set_flashdata('message', bootstrap_error('invalid request.'));
+                                        return;
+                                }
+                                
+                                //check if already droped
+                                if ($verified_student_subject_obj->student_subject_drop)
+                                {
+
+                                        //ignore the process
+                                        $this->session->set_flashdata('message', bootstrap_error('already dropped.'));
+                                        return;
+                                }
+
+                                //confirm?
+                                //so let take the process....
+                                
+                                
+                                //no need to load model, already done in 'check_id_from_url'
+                               $affected_rows = $this->Students_subjects_model->update(array(
+                                    'student_subject_drop' => TRUE
+                                        ), $verified_student_subject_obj->student_subject_id);
+                                if ($affected_rows > 0)
+                                {
+
+                                        $this->session->set_flashdata('message', bootstrap_success('Success!!'));
+                                }
+                        }
+                }
+        }
+
         /**
          *  @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
@@ -306,6 +348,10 @@ class Students extends CI_Capstone_Controller
                  * check url with id,tehn get studewnt row
                  */
                 $this->Student_model->set_informations($this->input->get('student-id'));
+                
+                //set here to load first student library..
+                $this->_drop_student_subject();
+                
                 $this->breadcrumbs->unshift(3, 'View Student [' . $this->student->school_id(TRUE) . ']', 'students/view?student-id=' . $this->student->id);
                 /**
                  * check if user is "dean" then check the courseId of student
@@ -420,6 +466,7 @@ class Students extends CI_Capstone_Controller
                 if (!$return_html)
                 {
                         $header[] = lang('student_status_th');
+                        $header[] = 'Option';
                 }
 
 

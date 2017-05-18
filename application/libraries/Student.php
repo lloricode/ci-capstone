@@ -437,6 +437,15 @@ class Student extends School_informations
                                 if ( ! $return_html)
                                 {
                                         $row_output [] = $status_return($stud_sub->student_subject_enroll_status, $return_html, $row_count);
+                                        if ($stud_sub->student_subject_drop)
+                                        {
+                                                $drop_btn_or_label = 'dropped';
+                                        }
+                                        else
+                                        {
+                                                $drop_btn_or_label = table_row_button_link("students/view?student-id={$this->__student->student_id}&student-subject-id={$stud_sub->student_subject_id}&action=drop-student-subject", 'Drop');
+                                        }
+                                        $row_output[] = $this->_row($drop_btn_or_label, $row_count);
                                 }
                                 $subject_offers[] = $row_output;
                                 if ($row_count === 2)// if there a second sched
@@ -531,7 +540,8 @@ class Student extends School_informations
                 $tmp    = $this->Students_subjects_model->
                         fields('subject_offer_id')->
                         where(array(
-                            'enrollment_id' => $this->__enrollment->enrollment_id
+                            'student_subject_drop' => FALSE,
+                            'enrollment_id'        => $this->__enrollment->enrollment_id
                         ))->
                         //set_cache()->
                         get_all();
@@ -634,6 +644,7 @@ class Student extends School_informations
                         fields('curriculum_subject_id')->
                         with_curriculum_subject()->
                         where(array(
+                    'student_subject_drop'        => FALSE,
                     'student_subject_semester'    => current_school_semester(TRUE),
                     'student_subject_school_year' => current_school_year(),
                     'enrollment_id'               => $this->__enrollment->enrollment_id

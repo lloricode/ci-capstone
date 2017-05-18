@@ -55,6 +55,13 @@ class Migration_Students_subjects extends CI_Migration
                         'null'       => FAlSE,
                         'default'    => FALSE
                     ),
+                    'student_subject_drop' => array(
+                        'type'       => 'TINYINT',
+                        'constraint' => '1',
+                        'unsigned'   => TRUE,
+                        'null'       => FAlSE,
+                        'default'    => FALSE
+                    ),
                     'curriculum_id'                 => array(//just incase, if student shift program, so it will dectect which curriculum
                         'type'       => 'INT',
                         'constraint' => '11',
