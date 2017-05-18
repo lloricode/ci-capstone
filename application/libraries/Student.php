@@ -776,7 +776,8 @@ class School_informations
         {
                 $obj = $this->Students_subjects_model->
                         where(array(
-                            'enrollment_id' => $this->__enrollment->enrollment_id
+                            'student_subject_drop' => FALSE,
+                            'enrollment_id'        => $this->__enrollment->enrollment_id
                         ))->
                         //set_cache('student_library_students_subjects_' . $this->__enrollment->enrollment_id . '_limit_' . $limit . '_offset_' . $offset)->
                         set_cache('student_library_students_subjects_' . $this->__enrollment->enrollment_id);
