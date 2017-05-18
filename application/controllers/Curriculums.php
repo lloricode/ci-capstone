@@ -276,11 +276,14 @@ class Curriculums extends CI_Capstone_Controller
                             'button_label' => $label,
                             'extra'        => array('class' => 'btn btn-primary icon-eye-open'),
                                 ), TRUE);
-                $template['export_curriculum_btn'] = MY_Controller::render('admin/_templates/button_view', array(
-                            'href'         => 'curriculums/export?curriculum-id=' . $curriculum_obj->curriculum_id,
-                            'button_label' => 'Exprot Excel',
-                            'extra'        => array('class' => 'btn btn-primary icon-print'),
-                                ), TRUE);
+                if ($curriculum_obj->curriculum_status)
+                {
+                        $template['export_curriculum_btn'] = MY_Controller::render('admin/_templates/button_view', array(
+                                    'href'         => 'curriculums/export?curriculum-id=' . $curriculum_obj->curriculum_id,
+                                    'button_label' => 'Exprot Excel',
+                                    'extra'        => array('class' => 'btn btn-primary icon-print'),
+                                        ), TRUE);
+                }
                 $this->render('admin/curriculums', $template);
         }
 
@@ -290,7 +293,10 @@ class Curriculums extends CI_Capstone_Controller
                 $header         = $tmp_result['header'];
                 $table_data     = $tmp_result['data'];
                 $curriculum_obj = $tmp_result['curriculum_obj'];
-
+                if ( ! $curriculum_obj->curriculum_status)
+                {
+                        show_error('not allowed');
+                }
                 $this->load->library('excel');
                 $this->excel->filename = 'Curriculum Export - ' . $curriculum_obj->curriculum_effective_school_year . ', ' .
                         $curriculum_obj->course->course_code . ', ' .
