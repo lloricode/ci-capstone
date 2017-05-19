@@ -10,7 +10,8 @@ class Create_curriculum_subject extends CI_Capstone_Controller
 {
 
 
-        private $type;
+        private $_type;
+        private $_form_count;
 
         function __construct()
         {
@@ -22,21 +23,11 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                 $this->breadcrumbs->unshift(2, lang('curriculum_label'), 'curriculums');
         }
 
+
         public function index()
         {
-                if ($key = $this->input->get('type'))
-                {
-                        if ($key != 'major' && $key != 'minor')
-                        {
-                                show_error('invalid type');
-                        }
-                        $this->type = $key;
-                }
-                else
-                {
-                        show_error('missing paramter');
-                }
-
+                $this->_check_input_get();
+                
                 $curriculum_obj = check_id_from_url('curriculum_id', 'Curriculum_model', 'curriculum-id', 'course');
 
                 if ($curriculum_obj->curriculum_status)
@@ -48,8 +39,8 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                         show_error('Edit is not allowed, Already been used by other data.');
                 }
 
-                $this->breadcrumbs->unshift(3, lang('curriculum_subject_label'), 'curriculums/view?curriculum-id=' . $curriculum_obj->curriculum_id);
-                $this->breadcrumbs->unshift(4, lang('create_curriculum_subject_label') . ' [ ' . $curriculum_obj->course->course_code . ' ]', 'create-curriculum-subject?curriculum-id=' . $curriculum_obj->curriculum_id . '&type=' . $this->type);
+                $this->breadcrumbs->unshift(3, lang('curriculum_subject_label'), "curriculums/view?curriculum-id={$curriculum_obj->curriculum_id}");
+                $this->breadcrumbs->unshift(4, lang('create_curriculum_subject_label') . " [ {$curriculum_obj->course->course_code} ]", "create-curriculum-subject?curriculum-id={$curriculum_obj->curriculum_id}&type={$this->_type}&form-count={$this->_form_count}");
 
 
                 if ($this->input->post('submit', TRUE))
@@ -60,7 +51,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                         $this->db->trans_begin();
 
 
-                        if ($this->type == 'major')
+                        if ($this->_type == 'major')
                         {
                                 $this->form_validation->set_rules($this->Unit_model->insert_validation());
                                 $unit_ok = $this->form_validation->run();
@@ -80,7 +71,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                                     'curriculum_id' => $curriculum_obj->curriculum_id,
                                     'unit_id'       => $unit_id
                                 ))->insert();
-                        if ($this->type == 'minor')
+                        if ($this->_type == 'minor')
                         {
                                 $unit_id = TRUE;
                         }
@@ -94,7 +85,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                                 $this->db->trans_rollback();
                                 if ($unit_limit)
                                 {
-                                        
+
                                         $this->session->set_flashdata('message', bootstrap_error('curriculum_subject_add_unsuccessfull'));
                                 }
                         }
@@ -109,6 +100,33 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                         }
                 }
                 $this->_form_view($curriculum_obj);
+        }
+
+        private function _check_input_get()
+        {
+
+                if ($key = $this->input->get('type', TRUE))
+                {
+                        if ($key != 'major' && $key != 'minor')
+                        {
+                                show_error('invalid type');
+                        }
+                        $this->_type = $key;
+                }
+                else
+                {
+                        show_error('missing paramter');
+                }
+
+                //if typecasting is failed, then show missing parameter will occure
+                if ($count = (int) $this->input->get('form-count', TRUE))
+                {
+                        $this->_form_count = $count;
+                }
+                else
+                {
+                        show_error('invalid or missing paramter');
+                }
         }
 
         private function _unit_term_limit()
@@ -215,7 +233,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                 $return[NULL] = 'no subject';
                 $subjects_obj = NULL;
 
-                switch ($this->type)
+                switch ($this->_type)
                 {
                         case 'major':
                                 $where_course = NULL;
@@ -283,7 +301,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                     'type'  => 'dropdown',
                     'lang'  => 'curriculum_subject_semester_label'
                 );
-                if ($this->type === 'major')
+                if ($this->_type === 'major')
                 {
                         $inputs['curriculum_subject_lecture_hours'] = array(
                             'name'  => 'lecture',
@@ -307,7 +325,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                         );
                 }
                 $template['curriculum_information']  = MY_Controller::render('admin/_templates/curriculums/curriculum_information', array('curriculum_obj' => $curriculum_obj), TRUE);
-                $template['curriculum_subject_form'] = $this->form_boostrap('create-curriculum-subject?curriculum-id=' . $curriculum_obj->curriculum_id . '&type=' . $this->type, $inputs, 'create_curriculum_subject_label', 'create_curriculum_subject_label', 'info-sign', NULL, TRUE);
+                $template['curriculum_subject_form'] = $this->form_boostrap('create-curriculum-subject?curriculum-id=' . $curriculum_obj->curriculum_id . '&type=' . $this->_type, $inputs, 'create_curriculum_subject_label', 'create_curriculum_subject_label', 'info-sign', NULL, TRUE);
                 $template['bootstrap']               = $this->_bootstrap();
                 $this->render('admin/create_curriculum_subject', $template);
         }
