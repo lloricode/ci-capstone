@@ -1,8 +1,11 @@
-# [ci-capstone](http://ci-capstone.sprikiwiki.club/)
-## A Thesis project (Enrollment System) made by using [CodeIgniter](http://codeigniter.com).
+#  ci-capstone
+### A Thesis project (Enrollment System) made by using [CodeIgniter](http://codeigniter.com).
 
 
+### Demo 
 
+- [demo1](http://ci-capstone.lloricmayugagarcia.com)
+- [demo2](http://ci-capstone.sprikiwiki.club/)
 
 ## Frameworks used
 Platform|Framework
@@ -28,7 +31,7 @@ Platform|Framework
 - Create first a databse named ``ci_capstone`` .
 - then just run/execute the website, ``tables`` in ``database`` will automatically migrate.
 
-- OR you import in databse a sample data in ``sample_data/ci_capstone.sql``.
+- OR you can just import in databse a sample data from ``sample_data/ci_capstone.sql``.
 
 ## Default Login
 
@@ -39,9 +42,6 @@ administrator|mypasswordisadmin1
 ## Screencapture
 -Updated overview over the Admin Panel
 ![screenshot at 2017-04-09 21-26-03](https://cloud.githubusercontent.com/assets/8251344/24837640/50a98c44-1d6b-11e7-95b8-11c754f8c81d.png)
-
--Database Relation,(result after migration) [outdated soon to update]
-![screenshot at 2017-04-02 13-04-48](https://cloud.githubusercontent.com/assets/8251344/24584608/3e2cb008-17a5-11e7-8e48-a1bdeadcd2b0.png)
 
 ## Note:
 ### production ENVIRONMENT 
