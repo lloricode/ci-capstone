@@ -161,8 +161,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                                 if (${"{$sem}_max_limit_config"} < $combined)
                                 {
                                         $tmpp = ${"{$sem}_max_limit_config"};
-                                        $total = $unit_selected[$sem] + $db_units;
-                                        $this->session->set_flashdata('message', bootstrap_error("Only " . strong("$tmpp unit(s)") . " allowed in " . semesters($sem, FALSE, 'short') . " Term. Total units to add: " . strong($unit_selected[$sem]) . ". Total units already in  curriculum: " . strong($db_units) . ". A Total of : " . strong($total)));
+                                        $this->session->set_flashdata('message', bootstrap_error("Only " . strong("$tmpp unit(s)") . " allowed in " . semesters($sem, FALSE, 'short') . " Term. Total units to add: " . strong($unit_selected[$sem]) . ". Total units already in  curriculum: " . strong($db_units) . ". A Total of : " . strong($combined)));
                                         return FALSE;
                                 }
                         }
