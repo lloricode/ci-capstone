@@ -156,7 +156,9 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                         {
                                 $db_units = $this->Curriculum_subject_model->total_units_per_term($this->input->get('curriculum-id', TRUE), $sem, $lvl);
                         
-                                if (${"{$sem}_max_limit_config"} < ($db_units + $unit_selected[$sem]))
+                                $combined = $db_units + $unit_selected[$sem];
+                                
+                                if (${"{$sem}_max_limit_config"} < $combined)
                                 {
                                         $tmpp = ${"{$sem}_max_limit_config"};
                                         $this->session->set_flashdata('message', bootstrap_error("Only $tmpp unit(s) allowed in " . semesters($sem, FALSE, 'short')." Term. selected unit: {$unit_selected[$sem]} + {$db_units} (from db))"));
