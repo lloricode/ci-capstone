@@ -14,3 +14,8 @@ $config['summer_semester_min_unit_limit'] = 6;
  * in one curriculum checking for enabling
  */
 $config['minimum_total_gen_ed_units'] = 23;
+
+/**
+ * limit in multiple form in  create-curriculum-subject
+ */
+$config['limit_multiple_form_add_curriculum_subject'] = 10;

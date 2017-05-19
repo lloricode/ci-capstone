@@ -14,7 +14,6 @@ class Curriculum_subject_model extends MY_Model
                 $this->before_update[] = '_add_updated_by';
 
                 $this->_relations();
-                $this->_form();
                 $this->_config();
 
                 parent::__construct();
@@ -101,19 +100,6 @@ class Curriculum_subject_model extends MY_Model
                 );
         }
 
-        private function _form()
-        {
-
-                $this->rules = array(
-                    'insert' => $this->_insert(),
-                    'update' => $this->_update()
-                );
-        }
-
-        private function _common()
-        {
-                return array();
-        }
 
         private function _inlist_semesters()
         {
@@ -127,50 +113,29 @@ class Curriculum_subject_model extends MY_Model
                 return $return;
         }
 
-        private function _insert()
+       
+        public function insert_validations($index)
         {
-//                $lec = (int) $this->input->post('lecture', TRUE);
-//                $lab = (int) $this->input->post('laboratory', TRUE);
                 return array(
-                    'curriculum_subject_year_level' => array(
+                    array(
                         'label' => lang('curriculum_subject_year_level_label'),
-                        'field' => 'level',
+                        'field' => "data[$index][level]",
                         'rules' => 'trim|required|is_natural_no_zero'
                     ),
-                    'curriculum_subject_semester'   => array(
+                    array(
                         'label'  => lang('curriculum_subject_semester_label'),
-                        'field'  => 'semester',
+                        'field'  => "data[$index][semester]",
                         'rules'  => 'trim|required|in_list[' . $this->_inlist_semesters() . ']', //must be specific value needed,table type type in enum
                         'errors' => array(
                             'in_list' => 'Invalid value in {field}'
                         )
                     ),
-//                    'curriculum_subject_units'            => array(
-//                        'label' => lang('curriculum_subject_units_label'),
-//                        'field' => 'units',
-//                        'rules' => "trim|required|is_natural_no_zero|is_unit_relate_types[$lec.$lab]"
-//                    ),
-//                    'curriculum_subject_lecture_hours'    => array(
-//                        'label' => lang('curriculum_subject_lecture_hours_label'),
-//                        'field' => 'lecture',
-//                        'rules' => 'trim|required|is_natural'
-//                    ),
-//                    'curriculum_subject_laboratory_hours' => array(
-//                        'label' => lang('curriculum_subject_laboratory_hours_label'),
-//                        'field' => 'laboratory',
-//                        'rules' => 'trim|required|is_natural'
-//                    ),
-                    'subject_id'                    => array(
+                    array(
                         'label' => lang('curriculum_subject_subject_label'),
-                        'field' => 'subject',
+                        'field' => "data[$index][subject]",
                         'rules' => 'trim|required|is_natural_no_zero|differs[pre_requisite]|differs[co_requisite]|callback_check_subject_in_curiculum'
                     ),
                 );
-        }
-
-        private function _update()
-        {
-                return array();
         }
 
         private function _curriculum_subject_query()
