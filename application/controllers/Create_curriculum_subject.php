@@ -35,11 +35,11 @@ class Create_curriculum_subject extends CI_Capstone_Controller
 
                 if ($curriculum_obj->curriculum_status)
                 {
-                        show_error('Already Enabled');
+                        show_error('Curriculum already Enabled.');
                 }
                 if ($curriculum_obj->curriculum_already_used)
                 {
-                        show_error('Edit is not allowed, Already been used by other data.');
+                        show_error('Unable to edit. This has already been used by other data.');
                 }
 
                 $this->breadcrumbs->unshift(3, lang('curriculum_subject_label'), "curriculums/view?curriculum-id={$curriculum_obj->curriculum_id}");
@@ -97,7 +97,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                 $valid = $this->_execute_all_validations(count($datas));
                 if ( ! $valid)
                 {
-                        $this->session->set_flashdata('message', bootstrap_error('Validation failed.'));
+                        $this->session->set_flashdata('message', bootstrap_error('Failed to validate the form/s.'));
                         return FALSE;
                 }
                 if ($datas)
@@ -120,7 +120,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                                 }
                                 else
                                 {
-                                        $this->session->set_flashdata('message', bootstrap_error('Subject Duplicate.'));
+                                        $this->session->set_flashdata('message', bootstrap_error('Duplicate Subjects is not allowed.'));
                                         return FALSE;
                                 }
 
@@ -159,7 +159,8 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                                 if (${"{$sem}_max_limit_config"} < ($db_units + $unit_selected[$sem]))
                                 {
                                         $tmpp = ${"{$sem}_max_limit_config"};
-                                        $this->session->set_flashdata('message', bootstrap_error("Only $tmpp unit(s) allowed in " . semesters($sem, FALSE, 'short')." Term. selected unit: {$unit_selected[$sem]} + {$db_units} (from db))"));
+                                        $total = $unit_selected[$sem] + $db_units;
+                                        $this->session->set_flashdata('message', bootstrap_error("Only $tmpp unit(s) allowed in " . semesters($sem, FALSE, 'short')." Term. Total units to add: {$unit_selected[$sem]}. Total units already in  curriculum: {$db_units}. A Total of : {$total}"));
                                         return FALSE;
                                 }
                         }
