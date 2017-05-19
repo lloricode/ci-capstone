@@ -53,7 +53,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                          */
                         $this->db->trans_begin();
 
-                        if ( ! $this->_is_subject_course($curriculum_obj->curriculum_id) OR ! $this->_insert_batch_($this->input->post('data'), $curriculum_obj->curriculum_id))
+                        if ( ! $this->_is_subject_course($curriculum_obj->curriculum_id) OR ! $this->_insert_batch_($this->input->post('data',TRUE), $curriculum_obj->curriculum_id))
                         {
                                 /**
                                  * rollback database
@@ -125,7 +125,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                                 $unit_selected[$row['semester']] += $this->_unit_selected((object) $row);
                         }
 
-                        //validate is unit limit                       
+                        //validate is unit limit  
                         return (bool) ($ok && $this->_validate_unit_($unit_selected, $level_selected));
                 }
                 return FALSE;
@@ -147,7 +147,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                                 if (${"{$sem}_max_limit_config"} < ($db_units + $unit_selected[$sem]))
                                 {
                                         $tmpp = ${"{$sem}_max_limit_config"};
-                                        $this->session->set_flashdata('message', bootstrap_error("Only $tmpp unit(s) allowed in " . semesters($sem, FALSE, 'short')." Term."));
+                                        $this->session->set_flashdata('message', bootstrap_error("Only $tmpp unit(s) allowed in " . semesters($sem, FALSE, 'short')." Term. selected unit: {$unit_selected[$sem]} + {$db_units} (from db))"));
                                         return FALSE;
                                 }
                         }
@@ -180,7 +180,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                 {
                         $unit_id = TRUE;
                 }
-                return (bool) ($unit_id & $id);
+                return (bool) ($unit_id && $id);
         }
 
         private function _check_input_get()
