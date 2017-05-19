@@ -33,16 +33,17 @@
                     echo form_reset('reset', 'Reset', array(
                         'class' => 'btn btn-default'
                     ));
-
-                    //submit button
-                    echo form_submit('submit', lang('create_curriculum_subject_label'), array(
-                        'class' => 'btn btn-success'
-                    ));
+                    
                     if (isset($new_form_url))
                     {
                             echo anchor($new_form_url, 'Add Another Form', array('class' => 'btn btn-info'));
                             unset($new_form_url);
                     }
+
+                    //submit button
+                    echo form_submit('submit', lang('create_curriculum_subject_label'), array(
+                        'class' => 'btn btn-success'
+                    ));
                     echo '</div>';
                     echo form_close();
                     ?>
