@@ -422,9 +422,14 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                                 );
                         }
                 }
+                $pre_url = "create-curriculum-subject?curriculum-id={$curriculum_obj->curriculum_id}&type={$this->_type}&form-count=";
+                if (($this->_form_count + 1) <= $this->_form_count_limit)
+                {
+                        $data['new_form_url'] = $pre_url . ($this->_form_count + 1);
+                }
                 $data['inputs'] = $inputs;
-                $data['action'] = "create-curriculum-subject?curriculum-id={$curriculum_obj->curriculum_id}&type={$this->_type}&form-count={$this->_form_count}";
-                
+                $data['action']       = $pre_url . $this->_form_count;
+
                 $template['curriculum_information']  = MY_Controller::render('admin/_templates/curriculums/curriculum_information', array('curriculum_obj' => $curriculum_obj), TRUE);
                 $template['curriculum_subject_form'] = MY_Controller::render('admin/_templates/create_curriculum_subject/form', $data, TRUE);
                 $template['bootstrap']               = $this->_bootstrap();

@@ -38,7 +38,11 @@
                     echo form_submit('submit', lang('create_curriculum_subject_label'), array(
                         'class' => 'btn btn-success'
                     ));
-
+                    if (isset($new_form_url))
+                    {
+                            echo anchor($new_form_url, 'Add Another Form', array('class' => 'btn btn-info'));
+                            unset($new_form_url);
+                    }
                     echo '</div>';
                     echo form_close();
                     ?>
