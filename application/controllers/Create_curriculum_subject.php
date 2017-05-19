@@ -110,8 +110,20 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                         $level_selected = array();
                         $ok             = TRUE;
                         $index          = 0;
+                        $subject_ids    = array(); //will use if there same subject selected
                         foreach ($datas as $row)
                         {
+
+                                if ( ! in_array($row['subject'], $subject_ids))
+                                {
+                                        $subject_ids[] = $row['subject'];
+                                }
+                                else
+                                {
+                                        $this->session->set_flashdata('message', bootstrap_error('Subject Duplicate.'));
+                                        return FALSE;
+                                }
+
                                 $ok = $this->_insert_one_data((object) $row, $curriculum_id);
                                 if ( ! $ok)
                                 {
