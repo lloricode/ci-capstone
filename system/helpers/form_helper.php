@@ -381,7 +381,8 @@ if ( ! function_exists('form_dropdown'))
 		}
 		else
 		{
-			$defaults = array('name' => $data);
+			$defaults = array('name' => $data,
+                                          'style' => 'width: 220px');
 		}
 
 		is_array($selected) OR $selected = array($selected);
