@@ -14,6 +14,10 @@ class Create_curriculum_subject extends CI_Capstone_Controller
         private $_form_count;
         private $_form_count_limit;
 
+
+        const MINOR = 'minor';
+        const MAJOR = 'major';
+
         function __construct()
         {
                 parent::__construct();
@@ -23,7 +27,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
                 $this->breadcrumbs->unshift(2, lang('curriculum_label'), 'curriculums');
 
-                $this->config->load('admin/curriculum_subject', TRUE);
+                $this->config->load('admin/curriculum_subject', TRUE);               
                 $this->_form_count_limit = $this->config->item('limit_multiple_form_add_curriculum_subject', 'admin/curriculum_subject');
         }
 
@@ -77,7 +81,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
         private function _execute_all_validations($count)
         {
                 $rules = array();
-                if ($this->_type == 'major')
+                if ($this->_type == self::MAJOR)
                 {
                         for ($i = 0; $i < $count; $i ++)
                         {
@@ -171,7 +175,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
 
         private function _insert_one_data($row, $curriculum_id)
         {
-                if ($this->_type == 'major')
+                if ($this->_type == self::MAJOR)
                 {
                         $unit_id = $this->Unit_model->insert(array(
                             'unit_value' => $row->units,
@@ -190,7 +194,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                     'curriculum_id'                 => $curriculum_id,
                     'unit_id'                       => $unit_id
                 ));
-                if ($this->_type == 'minor')
+                if ($this->_type == self::MINOR)
                 {
                         $unit_id = TRUE;
                 }
@@ -202,7 +206,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
 
                 if ($key = $this->input->get('type', TRUE))
                 {
-                        if ($key != 'major' && $key != 'minor')
+                        if ($key != self::MAJOR && $key != self::MINOR)
                         {
                                 show_error('invalid type');
                         }
@@ -235,7 +239,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
         //if minor sa subject kunin ang unit, else major sa input sya kunin
         private function _unit_selected($row)
         {
-                if ($this->_type == 'minor')
+                if ($this->_type == self::MINOR)
                 {
                         //get unit in selected subject
                         $unit_from_selected_input = $this->Subject_model->get_unit($row->subject);
@@ -329,7 +333,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
 
                 switch ($this->_type)
                 {
-                        case 'major':
+                        case self::MAJOR:
                                 $where_course = NULL;
                                 $string_query = FALSE;
                                 if ($curr_id      = $this->input->get('curriculum-id'))
@@ -346,7 +350,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                                         set_cache('as_dropdown_subject_code')->
                                         get_all();
                                 break;
-                        case 'minor':
+                        case self::MINOR:
                                 $subjects_obj = $this->Subject_model->
                                         where(' `unit_id` != \'NULL\'', NULL, NULL, FALSE, FALSE, TRUE/* query string */)->
                                         as_dropdown('subject_code')->
@@ -400,7 +404,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                             'type'  => 'dropdown',
                             'lang'  => 'curriculum_subject_semester_label'
                         );
-                        if ($this->_type === 'major')
+                        if ($this->_type === self::MAJOR)
                         {
                                 $inputs['curriculum_subject_lecture_hours'.$i] = array(
                                     'name'  => "data[$i][lecture]",
