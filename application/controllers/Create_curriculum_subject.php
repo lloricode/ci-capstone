@@ -57,13 +57,12 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                          */
                         $this->db->trans_begin();
 
-                        if ( ! $this->_is_subject_course($curriculum_obj->curriculum_id) OR ! $this->_insert_batch_($this->input->post('data',TRUE), $curriculum_obj->curriculum_id))
+                        if ( ! $this->_insert_batch_($this->input->post('data', TRUE), $curriculum_obj->curriculum_id))
                         {
                                 /**
                                  * rollback database
                                  */
                                 $this->db->trans_rollback();
-
                         }
                         else
                         {
@@ -120,7 +119,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                          * lets execute this first before insert anything that will affect in validation that will include in transaction
                          */
                         foreach ($datas as $row)
-                        {                               
+                        {                  
                                 if ( ! in_array($row['subject'], $subject_ids))
                                 {
                                         $subject_ids[] = $row['subject'];
@@ -130,6 +129,13 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                                         $this->session->set_flashdata('message', bootstrap_error('Duplicate Subjects is not allowed.'));
                                         return FALSE;
                                 }
+                                                                
+                                //che if subject is really valid with this curriculum
+                                if ( ! $this->_is_subject_course($curriculum_id, $row['subject']))
+                                {
+                                        return FALSE;
+                                }
+
                                 $lvl=(int)$row['level'];
                                 if ( ! in_array($lvl, $level_selected))
                                 {
@@ -271,10 +277,9 @@ class Create_curriculum_subject extends CI_Capstone_Controller
          * @return boolean
          * @author Lloric Mayuga Garcia <emorickfighter@gmail.com>
          */
-        private function _is_subject_course($curriculum_id)
+        private function _is_subject_course($curriculum_id, $subject_id)
         {
 
-                $subject_id = $this->input->post('subject', TRUE);
 
                 //select what course_id from subject ELSE GEN-ED
                 $subj_obj = $this->Subject_model->get($subject_id);
