@@ -115,9 +115,12 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                         $ok             = TRUE;
                         $index          = 0;
                         $subject_ids    = array(); //will use if there same subject selected
+                        
+                        /**
+                         * lets execute this first before insert anything that will affect in validation that will include in transaction
+                         */
                         foreach ($datas as $row)
-                        {
-
+                        {                               
                                 if ( ! in_array($row['subject'], $subject_ids))
                                 {
                                         $subject_ids[] = $row['subject'];
@@ -127,12 +130,6 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                                         $this->session->set_flashdata('message', bootstrap_error('Duplicate Subjects is not allowed.'));
                                         return FALSE;
                                 }
-
-                                $ok = $this->_insert_one_data((object) $row, $curriculum_id);
-                                if ( ! $ok)
-                                {
-                                        break;
-                                }
                                 $lvl=(int)$row['level'];
                                 if ( ! in_array($lvl, $level_selected))
                                 {
@@ -141,8 +138,23 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                                 $unit_selected[$row['semester']] += $this->_unit_selected((object) $row);
                         }
 
+                        unset($row);//just to make use 
+                        if ( ! $this->_validate_unit_($unit_selected, $level_selected))
+                        {
+                                return FALSE;
+                        }
+                        
+                        foreach ($datas as $row)
+                        {
+                                $ok = $this->_insert_one_data((object) $row, $curriculum_id);
+                                if ( ! $ok)
+                                {
+                                        break;
+                                }
+                        }
+
                         //validate is unit limit  
-                        return (bool) ($ok && $this->_validate_unit_($unit_selected, $level_selected));
+                        return $ok;
                 }
                 return FALSE;
         }
