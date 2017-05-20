@@ -10,7 +10,13 @@ class Create_curriculum_subject extends CI_Capstone_Controller
 {
 
 
-        private $type;
+        private $_type;
+        private $_form_count;
+        private $_form_count_limit;
+
+
+        const MINOR = 'minor';
+        const MAJOR = 'major';
 
         function __construct()
         {
@@ -20,36 +26,28 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                 $this->load->helper(array('school', 'combobox'));
                 $this->form_validation->set_error_delimiters('<span class="help-inline">', '</span> ');
                 $this->breadcrumbs->unshift(2, lang('curriculum_label'), 'curriculums');
+
+                $this->config->load('admin/curriculum_subject', TRUE);               
+                $this->_form_count_limit = $this->config->item('limit_multiple_form_add_curriculum_subject', 'admin/curriculum_subject');
         }
 
         public function index()
         {
-                if ($key = $this->input->get('type'))
-                {
-                        if ($key != 'major' && $key != 'minor')
-                        {
-                                show_error('invalid type');
-                        }
-                        $this->type = $key;
-                }
-                else
-                {
-                        show_error('missing paramter');
-                }
-
+                $this->_check_input_get();
+                
                 $curriculum_obj = check_id_from_url('curriculum_id', 'Curriculum_model', 'curriculum-id', 'course');
 
                 if ($curriculum_obj->curriculum_status)
                 {
-                        show_error('Already Enabled');
+                        show_error('Curriculum already Enabled.');
                 }
                 if ($curriculum_obj->curriculum_already_used)
                 {
-                        show_error('Edit is not allowed, Already been used by other data.');
+                        show_error('Unable to edit. This has already been used by other data.');
                 }
 
-                $this->breadcrumbs->unshift(3, lang('curriculum_subject_label'), 'curriculums/view?curriculum-id=' . $curriculum_obj->curriculum_id);
-                $this->breadcrumbs->unshift(4, lang('create_curriculum_subject_label') . ' [ ' . $curriculum_obj->course->course_code . ' ]', 'create-curriculum-subject?curriculum-id=' . $curriculum_obj->curriculum_id . '&type=' . $this->type);
+                $this->breadcrumbs->unshift(3, lang('curriculum_subject_label'), "curriculums/view?curriculum-id={$curriculum_obj->curriculum_id}");
+                $this->breadcrumbs->unshift(4, lang('create_curriculum_subject_label') . " [ {$curriculum_obj->course->course_code} ]", "create-curriculum-subject?curriculum-id={$curriculum_obj->curriculum_id}&type={$this->_type}&form-count={$this->_form_count}");
 
 
                 if ($this->input->post('submit', TRUE))
@@ -59,44 +57,13 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                          */
                         $this->db->trans_begin();
 
-
-                        if ($this->type == 'major')
-                        {
-                                $this->form_validation->set_rules($this->Unit_model->insert_validation());
-                                $unit_ok = $this->form_validation->run();
-
-                                $unit_id = $this->Unit_model->insert(array(
-                                    'unit_value' => $this->input->post('units', TRUE),
-                                    'lec_value'  => $this->input->post('lecture', TRUE),
-                                    'lab_value'  => $this->input->post('laboratory', TRUE)
-                                ));
-                        }
-                        else
-                        {
-                                $unit_ok = TRUE;
-                                $unit_id = NULL;
-                        }
-                        $id = $this->Curriculum_subject_model->from_form(NULL, array(
-                                    'curriculum_id' => $curriculum_obj->curriculum_id,
-                                    'unit_id'       => $unit_id
-                                ))->insert();
-                        if ($this->type == 'minor')
-                        {
-                                $unit_id = TRUE;
-                        }
-
-                        $unit_limit = $this->_unit_term_limit();
-                        if ( ! $unit_limit OR ! $this->_is_subject_course($curriculum_obj->curriculum_id) OR ! $id OR ! $unit_id OR ! $unit_ok)
+                        if ( ! $this->_is_subject_course($curriculum_obj->curriculum_id) OR ! $this->_insert_batch_($this->input->post('data',TRUE), $curriculum_obj->curriculum_id))
                         {
                                 /**
                                  * rollback database
                                  */
                                 $this->db->trans_rollback();
-                                if ($unit_limit)
-                                {
-                                        
-                                        $this->session->set_flashdata('message', bootstrap_error('curriculum_subject_add_unsuccessfull'));
-                                }
+
                         }
                         else
                         {
@@ -111,31 +78,192 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                 $this->_form_view($curriculum_obj);
         }
 
-        private function _unit_term_limit()
+        private function _execute_all_validations($count)
         {
-                //get unit limit config
-                $this->config->load('admin/curriculum_subject', TRUE);
-                $input_semester    = $this->input->post('semester', TRUE);
-                $unit_max_limit_config = $this->config->item("{$input_semester}_semester_max_unit_limit", 'admin/curriculum_subject');
-
-                //get unit in selected subject
-                $unit_from_selected_input = $this->Subject_model->get_unit($this->input->post('subject', TRUE));
-
-                //get total unit in select term AND year
-                $total_unit_in_term = $this->Curriculum_subject_model->total_units_per_term($this->input->get('curriculum-id', TRUE), $input_semester, $this->input->post('level', TRUE));
-
-
-                //add new unit PLUS total unit
-                $new_total_unit = $unit_from_selected_input + $total_unit_in_term;
-
-                //compare it from config
-                if ($new_total_unit > $unit_max_limit_config)
+                $rules = array();
+                if ($this->_type == self::MAJOR)
                 {
-                        $this->session->set_flashdata('message', bootstrap_error("Only $unit_max_limit_config unit(s) allowed in Term"));
+                        for ($i = 0; $i < $count; $i ++)
+                        {
+                                $rules = array_merge($rules, $this->Unit_model->insert_validation($i));
+                        }
+                }
+                for ($i = 0; $i < $count; $i ++ )
+                {
+                        $rules = array_merge($rules, $this->Curriculum_subject_model->insert_validations($i));
+                }
+                $this->form_validation->set_rules($rules);
+                return (bool) $this->form_validation->run();
+        }
+
+        private function _insert_batch_($datas, $curriculum_id)
+        {
+                $valid = $this->_execute_all_validations(count($datas));
+                if ( ! $valid)
+                {
+                        $this->session->set_flashdata('message', bootstrap_error('Failed to validate the form/s.'));
                         return FALSE;
                 }
-                //else ok
+                if ($datas)
+                {
+                        $unit_selected  = array(
+                            'first'  => 0,
+                            'second' => 0,
+                            'summer' => 0
+                        );
+                        $level_selected = array();
+                        $ok             = TRUE;
+                        $index          = 0;
+                        $subject_ids    = array(); //will use if there same subject selected
+                        
+                        /**
+                         * lets execute this first before insert anything that will affect in validation that will include in transaction
+                         */
+                        foreach ($datas as $row)
+                        {                               
+                                if ( ! in_array($row['subject'], $subject_ids))
+                                {
+                                        $subject_ids[] = $row['subject'];
+                                }
+                                else
+                                {
+                                        $this->session->set_flashdata('message', bootstrap_error('Duplicate Subjects is not allowed.'));
+                                        return FALSE;
+                                }
+                                $lvl=(int)$row['level'];
+                                if ( ! in_array($lvl, $level_selected))
+                                {
+                                        $level_selected[] = $lvl;
+                                }
+                                $unit_selected[$row['semester']] += $this->_unit_selected((object) $row);
+                        }
+
+                        unset($row);//just to make use 
+                        if ( ! $this->_validate_unit_($unit_selected, $level_selected))
+                        {
+                                return FALSE;
+                        }
+                        
+                        foreach ($datas as $row)
+                        {
+                                $ok = $this->_insert_one_data((object) $row, $curriculum_id);
+                                if ( ! $ok)
+                                {
+                                        break;
+                                }
+                        }
+
+                        //validate is unit limit  
+                        return $ok;
+                }
+                return FALSE;
+        }
+
+        private function _validate_unit_($unit_selected, $level_selected)
+        {
+
+                $first_max_limit_config  = $this->config->item("first_semester_max_unit_limit", 'admin/curriculum_subject');
+                $second_max_limit_config = $this->config->item("second_semester_max_unit_limit", 'admin/curriculum_subject');
+                $summer_max_limit_config = $this->config->item("summer_semester_max_unit_limit", 'admin/curriculum_subject');
+
+                foreach ($level_selected as $lvl)
+                {
+                        foreach (array('first', 'second', 'summer') as $sem)
+                        {
+                                $db_units = $this->Curriculum_subject_model->total_units_per_term($this->input->get('curriculum-id', TRUE), $sem, $lvl);
+                        
+                                $combined = $db_units + $unit_selected[$sem];
+                                
+                                if (${"{$sem}_max_limit_config"} < $combined)
+                                {
+                                        $tmpp = ${"{$sem}_max_limit_config"};
+                                        $this->session->set_flashdata('message', bootstrap_error("Only " . strong("$tmpp unit(s)") . " allowed in " . semesters($sem, FALSE, 'short') . " Term. Total units to add: " . strong($unit_selected[$sem]) . ". Total units already in  curriculum: " . strong($db_units) . ". A Total of : " . strong($combined)));
+                                        return FALSE;
+                                }
+                        }
+                }
                 return TRUE;
+        }
+
+        private function _insert_one_data($row, $curriculum_id)
+        {
+                if ($this->_type == self::MAJOR)
+                {
+                        $unit_id = $this->Unit_model->insert(array(
+                            'unit_value' => $row->units,
+                            'lec_value'  => $row->lecture,
+                            'lab_value'  => $row->laboratory
+                        ));
+                }
+                else
+                {
+                        $unit_id = NULL;
+                }
+                $id = $this->Curriculum_subject_model->insert(array(
+                    'curriculum_subject_year_level' => $row->level,
+                    'curriculum_subject_semester'   => $row->semester,
+                    'subject_id'                    => $row->subject,
+                    'curriculum_id'                 => $curriculum_id,
+                    'unit_id'                       => $unit_id
+                ));
+                if ($this->_type == self::MINOR)
+                {
+                        $unit_id = TRUE;
+                }
+                return (bool) ($unit_id && $id);
+        }
+
+        private function _check_input_get()
+        {
+
+                if ($key = $this->input->get('type', TRUE))
+                {
+                        if ($key != self::MAJOR && $key != self::MINOR)
+                        {
+                                show_error('invalid type');
+                        }
+                        $this->_type = $key;
+                }
+                else
+                {
+                        show_error('missing paramter');
+                }
+
+                //if typecasting is failed, then show missing parameter will occure
+                if ($count = (int) $this->input->get('form-count', TRUE))
+                {
+                        if ($count > $this->_form_count_limit)
+                        {
+                                show_error("Form limit is {$this->_form_count_limit}.");
+                        }
+                        if ($count < 1)
+                        {
+                                show_error("invalid form count");
+                        }
+                        $this->_form_count = $count;
+                }
+                else
+                {
+                        show_error('invalid or missing paramter');
+                }
+        }
+
+        //if minor sa subject kunin ang unit, else major sa input sya kunin
+        private function _unit_selected($row)
+        {
+                if ($this->_type == self::MINOR)
+                {
+                        //get unit in selected subject
+                        $unit_from_selected_input = $this->Subject_model->get_unit($row->subject);
+                }
+                else
+                {
+                        //major
+                        //unit selected is from input
+                        $unit_from_selected_input = $row->units;
+                }
+
+                return (int) $unit_from_selected_input;
         }
 
         /**
@@ -215,9 +343,9 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                 $return[NULL] = 'no subject';
                 $subjects_obj = NULL;
 
-                switch ($this->type)
+                switch ($this->_type)
                 {
-                        case 'major':
+                        case self::MAJOR:
                                 $where_course = NULL;
                                 $string_query = FALSE;
                                 if ($curr_id      = $this->input->get('curriculum-id'))
@@ -234,7 +362,7 @@ class Create_curriculum_subject extends CI_Capstone_Controller
                                         set_cache('as_dropdown_subject_code')->
                                         get_all();
                                 break;
-                        case 'minor':
+                        case self::MINOR:
                                 $subjects_obj = $this->Subject_model->
                                         where(' `unit_id` != \'NULL\'', NULL, NULL, FALSE, FALSE, TRUE/* query string */)->
                                         as_dropdown('subject_code')->
@@ -261,53 +389,67 @@ class Create_curriculum_subject extends CI_Capstone_Controller
 
         private function _form_view($curriculum_obj)
         {
-
-                $inputs['subject_id'] = array(
-                    'name'  => 'subject',
-                    'value' => $this->_dropdown_for_subjects(),
-                    'type'  => 'dropdown',
-                    'lang'  => 'curriculum_subject_subject_label',
-                        // 'note'  => 'Requisites is on the next form after submit this current form.'
-                );
-
-                $inputs['curriculum_subject_year_level'] = array(
-                    'name'  => 'level',
-                    'value' => _numbers_for_drop_down(1, 4),
-                    'type'  => 'dropdown',
-                    'lang'  => 'curriculum_subject_year_level_label',
-                );
-
-                $inputs['curriculum_subject_semester'] = array(
-                    'name'  => 'semester',
-                    'value' => semesters(FALSE),
-                    'type'  => 'dropdown',
-                    'lang'  => 'curriculum_subject_semester_label'
-                );
-                if ($this->type === 'major')
+                for ($i = 0; $i < $this->_form_count; $i ++ )
                 {
-                        $inputs['curriculum_subject_lecture_hours'] = array(
-                            'name'  => 'lecture',
-                            'value' => _numbers_for_drop_down(0, 5),
-                            'type'  => 'dropdown',
-                            'lang'  => 'curriculum_subject_lecture_hours_label'
+                        $inputs['form_count'.$i] = array(
+                            'form_count' => ($i+1)
                         );
 
-                        $inputs['curriculum_subject_laboratory_hours'] = array(
-                            'name'  => 'laboratory',
-                            'value' => _numbers_for_drop_down(0, 9),
+                        $inputs['subject_id'.$i] = array(
+                            'name'  => "data[$i][subject]",
+                            'value' => $this->_dropdown_for_subjects(),
                             'type'  => 'dropdown',
-                            'lang'  => 'curriculum_subject_laboratory_hours_label'
+                            'lang'  => 'curriculum_subject_subject_label',
+                                // 'note'  => 'Requisites is on the next form after submit this current form.'
                         );
 
-                        $inputs['curriculum_subject_units'] = array(
-                            'name'  => 'units',
-                            'value' => _numbers_for_drop_down(1, 6),
+                        $inputs['curriculum_subject_year_level'.$i] = array(
+                            'name'  => "data[$i][level]",
+                            'value' => _numbers_for_drop_down(1, 4),
                             'type'  => 'dropdown',
-                            'lang'  => 'curriculum_subject_units_label'
+                            'lang'  => 'curriculum_subject_year_level_label',
                         );
+
+                        $inputs['curriculum_subject_semester'.$i] = array(
+                            'name'  => "data[$i][semester]",
+                            'value' => semesters(FALSE),
+                            'type'  => 'dropdown',
+                            'lang'  => 'curriculum_subject_semester_label'
+                        );
+                        if ($this->_type === self::MAJOR)
+                        {
+                                $inputs['curriculum_subject_lecture_hours'.$i] = array(
+                                    'name'  => "data[$i][lecture]",
+                                    'value' => _numbers_for_drop_down(0, 5),
+                                    'type'  => 'dropdown',
+                                    'lang'  => 'curriculum_subject_lecture_hours_label'
+                                );
+
+                                $inputs['curriculum_subject_laboratory_hours'.$i] = array(
+                                    'name'  => "data[$i][laboratory]",
+                                    'value' => _numbers_for_drop_down(0, 9),
+                                    'type'  => 'dropdown',
+                                    'lang'  => 'curriculum_subject_laboratory_hours_label'
+                                );
+
+                                $inputs['curriculum_subject_units'.$i] = array(
+                                    'name'  => "data[$i][units]",
+                                    'value' => _numbers_for_drop_down(1, 6),
+                                    'type'  => 'dropdown',
+                                    'lang'  => 'curriculum_subject_units_label'
+                                );
+                        }
                 }
+                $pre_url = "create-curriculum-subject?curriculum-id={$curriculum_obj->curriculum_id}&type={$this->_type}&form-count=";
+                if (($this->_form_count + 1) <= $this->_form_count_limit)
+                {
+                        $data['new_form_url'] = $pre_url . ($this->_form_count + 1);
+                }
+                $data['inputs'] = $inputs;
+                $data['action']       = $pre_url . $this->_form_count;
+
                 $template['curriculum_information']  = MY_Controller::render('admin/_templates/curriculums/curriculum_information', array('curriculum_obj' => $curriculum_obj), TRUE);
-                $template['curriculum_subject_form'] = $this->form_boostrap('create-curriculum-subject?curriculum-id=' . $curriculum_obj->curriculum_id . '&type=' . $this->type, $inputs, 'create_curriculum_subject_label', 'create_curriculum_subject_label', 'info-sign', NULL, TRUE);
+                $template['curriculum_subject_form'] = MY_Controller::render('admin/_templates/create_curriculum_subject/form', $data, TRUE);
                 $template['bootstrap']               = $this->_bootstrap();
                 $this->render('admin/create_curriculum_subject', $template);
         }

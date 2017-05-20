@@ -46,24 +46,24 @@ class Unit_model extends MY_Model
                 $this->delete_cache_on_save = TRUE; //(bool) $this->config->item('my_model_delete_cache_on_save');
         }
 
-        public function insert_validation()
+        public function insert_validation($index)
         {
-                $lec = (int) $this->input->post('lecture', TRUE);
-                $lab = (int) $this->input->post('laboratory', TRUE);
+                $lec = (int) $this->input->post("data[$index][lecture]", TRUE);
+                $lab = (int) $this->input->post("data[$index][laboratory]", TRUE);
                 return array(
                     array(//unit_value
                         'label' => lang('unit_unit_label'),
-                        'field' => 'units',
+                        'field' => "data[$index][units]",
                         'rules' => "trim|required|min_length[1]|max_length[2]|is_natural_no_zero", //|is_unit_relate_types[$lec.$lab]"
                     ),
                     array(//lec_value
                         'label' => lang('unit_lec_label'),
-                        'field' => 'lecture',
+                        'field' => "data[$index][lecture]",
                         'rules' => "trim|required|min_length[1]|max_length[2]|is_natural|select_atleast_one[$lab]"
                     ),
                     array(//lab_value
                         'label' => lang('unit_lab_label'),
-                        'field' => 'laboratory',
+                        'field' => "data[$index][laboratory]",
                         'rules' => "trim|required|min_length[1]|max_length[2]|is_natural|select_atleast_one[$lec]"
                     ),
                 );
