@@ -54,6 +54,10 @@ class CI_Capstone_Controller extends MY_Controller
         function __construct()
         {
                 parent::__construct();
+                if (ENVIRONMENT === 'development')
+                {
+                        $this->output->enable_profiler(TRUE);
+                }
         }
 
         /**
