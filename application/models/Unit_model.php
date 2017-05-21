@@ -46,26 +46,30 @@ class Unit_model extends MY_Model
                 $this->delete_cache_on_save = TRUE; //(bool) $this->config->item('my_model_delete_cache_on_save');
         }
 
-        public function insert_validation($index)
+        public function insert_validation($index = NULL)
         {
-                $lec = (int) $this->input->post("data[$index][lecture]", TRUE);
-                $lab = (int) $this->input->post("data[$index][laboratory]", TRUE);
+                $unit_post       = (is_null($index)) ? 'units' : "data[$index][units]";
+                $lecture_post    = (is_null($index)) ? 'lecture' : "data[$index][lecture]";
+                $laboratory_post = (is_null($index)) ? 'laboratory' : "data[$index][laboratory]";
+
+                $lec = (int) $this->input->post($lecture_post, TRUE);
+                $lab = (int) $this->input->post($laboratory_post, TRUE);
                 return array(
                     array(//unit_value
                         'label' => lang('unit_unit_label'),
-                        'field' => "data[$index][units]",
+                        'field' => $unit_post,
                         'rules' => "trim|required|min_length[1]|max_length[2]|is_natural_no_zero", //|is_unit_relate_types[$lec.$lab]"
                     ),
                     array(//lec_value
                         'label' => lang('unit_lec_label'),
-                        'field' => "data[$index][lecture]",
+                        'field' => $lecture_post,
                         'rules' => "trim|required|min_length[1]|max_length[2]|is_natural|select_atleast_one[$lab]"
                     ),
                     array(//lab_value
                         'label' => lang('unit_lab_label'),
-                        'field' => "data[$index][laboratory]",
+                        'field' => $laboratory_post,
                         'rules' => "trim|required|min_length[1]|max_length[2]|is_natural|select_atleast_one[$lec]"
-                    ),
+                    )
                 );
         }
 
