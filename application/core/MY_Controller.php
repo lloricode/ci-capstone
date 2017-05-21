@@ -14,6 +14,10 @@ class MY_Controller extends CI_Controller
                 {
                         $this->delete_all_query_cache();
                 }
+                if (ENVIRONMENT === 'development')
+                {
+                        $this->output->enable_profiler(TRUE);
+                }
         }
 
         /**
@@ -54,10 +58,6 @@ class CI_Capstone_Controller extends MY_Controller
         function __construct()
         {
                 parent::__construct();
-                if (ENVIRONMENT === 'development')
-                {
-                        $this->output->enable_profiler(TRUE);
-                }
         }
 
         /**
