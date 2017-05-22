@@ -14,7 +14,7 @@
  | if not specicy, default is development
  */
 define('___CI_CAPSTONE_PROJECT_ENVIRONTMENT___', 1);
-define('CI_CAPSTONE_VERSION', '1.0');
+define('CI_CAPSTONE_VERSION', '1.0.1');
 
 /*
  |  -----------------------------
