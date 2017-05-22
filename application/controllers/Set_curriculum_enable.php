@@ -69,7 +69,7 @@ class Set_curriculum_enable extends CI_Capstone_Controller
                                         $this->db->trans_rollback();
                                         if ( ! $gen_ed_minimum)
                                         {
-                                                $this->session->set_flashdata('message', bootstrap_error('The curriculum must meet the required number of Gen Ed units.' .$gen_ed_minimum));
+                                                $this->session->set_flashdata('message', bootstrap_error('The curriculum must meet the required number of Gen Ed units.'));
                                         }
                                         elseif ( ! $min_unit)
                                         {
