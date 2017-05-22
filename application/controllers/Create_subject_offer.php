@@ -212,7 +212,7 @@ class Create_subject_offer extends CI_Capstone_Controller
 
                 if ( ! $return)
                 {
-                        $this->session->set_flashdata('message', bootstrap_error('Schedule did not meet the required ' . strong($leclab_total_hrs . ' hour(s)') . '. Your input is only ' . strong($total_hrs_input . ' hour(s)') . ', see curriculum for further information.'));
+                        $this->session->set_flashdata('message', bootstrap_error('Schedule did not meet the required ' . strong($leclab_total_hrs . ' hour(s)') . '. Your input is ' . strong($total_hrs_input . ' hour(s)') . ', see curriculum for further information.'));
                 }
                 return $return;
         }

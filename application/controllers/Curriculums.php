@@ -386,7 +386,7 @@ class Curriculums extends CI_Capstone_Controller
                  */
                 $header = array(
                     lang('curriculum_subject_subject_label'),
-                    'desc',
+                    'Description',
                     lang('curriculum_subject_units_label'),
                     lang('curriculum_subject_lecture_hours_label'),
                     lang('curriculum_subject_laboratory_hours_label'),
