@@ -10,7 +10,7 @@ $CI->output->_display();
 
 function _compress($buffer)
 {
-        if (ENVIRONMENT != 'production')
+        if (ENVIRONMENT === 'development')
         {
                 return $buffer;
         }
