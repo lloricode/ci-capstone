@@ -59,12 +59,12 @@ administrator|mypasswordisadmin1
 - all is this set up in application/config/{ENVIRONMENT_FOLDER_NAMES}/config.php
 
   
-### Thanks to our team
+### Thanks to our team.
 
 - [Jink Po](https://github.com/shikai06)
 - [Edzar Calibod](https://github.com/iEdzar)
 
-### Specially of Senior Programmer's seggesting
+### Specially of Senior Programmer's suggesting.
 
 - [Marcelius Dagpin](https://github.com/mardagz)
 - [Jicking Bebiro](https://github.com/jicking)
