@@ -33,6 +33,8 @@ Platform|Framework
 
 - OR you can just import in databse a sample data from ``sample_data/ci_capstone.sql``.
 
+- then if you just/want to rename the folder name, you will be required to set/modify the base url as the same of name of your new folder name.
+
 ## Default Login
 
 Username | Password
@@ -69,3 +71,5 @@ administrator|mypasswordisadmin1
 - [Marcelius Dagpin](https://github.com/mardagz)
 - [Jicking Bebiro](https://github.com/jicking)
 
+
+#### Any suggest/issue/problem dont hesitate to open an issue, even pull request. :)
