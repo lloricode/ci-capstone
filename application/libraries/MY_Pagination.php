@@ -31,14 +31,14 @@ class MY_Pagination extends CI_Pagination
                  * load configuration
                  * I did this because currently I can find how does CI load configuration in CI_Pagination
                  */
-                $this->CI->config->load('pagination');
+                $this->CI->config->load('pagination', TRUE);
                 foreach (array('prev_link_diabled', 'next_link_diabled', 'first_link_diabled', 'last_link_diabled') as $value)
                 {
                         /**
                          * declaring local variables same as in configuration item 
                          * then initialize with configuration to a variable.
                          */
-                        ${$value} = $this->CI->config->item($value);
+                        ${$value} = $this->CI->config->item($value, 'pagination');
                 }
 
                 $url = site_url($url);
@@ -153,6 +153,16 @@ class MY_Pagination extends CI_Pagination
                 {
                         $this->prefix = '/';
                 }
+                if ($this->page_query_string === TRUE)
+                {
+                        $_tmp = '?';
+                        if (preg_match('![?]!', $this->my_base_url))
+                        {
+                                $_tmp = '&';
+                        }
+                        $this->prefix = $_tmp . $this->CI->config->item('query_string_segment', 'pagination') . '=';
+                }
+
                 $num_pages = ((int) ceil($this->total_rows / $this->per_page));
                 // Render the "Last" link
 //                if ($this->last_link !== FALSE && ($this->cur_page + $this->num_links + !$this->num_links) < $num_pages)
