@@ -100,7 +100,7 @@ class CI_Capstone_Controller extends MY_Controller
         public function table_bootstrap($header, $table_data_rows, $table_config_or_template, $header_lang, $pagination = FALSE, $return_html = FALSE, $caption = NULL, $bootsrap = TRUE)
         {
 
-                $this->config->load('admin/table');
+                $this->config->load('admin/table', TRUE);
                 $this->load->library('table');
 
                 $temp_template = NULL;
@@ -116,7 +116,7 @@ class CI_Capstone_Controller extends MY_Controller
                         /**
                          * just table open
                          */
-                        $temp_template['table_open'] = $this->config->item($table_config_or_template);
+                        $temp_template['table_open'] = $this->config->item($table_config_or_template, 'admin/table');
                 }
                 $this->table->set_template($temp_template);
 
