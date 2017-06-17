@@ -14,18 +14,18 @@ class Breadcrumbs
         {
 
                 $this->CI = & get_instance();
-                $this->CI->config->load('breadcrumbs');
+                $this->CI->config->load('breadcrumbs', TRUE);
 
-                $this->breadcrumb_open               = $this->CI->config->item('breadcrumb_open');
-                $this->breadcrumb_close              = $this->CI->config->item('breadcrumb_close');
-                $this->breadcrumb_el_open            = $this->CI->config->item('breadcrumb_el_open');
-                $this->breadcrumb_el_open_extra      = $this->CI->config->item('breadcrumb_el_open_extra');
-                $this->breadcrumb_el_close           = $this->CI->config->item('breadcrumb_el_close');
-                $this->breadcrumb_el_first           = $this->CI->config->item('breadcrumb_el_first');
-                $this->breadcrumb_el_first_extra     = $this->CI->config->item('breadcrumb_el_first_extra');
-                $this->breadcrumb_el_last_open_extra = $this->CI->config->item('breadcrumb_el_last_open_extra');
-                $this->breadcrumb_el_last_open       = $this->CI->config->item('breadcrumb_el_last_open');
-                $this->breadcrumb_el_last_close      = $this->CI->config->item('breadcrumb_el_last_close');
+                $this->breadcrumb_open               = $this->CI->config->item('breadcrumb_open', 'breadcrumbs');
+                $this->breadcrumb_close              = $this->CI->config->item('breadcrumb_close', 'breadcrumbs');
+                $this->breadcrumb_el_open            = $this->CI->config->item('breadcrumb_el_open', 'breadcrumbs');
+                $this->breadcrumb_el_open_extra      = $this->CI->config->item('breadcrumb_el_open_extra', 'breadcrumbs');
+                $this->breadcrumb_el_close           = $this->CI->config->item('breadcrumb_el_close', 'breadcrumbs');
+                $this->breadcrumb_el_first           = $this->CI->config->item('breadcrumb_el_first', 'breadcrumbs');
+                $this->breadcrumb_el_first_extra     = $this->CI->config->item('breadcrumb_el_first_extra', 'breadcrumbs');
+                $this->breadcrumb_el_last_open_extra = $this->CI->config->item('breadcrumb_el_last_open_extra', 'breadcrumbs');
+                $this->breadcrumb_el_last_open       = $this->CI->config->item('breadcrumb_el_last_open', 'breadcrumbs');
+                $this->breadcrumb_el_last_close      = $this->CI->config->item('breadcrumb_el_last_close', 'breadcrumbs');
         }
 
         function array_sorter($key)
