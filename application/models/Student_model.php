@@ -309,17 +309,27 @@ class Student_model extends MY_Model
 
         public function all($limit = NULL, $offset = NULL, $course_id = NULL, $search = NULL, $report = FALSE, $enrolled_status_only = NULL, $is_dean = FALSE)
         {
-                $this->_query_all($course_id, $search, $enrolled_status_only, $is_dean);
-                $this->db->order_by('enrollment_year_level', 'ASC');
-                $this->db->order_by('student_lastname', 'ASC');
-                $this->db->order_by('created_at', 'DESC');
-                $this->db->order_by('updated_at', 'DESC');
-                if ( ! $report)
+                $tmp        = $course_id . $search . $enrolled_status_only . $is_dean . $limit . $offset;
+                $cache_name = "{$this->cache_prefix}_{$this->table}_{$tmp}";
+                unset($tmp);
+                $result     = $this->_get_query_cache($cache_name);
+
+                if ( ! (isset($result) && $result !== FALSE))
                 {
-                        $this->db->limit($limit, $offset);
+                        $this->_query_all($course_id, $search, $enrolled_status_only, $is_dean);
+                        $this->db->order_by('enrollment_year_level', 'ASC');
+                        $this->db->order_by('student_lastname', 'ASC');
+                        $this->db->order_by('created_at', 'DESC');
+                        $this->db->order_by('updated_at', 'DESC');
+                        if ( ! $report)
+                        {
+                                $this->db->limit($limit, $offset);
+                        }
+                        $rs     = $this->db->get($this->table);
+                        $result = $rs->custom_result_object('Student_row');
+                        $this->_write_query_cache($result, $cache_name);
                 }
-                $rs     = $this->db->get($this->table);
-                $result = $rs->custom_result_object('Student_row');
+
 
                 $this->db->reset_query();
 
@@ -330,6 +340,18 @@ class Student_model extends MY_Model
                             'result' => $result,
                             'count'  => $count
                 );
+        }
+
+        private function _write_query_cache($data, $cache_name)
+        {
+                $this->load->driver('cache');
+                $this->cache->{$this->cache_driver}->save($cache_name, $data, 86400);
+        }
+
+        private function _get_query_cache($cache_name)
+        {
+                $this->load->driver('cache');
+                return $this->cache->{$this->cache_driver}->get($cache_name);
         }
 
         private function _query_all($course_id = NULL, $search = NULL, $enrolled_status_only = NULL, $is_dean)

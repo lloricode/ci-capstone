@@ -59,10 +59,11 @@ class Permissions extends CI_Capstone_Controller
                         foreach ($controllers_obj as $c)
                         {
                                 $permission_obj          = $this->Permission_model->
-                                        set_cache('permission_controllers_' . $c->controller_id)->
-                                        get_all(array(
-                                    'controller_id' => $c->controller_id
-                                ));
+                                        where(array(
+                                            'controller_id' => $c->controller_id
+                                        ))->
+                                        set_cache('permission_controllers_where_controller_id' . $c->controller_id)->
+                                        get_all();
                                 $gruops                  = NULL;
                                 $all_current_group_count = 0;
                                 if ($permission_obj)

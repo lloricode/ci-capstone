@@ -153,6 +153,9 @@ class Create_requisite extends CI_Capstone_Controller
                         {
                                 if ($this->db->trans_commit())
                                 {
+                                        //this will affect in Curriculum_subject_model->curriculum_subjects
+                                        $cache_name = "curriculum_subjects_{$curriculum_id}*";
+                                        $this->Curriculum_subject_model->delete_cache($cache_name);
                                         $this->session->set_flashdata('message', bootstrap_success('requisite_success_added'));
                                         redirect(site_url('curriculums/view?curriculum-id=' . $curriculum_id), 'refresh');
                                 }
@@ -247,7 +250,7 @@ class Create_requisite extends CI_Capstone_Controller
                         {
                                 $id = $cur_subj->subject->unit_id;
                         }
-                        $unit_obj     = $this->Unit_model->get($id);
+                        $unit_obj     = $this->Unit_model->set_cache("get_{$id}")->get($id);
                         $table_data[] = array(
                             my_htmlspecialchars($cur_subj->curriculum_subject_year_level),
                             my_htmlspecialchars(semesters($cur_subj->curriculum_subject_semester)),
@@ -318,7 +321,7 @@ class Create_requisite extends CI_Capstone_Controller
                                             'subject_id'    => $subject_id
                                         ))->
                                         with_subject()->
-                                        //set_cache()->
+                                        set_cache("Curriculum_subject_model_with_subject_{$cur_sub_obj->curriculum_id}_{$subject_id}")->
                                         get();
                         }
 
@@ -383,7 +386,7 @@ class Create_requisite extends CI_Capstone_Controller
                                             'subject_id'    => $subject_id
                                         ))->
                                         with_subject()->
-                                        //set_cache()->
+                                        set_cache("Curriculum_subject_model_with_subject_{$cur_sub_obj->curriculum_id}_{$subject_id}")->
                                         get();
                         }
 

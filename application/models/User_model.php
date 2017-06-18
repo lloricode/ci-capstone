@@ -89,7 +89,7 @@ class User_model extends MY_Model
                         /**
                          * for student
                          */
-                        $user_obj = $this->get($user_id);
+                        $user_obj = $this->set_cache('modidy' . $user_id)->get($user_id);
                         $id       = $user_obj->id;
                         $fn       = $user_obj->first_name;
                         $ln       = $user_obj->last_name;

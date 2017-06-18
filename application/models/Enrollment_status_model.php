@@ -43,7 +43,7 @@ class Enrollment_status_model extends MY_Model
         public function status()
         {
                 $obj = $this->
-                        //set_cache()->
+                        set_cache('status')->
                         get();
                 return ($obj) ? (($obj->status) ? TRUE : FALSE) : FALSE;
         }

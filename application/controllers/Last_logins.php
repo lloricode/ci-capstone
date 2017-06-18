@@ -40,9 +40,10 @@ class Last_logins extends CI_Capstone_Controller
 
 
                 $last_login_obj = $this->Users_last_login_model->
+                        with_user()->
                         limit($this->limit, $this->limit * $this->page_ - $this->limit)->
                         order_by('created_at', 'DESC')->
-                        set_cache('last-logins_page_' . $this->page_)->
+                        set_cache('last_logins_with_user_page_' . $this->page_)->
                         get_all();
 
 
@@ -53,9 +54,9 @@ class Last_logins extends CI_Capstone_Controller
 
                         foreach ($last_login_obj as $last_login)
                         {
-                                $user = $this->User_model->get($last_login->user_id);
+//                                $user = $this->User_model->get($last_login->user_id);
                                 array_push($table_data, array(
-                                    my_htmlspecialchars($user->last_name . ', ' . $user->first_name),
+                                    my_htmlspecialchars($last_login->user->last_name . ', ' . $last_login->user->first_name),
                                     my_htmlspecialchars($last_login->ip_address),
                                     my_htmlspecialchars($last_login->agent),
                                     my_htmlspecialchars($last_login->platform),

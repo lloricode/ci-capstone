@@ -65,7 +65,7 @@ class Group_model extends MY_Model
 
                 if (is_int($param))
                 {
-                        $obj         = $this->get($param);
+                        $obj         = $this->set_cache("button_link_{$param}")->get($param);
                         $id          = $obj->id;
                         $name        = $obj->name;
                         $description = $obj->description;

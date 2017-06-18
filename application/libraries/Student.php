@@ -432,7 +432,7 @@ class Student extends School_informations
                                 {
                                         $row_output[] = $v;
                                 }
-                                $row_output[]  = $this->_row((($return_html) ? ($sub_of->faculty->last_name . ', ' . $sub_of->faculty->first_name) : $this->User_model->button_link($sub_of->faculty->id, $sub_of->faculty->last_name, $sub_of->faculty->first_name)), $row_count);
+                                $row_output[] = $this->_row((($return_html) ? ($sub_of->faculty->last_name . ', ' . $sub_of->faculty->first_name) : $this->User_model->button_link($sub_of->faculty->id, $sub_of->faculty->last_name, $sub_of->faculty->first_name)), $row_count);
 //                                $row_output [] = $this->_row($sub_of->subject->subject_rate . ' / ' . ($sub_of->subject->subject_rate * $unit), $row_count);
                                 if ( ! $return_html)
                                 {
@@ -543,7 +543,7 @@ class Student extends School_informations
                             'student_subject_drop' => FALSE,
                             'enrollment_id'        => $this->__enrollment->enrollment_id
                         ))->
-                        //set_cache()->
+                        set_cache("student_library_get_registered_notdrop_subject_offers_{$this->__enrollment->enrollment_id}_subject_offer_ids")->
                         get_all();
                 $return = array();
                 if ($tmp)
@@ -572,7 +572,7 @@ class Student extends School_informations
                         where(array(
                             'curriculum_id' => $this->__curriculum->curriculum_id
                         ))->
-                        //set_cache()->
+                        set_cache("student_library_get_all_subject_available_to_enroll_{$this->__curriculum->curriculum_id}_subject_ids_orderbycurriculum_subject_semester,curriculum_subject_year_level")->
                         get_all();
                 $return            = array();
                 if ($obj)
@@ -603,7 +603,7 @@ class Student extends School_informations
                                             'subject_offer_semester'    => current_school_semester(TRUE),
                                             'subject_offer_school_year' => current_school_year()
                                         ))->
-                                        // set_cache()->
+                                        set_cache("student_library_get_all_subject_available_to_enroll_{$s->subject_id}_currenttermyear")->
                                         get_all();
                                 if ($tmp)
                                 {
@@ -649,14 +649,17 @@ class Student extends School_informations
                     'student_subject_school_year' => current_school_year(),
                     'enrollment_id'               => $this->__enrollment->enrollment_id
                 ));
+
+                $cache_name = "enroll_id_{$this->__enrollment->enrollment_id}";
                 if ($enroll_only)
                 {
                         $obj->where(array(
                             'student_subject_enroll_status' => TRUE
                         ));
+                        $cache_name .= 'student_subject_enroll_status';
                 }
                 $obj   = $obj->
-                        //set_cache()->
+                        set_cache("student_library_enrolled_units_" . $cache_name)->
                         get_all();
                 $units = 0;
                 if ($obj)

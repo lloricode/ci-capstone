@@ -60,7 +60,7 @@ class Check_access
                 /**
                  * update enrollment status to FALSE in ALL not current semester and school_year
                  */
-                $this->Enrollment_model->unenroll_all_past_term();
+//                $this->Enrollment_model->unenroll_all_past_term();
                 /**
                  * when enrollment status is disabled, then check controller that will also disabled
                  */
@@ -114,12 +114,12 @@ class Check_access
                         $this->load->model('Dean_course_model');
                         $obj     = $this->Dean_course_model->where(array(
                                     'user_id' => $this->ion_auth->get_user_id()
-                                ))->get();
+                                ))->set_cache('Dean_course_model_get_' . $this->ion_auth->get_user_id())->get();
                         if ($obj)
                         {
                                 $this->load->model('Course_model');
                                 $dean_course_id   = $obj->course_id;
-                                $dean_course_code = $this->Course_model->get($obj->course_id)->course_code;
+                                $dean_course_code = $this->Course_model->set_cache('Course_model_get_' . $obj->course_id)->get($obj->course_id)->course_code;
                         }
                 }
                 //set the user name/last name in session
