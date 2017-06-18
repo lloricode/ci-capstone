@@ -310,7 +310,6 @@ class Student_model extends MY_Model
         public function all($limit = NULL, $offset = NULL, $course_id = NULL, $search = NULL, $report = FALSE, $enrolled_status_only = NULL, $is_dean = FALSE)
         {
                 $cache_name = $course_id . $search . $enrolled_status_only . $is_dean . $limit . $offset;
-                unset($tmp);
                 $this->set_cache($cache_name); //just to set cache_name using MY_model
                 $result     = $this->_get_from_cache(); //MY_model
 
