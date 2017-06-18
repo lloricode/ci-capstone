@@ -50,7 +50,7 @@ class Permission
                 $group_ids      = array();
                 $permission_obj = $this->Permission_model->where(array(
                             'controller_id' => $controller_id
-                        ))->get_all();
+                        ))->set_cache("permission_library_controller_groups_controller_id_{$controller_id}_get_all")->get_all();
                 if ($permission_obj)
                 {
                         foreach ($permission_obj as $p)

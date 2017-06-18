@@ -124,7 +124,7 @@ if ( ! function_exists('check_id_form_url'))
                  */
                 $obj = $loaded_model->
                         //just to make sure to create unique cache name
-                        set_cache('check_id_from_url' . $cache_name . '_$column' . $column . '_$model' . $model . '_$id_name' . $id_name . '_id' . $id)->
+                        set_cache('check_id_from_url_' . $cache_name . '_column' . $column . '_model' . $model . '_id_name' . $id_name . '_id' . $id)->
                         get(array(
                     $column => $id
                 ));

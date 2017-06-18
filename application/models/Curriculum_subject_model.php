@@ -193,7 +193,7 @@ class Curriculum_subject_model extends MY_Model
                                 order_by('curriculum_subject_year_level', 'ASC')->
                                 order_by('curriculum_subject_semester', 'ASC')->
                                 //$cache_name="curriculum_subjects_{$curriculum_id}" will use to delete cache in success add requisite | create_requisite trans_commit
-                                set_cache("curriculum_subjects_{$curriculum_id}_{$subject_offer}_{$all_current_semester}")->
+                                set_cache("curriculum_subjects_curriculum_id{$curriculum_id}_subject_offer{$subject_offer}_all_current_semester{$all_current_semester}")->
                                 get_all();
         }
 
@@ -202,7 +202,7 @@ class Curriculum_subject_model extends MY_Model
                 $subject_offer = ($subject_offer) ? 'yes' : 'no';
                 return $this->
                                 _curriculum_subject_query()->
-                                set_cache("curriculum_subject_{$curriculum_subject_id}_{$subject_offer}")->
+                                set_cache("curriculum_subject_curriculum_subject_id{$curriculum_subject_id}_subject_offer{$subject_offer}")->
                                 get($curriculum_subject_id);
         }
 
@@ -298,7 +298,7 @@ class Curriculum_subject_model extends MY_Model
                             'curriculum_id' => $curr_id,
                             'subject_id'    => $subject_id
                         ));
-                        $obj = $obj->set_cache("get_where_{$curr_id}_{$subject_id}")->get();
+                        $obj = $obj->set_cache("get_where_curriculum_id_{$curr_id}_subject_id_{$subject_id}")->get();
                         if ($obj->unit_id)
                         {
                                 /**
@@ -310,7 +310,7 @@ class Curriculum_subject_model extends MY_Model
                          * minor
                          */
                         $this->load->model('Subject_model');
-                        return (int) $this->Subject_model->with_unit('fields:unit_value')->set_cache("get_{$obj->subject_id}_with_unit")->get($obj->subject_id)->unit->unit_value;
+                        return (int) $this->Subject_model->with_unit('fields:unit_value')->set_cache("get_{$obj->subject_id}_with_unit_unit_value")->get($obj->subject_id)->unit->unit_value;
                 }
                 return (int) $obj->
                                 set_cache("get_{$id}_curriculum_subject_units")->
