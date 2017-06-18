@@ -309,10 +309,10 @@ class Student_model extends MY_Model
 
         public function all($limit = NULL, $offset = NULL, $course_id = NULL, $search = NULL, $report = FALSE, $enrolled_status_only = NULL, $is_dean = FALSE)
         {
-                $tmp        = $course_id . $search . $enrolled_status_only . $is_dean . $limit . $offset;
-                $cache_name = "{$this->cache_prefix}_{$this->table}_{$tmp}";
+                $cache_name = $course_id . $search . $enrolled_status_only . $is_dean . $limit . $offset;
                 unset($tmp);
-                $result     = $this->_get_query_cache($cache_name);
+                $this->set_cache($cache_name); //just to set cache_name using MY_model
+                $result     = $this->_get_from_cache(); //MY_model
 
                 if ( ! (isset($result) && $result !== FALSE))
                 {
@@ -327,7 +327,7 @@ class Student_model extends MY_Model
                         }
                         $rs     = $this->db->get($this->table);
                         $result = $rs->custom_result_object('Student_row');
-                        $this->_write_query_cache($result, $cache_name);
+                        $this->_write_to_cache($result); //MY_model
                 }
 
 
@@ -340,18 +340,6 @@ class Student_model extends MY_Model
                             'result' => $result,
                             'count'  => $count
                 );
-        }
-
-        private function _write_query_cache($data, $cache_name)
-        {
-                $this->load->driver('cache');
-                $this->cache->{$this->cache_driver}->save($cache_name, $data, 86400);
-        }
-
-        private function _get_query_cache($cache_name)
-        {
-                $this->load->driver('cache');
-                return $this->cache->{$this->cache_driver}->get($cache_name);
         }
 
         private function _query_all($course_id = NULL, $search = NULL, $enrolled_status_only = NULL, $is_dean)
