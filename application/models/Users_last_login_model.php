@@ -11,6 +11,7 @@ class Users_last_login_model extends MY_Model
                 $this->primary_key = 'users_last_login_id';
 
 
+                $this->_relations();
                 $this->_config();
 
                 parent::__construct();
@@ -30,6 +31,16 @@ class Users_last_login_model extends MY_Model
                  */
                 //  $this->remove_empty_before_write = TRUE;//(bool) $this->config->item('my_model_remove_empty_before_write');
                 $this->delete_cache_on_save = TRUE; //(bool) $this->config->item('my_model_delete_cache_on_save');
+        }
+
+        private function _relations()
+        {
+                $this->has_one['user'] = array(
+                    'foreign_model' => 'User_model',
+                    'foreign_table' => 'users',
+                    'foreign_key'   => 'id',
+                    'local_key'     => 'user_id'
+                );
         }
 
 }

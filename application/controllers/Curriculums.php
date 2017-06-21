@@ -5,6 +5,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Curriculums extends CI_Capstone_Controller
 {
 
+
         private $page_;
         private $limit;
         private $curriculum_search;
@@ -58,7 +59,7 @@ class Curriculums extends CI_Capstone_Controller
                                 or_like(array(
                                     'course_description' => $this->curriculum_search
                                 ))->
-                                //set_cache()->
+                                set_cache("Course_model_search_{$this->curriculum_search}")->
                                 get_all();
 
                         if ($c_obj)
@@ -130,7 +131,7 @@ class Curriculums extends CI_Capstone_Controller
                         limit($this->limit, $this->limit * $this->page_ - $this->limit)->
                         order_by('created_at', 'DESC')->
                         order_by('updated_at', 'DESC')->
-                        // set_cache('curriculum_page_' . $this->page_)->
+                        set_cache("curriculum_with_course_with_user_created_with_user_updated_page_{$this->page_}_{$labelll}")->
                         get_all();
 
                 $table_data = array();
@@ -210,7 +211,7 @@ class Curriculums extends CI_Capstone_Controller
 //                        $addtional_data['data'] = '<span class="pending">Disabled</span>';
 //                        return $addtional_data;
 //                }
-                if (!in_array('set-curriculum-enable', permission_controllers()))
+                if ( ! in_array('set-curriculum-enable', permission_controllers()))
                 {
                         $addtional_data['data'] = '<span class="pending">Disabled</span>';
                 }
@@ -229,8 +230,8 @@ class Curriculums extends CI_Capstone_Controller
                 {
                         if ($semster_value == 'current')
                         {
-                                $label    = 'All Semester';
-                                $url_link = '';
+                                $label                = 'All Semester';
+                                $url_link             = '';
                                 $all_current_semester = TRUE;
                         }
                 }
@@ -330,9 +331,9 @@ class Curriculums extends CI_Capstone_Controller
                                 $tmp_sem_year = $cur_subj->curriculum_subject_year_level . $cur_subj->curriculum_subject_semester;
                                 if ($tmp_compare != $tmp_sem_year)
                                 {
-                                        $tmp_compare  = $tmp_sem_year;
-                                        $total_units  = $this->Curriculum_subject_model->total_units_per_term($cur_subj->curriculum_id, $cur_subj->curriculum_subject_semester, $cur_subj->curriculum_subject_year_level);
-                                       
+                                        $tmp_compare = $tmp_sem_year;
+                                        $total_units = $this->Curriculum_subject_model->total_units_per_term($cur_subj->curriculum_id, $cur_subj->curriculum_subject_semester, $cur_subj->curriculum_subject_year_level);
+
                                         if ($export_excel)
                                         {
                                                 $table_data[] = array(
@@ -362,7 +363,7 @@ class Curriculums extends CI_Capstone_Controller
                                 {
                                         $id = $cur_subj->subject->unit_id;
                                 }
-                                $unit_obj  = $this->Unit_model->get($id);
+                                $unit_obj  = $this->Unit_model->fields('*')->set_cache("get_{$id}")->get($id);
                                 $requisite = $this->Requisites_model->subjects((isset($cur_subj->requisites) ? $cur_subj->requisites : NULL), (($export_excel) ? ', ' : br()));
                                 $tmp       = array(
                                     //  my_htmlspecialchars(semesters($cur_subj->curriculum_subject_semester, FALSE, 'short')),
@@ -394,8 +395,8 @@ class Curriculums extends CI_Capstone_Controller
                     lang('curriculum_subject_co_subject_label')
                 );
                 return array(
-                    'header'       => $header,
-                    'data'         => $table_data,
+                    'header'         => $header,
+                    'data'           => $table_data,
                     'curriculum_obj' => $curriculum_obj
                 );
         }

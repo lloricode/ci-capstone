@@ -36,7 +36,7 @@ class Report_info extends CI_Capstone_Controller
 
         private function _form_view()
         {
-                $rows                  = $this->Report_info_model->get();
+                $rows                  = $this->Report_info_model->set_cache('Report_info_model')->get();
                 $inputs['school_name'] = array(
                     'name'  => 'name',
                     'value' => $this->form_validation->set_value('name', $rows->school_name),

@@ -54,7 +54,7 @@ class Home extends CI_Capstone_Controller
                         {
                                 if ($id = $this->session->userdata('user_dean_course_id'))
                                 {
-                                        $course_row        = $this->Course_model->get($id);
+                                        $course_row        = $this->Course_model->set_cache('Course_model_get_' . $id)->get($id);
                                         $ecount            = $enrollment_object = $this->Enrollment_model->where(array(
                                                     'course_id'         => $id,
                                                     'enrollment_status' => TRUE
@@ -75,7 +75,7 @@ class Home extends CI_Capstone_Controller
                                  * get all course
                                  */
 
-                                $course_obj = $this->Course_model->order_by('course_code')->set_cache('course_get_all')->get_all();
+                                $course_obj = $this->Course_model->order_by('course_code')->set_cache('course_get_all_orderby_course_code')->get_all();
 
                                 if ($course_obj)
                                 {

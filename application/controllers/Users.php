@@ -43,7 +43,7 @@ class Users extends CI_Capstone_Controller
                         limit($this->limit, $this->limit * $this->page_ - $this->limit)->
                         order_by('updated_at', 'DESC')->
                         order_by('created_on', 'DESC')->
-                        set_cache('users_page_' . $this->page_)->
+                        set_cache('users_with_groups_page_' . $this->page_)->
                         get_all();
 
 
@@ -143,12 +143,12 @@ class Users extends CI_Capstone_Controller
         {
                 $obj = $this->Dean_course_model->where(array(
                             'user_id' => $id
-                        ))->get();
+                        ))->set_cache("get_where_user_id_{$id}")->get();
                 if ( ! $obj)
                 {
                         return '--';
                 }
-                return $this->Course_model->get($obj->course_id)->course_code;
+                return $this->Course_model->set_cache("get_{$obj->course_id}_course_code")->get($obj->course_id)->course_code;
         }
 
         /**

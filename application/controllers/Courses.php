@@ -43,7 +43,7 @@ class Courses extends CI_Capstone_Controller
                         with_user_created('fields:first_name,last_name')->
                         with_user_updated('fields:first_name,last_name')->
                         limit($this->limit, $this->limit * $this->page_ - $this->limit)->
-                        set_cache('courses_page_' . $this->page_)->
+                        set_cache('courses_withusercreated_withuserupdated_page_' . $this->page_)->
                         get_all();
 
 

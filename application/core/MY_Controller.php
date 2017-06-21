@@ -46,8 +46,8 @@ class MY_Controller extends CI_Controller
          */
         public function delete_all_query_cache()
         {
-                $this->load->model('User_model');
-                $this->User_model->delete_cache();
+//                $this->load->model('User_model');
+//                $this->User_model->delete_cache();
         }
 
 }

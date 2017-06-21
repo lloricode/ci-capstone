@@ -100,7 +100,6 @@ class Curriculum_subject_model extends MY_Model
                 );
         }
 
-
         private function _inlist_semesters()
         {
                 $this->load->helper('school');
@@ -113,7 +112,6 @@ class Curriculum_subject_model extends MY_Model
                 return $return;
         }
 
-       
         public function insert_validations($index)
         {
                 return array(
@@ -185,23 +183,26 @@ class Curriculum_subject_model extends MY_Model
 
                 if ($all_current_semester)
                 {
-                     $obj->where(array(
-                         'curriculum_subject_semester' => current_school_semester(TRUE)
-                     ));   
+                        $obj->where(array(
+                            'curriculum_subject_semester' => current_school_semester(TRUE)
+                        ));
                 }
-                
+                $subject_offer        = ($subject_offer) ? 'yes' : 'no';
+                $all_current_semester = ($all_current_semester) ? 'yes' : 'no';
                 return $obj->
                                 order_by('curriculum_subject_year_level', 'ASC')->
                                 order_by('curriculum_subject_semester', 'ASC')->
-                                //set_cache()->
+                                //$cache_name="curriculum_subjects_{$curriculum_id}" will use to delete cache in success add requisite | create_requisite trans_commit
+                                set_cache("curriculum_subjects_curriculum_id{$curriculum_id}_subject_offer{$subject_offer}_all_current_semester{$all_current_semester}")->
                                 get_all();
         }
 
         public function curriculum_subject($curriculum_subject_id, $subject_offer = FALSE)
         {
+                $subject_offer = ($subject_offer) ? 'yes' : 'no';
                 return $this->
                                 _curriculum_subject_query()->
-                                //set_cache()->
+                                set_cache("curriculum_subject_curriculum_subject_id{$curriculum_subject_id}_subject_offer{$subject_offer}")->
                                 get($curriculum_subject_id);
         }
 
@@ -236,7 +237,7 @@ class Curriculum_subject_model extends MY_Model
 
                         foreach ($subject_from_cur as $v)
                         {
-                                if (!in_array($v->subject_id, $requisites))//check if already added as requisite
+                                if ( ! in_array($v->subject_id, $requisites))//check if already added as requisite
                                 {
                                         $return[$v->subject_id] = $v->subject->subject_code;
                                 }
@@ -264,6 +265,7 @@ class Curriculum_subject_model extends MY_Model
                             'curriculum_subject_semester'   => $sem,
                             'curriculum_subject_year_level' => $yr_lvl
                         ))->
+                        set_cache("total_units_per_term_{$cur_id}_{$sem}_{$yr_lvl}")->
                         get_all();
                 $return = 0;
                 if ($obj)
@@ -272,7 +274,7 @@ class Curriculum_subject_model extends MY_Model
                         foreach ($obj as $v)
                         {
                                 $id = NULL;
-                                if (!is_null($v->unit_id))
+                                if ( ! is_null($v->unit_id))
                                 {
                                         $id = $v->unit_id;
                                 }
@@ -280,7 +282,7 @@ class Curriculum_subject_model extends MY_Model
                                 {
                                         $id = $v->subject->unit_id;
                                 }
-                                $return += $this->Unit_model->get($id)->unit_value;
+                                $return += $this->Unit_model->fields('unit_value')->set_cache("get_{$id}_unit_value")->get($id)->unit_value;
                         }
                 }
                 return $return;
@@ -296,21 +298,23 @@ class Curriculum_subject_model extends MY_Model
                             'curriculum_id' => $curr_id,
                             'subject_id'    => $subject_id
                         ));
-                        $obj = $obj->get();
+                        $obj = $obj->set_cache("get_where_curriculum_id_{$curr_id}_subject_id_{$subject_id}")->get();
                         if ($obj->unit_id)
                         {
                                 /**
                                  * major
                                  */
-                                return (int) $this->Unit_model->get($obj->unit_id)->unit_value;
+                                return (int) $this->Unit_model->fields('unit_value')->set_cache("get_{$obj->unit_id}_unit_value")->get($obj->unit_id)->unit_value;
                         }
                         /**
                          * minor
                          */
                         $this->load->model('Subject_model');
-                        return (int) $this->Subject_model->with_unit('fields:unit_value')->get($obj->subject_id)->unit->unit_value;
+                        return (int) $this->Subject_model->with_unit('fields:unit_value')->set_cache("get_{$obj->subject_id}_with_unit_unit_value")->get($obj->subject_id)->unit->unit_value;
                 }
-                return (int) $obj->get($id)->
+                return (int) $obj->
+                                set_cache("get_{$id}_curriculum_subject_units")->
+                                get($id)->
                         curriculum_subject_units;
         }
 

@@ -309,17 +309,26 @@ class Student_model extends MY_Model
 
         public function all($limit = NULL, $offset = NULL, $course_id = NULL, $search = NULL, $report = FALSE, $enrolled_status_only = NULL, $is_dean = FALSE)
         {
-                $this->_query_all($course_id, $search, $enrolled_status_only, $is_dean);
-                $this->db->order_by('enrollment_year_level', 'ASC');
-                $this->db->order_by('student_lastname', 'ASC');
-                $this->db->order_by('created_at', 'DESC');
-                $this->db->order_by('updated_at', 'DESC');
-                if ( ! $report)
+                $cache_name = $course_id . $search . $enrolled_status_only . $is_dean . $limit . $offset;
+                $this->set_cache($cache_name); //just to set cache_name using MY_model
+                $result     = $this->_get_from_cache(); //MY_model
+
+                if ( ! (isset($result) && $result !== FALSE))
                 {
-                        $this->db->limit($limit, $offset);
+                        $this->_query_all($course_id, $search, $enrolled_status_only, $is_dean);
+                        $this->db->order_by('enrollment_year_level', 'ASC');
+                        $this->db->order_by('student_lastname', 'ASC');
+                        $this->db->order_by('created_at', 'DESC');
+                        $this->db->order_by('updated_at', 'DESC');
+                        if ( ! $report)
+                        {
+                                $this->db->limit($limit, $offset);
+                        }
+                        $rs     = $this->db->get($this->table);
+                        $result = $rs->custom_result_object('Student_row');
+                        $this->_write_to_cache($result); //MY_model
                 }
-                $rs     = $this->db->get($this->table);
-                $result = $rs->custom_result_object('Student_row');
+
 
                 $this->db->reset_query();
 

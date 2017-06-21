@@ -51,7 +51,7 @@ class Subjects extends CI_Capstone_Controller
                 $subject_obj = $subject_obj->limit($this->limit, $this->limit * $this->page_ - $this->limit)->
                         order_by('updated_at', 'DESC')->
                         order_by('created_at', 'DESC')->
-                        set_cache('subjects_page_' . $this->page_)->
+                        set_cache("subjects_search_{$subject_search}_page_{$this->page_}")->
                         get_all();
 
                 $row_count = $tmp_obj->count_rows();
@@ -130,7 +130,7 @@ class Subjects extends CI_Capstone_Controller
                 {
                         return 'GEN ED';
                 }
-                return $this->Course_model->get($course_id)->course_code;
+                return $this->Course_model->fields('course_code')->set_cache("get_{$course_id}_course_code")->get($course_id)->course_code;
         }
 
         /**

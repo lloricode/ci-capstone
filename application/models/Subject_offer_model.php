@@ -170,6 +170,7 @@ class Subject_offer_model extends MY_Model
 
         public function all($current_sem_year = FALSE, $curriculum_id = FALSE, $enrollment_id = FALSE, $limit = NULL, $offset = NULL, $faculty_id = NULL/* to get all current schedules */)
         {
+                $change_name = '';
                 $this->_query();
                 if ($current_sem_year)
                 {
@@ -177,6 +178,7 @@ class Subject_offer_model extends MY_Model
                          * only current semester and year, if set to TRUE
                          */
                         $this->where_current_sem_year();
+                        $change_name .= "where_current_sem_year_{$current_sem_year}";
                 }
                 if ($enrollment_id)
                 {
@@ -184,6 +186,7 @@ class Subject_offer_model extends MY_Model
                          * for student profile
                          */
                         $this->with_student_subjects(); //'where:`enrollment_id`!=' . $enrollment_id);
+                        $change_name .= "_with_student_subjects_{$enrollment_id}_";
                 }
 //                $where__     = array(
 //                    'field'    => 'curriculum_subject_year_level,curriculum_subject_semester',
@@ -192,20 +195,20 @@ class Subject_offer_model extends MY_Model
 //                        'relation' => 'curriculum',
 //                        'field'    => 'curriculum_id'
 //                ));
-                $change_name = '';
                 if ($curriculum_id)
                 {
                         $nested_where['where'] = array(
                             'curriculum_id' => $curriculum_id
                         );
                         // $where__               = array_merge($where__, $nested_where);
-                        $change_name           = 'curriculum_id' . $curriculum_id;
+                        $change_name           .= "_curriculum_id_{$curriculum_id}";
                 }
                 if ( ! is_null($faculty_id))
                 {
                         $this->where(array(
                             'user_id' => $faculty_id
                         ));
+                        $change_name .= "_user_id{$faculty_id}_";
                 }
                 // $this->with_curriculum_subject($where__);
                 if ( ! is_null($limit) && ! is_null($offset))
@@ -214,9 +217,10 @@ class Subject_offer_model extends MY_Model
                          * for view all schedule (http://[::1]/ci-capstone/en/subject-offers)
                          */
                         $this->limit($limit, $offset);
+                        $change_name .= "_page_{$limit}_{$offset}_";
                 }
                 return $this->
-                                //set_cache(' '.$change_name)->
+                                set_cache('all_' . $change_name)->
                                 get_all();
         }
 
@@ -227,13 +231,13 @@ class Subject_offer_model extends MY_Model
                                 where(array(
                                     'curriculum_id' => $curriculum_id
                                 ))->
-                                //set_cache()->
+                                set_cache("all_on_curriculum_$curriculum_id")->
                                 get_all();
         }
 
         public function get_subject($id)
         {
-                return $this->with_subject()->get($id)->subject;
+                return $this->with_subject()->set_cache("get_subject_subject_$id")->get($id)->subject;
         }
 
 }

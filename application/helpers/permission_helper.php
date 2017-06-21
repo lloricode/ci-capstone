@@ -29,7 +29,7 @@ if ( ! function_exists('permission_controllers'))
                 {
                         $obj   = $CI->Controller_model->
                                 fields('controller_name,controller_enrollment_open')->
-                                //set_cache()->
+                                set_cache('permission_controllers_controller_name_controller_enrollment_open')->
                                 get_all();
                         $array = array();
                         foreach ($obj as $v)
