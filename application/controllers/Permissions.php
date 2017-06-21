@@ -48,7 +48,7 @@ class Permissions extends CI_Capstone_Controller
 
         private function main($controller_obj = NULL)
         {
-                $controllers_obj = $this->Controller_model->//fields('*')->
+                $controllers_obj = $this->Controller_model->fields('*')->
                         //  limit($this->limit, $this->limit * $this->page_ - $this->limit)->
                         order_by('controller_description', 'ASC')->
                         set_cache('controllers_all_permission_controller'/* . $this->page_ */)->
