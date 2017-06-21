@@ -363,7 +363,7 @@ class Curriculums extends CI_Capstone_Controller
                                 {
                                         $id = $cur_subj->subject->unit_id;
                                 }
-                                $unit_obj  = $this->Unit_model->set_cache("get_{$id}")->get($id);
+                                $unit_obj  = $this->Unit_model->fields('*')->set_cache("get_{$id}")->get($id);
                                 $requisite = $this->Requisites_model->subjects((isset($cur_subj->requisites) ? $cur_subj->requisites : NULL), (($export_excel) ? ', ' : br()));
                                 $tmp       = array(
                                     //  my_htmlspecialchars(semesters($cur_subj->curriculum_subject_semester, FALSE, 'short')),
