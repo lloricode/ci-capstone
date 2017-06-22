@@ -10,14 +10,12 @@ class MY_Controller extends CI_Controller
                 parent::__construct();
 
 
-                if ($this->migration->current())
+                if ( ! $this->migration->current())
                 {
                         $this->delete_all_query_cache();
                 }
-                if (ENVIRONMENT === 'development')
-                {
-                        $this->output->enable_profiler(TRUE);
-                }
+
+                $this->output->enable_profiler(ENVIRONMENT === 'development');
         }
 
         /**
@@ -46,8 +44,8 @@ class MY_Controller extends CI_Controller
          */
         public function delete_all_query_cache()
         {
-//                $this->load->model('User_model');
-//                $this->User_model->delete_cache();
+                $this->load->model('User_model');
+                $this->User_model->delete_cache();
         }
 
 }
