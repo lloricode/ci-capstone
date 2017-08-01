@@ -1,5 +1,5 @@
 #  [ci-capstone](https://github.com/lloricode/ci-capstone)
-### A Thesis project (Enrollment System) made by using [CodeIgniter](http://codeigniter.com).
+### A Capstone project (Enrollment System) made by using [CodeIgniter](http://codeigniter.com).
 
 
 ### Demo 
