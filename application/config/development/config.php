@@ -26,7 +26,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 */
 
-    $config['base_url'] = 'http://[::1]/ci-capstone/';
+    $config['base_url'] = 'http://ci-capstone.test/';
 
 /*
 |--------------------------------------------------------------------------
