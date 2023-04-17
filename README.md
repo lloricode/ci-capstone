@@ -1,45 +1,46 @@
 #  [ci-capstone](https://github.com/lloricode/ci-capstone)
 ### A Capstone project (Enrollment System) made by using [CodeIgniter](http://codeigniter.com).
 
+[![Laravel Forge Site Deployment Status](https://img.shields.io/endpoint?url=https%3A%2F%2Fforge.laravel.com%2Fsite-badges%2F240650fa-0dd7-4205-a18f-1a6f2c00c1e7%3Fdate%3D1&style=plastic)](https://forge.laravel.com)
 
 ### Demo 
 
-- [demo1](http://ci-capstone.lloricmayugagarcia.com)
-- [demo2](http://ci-capstone.sprikiwiki.club/)
+- [demo2](https://ci-capstone.lloricode.com/)
 
 ## Frameworks used
-Platform|Framework
---------------------- | ----------------------------
- PHP Framework        | [CodeIgniter 3.1.5](http://codeigniter.com).
- Admin UI Framework   | [matrix-admin Bootstrap](http://matrixadmin.themedesigner.in/).
-
+| Platform           | Framework                                                       |
+|--------------------|-----------------------------------------------------------------|
+| PHP Framework      | [CodeIgniter 3.1.5](http://codeigniter.com).                    |
+| Admin UI Framework | [matrix-admin Bootstrap](http://matrixadmin.themedesigner.in/). |
 
 ## Library used
 
 
- Name | Repository
--------------------------- | ----------------------
- Login Authentication      | [CodeIgniter-Ion-Auth](https://github.com/benedmunds/CodeIgniter-Ion-Auth).
- Migration Authentication  | [codeigniter-ion-auth-migration](https://github.com/iamfiscus/codeigniter-ion-auth-migration).
- Error Log                 | [CodeIgniter-Log-Library](https://github.com/appleboy/CodeIgniter-Log-Library).
- Excel Export              | [Codeigniter-Excel-Export](https://github.com/jiji262/Codeigniter-Excel-Export).
- Core My_Model             | [CodeIgniter-MY_Model](https://github.com/avenirer/CodeIgniter-MY_Model).
- Translator                | [codeigniter3-translations](https://github.com/bcit-ci/codeigniter3-translations).
+| Name                     | Repository                                                                                     |
+|--------------------------|------------------------------------------------------------------------------------------------|
+| Login Authentication     | [CodeIgniter-Ion-Auth](https://github.com/benedmunds/CodeIgniter-Ion-Auth).                    |
+| Migration Authentication | [codeigniter-ion-auth-migration](https://github.com/iamfiscus/codeigniter-ion-auth-migration). |
+| Error Log                | [CodeIgniter-Log-Library](https://github.com/appleboy/CodeIgniter-Log-Library).                |
+| Excel Export             | [Codeigniter-Excel-Export](https://github.com/jiji262/Codeigniter-Excel-Export).               |
+| Core My_Model            | [CodeIgniter-MY_Model](https://github.com/avenirer/CodeIgniter-MY_Model).                      |
+| Translator               | [codeigniter3-translations](https://github.com/bcit-ci/codeigniter3-translations).             |
 
 ## Installation
 
-- Create first a databse named ``ci_capstone`` .
+- Create first a database named ``ci_capstone`` .
 - then just run/execute the website, ``tables`` in ``database`` will automatically migrate.
 
-- OR you can just import in databse a sample data from ``sample_data/ci_capstone.sql``.
+- OR you can just import in database a sample data from ``sample_data/ci_capstone.sql``.
 
 - then if you just/want to rename the folder name, you will be required to set/modify the base url as the same of name of your new folder name.
 
+- Use PHP <= 7.0 to be working as expected, we accept PR for latest PHP support.
+
 ## Default Login
 
-Username | Password
--------- | -----------
-administrator|mypasswordisadmin1
+| Username      | Password           |
+|---------------|--------------------|
+| administrator | mypasswordisadmin1 |
 
 ## Screencapture
 -Updated overview over the Admin Panel
@@ -47,14 +48,14 @@ administrator|mypasswordisadmin1
 
 ## Note:
 ### production ENVIRONMENT 
-- compress html, for fast renderring page in live server 
+- compress html, for fast rendering page in live server 
 - csrf_protection is enabled (set to TRUE), for prevent malicious/unnecessary behavior in submitting forms
 - errors log save to database,then not directly seen in browsers,
 
 ### developing ENVIRONMENT
 - compress html disabled, for easy monitoring html output (easy debugging)
 - csrf_protection is disabled (set to FALSE), for easy submitting forms, for testing in big forms
-- errors log disabled, directly promt in browser,
+- errors log disabled, directly prompt in browser,
 - database set to localhost 
 
 ### ..
@@ -72,4 +73,4 @@ administrator|mypasswordisadmin1
 - [Jicking Bebiro](https://github.com/jicking)
 
 
-#### Any suggest/issue/problem dont hesitate to open an issue, even pull request. :)
+#### Any suggest/issue/problem don't hesitate to open an issue, even pull request. :)
