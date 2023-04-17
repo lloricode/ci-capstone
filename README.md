@@ -5,7 +5,7 @@
 
 ### Demo 
 
-- [demo2](https://ci-capstone.lloricode.com/)
+- [https://ci-capstone.lloricode.com](https://ci-capstone.lloricode.com/)
 
 ## Frameworks used
 | Platform           | Framework                                                       |
