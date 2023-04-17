@@ -15,8 +15,8 @@ $config['project_title']       = 'CI Capstone';
 $config['project_title_link']  = 'https://github.com/lloricode/ci-capstone';
 $config['project_title_1']     = 'CI';
 $config['project_title_2']     = 'Capstone';
-$config['project_web']         = 'lloricmayugagarcia.com';
-$config['project_web_link']    = 'http://lloricmayugagarcia.com';
+$config['project_web']         = 'lloricode.com';
+$config['project_web_link']    = 'http://lloricode.com';
 $config['current_year_footer'] = '2017';
 
 
