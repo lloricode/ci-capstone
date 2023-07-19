@@ -1,7 +1,7 @@
 #  [ci-capstone](https://github.com/lloricode/ci-capstone)
 ### A Capstone project (Enrollment System) made by using [CodeIgniter](http://codeigniter.com).
 
-[![Laravel Forge Site Deployment Status](https://img.shields.io/endpoint?url=https%3A%2F%2Fforge.laravel.com%2Fsite-badges%2F2b682308-d55a-4064-a816-c8d5151c0366%3Fdate%3D1&style=plastic)](https://forge.laravel.com)
+[![Laravel Forge Site Deployment Status](https://img.shields.io/endpoint?url=https%3A%2F%2Fforge.laravel.com%2Fsite-badges%2Fa46c5553-bf3b-4edd-945e-bccdd824c755%3Fdate%3D1&style=plastic)](https://forge.laravel.com/servers/701189/sites/2043445)
 
 ### Demo 
 
