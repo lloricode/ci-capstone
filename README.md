@@ -34,7 +34,7 @@
 
 - then if you just/want to rename the folder name, you will be required to set/modify the base url as the same of name of your new folder name.
 
-- Use PHP <= 7.0 to be working as expected, we accept PR for latest PHP support.
+- Use PHP <= 7.0 to be working as expected.
 
 ## Default Login
 
